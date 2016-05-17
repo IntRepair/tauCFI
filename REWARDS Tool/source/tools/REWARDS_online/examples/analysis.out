@@ -1,0 +1,1142 @@
+== Data section ==
+
+addresss: resolved type
+00403000: 32bit
+00403004: 32bit
+00403008: 32bit
+0040300c: 32bit
+00404000: char
+00404001: char
+00404002: char
+00404003: char
+00404004: char
+00404005: char
+00404006: char
+00404007: char
+00404008: char
+00404009: char
+0040400a: char
+0040400b: char
+0040400c: char
+0040400d: char
+0040400e: char
+0040400f: char
+00404010: char
+00404011: char
+00404012: char
+00404064: char
+00404065: char
+00404070: char*
+00404074: char
+00404075: char
+00404076: char
+00404077: char
+00404078: char
+00404079: char
+0040407a: char
+0040407b: char
+0040407c: char
+0040407d: char
+0040407e: char
+004040e8: char
+004040ea: char
+004040eb: char
+004040ec: char
+004040ee: char
+004040ef: char
+00404101: char
+00404102: char
+00404103: char
+00404104: char
+00404105: char
+00404106: char
+00404107: char
+00404108: char
+00404109: char
+0040410a: char
+0040410b: char
+0040410c: char
+0040410d: char
+0040410e: char
+0040410f: char
+00404110: char
+00404111: char
+00404112: char
+00404125: char
+00404126: char
+00404127: char
+00404128: char
+00404129: char
+0040412a: char
+0040412b: char
+0040412c: char
+0040412d: char
+0040412e: char
+0040412f: char
+00404130: char
+00404131: char
+00404132: char
+00404133: char
+00404134: char
+00404136: char
+00404137: char
+00404138: char
+00404139: char
+0040413a: char
+0040413b: char
+0040413c: char
+0040413d: char
+0040413e: char
+0040413f: char
+00404140: char
+00404141: char
+00404142: char
+00404143: char
+00404144: char
+00404146: char
+00404147: char
+00404148: char
+00404149: char
+0040414a: char
+0040414b: char
+0040414c: char
+0040414d: char
+0040414e: char
+0040414f: char
+00404150: char
+00404151: char
+00404152: char
+00404154: char
+00404155: char
+00404158: void (*f)()
+00406000: unsigned int
+00406004: [int**, unsigned int*, char**]
+00406020: unsigned int
+00406030: 32bit
+00406038: 32bit
+0040603c: [struct _STRING, char*]
+00406040: 32bit
+00406044: 32bit
+00406048: char*
+0040604c: struct _CRITICAL_SECTION
+00406050: struct _CRITICAL_SECTION
+00406054: struct _CRITICAL_SECTION
+00406058: struct _CRITICAL_SECTION
+0040605c: struct _CRITICAL_SECTION
+00407000: [char*, struct _UNICODE_STRING, wchar_t]
+0040700c: [unsigned int*, char*]
+00407010: [unsigned int*, char*, struct _UNICODE_STRING, char**, wchar_t]
+00407014: [unsigned int*, char*, struct _UNICODE_STRING]
+00407020: [unsigned int*, char*]
+00407024: [unsigned int*, char*, struct _UNICODE_STRING, wchar_t]
+00407028: [unsigned int*, char*, struct _UNICODE_STRING]
+00407034: [unsigned int*, char*]
+00407038: [unsigned int*, char*, struct _UNICODE_STRING, wchar_t]
+00407048: wchar_t
+00407050: [struct _STRING, unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR, wchar_t]
+00407054: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+00407058: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+0040705c: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+00407060: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+00407064: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+00407068: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+0040706c: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+00407070: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+00407074: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+00407078: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+0040707c: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+00407080: [unsigned int*, WCHAR*, WCHAR]
+00407084: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+00407088: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+0040708c: [unsigned int*, WCHAR*, WCHAR]
+00407090: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+00407094: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+00407098: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+0040709c: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070a0: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070a4: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070a8: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070ac: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070b0: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070b4: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070b8: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070bc: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070c0: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070c4: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070c8: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070cc: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070d0: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070d4: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070d8: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070dc: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070e0: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070e4: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070e8: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070ec: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070f0: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070f4: [unsigned int*, WCHAR*, struct _UNICODE_STRING, WCHAR]
+004070f8: [unsigned int*, WCHAR*, WCHAR]
+004070fc: char*
+00407100: char*
+00407104: int
+00407108: char*
+0040710c: int
+00407110: int
+00407114: int
+00407118: char*
+0040711c: int
+00407120: int
+00407124: int
+00407128: int
+00407130: [unsigned int*, WCHAR*, WCHAR]
+00407134: int
+0040713c: [unsigned int*, WCHAR*, WCHAR]
+00407140: int
+00407144: int
+00407148: int
+0040714c: int
+00407150: int
+00407154: int
+00407158: int
+0040715c: int
+00407160: int
+00407164: int
+00407168: int
+0040716c: int
+00407170: int
+00407174: int
+00407178: int
+0040717c: int
+00407180: int
+00407184: int
+00407188: int
+0040718c: int
+00407190: int
+00407194: int
+00407198: int
+0040719c: int
+004071a0: int
+004071a8: [struct _STRING, unsigned int*, WCHAR*, wchar_t, WCHAR]
+004071aa: [struct _STRING, unsigned int*, WCHAR*, wchar_t, WCHAR]
+004071ab: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071ac: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071ad: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071ae: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071af: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071b0: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071b1: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071b2: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071b3: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071b4: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071b5: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071b6: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071b7: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071b8: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071b9: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071ba: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071bb: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071bc: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071bd: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071be: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071bf: [struct _STRING, WCHAR*, WCHAR, unsigned int*]
+004071c0: [unsigned int*, WCHAR*, WCHAR]
+004071c2: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004071c3: [unsigned int*, WCHAR*, WCHAR]
+004071c4: [unsigned int*, WCHAR*, WCHAR]
+004071c5: [unsigned int*, WCHAR*, WCHAR]
+004071c6: [unsigned int*, WCHAR*, WCHAR]
+004071c7: [unsigned int*, WCHAR*, WCHAR]
+004071c8: [unsigned int*, WCHAR*, WCHAR]
+004071c9: [unsigned int*, WCHAR*, WCHAR]
+004071ca: [unsigned int*, WCHAR*, WCHAR]
+004071cb: [unsigned int*, WCHAR*, WCHAR]
+004071cc: [unsigned int*, WCHAR*, WCHAR]
+004071cd: [unsigned int*, WCHAR*, WCHAR]
+004071ce: [unsigned int*, WCHAR*, WCHAR]
+004071cf: [unsigned int*, WCHAR*, WCHAR]
+004071d0: [unsigned int*, WCHAR*, WCHAR]
+004071d1: [unsigned int*, WCHAR*, WCHAR]
+004071d2: [unsigned int*, WCHAR*, WCHAR]
+004071d3: [unsigned int*, WCHAR*, WCHAR]
+004071d4: [unsigned int*, WCHAR*, WCHAR]
+004071d5: [unsigned int*, WCHAR*, WCHAR]
+004071d6: [unsigned int*, WCHAR*, WCHAR]
+004071d8: [unsigned int*, WCHAR*, WCHAR]
+004071da: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004071db: [unsigned int*, WCHAR*, WCHAR]
+004071dc: [unsigned int*, WCHAR*, WCHAR]
+004071dd: [unsigned int*, WCHAR*, WCHAR]
+004071de: [unsigned int*, WCHAR*, WCHAR]
+004071df: [unsigned int*, WCHAR*, WCHAR]
+004071e0: [unsigned int*, WCHAR*, WCHAR]
+004071e1: [unsigned int*, WCHAR*, WCHAR]
+004071e2: [unsigned int*, WCHAR*, WCHAR]
+004071e3: [unsigned int*, WCHAR*, WCHAR]
+004071e4: [unsigned int*, WCHAR*, WCHAR]
+004071e5: [unsigned int*, WCHAR*, WCHAR]
+004071e6: [unsigned int*, WCHAR*, WCHAR]
+004071e8: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004071e9: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004071ea: [unsigned int*, WCHAR*, WCHAR]
+004071eb: [unsigned int*, WCHAR*, WCHAR]
+004071ec: [unsigned int*, WCHAR*, WCHAR]
+004071ed: [unsigned int*, WCHAR*, WCHAR]
+004071ee: [unsigned int*, WCHAR*, WCHAR]
+004071ef: [unsigned int*, WCHAR*, WCHAR]
+004071f0: [unsigned int*, WCHAR*, WCHAR]
+004071f1: [unsigned int*, WCHAR*, WCHAR]
+004071f2: [unsigned int*, WCHAR*, WCHAR]
+004071f3: [unsigned int*, WCHAR*, WCHAR]
+004071f4: [unsigned int*, WCHAR*, WCHAR]
+004071f6: [unsigned int*, WCHAR*, WCHAR]
+004071f8: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004071f9: [unsigned int*, WCHAR*, WCHAR]
+004071fa: [unsigned int*, WCHAR*, WCHAR]
+004071fb: [unsigned int*, WCHAR*, WCHAR]
+004071fc: [unsigned int*, WCHAR*, WCHAR]
+004071fd: [unsigned int*, WCHAR*, WCHAR]
+004071fe: [unsigned int*, WCHAR*, WCHAR]
+004071ff: [unsigned int*, WCHAR*, WCHAR]
+00407200: [unsigned int*, WCHAR*, WCHAR]
+00407201: [unsigned int*, WCHAR*, WCHAR]
+00407202: [unsigned int*, WCHAR*, WCHAR]
+00407203: [unsigned int*, WCHAR*, WCHAR]
+00407204: [unsigned int*, WCHAR*, WCHAR]
+00407205: [unsigned int*, WCHAR*, WCHAR]
+00407206: [unsigned int*, WCHAR*, WCHAR]
+00407207: [unsigned int*, WCHAR*, WCHAR]
+00407208: [unsigned int*, WCHAR*, WCHAR]
+0040720a: [unsigned int*, WCHAR*, WCHAR]
+0040720c: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+0040720d: [unsigned int*, WCHAR*, WCHAR]
+0040720e: [unsigned int*, WCHAR*, WCHAR]
+0040720f: [unsigned int*, WCHAR*, WCHAR]
+00407210: [unsigned int*, WCHAR*, WCHAR]
+00407211: [unsigned int*, WCHAR*, WCHAR]
+00407212: [unsigned int*, WCHAR*, WCHAR]
+00407213: [unsigned int*, WCHAR*, WCHAR]
+00407214: [unsigned int*, WCHAR*, WCHAR]
+00407215: [unsigned int*, WCHAR*, WCHAR]
+00407216: [unsigned int*, WCHAR*, WCHAR]
+00407217: [unsigned int*, WCHAR*, WCHAR]
+00407218: [unsigned int*, WCHAR*, WCHAR]
+00407219: [unsigned int*, WCHAR*, WCHAR]
+0040721a: [unsigned int*, WCHAR*, WCHAR]
+0040721c: [unsigned int*, WCHAR*, WCHAR]
+0040721e: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+0040721f: [unsigned int*, WCHAR*, WCHAR]
+00407220: [unsigned int*, WCHAR*, WCHAR]
+00407221: [unsigned int*, WCHAR*, WCHAR]
+00407222: [unsigned int*, WCHAR*, WCHAR]
+00407223: [unsigned int*, WCHAR*, WCHAR]
+00407224: [unsigned int*, WCHAR*, WCHAR]
+00407225: [unsigned int*, WCHAR*, WCHAR]
+00407226: [unsigned int*, WCHAR*, WCHAR]
+00407227: [unsigned int*, WCHAR*, WCHAR]
+00407228: [unsigned int*, WCHAR*, WCHAR]
+00407229: [unsigned int*, WCHAR*, WCHAR]
+0040722a: [unsigned int*, WCHAR*, WCHAR]
+0040722b: [unsigned int*, WCHAR*, WCHAR]
+0040722c: [unsigned int*, WCHAR*, WCHAR]
+0040722d: [unsigned int*, WCHAR*, WCHAR]
+0040722e: [unsigned int*, WCHAR*, WCHAR]
+0040722f: [unsigned int*, WCHAR*, WCHAR]
+00407230: [unsigned int*, WCHAR*, WCHAR]
+00407231: [unsigned int*, WCHAR*, WCHAR]
+00407232: [unsigned int*, WCHAR*, WCHAR]
+00407233: [unsigned int*, WCHAR*, WCHAR]
+00407234: [unsigned int*, WCHAR*, WCHAR]
+00407235: [unsigned int*, WCHAR*, WCHAR]
+00407236: [unsigned int*, WCHAR*, WCHAR]
+00407237: [unsigned int*, WCHAR*, WCHAR]
+00407238: [unsigned int*, WCHAR*, WCHAR]
+0040723a: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+0040723b: [unsigned int*, WCHAR*, WCHAR]
+0040723c: [unsigned int*, WCHAR*, WCHAR]
+0040723d: [unsigned int*, WCHAR*, WCHAR]
+0040723e: [unsigned int*, WCHAR*, WCHAR]
+0040723f: [unsigned int*, WCHAR*, WCHAR]
+00407240: [unsigned int*, WCHAR*, WCHAR]
+00407241: [unsigned int*, WCHAR*, WCHAR]
+00407242: [unsigned int*, WCHAR*, WCHAR]
+00407243: [unsigned int*, WCHAR*, WCHAR]
+00407244: [unsigned int*, WCHAR*, WCHAR]
+00407245: [unsigned int*, WCHAR*, WCHAR]
+00407246: [unsigned int*, WCHAR*, WCHAR]
+00407247: [unsigned int*, WCHAR*, WCHAR]
+00407248: [unsigned int*, WCHAR*, WCHAR]
+00407249: [unsigned int*, WCHAR*, WCHAR]
+0040724a: [unsigned int*, WCHAR*, WCHAR]
+0040724b: [unsigned int*, WCHAR*, WCHAR]
+0040724c: [unsigned int*, WCHAR*, WCHAR]
+0040724d: [unsigned int*, WCHAR*, WCHAR]
+0040724e: [unsigned int*, WCHAR*, WCHAR]
+00407250: [unsigned int*, WCHAR*, WCHAR]
+00407253: 64bit
+00407254: 64bit
+00407255: 64bit
+00407256: 64bit
+00407257: 64bit
+00407258: 64bit
+00407259: 64bit
+0040725a: 64bit
+0040725b: 64bit
+0040725c: 64bit
+0040725d: 64bit
+0040725e: 64bit
+0040725f: 64bit
+00407260: 64bit
+00407261: 64bit
+00407262: 64bit
+00407263: 64bit
+00407264: 64bit
+00407265: 64bit
+00407266: 64bit
+00407267: 64bit
+00407268: 64bit
+00407269: 64bit
+0040726a: 64bit
+0040726b: 64bit
+0040726c: 64bit
+0040726d: 64bit
+0040726e: [unsigned int*, WCHAR*, WCHAR]
+00407271: 64bit
+00407272: 64bit
+00407273: 64bit
+00407274: 64bit
+00407275: 64bit
+00407276: 64bit
+00407277: 64bit
+00407278: 64bit
+00407279: 64bit
+0040727a: 64bit
+0040727b: 64bit
+0040727c: [unsigned int*, WCHAR*, WCHAR]
+0040727f: 64bit
+00407280: 64bit
+00407281: 64bit
+00407282: 64bit
+00407283: 64bit
+00407284: 64bit
+00407285: 64bit
+00407286: 64bit
+00407287: 64bit
+00407288: 64bit
+00407289: 64bit
+0040728a: 64bit
+0040728b: 64bit
+0040728c: 64bit
+0040728e: [unsigned int*, WCHAR*, WCHAR]
+00407291: 64bit
+00407292: 64bit
+00407293: 64bit
+00407294: 64bit
+00407295: 64bit
+00407296: 64bit
+00407297: 64bit
+00407298: 64bit
+00407299: 64bit
+0040729a: 64bit
+0040729b: 64bit
+0040729c: 64bit
+0040729e: [unsigned int*, WCHAR*, WCHAR]
+004072a0: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072a1: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072a2: [unsigned int*, WCHAR*, WCHAR]
+004072a3: [unsigned int*, WCHAR*, WCHAR]
+004072a4: [unsigned int*, WCHAR*, WCHAR]
+004072a5: [unsigned int*, WCHAR*, WCHAR]
+004072a6: [unsigned int*, WCHAR*, WCHAR]
+004072a8: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072a9: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072aa: [unsigned int*, WCHAR*, WCHAR]
+004072ab: [unsigned int*, WCHAR*, WCHAR]
+004072ac: [unsigned int*, WCHAR*, WCHAR]
+004072ad: [unsigned int*, WCHAR*, WCHAR]
+004072ae: [unsigned int*, WCHAR*, WCHAR]
+004072b0: [unsigned int*, WCHAR*, WCHAR]
+004072b2: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072b3: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072b4: [unsigned int*, WCHAR*, WCHAR]
+004072b5: [unsigned int*, WCHAR*, WCHAR]
+004072b6: [unsigned int*, WCHAR*, WCHAR]
+004072b7: [unsigned int*, WCHAR*, WCHAR]
+004072b8: [unsigned int*, WCHAR*, WCHAR]
+004072b9: [unsigned int*, WCHAR*, WCHAR]
+004072ba: [unsigned int*, WCHAR*, WCHAR]
+004072bb: [unsigned int*, WCHAR*, WCHAR]
+004072bc: [unsigned int*, WCHAR*, WCHAR]
+004072bd: [unsigned int*, WCHAR*, WCHAR]
+004072be: [unsigned int*, WCHAR*, WCHAR]
+004072bf: [unsigned int*, WCHAR*, WCHAR]
+004072c0: [unsigned int*, WCHAR*, WCHAR]
+004072c2: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072c3: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072c4: [unsigned int*, WCHAR*, WCHAR]
+004072c5: [unsigned int*, WCHAR*, WCHAR]
+004072c6: [unsigned int*, WCHAR*, WCHAR]
+004072c7: [unsigned int*, WCHAR*, WCHAR]
+004072c8: [unsigned int*, WCHAR*, WCHAR]
+004072c9: [unsigned int*, WCHAR*, WCHAR]
+004072ca: [unsigned int*, WCHAR*, WCHAR]
+004072cb: [unsigned int*, WCHAR*, WCHAR]
+004072cc: [unsigned int*, WCHAR*, WCHAR]
+004072cd: [unsigned int*, WCHAR*, WCHAR]
+004072ce: [unsigned int*, WCHAR*, WCHAR]
+004072d0: [unsigned int*, WCHAR*, WCHAR]
+004072d2: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072d3: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072d4: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072d5: [unsigned int*, WCHAR*, WCHAR]
+004072d6: [unsigned int*, WCHAR*, WCHAR]
+004072d7: [unsigned int*, WCHAR*, WCHAR]
+004072d8: [unsigned int*, WCHAR*, WCHAR]
+004072d9: [unsigned int*, WCHAR*, WCHAR]
+004072da: [unsigned int*, WCHAR*, WCHAR]
+004072db: [unsigned int*, WCHAR*, WCHAR]
+004072dc: [unsigned int*, WCHAR*, WCHAR]
+004072de: [unsigned int*, WCHAR*, WCHAR]
+004072e0: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072e1: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072e2: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072e3: [unsigned int*, WCHAR*, WCHAR]
+004072e4: [unsigned int*, WCHAR*, WCHAR]
+004072e5: [unsigned int*, WCHAR*, WCHAR]
+004072e6: [unsigned int*, WCHAR*, WCHAR]
+004072e7: [unsigned int*, WCHAR*, WCHAR]
+004072e8: [unsigned int*, WCHAR*, WCHAR]
+004072e9: [unsigned int*, WCHAR*, WCHAR]
+004072ea: [unsigned int*, WCHAR*, WCHAR]
+004072eb: [unsigned int*, WCHAR*, WCHAR]
+004072ec: [unsigned int*, WCHAR*, WCHAR]
+004072ed: [unsigned int*, WCHAR*, WCHAR]
+004072ee: [unsigned int*, WCHAR*, WCHAR]
+004072f0: [unsigned int*, WCHAR*, WCHAR]
+004072f2: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072f3: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072f4: [unsigned int*, WCHAR*, WCHAR]
+004072f5: [unsigned int*, WCHAR*, WCHAR]
+004072f6: [unsigned int*, WCHAR*, WCHAR]
+004072f7: [unsigned int*, WCHAR*, WCHAR]
+004072f8: [unsigned int*, WCHAR*, WCHAR]
+004072fa: [unsigned int*, WCHAR*, WCHAR]
+004072fc: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072fd: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004072fe: [unsigned int*, WCHAR*, WCHAR]
+004072ff: [unsigned int*, WCHAR*, WCHAR]
+00407300: [unsigned int*, WCHAR*, WCHAR]
+00407302: [unsigned int*, WCHAR*, WCHAR]
+00407304: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+00407305: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+00407306: [unsigned int*, WCHAR*, WCHAR]
+00407307: [unsigned int*, WCHAR*, WCHAR]
+00407308: [unsigned int*, WCHAR*, WCHAR]
+00407309: [unsigned int*, WCHAR*, WCHAR]
+0040730a: [unsigned int*, WCHAR*, WCHAR]
+0040730b: [unsigned int*, WCHAR*, WCHAR]
+0040730c: [unsigned int*, WCHAR*, WCHAR]
+0040730e: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+0040730f: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+00407310: [unsigned int*, WCHAR*, WCHAR]
+00407311: [unsigned int*, WCHAR*, WCHAR]
+00407312: [unsigned int*, WCHAR*, WCHAR]
+00407313: [unsigned int*, WCHAR*, WCHAR]
+00407314: [unsigned int*, WCHAR*, WCHAR]
+00407315: [unsigned int*, WCHAR*, WCHAR]
+00407316: [unsigned int*, WCHAR*, WCHAR]
+00407318: [unsigned int*, WCHAR*, WCHAR]
+0040731a: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+0040731b: [unsigned int*, WCHAR*, WCHAR]
+0040731c: [unsigned int*, WCHAR*, WCHAR]
+0040731d: [unsigned int*, WCHAR*, WCHAR]
+0040731e: [unsigned int*, WCHAR*, WCHAR]
+0040731f: [unsigned int*, WCHAR*, WCHAR]
+00407320: [unsigned int*, WCHAR*, WCHAR]
+00407322: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+00407323: [unsigned int*, WCHAR*, WCHAR]
+00407324: [unsigned int*, WCHAR*, WCHAR]
+00407325: [unsigned int*, WCHAR*, WCHAR]
+00407326: [unsigned int*, WCHAR*, WCHAR]
+00407327: [unsigned int*, WCHAR*, WCHAR]
+00407328: [unsigned int*, WCHAR*, WCHAR]
+0040732a: [unsigned int*, WCHAR*, WCHAR]
+0040732c: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+0040732d: [unsigned int*, WCHAR*, WCHAR]
+0040732e: [unsigned int*, WCHAR*, WCHAR]
+0040732f: [unsigned int*, WCHAR*, WCHAR]
+00407330: [unsigned int*, WCHAR*, WCHAR]
+00407331: [unsigned int*, WCHAR*, WCHAR]
+00407332: [unsigned int*, WCHAR*, WCHAR]
+00407334: [unsigned int*, WCHAR*, WCHAR]
+00407336: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+00407337: [unsigned int*, WCHAR*, WCHAR]
+00407338: [unsigned int*, WCHAR*, WCHAR]
+00407339: [unsigned int*, WCHAR*, WCHAR]
+0040733a: [unsigned int*, WCHAR*, WCHAR]
+0040733c: [unsigned int*, WCHAR*, WCHAR]
+0040733e: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+0040733f: [unsigned int*, WCHAR*, WCHAR]
+00407340: [unsigned int*, WCHAR*, WCHAR]
+00407341: [unsigned int*, WCHAR*, WCHAR]
+00407342: [unsigned int*, WCHAR*, WCHAR]
+00407343: [unsigned int*, WCHAR*, WCHAR]
+00407344: [unsigned int*, WCHAR*, WCHAR]
+00407346: [unsigned int*, WCHAR*, WCHAR]
+00407348: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+00407349: [unsigned int*, WCHAR*, WCHAR]
+0040734a: [unsigned int*, WCHAR*, WCHAR]
+0040734b: [unsigned int*, WCHAR*, WCHAR]
+0040734c: [unsigned int*, WCHAR*, WCHAR]
+0040734d: [unsigned int*, WCHAR*, WCHAR]
+0040734e: [unsigned int*, WCHAR*, WCHAR]
+00407350: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+00407351: [unsigned int*, WCHAR*, WCHAR]
+00407352: [unsigned int*, WCHAR*, WCHAR]
+00407353: [unsigned int*, WCHAR*, WCHAR]
+00407354: [unsigned int*, WCHAR*, WCHAR]
+00407356: [unsigned int*, WCHAR*, WCHAR]
+00407358: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+00407359: [unsigned int*, WCHAR*, WCHAR]
+0040735a: [unsigned int*, WCHAR*, WCHAR]
+0040735b: [unsigned int*, WCHAR*, WCHAR]
+0040735c: [unsigned int*, WCHAR*, WCHAR]
+0040735d: [unsigned int*, WCHAR*, WCHAR]
+0040735e: [unsigned int*, WCHAR*, WCHAR]
+00407360: [unsigned int*, WCHAR*, WCHAR]
+00407362: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+00407363: [unsigned int*, WCHAR*, WCHAR]
+00407364: [unsigned int*, WCHAR*, WCHAR]
+00407365: [unsigned int*, WCHAR*, WCHAR]
+00407366: [unsigned int*, WCHAR*, WCHAR]
+00407368: [unsigned int*, WCHAR*, WCHAR]
+0040736a: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+0040736b: [unsigned int*, WCHAR*, WCHAR]
+0040736c: [unsigned int*, WCHAR*, WCHAR]
+0040736d: [unsigned int*, WCHAR*, WCHAR]
+0040736e: [unsigned int*, WCHAR*, WCHAR]
+0040736f: [unsigned int*, WCHAR*, WCHAR]
+00407370: [unsigned int*, WCHAR*, WCHAR]
+00407372: [unsigned int*, WCHAR*, WCHAR]
+00407374: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+00407375: [unsigned int*, WCHAR*, WCHAR]
+00407376: [unsigned int*, WCHAR*, WCHAR]
+00407377: [unsigned int*, WCHAR*, WCHAR]
+00407378: [unsigned int*, WCHAR*, WCHAR]
+00407379: [unsigned int*, WCHAR*, WCHAR]
+0040737a: [unsigned int*, WCHAR*, WCHAR]
+0040737c: [unsigned int*, WCHAR*, WCHAR]
+0040737e: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+0040737f: [unsigned int*, WCHAR*, WCHAR]
+00407380: [unsigned int*, WCHAR*, WCHAR]
+00407381: [unsigned int*, WCHAR*, WCHAR]
+00407382: [unsigned int*, WCHAR*, WCHAR]
+00407384: [unsigned int*, WCHAR*, WCHAR]
+00407386: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+00407387: [unsigned int*, WCHAR*, WCHAR]
+00407388: [unsigned int*, WCHAR*, WCHAR]
+00407389: [unsigned int*, WCHAR*, WCHAR]
+0040738a: [unsigned int*, WCHAR*, WCHAR]
+0040738b: [unsigned int*, WCHAR*, WCHAR]
+0040738c: [unsigned int*, WCHAR*, WCHAR]
+0040738e: [unsigned int*, WCHAR*, WCHAR]
+00407390: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+00407391: [unsigned int*, WCHAR*, WCHAR]
+00407392: [unsigned int*, WCHAR*, WCHAR]
+00407393: [unsigned int*, WCHAR*, WCHAR]
+00407394: [unsigned int*, WCHAR*, WCHAR]
+00407395: [unsigned int*, WCHAR*, WCHAR]
+00407396: [unsigned int*, WCHAR*, WCHAR]
+00407397: [unsigned int*, WCHAR*, WCHAR]
+00407398: [unsigned int*, WCHAR*, WCHAR]
+0040739a: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+0040739b: [unsigned int*, WCHAR*, WCHAR]
+0040739c: [unsigned int*, WCHAR*, WCHAR]
+0040739d: [unsigned int*, WCHAR*, WCHAR]
+0040739e: [unsigned int*, WCHAR*, WCHAR]
+0040739f: [unsigned int*, WCHAR*, WCHAR]
+004073a0: [unsigned int*, WCHAR*, WCHAR]
+004073a2: [unsigned int*, WCHAR*, WCHAR]
+004073a4: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004073a5: [unsigned int*, WCHAR*, WCHAR]
+004073a6: [unsigned int*, WCHAR*, WCHAR]
+004073a7: [unsigned int*, WCHAR*, WCHAR]
+004073a8: [unsigned int*, WCHAR*, WCHAR]
+004073a9: [unsigned int*, WCHAR*, WCHAR]
+004073aa: [unsigned int*, WCHAR*, WCHAR]
+004073ac: [unsigned int*, WCHAR*, WCHAR]
+004073ae: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004073af: [unsigned int*, WCHAR*, WCHAR]
+004073b0: [unsigned int*, WCHAR*, WCHAR]
+004073b1: [unsigned int*, WCHAR*, WCHAR]
+004073b2: [unsigned int*, WCHAR*, WCHAR]
+004073b3: [unsigned int*, WCHAR*, WCHAR]
+004073b4: [unsigned int*, WCHAR*, WCHAR]
+004073b6: [unsigned int*, WCHAR*, WCHAR]
+004073b8: [WCHAR*, unsigned int*, WCHAR, wchar_t]
+004073b9: [unsigned int*, WCHAR*, WCHAR]
+004073ba: [unsigned int*, WCHAR*, WCHAR]
+004073bb: [unsigned int*, WCHAR*, WCHAR]
+004073bc: [unsigned int*, WCHAR*, WCHAR]
+004073bd: [unsigned int*, WCHAR*, WCHAR]
+004073be: [unsigned int*, WCHAR*, WCHAR]
+004073bf: [unsigned int*, WCHAR*, WCHAR]
+004073c0: [unsigned int*, WCHAR*, WCHAR]
+004073f4: char
+004073f5: char
+004073f6: char
+004073f7: char
+004073f8: char
+004073f9: char
+004073fa: char
+004073fb: char
+004073fc: char
+004073fd: char
+004073fe: char
+004073ff: char
+00407400: char
+0040740c: char
+0040740d: char
+0040740e: char
+0040740f: char
+00407410: char
+00407411: char
+00407412: char
+00407413: char
+00407414: char
+00407415: char
+00407416: char
+00407480: char
+00407481: char
+00407482: char
+00407483: char
+00407484: char
+00407485: char
+00407486: char
+00407487: char
+00407488: char
+00407489: char
+0040748a: char
+00409000: wchar_t
+00409004: wchar_t
+00409008: wchar_t
+0040900c: wchar_t
+00409010: wchar_t
+00409014: wchar_t
+0040901a: 64bit
+0040901b: 64bit
+
+== Heap ==
+
+allocation site: resolved type
+         observed memory address + alloced bytes
+
+== Stack ==
+
+function + offset  : resolved type
+         observed memory addresses
+00401000 + 00000004: 32bit
+         0022ffa0
+00401000 + 00000008: 32bit
+         0022ff9c
+00401000 + 00000014: 32bit
+         0022ff90
+00401000 + 0000002c: 32bit*
+         0022ff78
+00401000 + 00000030: 32bit
+         0022ff74
+00401000 + 00000034: 32bit
+         0022ff70
+00401000 + 00000038: 32bit**
+         0022ff6c
+00401000 + 00000038: 32bit
+         0022ff6c
+00401000 + 0000003c: void (*f)()
+         0022ff68
+00401000 + 0000003c: void (*f)()
+         0022ff68
+00401000 + 0000003c: 32bit
+         0022ff68
+00401000 + 00000040: [char**, int**]
+         0022ff64
+00401000 + 00000044: unsigned int
+         0022ff60
+00401000 + 00000044: NTSTATUS
+         0022ff60
+0040126c + 00000004: 32bit
+         0022ffc0
+0040126c + 0000001c: 32bit
+         0022ffa8
+0040129c + 00000004: 32bit
+         0022ff18 0022ff38
+004012bc + 00000004: 32bit
+         0022ff18
+004012bc + 0000001c: char*
+         0022ff00
+004012bc + 0000001c: 32bit
+         0022ff00
+00401348 + 00000004: 32bit
+         0022ff3c
+00401348 + 0000001c: char*
+         0022ff24
+00401348 + 0000001c: 32bit
+         0022ff24
+0040138c + 00000004: 32bit
+         0022ef18
+0040138c + 00000014: unsigned int
+         0022ef08
+0040138c + 00000018: char*
+         0022ef04
+0040138c + 0000001c: char*
+         0022ef00
+0040138c + 0000001c: int
+         0022ef00
+004013b5 + 00000004: [HANDLE, struct _OSVERSIONINFOW, unsigned int*, struct _RTL_OSVERSIONINFOW, wchar_t, struct _OVERLAPPED*]
+         0022ef18
+004013b5 + 00000004: 32bit
+         0022ef18
+004013b5 + 00000014: unsigned int
+         0022ef08
+004013b5 + 00000018: char*
+         0022ef04
+004013b5 + 00000018: char
+         0022ef04
+004013b5 + 0000001c: char*
+         0022ef00
+004013b5 + 0000001c: int
+         0022ef00
+004013b5 + fffff3ce: char
+         0022fb4e
+004013b5 + fffff3ce: char
+         0022fb4e
+004013b5 + ffffffca: char
+         0022ef52
+004013b5 + fffffff8: char*
+         0022ef24
+004013f8 + 00000004: 32bit
+         0022ef18
+004013f8 + 00000010: char*
+         0022ef0c
+004013f8 + 00000014: unsigned int
+         0022ef08
+004013f8 + 0000002c: char*
+         0022eef0
+004013f8 + fffff3ce: char
+         0022fb4e
+004013f8 + fffff3cf: char
+         0022fb4d
+004013f8 + fffff3d0: char
+         0022fb4c
+004013f8 + fffff7cf: char
+         0022f74d
+004013f8 + fffff7d0: char
+         0022f74c
+0040144f + 00000004: 32bit
+         0022ef18
+0040144f + 00000008: char*
+         0022ef14
+0040144f + 0000000c: 32bit
+         0022ef10
+0040144f + fffff3cf: char
+         0022fb4d
+0040144f + fffff3d0: char
+         0022fb4c
+0040144f + fffff7cf: char
+         0022f74d
+0040144f + fffff7d0: char
+         0022f74c
+0040149e + 00000004: 32bit
+         0022ef18
+0040149e + 00000014: char
+         0022ef08
+0040149e + 00000018: char*
+         0022ef04
+0040149e + 0000001c: char*
+         0022ef00
+0040149e + fffff7cf: char
+         0022f74d
+0040149e + fffff7d0: char
+         0022f74c
+0040149e + fffffbcc: char
+         0022f350
+0040149e + fffffbcc: char
+         0022f350
+004014e2 + 00000004: 32bit
+         0022ef18
+004014e2 + 00000014: unsigned int
+         0022ef08
+004014e2 + 00000018: char*
+         0022ef04
+004014e2 + 0000001c: char*
+         0022ef00
+004014e2 + 0000001c: int
+         0022ef00
+0040150b + 00000004: 32bit
+         0022ef18
+0040150b + 00000010: 32bit
+         0022ef0c
+0040150b + 00000014: struct FILE*
+         0022ef08
+0040150b + 00000028: struct FILE*
+         0022eef4
+0040150b + 00000028: char*
+         0022eef4
+0040150b + 0000002c: struct FILE*
+         0022eef0
+0040150b + 0000002c: char*
+         0022eef0
+0040150b + 0000002c: char
+         0022eef0
+0040150b + fffff7cf: char
+         0022f74d
+0040150b + fffff7d0: char
+         0022f74c
+00401564 + 00000004: 32bit
+         0022ef18
+00401564 + 00000010: int
+         0022ef0c
+00401564 + 00000014: struct FILE*
+         0022ef08
+00401564 + 00000018: char
+         0022ef04
+00401564 + 00000028: char*
+         0022eef4
+00401564 + 0000002c: struct FILE*
+         0022eef0
+00401564 + 0000002c: char*
+         0022eef0
+00401564 + fffff7cf: char
+         0022f74d
+00401564 + fffff7cf: char
+         0022f74d
+00401564 + fffff7d0: char
+         0022f74c
+00401564 + fffff7d0: char
+         0022f74c
+004015d9 + 00000004: 32bit
+         0022ff58
+004015d9 + 00000008: 32bit
+         0022ff54
+004015d9 + 00000010: unsigned int
+         0022ff4c
+004015d9 + 00000010: unsigned int
+         0022ff4c
+004015d9 + 00000010: int
+         0022ff4c
+004015d9 + 00000010: int
+         0022ff4c
+004015d9 + 00000410: char
+         0022fb4c
+004015d9 + 00000810: char
+         0022f74c
+004015d9 + 00000c10: char
+         0022f34c
+004015d9 + 00001006: char
+         0022ef56
+004015d9 + 0000100a: char
+         0022ef52
+004015d9 + 0000100a: char
+         0022ef52
+004015d9 + 0000100b: char
+         0022ef51
+004015d9 + 0000100c: char
+         0022ef50
+004015d9 + 0000100d: char
+         0022ef4f
+004015d9 + 0000100e: char
+         0022ef4e
+004015d9 + 0000100f: char
+         0022ef4d
+004015d9 + 00001010: char
+         0022ef4c
+004015d9 + 00001020: unsigned int
+         0022ef3c
+004015d9 + 00001034: unsigned int
+         0022ef28
+004015d9 + 00001034: int
+         0022ef28
+004015d9 + 00001038: char*
+         0022ef24
+004015d9 + 00001038: int
+         0022ef24
+004015d9 + 00001038: char*
+         0022ef24
+004015d9 + 00001038: char*
+         0022ef24
+004015d9 + 00001038: char
+         0022ef24
+004015d9 + 00001038: char*
+         0022ef24
+004015d9 + 00001038: char*
+         0022ef24
+004015d9 + 0000103c: [WCHAR**, char*]
+         0022ef20
+004015d9 + 0000103c: char*
+         0022ef20
+004015d9 + 0000103c: int
+         0022ef20
+004015d9 + 0000103c: [WCHAR**, char*]
+         0022ef20
+004015d9 + 0000103c: char*
+         0022ef20
+004015d9 + 0000103c: char*
+         0022ef20
+004019dc + 00000004: 32bit
+         0022f9ac
+00401a10 + 00000004: 32bit
+         0022ff60 0022f9ac
+00401a10 + 00000008: 32bit
+         0022f9a8 0022ff5c
+00401a10 + 00000014: 32bit
+         0022f99c
+00401a10 + 00000018: 32bit
+         0022f998
+00401a10 + 0000001c: 32bit
+         0022f994
+00401a98 + 00000004: 32bit
+         0022ff60
+00401a98 + 00000008: 32bit
+         0022ff5c
+00401a98 + 00000010: 32bit
+         0022ff54
+00401b78 + 00000004: 32bit
+         0022ff60
+00401cb0 + 00000004: 32bit
+         0022ff60
+00401cb0 + 00000008: 32bit
+         0022ff5c
+00401cb0 + 0000000c: 32bit
+         0022ff58
+00401cb0 + 00000010: 32bit
+         0022ff54
+00401e7c + 00000004: 32bit
+         0022ff3c
+00401ef8 + 00000004: 32bit
+         0022ff58 0022ef18
+00401ef8 + 00000008: 32bit
+         0022ff54
+00401ef8 + 0000001c: void (*f)()
+         0022ff40
+00402088 + 00000004: 32bit
+         0022f98c
+00402088 + 0000001c: struct _CRITICAL_SECTION*
+         0022f974
+00402088 + 0000001c: 32bit
+         0022f974
+00402100 + 00000004: 32bit
+         0022ff48
+00402100 + 00000008: 32bit
+         0022ff44
+0040224c + 00000004: 32bit
+         0022ff38
+0040224c + 0000001c: void (*f)()
+         0022ff20
+
+== Function ==
+
+function resolved return type (resolved parameter type, ...)
+         observed return value (observed parameter value, ...)
+         global variable address: resolved type (observed value)
+00401000 void ()
+         void ()
+         00403000: 32bit (ffffffff)
+         00403004: 32bit (00004000)
+         00404158: void (*f)() (00401a10)
+         00406000: unsigned int (00000002)
+         00406004: [int**, unsigned int*, char**] (03d03fd0)
+         00406030: 32bit (00000000)
+0040126c void ()
+         void ()
+0040129c void ()
+         void ()
+         00407160: int (77be4e35)
+004012bc void ()
+         void ()
+         0040300c: 32bit (00000000)
+00401348 void ()
+         void ()
+0040138c void (char*, int)
+         void (00404125, 00000001)
+004013b5 void (int, char*, unsigned int)
+         void (00000000, 0022ef4c, 00000400)
+004013f8 unsigned int (char*, char*)
+         00000002 (0022f74d, 0022fb4d)
+         00404064: char (00000073)
+         00404065: char (00000070)
+         00404070: char* (00404064)
+0040144f void (char*, char*, int)
+         void (0022fb4d, 0022f74c, 00000002)
+         00404064: char (00000073)
+         00404065: char (00000070)
+         00404070: char* (00404064)
+0040149e void (char*, char*, int)
+         void (0022f34e, 0022f74c, 00000000)
+004014e2 void (char*, int)
+         void (00404146, 00000001)
+0040150b void (char*, char*, unsigned int)
+         void (0022ef4c, 0022f74c, 00000002)
+00401564 int (char*, char*)
+         00000002 (0022ef4c, 0022f74c)
+004015d9 NTSTATUS (unsigned int, [char**, int**])
+         00000000 (00000002, 03d03fd0)
+004019dc void (32bit, UNKNOWN)
+         void (00400000, 00000001)
+00401a10 void (32bit, 32bit, 32bit)
+         void (00400000, 00000002, 00000000)
+00401a98 void (ecx: unsigned int)
+         void (ecx: 00000002)
+00401b78 void ()
+         void ()
+00401cb0 void ()
+         void ()
+         00406038: 32bit (00000000)
+00401e7c void ()
+         void ()
+         00403008: 32bit (00402278)
+00401ef8 void ()
+         void ()
+         0040603c: [struct _STRING, char*] (00000001)
+00402088 void (32bit, 32bit)
+         void (00400000, 00000001)
+         00406044: 32bit (00000000)
+00402100 32bit (eax: 32bit)
+         00001030 (eax: 00001030)
+0040212c void ()
+         void ()
+00402134 void ()
+         void ()
+0040213c void ()
+         void ()
+00402144 void ()
+         void ()
+0040214c void ()
+         void ()
+00402154 void ()
+         void ()
+0040216c void ()
+         void ()
+00402174 void ()
+         void ()
+0040217c void ()
+         void ()
+00402184 void ()
+         void ()
+0040218c void ()
+         void ()
+00402194 void ()
+         void ()
+004021ac void ()
+         void ()
+004021b4 void ()
+         void ()
+004021bc void ()
+         void ()
+004021ec void ()
+         void ()
+004021f4 void ()
+         void ()
+004021fc void ()
+         void ()
+00402244 void ()
+         void ()
+0040224c void ()
+         void ()

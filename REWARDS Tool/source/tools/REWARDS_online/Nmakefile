@@ -1,0 +1,43 @@
+###################################################################################
+# This is the NMAKE file for building and testing PIN toos contained in one of the
+# subdirectories of the PinTool project or PIN kit. 
+#
+# For description of targets and options, see Nmakefile in the root directory.  
+######################################################################################
+
+DEBUG=0
+
+!if "$(PIN_HOME)"==""
+PIN_HOME=..
+!endif
+
+# Define tools to be buit and tested
+######################################################################################
+#COMMON_TOOLS= icount.dll filter.dll alarm_icount.dll alarm_symbol.dll \
+#              control.dll alarm_image_offset.dll
+COMMON_TOOLS=XXX
+
+
+# Include building and testing rules from the root Nmakefile. 
+######################################################################################
+INCLUDE_SUB_RULES=1
+
+all: REWARDS.dll
+
+!INCLUDE $(PIN_HOME)\Nmakefile 
+
+OBJS=$(OBJDIR)\types.o \
+	$(OBJDIR)\rewards.o $(OBJDIR)\rewards_helper.o \
+	$(OBJDIR)\inst_hook.o $(OBJDIR)\api_hook.o \
+	$(OBJDIR)\image_load.o $(OBJDIR)\malloc_hook.o \
+	$(OBJDIR)\sys_hook.o \
+	$(OBJDIR)\syscall.o \
+	$(OBJDIR)\tls.o $(OBJDIR)\tag.o
+
+#PIN_CXXFLAGS=/Wall /wd4820 /wd4061 /wd4514 /wd4711 /wd4127 /wd4100 /wd4710 /DDEBUG_REWARDS $(PIN_CXXFLAGS)
+PIN_CXXFLAGS=/W3 /DDEBUG_REWARDS $(PIN_CXXFLAGS)
+
+!INCLUDE Nmakefile.dep
+
+REWARDS.dll: .\$(OBJDIR) $(OBJS)
+	$(PIN_LD) $(PIN_LDFLAGS) /IMPLIB:$*.lib /PDB:$*.pdb /OUT:$@ $(OBJS) $(PIN_LIBS)

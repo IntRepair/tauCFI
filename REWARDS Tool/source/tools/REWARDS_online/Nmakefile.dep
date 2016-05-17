@@ -1,0 +1,33 @@
+$(OBJDIR)\image_load.o: \
+    image_load.cpp inttypes.h stdint.h rewards.h
+
+$(OBJDIR)\inst_hook.o: \
+    inst_hook.cpp inttypes.h stdint.h rewards.h rewards_helper.h types.h typeenum.def tag.h
+
+$(OBJDIR)\syscall.o: \
+    syscall.cpp types.h typeenum.def syscall.h syscall.def
+
+$(OBJDIR)\malloc_hook.o: \
+    malloc_hook.cpp rewards.h inttypes.h stdint.h tls.h shadow_mem.h tag.h types.h typeenum.def
+
+$(OBJDIR)\rewards_helper.o: \
+    rewards_helper.cpp inttypes.h stdint.h rewards.h rewards_helper.h tls.h tag.h types.h typeenum.def
+
+$(OBJDIR)\types.o: \
+    types.cpp inttypes.h stdint.h types.h typeenum.def tls.h tag.h type.def struct.def
+
+$(OBJDIR)\rewards.o: \
+    rewards.cpp inttypes.h stdint.h rewards.h tls.h tag.h types.h typeenum.def
+
+$(OBJDIR)\tag.o: \
+    tag.cpp rewards.h inttypes.h stdint.h tls.h tag.h types.h typeenum.def shadow_mem.h
+
+$(OBJDIR)\sys_hook.o: \
+    sys_hook.cpp rewards.h inttypes.h stdint.h syscall.h types.h typeenum.def tls.h tag.h
+
+$(OBJDIR)\tls.o: \
+    tls.cpp rewards.h inttypes.h stdint.h tls.h
+
+$(OBJDIR)\api_hook.o: \
+    api_hook.cpp inttypes.h stdint.h rewards.h malloc_hook.h types.h typeenum.def tag.h tls.h apicall.def
+

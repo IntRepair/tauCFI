@@ -1,0 +1,46 @@
+
+To use REWARDS.
+
+Build:
+	type "..\nmake.bat" will build REWARDS.dll under current directory
+
+Usage:
+	Collect data
+		run the plugin
+		./run.bat <bin>
+
+		To look at the instruction trace
+		./run.bat -i <bin>
+	
+		To look at the memory access trace
+		./run.bat -m <bin>
+
+		To look at the call trace
+		./run.bat -c <bin>
+
+		To look at details on the execution and how plugin works, etc
+		./run.bat -d <bin>
+
+		To pause the tool for a while in order to attach debugger
+		./run.bat -p <bin>
+
+		To provide statically linked library information from IDA
+		./run.bat -f <function information file> <bin>
+			The function information file should be like the following.
+			<function name> <start address> <end address>
+			...
+
+
+	Offline analysis
+		run the analysis tool
+		./analysis.py <directory containing trace>
+
+		analysis file, analysis.out, will be generated in current directory.
+
+
+Example:
+	Collect data for test.exe
+	./run.bat test.exe
+	
+	Offline analysis
+	./analysis.py test.exe-xxxx test.exe-yyyy ...
