@@ -1,0 +1,10 @@
+Hi Paul,
+
+I have to take some shortcuts to get you the info you're looking for... Please find attached a .cpp with the functions that I used to generate TypeArmor ground truth. It probably won't compile as is, but it should give an understanding of how one could determine ground truths as used by TypeArmor. I still plan to distribute the source soon, but it will take a bit more time.
+
+As for the versions numbers, I double checked, and you can find them in the paper (Section VIII).
+
+I am curious to know what you plan on doing with this, especially since you're interested in the version numbers :-) Did you find different ground truth results? Let me know if there is something that needs clarification.
+
+Best,
+Victor
