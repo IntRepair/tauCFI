@@ -7,10 +7,10 @@
 using namespace Dyninst::InstructionAPI;
 
 class CADecoderDynamoRIO : public CADecoder{
-	public:
-		CADecoderDynamoRIO();
-		~CADecoderDynamoRIO();
-		void decode(uint64_t addr, Instruction::Ptr iptr);
+public:
+    CADecoderDynamoRIO();
+    ~CADecoderDynamoRIO();
+    void decode(uint64_t addr, Instruction::Ptr iptr);
 		bool needDepie();
 		bool isCall();
 		bool isSysCall();
@@ -26,8 +26,16 @@ class CADecoderDynamoRIO : public CADecoder{
 		size_t JmpContextSave(uint8_t *payload);
 		size_t RetContextSave(uint8_t *payload);
 		void regUsage(int* flag_map);
-		uint64_t get_src_abs_addr();
-	private:
+    uint64_t get_src_abs_addr();
+    uint64_t get_src(int index);
+    bool is_indirect_call();
+    bool is_call();
+    bool is_return();
+    std::vector<std::pair<int, RegisterState>> get_register_state();
+    std::pair<size_t, size_t> get_register_range();
+
+
+private:
 		bool isPrefix(uint8_t);
 	private:
 		instr_t instr;

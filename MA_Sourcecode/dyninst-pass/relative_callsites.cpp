@@ -4,6 +4,8 @@
 
 #include <boost/range/adaptor/reversed.hpp>
 
+#include <unordered_map>
+
 #include <BPatch.h>
 #include <BPatch_addressSpace.h>
 #include <BPatch_binaryEdit.h>
@@ -33,11 +35,11 @@ std::vector<CallSite> relative_callsite_analysis(BPatch_image *image, std::vecto
 
         if (module->isSharedLib())
         {
-            LOG_WARNING("Skipping shared library %s\n", modname);
+            WARNING(LOG_FILTER_CALL_SITE, "Skipping shared library %s\n", modname);
         }
         else
         {
-            LOG_INFO("Processing module %s\n", modname);
+            INFO(LOG_FILTER_CALL_SITE, "Processing module %s\n", modname);
             // Instrument module
             std::vector<BPatch_function *> *functions = module->getProcedures(true);
 
@@ -49,32 +51,32 @@ std::vector<CallSite> relative_callsite_analysis(BPatch_image *image, std::vecto
                 // Instrument function
                 function->getName(funcname, BUFFER_STRING_LEN);
                 function->getAddressRange(start, end);
-                LOG_INFO("Processing function [%lx:%lx] %s\n", start, end, funcname);
+                INFO(LOG_FILTER_CALL_SITE, "Processing function [%lx:%lx] %s\n", start, end, funcname);
 
                 std::set<BPatch_basicBlock *> blocks;
                 BPatch_flowGraph *cfg = function->getCFG();
                 cfg->getAllBasicBlocks(blocks);
 
-                for (auto block : boost::adaptors::reverse(blocks))
+                for (auto block : blocks)
                 {
                     // Instrument BasicBlock
-                    LOG_DEBUG("Processing basic block %lx\n", block->getStartAddress());
+                    DEBUG(LOG_FILTER_CALL_SITE, "Processing basic block %lx\n", block->getStartAddress());
                     // iterate backwards (PatchAPI restriction)
                     PatchBlock::Insns insns;
                     Dyninst::PatchAPI::convert(block)->getInsns(insns);
 
-                    for (auto &instruction : boost::adaptors::reverse(insns))
+                    for (auto &instruction : insns)
                     {
                         // get instruction bytes
                         auto address = reinterpret_cast<uint64_t>(instruction.first);
                         Instruction::Ptr instruction_ptr = instruction.second;
 
                         decoder->decode(address, instruction_ptr);
-                        LOG_DEBUG("Processing instruction %lx\n", address);
+                        DEBUG(LOG_FILTER_CALL_SITE, "Processing instruction %lx\n", address);
 
-                        if (decoder->isCall_indirect())
+                        if (decoder->is_indirect_call())
                         {
-                            LOG_INFO("<CS>%lx:%lx\n", block->getStartAddress(), address);
+                            INFO(LOG_FILTER_CALL_SITE, "<CS>%lx:%lx\n", block->getStartAddress(), address);
                             call_sites.emplace_back(
                                 CallSite{std::string(modname), start, block->getStartAddress(), address});
                         }
@@ -90,6 +92,6 @@ std::vector<CallSite> relative_callsite_analysis(BPatch_image *image, std::vecto
 void dump_call_sites(std::vector<CallSite> &call_sites)
 {
     for (auto &call_site : call_sites)
-        LOG_INFO("<CS>%s:%lx:%lx:%lx\n", call_site.module_name.c_str(), call_site.function_start, call_site.block_start,
+        INFO(LOG_FILTER_CALL_SITE, "<CS>%s:%lx:%lx:%lx\n", call_site.module_name.c_str(), call_site.function_start, call_site.block_start,
              call_site.address);
 }
