@@ -1,0 +1,6 @@
+First compile these programs
+
+g++ -std=c++11 codegenerator.cpp -o codegenerator
+g++ -std=c++11 mapchecker.cpp -o mapchecker
+g++ -std=c++11 mapeval.cpp -o mapeval
+
