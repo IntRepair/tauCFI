@@ -29,26 +29,26 @@ class PadynPass : public ModulePass
         BPatch_addressSpace *as = (BPatch_addressSpace *)M;
 
         /* here we go! */
-        LOG_INFO("GetImage()...\n");
+        INFO(LOG_FILTER_GENERAL, "GetImage()...\n");
         BPatch_image *image = as->getImage();
 
-        LOG_INFO("GetModules()...\n");
+        INFO(LOG_FILTER_GENERAL, "GetModules()...\n");
         std::vector<BPatch_module *> *mods = image->getModules();
 
         CADecoder *decoder = new CADecoderDynamoRIO();
 
-        LOG_INFO("Performing address taken analysis...\n");
+        INFO(LOG_FILTER_GENERAL, "Performing address taken analysis...\n");
         auto taken_addresses = address_taken_analysis(image, mods, as, decoder);
 
-        LOG_INFO("Performing relative callee analysis...\n");
+        INFO(LOG_FILTER_GENERAL, "Performing relative callee analysis...\n");
         auto calltargets = calltarget_analysis(image, mods, as, decoder, taken_addresses);
 
-        LOG_INFO("Performing relative callsite analysis...\n");
+        INFO(LOG_FILTER_GENERAL, "Performing relative callsite analysis...\n");
         auto callsites = relative_callsite_analysis(image, mods, as, decoder);
 
         delete decoder;
 
-        LOG_INFO("Finished Dyninst setup, returning to target\n\n");
+        INFO(LOG_FILTER_GENERAL, "Finished Dyninst setup, returning to target\n\n");
 
         return false;
     }

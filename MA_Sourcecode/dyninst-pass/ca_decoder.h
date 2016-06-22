@@ -3,26 +3,38 @@
 #include "ca_defines.h"
 #include "PatchCommon.h"
 
+enum RegisterState {
+    REGISTER_UNTOUCHED,
+    REGISTER_READ_BEFORE_WRITE,
+    REGISTER_WRITE_BEFORE_READ,
+};
+
+static std::string RegisterStateToString(RegisterState state)
+{
+    switch(state)
+    {
+        case REGISTER_UNTOUCHED:
+            return "C";
+        case REGISTER_READ_BEFORE_WRITE:
+            return "R";
+        case REGISTER_WRITE_BEFORE_READ:
+            return "W";
+        default:
+            return "UNKNOWN";
+    }
+}
+
 using namespace Dyninst::InstructionAPI;
 class CADecoder
 {
-	public:
-		virtual ~CADecoder() {};
-		virtual void decode(uint64_t, Instruction::Ptr) = 0;
-		virtual bool needDepie() = 0;
-		virtual bool isCall() = 0;
-		virtual bool isSysCall() = 0;
-		virtual bool isRet() = 0;
-		virtual bool isCall_indirect() = 0;
-		virtual bool isIndirectJmp() = 0;
-		virtual uint32_t callTarget() = 0;
-		virtual size_t depie(uint8_t*) = 0;
-		virtual size_t JmpToPush(uint8_t *) = 0;
-		virtual size_t JmpContextSave(uint8_t *) = 0;
-		virtual size_t CallToPush(uint8_t *) = 0;
-		virtual size_t CallContextSave(uint8_t *) = 0;
-		virtual size_t callhandler(uint8_t *, uint64_t ) = 0;
-		virtual size_t RetContextSave(uint8_t *) = 0;
-		virtual void regUsage(int*) = 0;
-		virtual uint64_t get_src_abs_addr() = 0;
+public:
+    virtual ~CADecoder() {};
+    virtual void decode(uint64_t, Instruction::Ptr) = 0;
+    virtual uint64_t get_src(int index) = 0;
+    virtual uint64_t get_src_abs_addr() = 0;
+    virtual bool is_indirect_call() = 0;
+    virtual bool is_call() = 0;
+    virtual bool is_return() = 0;
+    virtual std::vector<std::pair<int, RegisterState>> get_register_state() = 0;
+    virtual std::pair<size_t, size_t> get_register_range() = 0;
 };

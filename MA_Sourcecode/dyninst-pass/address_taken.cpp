@@ -32,7 +32,7 @@ void dump_starting_functions(BPatch_image *image, uint64_t address)
     {
         function->getName(funcname, BUFFER_STRING_LEN);
         function->getAddressRange(start, end);
-        LOG_INFO("%s, %lx -> %lx\n", funcname, start, end);
+        INFO(LOG_FILTER_TAKEN_ADDRESS, "%s, %lx -> %lx\n", funcname, start, end);
     }
 }
 
@@ -74,7 +74,7 @@ std::map<uint64_t, uint64_t> read_raw_ck(BPatch_image *image, std::vector<TakenA
         // So add it no matter what
         if (strcmp(buf, ".plt") == 0)
         {
-            LOG_DEBUG("<PLT>%lx:%lx\n", ref_addr, tar_addr)
+            DEBUG(LOG_FILTER_TAKEN_ADDRESS, "<PLT>%lx:%lx\n", ref_addr, tar_addr);
             dump_starting_functions(image, tar_addr);
         }
 
@@ -93,15 +93,15 @@ std::map<uint64_t, uint64_t> read_raw_ck(BPatch_image *image, std::vector<TakenA
             if ((strcmp(buf, ".data") == 0) || (strcmp(buf, ".rodata") == 0))
             {
                 taken_addresses.emplace_back(TakenAddress{std::string("raw ck"), tar_addr});
-                LOG_DEBUG("<DATA>%lx:%lx\n", ref_addr, tar_addr);
+                DEBUG(LOG_FILTER_TAKEN_ADDRESS, "<DATA>%lx:%lx\n", ref_addr, tar_addr);
             }
         }
 
         /* TODO: How to handle these cases ?*/
         else if (tar_addr == 0)
-            LOG_DEBUG("target is 0 :%s", line);
+            DEBUG(LOG_FILTER_TAKEN_ADDRESS, "target is 0 :%s", line);
         else
-            LOG_DEBUG("target is not a function:%s", line);
+            DEBUG(LOG_FILTER_TAKEN_ADDRESS, "target is not a function:%s", line);
 
         free(line);
         line = 0;
@@ -124,11 +124,11 @@ std::vector<TakenAddress> address_taken_analysis(BPatch_image *image, std::vecto
 
         if (module->isSharedLib())
         {
-            LOG_WARNING("Skipping shared library %s\n", modname);
+            WARNING(LOG_FILTER_TAKEN_ADDRESS, "Skipping shared library %s\n", modname);
         }
         else
         {
-            LOG_INFO("Processing module: %s\n", modname);
+            INFO(LOG_FILTER_TAKEN_ADDRESS, "Processing module: %s\n", modname);
             // Instrument module
             char funcname[BUFFER_STRING_LEN];
             std::vector<BPatch_function *> *functions = module->getProcedures(true);
@@ -137,7 +137,7 @@ std::vector<TakenAddress> address_taken_analysis(BPatch_image *image, std::vecto
             {
                 // Instrument function
                 function->getName(funcname, BUFFER_STRING_LEN);
-                LOG_DEBUG("Processing function %s\n", funcname);
+                DEBUG(LOG_FILTER_TAKEN_ADDRESS, "Processing function %s\n", funcname);
 
                 std::set<BPatch_basicBlock *> blocks;
                 BPatch_flowGraph *cfg = function->getCFG();
@@ -146,7 +146,7 @@ std::vector<TakenAddress> address_taken_analysis(BPatch_image *image, std::vecto
                 for (auto block : boost::adaptors::reverse(blocks))
                 {
                     // Instrument BasicBlock
-                    LOG_DEBUG("Processing basic block %lx\n", block->getStartAddress());
+                    DEBUG(LOG_FILTER_TAKEN_ADDRESS, "Processing basic block %lx\n", block->getStartAddress());
                     // iterate backwards (PatchAPI restriction)
                     PatchBlock::Insns insns;
                     Dyninst::PatchAPI::convert(block)->getInsns(insns);
@@ -159,20 +159,20 @@ std::vector<TakenAddress> address_taken_analysis(BPatch_image *image, std::vecto
 
                         decoder->decode(address, instruction_ptr);
                         uint64_t deref_address = decoder->get_src_abs_addr();
-                        LOG_DEBUG("Processing instruction %lx : %lx\n", address, deref_address);
+                        DEBUG(LOG_FILTER_TAKEN_ADDRESS, "Processing instruction %lx : %lx\n", address, deref_address);
                         if (deref_address == 0)
                             continue;
 
                         if (is_function_start(image, deref_address))
                         {
-                            LOG_DEBUG("<AT>%lx:%lx\n", address, deref_address);
+                            DEBUG(LOG_FILTER_TAKEN_ADDRESS, "<AT>%lx:%lx\n", address, deref_address);
                             taken_addresses.emplace_back(TakenAddress{std::string(modname), deref_address});
                         }
                         else if (reference_map.count(deref_address) > 0)
                         {
                             //    if (address!=reference_map[deref_address])
                             auto deref_ref = reference_map[deref_address];
-                            LOG_DEBUG("<CK>%lx:%lx\n", address, deref_ref);
+                            DEBUG(LOG_FILTER_TAKEN_ADDRESS, "<CK>%lx:%lx\n", address, deref_ref);
                             taken_addresses.emplace_back(TakenAddress{std::string(modname), deref_ref});
                         }
                     }
@@ -187,5 +187,5 @@ std::vector<TakenAddress> address_taken_analysis(BPatch_image *image, std::vecto
 void dump_taken_addresses(std::vector<TakenAddress> &addresses)
 {
     for (auto &address : addresses)
-        LOG_INFO("<AT>%s:%lx\n", address.module_name.c_str(), address.deref_address);
+        INFO(LOG_FILTER_TAKEN_ADDRESS, "<AT>%s:%lx\n", address.module_name.c_str(), address.deref_address);
 }
