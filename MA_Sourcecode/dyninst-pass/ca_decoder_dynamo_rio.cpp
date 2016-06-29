@@ -394,22 +394,20 @@ bool CADecoderDynamoRIO::is_return()
     return (instr_get_opcode(&instr) == OP_ret);
 }
 
-std::vector<std::pair<int, RegisterState>> CADecoderDynamoRIO::get_register_state()
+RegisterStates CADecoderDynamoRIO::get_register_state()
 {
-    std::vector<std::pair<int, RegisterState>> register_state;
-    for (int reg = DR_REG_RAX; reg <= DR_REG_R15; ++reg){
-        if (instr_reads_from_reg(&instr,reg))
-            register_state.emplace_back(reg, REGISTER_READ_BEFORE_WRITE);
-        else if (instr_writes_to_reg(&instr,reg))
-            register_state.emplace_back(reg, REGISTER_WRITE_BEFORE_READ);
-        else
-            register_state.emplace_back(reg, REGISTER_UNTOUCHED);
+    RegisterStates register_state;
+    for (int reg = DR_REG_RAX; reg <= DR_REG_R15; ++reg)
+    {
+        RegisterState state = REGISTER_UNTOUCHED;
+        if (instr_writes_to_reg(&instr, reg))
+            state = static_cast<RegisterState>(state | REGISTER_WRITE);
+        if (instr_reads_from_reg(&instr, reg))
+            state = static_cast<RegisterState>(state | REGISTER_READ);
+        register_state[reg] = state;
     }
 
     return register_state;
 }
 
-std::pair<size_t, size_t> CADecoderDynamoRIO::get_register_range()
-{
-    return std::make_pair(DR_REG_RAX, DR_REG_R15);
-}
+std::pair<size_t, size_t> CADecoderDynamoRIO::get_register_range() { return std::make_pair(DR_REG_RAX, DR_REG_R15); }

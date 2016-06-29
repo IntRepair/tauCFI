@@ -31,7 +31,7 @@ public:
     bool is_indirect_call();
     bool is_call();
     bool is_return();
-    std::vector<std::pair<int, RegisterState>> get_register_state();
+    RegisterStates get_register_state();
     std::pair<size_t, size_t> get_register_range();
 
 

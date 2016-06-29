@@ -5,7 +5,7 @@
 #include "ca_decoder_dynamo_rio.h"
 #include "calltargets.h"
 #include "relative_callsites.h"
-#include "utils.h"
+#include "logging.h"
 
 using namespace Dyninst::PatchAPI;
 using namespace Dyninst::InstructionAPI;
