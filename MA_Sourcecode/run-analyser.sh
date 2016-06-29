@@ -20,7 +20,7 @@ if [ "$addr" != "" ]; then
     echo "addr.func.main=$addr" >> $LBR_BININFO
 fi
 
-DI=`pwd`/../Dyninst-8.2.1/install-dir
+DI=`pwd`/../Dyninst-9.1.0/install-dir
 DI_OPT=../bin/di-opt
 if [ ! -x $DI_OPT ]
 then	echo "$DI_OPT not found. Please build and install it first."
