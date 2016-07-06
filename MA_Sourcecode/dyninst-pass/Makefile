@@ -2,7 +2,7 @@
 INSTALL_DIR = ../bin
 
 PASSNAME := padyn
-OBJS     := padyn.o address_taken.o relative_callsites.o calltargets.o ca_decoder_dynamo_rio.o
+OBJS     := padyn.o address_taken.o relative_callsites.o calltargets.o ca_decoder.o
 
 # Dyninst headers
 include ../Makefile.inc

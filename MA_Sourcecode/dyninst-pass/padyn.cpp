@@ -2,7 +2,6 @@
 
 #include "address_taken.h"
 #include "ca_decoder.h"
-#include "ca_decoder_dynamo_rio.h"
 #include "calltargets.h"
 #include "relative_callsites.h"
 #include "logging.h"
@@ -35,19 +34,17 @@ class PadynPass : public ModulePass
         INFO(LOG_FILTER_GENERAL, "GetModules()...\n");
         std::vector<BPatch_module *> *mods = image->getModules();
 
-        CADecoder *decoder = new CADecoderDynamoRIO();
+        CADecoder decoder;
 
         INFO(LOG_FILTER_GENERAL, "Performing address taken analysis...\n");
-        auto taken_addresses = address_taken_analysis(image, mods, as, decoder);
+        auto taken_addresses = address_taken_analysis(image, mods, as, &decoder);
 
-        INFO(LOG_FILTER_GENERAL, "Performing relative callee analysis...\n");
-        auto calltargets = calltarget_analysis(image, mods, as, decoder, taken_addresses);
+        //INFO(LOG_FILTER_GENERAL, "Performing relative callee analysis...\n");
+        //auto calltargets = calltarget_analysis(image, mods, as, &decoder, taken_addresses);
 
         INFO(LOG_FILTER_GENERAL, "Performing relative callsite analysis...\n");
-        auto callsites = relative_callsite_analysis(image, mods, as, decoder);
-
-        delete decoder;
-
+        auto callsites = relative_callsite_analysis(image, mods, as, &decoder);
+        
         INFO(LOG_FILTER_GENERAL, "Finished Dyninst setup, returning to target\n\n");
 
         return false;

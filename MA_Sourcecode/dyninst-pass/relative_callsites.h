@@ -17,6 +17,7 @@ struct CallSite
     uint64_t function_start;
     uint64_t block_start;
     uint64_t address;
+    std::string register_state;
 };
 
 std::vector<CallSite> relative_callsite_analysis(BPatch_image *image, std::vector<BPatch_module *> *mods,
