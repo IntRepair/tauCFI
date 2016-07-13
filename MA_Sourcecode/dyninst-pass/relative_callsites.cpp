@@ -1,19 +1,15 @@
 #include "relative_callsites.h"
 
-#include "utils.h"
+#include "liveness_analysis.h"
+#include "reaching_analysis.h"
 
-#include <boost/range/adaptor/reversed.hpp>
-
-#include <unordered_map>
+#include "logging.h"
 
 #include <BPatch.h>
 #include <BPatch_addressSpace.h>
 #include <BPatch_binaryEdit.h>
 #include <BPatch_flowGraph.h>
 #include <BPatch_function.h>
-#include <BPatch_object.h>
-#include <BPatch_point.h>
-#include <BPatch_process.h>
 
 #include <AddrLookup.h>
 #include <PatchCFG.h>
@@ -28,6 +24,9 @@ std::vector<CallSite> relative_callsite_analysis(BPatch_image *image, std::vecto
 {
     std::vector<CallSite> call_sites;
 
+    auto liveness_states = liveness_init();
+    auto reaching_states = reaching_init();
+
     for (auto module : *mods)
     {
         char modname[BUFFER_STRING_LEN];
@@ -35,11 +34,11 @@ std::vector<CallSite> relative_callsite_analysis(BPatch_image *image, std::vecto
 
         if (module->isSharedLib())
         {
-            WARNING(LOG_FILTER_CALL_SITE, "Skipping shared library %s\n", modname);
+            WARNING(LOG_FILTER_CALL_SITE, "Skipping shared library %s", modname);
         }
         else
         {
-            INFO(LOG_FILTER_CALL_SITE, "Processing module %s\n", modname);
+            INFO(LOG_FILTER_CALL_SITE, "Processing module %s", modname);
             // Instrument module
             std::vector<BPatch_function *> *functions = module->getProcedures(true);
 
@@ -51,7 +50,7 @@ std::vector<CallSite> relative_callsite_analysis(BPatch_image *image, std::vecto
                 // Instrument function
                 function->getName(funcname, BUFFER_STRING_LEN);
                 function->getAddressRange(start, end);
-                INFO(LOG_FILTER_CALL_SITE, "Processing function [%lx:%lx] %s\n", start, end, funcname);
+                INFO(LOG_FILTER_CALL_SITE, "Processing function [%lx:%lx] %s", start, end, funcname);
 
                 std::set<BPatch_basicBlock *> blocks;
                 BPatch_flowGraph *cfg = function->getCFG();
@@ -60,7 +59,8 @@ std::vector<CallSite> relative_callsite_analysis(BPatch_image *image, std::vecto
                 for (auto block : blocks)
                 {
                     // Instrument BasicBlock
-                    DEBUG(LOG_FILTER_CALL_SITE, "Processing basic block %lx\n", block->getStartAddress());
+                    DEBUG(LOG_FILTER_CALL_SITE, "Processing basic block [%lx:%lx]", block->getStartAddress(),
+                          block->getEndAddress());
                     // iterate backwards (PatchAPI restriction)
                     PatchBlock::Insns insns;
                     Dyninst::PatchAPI::convert(block)->getInsns(insns);
@@ -72,13 +72,24 @@ std::vector<CallSite> relative_callsite_analysis(BPatch_image *image, std::vecto
                         Instruction::Ptr instruction_ptr = instruction.second;
 
                         decoder->decode(address, instruction_ptr);
-                        DEBUG(LOG_FILTER_CALL_SITE, "Processing instruction %lx\n", address);
+                        DEBUG(LOG_FILTER_CALL_SITE, "Processing instruction %lx", address);
 
                         if (decoder->is_indirect_call())
                         {
-                            INFO(LOG_FILTER_CALL_SITE, "<CS>%lx:%lx\n", block->getStartAddress(), address);
-                            call_sites.emplace_back(
-                                CallSite{std::string(modname), start, block->getStartAddress(), address});
+                            INFO(LOG_FILTER_CALL_SITE, "Callsite @ basic block [%lx:%lx] Instr %lx",
+                                  block->getStartAddress(), block->getEndAddress(), address);
+
+                            auto reaching_state = reaching_analysis(decoder, as, block, address, reaching_states);
+                            INFO(LOG_FILTER_CALL_SITE, "\tREGISTER_STATE %s", to_string(reaching_state).c_str());
+
+                            BPatch_Vector<BPatch_basicBlock *> targets;
+                            block->getTargets(targets);
+
+                            auto liveness_state = liveness_analysis(decoder, as, targets, liveness_states);
+                            INFO(LOG_FILTER_CALL_SITE, "\tRETURN_REGISTER_STATE %s", to_string(liveness_state).c_str());
+
+                            call_sites.emplace_back(CallSite{std::string(modname), start, block->getStartAddress(),
+                                                             address, to_string(reaching_state)});
                         }
                     }
                 }
@@ -92,6 +103,6 @@ std::vector<CallSite> relative_callsite_analysis(BPatch_image *image, std::vecto
 void dump_call_sites(std::vector<CallSite> &call_sites)
 {
     for (auto &call_site : call_sites)
-        INFO(LOG_FILTER_CALL_SITE, "<CS>%s:%lx:%lx:%lx\n", call_site.module_name.c_str(), call_site.function_start, call_site.block_start,
-             call_site.address);
+        INFO(LOG_FILTER_CALL_SITE, "<CS>%s:%lx:%lx:%lx", call_site.module_name.c_str(), call_site.function_start,
+             call_site.block_start, call_site.address);
 }

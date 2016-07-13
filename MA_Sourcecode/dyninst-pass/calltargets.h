@@ -16,6 +16,7 @@ struct CallTarget
 {
     std::string module_name;
     BPatch_function *function;
+    std::string register_state;
 };
 
 std::vector<CallTarget> calltarget_analysis(BPatch_image *image, std::vector<BPatch_module *> *mods,

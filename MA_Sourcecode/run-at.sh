@@ -9,7 +9,7 @@ fi
 
 exe=$1
 
-DI=`pwd`/../Dyninst-8.2.1/install-dir
+DI=`pwd`/../Dyninst-9.1.0/install-dir
 DRLIB=`pwd`/../DynamoRIO-Linux-5.0.0-9/lib64/release
 
 python `pwd`/../at/obj/get_objdump_func.py `pwd`/$exe
