@@ -2,7 +2,7 @@
 INSTALL_DIR = ../bin
 
 PASSNAME := padyn
-OBJS     := padyn.o address_taken.o relative_callsites.o calltargets.o ca_decoder.o
+OBJS     := padyn.o address_taken.o relative_callsites.o calltargets.o ca_decoder.o liveness_analysis.o reaching_analysis.o
 
 # Dyninst headers
 include ../Makefile.inc
@@ -52,7 +52,7 @@ CFLAGS += -Dx86_64_unknown_linux2_4
 CFLAGS += -DARCH=x64
 CFLAGS += --std=c++11
 CFLAGS += -I ../include/patharmor
-
+CFLAGS += -rdynamic
 
 FFLAGS += -DARMOR_WRAP_LIBRARIES
 FFLAGS += -DARMOR_WRAP_INDIRECTS

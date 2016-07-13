@@ -3,6 +3,23 @@
 #include "dr_api.h"
 #include "dr_defines.h"
 
+template <> std::string to_string(RegisterState state)
+{
+    switch (state)
+    {
+    case REGISTER_UNTOUCHED:
+        return "C";
+    case REGISTER_READ:
+        return "R";
+    case REGISTER_WRITE:
+        return "W";
+    case REGISTER_READ_WRITE:
+        return "RW";
+    default:
+        return "UNKNOWN";
+    }
+}
+
 static void* drcontext = dr_standalone_init();
 
 CADecoder::CADecoder()
@@ -88,37 +105,33 @@ bool CADecoder::is_indirect_call()
 
 bool CADecoder::is_call()
 {
-    return instr_is_call(&instr);
+    return instr_is_call_direct(&instr);
 }
 
 bool CADecoder::is_return()
 {
-    return (instr_get_opcode(&instr) == OP_ret);
+    return instr_is_return(&instr);
+}
+
+bool CADecoder::is_constant_write()
+{
+    ptr_int_t value;
+    return instr_is_mov_constant(&instr, &value);
 }
 
 bool CADecoder::needs_depie()
 {
-	return instr_has_rel_addr_reference(&instr);
+    return instr_has_rel_addr_reference(&instr);
 }
 
-constexpr std::size_t CADecoder::min_register() { return DR_REG_RAX; }
-
-constexpr std::size_t CADecoder::max_register() { return DR_REG_R15; }
-
-RegisterStates CADecoder::get_register_state()
+RegisterState CADecoder::__get_register_state(std::size_t reg)
 {
-    RegisterStates register_state;
-    for (int reg = DR_REG_RAX; reg <= DR_REG_R15; ++reg)
-    {
-        RegisterState state = REGISTER_UNTOUCHED;
-        if (instr_writes_to_reg(&instr, reg))
-            state = static_cast<RegisterState>(state | REGISTER_WRITE);
-        if (instr_reads_from_reg(&instr, reg))
-            state = static_cast<RegisterState>(state | REGISTER_READ);
-		register_state[reg] = state;
-    }
-
-    return register_state;
+    RegisterState state = REGISTER_UNTOUCHED;
+    if (instr_writes_to_reg(&instr, reg))
+        state = static_cast<RegisterState>(state | REGISTER_WRITE);
+    if (instr_reads_from_reg(&instr, reg))
+        state = static_cast<RegisterState>(state | REGISTER_READ);
+    return state;
 }
 
 std::pair<size_t, size_t> CADecoder::get_register_range() { return std::make_pair(DR_REG_RAX, DR_REG_R15); }
