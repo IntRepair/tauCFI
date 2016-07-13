@@ -7,3 +7,24 @@ https://github.com/iphelix/ida-sploiter
 https://github.com/JonathanSalwan/ROPgadget
 https://github.com/acama/xrop
 https://github.com/sashs/Ropper
+
+
+from robert tool sugestion.
+
+angr
+amoco
+barf
+miasm2
+radare2 (glaube ich).
+
+roptool
+https://github.com/pakt/ropc
+https://github.com/trailofbits/codereason 
+https://github.com/trailofbits/codereason/tree/master/tools/RopTool
+https://blog.trailofbits.com/2014/02/23/semantic-analysis-of-native-programs-introducing-codereason/
+
+Eine Reimplementierung wäre besser:
+1) code extraction mit ida
+2) angr benutzen um code semantisch zu klassifizieren und verifizieren.
+
+
