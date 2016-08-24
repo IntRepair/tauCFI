@@ -1,16 +1,19 @@
-#include <common/opt/passi.h>
-
-#include "address_taken.h"
-#include "ca_decoder.h"
-#include "calltargets.h"
-#include "logging.h"
-#include "relative_callsites.h"
 
 #include <execinfo.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+#include <common/opt/passi.h>
+
+#include "address_taken.h"
+#include "ca_decoder.h"
+#include "callsites.h"
+#include "calltargets.h"
+#include "instrumentation.h"
+#include "logging.h"
+#include "patching.h"
 
 void handler(int sig)
 {
@@ -51,19 +54,26 @@ class PadynPass : public ModulePass
         INFO(LOG_FILTER_GENERAL, "GetImage()...");
         BPatch_image *image = as->getImage();
 
-        INFO(LOG_FILTER_GENERAL, "GetModules()...");
-        std::vector<BPatch_module *> *mods = image->getModules();
-
         CADecoder decoder;
 
-        INFO(LOG_FILTER_GENERAL, "Performing address taken analysis...");
-        auto taken_addresses = address_taken_analysis(image, mods, as, &decoder);
+        instrument_image_objects(image, [&decoder, image](BPatch_object *object) {
+            INFO(LOG_FILTER_GENERAL, "Processing object %s", object->name().c_str());
 
-        INFO(LOG_FILTER_GENERAL, "Performing relative callee analysis...");
-        auto calltargets = calltarget_analysis(image, mods, as, &decoder, taken_addresses);
+            INFO(LOG_FILTER_GENERAL, "Performing address taken analysis...");
+            auto taken_addresses = address_taken_analysis(object, image, &decoder);
 
-        INFO(LOG_FILTER_GENERAL, "Performing relative callsite analysis...");
-        auto callsites = relative_callsite_analysis(image, mods, as, &decoder);
+            INFO(LOG_FILTER_GENERAL, "Performing relative callee analysis...");
+            auto calltargets = calltarget_analysis(object, image, &decoder, taken_addresses);
+
+            INFO(LOG_FILTER_GENERAL, "Performing relative callsite analysis...");
+            auto callsites = callsite_analysis(object, image, &decoder);
+
+            INFO(LOG_FILTER_GENERAL, "Found %lu taken_addresses, %lu calltargets and %lu callsites",
+                 taken_addresses.size(), calltargets.size(), callsites.size());
+
+            INFO(LOG_FILTER_GENERAL, "Performing binary patching...");
+            binary_patching(image, &decoder, calltargets, callsites);
+        });
 
         INFO(LOG_FILTER_GENERAL, "Finished Dyninst setup, returning to target");
 

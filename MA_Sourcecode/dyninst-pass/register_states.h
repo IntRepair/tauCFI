@@ -47,10 +47,10 @@ __register_states_t<min, max, new_state_t> convert_states(__register_states_t<mi
     return conv_states;
 }
 
-template <typename state_t> std::string to_string(state_t);
+template <typename object_t> std::string to_string(object_t &object);
 
 template <std::size_t min, std::size_t max, typename register_state_t>
-std::string to_string(__register_states_t<min, max, register_state_t> const &register_states)
+std::string to_string(__register_states_t<min, max, register_state_t> &register_states)
 {
     std::stringstream ss;
     ss << "[";

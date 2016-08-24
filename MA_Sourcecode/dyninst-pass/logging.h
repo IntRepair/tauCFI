@@ -21,4 +21,27 @@
 #define FATAL(filter, fmt, ...) if ((LOG_LEVEL & LOG_FATAL) == LOG_FATAL) \
     if (filter & LOG_FILTER) printf("[FATAL @" #filter"] " fmt "\n", ##__VA_ARGS__)
 
+#include <iomanip>
+#include <sstream>
+#include <string>
+
+template <typename int_t> std::string int_to_hex(int_t value)
+{
+    std::stringstream ss;
+    ss << std::showbase << std::setfill('0') << std::setw(sizeof(int_t) * 2) << std::hex << value;
+    return ss.str();
+}
+
+template <typename object_t> std::string to_string(object_t &object);
+
+template <typename object_t> std::string to_string(std::vector<object_t> &objects)
+{
+    std::stringstream ss;
+
+    for (auto &&object : objects)
+        ss << to_string<object_t>(object) << "\n";
+
+    return ss.str();
+}
+
 #endif /* __LOGGING_H */

@@ -20,7 +20,8 @@ if [ "$addr" != "" ]; then
     echo "addr.func.main=$addr" >> $LBR_BININFO
 fi
 
-DI=`pwd`/../Dyninst-9.1.0/install-dir
+DI=`pwd`/../Dyninst/install-dir
+DRLIB=`pwd`/../DynamoRIO/lib64/release
 DI_OPT=../bin/di-opt
 if [ ! -x $DI_OPT ]
 then	echo "$DI_OPT not found. Please build and install it first."
@@ -28,4 +29,4 @@ then	echo "$DI_OPT not found. Please build and install it first."
 	exit 1
 fi
 
-sudo DYNINSTAPI_RT_LIB=$DI/lib/libdyninstAPI_RT.so LD_LIBRARY_PATH=$DI/lib:$LD_LIBRARY_PATH $DI_OPT -load=../bin/lbr_analysis_pass.di -lbr_analysis_pass -icall-map-type=at -window-size=16 -daemon -o $exe ${exe}.1
+sudo DYNINSTAPI_RT_LIB=$DI/dyninstAPI_RT/libdyninstAPI_RT.so LD_LIBRARY_PATH=$DI/dyninstAPI/:$LD_LIBRARY_PATH $DI_OPT -load=../bin/lbr_analysis_pass.di -lbr_analysis_pass -icall-map-type=at -window-size=16 -daemon -o $exe ${exe}.1

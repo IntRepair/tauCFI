@@ -3,13 +3,13 @@
 
 #include "PatchCommon.h"
 
-#include "dr_api.h"
-#include "dr_defines.h"
+#include <dr_api.h>
+#include <dr_defines.h>
+
 #include "ca_defines.h"
+#include "logging.h"
 
 #include "register_states.h"
-
-#include "logging.h"
 
 enum RegisterState
 {
@@ -40,6 +40,8 @@ class CADecoder
     bool is_return();
     bool is_constant_write();
     bool needs_depie();
+
+    void operand_information();
 
     template <std::size_t min_reg = min_register(), std::size_t max_reg = max_register()>
     __register_states_t<min_reg, max_reg, RegisterState> get_register_state()
