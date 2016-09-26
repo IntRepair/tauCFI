@@ -1,0 +1,808 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Errata SPEC CPU2006</title>
+<!-- $Id: errata.html 6775 2011-08-16 22:43:20Z CloyceS $ -->
+<!-- You'll want a nice wide (132 column) screen when editing this ............................................................. -->
+
+<link rel="STYLESHEET" href="css/cpu2006docs.css" type="text/css" />
+<style type="text/css">
+body { background: white; color: black; }
+
+
+h2 { border-top: medium solid black; }
+
+h3 { font-size:110%; border-top:thin solid gray;}
+
+</style>
+
+</head>
+<body>
+
+<h1 style="margin-bottom:0">Errata for SPEC CPU2006</h1>
+<p class="snug"><span style="font-size:80%;">
+Last updated: $Date: 2011-08-16 18:43:20 -0400 (Tue, 16 Aug 2011) $ by $Author: CloyceS $</span> </p>
+<p class="snugtop">(To check for possible updates to this document, please see <a class="external"
+href="http://www.spec.org/cpu2006/Docs/">http://www.spec.org/cpu2006/Docs/</a>  ) </p> 
+
+<p class="contents">Contents</p>
+
+<p class="contentsl1"><a href="#intro">Introduction</a></p>
+<p class="contentsl1"><a href="#open">Open Problem Reports</a></p>
+<p class="contentsl2"><a href="#problem7">7. </a> The <span class="ttnobr">submit</span> command may fail under Windows </p>
+<p class="contentsl2"><a href="#problem11">11. </a> Runaway <span class="ttnobr">specmake.exe</span> on Windows</p>  
+<p class="contentsl2"><a href="#problem17">17.</a> <span class="ttnobr">Notice: Unusable path detected</span> followed by run failure</p>
+
+
+<!-- Template
+<p class="contentsl2"><a href="#problemNN">NN.</a> <span class="ttnobr">message</span> with such-and-such mumble  </p>
+-->
+
+<p class="contentsl1"><a href="#closed">Closed Problem Reports</a></p>
+<p class="contentsl2"><a href="#problem1">1. </a> Missing <span class="ttnobr">example-advanced.cfg</span></p>  
+<p class="contentsl2"><a href="#problem2">2. </a> Parallel builds aren't parallel on Windows</p>
+<p class="contentsl2"><a href="#problem3">3. </a> Reporting of seconds</p>
+<p class="contentsl2"><a href="#problem4">4. </a> Unexpected message installing on Solaris/x86</p>  
+<p class="contentsl2"><a href="#problem5">5. </a> Incorrect path example in <tt>shrc.bat</tt> on Microsoft Windows</p>  
+<p class="contentsl2"><a href="#problem6">6. </a> The <span class="ttnobr">mailcompress</span> option doesn't work yet</p>  
+<p class="contentsl2"><a href="#problem8">8. </a> <span class="ttnobr">Your vendor has not defined POSIX macro
+                                              WEXITSTATUS</span> with invalid flags file</p>  
+<p class="contentsl2"><a href="#problem9">9. </a> <span class="ttnobr">Error: corrupt result file; unable to format</span>
+                                              after failed FDO build</p>
+<p class="contentsl2"><a href="#problem10">10. </a> <span class="ttnobr">WARNING: accessor 'benchmark' not found</span>
+                                              during reportable run</p>
+<p class="contentsl2"><a href="#problem12">12. </a> Style settings may appear ineffective when formatting results with
+                                              multiple flags files </p>
+<p class="contentsl2"><a href="#problem13">13.</a> <span class="ttnobr">ERROR(update_config_file)</span> with src.alt.</p>
+<p class="contentsl2"><a href="#problem14">14.</a> <span class="ttnobr">WARNING: accessor 'setup_error' not found</span> with
+                                              minimize_rundirs </p>
+<p class="contentsl2"><a href="#problem15">15.</a> Index utility prints <span class="ttnobr">Expected 17 fields; got 16
+                                              (base_copies, ...</span></p>
+<p class="contentsl2"><a href="#problem16">16.</a> <span class="ttnobr">Individual benchmark selection is not allowed for 
+                                               a reportable run</span>   </p>
+<p class="contentsl2"><a href="#problem18">18.</a> Incorrect spelling: "Evironment" when using <span class="ttnobr">preENV</span></p>
+<p class="contentsl2"><a href="#problem19">19.</a> The config file feature <span class="ttnobr">rate=1</span> is not recommended</p>
+<p class="contentsl2"><a href="#problem20">20.</a> During installation <span class="ttnobr">"Error running runspec
+tests"</span> due to <span class="ttnobr">time.t "FAILED at test 2"</span> </p>
+<p class="contentsl2"><a href="#problem21">21.</a> During installation <span class="ttnobr">"Error running runspec
+tests"</span> due to <span class="ttnobr">tie.t not ok 20 "unlocalisation of tied hashes"</span>  </p>
+<p class="contentsl2"><a href="#problem22">22.</a> Some test or train failures may not be properly reported.</p>
+
+
+
+<h2 id="intro">Introduction</h2>
+
+<p>This document describes known problems in SPEC CPU2006.  The latest version of this document may be found at <a
+class="external" href="http://www.spec.org/cpu2006/Docs/errata.html">http://www.spec.org/cpu2006/Docs/errata.html</a>. </p> 
+
+<p class="commentary">If you are looking for the solution to a technical question, you might also want to review the latest
+version of <a class="external" href="http://www.spec.org/cpu2006/Docs/faq.html">http://www.spec.org/cpu2006/Docs/faq.html</a>.</p> 
+
+<p>SPEC CPU2006 is extensively tested on a wide variety of systems prior to release, including a variety of Unix and Linux
+systems, and a variety of Windows systems; big-endian and little-endian systems; 32-bit and 64-bit systems.  Nevertheless, as
+with any software product, problems may be found too late in the testing process to be fixed in the release, or may be
+discovered after release.</p>
+
+<p>If you discover problems that are not listed here or in the <a class="external"
+href="http://www.spec.org/cpu2006/Docs/faq.html">FAQ</a>, please <a class="external" href="techsupport.html">report them to
+SPEC</a>.</p> 
+
+<p>About the format of this document:</p>
+<ul>
+<li>Problems may be added in the <a href="#open">Open</a> section from time to time. 
+In each case, a workaround is given, if one is known.  </li>
+<li>When problems are fixed, they are moved to the <a href="#closed">Closed</a> section. </li>
+</ul>
+
+<p style="font-size:80%">Notice to maintainers: When updating this document, please do not ever re-use problem numbers.</p>
+
+
+<h2 id="open">Open Problem Reports</h2>
+
+
+<!--  ======================================================================================= -->
+<h3 id="problem7">7. The <span class="ttnobr">submit</span> command may fail under Windows </h3>
+  <ul>
+  <li><p><b>Problem summary:</b> A common submit command may sometimes fail under Windows. </p></li>
+  <li><p><b>Details:</b> The following way of binding processes to processors is often used on Windows:</p>
+  <pre>submit=specperl -e &quot;system sprintf qq{start /b /wait /affinity %x %s}, (1&lt;&lt;$SPECCOPYNUM), q{$command}&quot;</pre>
+        <p>The above command sometimes results in the benchmark program not executing (no output files
+        are generated in the corresponding run directory).  Apparently, <tt>cmd.exe</tt> is not started.</p></li>
+  <li><p><b>Workarounds:</b> There are several possible ways to work around this issue:</p>
+     <p class="snugbot">1. Explicitly invoke <tt>cmd.exe</tt>:</p>
+<pre>submit=specperl -e &quot;system sprintf qq{cmd.exe /E:on /D /C start /b /wait /affinity %x %s}, (1&lt;&lt;$SPECCOPYNUM), q{$command}&quot;</pre>
+     <p class="snugbot">2. Or insert an @ and a space before <tt>start</tt>, which is the Windows syntax for not echoing a
+     line.  For reasons that are not completely clear, this does result in <tt>cmd.exe</tt> getting called.</p>
+<pre>submit=specperl -e &quot;system sprintf qq{@ start /b /wait /affinity %x %s}, (1&lt;&lt;$SPECCOPYNUM), q{$command}&quot;</pre>
+    <p class="snugbot">3. Or, split the submit command into several lines as follows:</p>
+    <pre>submit0 = echo @ echo off &gt;runex.cmd
+submit1 = specperl -e &quot;system sprintf qq{echo set MYMASK= %x &gt;&gt;runex.cmd}, (1&lt;&lt;$SPECCOPYNUM)&quot;
+submit2 = echo start /b /wait /affinity %MYMASK% $command &gt;&gt;runex.cmd
+submit3 = call runex.cmd</pre>
+  </li>
+  </ul>
+
+
+<!--  ======================================================================================= -->
+<h3 id="problem11">11. Runaway <span class="ttnobr">specmake.exe</span> on Windows</h3>  
+  <ul>
+  <li><p><b>Problem summary:</b> If <tt>runspec</tt> is interrupted at the wrong time, the currently running copy of
+  <tt>specmake.exe</tt> will start to consume 100% of one processor and will never exit.</p></li> 
+  <li><p><b>Details:</b> When checking pre-built binaries to see if they are up-to-date, <tt>runspec</tt> uses <a class="external"
+  href="utility.html#specmake">specmake.exe</a> to generate options lists for each benchmark.  If <tt>runspec</tt> is interrupted
+  during this process (by pressing Control-C in the command window), sometimes the <tt>specmake.exe</tt> process that is
+  generating the options lists will enter an infinite loop and consume all of a processor until it is manually terminated.</p> 
+
+        <p>Normally when <tt>runspec</tt> is interrupted by Control-C, it prints a message saying that it has been interrupted by SIGINT, and
+        then <span class="ttnobr">Terminate batch job (Y/N)?</span>. When this problem occurs, only the SIGINT message is printed,
+        as in this output:</p>
+<pre>[...]
+Compiling Binaries
+Up to date 998.specrand base cpu2006.ic10.1.win32.core2.rate.exe default
+Up to date 999.specrand base cpu2006.ic10.1.win32.core2.rate.exe default
+Terminating on signal SIGINT(2)
+
+C:\spec\cpu2006&gt;
+</pre></li>
+  <li><p><b>Workaround:</b> To avoid the problem, do not interrupt runspec during the "Compiling
+        Binaries" phase of the run. </p>
+
+        <p>If you do interrupt, and if a <tt>specmake.exe</tt> process goes out of control, terminate it using the Windows
+        Task Manager.  This can be done by opening Task Manager, selecting the "Processes" tab, and sorting the results by
+        "CPU" in descending order.  The runaway specmake.exe process should sit at the top of this list; highlight it and
+        press the "End Process" button.</p>
+        
+        </li>
+  </ul>
+
+
+
+
+
+<!--  ======================================================================================= -->
+<h3 id="problem17">17.  <span class="ttnobr">Notice: Unusable path detected</span> followed by run failure</h3>
+  <ul>
+  <li><p><b>Problem summary:</b> Messages are printed about unusable paths.  Although these appear to be only warnings,
+  the run soon fails.</p></li>
+  <li><p><b>Details:</b> 
+
+  When setting up run directories, the tools read <span class="ttnobr">benchspec/CPU2006/nnn.benchmark/run/list</span> to see
+  what directories already exist.  (A similar method is used for <span class="ttnobr">build</span> directories.)  If the list
+  contains references to directories that are not underneath the current top, the intended behavior is that such directories
+  should cause a warning, and should not be used.  For example:</p>
+
+  <pre>
+  Notice: Unusable path detected in run directory list file.
+      /spec/johnh/cpu2006/benchspec/CPU2006/998.specrand/run/list
+  references one or more paths which will be ignored, because they are
+  not subdirectories of this run directory.  This condition may be a
+  result of having moved your SPEC benchmark tree.  If that's what happened,
+  and if you don't need the old run directories, you can just remove
+  them, along with the list file.  (Usually it's safe to delete old
+  run directories, as they are automatically re-created when needed.)
+  </pre>
+
+
+  <p>A problem may occur if you use a SPEC CPU2006 directory tree for a while, move it, and then continue running. Sometimes, the
+  notice will be emitted, but the old location will still be used.  Sometimes, this will succeed.  Other times, a mixture of old
+  and new locations will be used - which then leads to a failure when the executable is not found via a relative path, such as
+  <span class="ttnobr">../run_base_ref_fast.0001/perlbench_base.fast</span>.  (The problem can occur whether or not you use the <a
+  class="external" href="http://www.spec.org/cpu2006/Docs/utility.html#relocate">relocate</a> utility.) </p></li> 
+
+  <li><p><b>Workaround:</b> When you move a directory tree, delete all the run directories.  Build directories should also be
+  deleted, perhaps after backing them up for reference.  For example, on a Unix system you could say:</p>
+  <pre>
+  cd $SPEC/benchspec/CPU2006
+  spectar cf - */build | specbzip2 &gt; ~/mybuilds.backup.tar.bz2
+  rm -Rf */run */build
+  </pre>
+  </li>
+  </ul>
+
+
+
+<!-- 
+======================================================================================================================= 
+                                           Template 
+(NN = next available problem number).  Please do not ever re-use problem numbers.
+======================================================================================================================= 
+
+<h3 id="problemNN">NN.  <span class="ttnobr">message</span> with such-and-such mumble  </h3>
+  <ul>
+  <li><p><b>Problem summary:</b> one or two lines, emphasizing the SYMPTOMS</p></li> 
+  <li><p><b>Details:</b> explain the circumustances under which it happens, the symptoms, the cause, the effects, etc</p></li>
+  <li><p><b>Workaround:</b> </p></li>
+  </ul>
+
+-->
+
+
+<!--
+======================================================================================================================= 
+===                                       closed reports below this point                                           ===
+======================================================================================================================= 
+-->
+<h2 id="closed">Closed Problem Reports</h2>
+
+
+
+<!--  ======================================================================================= -->
+<h3 id="problem1">CLOSED: 1. Missing <span class="ttnobr">example-advanced.cfg</span></h3>  
+  <ul>
+  <li><b>Problem summary:</b> The advanced example config file has not been updated</li> 
+  <li><b>Details:</b> SPEC CPU2000 had a config file which demonstrated various advanced features.  For SPEC CPU2006, a
+  self-contained advanced example has not been developed.</li>
+  <li><b>Workaround:</b> Various brief examples are contained throughout <a class="external"
+  href="http://www.spec.org/cpu2006/">www.spec.org/cpu2006/Docs/config.html</a>.  It is also possible to download examples for
+  many architectures from results posted to www.spec.org.  </li> 
+  <li><b>Resolution:</b> Closing as not needed, because most of the examples in the CPU2000 example-advanced config file are
+  not needed, or are obsolete, in the CPU2006 environment.  (CPU2006 includes automatic flag reporting, a config file
+  pre-processor, and automatic ordering of parallel compiles by recording dependencies in the file <span
+  class="ttnobr">nnn.bmark/Spec/object.pm</span>.)</li>
+  </ul>
+
+<!--  ======================================================================================= -->
+<h3 id="problem2">CLOSED: 2. Parallel builds aren't parallel on Windows</h3>
+  <ul>
+  <li><b>Problem summary:</b> Benchmark builds on Windows effectively ignore the <tt>-j</tt> flag.</li> 
+  <li><b>Details:</b> The Windows build of GNU make requires <tt>sh.exe</tt> to be present in order to do parallel
+      builds.  No <tt>sh.exe</tt> is shipped with the SPEC CPU2006 tools, so using the option to do parallel builds
+      will only result in a warning and a normal serial build.</li>
+  <li><b>Resolution:</b> <a class="external" href="changes-in-v1.1.html#parallelbuild">Fixed</a> in CPU2006 V1.1.</li> 
+  </ul>
+
+<!--  ======================================================================================= -->
+<h3 id="problem3">CLOSED: 3. Reporting of seconds</h3>
+  <ul>
+  <li><b>Problem summary:</b> Seconds are rounded to 3 digits in some reports</li> 
+  <li><p><b>Details:</b> For certain values, the SPEC tools print 3 significant digits.  This is intentional.  For example, if one
+  system has a SPECint_rate2006 performance of 1234.456 and another has a SPECint_rate2006 performance of 1229.987, it is
+  arguable that the performance of these systems is not materially different.  Given the reality of run-to-run variation
+  (which is, sometimes, on the order of 1%), it makes sense to report both systems' SPECint_rate2006 as 1230.</p>
+
+  <p>There was agreement that it is acceptable to round SPEC's <b>computed metrics</b> to 3 significant digits.  However, it
+  has been noted that the argument is weaker for rounding of original <b>observations</b>.  In particular, if we wish to
+  acknowledge the reality of run to run variation, then it seems reasonable to report a time of 1234.456 seconds using an
+  integral number of seconds (1234), rather than rounding to the nearest 10 seconds (1230).</p>
+  <p>Results posted on SPEC's web site in reports such as the HTML, PDF, and text formats will use 3 significant digits for
+  computed metrics, but seconds larger than 1000 will be reported as an integral number of seconds.  A future maintenance
+  update of SPEC CPU2006 will behave the same way.  But for SPEC CPU2006 V1.0, you may notice that reports you generate for
+  yourself round seconds to three significant digits.</p></li>
+  <li><b>Workaround:</b> The above described rounding occurs only in the reports intended for humans, such as PDF, HTML, and text.
+  But all available digits are still included in the raw files (<tt>.rsf</tt>), and in the file intended for use by spreadsheets
+  (<tt>.csv</tt>).  Therefore, if you prefer to see as many digits as possible, or would prefer to do your own rounding, then this
+  is <span class="alarm">another good reason to use CSV output format</span>.  See the documentation for <a class="external"
+  href="runspec.html#output_format"> <span class="ttnobr">runspec --output_format csv</span></a>.</li> 
+  <li><p><b>Resolution:</b> <a class="external" href="changes-in-v1.1.html#seconds">Fixed</a> in CPU2006 V1.1</p></li> 
+  </ul>
+
+<!--  ======================================================================================= -->
+<h3 id="problem4">CLOSED: 4.  Unexpected message installing on Solaris/x86</h3>  
+  <ul>
+  <li><b>Problem summary:</b> Unexpected "killed" messages occur while installing on Solaris/x86</li> 
+  <li><b>Details:</b> The lines shown in red below should not be present:
+
+<pre>
+./install.sh
+
+SPEC CPU2006 Installation
+
+Top of the CPU2006 tree is '/data1/kumaran/kit97'
+<span class="alarm">specbzip2: Cannot find /lib64/ld-linux-x86-64.so.2
+Killed
+specbzip2: Cannot find /lib/ld-linux.so.2
+Killed</span>
+
+There appears to be only one valid toolset:
+
+solaris-x86                   Recommended for Solaris 10 and later
+                              Built on Solaris 10 with Sun Studio 11
+</pre>                                                                                                                                    
+  </li>
+  <li><b>Workaround:</b> The lines can safely be ignored.  The suite figures out which tool sets to offer you by trying them.  The
+  above lines come from toolsets that are not actually compatible with Solaris-x86.  But a moment later, the correct toolset
+  is found and offered.  Please ignore the extraneous messages.</li>
+  <li><b>Resolution:</b> Fixed in CPU2006 V1.1.</li>
+  </ul>
+
+<!--  ======================================================================================= -->
+<h3 id="problem5">CLOSED: 5.  Incorrect path example in <tt>shrc.bat</tt> on Microsoft Windows</h3>  
+  <ul>
+  <li><b>Problem summary:</b> <tt>shrc.bat</tt> has a path example with incorrect quoting.</li> 
+  <li><b>Details:</b> The problem described in <a class="external"
+      href="http://www.spec.org/cpu2006/Docs/faq.html#make.clean.err">www.spec.org/cpu2006/Docs/faq.html</a> about
+      <tt>make.clean.err</tt> happens if you follow the path example in <tt>shrc.bat</tt> too closely, because the example has
+      incorrect quoting.</li> 
+  <li><b>Workaround:</b> As described in faq.html, do not include semicolons within quoted strings.</li>
+  <li><b>Resolution:</b> The example in V1.1 no longer has erroneous quoting.</li>
+  </ul>
+
+<!--  ======================================================================================= -->
+<h3 id="problem6">CLOSED: 6.  The <span class="ttnobr">mailcompress</span> option doesn't work yet</h3>  
+  <ul>
+  <li><b>Problem summary:</b> The feature described at <a class="external"
+  href="config.html#mailcompress">config.html#mailcompress</a> is only partially implemented in V1.0</li> 
+  <li><b>Workaround:</b> Do not use mail compression in V1.0</li>
+  <li><b>Resolution:</b> Fixed in V1.1.</li>
+  </ul>
+
+<!--  ======================================================================================= -->
+<h3 id="problem8">CLOSED: 8. <span class="ttnobr">Your vendor has not defined POSIX macro WEXITSTATUS</span> with invalid flags file</h3>  
+  <ul>
+  <li><p><b>Problem summary:</b> On Windows, attempting to use <a class="external" href="utility.html#rawformat">rawformat</a>
+  with a flags file that contains invalid XML will cause <tt>rawformat</tt> to crash.  The files being formatted will not be
+  changed. </p></li> 
+
+  <li><p><b>Details:</b> Before flag files are parsed, they are sent through <a class="external"
+  href="utility.html#specrxp">specrxp.exe</a> for validation.  If the validation fails, <tt>specrxp.exe</tt> will exit with a
+  non-zero exit code.  The code in <tt>rawformat</tt> that handles this case relies on macros from the POSIX module which are not
+  implemented on Windows.  The error message is</p> 
+<pre>Your vendor has not defined POSIX macro WEXITSTATUS, used at 
+C:\cpu2006/bin/formatter/flagutils_common.pl line 970</pre>
+  <p>The <tt>rawformat</tt> process stops, no new files are written, and no existing files are modified.</p></li>
+
+  <li><p><b>Workaround:</b> The workaround for this problem is to make sure that your XML is valid before using it with rawformat.
+   When modifying flags files, you can run <a class="external" href="utility.html#specrxp">specrxp.exe</a> manually to ensure that
+  your changes have not caused the XML to be invalid or not well-formed:</p> 
+<pre>C:\spec\cpu2006&gt; <b> specrxp -V -s good.xml</b>
+
+C:\spec\cpu2006&gt; <b> specrxp -V -s bad.xml</b>
+Error: Value of attribute is unquoted
+ in unnamed entity at line 253 char 15 of file:///C:/spec/cpu2006/bad.xml</pre>
+        <p>If the command above exits without printing anything as in the first example above, <tt>rawformat</tt> will not
+        crash when using that flags file.  Otherwise, the error message will point out the line on which the error occured.
+        The XML flags files may have UNIX-style LF-only line endings, so you may need to edit the file with <tt>wordpad</tt>
+        instead of <tt>notepad</tt>.  Note that the path given to <tt>specrxp</tt> must NOT contain the drive letter
+        specifier; <tt>specrxp</tt> interprets any filename that begins with letters followed by a colon as a URL.</p></li>
+  <li><b>Resolution:</b> Fixed in V1.2.</li>
+  </ul>
+
+
+<!--  ======================================================================================= -->
+<h3 id="problem9">CLOSED: 9. <span class="ttnobr">Error: corrupt result file; unable to format</span> after failed FDO build</h3>
+  <ul>
+  <li><p><b>Problem summary:</b> Certain errors building a benchmark with feedback may cause the run to terminate with <span
+  class="ttnobr">Error: corrupt result file; unable to format.</span></p></li>
+
+  <li><p><b>Details:</b> In order for this error to occur, all of these conditions must be true: (1)&nbsp;A benchmark build fails;
+  (2)&nbsp;The build uses feedback-directed optimization; (3)&nbsp;<span class="ttnobr">ignore_errors</span> is set (by the config
+  file option, or from the command line); (4)&nbsp;The run is not <a class="external"
+  href="runspec.html#reportable">reportable</a>.</p> 
+
+  <p>In this combination of circumstances, when an error occurs during the build of a benchmark that uses FDO, the error
+  information is not properly stored, and this causes <tt>runspec</tt> to output a raw file that is not syntactically correct. 
+  The <a class="external" href="utility.html#rawformat">rawformat</a> utility (which is automatically called by <tt>runspec</tt>)
+  will refuse to format it, generating <span class="ttnobr">Error: corrupt result file; unable to format.</span> No human-readable
+  outputs will be generated from the run.</p> 
+
+  <p>When <span class="ttnobr">ignore_errors</span> is <span class="u">not</span> set (the default), errors in the build
+  process cause <tt>runspec</tt> to stop, so <tt>rawformat</tt> is not run, and the error message does not occur.  If <span
+  class="ttnobr">ignore_errors</span> <span class="u">is</span> set, either by using <span class="ttnobr">ignore_errors =
+  1</span> in the config file or by using <span class="ttnobr">--ignore_errors</span> or <span class="ttnobr">-I</span> on
+  the command line, <tt>runspec</tt> will carry on and run all benchmarks that did not have build errors, eventually calling
+<tt>rawformat</tt>, which protests the incorrect information in the raw file.  </p>
+
+  <p>Since <span class="ttnobr">ignore_errors</span> is automatically unset for reportable runs, this error will never affect
+  a result that would have otherwise been publishable.</p></li>
+
+  <li><b>Workaround:</b> There are two possible workarounds: 1.&nbsp;Do not set <a class="external"
+  href="config.html#ignore_errors">ignore_errors</a>.  2.&nbsp;Or, do the build and run as separate invocations of
+  <tt>runspec</tt>, and use <a class="external" href="runspec.html#nobuild">--nobuild</a> in the second run, so that the failing
+  build will not be re-attempted.  For example: 
+<pre>runspec --action build &lt;other options&gt; &lt;benchmarks&gt;
+runspec --nobuild &lt;other options&gt; &lt;benchmarks&gt;</pre></li>
+        
+  <li><b>Resolution:</b> Fixed in V1.2.</li>
+  </ul>
+
+
+<!--  ======================================================================================= -->
+<h3 id="problem10">CLOSED: 10. <span class="ttnobr">WARNING: accessor 'benchmark' not found</span> during reportable run</h3>
+  <ul>
+  <li><p><b>Problem summary:</b> Under certain conditions during a reportable SPECrate run, the following warning message
+  will be printed.  It can safely be ignored.</p>
+        <pre>WARNING: accessor 'benchmark' not found; called from Spec::Config::copies 
+        (call at config.pl line 1372) for object Spec::Config</pre></li> 
+
+  <li><p><b>Details:</b> This problem occurs only when all of these conditions are true: (1)&nbsp;The run is <a class="external"
+  href="runspec.html#reportable">reportable</a>.  (2)&nbsp;It is a <a class="external" href="config.html#rate">SPECrate</a> run. 
+  (3)&nbsp;The number of <a class="external" href="config.html#copies">copies</a> is specified in the config file and not on the
+  command line.  (4)&nbsp;A value for <a class="external" href="config.html#parallel_test">parallel_test</a> is not provided in
+  the config file nor on the command line.</p>  
+
+  <p>In these circumstances, by default the test and train portion of the run are done in parallel, with the
+  number of jobs equal to the number of copies.  The <tt>runspec</tt> process looks up the number of parallel jobs that can
+  be run, and does not find the correct value, and prints the above message.</p>
+        
+  <p>The message can safely be ignored; in the worst case the test and train runs will be done serially.</p></li>
+
+  <li><p><b>Workaround:</b> You can safely ignore the warning, or you can pick from one of these workarounds:</p>
+        <ol>
+          <li>Specify a value for the number of copies on the command line, either by using <a class="external"
+          href="runspec.html#copies">--copies &lt;n&gt;</a> or <a class="external" href="runspec.html#rate">--rate
+          &lt;n&gt;</a>.</li> 
+          <li>Specify a value for <span class="ttnobr">parallel_test</span>, either on the <a class="external"
+          href="runspec.html#parallel_test">command line</a> or in the <a class="external" href="config.html#parallel_test">config
+          file</a>.</li>  
+          <li>Cause <span class="ttnobr">parallel_test</span> to match the number of copies by finding the line in your
+          config file that specifies <span class="ttnobr">copies</span> and put 
+          the following line <b>after</b> it:
+              
+<pre>parallel_test = $[copies]</pre></li>
+        </ol></li>
+
+  <li><b>Resolution:</b> Fixed in V1.2.</li>
+  </ul>
+
+
+
+<!--  ======================================================================================= -->
+<h3 id="problem12">CLOSED: 12. Style settings may appear ineffective when formatting results with multiple flags files </h3>
+  <ul>
+  <li><p><b>Problem summary:</b> In a <a class="external" href="flag-description.html#per-result">per-result flags report</a>, the
+  &lt;style&gt; section may seem to have no effect.</p></li> 
+
+  <li><p><b>Details:</b> When results are formatted with multiple user flags files, and two or more of those files contain <a
+  class="external" href="flag-description.html#style">style</a> sections, the resulting HTML output in the <a class="external"
+  href="flag-description.html#per-result">per-result flags report</a> will have a &lt;style&gt; section that many browsers will
+  ignore.  When the CSS sections of multiple flags files are merged, the SPEC tools separate them with comments that note the
+  provenance of the settings in question.  The problem is that the notes are in HTML-style comments which are not valid for CSS. 
+  This causes most browsers to simply ignore the CSS in the affected document.</p> 
+
+  <p><b>Note</b> that for results that will be published at the SPEC website, multiple &lt;style&gt; sections will work
+  correctly (the copy of the formatter there has been fixed).  </p></li>
+
+  <li><p><b>Workaround:</b> There are two possible workarounds:</p>
+        <ol>
+          <li><p>Make sure only one of the flags files has a <a class="external" href="flag-description.html#style">style</a>
+          section.  This is the simplest course of action.</p></li> 
+
+          <li><p>If you really want multiple &lt;style&gt; sections (e.g. you will be publishing your results at the SPEC
+          website where the problem has been fixed), you can fix your local HTML-style comment markers by hand.  Edit them to
+          replace HTML-style comments with CSS-style markers.  For example, the generated CSS section will have comments such
+          as:</p>
+<pre>
+&lt;!-- CSS section from &lt;filename&gt; --&gt;
+</pre>
+              Those may be deleted, or replaced with something like
+
+<pre>
+/* CSS section from &lt;filename&gt; */
+</pre></li>
+        </ol></li>
+  <li><b>Resolution:</b> Fixed in V1.2.</li>
+  </ul>
+
+<!--  ======================================================================================= -->
+<h3 id="problem13">CLOSED: 13. <span class="ttnobr">ERROR(update_config_file)</span> with src.alt.</h3>
+  <ul>
+  <li><b>Problem summary:</b> The above-mentioned error is sometimes seen with V1.0</li>
+  <li><b>Details:</b> With V1.0, if a <a class="external" href="config.html#src.alt">src.alt</a> is used, you may see messages
+  such as 
+<pre>ERROR(update_config_file): Config file line at 36 (prepared_by) does not match tester!
+ERROR: Edit of stored config file failed; Update of tester failed.</pre>  </li>
+  <li><b>Workaround:</b> The message can safely be ignored.  </li>
+  <li><b>Resolution:</b> Fixed in V1.1.</li>
+  </ul>
+
+<!--  ======================================================================================= -->
+<h3 id="problem14">CLOSED: 14.  <span class="ttnobr">WARNING: accessor 'setup_error' not found</span> with minimize_rundirs</h3>
+  <ul>
+  <li><b>Problem summary:</b> During the benchmark run the tools will print messages like:
+
+<pre>WARNING: accessor 'setup_error' not found; called from Spec::Benchmark::perlbench400::setup_error (call at runspec line 939) for object Spec::Benchmark::perlbench400
+WARNING: accessor 'setup_error' not found; called from Spec::Benchmark::bzip2401::setup_error (call at runspec line 939) for object Spec::Benchmark::bzip2401
+WARNING: accessor 'setup_error' not found; called from Spec::Benchmark::gcc403::setup_error (call at runspec line 939) for object Spec::Benchmark::gcc403
+</pre></li>
+
+  <li><b>Details:</b> These messages are printed when the 'minimize_rundirs' feature is used.  They are harmless and do not
+  indicate any error.<br/>
+  The normal setup process adds a flag to each benchmark object indicating whether there was an error during setup.  When
+  'minimize_rundirs' is used, the normal setup is skipped and the flag is not added; the message is not about whether the flag
+  is true or false, just that it doesn't exist.</li>
+
+  <li><b>Workaround:</b> Ignore the error, or do not use the 'minimize_rundirs' feature.</li>
+
+  <li><b>Resolution:</b> Fixed in V1.2.</li>
+  </ul>
+
+<!--  ======================================================================================= -->
+<h3 id="problem15">CLOSED: 15.  Index utility prints <span class="ttnobr">Expected 17 fields; got 16 (base_copies, ...</span> </h3>
+  <ul>
+  <li><p><b>Problem summary:</b> The <tt>index</tt> utility fails, complaining about a missing field</p></li>
+
+  <li><p><b>Details:</b> The <a class="external" href="utility.html#index">index</a> utility is officially <i>unsupported</i>. 
+  Nevertheless, some people have found it useful when building directories of results (e.g. for internal use, or prior to
+  submitting results to SPEC).  With V1.1, you may see messages such as:</p> 
+<pre>
+$ <b>$SPEC/bin/scripts.misc/index</b>    
+Expected 17 fields; got 16 (base_copies, basemean, hw_model, hw_nchips, 
+hw_ncores, hw_ncoresperchip, hw_nthreadspercore, hw_vendor, nc, nc_is_cd, 
+nc_is_na, peakmean, rate, test_sponsor, tester, units).
+Skipping result in ./fprate2.ref
+$
+</pre>
+
+  <p>The reason that the problem occurs is because of the new features added relatively late in the development of V1.1 to <a
+  class="external" href="changes-in-v1.1.html#parallelreporting">automatically set the field "Parallel: Yes/No"</a>.  The index
+  utility that ships with V1.1 has not caught up with that change. </p> </li> 
+
+  <li><p><b>Workaround:</b> The following edit removes the index utility's expectation that the parallel field will be found
+  in the <tt>.rsf</tt> file.  </p>
+  
+
+<pre>
+$ <b>diff -u $SPEC/bin/scripts.misc/index $SPEC/bin/scripts.misc/index2</b>
+--- /bench/cpu2006/v1.1/bin/scripts.misc/index  Tue Feb 12 18:44:01 2008
++++ /bench/cpu2006/v1.1/bin/scripts.misc/index2 Fri Jun  6 12:12:40 2008
+@@ -130,7 +130,6 @@
+     $vendor_field,
+     'test_sponsor',
+     'tester',
+-    'sw_auto_parallel',
+     'hw_model',
+     'hw_nchips',
+     'hw_ncores',
+@@ -157,7 +156,6 @@
+     [ 'Test Sponsor',      'test_sponsor',       1,           2,   ],
+     [ 'System Name',       'hw_model',           1,           2,   ],
+     [ 'Base&lt;br /&gt;Copies',  'base_copies',        1,           2,   ],
+-    [ 'Auto&lt;br /&gt;Parallel','sw_auto_parallel',   1,           2,   ],
+     [ 'Cores',             'hw_ncores',          4,           1,   'Processor', ],
+     [ 'Chips',             'hw_nchips',          1,           1,   '',          ],
+     [ 'Cores/&lt;br/&gt;Chip',   'hw_ncoresperchip',   1,           1,   '',          ],
+$ 
+</pre>
+
+  </li>
+
+  <li><b>Resolution:</b> Fixed in V1.2.</li>
+  </ul>
+
+
+<!--  ======================================================================================= -->
+<h3 id="problem16">CLOSED: 16.  <span class="ttnobr">Individual benchmark selection is not allowed for a reportable run</span></h3>
+  <ul>
+  <li><p><b>Problem summary:</b> Even though individual benchmarks were <b>not</b> requested, sometimes this 
+  message is confusingly printed: <span class="ttnobr">Individual benchmark selection is not allowed for a reportable
+  run</span>.</p></li>
+
+  <li><p><b>Details:</b> The problem arises if a <a class="external" href="runspec.html#reportable">reportable</a> run is
+  attempted while the <a class="external" href="runspec.html#runlist">runlist</a> is empty.  The tools should complain about the
+  emptiness; instead, the above misleading error message is printed.</p></li> 
+
+  <li><p><b>Workaround:</b>  For a reportable run, you must say one of <span class="ttnobr">int</span>, <span
+  class="ttnobr">fp</span>, or <span class="ttnobr">all</span>.
+  </p></li>
+
+  <li><b>Resolution:</b> Fixed in V1.2.</li>
+
+  </ul>
+
+
+<!--  ======================================================================================= -->
+<h3 id="problem18">CLOSED: 18.  Incorrect spelling: "Evironment" when using <span class="ttnobr">preENV</span></h3>
+  <ul>
+  <li><p><b>Problem summary:</b> Reports sometimes contain the string <br />"Evironment", when what was meant was
+  <br />"Environment".</p></li>
+  <li><p><b>Details:</b> The problem occurs when using the <a class="external" href="config.html#preenv">preENV</a> feature
+  introduced in CPU2006 V1.1.  Several notes lines are automatically added to the rawfile, for example:</p> 
+  <pre>
+spec.cpu2006.notes_000: Evironment variables set by runspec before the start of the run:
+spec.cpu2006.notes_005: HUGETLB_MORECORE = "yes"
+spec.cpu2006.notes_010: LD_LIBRARY_PATH = "/root/work/cpu2006v1.1/amd909gh-libs/64:/root/work/cpu2006v1.1/amd909gh-libs/32"
+  </pre>
+  <p>Because the incorrect spelling is in the rawfile, any generated report(s) (PDF, HTML, etc) will also contain the wrong
+  spelling.</p></li>
+  <li><p><b>Workaround:</b> To fix the problem, simply edit the notes line and then use <a class="external"
+  href="utility.html#rawformat">rawformat</a> to regenerate the report(s). </p></li> 
+  <li><b>Resolution:</b> Fixed in V1.2.</li>
+  </ul>
+
+
+<!--  ======================================================================================= -->
+<h3 id="problem19">CLOSED: 19. The config file feature <span class="ttnobr">rate=1</span> is not recommended</h3>
+  <ul>
+  <li><p><b>Problem summary:</b> If you use <span class="ttnobr">rate=1</span> you may find your system subjected to an
+  unexpectedly large load during benchmark validation.</p></li>
+
+  <li><p><b>Details:</b> As described in <a class="external"
+  href="http://www.spec.org/cpu2006/Docs/runspec.html#runorder">runspec.html</a>, during reportable runs, the test and train
+  workloads are run, but not timed.  </p> 
+
+  <p>As described in <a class="external"
+  href="http://www.spec.org/cpu2006/Docs/changes-in-v1.1.html#parallelsetup">changes-in-v1.1.html</a>, for rate runs, multiple
+  benchmarks now run their test and train workloads at once.   For example, if you say <span class="ttnobr">runspec --tune base
+  --rate --copies 255 fp</span>, the 17 floating point benchmarks will all run their test workloads simultaneously. </p> 
+
+  <p>During benchmark validation, it is intended that only a single copy of each benchmark should be run.</p>
+  
+  <p>The feature works as intended unless <a class="external" href="http://www.spec.org/cpu2006/Docs/config.html#rate">rate=1</a>
+  is present in the config file.  If it is, then instead of running one copy, the above command would run 255 copies of all 17
+  benchmarks - that is, it would attempt to subject the system to a load average of more than 4000.  Your system might not mind
+  such a big load average - after all, it is only the test and train workloads - or it might run very slowly, or it might complain
+  most pitifully in all sorts of unexpected ways.  </p></li> 
+
+  <li><p><b>Workaround:</b> If you wish to select a rate run, use the command line switch <a class="external"
+  href="http://www.spec.org/cpu2006/Docs/runspec.html#rate">--rate</a> instead of the config file option <span
+  class="ttnobr">rate=1</span>.</p></li> 
+
+  <li><b>Resolution:</b> Fixed in V1.2.</li>
+
+  </ul>
+
+
+<!--  ======================================================================================= -->
+<h3 id="problem20">CLOSED: 20.  During installation <span class="ttnobr">"Error running runspec tests"</span> due to
+                        <span class="ttnobr">time.t "FAILED at test 2"</span>  </h3>
+
+  <ul>
+
+  <li><p><b>Problem summary:</b> <tt>install.sh</tt> fails during tools testing; investigation indicates <tt>time.t</tt>.</p></li>
+
+  <li><p><b>Details:</b>  During installation, a failure occurs during the test of the tools - for example:</p>
+
+<pre>
+  Checksums are all okay.
+
+  Testing the tools installation (this may take a minute)
+
+  ..........................................................o.................
+  ...................o........................................................
+  ................X.................o..
+  Error running runspec tests. See runspec-test.linux-suse101-i386.out for details.
+</pre>
+
+   <p>Depending on the system, other tool sets might be tried, producing similar complaints.  For example, one tested system
+   produces three similar output files: <span class="ttnobr">runspec-test.linux-redhat62-ia32.out</span>,  <span
+   class="ttnobr">runspec-test.linux-suse101-AMD64.out</span>, and <span
+   class="ttnobr">runspec-test.linux-suse101-i386.out</span>.  Examination of all three of these shows the same failure:</p>
+
+<pre>
+test/op/time............1..7
+ok 1 - very basic time test
+not ok 2 - very basic times test
+FAILED at test 2
+</pre>
+
+   <p>This is a basic test of perl.  The SPEC toolset includes a copy of perl, built as "specperl".  You may have a copy of
+   <tt>perl(1)</tt> that was automatically installed on your system; if so, you might notice that it fails the same test:</p>
+
+<pre>
+$ cd bin/test/op
+$ perl time.t
+1..7
+ok 1 - very basic time test
+not ok 2 - very basic times test
+# Failed test at line 42
+ok 3 - localtime() list context
+ok 4 - localtime(), scalar context
+ok 5 - gmtime() list context
+ok 6 - gmtime() and localtime() agree what day of year
+ok 7 - gmtime(), scalar context
+$ 
+</pre>
+
+   <p>The problem is with the test itself:  <tt>time.t</tt> assumes that it is inconceivable that one could call the
+   <tt>times(2)</tt> system service 10,000 times in a row without a clock tick.  On a fast enough system, with a low enough
+   granularity for clock ticks, this can happen.</p></li>
+
+
+  <li><p><b>Workaround:</b> <a class="external" href="http://www.spec.org/cpu2006/Docs/techsupport.html">Contact SPEC support</a>
+  for a workaround. </p></li> 
+
+  <li><b>Resolution:</b> Fixed in V1.2.</li>
+  </ul>
+
+
+<!--  ======================================================================================= -->
+<h3 id="problem21">CLOSED: 21.  During installation <span class="ttnobr">"Error running runspec tests"</span> due to
+                        <span class="ttnobr">tie.t not ok 20 "unlocalisation of tied hashes"</span>  </h3>
+  <ul>
+
+  <li><p><b>Problem summary:</b> <tt>install.sh</tt> fails during tools testing; investigation indicates <tt>tie.t</tt></p></li>
+
+  <li><p><b>Details:</b> Sometimes, the installation fails with:</p>
+<pre>
+  Testing the tools installation (this may take a minute)
+
+  ..........................................................o.................
+  ...................o........................................................
+  .............X....................o..
+  Error running runspec tests. See runspec-test.(platform-name).out
+</pre>
+
+<p>Looking at the referenced file <tt>runspec-test.(platform-name).out</tt> shows various tests that appear to be "<span
+class="ttnobr">not ok</span>"; but most of these are also marked "<tt>TODO</tt>", so are not treated as actual problems.  One
+line starts with "<span class="ttnobr">not ok</span>" and lacks the "<tt>TODO</tt>":</p>
+
+<pre>
+   $ <b>grep "^not ok" runspec-test.*.out | grep -v "TODO"</b>
+   not ok 20 - fresh_perl - correct unlocalisation of tied hashes (patch \#16431)
+</pre>
+
+<p>This line is from execution of "<tt>tie.t</tt>".  </p>
+
+<p>It turns out that if you have an environment variable with the name of "<tt>foo</tt>", that will cause <tt>tie.t</tt> to
+fail.  The failure is not unique to <tt>specperl</tt>; if you have <tt>perl</tt> installed locally on your system, you may
+observe that it that fails similarly:</p>
+
+<pre>
+   $ <b>cd $SPEC/bin/test</b>
+   $ <b>export foo=bar</b>
+   $ <b>specperl op/tie.t 2&gt;&amp;1 | grep "not ok 20"</b>
+   not ok 20 - fresh_perl - correct unlocalisation of tied hashes (patch \#16431)
+   $ <b>perl op/tie.t 2&gt;&amp;1 | grep "not ok 20"</b>
+   not ok 20 - fresh_perl - correct unlocalisation of tied hashes (patch \#16431)
+   $ 
+</pre>
+
+<p>If you remove "<tt>foo</tt>" from the environment, the test passes:</p>
+
+<pre>
+   $ <b>export -n foo</b>
+   $ <b>perl op/tie.t 2&gt;&amp;1 | grep "not ok 20"</b>
+   $ <b>specperl op/tie.t 2&gt;&amp;1 | grep "not ok 20"</b>
+   $ 
+</pre>
+
+
+  </li>
+  <li><p><b>Workaround:</b> Remove the variable "<tt>foo</tt>" from your environment prior to installing SPEC CPU2006.   In
+  the example above, <tt>bash</tt> syntax is used ("<span class="ttnobr">export -n foo</span>").  In a CSH-compatible shell,
+  you would say "<span class="ttnobr">unsetenv foo</span>".  For Windows, you would say "<span class="ttnobr">set
+  foo=</span>" </p>
+
+   <p>Note: during investigation of this problem, it was discovered that if you have environment variables spelt
+   "<tt>_A_</tt>", or "<tt>_B_</tt>", these may also cause failures with the installations tests.  Although these other two
+   variables are presumably less likely to be found in user environments, one should note that all three should be avoided.
+   </p>
+
+  </li>
+
+  <li><b>Resolution:</b> Fixed in V1.2.</li>
+  </ul>
+
+
+<!--  ======================================================================================= -->
+<h3 id="problem22">CLOSED: 22. Some test or train failures may not be properly reported.</h3>
+  <ul>
+
+  <li><p><b>Problem summary:</b>  During a reportable SPECrate run, if a (non-timed) test or train workload miscompares, then the
+  run should halt.  Instead, it may continue.</p></li>
+
+  <li><p><b>Details:</b> During a <a class="external" href="http://www.spec.org/cpu2006/Docs/runspec.html#reportable">reportable
+  run</a>, all three workload <a class="external" href="http://www.spec.org/cpu2006/Docs/runspec.html#size">sizes</a> ("test",
+  "train", and "ref") are checked to confirm whether or not correct answers are obtained.  (The reported times use only "ref".) 
+  Correct answers are required per <a class="external" href="http://www.spec.org/cpu2006/Docs/runrules.html#rule_3.3">rule
+  3.3</a>.</p> 
+
+  <p>It has been discovered that if <a class="external"
+  href="http://www.spec.org/cpu2006/Docs/runspec.html#parallel_test">parallel_test</a> is greater than 1, errors with test and
+  train are not properly reported with CPU2006 V1.1.  A run that should halt after a failure with test or train will instead
+  continue.</p> 
+
+  <p>Typically, parallel_test is greater than one when doing SPECrate testing, because it defaults to the number of copies
+  run.</p></li>
+  
+  <li><p><b>Workaround:</b> Add <a class="external"
+  href="http://www.spec.org/cpu2006/Docs/runspec.html#parallel_test">--parallel_test=1</a> to your runspec command line.</p></li> 
+
+  <li><b>Resolution:</b> Fixed in V1.2.</li>
+  </ul>
+
+
+<hr />
+<p>Copyright 2006-2011 Standard Performance Evaluation Corporation</p>
+<p>All Rights Reserved</p>
+
+
+<!-- this space intentionally left blank: some empty space at the bottom increases the probability that clicking on a link in
+the table of contents will actually position the desired section at the top of your browser window -->
+<p style="margin-bottom:1900px;">&nbsp;</p>
+
+
+
+</body>
+</html>

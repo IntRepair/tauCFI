@@ -1,0 +1,18 @@
+#
+# Makefile for pm_stub performance monitor module for specinvoke
+# Copyright 2009 Standard Performance Evaluation Corporation
+#
+# $Id: Makefile.MinGW 6361 2011-03-03 22:29:36Z cloyce $
+
+all: pmfuncs.o
+
+CC=gcc
+CFLAGS=-O3 -Wall -Wextra -I../win32
+
+pmfuncs.o: pmfuncs.c specinvoke_pm.h
+	$(CC) $(CFLAGS) -c -o $@ -I. -I.. -DPERFMON pmfuncs.c
+
+clean:
+	del /s /q /f *.o *.pdb *.ilk *.obj
+
+distclean: clean

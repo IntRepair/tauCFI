@@ -1,0 +1,451 @@
+---------------------------------------------------
+W A R N I N G      W A R N I N G      W A R N I N G
+---------------------------------------------------
+The following text file was automatically generated
+from a document that you really should read in HTML
+format.  This text document is only a poor fallback
+if you cannot read HTML, but it is NOT RECOMMENDED.
+
+To read this document in the recommended way, point
+your favorite web browser at one of these 3 places:
+(1) The SPEC site http://www.spec.org/cpu2006/Docs/
+(2) The docs directory from your CPU2006 DVD, e.g.:
+    /dvdrom/Docs/ for Unix or E:\Docs\ for Windows.
+(3) The Docs directory on the system where you have
+    installed your SPEC CPU2006 tree - for example:
+    /spec/Docs/ (Unix) or D:\myspec\Docs\ (Windows)
+---------------------------------------------------
+W A R N I N G      W A R N I N G      W A R N I N G
+---------------------------------------------------
+
+                               Runspec Avoidance
+
+ Using the SPEC CPU2006 benchmarks while making minimal use of SPEC's tool set
+
+   Last updated: $Date: 2011-08-16 18:43:20 -0400 (Tue, 16 Aug 2011) $ by
+   $Author: CloyceS $
+
+   (To check for possible updates to this document, please see
+   http://www.spec.org/cpu2006/Docs/ )
+
+   Contents
+
+   Introduction
+
+   Environment
+
+   Steps
+
+   Review two rules
+
+   Install
+
+   Pick a benchmark
+
+   Pick a config file
+
+   Fake it
+
+   Find the log
+
+   Find the build dir
+
+   Copy the build dir (triple only)
+
+   Build it
+
+   Figure out the correct name for the binary
+
+   Place the binary in the run dir
+
+   Copy the run dir
+
+   Run it
+
+   Save your work
+
+   Repeat
+
+   Validation
+
+   Note: links to SPEC CPU2006 documents on this web page assume that you are
+   reading the page from a directory that also contains the other SPEC
+   CPU2006 documents. If by some chance you are reading this web page from a
+   location where the links do not work, try accessing the referenced
+   documents at one of the following locations:
+
+     * www.spec.org/cpu2006/Docs/
+     * The $SPEC/Docs/ (Unix) or %SPEC%\Docs\ (Microsoft Windows) directory
+       on a system where SPEC CPU2006 has been installed.
+     * The Docs/ directory on your SPEC CPU2006 distribution media.
+
+Introduction
+
+   This document is for those who prefer to avoid using some of the
+   SPEC-supplied tools, typically because of a need for more direct access to
+   the benchmarks. For example:
+
+     * Some users want to work directly with benchmark source code and
+       compile by hand, rather than through the SPEC supplied tools. Perhaps
+       an experimental compiler is under development, and it is more
+       convenient to just issue "cc" commands in a sandbox. Perhaps a custom
+       build process is needed in order to add instrumentation.
+
+     * Some users want to run the benchmarks directly from the command line,
+       rather than via the SPEC supplied tools. Perhaps this is part of a
+       debugging effort, or is needed in order to collect a performance
+       "trace".
+
+   If the above describes you, here is a suggested path which should lead
+   quickly to your desired state. This document shows you how to use SPEC's
+   tools for the minimal purpose of just generating work directories, for use
+   as a private sandbox. Note, however, that you cannot do formal,
+   "reportable" runs without using SPEC's toolset.
+
+Environments
+
+   Three different environments are referenced in this document, using these
+   labels:
+
+     * "Unified": The SPEC toolset, the compilers, and the run environment
+       are all on the same system.
+
+     * "Cross compile": The SPEC toolset and the compilers are on one system;
+       the run time environment is a different system.
+
+     * "Triple": The SPEC toolset is on one system, the compiler is on a
+       second, and the run time environment is a third.
+
+Steps
+
+    1. Review two rules: Please read just one page from runrules.html, namely
+       "4.5 Research and Academic usage of CPU2006" and "4.6 Required
+       Disclosures"
+
+       These run rules sections acknowledge that the suite may be used in
+       ways other than the formal environment that the tools help to enforce;
+       but they warn that if you plan to publish your results, you should be
+       able to state HOW your usage of the suite differs from the standard
+       usage.
+
+       So even if you skip over the tools and the run rules today, you should
+       plan a time to come back and learn them later.
+
+    2. Install: Get through a successful installation, even if it is on a
+       different system than the one that you care about. Yes, we are about
+       to teach you how to mostly bypass the tools, but there will still be
+       some minimal use. So you need a working toolset and a valid
+       installation. If you have troubles with the install procedures
+       described in install-guide-unix.html or install-guide-windows.html,
+       please see techsupport.html and we'll try to help you.
+
+    3. Pick a benchmark: Pick a benchmark that will be your starting point.
+
+       Choose one benchmark from the CPU2006 suite that you'd like to start
+       with. For example, you might start with 410.bwaves (Fortran) or
+       470.lbm (C). These are two of the shortest benchmarks for lines of
+       code, and therefore relatively easy to understand.
+
+    4. Pick a config file: Pick a config file for an environment that
+       resembles your environment. You'll find a variety of config files in
+       the directory $SPEC/config/ on Unix systems, or %SPEC%\config\ on
+       Windows, or at www.spec.org/cpu2006 with the submitted CPU2006
+       results. Don't worry if the config file you pick doesn't exactly match
+       your environment; you're just looking for a somewhat reasonable
+       starting point.
+
+    5. Fake it: Execute a "fake" run to set up run directories, including a
+       build directory for source code, for the benchmark.
+
+       For example, let's suppose that you want to work with 410.bwaves and
+       your environment is at least partially similar to the environment
+       described in the comments for Example-linux64-amd64-gcc43+.cfg
+
+       [Other Unix-like systems should behave similarly to the example in
+       this section.]
+
+       For example, you could enter the following commands:
+
+   % sh
+       ... if you're not already in a Bourne-compatible shell
+   $ cd  /home/reiner/cpu2006/
+       ... or wherever you installed the SPEC CPU2006 tree
+   $ . ./shrc      (that's dot-space-dot-slash-shrc)
+   $ cd config
+   $ cp Example-linux64-amd64-gcc43+.cfg my_test.cfg
+   $ runspec --fake --loose --size test --tune base --config my_test bwaves
+   ... (lots of stuff goes by, ending with)
+   Success: 1x410.bwaves
+
+   The log for this run is in /home/reiner/cpu2006/kit117/result/CPU2006.033.log
+
+   runspec finished at Tue Jul  5 17:20:17 2011; 3 total seconds elapsed
+
+       This command should report a success for the build, run and validation
+       phases of the test case, but the actual commands have not been run. It
+       is only a report of what would be run according to the config file
+       that you have supplied. (History: The --fake option above was added in
+       SPEC CPU2006 V1.0.)
+
+    6. Find the log: Near the bottom of the output from the previous step,
+       notice the location of the log file for this run -- in the example
+       above, log number 033. The log file contains a record of the commands
+       as reported by the "fake" run. You can find the commands by searching
+       for "%%".
+
+    7. Find the build dir: To find the build directory that was set up in the
+       fake run, you can search for the string build/ in the log:
+
+     $ cd $SPEC/result
+     $ grep build/ CPU2006.033.log
+     Wrote to makefile
+     '/home/reiner/cpu2006/kit117/benchspec/CPU2006/410.bwaves/build/build_base_gcc43-64bit.0000/Makefile.deps':
+     Wrote to makefile
+     '/home/reiner/cpu2006/kit117/benchspec/CPU2006/410.bwaves/build/build_base_gcc43-64bit.0000/Makefile.spec':
+     $
+
+       Or, you can just go directly to the benchmark build (*) directories
+       and look for the most recent one. For example:,
+
+   $ go bwaves
+   $ /home/reiner/cpu2006/kit117/benchspec/CPU2006/410.bwaves
+   $ cd build
+   $ ls -gtd build*
+   drwxrwxr-x 2 reiner 4096 Jul  5 17:20 build_base_gcc43-64bit.0000
+
+       In the example above, go is shorthand for getting us around the SPEC
+       tree. The ls -gtd command prints the names of each build subdirectory,
+       with the most recent first. If this is your first time here, there
+       will be only one directory listed, as in the example above. (On
+       Windows, the "go" command is not available; use cd to get to the
+       analogous directory, which would be spelt with reversed slashes. The
+       top of the SPEC tree is "%SPEC%", not "$SPEC". Instead of "ls -gtd",
+       you would say something like "dir build*/o:d".)
+
+       You can work in this build directory, make source code changes, and
+       try other build commands without affecting the original sources.
+
+       (*) In CPU2006 V1.0, the build directories were located underneath
+       nnn.bmark/run; now they are under nnn.bmark/build. For more
+       information on the change, see the description of build_in_build_dir.
+
+    8. Copy the build dir (triple only): If you are using a unified or
+       cross-compile environment, you can skip to the next step. But if you
+       are using a triple environment, then you will want to package up the
+       build directory with a program such as tar -- a handy copy is in the
+       bin directory of your SPEC installation, as spectar. Then, you will
+       move the package off to whatever system has compilers.
+
+       For example, you might say something like this:
+
+   $ spectar -cvf  -  build_base_gcc43-64bit.0000 | specxz > mybuild.tar.xz
+   $ ftp
+   ftp> op buildsys
+   Connected to buildsys
+   Name: whoever
+   Password:
+   ftp> bin
+   ftp> put mybuild.tar.xz
+
+       Note that the above example assumes that you have versions of xz and
+       tar available on the system that has compilers, which you will use to
+       unpack the compressed tarfile, typically with a command similar to
+       this:
+
+       xz -dc mybuild.tar.xz | tar -xvf -
+
+       If you don't have xz available, you might try bzip2 or gzip on both
+       the sending and receiving systems. If you use some other compression
+       utility, be sure that it does not corrupt the files by destroying line
+       endings, re-wrapping long lines, or otherwise subtracting value.
+
+    9. Build it: Generate an executable using the build directory. If you are
+       using a unified or cross-compile environment, then you can say
+       commands such as these:
+
+   $ cd build_base_gcc43-64bit.0000
+   $ specmake clean
+   $ specmake
+   f90 -c -o block_solver.o ...
+
+       You can also carry out a dry run of the build, which will display the
+       build commands without attempting to run them, by adding -n to the
+       specmake command line. You might find it useful to capture the output
+       of specmake -n to a file, so it can easily be edited, and used as a
+       script.
+
+       If you are trying to debug a new system, you can prototype changes to
+       Makefile.spec or even to the benchmark sources.
+
+       If you are using a triple environment, then presumably it's because
+       you don't have specmake working on the system where the compiler
+       resides. But fear not: specmake is just GNU make under another name,
+       so whatever make you have handy on the target system might work fine
+       with the above commands. If not, then you'll need to extract the build
+       commands from the log and try them on the system that has the
+       compilers, using commands such as the following:
+
+ $ grep -n %% *033.log | grep make | grep build
+ 311:%% Fake commands from make (specmake -n build):
+ 318:%% End of fake output from make (specmake -n build)
+ $ head -318 *033.log | tail -8
+ %% Fake commands from make (specmake -n build):
+ /usr/bin/gfortran -c -o block_solver.o -O2 -fno-strict-aliasing block_solver.f
+ /usr/bin/gfortran -c -o flow_lam.o -O2 -fno-strict-aliasing flow_lam.f
+ /usr/bin/gfortran -c -o flux_lam.o -O2 -fno-strict-aliasing flux_lam.f
+ /usr/bin/gfortran -c -o jacobian_lam.o -O2 -fno-strict-aliasing jacobian_lam.f
+ /usr/bin/gfortran -c -o shell_lam.o -O2 -fno-strict-aliasing shell_lam.f
+ /usr/bin/gfortran   -O2 -fno-strict-aliasing  -DSPEC_CPU_LP64        block_solver.o flow_lam.o flux_lam.o jacobian_lam.o
+ shell_lam.o                     -o bwaves
+ %% End of fake output from make (specmake -n build)
+ $
+
+       The first command above uses grep -n to find the line numbers of
+       interest, and the second command prints them.
+
+   10. Figure out the correct name for the binary: Once you have built an
+       executable image, figure out its new name. You can either rename it
+       now, in the build directory; or you can do so when you copy it to the
+       run directory (next step). The new name will need to be of the form:
+
+       <exename>_<tuning>.<extension>
+
+       where:
+
+          * exename is typically the same as the name of the benchmark, but
+            not always. The precise string can be found by saying
+                grep exename
+            $SPEC/benchspec/CPU2006/nnn.benchmark/Spec/object.pm
+            (On Windows, of course, you would spell "$SPEC" as "%SPEC%", turn
+            the slashes around, and use findstr)
+          * tuning is either base or peak
+          * extension is the extension specified in your config file.
+
+       For example, if you are working with a base version of 410.bwaves and
+       your config file has the line:
+
+       ext=gcc43-64bit
+
+       the correct name for the executable is bwaves_base.gcc43-64bit
+
+   11. Place the binary in the run dir: Using techniques similar to those
+       used to find the build directory, find the run directory established
+       above, and place the binary into it. If you are using a unified or
+       cross-compile environment, you can copy the binary directly into the
+       run directory; if you are using a triple environment, then you'll have
+       to retrieve the binary from the compilation system using whatever
+       program (such as ftp) you use to communicate between systems.
+
+       In a unified environment, the commands might look something like this:
+
+    $ go result
+    /home/reiner/cpu2006/kit117/result
+    $ grep "Setting up" *033.log
+      Setting up 410.bwaves test base gcc43-64bit default: created (run_base_test_gcc43-64bit.0000)
+    $ go bwaves
+    /home/reiner/cpu2006/kit117/benchspec/CPU2006/410.bwaves
+    $ cd run/run_base_test_gcc43-64bit.0000/
+    $ cp ../../build/build_base_gcc43-64bit.0000/bwaves ./bwaves_base.gcc43-64bit
+    $
+
+       In the result directory, we search log 033 to find the correct name of
+       the directory, go there, and copy the binary into it.
+
+   12. Copy the run dir: If you are using a unified environment, you can skip
+       this step. Otherwise, you'll need to package up the run directory and
+       transport it to the system where you want to run the benchmark. For
+       example:
+
+    $ go bwaves run
+    /home/reiner/cpu2006/kit117/benchspec/CPU2006/410.bwaves/run
+    $ spectar cvf - run_base_test_gcc43-64bit.0000/ | specxz > myrun.tar.xz
+    run_base_test_gcc43-64bit.0000/
+    run_base_test_gcc43-64bit.0000/compare.cmd
+    run_base_test_gcc43-64bit.0000/benchmark_run.out
+    run_base_test_gcc43-64bit.0000/benchmark_run.err
+    run_base_test_gcc43-64bit.0000/compare_run.out
+    run_base_test_gcc43-64bit.0000/speccmds.cmd
+    run_base_test_gcc43-64bit.0000/bwaves.in
+    run_base_test_gcc43-64bit.0000/bwaves_base.gcc43-64bit
+    run_base_test_gcc43-64bit.0000/compare_run.err
+    $
+    $ ftp
+    ftp> op runsys
+    Connected to runsys
+    Name: whoever
+    Password:
+    ftp> bin
+    ftp> put myrun.tar.xz
+
+       Note that the above example assumes that you have versions of xz and
+       tar available on the run time system, which you will use to unpack the
+       compressed tarfile, typically with something like this:
+
+       xz -dc myrun.tar.xz | tar -xvf -
+
+       If you don't have xz available, you might try bzip2 or gzip on both
+       the sending and receiving systems. If you use some other compression
+       utility, be sure that it does not corrupt the files by destroying line
+       endings, re-wrapping long lines, or otherwise subtracting value.
+
+   13. Run it: If you are using a unified environment, you are now ready to
+       try specinvoke:
+
+   $ specinvoke -n
+         ... shows the command line that executes the benchmark
+   $ specinvoke
+         ... executes that command line
+
+       For example:
+
+ $ go bwav run
+ /home/reiner/cpu2006/kit117/benchspec/CPU2006/410.bwaves/run
+ $ cd run_base_test_gcc43-64bit.0000/
+ $ specinvoke -n
+ # specinvoke r6392
+ #  Invoked as: specinvoke -n
+ # timer ticks over every 1000 ns
+ # Use another -n on the command line to see chdir commands and env dump
+ # Starting run for copy #0
+ ../run_base_test_gcc43-64bit.0000/bwaves_base.gcc43-64bit 2>> bwaves.err
+ $ specinvoke
+
+       If you are using a cross-compile or triple environment, then you won't
+       be able to use specinvoke. Instead, you'll need to extract the run
+       commands from the log and enter them by hand. Recall that you can look
+       for the string "%%" to help you find your way around the log file.
+
+   14. Save your work: Important: if you are at all interested in saving your
+       work, move the build/build* and run/run* directories to some safer
+       location. That way, your work areas will not be accidentally deleted
+       the next time someone comes along and uses one of runspec cleanup
+       actions..
+
+   15. Repeat: Admittedly, the large number of steps that it took to get here
+       may seem like a lot of trouble. But that's why you started with a
+       simple benchmark and the simplest workload (--size test in the fake
+       step). Now that you've got the pattern down, it is hoped that it will
+       be straightforward to repeat the process for the other available
+       workloads: --size=train and --size=ref, and then for additional
+       benchmarks.
+
+       But if you're finding it tedious... then maybe this is an opportunity
+       to sell you on the notion of using runspec after all, which automates
+       all this tedium. If the reason you came here was because runspec
+       doesn't work on your brand-new environment, then perhaps you'll want
+       to try to get it built, using the hints in tools-build.html.
+
+Validation
+
+   Note that this document has only discussed getting the benchmarks built
+   and running. Presumably at some point you'd like to know whether your
+   system got the correct answer. At that point, you can use specdiff, which
+   is explained in utility.html.
+
+   --------------------------------------------------------------------------
+
+   Copyright 1999-2011 Standard Performance Evaluation Corporation
+
+   All Rights Reserved
+
+

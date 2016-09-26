@@ -1,0 +1,858 @@
+---------------------------------------------------
+W A R N I N G      W A R N I N G      W A R N I N G
+---------------------------------------------------
+The following text file was automatically generated
+from a document that you really should read in HTML
+format.  This text document is only a poor fallback
+if you cannot read HTML, but it is NOT RECOMMENDED.
+
+To read this document in the recommended way, point
+your favorite web browser at one of these 3 places:
+(1) The SPEC site http://www.spec.org/cpu2006/Docs/
+(2) The docs directory from your CPU2006 DVD, e.g.:
+    /dvdrom/Docs/ for Unix or E:\Docs\ for Windows.
+(3) The Docs directory on the system where you have
+    installed your SPEC CPU2006 tree - for example:
+    /spec/Docs/ (Unix) or D:\myspec\Docs\ (Windows)
+---------------------------------------------------
+W A R N I N G      W A R N I N G      W A R N I N G
+---------------------------------------------------
+
+                         SPEC CPU2006: Changes in V1.1
+
+   Last updated: $Date: 2008-05-13 09:00:38 -0500 (Tue, 13 May 2008) $ by
+   $Author: john $
+
+   (To check for possible updates to this document, please see
+   http://www.spec.org/cpu2006/Docs/ )
+
+Introduction: Who Wants V1.1?
+
+   SPEC CPU2006 V1.1 is an incremental update to SPEC CPU2006 V1.0. Results
+   generated with V1.1 are comparable to results from V1.0 and vice versa.
+   V1.1 is intended to improve compatibility, stability, documentation and
+   ease of use. Changes are intended to be useful to several kinds of users:
+
+   For users of new platforms:
+
+     * Updates to 12 benchmarks, primarily to improve portability
+
+   For anyone who reads (or produces) a result:
+
+     * Cleanup of graph formats
+     * Improvements to report readability and   several   detailed   changes
+         to improve accuracy.
+     * Clarifications and additions to the Run and Reporting Rules, including
+       rules for disclosure of "user-built" systems, reporting of automatic
+       parallelization, and comparison of estimates.
+
+   For researchers and developers:
+
+     * Documentation of the monitor hooks
+     * Easier investigation of alternate sources or workloads, via the
+       convert_to_development utility.
+
+   For testers of large systems:
+
+     * A group of 6 features to make the setup phase faster on big systems.
+     * Refinements of the submit and bind features and greatly expanded
+       documentation thereof.
+
+   For new users of the suite:
+
+     * Clarifications and additions to the documentation.
+     * Updated example config files.
+
+   For those who test many platforms:
+
+     * Fewer unexpected rebuilds
+     * The ability to bundle up a set of binaries and their associated config
+       file, for easy transportation and use on other systems.
+     * Many other features intended to make benchmarking easier, more
+       productive, and less error-prone, as summarized in the table of
+       contents. Depending on the level of detail at which you count, there
+       are approximately 60 new, updated, or newly-documented user-visible
+       features in V1.1.
+
+   If you have already used SPEC CPU2006 V1.0 and already have configuration
+   files, it is recommended that you read through this document, so as to
+   avoid surprises during use of V1.1 Among the changes that you are likely
+   to be affected by are the change to build directory locations, the
+   reporting of parallel flags, the automatic setting of test date, and the
+   addition of debug logs. If you still have USER numbers, it's time to stop
+   now.
+
+   Contents
+
+   (This table of contents proceeds in rough order of time for a user of the
+   suite: you acquire a platform, ensure that you are familiar with the
+   rules, build the benchmarks, run them, generate reports, and occasionally
+   use utilities and other features.)
+
+   New systems supported
+
+   Systems no longer supported
+
+   Benchmark source code changes
+
+   400.perlbench
+
+   403.gcc
+
+   435.gromacs
+
+   445.gobmk
+
+   447.dealII
+
+   450.soplex
+
+   453.povray
+
+   462.libquantum
+
+   464.h264ref
+
+   471.omnetpp
+
+   481.wrf
+
+   483.xalancbmk
+
+   Run Rules
+
+   1.6 estimates
+
+   2.1.1 identifiers
+
+   3.1.2 system state
+
+   3.2.5 parallel setup
+
+   4.2.3 automatic parallelization
+
+   4.2.6 user-built systems
+
+   4.3.2 speed conversion
+
+   4.6 required disclosures
+
+   Building Benchmarks
+
+   1.  Build directories separated
+
+   2.  Bundle up binaries and config file
+
+   3.  Parallel builds on Windows too
+
+   4.  Unexpected rebuilds reduced
+
+   Running the Suite
+
+   1.  Parallel setup
+
+   2.  Per-benchmark basepeak and copies - behavior change
+
+   3.  Per-benchmark bind
+
+   4.  PreENV allows setting of environment variables
+
+   5.  Runtime monitoring
+
+   6.  $SPECUSERNUM no longer recognized
+
+   Reports
+
+   1.  Auto Parallel - changes to handle common cases
+
+   2.  CSV updated
+
+   3.  Flag reporting - multiple files supported, flag order preserved,
+   report readability
+
+   4.  Graphs cleaned up
+
+   5.  Links and attachments
+
+   6.  Report names have changed
+
+   7.  Seconds are reported with more digits
+
+   8.  Submission check automatically included with rawformat
+
+   9.  Test date automatically set
+
+   Utilities
+
+   1.  Convert to Development
+
+   2.  Dump alternative source
+
+   3.  Index
+
+   4.  Make alternative source
+
+   5.  ogo top takes you to $GO
+
+   6.  port_progress
+
+   7.  specrxp
+
+   8.  Speed metric from rate run
+
+   Other New and Changed Tools Features
+
+   1.  Benchmark lists and sets can be referenced
+
+   2.  Debug logs
+
+   3.  Keeping temporaries
+
+   4.  Submit lines continued
+
+   5.  Submit notes
+
+   6.  Trailing spaces in config files
+
+   Documentation
+
+   Updated Feature Index
+
+   --------------------------------------------------------------------------
+
+   Note: links to SPEC CPU2006 documents on this web page assume that you are
+   reading the page from a directory that also contains the other SPEC
+   CPU2006 documents. If by some chance you are reading this web page from a
+   location where the links do not work, try accessing the referenced
+   documents at one of the following locations:
+
+     * www.spec.org/cpu2006/Docs/
+     * The $SPEC/Docs/ (Unix) or %SPEC%\Docs\ (Windows) directory on a system
+       where SPEC CPU2006 has been installed.
+     * The Docs/ directory on your SPEC CPU2006 distribution DVD.
+
+New systems supported
+
+   With this release of SPEC CPU2006, new support is added for:
+
+     * HP-UX 11iv1 on PA-RISC systems
+     * MacOS X 10.1 on PowerPC systems
+
+Systems no longer supported
+
+   With this release of SPEC CPU2006, support is removed for:
+
+     * RHAS 3r2 to RHAS 4r3 on Itanium systems
+     * Linux on PowerPC-based systems with GLIBC 2.2.1-2.2.4
+
+Changes to benchmarks
+
+   The following benchmark changes were made in V1.1:
+
+     * 400.perlbench
+
+          * Added new portability flag -DSPEC_CPU_NEED_POSIX_IDS to include
+            the POSIX symbols uid_t, gid_t, and mode_t on Windows. Note that
+            this flag is the default for some Windows compilers.
+          * Compiling 400.perlbench on Solaris with gcc, or gcc-compatible
+            compilers, used to fail with messages such as
+
+ perlio.c:2872: error: 'FILE' has no member named '_file'
+
+            because of a change in the Solaris FILE structure. This problem
+            has been fixed by removing the outdated code.
+          * Under V1.0 of SPEC CPU2006, if you compiled 400.perlbench with
+            gcc on ia64/Linux, the benchmark would sometimes abort abnormally
+            with an unaligned access error, due to a jmpbuf on some Linux
+            systems whose alignment violated the ABI. You can now optionally
+            set SPEC_CPU_IA64_GCC_ALIGNMENT to force jmpenv (in scope.h) to
+            be better aligned.
+
+     * 403.gcc
+
+          * Removed '#line' directives from c-parse.c
+          * Several code segments which were protected by
+            #if !defined(SPEC_CPU2006)
+            should have said SPEC_CPU, and were fixed. The effect of the
+            change is to increase the degree to which both gcc and non-gcc
+            compilers are presented with the same souce code when compiling
+            403.gcc.
+
+     * 435.gromacs
+
+          * Internal system calls which set the OS scheduling priority were
+            disabled. The effect of this change is minimal, because when it
+            is run from the SPEC harness, the GROMACS line option '-nice 0'
+            is included, which also disables these system calls. For V1.0, a
+            user studying 435.gromacs outside the runspec harness might have
+            encountered inconsistent measurements if '-nice 0' was not used.
+          * Replaced a GPL version of the C99 math function "erfc" with a
+            public domain version.
+          * Added new portability flag '-DSPEC_CPU_HAVE_ERF' to have the
+            benchmark use a system's "erfc" library function instead of the
+            version included with the benchmark. This flag is the default on
+            some platforms.
+
+     * 445.gobmk
+
+          * Rename _getopt_internal to getopt_internal to avoid possible name
+            clash (user functions are not supposed to start with underscore).
+          * Added explicit inclusion of cstring header file.
+
+     * 447.dealII
+
+          * Added explicit inclusion of cstring header file in
+            vector.templates.h
+          * Added some missing prototypes in quadrature.h and tria.h
+
+     * 450.soplex
+
+          * In V1.0, some output was written to stderr. That output is now
+            written to regular files. SPEC's validation has been adjusted to
+            validate the new output.
+
+     * 453.povray
+
+          * In V1.0, approximately 25,000 lines of output were duplicated to
+            both the log file and to standard error. The duplicate output has
+            been elimated from stderr.
+
+     * 462.libquantum
+
+          * In config.h, there is a list of platforms that have <complex.h>
+            included. Additional platforms can now be accomodated by setting
+            -DSPEC_CPU_NEED_COMPLEX_H.
+
+     * 464.h264ref
+
+          * Some compilers object to having TRUE and FALSE used in this enum
+            in parsetcommon.h:
+
+ typedef enum {
+   FALSE,
+   TRUE
+ } Boolean;
+
+            which implicitly redefines FALSE to 0 and TRUE to 1. Although
+            these are the same values they already had, some compilers object
+            to the redefinition. A simple solution is to undefine these just
+            before the enum, which can be done by setting the new flag
+            -DSPEC_CPU_REDEF_TRUE_FALSE.
+
+     * 471.omnetpp
+
+          * Renamed random.h to avoid clashes with system headers.
+
+     * 481.wrf
+
+          * Added new portability flag -DSPEC_CPU_NEED_IO_H to include the
+            header file io.h on Windows. Previously, io.h was only included
+            if _MSC_VER was defined by the compiler.
+          * Fixed a Fortran 90 standards violation where two associated dummy
+            arguments were defined during the execution of a subprogram. Note
+            that this update used the same fix as WRF version 2.2. (481.wrf
+            is based on WRF version 2.1).
+
+            In a bit more detail: There is a subroutine in module_bl_ysu.F90
+            that is called in violation of the Fortran standard about
+            variable overlapping. The routine tridin has three variables
+            (cu,r1,r2) that are passed in the same parameters as (au,a1,a2)
+            in both calls. The new code has fixed this problem by making
+            copies of the read-only versions of the duplicated parameters
+            before the call.
+
+     * 483.xalancbmk
+
+          * Added explicit inclusion of cstring header file.
+          * Multiple portability changes for use with the PGI C++ compiler on
+            Windows.
+          * Added multiple portability changes for use with the ParallelNavi
+            compiler on Solaris. To use, you'll need to set
+            -DSPEC_CPU_PARANAVI
+
+Run Rules Changes
+
+     * Explain a philosophy of estimates in rule 1.6, and clarify marking of
+       estimates in rule 4.8.
+     * Tweak rule 2.1.1 to clarify that the rule is discussing "benchmark"
+       source code.
+     * Clarify documentation of system state and tuning, in rules 3.1.2,
+       4.2.3 (paragraphs b and g), and 4.2.4 (paragraphs f, g).
+     * Add rule 3.2.5 for parallel setup and parallel test
+     * Expand rule 4.2.3 on automatic parallelization and reporting thereof.
+     * Add new rule 4.2.6 regarding disclosure of configurations for
+       user-built systems.
+     * In rule 4.3.2 allow conversions in both directions between SPECspeed
+       metrics and 1 copy SPECrate metrics.
+     * In rule 4.6 note that a required disclosure is considered public
+       information.
+
+Building Benchmarks
+
+    1. Build directories separated: Benchmarks are now built in directories
+       named benchspec/CPU2006/nnn.benchmark/build/build... (or, on Windows,
+       benchspec\CPU2006\nnn.benchmark\build\build...), rather than under the
+       benchmark's run subdirectory. The change is intended to make it easier
+       to copy, backup, or delete build and run directories separately from
+       each other. (It may also make problem diagnosis easier in some
+       situations, since your habit of removing all the run directories will
+       no longer destroy essential evidence 10 minutes before the compiler
+       developer says "Wait - what exactly happened at build time?").
+
+       If you prefer the V1.0 behavior, you can revert to it by setting
+       build_in_build_dir to 0.
+
+    2. You can now bundle up a set of binaries and their associated config
+       file, for easy transportation and use on other systems.
+
+       WARNING: Although the features to create and use bundles are intended
+       to make it easier to run SPEC CPU2006, the tester remains responsible
+       for compliance with the run rules. And, of course, both the creators
+       and the users of bundles are responsible for compliance with any
+       applicable software licenses.
+
+    3. Parallel builds on Windows too: Users of Microsoft Windows systems can
+       now use multiple processors to do parallel builds, by setting
+       makeflags, for example:
+
+ makeflags = -j N
+
+       This feature has worked with SPEC CPU testing on Unix for many years;
+       what's new in CPU2006 V1.1 is the ability to use it on Windows. Note
+       that requesting a parallel build with makeflags = -j N causes multiple
+       processors to be used at build time. It has no effect on whether
+       multiple processors are used at run time, and so does not affect how
+       you report on parallelism.
+
+    4. Unexpected rebuilds reduced: In V1.0, the tools were much more likely
+       to trigger automatic rebuilds of the benchmark binaries than they are
+       in V1.1, because unrecognized options (e.g. a mis-spelled CXXOPTIMZIE,
+       or a user-defined option such as MY_OPTS) would be passed to specmake,
+       and the tools had no way to know what specmake did with such options.
+       Now, the tools record only what is actually used by specmake, plus the
+       options that are sent to the shell (e.g. via fdo_pre0). With this more
+       careful recording, config file changes do not trigger rebuilds unless
+       they actually affect the generated binary.
+
+Running Benchmarks
+
+    1. Parallel Setup: For reportable runs, substantial time may be required
+       during the setup phase, as the tools write run directories for every
+       copy, and validate that benchmark binaries get the correct answers for
+       the (non-timed) test/train workloads. SPEC CPU2006 V1.1 provides
+       several new features to allow these operations to complete more
+       quickly by optionally doing more operations in parallel:
+       parallel_setup, parallel_test, parallel_setup_type,
+       parallel_setup_prefork, bench_post_setup, and post_setup.
+
+       During testing of V1.1, a very large server (with over 600 hw_threads)
+       was observed to complete the binary validation phase about 8x faster
+       using parallel_test, and the ref directory setup phase more than 2x
+       faster with parallel_setup. The net time saved on this very large
+       server was more than 10 hours.
+
+       Your mileage may vary:
+
+          * The effects of these options are much less pronounced on small
+            servers.
+          * The effects are strongly affected by your disk setup.
+          * Asking your disk system to do more than it can handle may make
+            your setup phase slower, not faster. For example, asking a disk
+            with a single actuator arm to do parallel setup of 30 copies may
+            cause the disk to spend most of its time seeking.
+
+       When considering your disk layout options, bear in mind that the run
+       rules require use of a single file system.
+
+       Note that these setup features (parallel_setup, parallel_test,
+       parallel_setup_type, and parallel_setup_prefork) control parallelism
+       during the preparation phase for running the benchmarks, not the
+       actual runs. Therefore, they have no effect on the setting of the
+       report field
+
+       Auto Parallel: Yes/No
+
+       ... discussed below
+
+    2. Per-benchmark basepeak and copies - behavior change: If you select
+       basepeak=1 for an individual benchmark, the number of copies in peak
+       will be forced to be the same as in base. Note that in SPEC CPU2006
+       V1.0, you could set basepeak for a benchmark, and still change the
+       number of copies in peak; this was deemed to be an error. If you want
+       to run the same tuning in both base and peak, while changing the
+       number of copies, you will need to build two binaries with the same
+       compiler switches.
+
+    3. Per-benchmark bind: The bind list can now differ on a per-benchmark
+       basis in peak. Allowing this difference was viewed as a convenience,
+       since the run rules already allow the submit command to differ on a
+       per-benchmark basis in peak.
+
+    4. The PreENV config file option allows setting of environment variables
+       prior to the exectuion of runspec.
+
+    5. Run-time monitoring: The monitor hooks have been a little-known
+       feature of the SPEC CPU toolset for many years. They were first
+       described in the ACM SIGARCH article SPEC CPU2006 Benchmark Tools and
+       are now further described in monitors.html. The monitor hooks allow
+       advanced users to instrument the suite in a variety of ways. SPEC can
+       provide only limited support for their use; if your monitors break
+       files or processes that the suite expects to find, you should be
+       prepared to do significant diagnostic work on your own.
+
+    6. $SPECUSERNUM no longer recognized: The field $SPECUSERNUM was
+       deprecated in V1.0 of SPEC CPU2006, in favor of $SPECOPYNUM.
+       $SPECUSERNUM is no longer recognized in V1.1. No error message is
+       printed. If you still have user numbers lurking in your config file,
+       make them into copy numbers, please.
+
+Reporting
+
+    1. Auto Parallel - changes to handle common cases: If benchmarks are
+       automatically optimized to use multiple threads, cores, and/or chips
+       at run time, the tester needs to indicate this in the report as
+
+       Auto Parallel: Yes
+
+       For V1.0, it was sometimes difficult to ensure that reports were
+       accurate, in part because there can be multiple sources of run-time
+       parallelism (as described in the run rules).
+
+       With SPEC CPU2006 V1.1, the V1.0 method of filling out the above
+       field, sw_auto_parallel, has been retired, and three new features have
+       been introduced to better reflect these sources of parallelism.
+
+          * When writing a flags file, the parallel flag attribute should be
+            set for compiler flags that cause binaries to be multi-threaded.
+            Then, when binaries that use those flags are run, the report type
+            will be listed as "Auto Parallel: Yes".
+          * The config file field sw_parallel_other should be set when there
+            are other (non-compiler) sources of parallelism.
+          * A rawfile-only field, sw_parallel_defeat, can be used to indicate
+            that, despite any other settings, a tested system has been forced
+            to run in a single-threaded mode (for example, by removing all
+            but one processor).
+
+       The intent is that the most common case will be handled automatically:
+
+          * Commonly, the SPEC tools will use (i) to automatically determine
+            whether the run is parallel. For this case, (ii) and (iii) will
+            not be needed.
+          * If your source of parallelism is not visible to the SPEC toolset,
+            you can set (ii).
+          * Rarely, you can take a software stack which appears to be
+            parallel, but explain with (iii) why it was not.
+
+       Overall, the setting of the Auto Parallel field in reports can be
+       thought of as if it were derived from this logic:
+
+    (i | ii) & (NOT iii)
+
+       ... or for the benefit of those readers who think in FORTRAN, it is as
+       if the derivation were:
+
+   ( I .OR. II ) .AND. ( .NOT. III)
+
+    2. CSV format updated - If you populate spreadsheets from your runs, you
+       probably shouldn't be doing cut/paste of text files; you'll get more
+       accurate data by using --output_format csv. The V1.1 CSV output now
+       has a format that includes much more of the information in the other
+       reports. All runs times are now included, and the selected run times
+       are listed separately. The flags used are also included. Although
+       details of the new features are not shown in the documentation, you
+       should explore them, by taking the new CSV out for a test drive. It is
+       hoped that you will find the V1.1 format more complete and more
+       useful.
+
+    3. Flag reporting - multiple files supported, flag order preserved,
+       report readability There are several changes to reporting on compiler
+       flags:
+
+         1. You can now format a single result using multiple flags files.
+            This feature is intended to make it easier for multiple results
+            to share what should be shared, while separating what should be
+            separated. Common elements (such as a certain version of a
+            compiler) can be placed into one flags file, while the elements
+            that differ from one system to another (such as platform notes)
+            can be maintained separately. Suggestions on use of this feature
+            can be found in flag-description.html.
+
+         2. The flag reporter now does a better job of reporting flags in the
+            same order in which they appeared on the command line.
+
+         3. Flag reporting has been re-organized in an attempt to improve
+            readability:
+
+              1. Within the Optimization Flags section, the report no longer
+                 prints phrases such as "Fortran benchmarks (except as noted
+                 below):" because readers may not remember which benchmarks
+                 are in Fortran. Instead, all the Fortran benchmarks are
+                 enumerated, and if some use the same flags as others, that
+                 fact is noted in line, rather than at the top of the list.
+              2. Within the Portability Flags section, benchmarks appear in
+                 order by number, rather than ordered by language.
+              3. When the reporter detects that base and peak are
+                 sufficiently different from each other (e.g. different
+                 compilers, or different portability options) the flags
+                 report is ordered to put all the base information first,
+                 then all the peak information - for example:
+
+        Base Compiler Invocation
+        Base Portability Flags
+        Base Optimization
+        Peak Compiler Invocation
+        Peak Portability Flags
+        Peak Optimization
+
+    4. Graphs cleaned up:
+
+                                 Graphs have been changed to reduce the
+                                 amount of shading, and to reduce painting of
+       V1.0 format: V1.1 format: other pixels that were not essential to the
+       oldgraph     newgraph     data being presented (with a tip of the hat
+                                 to Professor Tufte's notion of reducing
+                                 "chartjunk", or apologies, depending on the
+                                 reader's opinion of the change).
+
+    5. Links and attachments can now be added to reports.
+
+    6. Report names have changed:
+
+       In CPU2006 V1.0, final reports had names of the form
+
+ <suite>.<nnn>.<type>
+
+       for example, CINT2006.003.ps, CINT2006.003.txt, CFP2006.022.pdf, and
+       so forth. The form of the file names has changed to now be
+
+ <suite>.<nnn>.<workload>.<type>
+
+       for example, CINT2006.003.ref.ps, CINT2006.003.ref.txt,
+       CFP2006.022.ref.pdf.
+
+       There are two reasons for this change:
+
+          * For CPU2006, all "reportable" runs use a workload named "ref",
+            but this is not necessarily true for other benchmarks that use
+            the same toolset. Designating the workload in the file name
+            reduces possible ambiguity.
+          * If you select the test or train workloads (with the --size
+            switch), output files for V1.0 were already tagged with the
+            workload designator; this change causes ref to match the other
+            two.
+
+       Note: For V1.0, a reportable run would generate three .rsf files:
+       CPU2006.nnn.test.rsf, CPU2006.nnn.train.rsf, and CPU2006.nnn.rsf. For
+       V1.1, for a reportable run, you will see only CPU2006.nnn.ref.rsf. You
+       won't see CPU2006.nnn.test.rsf or CPU2006.nnn.train.rsf unless you say
+       --size test or --size train in your runspec command.
+
+    7. Seconds are reported with more digits:
+
+          * Background: For certain values, the SPEC tools print 3
+            significant digits. This is intentional. For example, if one
+            system has a SPECint_rate2006 performance of 1234.456 and another
+            has a SPECint_rate2006 performance of 1229.987, it is arguable
+            that the performance of these systems is not materially
+            different. Given the reality of run-to-run variation (which is,
+            sometimes, on the order of 1%), it makes sense to report both
+            systems' SPECint_rate2006 as 1230.
+
+            Although there is agreement that it is acceptable to round SPEC's
+            computed metrics to 3 significant digits, it has been noted that
+            the argument is weaker for rounding of original observations. In
+            particular, if we wish to acknowledge the reality of run to run
+            variation, then it seems reasonable to report a time of 1234.456
+            seconds using an integral number of seconds (1234), rather than
+            rounding to the three significant digits, which in this case
+            would be rounding to the nearest 10 seconds (1230).
+
+          * Change made: Ever since the release of V1.0 of SPEC CPU2006,
+            results posted on SPEC's web site (such as the HTML, PDF, and
+            text formats) have used 3 significant digits for computed
+            metrics, and seconds larger than 1000 have been reported as an
+            integral number of seconds. As of V1.1, reports produced on your
+            own test systems now behave the same way.
+
+    8. The Submission Check report is now automatically included in the
+       output_format list when using rawformat. This change was made because
+       the typical use of rawformat is to create final (submission quality)
+       reports. Even if you don't plan to submit your result to SPEC, the
+       checks that are done by Submission Check can help you to create
+       reports that are more complete and more readable.
+
+    9. The test_date is now automatically set from the system clock, and you
+       should not set it yourself.
+
+New Utilities Features
+
+    1. Convert to Development: In order to assist with compliance with the
+       run rules (so that results are meaningful and comparable), the SPEC
+       CPU tools perform various checks to ensure that benchmark code,
+       workloads, and tools match the original distribution. Sometimes,
+       though, researchers or developers may want to work in an environment
+       without these checks, for example, when modifying code to add
+       performance instrumentation.
+
+       Prior to V1.1, doing so typically required that you abandon the tools.
+       With V1.1, you now have another choice: you can continue using the
+       SPEC supplied toolset in a development sandbox, via the
+       convert_to_development utility.
+
+    2. Dump alternative source: dumpsrcalt is a utility which shows you the
+       content of src.alts
+    3. The index utility remains UNSUPPORTED, but is now documented for the
+       first time
+    4. Make alternative source: makesrcalt is a utility which is used to
+       create packages with newly developed alternative sources. This utility
+       is ehanced in, and is documented for the first time in, V1.1.
+    5. ogo top: If you type ogo without any parameters, or if you type ogo
+       top, the command sets your current directory to $GO instead of to
+       $SPEC.
+    6. The port_progress utility is documented now.
+    7. The specrxp utility validates flags files. It is called automatically,
+       or you can call it directly if you wish.
+    8. SPECspeed metrics from SPECrate test: Using rawformat, you can now
+       convert a 1-copy SPECrate result to a SPECspeed result.
+
+Other New and Changed Tools Features
+
+    1. Benchmark lists and sets: Two formerly undocumented features are now
+       documented: your config file can reference benchmark lists and sets.
+       Set references use the various "bset" files that are found
+       $SPEC/benchspec/CPU2006 or %SPEC%\benchspec\CPU2006. If you are a user
+       who already has noticed this feature, please note that the definitions
+       of the bsets have changed, and the number of bsets has been reduced.
+    2. Debug logs: Failed runs now leave behind additional detail, in files
+       such as CPU2006.001.log.debug. Temporary files are also left behind
+       after a failed run. If you are managing disk space on a tight budget,
+       you'll need to adjust your cleaning methods.
+    3. Keeping temporaries: If you are having trouble debugging your test
+       setup (for example, if your new submit command or parallel_test option
+       is failing), you may want to try the new keeptmp feature. When this
+       option is set, the above-mentioned debug log is kept, along with the
+       various temporary files that it mentions.
+
+       If you leave keeptmp at its default setting, temporary files will be
+       automatically deleted after a successful run. If you are managing disk
+       space on a tight budget, and keeping temporaries, you'll almost
+       certainly need to adjust your cleaning methods.
+
+    4. submit lines continued: It is now possible to append a numeral to
+       submit lines, to continue your submit commands over several lines.
+       This feature is intended to improve the readability of your config
+       file when using the submit feature.
+
+    5. Submit notes: The tools will now automatically insert a section with
+       notes on your submit command for runs that use submit. You can
+       customize the section.
+
+    6. Trailing spaces are now stripped in config files, unless preceded by a
+       backslash, as described in the section on whitespace.
+
+Documentation Updates
+
+   Documentation has been added for the new features mentioned in this
+   document. Most of the changes are linked from the descriptions above. A
+   few items might not be immediately obvious from the above links, and are
+   called out here:
+
+                           * A new chapter About Alternate Sources was added.
+                           * A new section on automatic rebuilds suggests a
+                             way to test whether proposed changes would force
+                             a rebuild (without actually doing the build).
+                           * More examples are provided for how to specify a
+                             bind list, including use of a here document.
+                           * Explain that you are allowed to change the
+                             feedback options, and show how to find out the
+                             default options. Provide a couple of examples of
+                             fdo modification.
+                           * The discussion of free form notes for readers
+                             has been substantially expanded.
+                           * The documentation now tells you what happens
+                             with macros that aren't defined if you try to
+        config.html          use them.
+                           * All options that affect runspec are described
+                             together. In V1.0, there were two tables, one
+                             for the options that could be mentioned either
+                             on the command line or in the config file, and a
+                             separate table for options that can only be
+                             mentioned in a config file.
+                           * A sidebar about quoting was added, to try to
+                             help reduce confusion when you are trying to
+                             ensure that variables are interpreted by the
+                             correct software.
+                           * The documentation of log files now suggests some
+                             useful search strings that can help you as you
+                             try to find your way through a log.
+                           * The documentation of submit was rewritten and
+                             expanded.
+                           * Flag file types have been clarified, using an
+                             example that points to the three files for
+                             result #00001, as posted at www.spec.org.
+                           * A complete example is provided to show how you
+                             can edit a flags file and use rawformat to
+                             incorporate it.
+   flag-description.html   * A "Recommended Practices" section has been
+                             added.
+                           * The discussions of replacement of example text -
+                             both <example> and <ex_replacement> - has been
+                             considerably expanded to explain the difference
+                             between the two, and examples of their use are
+                             shown.
+                           * The description of directory sharing via
+                             output_root now starts with a simple summary of
+                             the steps.
+                           * More details are given about --review.
+       runspec.html        * The documentation now describes the run order
+                             for reportable runs.
+                           * The output format subcheck is explained.
+                           * The description of --update now explains that
+                             additional items might be updated, not just your
+                             flags files.
+
+Updated Feature Index
+
+   These user-visible features are new, updated, or newly documented for SPEC
+   CPU2006 V1.1:
+
+                                   31. parallel_setup_type
+                                   32. parallel_test
+    1. attachments to results      33. port_progress
+    2. basepeak, effect on copies  34. post_setup
+    3. bench_post_setup            35. preenv
+    4. bind, per-benchmark         36. rebuilds, reduced
+    5. build_in_build_dir          37. reports, names of
+    6. build_post_bench            38. search strings in logfiles
+    7. build_pre_bench             39. seconds, reporting thereof
+    8. convert_to_development      40. sets of benchmarks
+    9. CSV format                  41. specrxp
+   10. debug logs                  42. SPECUSERNUM, removed feature
+   11. dumpsrcalt                  43. SPEC_CPU_HAVE_ERF (435.gromacs)
+   12. flags files, multiple       44. SPEC_CPU_IA64_GCC_ALIGNMENT
+   13. graphs, format thereof          (400.perlbench)
+   14. index utility               45. SPEC_CPU_NEED_COMPLEX_H
+   15. keeptmp                         (462.libquantum)
+   16. links in results            46. SPEC_CPU_NEED_IO_H (481.wrf)
+   17. lists of benchmarks         47. SPEC_CPU_NEED_POSIX_IDS
+   18. makeflags, on Windows           (400.perlbench)
+   19. makesrcalt                  48. SPEC_CPU_PARANAVI (483.xalancbmk)
+   20. make_bundle                 49. SPEC_CPU_REDEF_TRUE_FALSE.
+   21. monitor_post                    (464.h264ref)
+   22. monitor_post_bench          50. SPECspeed, rawformat from SPECrate
+   23. monitor_pre                 51. Submission Check, included with
+   24. monitor_pre_bench               rawformat
+   25. monitor_specrun_wrapper     52. submit notes
+   26. monitor_wrapper             53. submit, continuation of
+   27. ogo top, destination of     54. sw_auto_parallel, removed feature
+   28. parallel flag attribute     55. sw_parallel_defeat
+   29. parallel_setup              56. sw_parallel_other
+   30. parallel_setup_prefork      57. test_date
+                                   58. trailing spaces, stripped
+                                   59. unpack_bundle
+                                   60. use_bundle
+
+   --------------------------------------------------------------------------
+
+   Copyright 2008-2011 Standard Performance Evaluation Corporation
+   All Rights Reserved

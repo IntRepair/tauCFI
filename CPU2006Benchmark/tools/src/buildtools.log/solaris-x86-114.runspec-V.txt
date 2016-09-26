@@ -1,0 +1,33 @@
+runspec v6437 - Copyright 1999-2009 Standard Performance Evaluation Corporation
+Using 'solaris-x86' tools
+                 This is the SPEC CPU2006 benchmark tools suite.
+
+Version summary:
+    CPU2006 version: 114
+ Benchmarks version: 113
+      Tools version: 114
+    runspec version: 6437 ($Id: runspec 6437 2011-04-15 00:19:12Z cloyce $)
+
+Tools information:
+ Tools package installed: solaris-x86
+ File locking method: fcntl(2) (probably network-safe)
+Mode |  UID  |  GID  |   Size  |    Modified Date   | Name
+0755 | 95621 | 201   |  250808 | 15-Apr-2011 23:25:18 | specmake
+0755 | 95621 | 201   | 1985968 | 15-Apr-2011 23:25:18 | specperl
+0755 | 95621 | 201   |   26964 | 15-Apr-2011 23:25:24 | specinvoke
+0755 | 95621 | 201   |   31248 | 15-Apr-2011 23:25:24 | specinvoke_pm
+0755 | 95621 | 201   |  332452 | 15-Apr-2011 23:25:18 | specxz
+0755 | 95621 | 201   |   77096 | 15-Apr-2011 23:25:24 | specmd5sum
+0755 | 95621 | 201   |    7661 | 15-Apr-2011 23:11:44 | specdiff
+0755 | 95621 | 201   |   89763 | 15-Apr-2011 23:11:45 | specpp
+0755 | 95621 | 201   |  282240 | 15-Apr-2011 23:25:18 | specrxp
+0755 | 95621 | 201   |  128894 | 15-Apr-2011 23:11:44 | runspec
+
+Version info for specinvoke (specinvoke): specinvoke r6392
+Version info for specmake (specmake): GNU Make 3.82
+Version info for specrxp (/export/ptmp/cloyce/cpu2006/bin/specrxp): RXP 1.5.0 Copyright Richard Tobin, LTG, HCRC, University of Edinburgh
+                                                                    Modified for use in SPEC benchmarks - 14 April 2011
+Version info for specxz (/export/ptmp/cloyce/cpu2006/bin/specxz): xz (XZ Utils) 5.0.0
+Version info for specpp (/export/ptmp/cloyce/cpu2006/bin/specperl): filepp version 1.8.0SPEC
+Version info for specperl (/export/ptmp/cloyce/cpu2006/bin/specperl): This is specperl 5, version 12, subversion 3 (v5.12.3) built for i86pc-solaris
+                                                                      For more detail on specperl, say 'specperl -V'

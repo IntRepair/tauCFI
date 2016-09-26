@@ -1,0 +1,33 @@
+runspec v6437 - Copyright 1999-2009 Standard Performance Evaluation Corporation
+Using 'macosx' tools
+                 This is the SPEC CPU2006 benchmark tools suite.
+
+Version summary:
+    CPU2006 version: 114
+ Benchmarks version: 113
+      Tools version: 114
+    runspec version: 6437 ($Id: runspec 6437 2011-04-15 00:19:12Z cloyce $)
+
+Tools information:
+ Tools package installed: macosx
+ File locking method: fcntl(2) (probably network-safe)
+Mode |  UID  |  GID  |   Size  |    Modified Date   | Name
+0755 | 503   | 20    |  200036 | 16-Apr-2011 03:20:26 | specmake
+0755 | 503   | 20    | 1429580 | 16-Apr-2011 03:20:26 | specperl
+0755 | 503   | 20    |   30452 | 16-Apr-2011 03:20:30 | specinvoke
+0755 | 503   | 20    |   34548 | 16-Apr-2011 03:20:30 | specinvoke_pm
+0755 | 503   | 20    |  195076 | 16-Apr-2011 03:20:26 | specxz
+0755 | 503   | 20    |   47252 | 16-Apr-2011 03:20:30 | specmd5sum
+0755 | 503   | 20    |    7649 | 18-Apr-2011 22:08:57 | specdiff
+0755 | 503   | 20    |   89751 | 18-Apr-2011 22:08:57 | specpp
+0755 | 503   | 20    |  243776 | 16-Apr-2011 03:20:26 | specrxp
+0755 | 503   | 20    |  128882 | 18-Apr-2011 22:08:57 | runspec
+
+Version info for specinvoke (specinvoke): specinvoke r6392
+Version info for specmake (specmake): GNU Make 3.82
+Version info for specrxp (/Users/cloyce/cpu2006/bin/specrxp): RXP 1.5.0 Copyright Richard Tobin, LTG, HCRC, University of Edinburgh
+                                                              Modified for use in SPEC benchmarks - 14 April 2011
+Version info for specxz (/Users/cloyce/cpu2006/bin/specxz): xz (XZ Utils) 5.0.0
+Version info for specpp (/Users/cloyce/cpu2006/bin/specperl): filepp version 1.8.0SPEC
+Version info for specperl (/Users/cloyce/cpu2006/bin/specperl): This is specperl 5, version 12, subversion 3 (v5.12.3) built for darwin-2level
+                                                                For more detail on specperl, say 'specperl -V'

@@ -1,0 +1,33 @@
+runspec v6437 - Copyright 1999-2009 Standard Performance Evaluation Corporation
+Using 'linux-suse10-ia32' tools
+                 This is the SPEC CPU2006 benchmark tools suite.
+
+Version summary:
+    CPU2006 version: 115
+ Benchmarks version: 113
+      Tools version: 115
+    runspec version: 6437 ($Id: runspec 6437 2011-04-15 00:19:12Z cloyce $)
+
+Tools information:
+ Tools package installed: linux-suse10-ia32
+ File locking method: fcntl(2) (probably network-safe)
+Mode |  UID  |  GID  |   Size  |    Modified Date   | Name
+0755 | 22631 | 116   |  150124 | 15-Apr-2011 22:23:05 | specmake
+0755 | 22631 | 116   | 1199590 | 15-Apr-2011 22:23:05 | specperl
+0755 | 22631 | 116   |   21780 | 15-Apr-2011 22:23:12 | specinvoke
+0755 | 22631 | 116   |   24232 | 15-Apr-2011 22:23:12 | specinvoke_pm
+0755 | 22631 | 116   |  186104 | 15-Apr-2011 22:23:05 | specxz
+0755 | 22631 | 116   |   34192 | 15-Apr-2011 22:23:13 | specmd5sum
+0755 | 22631 | 116   |    7673 | 15-Apr-2011 23:19:33 | specdiff
+0755 | 22631 | 116   |   89775 | 15-Apr-2011 23:19:33 | specpp
+0755 | 22631 | 116   |  219540 | 15-Apr-2011 22:23:05 | specrxp
+0755 | 22631 | 116   |  128906 | 15-Apr-2011 23:19:33 | runspec
+
+Version info for specinvoke (specinvoke): specinvoke r6392
+Version info for specmake (specmake): GNU Make 3.82
+Version info for specrxp (/spec/pro/osg/cpu/cpu2006/cpu2006/bin/specrxp): RXP 1.5.0 Copyright Richard Tobin, LTG, HCRC, University of Edinburgh
+                                                                          Modified for use in SPEC benchmarks - 14 April 2011
+Version info for specxz (/spec/pro/osg/cpu/cpu2006/cpu2006/bin/specxz): xz (XZ Utils) 5.0.0
+Version info for specpp (/spec/pro/osg/cpu/cpu2006/cpu2006/bin/specperl): filepp version 1.8.0SPEC
+Version info for specperl (/spec/pro/osg/cpu/cpu2006/cpu2006/bin/specperl): This is specperl 5, version 12, subversion 3 (v5.12.3) built for i686-linux
+                                                                            For more detail on specperl, say 'specperl -V'

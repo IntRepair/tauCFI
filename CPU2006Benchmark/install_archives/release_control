@@ -1,0 +1,33 @@
+cpu2006-118.base.tar.xz 136949832 141.5 CPU2006 base files
+400.perlbench-109.tar.xz 10154916 61.5 400.perlbench benchmark and data files
+401.bzip2-093.tar.xz 11750752 110.7 401.bzip2 benchmark and data files
+403.gcc-116.tar.xz 4739336 43 403.gcc benchmark and data files
+410.bwaves-101.tar.xz 12472 0.1 410.bwaves benchmark and data files
+416.gamess-101.tar.xz 2365492 16.8 416.gamess benchmark and data files
+429.mcf-098.tar.xz 1210736 6.9 429.mcf benchmark and data files
+433.milc-098.tar.xz 96692 0.6 433.milc benchmark and data files
+434.zeusmp-101.tar.xz 83884 1.1 434.zeusmp benchmark and data files
+435.gromacs-109.tar.xz 744616 13 435.gromacs benchmark and data files
+436.cactusADM-098.tar.xz 361136 3.3 436.cactusADM benchmark and data files
+437.leslie3d-098.tar.xz 43252 0.3 437.leslie3d benchmark and data files
+444.namd-093.tar.xz 1155696 7.6 444.namd benchmark and data files
+445.gobmk-109.tar.xz 995500 9.2 445.gobmk benchmark and data files
+447.dealII-113.tar.xz 4108364 70.2 447.dealII benchmark and data files
+450.soplex-110.tar.xz 9855840 321 450.soplex benchmark and data files
+453.povray-109.tar.xz 2315628 10.3 453.povray benchmark and data files
+454.calculix-107.tar.xz 7768340 26 454.calculix benchmark and data files
+456.hmmer-100.tar.xz 18461612 57 456.hmmer benchmark and data files
+458.sjeng-098.tar.xz 65032 0.4 458.sjeng benchmark and data files
+459.GemsFDTD-098.tar.xz 293956 2.6 459.GemsFDTD benchmark and data files
+462.libquantum-109.tar.xz 33620 0.2 462.libquantum benchmark and data files
+464.h264ref-109.tar.xz 12309092 52.9 464.h264ref benchmark and data files
+465.tonto-093.tar.xz 714548 6.9 465.tonto benchmark and data files
+470.lbm-105.tar.xz 332048 4.7 470.lbm benchmark and data files
+471.omnetpp-109.tar.xz 247020 2.8 471.omnetpp benchmark and data files
+473.astar-100.tar.xz 225308 5.8 473.astar benchmark and data files
+481.wrf-109.tar.xz 13801880 67.1 481.wrf benchmark and data files
+482.sphinx3-098.tar.xz 23285684 51.7 482.sphinx3 benchmark and data files
+483.xalancbmk-113.tar.xz 17310044 213.7 483.xalancbmk benchmark and data files
+998.specrand-093.tar.xz 1596788 4.1 998.specrand benchmark and data files
+999.specrand-093.tar.xz 1596416 4.1 999.specrand benchmark and data files
+cpu2006-118.tools-src.tar.xz 19100868 161.7 tools source files

@@ -1,0 +1,34 @@
+runspec v6514 - Copyright 1999-2009 Standard Performance Evaluation Corporation
+Using 'tru64-alpha' tools
+                 This is the SPEC CPU2006 benchmark tools suite.
+
+Version summary:
+    CPU2006 version: 116
+ Benchmarks version: 116
+      Tools version: 116
+    runspec version: 6514 ($Id: runspec 6514 2011-06-01 23:50:02Z CloyceS $)
+
+Tools information:
+ Tools package installed: tru64-alpha
+ File locking method: fcntl(2) (probably network-safe)
+Mode |  UID  |  GID  |   Size  |    Modified Date   | Name
+0755 | 12867 | 1000  |  254128 | 29-May-2011 04:31:32 | specmake
+0755 | 12867 | 1000  |   20768 | 29-May-2011 04:31:33 | specperl
+0755 | 12867 | 1000  |   32944 | 29-May-2011 04:32:58 | specinvoke
+0755 | 12867 | 1000  |   41136 | 29-May-2011 04:32:58 | specinvoke_pm
+0755 | 12867 | 1000  |  245936 | 29-May-2011 04:31:33 | specxz
+0755 | 12867 | 1000  |   65712 | 29-May-2011 04:32:58 | specmd5sum
+0755 | 12867 | 1000  |    7661 | 13-Jun-2011 20:45:31 | specdiff
+0755 | 12867 | 1000  |   89763 | 13-Jun-2011 20:45:32 | specpp
+0755 | 12867 | 1000  |  295088 | 29-May-2011 04:31:33 | specrxp
+0755 | 12867 | 1000  |  129071 | 13-Jun-2011 20:45:31 | runspec
+0644 | 12867 | 1000  | 2178400 | 29-May-2011 04:31:32 | libperl.so
+
+Version info for specinvoke (specinvoke): specinvoke r6392
+Version info for specmake (specmake): GNU Make 3.82
+Version info for specrxp (/home/amackay/chopin/kit116/bin/specrxp): RXP 1.5.0 Copyright Richard Tobin, LTG, HCRC, University of Edinburgh
+                                                                    Modified for use in SPEC benchmarks - 14 April 2011
+Version info for specxz (/home/amackay/chopin/kit116/bin/specxz): xz (XZ Utils) 5.0.0
+Version info for specpp (/home/amackay/chopin/kit116/bin/specperl): filepp version 1.8.0SPEC
+Version info for specperl (/home/amackay/chopin/kit116/bin/specperl): This is specperl 5, version 12, subversion 3 (v5.12.3) built for alpha-dec_osf
+                                                                      For more detail on specperl, say 'specperl -V'

@@ -1,0 +1,1993 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Utility Programs CPU2006</title>
+<!-- You'll want a nice wide screen when editing this (132 columns)............................................................. -->
+
+<link rel="STYLESHEET" href="css/cpu2006docs.css" type="text/css" />
+<style type="text/css">
+body { background: white; color: black; }
+
+h2 { padding-top:.2cm; border-top: solid 1px #c0c0c0; }
+</style>
+</head>
+
+<body>
+<h1>SPEC CPU2006 Utility Programs </h1>
+<p class="snug"><span style="font-size:80%;">
+Last updated: $Date: 2011-08-16 18:43:20 -0400 (Tue, 16 Aug 2011) $ by $Author: CloyceS $</span> </p>
+<p class="snugtop">(To check for possible updates to this document, please see <a class="external"
+href="http://www.spec.org/cpu2006/Docs/">http://www.spec.org/cpu2006/Docs/</a>  ) </p> 
+
+
+  <p class="contents">Contents</p>
+  <p class="contentsl1"><a href="#intro"         >Introduction</a></p>
+  <p class="contentsl1"><a href="#configpp">       configpp             </a></p>
+  <p class="contentsl1"><a href="#convert">        convert_to_development</a></p>
+  <p class="contentsl1"><a href="#dumpsrcalt">     dumpsrcalt           </a></p>
+  <p class="contentsl1"><a href="#extract_config"> extract_config       </a></p>
+  <p class="contentsl1"><a href="#extract_flags">  extract_flags        </a></p>
+  <p class="contentsl1"><a href="#extract_raw">    extract_raw          </a></p>
+  <p class="contentsl1"><a href="#flag_dump">      flag_dump            </a></p>
+  <p class="contentsl1"><a href="#go">             go (Unix only)       </a></p>
+  <p class="contentsl1"><a href="#index">          index (UNSUPPORTED)</a></p>
+  <p class="contentsl1"><a href="#makesrcalt">     makesrcalt           </a></p>
+  <p class="contentsl1"><a href="#ogo">            ogo (Unix only)      </a></p>
+  <p class="contentsl1"><a href="#port_progress">     port_progress     </a></p>
+  <p class="contentsl1"><a href="#printkids">      printkids.pl         </a></p>
+  <p class="contentsl1"><a href="#printpath">      printpath.pl         </a></p>
+  <p class="contentsl1"><a href="#rawformat">      rawformat            </a></p>
+     <p class="contentsl2"><a href="#description">      Editing result description fields</a></p>
+     <p class="contentsl2"><a href="#cont">            About continuation fields</a></p>
+     <p class="contentsl2"><a href="#rawfilefields">Fields allowed only in rawfiles</a></p>
+        <p class="contentsl3"><a href="#sw_parallel_defeat">sw_parallel_defeat</a></p>
+        <p class="contentsl3"><a href="#test_date">test_date</a></p>
+     <p class="contentsl2"><a href="#changetype">How do you generate a SPECrate result from a SPECspeed result? (or vice-versa)</a></p>
+  <p class="contentsl1"><a href="#relocate">       relocate (Unix only) </a></p>
+  <p class="contentsl1"><a href="#specdiff">       specdiff             </a></p>
+  <p class="contentsl1"><a href="#specinvoke">     specinvoke           </a></p>
+  <p class="contentsl1"><a href="#specmake">       specmake             </a></p>
+  <p class="contentsl1"><a href="#specrxp">       specrxp             </a></p>
+  <p class="contentsl1"><a href="#spectar">       spectar             </a></p>
+  <p class="contentsl1"><a href="#specxz">       specxz             </a></p>
+  <p class="contentsl1last"><a href="#toolsver">       toolsver             </a></p>
+
+<p class="commentarystart">Note: links to SPEC CPU2006 documents on this web page assume that you are reading the page from a
+directory that also contains the other SPEC CPU2006 documents.  If by some chance you are reading this web page from a
+location where the links do not work, try accessing the referenced documents at one of the following locations:</p>
+<ul class="commentaryul">
+  <li class="commentaryli"><a class="external" href="http://www.spec.org/cpu2006/Docs/">www.spec.org/cpu2006/Docs/</a></li> 
+  <li class="commentaryli">The <span class="ttnobr">$SPEC/Docs/</span> (Unix) or <span class="ttnobr">%SPEC%\Docs\</span>
+      (Windows) directory on a system where SPEC CPU2006 has been installed.</li>
+  <li class="commentaryli">The <span class="tt">Docs/</span> directory on your SPEC CPU2006 distribution media.</li>
+</ul>
+<p class="commentaryend"></p>
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="intro">Introduction</h2>
+
+<p>This document describes various useful utilities that ship with SPEC CPU2006.  It is assumed that you have already read <a
+class="external" href="runspec.html">runspec.html</a> and <a class="external" href="config.html">config.html</a>. </p> 
+
+<h4>On Windows Systems</h4>
+
+<p class="l1">Most of the examples in this document have been written in Unix syntax.    That means you'll need to use your
+imagination just a bit as you read this document:  </p>
+<table style="margin:.4em 8%">
+<tr><td><b>If&nbsp;you&nbsp;see:&nbsp;&nbsp;&nbsp;&nbsp;</b></td>    
+                                   <td><b>Just pretend you saw:</b></td></tr>
+<tr><th>cat</th>                   <th>type</th></tr>
+<tr><th>cp</th>                    <th>copy</th></tr>
+<tr><th>diff</th>                  <th>fc</th></tr>
+<tr><th>grep</th>                  <th>findstr</th></tr>
+<tr><th>ls</th>                    <th>dir</th></tr>
+<tr><th>/</th>                     <th>\</th></tr>
+<tr><th>$SPEC</th>                 <th>%spec%</th></tr>
+</table>
+
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="configpp">configpp </h2>
+
+<p>"configpp" is a short way to say: </p>
+
+<pre>
+   $ <b>runspec --action configpp  </b>
+</pre>
+
+<p>That switch is mentioned in <a class="external" href="runspec.html#section3.3">runspec.html</a> but you'll find  much more
+about the config file preprocessor in <a class="external" href="config.html#sectionVII">config.html</a>.  The configuration file
+is specified using the <kbd>--config</kbd> switch, or <kbd>-c</kbd> for short, at the command line. For example, the following two
+command are equivalent: </p> 
+<pre>
+   $ <b>runspec --action configpp  -c try_utilities.cfg</b>
+   $ <b>configpp -c try_utilities.cfg</b>
+</pre>
+
+<p>There are a couple of points worth mentioning here:</p>
+<ol>
+ <li>The preprocessed configuration file will be dumped to stdout.  But the normal progress output from <tt>runspec</tt> also
+ goes to stdout, so the config file output will be delimited by two lines of hyphens.</li>
+ <li>There's no need to specify benchmarks to run.</li>
+ <li>As always, if you don't explicitly specify a config file via '<kbd>-c &lt;filename&gt;</kbd>', then the file
+ <tt>default.cfg</tt> will be used.</li>
+</ol>
+
+<p>The <tt>configpp</tt> utility is a good way to check your configuration file for fatal errors, as the config file is
+completely parsed before it's output.</p>
+
+<p><span class="oldnews">(History: The configpp utility  was added in SPEC CPU2006 V1.0.)</span></p>
+
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="convert"><a name="convert_to_development"></a>convert_to_development</h2>
+
+<p>The "convert_to_development" utility removes various safety checks that ensure that benchmark code, data, and tools
+haven't been modified.  This utility is useful if you are pursuing experimental changes that you would like to try out while
+still continuing to use the SPEC tool harness.  For example, you might want to add your own performance instrumentation code,
+add some debugging code, or try out a modified workload.</p> 
+
+<p>To use it, type:</p>
+<pre>     convert_to_development                  <span class="annotation">&lt;--- Unix</span>
+     specperl bin\convert_to_development     <span class="annotation">&lt;--- Windows</span></pre>
+
+<p>A development tree cannnot be used for <a class="external" href="runspec.html#reportable">reportable</a> runs. </p> 
+
+<p>Benchmark binaries built in one type of tree (reportable or development) cannot be used in the other type unless you set <a
+class="external" href="config.html#check_md5">check_md5=0</a>.  Note that even in a development tree, the default for <span
+class="ttnobr">check_md5</span> remains 1.</p> 
+
+<p><span class="alarm">Warning 1:</span> If you use this utility, you will <i>permanently</i> render the current SPEC
+directory tree incapable of doing <span class="ttnobr">reportable</span> runs.  If you are doing both development work and
+reportable runs, install the suite twice in two different directory trees (for example, on different disks).  </p>
+
+<p><span style="margin-bottom:.2em;" class="alarm">Warning 2:</span> Because benchmark binaries built in a reportable tree
+cannot be used in a development tree (unless you set <span class="ttnobr">check_md5=0</span>), care should be taken to avoid
+accidental deletion and rebuilding of benchmark binaries.  Consider the following scenario, where the user only wanted to try
+changing input files from the workload of 403.gcc:</p>
+
+<div style="width:80%;margin-left:10%;background:#ffdddd;"><b>Probably not what you meant:</b>
+
+<pre class="codeexample">
+  $ <b>runspec --config myconfig --action build 403.gcc</b>
+  $ <b>convert_to_development</b>
+     <i>Modify the workload for 403.gcc to try out some idea, 
+     changing files in 403.gcc/data/ref/input </i>
+  $ <b>runspec --config myconfig --action validate 403.gcc</b>
+  ...
+  Building 403.gcc base 
+</pre>
+</div>
+
+<p class="snugtop">Unless <span class="ttnobr">myconfig.cfg</span> contains <span class="ttnobr">check_md5=0</span>, the
+effect of the above command will be to immediately rebuild <span class="ttnobr">403.gcc</span>, which probably isn't your
+intent if you are only studying the effects of <i>workload</i> modifications for <span class="ttnobr">403.gcc</span>.  </p>
+
+<p><span class="oldnews">(History: The convert_to_development utility was added in SPEC CPU2006 V1.1.)</span></p>
+
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="dumpsrcalt">dumpsrcalt</h2>
+
+<p>SPEC distributes approved source changes in packages referred to as src.alts, which are applied using the config file <a
+class="external" href="config.html#src.alt">src.alt</a> option.  In config.html, you will also find an <a class="external"
+href="config.html#src.alt.example">example</a> showing what happens when one is applied.</p> 
+
+<p>The <kbd>dumpsrcalt</kbd> tool allows you to find out what's in a src.alt without necessarily having to apply it.</p>
+
+<p><kbd>dumpsrcalt</kbd> takes a packaged src.alt, an installed src.alt, or just the src.alt description file
+(<kbd>srcalt.pm</kbd>) and outputs the source changes as a unified diff file, which shows "<tt>-</tt>" for lines that are
+removed and "<tt>+</tt>" for lines that are added.</p>
+
+<p>A src.alt package may also contain whole new files.  In fact, all will contain at least one, as the presence of a "README"
+file is enforced by <a href="#makesrcalt">makesrcalt</a>.   The new files will also be printed, if they are available.</p>
+
+<p><kbd>dumpsrcalt</kbd>'s command-line options control which parts of the src.alt are output.  By default all information
+known about a src.alt is printed.  This includes a summary with the name of the src.alt, the benchmark to which it applies,
+the versions of CPU2006 with which it may be used, and a count of new and changed files.</p>  
+
+<p>Here are the contents of the src.alt created in the example for <a href="#makesrcalt">makesrcalt</a>:</p>
+
+<pre>
+$ <b>dumpsrcalt 403.gcc.no_line.cpu2006.v1.2.tar.xz</b>
+This is src.alt "no_line" for 403.gcc.
+It is usable with version 1.2 of the benchmark.
+It contains 1 new file and changes to 1 existing file.
+------------------------------------------------------------------------------
+Index: README
+===================================================================
+--- original/README     1970-01-01 01:00:00.000000000 +0100
++++ no_line/README      2011-07-20 16:40:47.000000000 +0100
+@@ -0,0 +1,1 @@
++Remove some of those pesky #line directives.
+Index: c-parse.c
+===================================================================
+--- original/c-parse.c  1970-01-01 01:00:00.000000000 +0100
++++ no_line/c-parse.c   2011-07-20 16:40:47.000000000 +0100
+@@ -71,8 +71,6 @@
+ #define        CLASS   321
+ #define        ALIAS   322
+ 
+-/* #line 34 "c-parse.y" */
+-
+ #include "config.h"
+ #include "system.h"
+ #include "tree.h"
+@@ -102,10 +100,8 @@
+ /* Rename the "yyparse" function so that we can override it elsewhere.  */
+ #define yyparse yyparse_1
+ 
+-/* #line 67 "c-parse.y" */
+ typedef union {long itype; tree ttype; enum tree_code code;
+  const char *filename; int lineno; } YYSTYPE;
+-/* #line 200 "c-parse.y" */
+ 
+ /* Number of statements (loosely speaking) and compound statements 
+    seen so far.  */
+$
+</pre>
+
+<p>Notice above that <tt>dumpsrcalt</tt> was applied to the packaged (<tt>.xz</tt>) src.alt.  The <tt>dumpsrcalt</tt>
+utility can also be applied to an installed src.alt, producing the same output:</p>
+
+<pre>
+$ <b>. ./shrc</b>
+$ <b>specxz -dc 403.gcc.no_line.cpu2006.v1.2.tar.xz | spectar -xvf -</b>
+README.403.gcc.src.alt.no_line.txt
+benchspec/CPU2006/403.gcc/src/src.alt/no_line/srcalt.pm
+benchspec/CPU2006/403.gcc/src/src.alt/no_line/README
+$ <b>dumpsrcalt 403.gcc no_line</b>
+This is src.alt "no_line" for 403.gcc.
+It is usable with version 1.2 of the benchmark.
+It contains 1 new file and changes to 1 existing file.
+------------------------------------------------------------------------------
+Index: README
+===================================================================
+--- original/README     1970-01-01 01:00:00.000000000 +0100
++++ no_line/README      2011-07-20 16:44:27.000000000 +0100
+@@ -0,0 +1,1 @@
++Remove some of those pesky #line directives.
+Index: c-parse.c
+===================================================================
+--- original/c-parse.c  1970-01-01 01:00:00.000000000 +0100
++++ no_line/c-parse.c   2011-07-20 16:44:27.000000000 +0100
+@@ -71,8 +71,6 @@
+ #define        CLASS   321
+ #define        ALIAS   322
+ 
+-/* #line 34 "c-parse.y" */
+-
+ #include "config.h"
+ #include "system.h"
+ #include "tree.h"
+@@ -102,10 +100,8 @@
+ /* Rename the "yyparse" function so that we can override it elsewhere.  */
+ #define yyparse yyparse_1
+ 
+-/* #line 67 "c-parse.y" */
+ typedef union {long itype; tree ttype; enum tree_code code;
+  const char *filename; int lineno; } YYSTYPE;
+-/* #line 200 "c-parse.y" */
+ 
+ /* Number of statements (loosely speaking) and compound statements 
+    seen so far.  */
+$
+</pre>
+
+<p>Finally, you can apply <tt>dumpsrcalt</tt> just to <kbd>srcalt.pm</kbd>.  In that case, the <tt>README</tt> file is not
+displayed, since <tt>srcalt.pm</tt> contains only differences:</p>
+
+<pre>
+$ <b>dumpsrcalt benchspec/CPU2006/403.gcc/src/src.alt/no_line/srcalt.pm</b>
+This is src.alt "no_line" for 403.gcc.
+It is usable with version 1.2 of the benchmark.
+It contains 1 new file and changes to 1 existing file.
+------------------------------------------------------------------------------
+New file "README" isn't present, and can't be dumped.
+Index: c-parse.c
+===================================================================
+--- original/c-parse.c  1970-01-01 01:00:00.000000000 +0100
++++ no_line/c-parse.c   2011-07-20 16:46:43.000000000 +0100
+@@ -71,8 +71,6 @@
+ #define        CLASS   321
+ #define        ALIAS   322
+ 
+-/* #line 34 "c-parse.y" */
+-
+ #include "config.h"
+ #include "system.h"
+ #include "tree.h"
+@@ -102,10 +100,8 @@
+ /* Rename the "yyparse" function so that we can override it elsewhere.  */
+ #define yyparse yyparse_1
+ 
+-/* #line 67 "c-parse.y" */
+ typedef union {long itype; tree ttype; enum tree_code code;
+  const char *filename; int lineno; } YYSTYPE;
+-/* #line 200 "c-parse.y" */
+ 
+ /* Number of statements (loosely speaking) and compound statements 
+    seen so far.  */
+$
+</pre>
+
+<p>Notice that the output from <tt>dumpsrcalt</tt> is suitable for use as input to many <tt>patch (1)</tt> programs,
+available on Unix systems and in some add-on packages for Windows (e.g. Cygwin).  If you try to apply the output of
+<tt>dumpsrcalt</tt> yourself, take care to notice how paths are handled by your patch program, especially if the src.alt is
+for a benchmark that has a complicated source tree.  Many patch programs will pay attention to the filename but not the path
+listed on the "Index:" lines, so it may be best to apply them using the "<tt>-p1</tt>" option, to cause patch to ignore
+"Index:" lines and use the full paths of the files as listed in the diff.  </p>
+
+<p><kbd>dumpsrcalt</kbd>'s command-line options are intended to be self-explanatory:</p>
+
+<pre>
+$ <b>dumpsrcalt --help</b>
+Usage: bin/dumpsrcalt [options] &lt;benchmark&gt; &lt;srcaltname&gt;
+       bin/dumpsrcalt [options] &lt;path to srcalt tarball&gt;
+       bin/dumpsrcalt [options] &lt;path to srcalt.pm&gt;
+Options:
+   --skip-changed         -- Do not output diffs of files that have changed
+   --skip-new             -- Do not output diffs for new files
+   --summarize            -- Do not output any diffs at all
+   --no-summary           -- Do not output the summary for the src.alt
+
+&lt;benchmark&gt; must be the full nnn.name form
+&lt;srcaltname&gt; must match the name of the subdirectory in the benchmark's
+  src.alt directory
+</pre>
+
+<p><span class="oldnews">(History: The dumpsrcalt utility was added in SPEC CPU2006 V1.1.)</span></p>
+
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="extract_config">extract_config</h2>
+
+<p>If you have a rawfile, you can extract the config file that was used with it.  To do so, use the <kbd>extract_config</kbd>
+utility.  </p>
+
+<p>For example, starting with a freshly-installed SPEC CPU2006 directory tree:</p>
+
+<pre>
+ % <b>runspec --config=Example-simple --size=test --iterations=1 \
+   --tuning=base --output_format=text,raw bzip2 > /dev/null</b>
+ % <b>cd result</b>
+ % <b>ls</b>
+ CINT2006.001.test.rsf CINT2006.001.test.txt CPU2006.001.log       lock.CPU2006
+</pre>
+
+<p>Note that we have just the single result.  Let's make a temporary directory and copy the rawfile there:</p>
+
+<pre>
+ % <b>mkdir tmp</b>
+ % <b>cd tmp</b>
+ % <b>cp ../CINT2006.001.test.rsf .</b>
+ % <b>ls</b>
+ CINT2006.001.test.rsf  </pre>
+
+<p>(On Windows, that <tt>ls</tt> command would be spelt <tt>dir</tt>.  You'll find some more Windows notes in the
+<a href="#intro">introduction</a>.)</p>
+
+<p>Now, attempt to extract the config file:</p>
+
+<pre>
+ % <b>extract_config --stdout CINT2006.001.test.rsf > tmp.cfg  </b></pre>
+
+<p>Does the extracted file match the original?</p>
+
+<pre>
+ % <b>diff -u ../../config/try_utilities.cfg tmp.cfg</b>
+ --- ../../config/try_utilities.cfg      2006-05-22 14:41:42.000000000 -0700
+ +++ tmp.cfg     2006-05-22 14:43:16.000000000 -0700
+ @@ -1,3 +1,6 @@
+ +# Invocation command line:
+ +# /Volumes/storage/WorkRelated/SPEC/CPU2006/Kits/cpu2006-kit91/bin/runspec 
+     --config=try_utilities --size=test --iterations=1 --tuning=base 
+     --output_format=asc,raw bzip2
+ +############################################################################
+  # This is a sample config file. It was tested with:
+  # 
+  #      Compiler name/version:       Apple GCC v4.0.1 build 5245
+ @@ -128,15 +131,8 @@
+  sw_state         = Default
+  sw_other         = None
+  
+ -__MD5__
+ -401.bzip2=base=try_utilities=default:
+ -# Last updated Mon May 22 14:41:42 2006
+ -optmd5=0666e60587f33e2aa13eb6ba0917aa60
+ -baggage=
+ -compile_options=\
+ -@eNqNj00LgkAQhu/7K4a9b5duoUKuJpa6C+qlS9QmYqAjaYf+faMF2cfBYQ8Dsy/P80oV6xWUxoCg\
+ -h4BtX2HTLRCEl2pfHqTOaU08380DoBFqCaI+35tjXRnRoGgrCpbwNVaHt6spHCZXIKXNicDHXblb\
+ -pTObf+A4IwkibaJ1kNLtF82ZGsI6C+Nw79OX/xqcRWGyexaa4Wrh6VKYvnMm5m+rwTfyXu4z8WNE\
+ -5UPBSbsHPPNh9Q==
+ -exemd5=d828496b92983e96408f680b55393225
+  
+ %  
+</pre>
+
+<p>Yes.  The only differences are:</p>
+
+<ul>
+  <li> The copy in the rawfile adds a comment to tell you how the config file was invoked.</li>
+  <li> The original copy (in <kbd>$SPEC/config</kbd>) has the MD5 information for <tt>401.bzip2</tt>.  (The config file is
+  tucked away into the rawfile without the MD5 section.)  </li>
+</ul>
+
+<p>The config file can also be extracted directly to a file:</p>
+<pre>
+ % <b>extract_config --nostdout CINT2006.001.test.rsf</b>
+Wrote "CINT2006.001.test.cfg"</pre>
+<p>or</p>
+<pre>
+ % <b>extract_config CINT2006.001.test.rsf</b>
+Wrote "CINT2006.001.test.cfg"</pre>
+
+<p>Lastly, you can choose the filename if you're piping files in via stdin:</p>
+<pre>
+ % <b>extract_config --basename=SampleFilename &lt; CINT2006.001.test.rsf</b>
+Wrote "SampleFilename.cfg"</pre>
+
+<h4>On Windows systems</h4>
+<p class="l1snugbot">Instead of saying <tt>diff</tt> just above, you would say <tt>fc</tt> (and, as already mentioned,
+<tt>dir</tt> is the Windows spelling for what Unix calls <tt>ls</tt>.)</p>
+
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="extract_flags">extract_flags</h2>
+<p> If you have a rawfile, you can extract the XML flags description file that the result uses.  To do so, use
+<kbd>extract_flags</kbd>.  Usage is similar to <a href="#extract_raw">extract_raw</a>, but unlike <span
+class="ttnobr">extract_raw</span>, the <span class="ttnobr">extract_flags</span> utility <strong>might not</strong> produce a
+flags description file identical to the original flags file.  This is because EOLs (end-of-line) characters are normalized to
+Unix-style LF (line feed) only. </p>
+
+<p><strong>Note: </strong>If you have used a flags description file to format your result, the entire flags file is stored in
+the raw file (not just the part needed for result).</p>
+
+<p>For example, continuing the example from <a href="#extract_raw">extract_raw</a>, you can extract the flags file using the
+following command: </p>
+
+<pre>
+$ <b>extract_flags --stdout new.rsf &gt; extracted.flags.xml</b>
+$ <b>diff ../myflags.xml ./extracted.flags.xml </b>
+$ 
+</pre>
+
+<p>We see no difference between the extracted flags description file and the original.  Notice that the above command asked for
+the flags to be written to standard out; without that switch, they would have been written to whatever filename was <a
+class="external" href="flag-description.html#suggestedfilename">suggested</a>.</p> 
+
+<p>If you'd like for the filename of the extracted flags file to match the rawfile, use the <kbd>--nofilename</kbd> option.
+This will cause <b>extract_flags</b> to ignore the flag file's "suggested filename":</p>
+
+<pre>
+    % <b>ls *rsf</b>
+    cpu2006-20060901-00074.rsf  cpu2006-20060904-00080.rsf
+    cpu2006-20060901-00075.rsf  cpu2006-20060904-00081.rsf
+    cpu2006-20060903-00076.rsf  cpu2006-20060904-00082.rsf
+    cpu2006-20060903-00077.rsf  cpu2006-20060904-00083.rsf
+    cpu2006-20060904-00078.rsf  cpu2006-20060904-00084.rsf
+    cpu2006-20060904-00079.rsf  cpu2006-20060904-00085.rsf
+    % <b>extract_flags --nofilename cpu2006-20060904-00085.rsf</b>
+    Reading "cpu2006-20060904-00085.rsf"
+    Wrote "cpu2006-20060904-00085.xml"
+    %
+</pre>
+
+<p><span class="oldnews">(History: as of SPEC CPU2006 V1.1)</span> You can format a result with multiple flags files.  If 
+you used multiple flags files as input to <tt>runspec</tt> then you will get multiple flags files when running
+<tt>extract_flags</tt>.</p>
+ 
+<pre> 
+# <b>extract_flags CINT2006.001.ref.rsf</b>
+Reading "CINT2006.001.ref.rsf"
+Wrote "platform-setup.xml"
+Wrote "pathscale-flags.xml"
+ 
+# <b>extract_flags --nofilename CINT2006.001.ref.rsf</b>
+Reading "CINT2006.001.ref.rsf"
+Wrote "CINT2006.001.ref.xml"
+Wrote "CINT2006.001.ref-1.xml"
+</pre> 
+
+<p>In the examples above, result 001 used two flags files.  One has information about the platform (which might contain items such
+as BIOS settings), and the other describes the compiler.</p>
+
+<p><strong>Note: </strong>If a raw file has not been formatted with a flags description file, <kbd>extract_flags</kbd> does
+nothing.</p>
+
+<p><span class="oldnews">(History: the extract_flags utility is new with SPEC CPU2006 V1.0.  Several of its switches are new with
+SPEC CPU2006 V1.1.)</span></p>
+
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="extract_raw">extract_raw</h2>
+
+<p>If you have a PDF, HTML, or PostScript output file, you can extract the rawfile that was used to generate it.  To do so, use
+<kbd>extract_raw</kbd>.  For example:</p>
+
+<pre>
+$ <b>cp -p CINT2006.267.ref.rsf new</b>
+$ <b>ls -g new</b>
+-rw-rw-r--   1 ptg       186202 Mar 13 22:57 new
+$ <b>rawformat -o html,raw --flagsurl ./myflags.xml new 2&gt;&amp;1 &gt; /dev/null</b>
+$ <b>ls -g new.html new.rsf</b>
+-rw-rw-r--   1 ptg       109390 Mar 20 12:48 new.html
+-rw-rw-r--   1 ptg       194193 Mar 20 12:48 new.rsf
+$ <b>mkdir AppleFrancisco</b>
+$ <b>cd AppleFrancisco/</b>
+$ <b>cp ../new.html .</b>
+$ <b>ls -g</b>
+-rw-rw-r--   1 ptg       109390 Mar 20 12:51 new.html
+$ <b>extract_raw new.html </b>
+new.html: Wrote "new.rsf"
+$ <b>ls -g</b>
+-rw-rw-r--   1 ptg       109390 Mar 20 12:51 new.html
+-rw-rw-r--   1 ptg       194193 Mar 20 12:51 new.rsf
+$ <b>diff ../new.rsf new.rsf</b>
+$ 
+</pre>
+
+<p>In the above example, we begin by copying the original rawfile (always recommended anytime you use commands that create
+new rawfiles).  The <span class="ttnobr">rawformat</span> command takes <span class="ttnobr">new</span> as input and produces
+as output both <span class="ttnobr">new.html</span> and <span class="ttnobr">new.rsf</span>.  We copy only <span
+class="ttnobr">new.html</span> to a newly created directory, where we demonstrate that <span
+class="ttnobr">extract_raw</span> can create a copy of <span class="ttnobr">new.rsf</span> that is identical to the copy in
+the parent directory.</p>
+
+<h4>On Windows systems</h4>
+
+<p class="l1">Note that the file you extract from can be PDF, PostScript, or HTML, just as on Unix systems, with one important
+exception: if you are using a browser that attempts to add value to the HTML when you save it, that browser may break the
+embedded rawfile.  For example, with Internet Explorer Version 5.00.3103.1000, if you are viewing a SPEC CPU2006 html file
+and you select <span class="ttnobr">File -&gt; Save As</span>, the default for "<span class="ttnobr">Save as type</span>" is
+shown as </p>
+
+<pre>
+     "Web Page, complete (*.htm,*.html)"  </pre>
+
+<p class="l1"><span class="alarm">Do not accept that default if you want to be able to retrieve the rawfile later on.  If you take the default,
+your saved file will be <span class="u">incomplete</span>.  To save the web page INCLUDING the embedded rawfile, you must
+change "Save as type" to</span></p>
+
+<pre>
+     "Web Page, HTML only (*.htm,*.html)"  </pre>
+
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="flag_dump" style="margin-bottom:0.05em;">flag_dump</h2>
+<p class="snugtop">(You can also invoke this utility with the spelling: 'flags_dump')</p>
+
+<p>If you have an XML flag description file, such as one extracted using <a href="#extract_flags">extract_flags</a>, or one
+downloaded <a class="external" href="http://www.spec.org/cpu2006/flags/">from SPEC</a>, <tt>flag_dump</tt> will create a more
+human-readable HTML version from it.  The <tt>flag_dump</tt> utility will also handle more than one XML flag description at a
+time.</p> 
+
+<p> For example:</p>
+<pre>
+$ <b>cd /tmp</b>
+$ <b>mkdir myflags</b>
+$ <b>cd myflags/</b>
+$ <b>cp $SPEC/Docs/flags/*xml .</b>
+$ <b>ls</b>
+example-medium-cfg-flags.xml    flags-advanced.xml              flags-simple.xml
+$ <b>cp flags-advanced.xml flags-for-willi.xml</b>
+$ <b>flag_dump flags-advanced.xml flags-for-willi.xml flags-simple.xml </b>
+Processing flags-advanced.xml...wrote flags-advanced.html
+Processing flags-for-willi.xml...wrote flags-for-willi.html
+Processing flags-simple.xml...wrote flags-simple.html
+$ 
+</pre>
+
+<p>If you are writing a flags file, <span class="alarm">you should validate that the dump is valid HTML</span>.  If it isn't, you
+probably made a mistake in the HTML text that you have included inside your XML flags file.  A handy HTML validator can be found
+at <a class="external" href="http://validator.w3.org/">http://validator.w3.org/</a>.</p> 
+
+<p>Note that <kbd>flag_dump</kbd> utility assumes that you are formatting flags files written by users. These files are not
+allowed to contain mandatory flags. If you attempt to use the <kbd>flag_dump</kbd> utility to format any of the
+suite-provided flag files such as <kbd>flags_mandatory.xml</kbd> or the benchmark flag files that reside in
+<kbd>$SPEC/benchspec/CPU2006/*/Spec/</kbd> directory, the utility will exit with an error message such as the one below.</p>
+
+<pre>
+    % <b>cd $SPEC/benchspec</b>
+    % <b>flag_dump flags_mandatory.xml</b>
+    Processing flags_mandatory.xml...
+    ERROR: The flag file at
+           flags_mandatory.xml
+         contains one or more flags in the class "mandatory", which is not
+         allowed.
+    % 
+</pre>
+
+<p><span class="oldnews">(History: The flag_dump utility  was added in SPEC CPU2006 V1.0.)</span></p>
+
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="go">go (Unix only)</h2>
+
+<p>When you source the <kbd><strong>shrc</strong></kbd>, as described in <a class="external"
+href="runspec.html#section2.4">runspec.html</a>, the '<kbd>go</kbd>' shell alias is created. <kbd>go</kbd> is a handy utility to
+navigate the directory structure of a SPEC source tree. Here are the various things it understands and the places they will take
+you: </p> 
+
+<table style="margin:1em 8%">
+<tr><td><b>If you say</b></td>               <td><b>You'll end up in</b> </td></tr>
+<tr><th>go
+  <br />go&nbsp;top</th>                     <td><tt>$SPEC</tt></td></tr>
+<tr><th>go bin</th>                          <td><tt>$SPEC/bin</tt> (where the tools live)</td></tr>
+<tr><th>go config</th>                       <td><tt>$SPEC/config</tt></td></tr>
+<tr><th>go&nbsp;result
+  <br />go&nbsp;results</th>                 <td><tt>$SPEC/result</tt></td></tr>
+<tr><th>go&nbsp;doc
+   <br />go&nbsp;docs</th>                   <td><tt>$SPEC/Docs</tt></td></tr>
+<tr><th>go cpu</th>                          <td><tt>$SPEC/benchspec/CPU2006</tt></td></tr>
+<tr><th>go <i>benchmark</i></th>             <td> The top level directory for the named benchmark,  if it can be 
+                                                  found. (Examples follow)</td></tr>
+<tr><th>go 401</th>                          <td> <tt>$SPEC/benchspec/CPU2006/401.bzip2</tt></td></tr>
+<tr><th>go perlb</th>                        <td><p class="snug"><tt>$SPEC/benchspec/CPU2006/400.perlbench</tt>  Notice 
+                                                 that abbreviated names are accepted.  But if the abbreviation is 
+                                                 ambiguous, the command will pick the first match, so pay attention 
+                                                 to the reply:</p>
+<pre class="snugbot">$ <b>go g</b>
+/spec/cpu2006/kit91/benchspec/CPU2006/403.gcc
+$ <b>go go</b>
+/spec/cpu2006/kit91/benchspec/CPU2006/445.gobmk
+$ 
+</pre>                                       </td></tr>
+<tr><th>go nada</th>                         <td> no change: there's no benchmark named <tt>nada*</tt></td></tr>
+<tr><th>go&nbsp;<i>benchmark&nbsp;subdir</i></th>
+                                             <td><p class="snug">The named subdirectory of the directory tree for the
+                                                 referenced benchmark, for example "<span class="ttnobr">go perlb
+                                                 run</span>".  You can also name more than one level of subdirectory: "<span
+                                                 class="ttnobr">go 462 data train</span>".  <span class="oldnews">(History:  The
+                                                 go alias existed in SPEC CPU2000, but for SPEC CPU2006 the order is new when
+                                                 naming subdirectories, as is the ability to name more than one level of
+                                                 subdirectory.)</span></p>
+                                                 </td></tr>
+<tr><th>go&nbsp;<i>subdir</i></th>
+                                             <td><p class="snugtop">If you are already in a benchmark subtree, then you can
+                                                 move to a different branch of the same benchmark, by naming the branch and
+                                                 not mentioning a benchmark.  For example:</p>
+<pre class="snugbot">
+$ <b>pwd</b>
+/rahul/benchspec/CPU2006/401.bzip2/run/build_base_a3.0000
+$ <b>go exe</b>
+/rahul/benchspec/CPU2006/401.bzip2/exe
+$ 
+</pre>
+</td></tr>
+
+</table>
+
+<p><tt>go</tt> also understands <tt>-h</tt> and <tt>--help</tt>, and will output a short usage message in response to either of those arguments.</p>
+
+<p><strong>Note: </strong>If you leave the shell where you sourced <tt>shrc</tt>, the alias is no longer
+available! So if you want to use this alias, do not start a sub-shell.</p>
+
+<p><strong>Note: </strong>'<tt>go</tt>' does not know about your settings for <a class="external"
+href="config.html#output_root">output_root</a> or <a class="external" href="config.html#expid">expid</a>, and will not be able to
+take you to your run, exe, or result directories if you use those features.  See <a href="#ogo">ogo</a> for something that can
+help.</p> 
+
+
+<h4>Users of shells compatible with <tt>csh</tt></h4> 
+
+<p class="l1"><span class="oldnews">(History: since the release of SPEC CPU2006 V1.0,)</span> If you use a <tt>csh</tt>-like
+shell, please note that after you say <span class="ttnobr">source cshrc</span>, there is a <tt>go</tt> alias that is set up
+for you, which implements the same features as described above.</p>
+
+<h4>Windows Users</h4>
+<p class="l1">Sorry, the <tt>go</tt> feature does not exist for Windows systems.</p>
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="index">index (UNSUPPORTED)</h2>
+
+<p>As you are preparing sets of results, you might find it handy to use <span class="ttnobr">scripts.misc/index</span>.  This
+script is NOT supported - please do not submit bug reports for it.  But you're welcome to try it out, like so: </p>
+
+<pre>
+$ <b>ls</b>
+fprate.rsf   intrate.rsf
+$ <b>rawformat -o html *rsf &gt; /dev/null</b>
+$ <b>ls</b>
+fprate.flags.html   fprate.rsf          intrate.html
+fprate.gif          intrate.flags.html  intrate.rsf
+fprate.html         intrate.gif
+$ <b>$SPEC/bin/scripts.misc/index</b>
+$ <b>ls</b>
+fprate.flags.html   fprate.rsf          intrate.gif
+fprate.gif          index.html          intrate.html
+fprate.html         intrate.flags.html  intrate.rsf
+$ 
+</pre>
+
+<p>In the above example, we have a couple rawfiles in a directory, generate html reports for them, and then add an
+index.</p>
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="makesrcalt">makesrcalt</h2>
+
+<p>SPEC distributes approved source changes in packages referred to as src.alts, which are applied using the config file <a
+class="external" href="config.html#src.alt">src.alt</a> option.  (The file config.html also has an <a class="external"
+href="config.html#src.alt.example">example</a> showing what happens when one is applied.)</p> 
+
+<p>A src.alt is a specialized difference file, and can't be made by hand.  When you need to package some source changes,
+<kbd>makesrcalt</kbd> is the tool you need.</p>
+
+<p>If you are a developer and you believe that changes are needed to the SPEC source code, it will probably be convenient to work
+in a sandbox, temporarily <a class="external" href="runspec-avoidance.html">abandoning the tools</a> during your development
+phase.  (Or, you can use <a  href="utility.html#convert_to_development">convert_to_development</a> to make the whole installation
+into one big sandbox.)  Once you have a pretty good idea of the changes that you want:</p> 
+<ol>
+
+<li><p>Create a subdirectory under the benchmark's <kbd>src/</kbd> directory named "<kbd>src.alt/</kbd>".</p> </li>
+
+<li><p>Decide on a name for your src.alt.  The src.alt name may contain only letters, digits, and underscores.  For
+convenience, it should be short.  Create a subdirectory under <kbd>src/src.alt/</kbd> using the name you have
+chosen.</p></li>
+
+<li><p>In that subdirectory, deposit any modified or new source files for the benchmark. </p> </li>
+
+<li><p>You must also put a file named "README" in that subdirectory.  Its contents are up to you; to see examples of the kind of
+information that is usually placed in README files, see <a class="external"
+href="http://www.spec.org/cpu2006/src.alt/">www.spec.org/cpu2006/src.alt</a>.  In your draft, kindly do NOT claim that it is
+approved; the release manager will do that at the last minute.</p></li> 
+
+<li><p>Once the directory structure is set up, creation of the src.alt package is simple: just type <span
+class="ttnobr">makesrcalt</span> followed by the name of the benchmark and the src.alt name.</p></li>
+
+<li><p><a class="external" href="techsupport.html">Contact SPEC</a> to get the src.alt approved.  </p></li> 
+</ol>
+
+<p><b>Example:</b> We've made source changes to 403.gcc to remove preprocessor <kbd>#line</kbd> directives from the
+<kbd>c-parse.c</kbd> source file.  This src.alt will be called 'no_line':</p>
+
+<pre>
+$ <b>makesrcalt 403.gcc no_line</b>
+
+Making 'no_line' src.alt for 403.gcc
+This will be usable with version 1.2 of the suite.
+
+Making differences and computing checksums...
+Writing control file...
+Gathering files...
+Wrote /spec/cpu2006/403.gcc.no_line.cpu2006.v1.2.tar.xz
+
+Finished making 'no_line' src.alt for 403.gcc.  Elapsed time: 0 seconds
+$
+</pre>
+
+<p>If you use <span class="ttnobr">--help</span>, you'll get an up-to-date list of options.  Usually, you won't need any of
+these:</p>
+
+<pre>
+$ <b>makesrcalt --help</b>
+Usage: bin/makesrcalt [options] &lt;benchmark&gt; &lt;srcaltname&gt;
+Options:
+   --usewith &lt;min&gt;:&lt;max&gt;  -- Set the versions of the suite that will accept
+                             this src.alt (defaults to 1.1)
+   --notarball            -- Skip packaging the src.alt as a tarball (created
+                             by default)
+   --context &lt;lines&gt;      -- Set lines of context for the diff.  This defaults
+                             to 3 and should not be changed.
+   --help                 -- Print this message
+
+&lt;benchmark&gt; must be the full nnn.name form
+&lt;srcaltname&gt; must match the name of the subdirectory in the benchmark's
+  src.alt directory
+$
+</pre>
+
+<p><span class="oldnews">(History: the makesrcalt utility was improved in, and was documented for the first time with, SPEC
+CPU2006 V1.1.)</span></p>
+
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="ogo">ogo (Unix only)</h2>
+
+<p>When you source <tt>shrc</tt>, as described in <a class="external" href="runspec.html#section2.4">runspec.html</a>, the
+'<tt>ogo</tt>' shell alias is created. Its function is similar to the <a href="#go">go</a> alias with one important difference: if
+you use the <a class="external" href="config.html#output_root">output_root</a> setting in your config file (also discussed in <a
+class="external" href="runspec.html#output_root">runspec.html</a>) you can use <tt>ogo</tt> as a shorthand for moving around both
+the original installed benchmark tree and your output tree. </p> 
+
+<p>To do so, simply set the <tt>GO</tt> environment variable to the same value as your <tt>output_root</tt>.  Then,
+'<tt>ogo</tt>' will use the contents of that variable as the top level of the benchmark tree when looking for run directories
+and results.</p>
+
+<p>For example, you could say something like this:</p>
+<pre class="snugbot">
+$ <b>go config</b>
+/spec/config
+$ <b>grep output_root cds.cfg</b>
+output_root = /cds_stuff
+$ <b>GO=/cds_stuff</b>
+$ <b>ogo run perl</b>
+Using value in GO for output_root: /cds_stuff
+/cds_stuff/benchspec/CPU2006/400.perlbench/run
+$ 
+</pre>
+
+<p>Note the helpful message that tells you which directory you have landed in.  (If you define the environment variable <span
+class="ttnobr">OGO_NO_WARN</span> the message will be shorter - the first line <span class="ttnobr">"Using
+value in GO..."</span> will not be output.)</p>
+
+<p>In this example, the benchmarks are installed in "<tt>/spec</tt>", and <tt>output_root</tt> is set to
+"<tt>/cds_stuff</tt>" in the config file.  Any runs using that config file will write their results, executables, and run
+directories under "<tt>/cds_stuff</tt>".  Continuing with other examples:</p>
+
+<table style="margin:1em 8%">
+<tr><td><b>If you say</b></td>               <td><b>You'll end up in</b> </td></tr> <tr><th>ogo<br />ogo top</th>                 
+  <td><tt>/cds_stuff</tt> <br />Your own private output tree </td></tr> <tr><th>ogo result</th>                     
+<td><tt>/cds_stuff/result</tt> <br />Your own private result directory</td></tr> <tr><th>ogo&nbsp;400&nbsp;run</th>          
+<td><tt>/cds_stuff/benchspec/CPU2006/400.perlbench/run</tt> <br />Your own private run directories</td></tr>
+<tr><th>ogo&nbsp;bzip&nbsp;exe</th>          <td><tt>/cds_stuff/benchspec/CPU2006/401.bzip2/exe</tt> <br />Your own private
+executables</td></tr> <tr><th>ogo doc</th>                         <td><tt>/spec/Docs</tt> <br />There's only one Docs directory,
+on the original installed <tt>$SPEC</tt> tree</td></tr> <tr><th>ogo config</th>                      <td><tt>/spec/config</tt> <br
+/>The config directory is always on the original installed tree; set its protections as described in <a class="external"
+href="runspec.html#output_root">runspec.html</a></td></tr> <tr><th>ogo 400 src</th>                    
+<td><tt>/spec/benchspec/CPU2006/400.perlbench/src</tt> <br />Run directories are under <tt>output_root</tt>, but the benchmark
+<tt>src</tt> directory is still in the original installed <tt>$SPEC</tt> tree.</td></tr> </table> 
+<p><tt>ogo</tt> also understands <tt>-h</tt> and <tt>--help</tt>, and will output a short usage message in response to either of those arguments.</p>
+
+<p><span class="oldnews">(History: since SPEC CPU2006 V1.1,)</span> Saying <span class="ttnobr">ogo top</span> or just <span
+class="ttnobr">ogo</span> takes you to <span class="ttnobr">$GO</span>.  It used to take you to <span
+class="ttnobr">$SPEC</span>.</p>
+
+
+
+<p><strong>Note: </strong>It's not necessary to export the "GO" variable.  Declaring this variable at the command-prompt is
+sufficient. </p>
+<pre>
+    $ <b>GO=/tmp/cds</b>
+    $ <b>echo $GO</b>
+    /tmp/cds
+</pre>
+
+<p><span class="oldnews">(History: The ogo alias  was added in SPEC CPU2006 V1.0.)</span></p>
+
+<h4>Users of shells compatible with <tt>csh</tt></h4>
+<p class="l1"><tt>ogo</tt> has also been implemented for <tt>cshrc</tt>.  There is one <b>restriction</b>: to get the full
+feature set above, you must set <tt>OGO</tt> to the actual directory, not to a symbolic link.</p>
+
+<h4>Windows Users</h4>
+<p class="l1">Sorry, the <tt>ogo</tt> feature does not exist for Windows systems.</p>
+
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="port_progress">port_progress</h2>
+
+<p>The <span class="ttnobr">port_progress</span> utility analyzes log files and summarizes errors.  It was primarily used
+during the benchmark porting phase for SPEC CPU2006, but can still come in handy, for example when trying the benchmarks with
+a new compiler.  To use it:</p>
+<pre>
+  cd $SPEC/result  (or on Windows, cd %SPEC%\result)
+  port_progress logfile...
+</pre>
+
+<p>Optionally, you can limit output by saying:</p>
+<pre>
+  -c config    only report logs that match the named config file
+</pre>
+
+<p>In the example below: </p>
+<ul>
+<li>User <span class="ttnobr">john</span> has asked for a summary of logs that used config files that match "<span
+class="ttnobr">dec2</span>". </li> 
+<li><span class="ttnobr">Te</span>, <span class="ttnobr">Tr</span>, and <span class="ttnobr">Ref</span> indicate the Test,
+Train, and Ref workloads. </li> 
+<li>In the first line of the table, the benchmark <span class="ttnobr">400.perlbench</span> is reported as successful (<span
+class="ttnobr">"S"</span>) for all 6 tests (base tuning/peak tuning, test/train/ref).  </li>
+<li>A few lines down, <span class="ttnobr">410.bwaves</span> succeeded for the test workload with base tuning, but no
+information is available about the other 5 tests.  The code <span class="ttnobr">"b?"</span> indicates that there was at least
+one build attempt for a benchmark, but it was not recorded as Successful, nor was it recorded as having a run-time
+error.</li>
+<li>The next line, <span class="ttnobr">416.gamess</span>, is blank because that benchmark was not attempted at all with
+config file <span class="ttnobr">dec22a.cfg</span>.</li>
+<li>Benchmark <span class="ttnobr">464.h264ref</span> has a code <span class="ttnobr">"r?"</span> for the Reference workload
+with the base tuning, indicating a run-time failure.  Additional information about that failure is at the bottom of the
+report: the problem happened in log number 79, which used a <span class="ttnobr">runspec</span> command that included the
+switches listed (<span class="ttnobr">--define OUTDISK=/export/bmk/john/out/ -c dec22a --reportable -r int</span>).
+</li>
+</ul>
+
+<pre>
+$ <b>port_progress -c dec2  *.log</b>
+SPEC CPU2006 mydir
+Tester: john
+
+               dec22a                
+               Base      Peak        
+               Te Tr Ref Te Tr Ref   
+400.perlbench  S  S  S   S  S  S     
+401.bzip2      S  S  S   S  S  S     
+403.gcc        S  S  S   S  S  S     
+410.bwaves     S  b? b?  b? b? b?    
+416.gamess                           
+429.mcf        S  S  S   S  S  S     
+433.milc                             
+434.zeusmp                           
+435.gromacs                          
+436.cactusADM                        
+437.leslie3d                         
+444.namd                             
+445.gobmk      S  S  S   S  S  S     
+447.dealII                           
+450.soplex                           
+453.povray                           
+454.calculix                         
+456.hmmer      S  S  S   S  S  S     
+458.sjeng      S  S  S   S  S  S     
+459.GemsFDTD                         
+462.libquantum S  S  S   S  S  S     
+464.h264ref    S  S  r?  S  S  S     
+465.tonto                            
+471.omnetpp    S  S  S   S  S  S     
+473.astar      S  S  S   S  S  S     
+481.wrf                              
+482.sphinx3                          
+483.xalancbmk  S  S  S   S  S  S     
+998.specrand                         
+999.specrand   S  S  S   S  S  S     
+
+464.h264ref run failures in logs: 
+   079  --define OUTDISK=/export/bmk/john/out/ -c dec22a --reportable -r int
+</pre>
+
+<p id="porttune"><span class="new">New with CPU2006 V1.2,</span> you can remove reporting on base runs with <span
+class="ttnobr">--nobase</span> or remove peak with <span class="ttnobr">--nopeak</span>.  This option may be convenient if,
+at a particular moment, you are only debugging one type of output.</p>
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="printkids">printkids.pl</h2>
+
+<p>Some benchmark executables are invoked multiple times.  If you'd like to know how much time was spent on each invocation,
+it may not be easy to tell.  You could examine "<kbd>speccmds.out</kbd>", but that file is not easy to interpret:</p>
+
+<pre>
+$ <b>runspec --config=try_utilities --size=test --iterations=1 \
+     --tuning=base --output_format=ps  400</b>
+$ <b>go work 400</b>
+$ <b>cd run_base_test_try_utilities.0000/</b>
+$
+$ <b>cat speccmds.out | fold -s</b>
+running commands in speccmds.cmd 1 times
+runs started at 1148417981, 220153000, Tue May 23 13:59:41 2006
+run 1 started at 1148417981, 222495000, Tue May 23 13:59:41 2006
+child started: 0, 1148417981, 222535000, pid=2396, 
+'../run_base_test_try_utilities.0000/perlbench_base.try_utilities -I. -I./lib 
+attrs.pl'
+child finished: 0, 1148417981, 339666000, sec=0, nsec=117131000, pid=2396, rc=0
+child started: 0, 1148417981, 339754000, pid=2397, 
+'../run_base_test_try_utilities.0000/perlbench_base.try_utilities -I. -I./lib 
+gv.pl'
+child finished: 0, 1148417981, 384163000, sec=0, nsec=44409000, pid=2397, rc=0
+child started: 0, 1148417981, 384240000, pid=2398, 
+'../run_base_test_try_utilities.0000/perlbench_base.try_utilities -I. -I./lib 
+makerand.pl'
+child finished: 0, 1148417981, 710682000, sec=0, nsec=326442000, pid=2398, rc=0
+child started: 0, 1148417981, 710786000, pid=2399, 
+'../run_base_test_try_utilities.0000/perlbench_base.try_utilities -I. -I./lib 
+pack.pl'
+child finished: 0, 1148417981, 973602000, sec=0, nsec=262816000, pid=2399, rc=0
+child started: 0, 1148417981, 973684000, pid=2400, 
+'../run_base_test_try_utilities.0000/perlbench_base.try_utilities -I. -I./lib 
+redef.pl'
+child finished: 0, 1148417981, 997347000, sec=0, nsec=23663000, pid=2400, rc=0
+child started: 0, 1148417981, 997429000, pid=2401, 
+'../run_base_test_try_utilities.0000/perlbench_base.try_utilities -I. -I./lib 
+ref.pl'
+child finished: 0, 1148417982, 24001000, sec=0, nsec=26572000, pid=2401, rc=0
+child started: 0, 1148417982, 24081000, pid=2402, 
+'../run_base_test_try_utilities.0000/perlbench_base.try_utilities -I. -I./lib 
+regmesg.pl'
+child finished: 0, 1148417982, 55465000, sec=0, nsec=31384000, pid=2402, rc=0
+child started: 0, 1148417982, 55621000, pid=2403, 
+'../run_base_test_try_utilities.0000/perlbench_base.try_utilities -I. -I./lib 
+test.pl'
+child finished: 0, 1148417988, 281976000, sec=6, nsec=226355000, pid=2403, rc=0
+run 1 finished at: 1148417988, 282030000, Tue May 23 13:59:48 2006
+run 1 elapsed time: 7, 59535000, 7.059535000
+runs finished at 1148417988, 282155000, Tue May 23 13:59:48 2006
+runs elapsed time: 7, 62002000, 7.062002000
+$
+</pre>
+
+<p>Fortunately, SPEC has provided a tool to interpret the above for you:</p>
+
+<pre>
+$ <b>printkids.pl</b>
+  Seconds  Command
+     0.12 test_try_utilities.0000/perlbench_base.try_utilities -I. -I./lib attr
+     0.04 test_try_utilities.0000/perlbench_base.try_utilities -I. -I./lib gv.p
+     0.33 test_try_utilities.0000/perlbench_base.try_utilities -I. -I./lib make
+     0.26 test_try_utilities.0000/perlbench_base.try_utilities -I. -I./lib pack
+     0.02 test_try_utilities.0000/perlbench_base.try_utilities -I. -I./lib rede
+     0.03 test_try_utilities.0000/perlbench_base.try_utilities -I. -I./lib ref.
+     0.03 test_try_utilities.0000/perlbench_base.try_utilities -I. -I./lib regm
+     6.23 test_try_utilities.0000/perlbench_base.try_utilities -I. -I./lib test
+=========
+     7.06 Total by adding children      
+     7.06 Total according to speccmds.out
+$  
+</pre>
+
+<h2 id="printpath">printpath.pl</h2>
+
+<p>As a convenience for Windows users, you can use <tt>printpath.pl</tt> to print your path in an easier to read form.  You
+can send the output to a file, which can then be easily edited.  </p>
+
+<p>In the example below, <tt>printpath.pl</tt> makes it easy to notice that <tt>cygwin</tt> (a Windows/Unix compatibility product)
+is in the path.  SPEC recommends that your <tt>%PATH%</tt> should not include Windows/Unix compatibility products, because these
+have sometimes contributed to <a class="external" href="faq.html#Run.04">hard-to-diagnose errors</a>. </p> 
+<pre>
+C:\cpu2006&gt;<b>echo %PATH%</b>
+C:\cpu2006\bin\windows;C:\cpu2006\bin;C:\Program Files\Microsoft Visual Studio 9
+.0\Common7\IDE;C:\Program Files\Microsoft Visual Studio 9.0\VC\BIN;C:\Program Fi
+les\Microsoft Visual Studio 9.0\Common7\Tools;C:\WINDOWS\Microsoft.NET\Framework
+\v3.5;C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727;C:\Program Files\Microsoft V
+isual Studio 9.0\VC\VCPackages;C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin
+;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;c:\cygwin\bin;C:\WINDOW
+S\system32\WindowsPowerShell\v1.0
+
+C:\cpu2006&gt;<b>specperl bin\printpath.pl</b>
+
+PATH=^
+C:\cpu2006\bin\windows;^
+C:\cpu2006\bin;^
+C:\Program Files\Microsoft Visual Studio 9.0\Common7\IDE;^
+C:\Program Files\Microsoft Visual Studio 9.0\VC\BIN;^
+C:\Program Files\Microsoft Visual Studio 9.0\Common7\Tools;^
+C:\WINDOWS\Microsoft.NET\Framework\v3.5;^
+C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727;^
+C:\Program Files\Microsoft Visual Studio 9.0\VC\VCPackages;^
+C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin;^
+C:\WINDOWS\system32;^
+C:\WINDOWS;^
+C:\WINDOWS\System32\Wbem;^
+c:\cygwin\bin;^                           <span style="color:red;">&lt;-- not recommended</span>
+C:\WINDOWS\system32\WindowsPowerShell\v1.0
+
+C:\cpu2006&gt;<b>specperl bin\printpath.pl &gt; my-easy-to-edit-pathset.bat</b>
+C:\cpu2006&gt;<b>notepad my-easy-to-edit-pathset.bat</b>
+
+C:\cpu2006&gt;<b>my-easy-to-edit-pathset.bat</b>
+</pre>
+
+<p>In the example above, to remove <tt>cygwin</tt>, the user just uses <tt>notepad</tt> to remove the second last line of the
+file <span class="ttnobr">my-easy-to-edit-pathset.bat</span></p>
+
+
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="rawformat">rawformat </h2>
+<p>"rawformat" is the result formatter.  It can be invoked directly, by typing <span class="ttnobr">rawformat</span>, or
+equivalently by typing <a class="external" href="runspec.html#rawformat">runspec --rawformat</a>.  These two commands achieve the
+same effect because, saying <span class="ttnobr">runspec --rawformat</span> just causes <span class="ttnobr">runspec</span> to
+exit, invoking <span class="ttnobr">rawformat</span> in its stead, and passing the formatter whatever other options you mentioned
+on the command line.</p> 
+
+<p>The <span class="ttnobr">rawformat</span> utility is also automatically invoked by <span class="ttnobr">runspec</span> at
+the end of a run, to generate the reports from your run.</p>
+
+<p>For convenience, most <span class="ttnobr">rawformat</span> options are documented in <a class="external"
+href="runspec.html#rawformat">runspec.html</a>, which see for basic information on using this command.  You can also say <span
+class="ttnobr">rawformat --help</span> to get a list of switches that are used by the formatter.</p> 
+
+<p>Note that when runnng <span class="ttnobr">rawformat</span>, you will always get format "Submission Check", which
+encourages consistent formatting for various result fields when preparing final (submittable) reports.  In addition, you will
+get the formats that you mention on the command line, or, if none are mentioned there, then you will get the defaults
+documented under <a class="external" href="runspec.html#output_format">output_format</a>. <span class="oldnews">(History: the
+automatic addition of subcheck to the list of outputs was added in SPEC CPU2006 V1.1)</span></p> 
+
+<p>A few additional points are worth mentioning, in the following sections.  </p>
+
+<h3 id="description">Editing result description fields</h3>
+  
+  <p>A result rawfile may be edited to update reader fields, such as the system description.  Rawfile syntax is similar to the
+  syntax in <a class="external" href="config.html#Dtoc_V">config files</a>, with a few exceptions:</p> 
+  <ul>
+  <li>config files use equal signs; rawfiles use colons</li>
+  <li>the benchmark name is prepended to field names</li>
+  <li>rawfiles may not be edited beyond a certain point</li>
+  <li>rawfiles have stricter rules for field continuation</li>
+  <li>rawfiles allow two fields, sw_parallel_defeat and test_date, which are not allowed in config files</li>
+  </ul>
+
+  <p>These points are described in this section.</p>
+
+  <p style="margin-left:3em;"><strong>WARNING:</strong> Before you do anything, make a backup copy of the rawfile first!  </p>
+
+  <p class="snugbot" id="mkt">Example: What do you do when Marketing decides to change the name from "SuperHero 4" to
+  "SuperHero IV" just before you publish the results, or just before you're ready to submit them to SPEC?  In your config
+  file, you had </p>
+  <pre> hw_model = SuperHero 4</pre>
+  <p class="snug">which has caused the rawfile to contain the line</p>
+  <pre>spec.cpu2006.hw_model: SuperHero 4</pre>
+  <p class="snugtop">and you've just been told that the name is wrong.  You don't have time to re-run your test.  It's too
+  late to change the config file.</p>
+
+  <p>SPEC does allow you to edit the rawfile to make corrections.  Just make sure that you only edit the fields located
+   before the "fence":</p>
+  <pre>
+  # =============== do not edit below this point ===================
+  </pre>
+
+  <p><strong>WARNING:</strong> Make a backup copy of the rawfile first!  </p>
+
+   <p>For example:</p>
+<pre>
+$ <b>cd $SPEC/result</b>
+$ <b>cp CINT2006.001.ref.rsf new.rsf</b>
+      <i>edit new.rsf to make your changes</i> 
+$ <b>diff CINT2006.001.ref.rsf new.rsf</b>
+9c9
+&lt; spec.cpu2006.hw_model: SuperHero 4
+---
+&gt; spec.cpu2006.hw_model: SuperHero IV
+$ 
+$ <b>rawformat -o ps new.rsf</b>
+runspec v4256 - Copyright 1999-2006 Standard Performance Evaluation Corporation
+Using 'macosx-ppc' tools
+Reading MANIFEST... 2565 files
+Loading runspec modules...............
+Locating benchmarks...found 31 benchmarks in 2 benchsets.
+Locating output formats: ASCII, config, CSV, flags, html, mail, PDF, 
+    PostScript, raw, Screen, Submission Check
+Formatting new.rsf
+
+Parsing flags for 400.perlbench base: done
+Parsing flags for 401.bzip2 base: done
+Parsing flags for 403.gcc base: done
+Parsing flags for 429.mcf base: done
+Parsing flags for 445.gobmk base: done
+Parsing flags for 456.hmmer base: done
+Parsing flags for 458.sjeng base: done
+Parsing flags for 462.libquantum base: done
+Parsing flags for 464.h264ref base: done
+Parsing flags for 471.omnetpp base: done
+Parsing flags for 473.astar base: done
+Parsing flags for 483.xalancbmk base: done
+Doing flag reduction: done
+        format: PostScript -&gt; new.ps
+
+There is no log file for this run.
+
+runspec finished at Tue May 23 15:09:25 2006; 16 total seconds elapsed
+$
+</pre>
+
+<h3 id="cont">About continuation fields in rawfiles</h3>
+   
+   <p class="snugbot">Notice when editing fields that have more than one line that you need to construct the numbers with correct
+   syntax.  The syntax in the rawfile is a bit more picky than in config files (compare the following vs. the <a class="external"
+   href="config.html#continuation">config.html section on "Field scoping and continuation"</a>.  You cannot say something like
+   this:</p> 
+
+   <table  style="background:#ffe0e0;margin: 1em 8%;">
+   <tr><td><strong>WRONG:</strong></td>
+       <td>
+<tt>spec.cpu2006.sw_compiler: Intel C Compiler 9.1 for Windows XP
+<br />spec.cpu2006.sw_compiler1: Visual Studio 2005 (for libraries) </tt>
+   </td></tr>
+   </table>
+
+<p class="snugtop">because the tools are not prepared at this point for a mixture of numbered and un-numbered fields.  If you
+need to have continued fields, say instead:</p>
+
+   <table style="margin: 1em 8%;background:#e0ffe0;">
+   <tr><td><strong>RIGHT:</strong></td>
+       <td>
+<tt>spec.cpu2006.sw_compiler0: Intel C Compiler 9.1 for Windows XP
+<br />spec.cpu2006.sw_compiler1: Visual Studio 2005 (for libraries) </tt>
+   </td></tr>
+   </table>
+
+<h3 id="rawfilefields">Fields allowed only in rawfiles</h3> 
+
+<p>Two testbed description fields are allowed in raw files that are not allowed in config files:</p>
+<table>
+
+<tr>
+   <td id="sw_parallel_defeat"> <tt>sw_parallel_defeat</tt> </td>
+   <td><p class="snugtop">This field can be used to specify a reason why, despite the settings of other fields, parallelism
+   was defeated on a particular SUT.  For example, you could set:</p>
+<pre>
+spec.cpu2006.sw_parallel_defeat: Tested with OMP_NUM_THREADS=1
+</pre>
+
+       <p>This field cannot be set in config files, but can be set in raw files.  If set in a config file, a warning will be
+          issued and the setting will be ignored. </p> 
+
+       <p>The reason that you specify will be displayed in the notes section of reports.</p>
+
+       <p class="snugbot">See also the discussion <a class="external" href="config.html#parallelreporting">Parllel Reporting in
+       config.html</a>. <span class="oldnews">(History: sw_parallel_defeat was added in SPEC CPU2006 V1.1)</span></p> 
+</td></tr>
+
+<tr>
+   <td id="test_date"> <tt>test_date</tt> </td>
+   <td><p class="snug"> When the tests were run.  <span class="oldnews">(History: As of SPEC CPU2006 V1.1,)</span> Tthis
+   field is populated automatically based on the clock in the system under test.  Setting this in the config file will
+   generate a warning and the setting will be ignored.  If your system clock is incorrect, then the value may be edited in
+   the raw file.  It's better to avoid the necessity to edit, by setting your system clock properly.</p>
+   
+</td></tr>
+
+
+
+</table>
+
+<h3 id="changetype">How do you generate a SPECrate result from a SPECspeed result? (or vice-versa)</h3>
+
+   <p>To generate a 1-copy SPECrate result from a SPECspeed run, copy the original rawfile to another location, and use
+   <tt>rawformat</tt> to both generate the new rawfile and whatever other reports you want.  For example:</p>
+
+<pre>
+$ <b>ls</b>
+CINT2006.383.ref.rsf  CINT2006.383.ref.txt
+$ <b>grep SPECint *txt | grep base</b>
+ SPECint(R)_base2006                  10.1 
+$ <b>cp CINT2006.383.ref.rsf convertme</b>
+$ <b>rawformat --output_format rsf,txt --rate convertme </b>
+rawformat v5613 - Copyright 1999-2007 Standard Performance Evaluation Corporation
+Using 'solaris-sparc' tools
+Reading MANIFEST... 2357 files
+Loading rawformat modules............
+Locating benchmarks...found 31 benchmarks in 3 benchsets.
+Locating output formats: ASCII, config, CSV, flags, HTML, mail, PDF, PostScript, raw, Screen, Submission Check
+Formatting convertme
+Parsing flags for 400.perlbench base: done
+Parsing flags for 400.perlbench peak: done
+Parsing flags for 401.bzip2 base: done
+Parsing flags for 401.bzip2 peak: done
+Parsing flags for 403.gcc base: done
+Parsing flags for 403.gcc peak: done
+Parsing flags for 429.mcf base: done
+Parsing flags for 429.mcf peak: done
+Parsing flags for 445.gobmk base: done
+Parsing flags for 445.gobmk peak: done
+Parsing flags for 456.hmmer base: done
+Parsing flags for 456.hmmer peak: done
+Parsing flags for 458.sjeng base: done
+Parsing flags for 458.sjeng peak: done
+Parsing flags for 462.libquantum base: done
+Parsing flags for 462.libquantum peak: done
+Parsing flags for 464.h264ref base: done
+Parsing flags for 464.h264ref peak: done
+Parsing flags for 471.omnetpp base: done
+Parsing flags for 471.omnetpp peak: done
+Parsing flags for 473.astar base: done
+Parsing flags for 473.astar peak: done
+Parsing flags for 483.xalancbmk base: done
+Parsing flags for 483.xalancbmk peak: done
+Doing flag reduction: done
+        format: raw -&gt; convertme.rsf
+        format: ASCII -&gt; convertme.txt
+        format: Submission Check -&gt; PASSED syntax check
+
+             Note: although this result has PASSED subcheck
+                   you should be aware that:
+
+                 - SPEC may have updated requirements in the version of the
+                   checker at the SPEC submission website.
+                 - Much (though not all) of SPEC's version is downloadable,
+                   and can be synchronized with your version; see:
+                   http://www.spec.org/auto/cpu2006/Docs/runspec.html#newflags
+
+rawformat finished at Thu Jan 10 05:40:45 2008; 62 total seconds elapsed
+$ <b>grep SPECint *txt | grep base</b>
+CINT2006.383.txt: SPECint(R)_base2006                  10.1 
+convertme.txt: SPECint(R)_rate_base2006             10.1 
+$ 
+</pre>
+
+<p>As you can see, the new file <span class="ttnobr">convertme.txt</span> has the SPECrate merics.</p> 
+
+<p>We can also continue the above example and convert back again:</p>
+<pre>
+$ <b>cp convertme.rsf backagain</b>
+$ <b>rawformat --output_format rsf,txt --speed backagain </b>
+rawformat v5613 - Copyright 1999-2007 Standard Performance Evaluation Corporation
+Using 'solaris-sparc' tools
+Reading MANIFEST... 2357 files
+Loading rawformat modules............
+Locating benchmarks...found 31 benchmarks in 3 benchsets.
+Locating output formats: ASCII, config, CSV, flags, HTML, mail, PDF, PostScript, raw, Screen, Submission Check
+Formatting backagain
+Parsing flags for 400.perlbench base: done
+Parsing flags for 400.perlbench peak: done
+Parsing flags for 401.bzip2 base: done
+Parsing flags for 401.bzip2 peak: done
+Parsing flags for 403.gcc base: done
+Parsing flags for 403.gcc peak: done
+Parsing flags for 429.mcf base: done
+Parsing flags for 429.mcf peak: done
+Parsing flags for 445.gobmk base: done
+Parsing flags for 445.gobmk peak: done
+Parsing flags for 456.hmmer base: done
+Parsing flags for 456.hmmer peak: done
+Parsing flags for 458.sjeng base: done
+Parsing flags for 458.sjeng peak: done
+Parsing flags for 462.libquantum base: done
+Parsing flags for 462.libquantum peak: done
+Parsing flags for 464.h264ref base: done
+Parsing flags for 464.h264ref peak: done
+Parsing flags for 471.omnetpp base: done
+Parsing flags for 471.omnetpp peak: done
+Parsing flags for 473.astar base: done
+Parsing flags for 473.astar peak: done
+Parsing flags for 483.xalancbmk base: done
+Parsing flags for 483.xalancbmk peak: done
+Doing flag reduction: done
+        format: raw -&gt; backagain.rsf
+        format: ASCII -&gt; backagain.txt
+        format: Submission Check -&gt; PASSED syntax check
+
+             Note: although this result has PASSED subcheck
+                   you should be aware that:
+
+                 - SPEC may have updated requirements in the version of the
+                   checker at the SPEC submission website.
+                 - Much (though not all) of SPEC's version is downloadable,
+                   and can be synchronized with your version; see:
+                   http://www.spec.org/auto/cpu2006/Docs/runspec.html#newflags
+
+rawformat finished at Thu Jan 10 05:42:32 2008; 64 total seconds elapsed
+$ <b>grep SPECint *txt | grep base</b>
+CINT2006.383.ref.txt: SPECint(R)_base2006                  10.1 
+backagain.txt: SPECint(R)_base2006                  10.1 
+convertme.txt: SPECint(R)_rate_base2006             10.1 
+$ <b>diff CINT2006.383.txt backagain.txt </b>
+185c185
+&lt; Report generated on Wed Jan  9 16:07:02 2008 by CPU2006 ASCII formatter v5613.
+---
+&gt; Report generated on Thu Jan 10 05:42:32 2008 by CPU2006 ASCII formatter v5613.
+$ 
+</pre>
+
+<p>Notice above that the round trip is complete: the original report, from run 383, matches <span
+class="ttnobr">backagain.txt</span> in all but the time that the formatter was run.  </p>
+
+<p>You cannot format a multi-copy SPECrate run as a SPECspeed run; only a single-copy run.</p>
+
+<p>Also notice above that output format "Submission Check" (aka <a class="external"
+href="runspec.html#output_format">subcheck</a>) was automatically selected.  This is because <span class="ttnobr">rawformat</span>
+is often used to check raw file edits for results that are to be submitted to SPEC for publication.</p> 
+
+<h4>On Windows systems</h4>
+<p class="l1">You may find that <span class="ttnobr">--output_format</span> will only accept one argument at a time.  If so,
+first create the rawfile with <span class="ttnobr">--output_format raw</span>, then use the new rawfile to create the
+other reports.</p>
+
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="relocate">relocate (Unix only)</h2>
+<p>If you rearrange mount points or rename your SPEC root directory, you will probably find confusing problems like the one
+in the example that follows.  We used to have a working SPEC tree under <kbd>/cpu2006/cpu2006-kit91</kbd>, but we're going to
+change that:</p>
+<pre>
+$ <b>cd /cpu2006</b>
+$ <b>mv cpu2006-kit91 jamesbond</b>
+$ <b>cd jamesbond</b>
+$ <b>. ./shrc</b>
+$ <b>runspec -h</b>
+-bash: /cpu2006/jamesbond/bin/runspec: /cpu2006/cpu2006-kit91/bin/specperl: 
+  bad interpreter: No such file or directory
+</pre>
+
+<p>The problem is that the first line of runspec points to a path that no longer exists:</p>
+<pre>
+$ <b>head -1 bin/runspec</b>
+#!/cpu2006/cpu2006-kit91/bin/specperl
+$  
+</pre>
+
+<p>Fortunately, SPEC has provided a tool to relocate the tools in the new tree:</p>
+<pre>
+$ <b>cd /cpu2006/jamesbond</b>
+$ <b>. ./shrc</b>
+$ <b>relocate</b>
+Top of SPEC benchmark tree is '/cpu2006/jamesbond'
+$ <b>runspec -h | head -3</b>
+runspec v4256 - Copyright 1999-2006 Standard Performance Evaluation Corporation
+Using 'macosx-ppc' tools
+Reading MANIFEST... 2565 files
+</pre>
+
+<p><strong>Limitations:</strong> There are some limitations to this tool.  Most notably, it uses perl, so if the tree has
+been re-arranged in such a way that perl has an identity crisis and can't find itself, you'll be in trouble.  Make sure that
+you have sourced <tt>shrc</tt>, as in the next example; if it still fails, you may need to reinstall the CPU2006 kit.</p>
+
+<pre>
+$ <b>cd /cpu2006</b>
+$ <b>mv jamesbond dr_evil</b>
+$ <b>cd dr_evil</b>
+$ <b>bin/relocate</b>
+Your $SPEC variable is not set correctly!
+Top of SPEC benchmark tree is '/cpu2006/dr_evil'
+Can't locate strict.pm in @INC (@INC contains: /cpu2006/jamesbond/bin 
+    /cpu2006/jamesbond/bin/lib .) at bin/relocate line 3.
+BEGIN failed--compilation aborted at bin/relocate line 3.
+$ <b>. ./shrc</b>
+$ <b>bin/relocate</b>
+Top of SPEC benchmark tree is '/cpu2006/dr_evil'
+$ <b>runspec -h | head -2</b>
+runspec v4256 - Copyright 1999-2006 Standard Performance Evaluation Corporation
+Using 'macosx-ppc' tools
+Reading MANIFEST... 2565 files
+$  
+</pre>
+
+<p><strong>Important: delete the old run and build directories.  </strong>  When setting up run directories, the tools read
+<span class="ttnobr">benchspec/CPU2006/nnn.benchmark/run/list</span> to see what directories already exist.  (A similar
+method is used for <span class="ttnobr">build</span> directories.)  If the list contains references to directories that are
+not underneath the current top, the intended behavior is that such directories should cause a warning, and should not be
+used.  For example:</p>
+
+  <pre>
+  Notice: Unusable path detected in run directory list file.
+      /brian/liberator/cpu2006/benchspec/CPU2006/998.specrand/run/list
+  references one or more paths which will be ignored, because they are
+  not subdirectories of this run directory.  This condition may be a
+  result of having moved your SPEC benchmark tree.  If that's what happened,
+  and if you don't need the old run directories, you can just remove
+  them, along with the list file.  (Usually it's safe to delete old
+  run directories, as they are automatically re-created when needed.)
+  </pre>
+
+<p>Unfortunately, it is sometimes possible to confuse the tools when the list contains directories that are not underneath
+<span class="ttnobr">$SPEC</span>.  Although the above message is printed, the tools can actually end up using a mixture of
+old and new directory paths, and nothing good can come of such mixtures.  To avoid the confusion, you should delete the old
+run directories right after the relocate.  Old build directories should be deleted (perhaps after backing them up if you wish
+to save them for reference).  For example:</p>
+
+  <pre>
+  mkdir newdir
+  mv $SPEC/* newdir
+  cd newdir
+  bin/relocate
+  cd benchspec/CPU2006
+  spectar cf - */build | specxz &gt; ~/mybuilds.backup.tar.xz
+  rm -Rf */run */build
+  </pre>
+
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="specdiff">specdiff</h2>
+
+<p>In order to decide whether your system got the correct answer for a benchmark, <tt>runspec</tt> writes a file called
+<tt>compare.cmd</tt> in the run directory, and then calls <tt>specinvoke</tt>, which calls <tt>specdiff</tt>.  (The
+<tt>specinvoke</tt> utility is described <a href="#specinvoke">below</a>.)</p>
+
+<p>Suppose that your results are flagged as incorrect, but you'd like to have more detail.  You could ask for more than 10 lines
+of detail by changing the config file's default for <a class="external" href="config.html#difflines">difflines</a> from 10 to
+something else, and re-running the experiment.  But, you might save a lot of time and avoid the re-run of the experiment, by
+calling <tt>specdiff</tt> directly, with a different number of lines for its switch <kbd>-l</kbd>.</p> 
+
+<p>For example, a file chock-full of wrong answers for <tt>444.namd</tt> has been created by hand.  First, let's see how
+<tt>specdiff</tt> would normally be run (line wraps added for readability):</p>
+
+<pre>
+$ <b>go run namd</b>
+$ <b>cd run_base_test_try_utilities.0000/</b>
+$ <b>specinvoke -c 1 -f compare.cmd -n</b>
+# Use another -n on the command line to see chdir commands
+# Starting run for copy #0
+specperl /cpu2006/dr_evil/bin/specdiff -m -l 10  --abstol 1e-05 \
+/cpu2006/dr_evil/benchspec/CPU2006/444.namd/data/test/output/namd.out namd.out &gt; namd.out.cmp
+</pre>
+
+<p>The above says that normally we test for correct answers by comparing the file <span
+class="ttnobr">$SPEC/benchspec/CPU2006/444.namd/data/test/output/namd.out</span> versus the file <span
+class="ttnobr">namd.out</span> in the current directory.  Normally, 10 lines of detail are printed.  Let's change that to 15
+lines, and compare versus our intentionally wrong file instead:</p>
+
+<pre>
+$ <b>specdiff -m -l 15  --abstol 1e-05 \
+     /cpu2006/dr_evil/benchspec/CPU2006/444.namd/data/test/output/namd.out namd_wrong.out </b>
+0003:  -355359.705797 0.000000 24229.348329
+       -355359.705797 0.000000 23229.338329
+                                          ^
+0004:  229430.745102 5781.466932 -2454.694382
+       229330.735102 5781.366932 -2353.693382
+                   ^
+0005:  5781.466932 226184.623759 -7867.535225
+       5781.366932 226183.623759 -7867.535225
+                 ^
+0006:  -2454.694382 -7867.535225 252281.168869
+       -2353.693382 -7867.535225 252281.168869
+                  ^
+0010:  0.000000 -0.000000 0.000000 24.034240
+       -0.000000 -0.000000 0.000000 23.033230
+                                            ^
+0012:  0.000000 -0.000000 0.000000 24.034240
+       -0.000000 -0.000000 0.000000 23.033230
+                                            ^
+0016:  -355359.705797 1175488.426964 24229.348329
+       -355359.705797 1175388.326963 23229.338329
+                                   ^
+0017:  229430.745102 5781.466932 -2454.694382
+       229330.735102 5781.366932 -2353.693382
+                   ^
+0018:  5781.466932 226184.623759 -7867.535225
+       5781.366932 226183.623759 -7867.535225
+                 ^
+0019:  -2454.694382 -7867.535225 252281.168869
+       -2353.693382 -7867.535225 252281.168869
+                  ^
+0020:  5180.324284 277.843622 -1135.837232
+       5180.323283 277.833622 -1135.837232
+                 ^
+0021:  277.843622 2960.457709 -681.816292
+       277.833622 2960.357709 -681.816292
+                ^
+0022:  -1135.837232 -681.816292 4515.105462
+       -1135.837232 -681.816292 3515.105362
+                                          ^
+0023:  0.000000 -0.000000 0.000000 24.034240
+       -0.000000 -0.000000 0.000000 23.033230
+                                            ^
+0024:  -0.000000 -0.000000 0.000000 0.654402
+       0.000000 -0.000000 0.000000 0.653302
+                                          ^
+0025:  0.000000 -0.000000 0.000000 24.079992
+       -0.000000 -0.000000 0.000000 23.079992
+                                            ^
+specdiff run completed
+$  
+</pre>
+
+<p>Here are the switches supported by specdiff:</p>
+
+<pre>
+$ specdiff -h
+Usage: /spec/cpu2006/bin/specdiff &lt;options&gt; file1 [file2]
+      -l,--lines         # of lines of differences to print (-1 for all)
+      -q,--quiet         don't print lines just set return code
+      -a,--abstol        absolute tolerance (for floating point compares)
+      -r,--reltol        relative tolerance (for floating point compares)
+      -o,--obiwan        allow off-by-one errors
+      -O,--OBIWAN        *don't* allow off-by-one errors
+      -s,--skiptol       # of differences to ignore
+         --skipabstol    # of abstol differences to ignore
+         --skipreltol    # of reltol differences to ignore
+         --skipobiwan    # of off-by-one differences to ignore
+      -t,--calctol       calculate required tolerances
+      -H,--histogram     show a histogram of differences
+      -f,--floatcompare  Do comparison for floating-point values even if no
+                         tolerances are specified.  (Normally this is
+                         automatic.)
+      -m,--mis           write file2.mis with miscompares
+      -c,--cw            collapse whitespace (probably doesn't do what you
+                         think it does)
+      -C,--CW            *don't* collapse whitespace
+      -b,--binary        Do byte-wise comparison for binary outputs
+      -i,--ignorecase    Ignore case for string comparisons
+      -d,--datadir       Compare against file(s) in data directory
+         --os            Set the operating system type (this is unnecessary)
+      -v,--verbose       Set the level of noisiness for the output
+      -h,--help          Print this message
+$  </pre>
+
+<p id="diffprev"><span class="new">Changed (fixed) in V1.2:</span> The <tt>specdiff</tt> program, as of CPU2006 V1.2,
+removes previous outputs prior to running.  For CPU2006 V1.0 and V1.1, you needed to remove previous outputs by hand before
+your run in order to avoid confusion from output files (e.g. <tt>.mis</tt>) that were hanging around from earlier runs. </p> 
+
+
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="specinvoke">specinvoke</h2>
+<p>In order to run a benchmark, <tt>runspec</tt> writes a series of commands in the run directory, in the file
+<tt>speccmds.cmd</tt>.  These commands are then interpreted by <tt>specinvoke</tt>.</p>
+
+<p>When something goes wrong, it is often useful to try the commands by hand.  Ask <tt>specinvoke</tt> what it did, by using
+the "<tt>-n</tt>" switch:</p>
+
+<pre>
+$ <b>go namd run</b>
+/cpu2006/dr_evil/benchspec/CPU2006/444.namd/run
+$ <b>cd run_base_test_try_utilities.0000</b>
+$ <b>ls</b>
+compare.cmd             namd.input              namd_base.try_utilities
+compare.err             namd.out.cmp            speccmds.cmd
+compare.out             namd.out.mis            speccmds.err
+compare.stdout          namd.out.orig           speccmds.out
+namd.err                namd.stdout             speccmds.stdout
+$ <b>specinvoke -n</b>
+# Use another -n on the command line to see chdir commands
+# Starting run for copy #0
+../run_base_test_try_utilities.0000/namd_base.try_utilities \
+    --input namd.input --iterations 1 \
+    --output namd.out &gt; namd.stdout 2&gt;&gt; namd.err
+$  
+</pre>
+
+<p>In the above example, we see how namd is invoked (line wraps added for readability).  If you wanted to try out your own
+variations on the above command by hand, you could do so.</p>
+
+<p>Here are the switches supported by specinvoke:</p>
+
+<pre>
+$ <b>specinvoke -h</b>
+Usage: specinvoke [options] [instructionfile]
+           -i &lt;n&gt;          iterations
+           -c &lt;n&gt;          concurrent processes (overrides -C in command file)
+                              Do not attempt to use this flag for rate runs.
+           -E              return non-zero exit code if child does
+           -s shell        shell to invoke
+           -f file         instruction file
+           -o file         output file
+           -e file         error file
+           -d dir          change to dir first
+           -n[n]           print a 'dry_run' of commands
+           -A              return 0 error code
+           -S msecs        sleep between spawning copies (in milliseconds)
+           -r              don't do I/O redirection ($command already has it)
+           -N              open null device when no input file is specified
+           -Z              use zero-length file when no input file is specified
+           -C              (default) close stdin when no input file is specified
+           -D &lt;n&gt;          Turn on debugging at level &lt;n&gt;
+           -q              Stop issuing commands as soon as one fails (default)
+           -k              Continue issuing commands even if one fails
+           -h              this message
+</pre>
+
+<p id="specinvoke-qk">The <tt>-q</tt> and <tt>-k</tt> switches above are <span class="new">new with CPU2006 1.2.</span>
+They may be useful if <tt>specinvoke</tt> is being used separately as part of a benchmark development or debug effort (see <a
+class="external" href="runspec-avoidance.html">runspec-avoidance.html</a>.)</p> 
+
+
+<h3 id="specinvoke-nn">specinvoke -nn prints (but does not set) the environment</h3>
+
+<p><span class="new">New with CPU2006 V1.2</span>, the output of <span class="ttnobr">specinvoke -nn</span> is expanded.  It
+now includes information about environment variables that were set by the tools prior to the invocation, which may come in
+very handy if you want to run a benchmark outside the SPEC harness, for example, during a debugging or tuning effort.</p>
+
+<p> Consider the following example, where OMP_NUM_THREADS is set prior to doing a (<a class="external"
+href="runspec.html#fake">fake</a>) invocation of <tt>runspec</tt>:</p> 
+<pre>
+   $ <b>cd $SPEC/config</b>
+   $ <b>export OMP_NUM_THREADS=1024</b>
+   $ <b>cp Example-linux64-amd64-gcc43+.cfg jeff.cfg</b>
+   $ <b>runspec --config=jeff --fake --loose --size=test libquantum &gt; /dev/null</b>
+   $
+
+   $ <b>go libquantum run</b>
+   /home/jeff/cpu2006/benchspec/CPU2006/462.libquantum/run
+   $ <b>cd run_base_test_gcc43-64bit.0000/</b>
+   $ <b>grep OMP speccmds.cmd</b>
+   -E OMP_NUM_THREADS 1024
+   $ 
+
+   $ <b>specinvoke -nn | grep OMP</b>
+   OMP_NUM_THREADS=1024
+   export OMP_NUM_THREADS PATH REPLYTO SHELL SPEC SPECDB_PWD SPECPERLLIB SSH_ASKPASS
+   $ 
+</pre>
+
+<p>In the example above, an environment variable is set to request 1024 threads, and the setting is recorded in
+<tt>speccmds.cmd</tt>.  When <span class="ttnobr">specinvoke -nn</span> is used, the setting is printed, along with an
+<tt>export</tt> command that would put the setting into the environment (along with various other variables that the tools
+noticed in the original environment).</p>
+
+<p><b>It is important to understand</b> that <tt>specinvoke</tt> does <b>not</b> actually set any environment variables for
+you.  Consider this simplified test case:</p>
+
+<pre>
+   $ <b>cat tmp.cmd</b>
+   -E MY_IMPORTANT_ENV_SETTING enabled
+   echo "important setting: '$MY_IMPORTANT_ENV_SETTING'"
+   $ <b>specinvoke tmp.cmd</b>
+   important setting: ''
+   $ 
+</pre>
+
+<p>In the example above, the echo command prints nothing for the environment variable, despite the presence of 
+<span class="ttnobr">-E MY_IMPORTANT_ENV_SETTING enabled</span> in the command file.  So, one might ask, what good is the
+feature?  Well, it's very useful, if you just redirect the output of <span class="ttnobr">specinvoke -nn</span> to a file, as
+is commonly done:</p>
+
+<pre>
+   $ <b>specinvoke -nn tmp.cmd &gt; doit.sh</b>
+   $ <b>sh doit.sh</b>
+   important setting: 'enabled'
+   $  
+</pre>
+
+
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="specmake">specmake</h2>
+<p>To build a benchmark, <tt>runspec</tt> uses <tt>specmake</tt>, which is simply GNU <tt>make</tt> under a unique name to
+avoid possible conflicts with other versions of make on your system.</p>
+
+<p>If a benchmark build fails, one of the most massively useful things you can do is to ask <tt>specmake</tt> what it did, by
+using the "<kbd>-n</kbd>" switch, which means "dry run".</p>
+
+<p>For example, let's create a config file that is unlikely to work:</p>
+
+<pre>
+$ <b>go config</b>
+$ <b>cat > tmp.cfg</b>
+ext = silly
+FC  = f66
+$  
+</pre>
+
+<p> and try it out:</p>
+
+<pre>
+$ <b>runspec --config=tmp --tuning=base --action=build leslie3d</b>
+runspec v4256 - Copyright 1999-2006 Standard Performance Evaluation Corporation
+Using 'macosx-ppc' tools
+Reading MANIFEST... 2565 files
+Loading runspec modules...............
+Locating benchmarks...found 31 benchmarks in 13 benchsets.
+Locating output formats: ASCII, config, CSV, flags, html, mail, PDF, 
+     PostScript, raw, Screen, Submission Check
+Reading config file '/cpu2006/dr_evil/config/tmp.cfg'
+Benchmarks selected: 437.leslie3d
+Compiling Binaries
+  Building 437.leslie3d ref base silly default: (build_base_silly.0000)
+Error with make 'specmake build': check file 
+'/cpu2006/dr_evil/benchspec/CPU2006/437.leslie3d/run/build_base_silly.0000/make.err'
+  Error with make!
+*** Error building 437.leslie3d
+If you wish to ignore this error, please use '-I' or ignore errors.
+
+The log for this run is in /cpu2006/dr_evil/result/CPU2006.009.log
+
+runspec finished at Thu May 25 10:01:54 2006; 8 total seconds elapsed
+$  
+</pre>
+
+<p>Sure enough, it failed.  Let's find the appropriate run directory where our silly build was attempted:</p>
+
+<pre>
+$ <b>go leslie3d run</b>
+/cpu2006/dr_evil/benchspec/CPU2006/437.leslie3d/run
+$ <b>ls</b>
+build_base_silly.0000 list
+$ <b>cd build_base_silly.0000</b>
+</pre>
+
+<p>And ask specmake just exactly what it generated:</p>
+
+<pre>
+$ <b>specmake -n</b>
+f66 -c -o tml.o                    tml.f
+f66             tml.o                     -o leslie3d
+</pre>
+
+<p>OK, let's enter the command by hand:</p>
+
+<pre>
+$ <b>f66 -c -o tml.o                    tml.f</b>
+-bash: f66: command not found
+$  </pre>
+
+<p>A great convenience of the CPU2006 suite is the fact that you can now proceed to play with all the files in this run
+directory, to prototype different changes and try out ideas, without fear that you will break anything.  As long as you
+confine your edits to (in this example) <kbd>$SPEC/benchspec/CPU2006/437.leslie3d/run/build_base_silly.0000</kbd>, you are in
+a private sandbox and will not harm the original sources.</p>
+
+<p>Here are the switches supported by specmake:</p>
+<pre>
+$ <b>specmake -h</b>
+Usage: specmake [options] [target] ...
+Options:
+  -b, -m                      Ignored for compatibility.
+  -B, --always-make           Unconditionally make all targets.
+  -C DIRECTORY, --directory=DIRECTORY
+                              Change to DIRECTORY before doing anything.
+  -d                          Print lots of debugging information.
+  --debug[=FLAGS]             Print various types of debugging information.
+  -e, --environment-overrides
+                              Environment variables override makefiles.
+  -f FILE, --file=FILE, --makefile=FILE
+                              Read FILE as a makefile.
+  -h, --help                  Print this message and exit.
+  -i, --ignore-errors         Ignore errors from commands.
+  -I DIRECTORY, --include-dir=DIRECTORY
+                              Search DIRECTORY for included makefiles.
+  -j [N], --jobs[=N]          Allow N jobs at once; infinite jobs with no arg.
+  -k, --keep-going            Keep going when some targets can't be made.
+  -l [N], --load-average[=N], --max-load[=N]
+                              Don't start multiple jobs unless load is below N.
+  -n, --just-print, --dry-run, --recon
+                              Don't actually run any commands; just print them.
+  -o FILE, --old-file=FILE, --assume-old=FILE
+                              Consider FILE to be very old and don't remake it.
+  -p, --print-data-base       Print make's internal database.
+  -q, --question              Run no commands; exit status says if up to date.
+  -r, --no-builtin-rules      Disable the built-in implicit rules.
+  -R, --no-builtin-variables  Disable the built-in variable settings.
+  -s, --silent, --quiet       Don't echo commands.
+  -S, --no-keep-going, --stop
+                              Turns off -k.
+  -t, --touch                 Touch targets instead of remaking them.
+  -v, --version               Print the version number of make and exit.
+  -w, --print-directory       Print the current directory.
+  --no-print-directory        Turn off -w, even if it was turned on implicitly.
+  -W FILE, --what-if=FILE, --new-file=FILE, --assume-new=FILE
+                              Consider FILE to be infinitely new.
+  --warn-undefined-variables  Warn when an undefined variable is referenced.
+
+This program built for powerpc-apple-darwin6.8
+Report bugs to &lt;bug-make@gnu.org&gt;
+</pre>
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="specrxp">specrxp</h2>
+
+<p>To check <a class="external" href="flag-description.html">XML flags files</a>, <tt>runspec</tt> uses <tt>specrxp</tt>, which is
+simply <a class="external" href="http://www.cogsci.ed.ac.uk/~richard/rxp.html">RXP</a> under a unique name to ensure no possible
+conflicts with other versions of rxp on your system.  RXP is a validating XML parser.  If your flags file passes RXP's tests, that
+doesn't mean that the flags file makes sense, but it's a start.</p> 
+
+<p>You don't have to know anything abour specrxp, as it is called automatically.  But if you want to, you can call it
+directly, for example:</p>
+
+<pre>specrxp -V -s myflags.xml</pre>
+
+<p>The <tt>-V</tt> switch requests validation, and <tt>-s</tt> requests that all output be suppressed except error
+messages.</p>
+
+<p>A <a class="external" href="specrxp.html">manpage</a> for rxp is available.</p> 
+
+<p>Once you have your flags file passing specrxp validation, you should do a <a href="#flag_dump">flag_dump</a>, and <a
+class="external" href="http://validator.w3.org/">validate that the dump is valid HTML</a>.</p> 
+
+<p class="snugbot"><b>If specrxp seems to hang:</b></p>
+<p class="l1snugbot">If specrxp seems to hang when you run it, it may because this line in
+your flags file requires internet access, but your system is behind a firewall:</p>
+<pre>
+   SYSTEM "http://www.spec.org/dtd/cpuflags2.dtd"
+</pre>
+<p class="l1snug">To resolve the problem, copy the flags file to a system that does have access; or define proxy environment
+variable(s) to allow internet access for programs on your system; or <b>*temporarily*</b> change the line to point to a local
+copy, like so:</p>
+<pre>
+   SYSTEM "file:///Arques/Site/Lab/carol/cpu2006/Docs/flags/cpuflags2.dtd" <span class="alarm">&lt;-- temporary only!</span>
+</pre>
+<p class="l1snugtop"><b>Warning:</b> Be sure to change it back to the correct location prior to attempting to submit a result
+to SPEC, because SPEC probably does not have access to <tt>/Arques/Site/Lab/</tt>, and the submission handler will probably
+bounce your submission.</p>
+
+<p class="snugbot"><b>If you get unexpected errors from specrxp:</b> </p>
+<p class="l1snugbot">If you get unexpected messages such as:</p>
+<pre>
+   Warning: Start tag for undeclared element
+</pre>
+<p class="l1snugtop">check that you have correctly set the dtd version.</p>
+
+<p><span style="border:thin solid red;padding:2px;font-size:125%;"> <span class="new">New: as of SPEC CPU2006
+V1.2,</span> please note that the dtd version is now cpuflags<span class="alarm">2</span>.dtd, not cpuflags<span
+class="alarm">1</span>.dtd.</span></p>
+
+
+<p class="oldnews">(History: The specrxp utility was added in SPEC CPU2006 V1.1)</p>
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="spectar">spectar</h2>
+
+<p>The utility <tt>spectar</tt> is simply GNU tar, built under a known set of circumstances at the same time as other tools
+in the SPEC toolset, and renamed to avoid conflicts with any other versions of the program on your path.  GNU tar, unlike
+some other archiving programs, correctly handles very long path names.  </p>
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="specxz">specxz</h2>
+
+<p>The utility <tt>specxz</tt> is XZ Utils, built under a known set of circumstances at the same time as other tools in the
+SPEC toolset, and renamed to avoid conflicts with any other versions of the program on your path.  </p>
+
+<p>Commonly-used switches work analogously to those in other compression utilities, such as <tt>-d</tt> to decompress.   For
+details, say <span class="ttnobr">specxz --help</span></p>
+
+<p><span class="new"> Inclusion of specxz is new with CPU2006 V1.2.</span>  Switching compression programs has reduced the
+size of SPEC distribution media.  If you have written scripts that rely on <tt>specbzip2</tt>, it will be necessary to either
+retain a copy of <tt>specbzip2</tt> from your V1.1 kit, or to change your scripts to <tt>specxz</tt>.  If you make the
+change, you will also probably notice that <tt>specxz</tt> produces smaller files.   </p>
+
+<p class="snugbot"><b>Warning:</b> this idiom, commonly used on Unix systems, has been observed to fail on some tested
+Windows systems:  </p>
+
+<pre>specxz -dc mumble.tar.xz | spectar -xf -  <span class="alarm">&lt;-- may fail on Windows</span>
+</pre>
+
+<p class="snugbot">If you see failures, break it into two commands.</p>
+<pre>specxz -d mumble.tar.xz                   <span class="alarm">&lt;-- an alternative</span>
+spectar -xf mumble.tar </pre>
+
+<!-- ........................................................................................................................... -->
+
+<h2 id="toolsver">toolsver</h2>
+
+<p>If you have a rawfile, you can get information about the binary toolset and the versions of all of the system-independent
+tools files.  To do so, use the <kbd>toolsver</kbd> utility.  </p>
+
+<p>For example, starting with a freshly-installed SPEC CPU2006 directory tree:</p>
+
+<pre>
+% <b>runspec --config=try_utilities --size=test --iterations=1 \
+  --tuning=base --output_format=ps > /dev/null</b>
+% <b>cd $SPEC/result</b>
+% <b>ls</b>
+CINT2006.001.test.ps  CINT2006.001.test.rsf CPU2006.001.log       lock.CPU2006
+</pre>
+
+<p>Note that we have just the single result file.  Now, attempt to extract the version information:</p>
+
+<pre>
+% <b>toolsver CINT2006.001.test.rsf</b>
+CINT2006.001.test.rsf:
+ Binary toolset used was 'macosx-ppc'
+ Versions of Perl-based tools:
+    4256 runspec
+    4163 CPUFlagsParser.pm
+    4160 PSPDF.pm
+    4253 asc.pl
+    4256 benchmark.pm
+    4223 benchset.pm
+    4238 cfgfile.pl
+    3626 compare.pl
+    4243 config.pl
+    4247 csv.pl
+    4238 flags.pl
+    4238 flagutils.pl
+    3626 format.pm
+    4238 listfile.pm
+    4166 locate.pl
+    4160 log.pl
+    4214 mail.pl
+    3626 monitor.pl
+    4160 os.pl
+    4252 parse.pl
+    4160 pdf.pl
+    4253 ps.pl
+    4184 raw.pl
+    3626 screen.pl
+    4212 subcheck.pl
+    4251 util.pl
+    4196 vars.pl
+</pre>
+
+<p><span class="oldnews">(History: The toolsver utility  was added in SPEC CPU2006 V1.0.)</span></p>
+
+<hr />
+<p>Copyright 1999-2011 Standard Performance Evaluation Corporation
+<br />All Rights Reserved</p>
+
+
+<!-- this space intentionally left blank: some empty space at the bottom increases the probability that clicking on a link in
+the table of contents will actually position the desired section at the top of your browser window -->
+<p style="margin-bottom:1900px;">&nbsp;</p>
+
+
+
+</body>
+</html>

@@ -1,0 +1,768 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>FAQ CPU2006</title>
+<!-- $Id: faq.html 6775 2011-08-16 22:43:20Z CloyceS $ -->
+<!-- You'll want a nice wide screen when editing this .......................................................................... -->
+
+<link rel="STYLESHEET" href="css/cpu2006docs.css" type="text/css" />
+<style type="text/css">
+body { background: white; color: black; }
+.question         { font-family:sans-serif; color:#5c031d; margin: 1em; }
+p.questionsnug    { font-family:sans-serif; color:#5c031d; margin: .2em 1em; }
+p.questionsnugtop { font-family:sans-serif; color:#5c031d; margin: .2em 1em 1em; }
+p.questionsnugbot { font-family:sans-serif; color:#5c031d; margin: 1em 1em .2em; }
+p.answer          { font-family:times; margin: 1em;}
+p.answersnug      { font-family:times; margin: .2em 1em; }
+p.answersnugtop   { font-family:times; margin: .2em 1em 1em; }
+p.answersnugbot   { font-family:times; margin: 1em 1em .2em; }
+h2   { margin-top:4em; color:#eeeeef; background:#446688; padding:10px; text-align: center; margin-right:66%; }
+h3   { font-size:100%; margin-top:2em; border-top: solid 1px #c0c0c0; }
+pre  { margin-left:5em; }
+pre.pquestion { color:#5c031d; }
+</style>
+
+</head>
+<body>
+
+<h1 style="margin-bottom:0">CPU2006 Frequently asked questions</h1>
+<p class="snug"><span style="font-size:80%;">
+Last updated: $Date: 2011-08-16 18:43:20 -0400 (Tue, 16 Aug 2011) $ by $Author: CloyceS $</span> </p>
+
+<p>This document has frequently asked technical questions and answers.  The latest version of this document may be found at <a
+class="external" href="http://www.spec.org/cpu2006/Docs/faq.html">http://www.spec.org/cpu2006/Docs/faq.html</a>.  </p> 
+
+<p class="commentary">If you are looking for the list of known problems with SPEC CPU2006, please see <a class="external"
+href="http://www.spec.org/cpu2006/Docs/errata.html">http://www.spec.org/cpu2006/Docs/errata.html</a>.</p> 
+
+
+<!-- ....................... Contents ...................................................................................  -->
+<!-- Contents Template
+<p class="contentsl2"><a href="#Section.nn">Section.nn</a> mumble mumble</p>
+-->
+
+<p class="contents">Contents</p>
+<p class="contentsl1">Installation</p>
+<p class="contentsl2"><a href="#Install.01">Install.01</a> <tt>./install.sh: /bin/sh: bad interpreter: Permission denied</tt></p>
+<p class="contentsl2"><a href="#Install.02">Install.02</a> The DVD drive is on system A, but I want to install on system B. 
+                       What do I do?</p>
+<p class="contentsl2"><a href="#Install.03">Install.03</a> <tt>Error occurred while processing: C:\Documents</tt></p>
+<p class="contentsl2"><a href="#Install.04">Install.04</a> How do I uninstall?</p>
+
+<p class="contentsl1">runspec</p>
+<p class="contentsl2"><a href="#runspec.01">runspec.01</a> <tt>Can't locate strict.pm</tt></p>
+<p class="contentsl2"><a href="#runspec.02">runspec.02</a> <tt>specperl: bad interpreter: No such file or directory</tt></p>
+<p class="contentsl2"><a href="#runspec.03">runspec.03</a> <tt>'http://xml.org/sax/features/namespaces' is not recognized by
+XML::SAX::ExpatXS</tt></p>
+<p class="contentsl2"><a href="#runspec.04">runspec.04</a> <tt>Error: Start tag for undeclared element platform_settings</tt></p>
+
+
+<p class="contentsl1">Building benchmarks</p>
+<p class="contentsl2"><a href="#Build.01">Build.01</a> <tt>CreateProcess((null), ifort ...) failed.</tt></p>
+<p class="contentsl2"><a href="#Build.02">Build.02</a> <tt>make.clean.err</tt> does not exist</p>
+<p class="contentsl2"><a href="#Build.03">Build.03</a> Why is it rebuilding the benchmarks?</p>
+<p class="contentsl2"><a href="#Build.04">Build.04</a> Is there a config file for Visual C++?</p>
+
+<p class="contentsl1">Setting up</p>
+<p class="contentsl2"><a href="#Setup.01">Setup.01</a> <tt>hash doesn't match after copy</tt></p>
+<p class="contentsl2"><a href="#Setup.02">Setup.02</a> <tt>Copying executable failed</tt></p>
+
+<p class="contentsl1">Running benchmarks</p>
+<p class="contentsl2"><a href="#Run.01">Run.01</a> What's this <tt>specrand</tt> thing?</p>
+<p class="contentsl2"><a href="#Run.02">Run.02</a> Why does this benchmark take so long to run?</p>
+<p class="contentsl2"><a href="#Run.03">Run.03</a> Why was there this cryptic message from the operating system?</p>
+<p class="contentsl2"><a href="#Run.04">Run.04</a> Console Window Host has stopped working; specinvoke unable to start 0xc0000142</p>
+
+<p class="contentsl1">Miscompares</p>
+<p class="contentsl2"><a href="#Miscompare.01">Miscompare.01</a> I got a message about a miscompare </p>
+<p class="contentsl2"><a href="#Miscompare.02">Miscompare.02</a> The benchmark took less than 1 second </p>
+<p class="contentsl2"><a href="#Miscompare.03">Miscompare.03</a> The <tt>.mis</tt> file says "short" </p>
+<p class="contentsl2"><a href="#Miscompare.04">Miscompare.04</a> My compiler is generating bad code! </p>
+<p class="contentsl2"><a href="#Miscompare.05">Miscompare.05</a> The code is bad even with low optimization! </p>
+<p class="contentsl2"><a href="#Miscompare.06">Miscompare.06</a> The <tt>.mis</tt> file is just a bunch of numbers. </p>
+
+<p class="contentsl1">Results reporting</p>
+
+<p class="contentsl2"><a href="#Results.01">Results.01</a> Where did the reference times go?</p>
+<p class="contentsl2"><a href="#Results.02">Results.02</a> It's hard to cut/paste into my spreadsheet</p>
+<p class="contentsl2"><a href="#Results.03">Results.03</a> What is a "flags file"?  What does <tt>Unknown Flags </tt> mean?</p>
+<p class="contentsl2last"><a href="#Results.04">Results.04</a> <tt>Submission Check -&gt; FAILED</tt></p>
+
+<!-- ....................................... Body .......................................................................... -->
+<!-- Body Template
+<h3 id="Section.nn"><a name="OptionalExtraHandle">Section.nn</a>
+<span class="question">q. mumble mumble mumble
+</span></h3>
+
+   <p class="question">continued question (if neeeded)
+   </p>
+
+   <p class="answer">a. grumble grumble grumble
+   </p>
+--> 
+
+
+<!-- ...................... Installation .......................................  -->
+
+<h2>Installation</h2>
+
+<h3 id="Install.01"><a name="installpermission">Install.01</a> 
+<span class="question">q. Why am I getting a message such as "<span class="ttnobr">./install.sh: /bin/sh: bad interpreter:
+Permission denied</span>"? </span></h3>
+
+   <p class="answer">a. If you are installing from the DVD, check to be sure that your operating system allows programs to be
+   executed from the DVD.  For example, some Linux man pages for <tt>mount</tt> suggest setting the properties for the CD or DVD
+   drive in <tt>/etc/fstab</tt> to "<span class="ttnobr">/dev/cdrom  /cd  iso9660  ro,user,noauto,unhide</span>", which is notably
+   missing the property "<tt>exec</tt>".  Add <tt>exec</tt> to that list in <tt>/etc/fstab</tt>, or add it to your <tt>mount</tt>
+   command.  Notice that the sample Linux <tt>mount</tt> command in <a class="external"
+   href="install-guide-unix.html#mount">install-guide-unix.html</a> does include <tt>exec</tt>.</p> 
+
+   <p class="answer">Perhaps <tt>install.sh</tt> lacks permission to run because you tried to copy all the files from the
+   DVD, in order to move them to another system.  If so, please don't do that.  There's an easier way.  See the next
+   question.</p>
+
+
+<h3 id="Install.02"><a name="nodvd">Install.02</a>
+<span class="question">q.  The DVD drive is on system A, but I want to install on system B.  What do I do?</span></h3>
+
+   <p class="answer">a. The installation guides have an appendix just for you, which describe installing from the network or
+   installing from a tarfile.  See Appendix 1 in <a class="external"
+   href="install-guide-unix.html#appendix1">install-guide-unix.html</a> or <a class="external"
+   href="install-guide-windows.html#appendix1">install-guide-windows.html</a>.</p> 
+
+
+<h3 id="Install.03">Install.03
+<span class="question">q. Why did the installation fail with <tt>Error occurred while processing: C:\Documents</tt>?  
+</span></h3>
+
+<p class="question">I was installing on Windows using the tar file.  It said:</p>
+<pre class="pquestion">
+C:\Documents and Settings\John\cpu2006&gt; <b>install</b>
+The environment variable SPEC should point to the source of the
+SPEC distribution as an absolute path.  I will now try to set
+the variable for you...
+
+SPEC is set to C:\Documents and Settings\John\cpu2006
+If this is NOT what you want, press control-C
+Press any key to continue . . .
+Installing from "C:\Documents and Settings\John\cpu2006"
+
+Checking the integrity of your source tree...
+
+ Depending on the amount of memory in your system, and the speed of your
+ destination disk, this may take more than 10 minutes.
+ Please be patient.
+
+The system cannot find the file specified.
+Error occurred while processing: C:\Documents.
+The system cannot find the file specified.
+Error occurred while processing: and.
+The system cannot find the path specified.
+C:\Documents and Settings\John\cpu2006\tools\bin\windows-i386\specmd5sum: MANIFEST.tmp: no properly formatted MD5 checksum lines found
+Package integrity check failed!
+Installation NOT completed!
+</pre>
+
+   <p class="answer">a. The problem is that the SPEC tools do NOT support spaces in path names.  Sorry.  This is a limitation
+   of the SPEC toolset and there are currently no plans to change this requirement.  Please use a path that does not contain
+   spaces.  </p>
+
+<h3 id="Install.04"><a name="uninstall">Install.04</a>
+<span class="question">q. How do I uninstall? This script <tt>uninstall.sh</tt> doesn't seem to be it.
+</span></h3>
+
+
+   <p class="answer">a. You are correct that <tt>uninstall.sh</tt> does not remove the whole product; it only removes the
+   SPEC tool set, and does not affect the benchmarks (which consume the bulk of the disk space).  At this time, SPEC does not
+   provide an uninstall utility for the suite as a whole.  But it's easy to do: on Unix systems, use <span class="ttnobr">rm
+   -Rf</span> on the directory where you installed the suite, for example:</p>  
+
+       <pre>  rm -Rf /home/cs3000/saturos/spec/cpu2006</pre>
+
+   <p class="answer">On Windows systems, select the top directory in Windows Explorer and delete it.</p>
+
+   <p class="answer">If you have been using the <a class="external" href="runspec.html#output_root">output_root</a> feature,
+   you will have to track those down separately.  See the suggested commands in the appendix about uninstalling, in the <a
+   class="external" href="install-guide-unix.html#uninstall">install guides</a>.</p> 
+
+   <p class="answer">Note: instead of deleting the entire directory tree, some users find it useful to keep the
+   <tt>config</tt> and <tt>result</tt> subdirectories, while deleting everything else.  </p>
+
+
+<!-- ...................... runspec .......................................  -->
+
+<h2>runspec</h2>
+
+<h3 id="runspec.01"><a name="perlpath">runspec.01</a> <span class="question">q. When I say <tt>runspec</tt>, why does it say
+<tt>Can't locate strict.pm</tt>?  For example:</span></h3>
+
+<pre class="pquestion">
+D:\cpu2006&gt;<b>runspec --help</b>
+Can't locate strict.pm in @INC (@INC contains: .) at
+D:\cpu2006\bin\runspec line 62.
+BEGIN failed--compilation aborted at D:\cpu2006\bin\runspec line 62.
+</pre>
+
+   <p class="answer">a. You can't use <tt>runspec</tt> if its path is not set correctly.  On Unix, Linux, or Mac OS X, you should
+   source <tt>shrc</tt> or <tt>cshrc</tt>, as described in <a class="external" href="runspec.html#section2.4">runspec.html section
+   2.4</a>.  For Windows, please edit <tt>shrc.bat</tt> and make the adjustments described in the comments.  Then, execute that
+   file, as described in <a class="external" href="runspec.html#section2.5">runspec.html section 2.5</a>.</p> 
+
+
+<h3 id="runspec.02">runspec.02
+<span class="question">q. Why am I getting messages about <tt>specperl: bad interpreter</tt>?  For example:
+</span></h3>
+<pre class="pquestion">
+bash: /cpu2006newdir/bin/runspec: /cpu2006/bin/specperl: bad interpreter: No such file or directory
+</pre>
+
+   <p class="answer">a. Did you move the directory where <tt>runspec</tt> was installed?  If so, you can probably put
+   everything to rights, just by going to the new top of the directory tree and typing "<tt>bin/relocate</tt>".
+   </p>
+
+   <p class="answer">For example, the following unwise sequence of events is repaired after completion of the final line.</p>
+
+<pre>
+Top of SPEC benchmark tree is '/cpu2006'
+Everything looks okay.  cd to /cpu2006,
+source the shrc file and have at it!
+$ <b>cd /cpu2006</b>
+$ <b>. ./shrc</b>
+$ <b>cd ..</b>
+$ <b>mv cpu2006 cpu2006newdir</b>
+$ <b>runspec -h | head</b>
+bash: runspec: command not found
+$ <b>cd cpu2006newdir/</b>
+$ <b>. ./shrc</b>
+$ <b>runspec --help | head</b>
+bash: /cpu2006newdir/bin/runspec: /cpu2006/bin/specperl: bad interpreter: No such file or directory
+$ <b>bin/relocate</b>
+</pre>
+
+
+<h3 id="runspec.03">runspec.03
+<span class="question">q. Why does <tt>runspec</tt> fail with <tt>The feature 'http://xml.org/sax/features/namespaces' is not
+recognized by XML::SAX::ExpatXS</tt>?</span></h3>
+
+<p class="answer">a.  The problem is that the ExpatXS module as built on SuSE 10.1 requires a type of code relocation that
+SELinux does not want to allow.  For SPEC CPU2006 V1.1, several workarounds were suggested: enable relocations for the
+offending object, or turn off SELinux, or try a different toolset.  <b>For CPU2006 V1.2, the problem is not expected to
+occur.</b>
+</p> 
+
+<h3 id="runspec.04">runspec.04
+<span class="question">q. Why did I get the message <tt>Error: Start tag for undeclared element platform_settings</tt>?
+</span></h3>
+
+   <p class="question">I installed SPEC CPU2006 V1.2, and now my <tt>runspec</tt> command exits immediately, with this
+   message: </p>
+<pre>
+ERROR: An error was encountered while parsing the flag description file
+        at /cpu2006/V1.2/config/Oracle-Solaris-Studio12.2.xml
+   Output from the XML validator follows:
+
+-----------
+Error: Start tag for undeclared element platform_settings
+ in unnamed entity at line 91 char 19
+ </pre>
+
+   <p class="answer">a. The problem above is that although the named file
+   (<tt>/cpu2006/V1.2/config/Oracle-Solaris-Studio12.2.xml</tt>) has useful information about the tested platform, the
+   information needs to be updated and put into new locations.  For SPEC CPU2006 V1.2, instead of using a platform <span
+   class="u">element</span>, you need to use a platform <span class="u">file</span>.  The message above is telling you that
+   there is no element named "platform_settings" (as of V1.2).</p>
+
+   <p class="answer">An example of how to fix SPEC CPU2006 V1.1 flags files to match the SPEC CPU2006 V1.2 format is
+   available in <a class="external" href="flag-description.html#fix-1dot2-flags">flag-description.html</a>.</p>
+
+   <p class="answer">You must fix this problem in order to proceed, because <tt>runspec</tt> exits immediately if flags files
+   are improperfly formatted.  (Or, you could do your run with no flags files at all, and then add them back in afterwards
+   with <a class="external" href="runspec.html#flagsurl">rawformat --flagsurl</a>.  This tactic will allow your run to
+   proceed, but the results wll be marked invalid until you apply the flags.)</p>
+
+
+<!-- ...................... Building .......................................  -->
+
+<h2>Building benchmarks</h2>
+
+<h3 id="Build.01"><a name="winpath">Build.01</a> <span class="question">q. I'm using Windows and I can't build any
+benchmarks.   What does <tt>CreateProcess((null), ifort ...) failed</tt> mean?  For example:</span></h3>
+
+<pre class="pquestion">
+Error with make 'specmake build': check file
+'D:/cpu2006/benchspec/CPU2006/410.bwaves/run/build_base_cpu2006.win32.fast.exe.0000/make.err'
+  Error with make!
+*** Error building 410.bwaves
+-----
+make.err:
+process_begin: CreateProcess((null), ifort -c -Foblock_solver.obj -Ox block_solver.f, ...) failed.
+make (e=2): The system cannot find the file specified.
+
+specmake: *** [block_solver.obj] Error 2     
+</pre>
+
+   <p class="answer">a. This <tt>CreateProcess</tt> failure occurs on Windows when <tt>specmake</tt> cannot find your compiler. 
+   (Recall from <a class="external" href="system-requirements.html">system-requirements.html</a> that the benchmarks are supplied
+   in source code form, and that they must be compiled.)</p> 
+
+   <p class="answer">The reason that it cannot find your compiler is, most likely, because: </p>
+   <ol> 
+      <li>You have not edited <tt>shrc.bat</tt> to correctly reference your compiler, or </li>
+      <li>You have used a config file that references a compiler that does not exist. </li> 
+   </ol>
+
+   <p class="answer">To fix your problem, investigate and address both items.</p>
+
+   <ol class="answer"> <li><p>In <tt>shrc.bat</tt>, you need to either:</p>
+
+      <ol style="list-style-type:lower-alpha;">
+      <li><p>Reference a vendor-supplied file that sets the path.</p>
+
+         <p>The supplied <tt>shrc.bat</tt> in V1.2 mentions sample <span class="ttnobr">.bat</span> files that are often
+         provided by compilers to set your environment.  If you want to use this option but you can't find the right file,
+         check your compiler documentation, or you might try searching your hard drive for <span
+         class="ttnobr">*vars*bat</span>.</p>
+         
+         <p>The file names change frequently; check your compiler docs.  </p>
+
+         <p class="example" style="margin-left:5em;">For example, for Visual Studio 10, you might use something like <span
+         class="ttnobr">call "C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\Tools\vsvars32.bat" </span> but for
+         older compilers, you might need to look for <span class="ttnobr">v<span
+         class="alarm"><b>c</b></span>vars32.bat</span>, not <span class="ttnobr">v<span
+         class="alarm"><b>s</b></span>vars32.bat</span>.  </p>
+         
+         <p class="example" style="margin-left:5em;">For example, when using the (mid-2011) Intel compiler, to select 32 or
+         64-bit mode, you must remember
+         to add the appropriate argument after the call.  This statement requests 32-bit mode: <br /><span class="ttnobr">call
+         "C:\Program Files (x86)\Intel\ComposerXE-2011\bin\compilervars.bat" ia32</span></p>
+
+         <p class="example" style="margin-left:5em;">For example, when using the PGI 11.7 compiler, the path varies depending
+         on whether you are using 32 or 64-bit mode:<br /><span class="ttnobr">
+         call "c:\Program Files\PGI\win64\11.7\pgi_env.bat"</span> <br />or 
+         <br /><span class="ttnobr"> call "c:\Program Files (x86)\PGI\win32\11.7\pgi_env.bat"</span></p>
+
+         <p><span class="u">Summary: your call statement will vary,</span>  by compiler, by version, and sometimes, by
+         features.  Check your compiler's documentation, to find the right call.</p>
+         </li>
+
+      <li><p>Or, edit the path yourself.</p>
+
+         <p class="l1">You can set the path yourself if you like, with commands such as: </p>
+         <pre>set PATH=%PATH%;"c:\program files\path\to\my\compiler\bin"</pre>  
+         <p class="l1">If you want to use option b, but you can't figure out what path to set, try looking in the
+         documentation for your compiler under topics such as "setting the path", or "command line", or "environment
+         variables".  The documentation should mention whether any other environment variables (such as LIB or INCLUDE) are
+         required, in addition to PATH.</p></li>
+
+      </ol>
+   </li>
+
+
+   <li><p>You must also use a config file that is appropriate for your compiler.  <span class="alarm"
+   style="font-size:120%">Microsoft C++ users: </span> please see <a href="#VisualCXX">below</a>.</p></li>
+   </ol>
+
+
+<h3 id="Build.02"><a name="make.clean.err">Build.02</a> <span class="question">q. The file <tt>make.clean.err</tt> is mentioned, 
+but it does not exist.  Why not?  </span></h3>
+
+   <p class="questionsnugbot">The tools print a message such as:</p>
+   <pre class="pquestion"  style="margin-top:.2em; margin-bottom:.2em;">   Building 401.bzip2 ref base cpu2006.win32.fast.exe default:
+(build_base_cpu2006.win32.fast.exe.0000)
+Error with make.clean 'specmake clean': check file
+'D:/cpu2006/benchspec/CPU2006/401.bzip2/run/build_base_cpu2006fast.exe.0000/make.clean.err'
+*** Error building 401.bzip2
+If you wish to ignore this error, please use '-I' or ignore errors.
+</pre>
+   <p class="questionsnugtop">But on investigation, the file <tt>make.clean.err</tt> does not exist.  Why
+   not?</p>
+
+   <p class="answersnugbot">a. A missing <tt>.err</tt> file has been reported on Microsoft Windows if a path from
+   <tt>shrc.bat</tt> uses quoted strings that include semicolons within the quotes, such as: </p>
+<pre>set PATH="%PATH%;d:\My Compiler Path\bin" <span class="alarm"> &lt;--- wrong</span>
+set PATH="%PATH%;d:\mycompiler\bin"       <span class="alarm"> &lt;--- wrong</span>
+</pre>
+   <p class="answersnug">Paths such as the above may appear to work if you enter them at the command line.  But when the
+   tools call <tt>CreateProcess</tt>, they cause mysterious-seeming failures.  The correct way to do it is:</p>
+<pre>    set PATH=%PATH%;"d:\My Compiler Path\bin" 
+or
+    set PATH=%PATH%;d:\mycompiler\bin     
+</pre>
+   <p class="answer">Notice that in both cases, there are no semicolons inside of quotes.</p>
+
+
+<h3 id="Build.03"><a name="rebuild">Build.03</a> <span class="question">q. Why is it rebuilding the benchmarks?
+</span></h3>
+
+<p class="answer">a. You changed something, and the tools thought that it might affect the generated binaries.  Note that as of <a
+class="external" href="changes-in-v1.1.html#unexpectedrebuilds">V1.1</a>, unexpected rebuilds should be greatly reduced.</p> 
+
+
+<h3 id="Build.04"><a name="VisualCXX">Build.04</a>
+<span class="question">q. Are there config files for Visual C++?
+</span></h3>
+
+<p class="answer">a. Yes, but they are incomplete.  In your directory <span class="ttnobr">%SPEC%\config\</span> there are
+config files that can be used to compile all but one of the C/C++ benchmarks:</p>
+<pre>%SPEC%\config\Example-windows-ia32-visualstudio.cfg</pre>
+<p class="answer">or</p>
+<pre>%SPEC%\config\Example-windows-amd64-visualstudio.cfg</pre> 
+
+<p class="answer">but (as of July 2011) these will not compile <span class="ttnobr">462.libquantum</span>.  <span
+class="alarm">Please read the comments carefully</span> in the above config files, to understand their limitations.</p>
+
+<p class="answer">Users of Microsoft Visual C++ should also please note that the <span class="alarm">config files from
+results posted with the Intel C++ compiler are not appropriate for you</span>, nor is the file <span
+class="ttnobr">%SPEC%\config\Example-windows-ia32-icl.cfg</span> on your kit.  The Intel compiler has additional switches
+that the Microsoft compiler does not recognize, and it spells the compiler name differently ("<tt>icl</tt>" vs.
+"<tt>cl</tt>").</p>
+
+<!-- ...................... setup .......................................  -->
+<h2>Setting up</h2>
+
+<h3 id="Setup.01">Setup.01 <span class="question">q. What does <tt> hash doesn't match after copy </tt> mean?</span></h3>
+
+   <p class="question">I got this strange, difficult to reproduce message:
+   <br /><tt>&nbsp;&nbsp;&nbsp; hash doesn't match after copy ... in copy_file (1 try total)!  Sleeping 2 seconds...</tt> 
+   <br />followed by several more tries and sleeps. Why?</p>
+
+   <p class="answer">a. During benchmark setup, certain files are checked.  If they don't match what they are expected to,
+   you might see this message.  Check:</p>
+   <ul>
+   <li>Are you out of disk space?</li>
+   <li>Does the error go away if a different disk is used?  Perhaps you have a bad disk, or an unreliable disk controller.
+   </li>
+   </ul> <p class="answer">If the condition persists, try turning up the <a class="external"
+   href="config.html#verbose">verbosity</a> level.  Look at the files with other tools; do they exist?  Can you see differences? 
+   Try a different disk and controller.  And, check for the specific instance of this message described in the next question.</p> 
+
+
+<h3 id="Setup.02">Setup.02<span class="question">q. Why does it say <tt>ERROR: Copying executable failed?</tt></span></h3>
+
+   <p class="question">I got this strange, difficult to reproduce message:
+   <br /><tt>&nbsp;&nbsp;&nbsp; ERROR: Copying executable to run directory FAILED</tt> <br />or 
+   <br /><tt>&nbsp;&nbsp;&nbsp; ERROR: Copying executable from build dir to exe dir FAILED!</tt> 
+   <br />along with the bit about hashes not matching from the previous question.  Why?</p>
+
+   <p class="answer">a. Perhaps you have attempted to build the same benchmark twice in two simultaneous jobs.  </p>
+   
+   <p class="answer">On most operating systems, the SPEC tools don't mind concurrent jobs.  They use your operating system's
+   locking facilities to write the correct outputs to the correct files, even if you fire off many <tt>runspec</tt> commands
+   at the same time.  </p>
+   
+   <p class="answer">But there's one case of simultaneous building that is difficult for the tools to defend against: please
+   don't try to build the very same executable from two different jobs at the same time.  Notice that if you say something
+   like this:</p>
+<pre>
+$ <b>tail myconfig.cfg</b>
+445.gobmk=peak:
+basepeak=yes
+$ <b>runspec --config myconfig --size test --tune base 445.gobmk &amp;</b>
+$ <b>runspec --config myconfig --size test --tune peak 445.gobmk &amp;</b>
+</pre>
+   <p class="answer">then you are trying to build the same benchmark twice in two different jobs, because of the presence of
+   <tt>basepeak=yes</tt>.  Please don't try to do that.</p>
+
+
+
+
+
+
+<!-- ...................... running .......................................  -->
+<h2>Running benchmarks</h2>
+
+<h3 id="Run.01">Run.01
+<span class="question">q. What's this <tt>specrand</tt> thing?
+</span></h3>
+
+   <p class="question">During a run, <tt>998.specrand</tt> and <tt>999.specrand</tt> are mentioned.  Why?  For example;
+   </p>
+   <pre class="pquestion" >
+   Benchmarks selected: 400.perlbench, 401.bzip2, 403.gcc, 429.mcf, 445.gobmk, 
+   456.hmmer, 458.sjeng, 462.libquantum, 464.h264ref, 471.omnetpp, 473.astar, 
+   483.xalancbmk, 999.specrand
+   .
+   .
+   .
+     Running 473.astar test peak submitted default (1 copy)
+     Running 483.xalancbmk test peak submitted default (1 copy)
+     Running 999.specrand test peak submitted default (1 copy)
+     </pre>
+
+   <p class="answer">a. Several of the benchmarks use a common random number generator.  During development of CPU2006, it
+   was often useful to have the random number generator as a separate pseudo-benchmark, to help with problem diagnosis.
+   ("You miscompared on benchmark mumble?  Hmmm.  Do you also miscompare on specrand?")</p>
+
+   <p class="answer">For the released version of the suite, SPEC decided to retain <tt>specrand</tt>, in case it comes in
+   useful for later problem diagnosis.  It is run with both the integer and floating point suites, but its time is not
+   reported, and its performance does not contribute to the bottom line metrics. </p>
+
+   <p class="answer">You'll find more information about <tt>specrand</tt> at <a class="external"
+   href="http://www.spec.org/cpu2006/Docs/999.specrand.html">http://www.spec.org/cpu2006/Docs/999.specrand.html</a>.</p> 
+
+
+<h3 id="Run.02">Run.02
+<span class="question">q. Why does this benchmark suite take so long to run?
+</span></h3>
+
+   <p class="answer">a. Please understand that the suite has been designed to be useful for at least 5 years.   Benchmarks that
+   seem slow today probably will not seem slow at the end of life of the suite.  You can see a bit more on this topic at question
+   17 of <a class="external" href="readme1st.html#Q17">readme1st.html</a>.</p> 
+
+
+<h3 id="Run.03">Run.03 <span class="question">q. Why was there this cryptic message from the operating system?</span></h3>
+
+   <p class="answer">a. If you are getting cryptic, hard-to-reproduce, unpredictable error messages from your system, one possible
+   reason may be that the benchmarks consume substantial resources, of several types.  If an OS runs out of some resource - for
+   example, pagefile space, or process heap space - it might not give you a very clear message.  Instead, you might see only a
+   very brief message, or a diaolog box with a hex error code in it.  Please see the hints and suggestions in the section about
+   resources in <a class="external" href="system-requirements.html#resources">system-requirements.html</a>.</p> 
+
+
+<h3 id="Run.04">Run.04 <span class="question">Console Window Host has stopped working; specinvoke unable to start 0xc0000142</span></h3>
+
+  <p class="question">It was reported that under Windows7 with SP1, a user saw SPEC CPU2006 benchmark failures 
+  and this dialog box: <br />
+  <img style="margin:1em 4em;" src="images/console-window-host.jpg" width="368" height="198" alt="console window host has
+  stopped working" />
+  <br />which, after pressing the button, was followed by:
+  <br />
+  <img style="margin:1em 4em;" src="images/specinvoke-nostart.jpg" width="498" height="175" alt="specinvoke 0xc0000142" />
+  </p>
+
+  <p class="answer">The problem was difficult to diagnose, because the problem sometimes moved around (showing up at
+  different stages of the run), with slight variations in the symptoms (e.g. which dialog boxes appeared). Eventually, it was
+  noticed that an older (pre-Windows 7) version of <tt>cygwin</tt> was present in the <tt>%PATH%</tt>; removing
+  <tt>cygwin</tt> from the <tt>%PATH%</tt> removed the failures.</p>
+
+  <p class="answer">Because the version of <tt>cygwin</tt> was obsolete, it would be unfair to "blame" it for the
+  failures!</p>
+
+  <p class="answer">Nevertheless, it may be fair to point out that providing a Unix-like environment on Windows poses
+  difficult problems.  Historically there have been various approaches, with differing (incompatible) assumptions about how
+  to mask or bridge differences between Windows and Unix. The SPEC CPU toolset has its own approach and its own set of
+  assumptions, and this is not the first report of a difficult-to-diagnose error when a Windows/Unix compatibility product is
+  present on the path.</p>   
+
+  <p class="answer">Therefore, SPEC recommends that, in general, you should remove items from your path that are not needed,
+  and, in particular, that you should remove Windows/Unix compatibility products from the <tt>%PATH%</tt> prior to invoking
+  <tt>runspec</tt>.</p>
+  
+  <p class="answer">If you see odd error messages such as the above, please remove any such products from the PATH prior to
+  requesting <a class="external" href="techsupport.html">support</a> from SPEC.</p> 
+
+  <p class="answer"><span class="new">New with CPU2006 V1.2,</span> the utility <a class="external"
+  href="utility.html#printpath">printpath</a> is documented, with an example of using it for the purpose of studying the path and
+  then removing <tt>cygwin</tt>.</p>  
+
+
+<!-- ...................... miscompares .......................................  -->
+<h2>Miscompares</h2>
+
+<h3 id="Miscompare.01">Miscompare.01 <span class="question"> I got a message about a miscompare. The tools said something
+like:</span></h3> 
+
+<table style="horizontal-align:center; border:none;">
+<tr style="border:none;"><td style="border:none;">
+<pre class="pquestion" style="background:black; color:white; border-color: #025af2; border-style:solid; border-width: 15px 3px 3px 3px;">
+Running Benchmarks
+  Running 999.specrand ref base oct09a default
+Error with '/spec/cpu2006/bin/specinvoke -E -d /spec/cp
+u2006/benchspec/CPU2006/999.specrand/run/run_base_ref_o
+ct09a.0000 -c 1 -e compare.err -o compare.stdout -f com
+pare.cmd': check file '/spec/cpu2006/benchspec/CPU2006/
+999.specrand/run/run_base_ref_oct09a.0000/.err'
+*** Miscompare of rand.234923.out, see /spec/cpu2006/be
+nchspec/CPU2006/999.specrand/run/run_base_ref_oct09a.00
+00/rand.234923.out.mis
+Error: 1x999.specrand
+Producing Reports
+mach: default
+  ext: oct09a
+    size: ref
+      set: int
+      set: fp
+</pre>
+</td></tr></table>
+
+   <p class="question">Why did it say that?  What's the problem?</p>
+
+   <p class="answer">a. We don't know.  Many things can cause a benchmark to miscompare, so we
+   really can't tell you exactly what's wrong based only on the fact that a miscompare occurred. </p> 
+
+   <p class="answer">But don't panic. </p>
+
+   <p class="answer">Please notice, if you read the message carefully, that there's a suggestion of a very specific file to look in.  It may be a little hard to read if you have a narrow terminal window, as in the example above, but if you look carefully you'll see that it says:</p>
+
+<pre>
+*** Miscompare of rand.234923.out, see 
+/spec/cpu2006/benchspec/CPU2006/999.specrand/run/run_base_ref_oct09a.0000/rand.234923.out.mis
+</pre>
+
+<p class="answer">Now's the time to look inside that file.  Simply doing so <b>may</b> provide a clue as to the nature of your
+   problem.  </p>
+   <p class="answer">On Unix systems, change your current directory to the run directory using the path mentioned in the
+   message, for example:</p>
+
+<pre>cd /spec/cpu2006/benchspec/CPU2006/999.specrand/run/run_base_ref_oct09a.0000/
+</pre>
+
+   <p class="answer">On Microsoft Windows systems, remember to turn the slashes backwards in your cd command.  </p>
+
+   <p class="answer">Then, have a look at the file that was mentioned, using your favorite text editor.  If the file does not
+   exist, then <a href="#make.clean.err">check your paths</a>, and check to see whether you have run out of disk space.</p>
+
+<h3 id="Miscompare.02">Miscompare.02 <span class="question"> The benchmark ran, but it took less than 1 second and there was
+a miscompare.  Help!</span></h3>
+
+   <p class="answer">a. If the benchmark took less than 1 second to execute, it didn't execute properly.  There should be one
+   or more <tt>.err</tt> files in the run directory which will contain some clues about why the benchmark failed to run.
+   Common causes include libraries that were used for compilation but not available during the run, executables that crash
+   with access violations or other exceptions, and permissions problems.  See also the suggestions in the next question.</p>
+
+<h3 id="Miscompare.03">Miscompare.03 <span class="question">  I looked in the <tt>.mis</tt> file and it said something
+like:</span></h3>
+<pre class="pquestion">
+   'rand.234923.out' short
+</pre>
+   <p class="question">What does "short" mean?</p>
+
+   <p class="answer">a. If a line like the above is the only line in the <tt>.mis</tt> file, it means that the benchmark
+   failed to produce any output.  In this case, the corresponding error file (look for files with <tt>.err</tt> extensions in
+   the run directory) may have a clue.  In this case, it was <tt>Segmentation Fault - core dumped</tt>.  For problems like
+   this, the first things to examine are the portability flags used to build the benchmark.  </p>
+
+   <p class="answer">Have a look at the sample config files in <span class="ttnobr">$SPEC/config</span> or, on Windows, <span
+   class="ttnobr">%SPEC%\config</span>.  If you constructed your own config file based on one of those, maybe you picked a
+   starting point that was not really appropriate (e.g. you picked a 32-bit config file but are using 64-bit compilation options).
+    Have a look at other samples in that directory.  Check at <a class="external"
+   href="http://www.spec.org/cpu2006/">www.spec.org/cpu2006</a> to see if there have been any result submissions using the
+   platform that you are trying to test.  If so, compare your portability flags to the ones in the the config files for those
+   results.</p> 
+
+   <p class="answer">If the portability flags are okay, your compiler may be generating bad code.</p>
+
+<h3 id="Miscompare.04">Miscompare.04 <span class="question"> My compiler is generating bad code!  Help!</span></h3>
+
+   <p class="answer">a. Try reducing the optimization that the compiler is doing.  Instructions for doing this will vary from
+   compiler to compiler, so it's best to ask your compiler vendor for advice if you can't figure out how to do it for
+   yourself.</p>
+
+<h3 id="Miscompare.05">Miscompare.05 <span class="question"> My compiler is generating bad code with low or no optimization!  Help!</span></h3>
+
+   <p class="answer">a. If you're using a beta compiler, try dropping down to the last released version, or get a newer copy
+   of the beta.  If you're using a version of GCC that shipped with your OS, you may want to try getting a "vanilla" (no
+   patches) version and building it yourself.</p>
+
+<h3 id="Miscompare.06">Miscompare.06 <span class="question"> I looked in the <span class="ttnobr">.mis</span> file and it was
+just full of a bunch of numbers.</span></h3>
+
+   <p class="answer">a. In this case, the benchmark is probably running, but it's not generating answers that are within the
+   tolerances set.  See the suggestions for how to deal with compilers that generate bad code in the previous two questions.
+   In particular, you might see if there is a way to encourage your compiler to be careful about optimization of floating
+   point expressions.</p>
+
+<!-- ...................... reports .......................................  -->
+<h2>Results reporting </h2>
+
+<h3 id="Results.01">Results.01 
+<span class="question">q. Where did the reference times go?
+</span></h3>
+
+   <p class="question">I was reading an HTML (or PDF or PS) report and see that in the table SPEC now prints all three
+   observations as both seconds and ratio, with the bold underlined item for the median.  Although this is useful, CPU2000
+   results reports included the reference times in their own column, and I miss them.  Yes, I understand that the ratio
+   is defined as <span class="ttnobr">reference time / observed time</span>, so I could calculate the reference times by
+   simple multiplication.  Nevertheless, it was nice having them handy in the previous report format.  </p>
+
+   <p class="answer">a. They are still fairly easy to locate.  The text format still prints them on every line (just like
+   CPU2000), so if you go up to the top of your browser and change the <tt>.pdf</tt> (or <tt>.whichever</tt>) to
+   <tt>.txt</tt>, you'll find the reference times.  </p>
+
+
+<h3 id="Results.02">Results.02
+<span class="question">q. It's hard to cut/paste into my spreadsheet
+</span></h3>
+
+   <p class="answer">a. Please don't do that.  With CPU2006, there's a handy <tt>.csv</tt> format file right next to the
+   other result formats on the index page.  Or, you can go up to the top of your browser and change the <tt>.pdf</tt> (or
+   <tt>.whichever</tt>) to <tt>.csv</tt> </p>
+
+
+<h3 id="Results.03"><a name="flagsfile">Results.03</a>
+<span class="question">q. What is a "flags file"?  What does the message <tt> Unknown Flags </tt> mean in a report?
+</span></h3>
+
+   <p class="answer">a.  SPEC CPU2006 provides benchmarks in source code form, which are compiled under control of SPEC's
+   toolset. Compilation flags (such as <tt>-O5</tt> or <tt>-unroll</tt>) are detected and reported by the tools with the
+   help of flag description files.  Therefore, to do a complete run, you need to (1) point to an existing flags file (easy)
+   or (2) modify an existing flags file (slightly harder) or (3) write one from scratch (definitely harder).</p>
+
+   <ol class="answer">
+
+   <li style="margin-bottom:.8em;" class="answer"> Find an existing flags file by noticing the address of the <tt>.xml</tt> file
+   at the bottom of any result published at <a class="external" href="http://www.spec.org/cpu2006/">www.spec.org/cpu2006</a>.  You
+   can use the <a class="external" href="runspec.html#flagsurl">--flagsurl</a> switch to point your own <tt>runspec</tt> command
+   at that file, or you can reference it from your config file with the <a class="external"
+   href="config.html#flagsurl">flagsurl</a> option.  For example: <br />  
+   <span class="ttnobr">&nbsp;&nbsp;&nbsp;runspec --config=myconfig --flagsurl=http://www.spec.org/cpu2006/flags/sun-studio.xml int
+   </span></li>
+
+   <li style="margin-bottom:.8em;" class="answer"> You can download the <tt>.xml</tt> flags file referenced at the bottom of any
+   published result at <a class="external" href="http://www.spec.org/cpu2006/">www.spec.org/cpu2006</a>.  <span
+   class="alarm">Warning:</span> clicking on the <tt>.xml</tt> link may just confuse your web browser; it's probably better to use
+   whatever methods your browser provides to download a file without viewing it - for example, control-click in Safari, right
+   click in Internet Explorer.  Then, look at it with a text editor.</li> 
+   <li style="margin-bottom:.8em;" class="answer"> You can write your own flags file by following the instructions in <a
+   class="external" href="flag-description.html">flag-description.html</a>.  </li> 
+   </ol>
+
+   <p class="answer">Notice that you do not need to re-run your tests if the only problem was <tt>Unknown flags</tt>.  You can
+   just use <a class="external" href="runspec.html#flagsurl">runspec --rawformat --flagsurl</a></p> 
+
+
+<h3 id="Results.04">Results.04
+<span class="question">q. What's all this about <tt>Submission Check -&gt; FAILED</tt> littering my log file and my screen?
+</span></h3>
+
+   <p class="question">At the end of my run, why did it print something like this?
+   </p>
+
+<pre class="pquestion">
+format: Submission Check -&gt; FAILED.  Found the following errors:
+        - The "hw_memory" field is invalid.
+            It must contain leading digits, followed by a space,
+            and a standard unit abbreviation.  Acceptable
+            abbreviations are KB, MB, GB, and TB.
+           The current value is "20480 Megabytes".
+</pre>
+
+   <p class="answer">a. A complete, reportable result has various information filled in for readers.  These fields are listed in
+   the table of contents for <a class="external" href="config.html#Dtoc_V">config.html</a>.  If you wish to submit a result to
+   SPEC for publication at <a class="external" href="http://www.spec.org/cpu2006/">www.spec.org/cpu2006</a>, these fields not only
+   have to be filled in; they also have to follow certain formats.  Although you are not required to submit your result to SPEC,
+   for convenience the tools try to tell you as much as they can about how the result should be improved if you were to submit it.
+    In the above example, the tools would stop complaining if the field <tt>hw_memory</tt> said something like "20 GB" instead of
+   "20480 Megabytes". </p> 
+
+   <p class="answer">Notice that you can repair minor formatting problems such as these without doing a re-run of your tests. You
+   are allowed to edit the rawfile, as described in <a class="external" href="utility.html#rawformat">utility.html</a>.</p> 
+<!-- 
+
+-->
+<p>&nbsp;</p>
+
+<hr />
+<p>Copyright 2006-2011 Standard Performance Evaluation Corporation</p>
+<p>All Rights Reserved</p>
+
+
+<!-- this space intentionally left blank: some empty space at the bottom increases the probability that clicking on a link in
+the table of contents will actually position the desired section at the top of your browser window -->
+<p style="margin-bottom:1900px;">&nbsp;</p>
+
+
+
+</body></html>
+

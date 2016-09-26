@@ -1,0 +1,33 @@
+runspec v6437 - Copyright 1999-2009 Standard Performance Evaluation Corporation
+Using 'hpux11iv3-ipf' tools
+                 This is the SPEC CPU2006 benchmark tools suite.
+
+Version summary:
+    CPU2006 version: 114
+ Benchmarks version: 113
+      Tools version: 114
+    runspec version: 6437 ($Id: runspec 6437 2011-04-15 00:19:12Z cloyce $)
+
+Tools information:
+ Tools package installed: hpux11iv3-ipf
+ File locking method: fcntl(2) (probably network-safe)
+Mode |  UID  |  GID  |   Size  |    Modified Date   | Name
+0755 | 662   | 191   |  682808 | 26-Apr-2011 23:37:58 | specmake
+0755 | 662   | 191   | 5009360 | 26-Apr-2011 23:37:59 | specperl
+0755 | 662   | 191   |   70164 | 26-Apr-2011 23:38:06 | specinvoke
+0755 | 662   | 191   |   70904 | 26-Apr-2011 23:38:06 | specinvoke_pm
+0755 | 662   | 191   |  587024 | 26-Apr-2011 23:37:59 | specxz
+0755 | 662   | 191   |  149960 | 26-Apr-2011 23:38:06 | specmd5sum
+0755 | 0     | 116   |    7633 | 27-Apr-2011 15:00:36 | specdiff
+0755 | 0     | 116   |   89735 | 27-Apr-2011 15:00:36 | specpp
+0755 | 662   | 191   |  673268 | 26-Apr-2011 23:37:59 | specrxp
+0755 | 0     | 116   |  128866 | 27-Apr-2011 15:00:36 | runspec
+
+Version info for specinvoke (specinvoke): specinvoke r6392
+Version info for specmake (specmake): GNU Make 3.82
+Version info for specrxp (/cpu2006-test/bin/specrxp): RXP 1.5.0 Copyright Richard Tobin, LTG, HCRC, University of Edinburgh
+                                                      Modified for use in SPEC benchmarks - 14 April 2011
+Version info for specxz (/cpu2006-test/bin/specxz): xz (XZ Utils) 5.0.0
+Version info for specpp (/cpu2006-test/bin/specperl): filepp version 1.8.0SPEC
+Version info for specperl (/cpu2006-test/bin/specperl): This is specperl 5, version 12, subversion 3 (v5.12.3) built for IA64.ARCHREV_0
+                                                        For more detail on specperl, say 'specperl -V'

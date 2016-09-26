@@ -1,0 +1,843 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<title>SPEC CPU2006: Changes in V1.1</title>
+<!-- $Id: changes-in-v1.1.html 6161 2008-05-13 14:00:38Z john $ -->
+<link rel="STYLESHEET" href="css/cpu2006docs.css" type="text/css" />
+<style type="text/css">
+li { margin-top:.5em; margin-bottom:.5em; }
+</style>
+</head>
+<body>
+
+<h1>SPEC CPU2006: Changes in V1.1</h1>
+<p class="snug"><span style="font-size:80%;">
+Last updated: $Date: 2008-05-13 09:00:38 -0500 (Tue, 13 May 2008) $ by $Author: john $</span> </p>
+<p class="snugtop">(To check for possible updates to this document, please see <a class="external"
+href="http://www.spec.org/cpu2006/Docs/">http://www.spec.org/cpu2006/Docs/</a>  ) </p> 
+<h2>Introduction: Who Wants V1.1?</h2>
+
+<p>SPEC CPU2006 V1.1 is an incremental update to SPEC CPU2006 V1.0.  Results generated with V1.1 are comparable to results
+from V1.0 and vice versa. V1.1 is intended to improve compatibility, stability, documentation and ease of use. Changes are
+intended to be useful to several kinds of users:</p>
+
+<p class="snugbot"><b>For users of new platforms:</b></p>
+<ul class="snugtop">
+   <li>Updates to 12 <a href="#benchmarks">benchmarks</a>, primarily to improve portability </li>
+</ul>
+
+<p class="snugbot"><b>For anyone who reads (or produces) a result: </b></p>
+<ul class="snugtop">
+   <li>Cleanup of <a href="#graphs">graph</a> formats</li>
+
+   <li>Improvements to report <a href="#flagreporting">readability</a> and &nbsp; <a href="#parallelreporting">several</a>
+   &nbsp; <a href="#subcheck">detailed</a> &nbsp; <a href="#testdate">changes</a> &nbsp;  to improve accuracy.</li>
+
+   <li>Clarifications and additions to the <a class="external" href="runrules.html">Run and Reporting Rules</a>, including rules
+   for disclosure of <a href="#ruleuserbuilt">"user-built"</a> systems, reporting of <a href="#ruleautopar">automatic
+   parallelization</a>, and comparison of <a href="#ruleestimates">estimates</a>.  </li> 
+</ul>
+
+<p class="snugbot"><b>For researchers and developers:</b></p>
+<ul class="snugtop">
+   <li>Documentation of the <a href="#monitor">monitor hooks</a> </li>
+
+   <li>Easier investigation of alternate sources or workloads, via the <a href="#convert">convert_to_development</a>
+   utility.</li>
+</ul>
+
+<p class="snugbot"><b>For testers of large systems:</b></p>
+<ul class="snugtop">
+   <li>A group of 6 features to make the <a href="#parallelsetup">setup phase</a> faster on big systems. </li>
+   <li>Refinements of the <a href="#submitcontinued">submit</a> and <a href="#bind">bind</a> features and greatly expanded <a
+   class="external" href="config.html#submit">documentation</a> thereof.</li> 
+</ul>
+
+<p class="snugbot"><b>For new users of the suite:</b></p>
+<ul class="snugtop">
+   <li>Clarifications and additions to the <a href="#docs">documentation</a>.</li>
+   <li>Updated example config files.</li>
+</ul>
+
+<p class="snugbot"><b>For those who test many platforms:</b></p>
+<ul class="snugtop">
+   <li>Fewer <a href="#unexpectedrebuilds">unexpected rebuilds</a></li>
+   <li>The ability to <a href="#bundle">bundle up</a> a set of binaries and their associated config file, for easy
+   transportation and use on other systems.</li>
+   <li>Many other features intended to make benchmarking easier, more productive, and less error-prone, as summarized in the
+   table of contents.  Depending on the level of detail at which you count, there are approximately 60 new, updated, or
+   newly-documented <a href="#featureindex">user-visible features</a> in V1.1.</li>
+</ul>
+
+<div style="border:thin red solid; margin:2em 5em 1em; padding:.3em .6em;">
+
+<p><span style="font-size:110%;" class="alarm"><b> If you have already used SPEC CPU2006 V1.0 and already have configuration
+files, it is recommended that you read through this document, so as to avoid surprises during use of V1.1</b></span> Among
+the changes that you are likely to be affected by are the change to <a href="#builddir">build directory locations</a>, the
+reporting of <a href="#parallelreporting">parallel flags</a>, the <a href="#testdate">automatic setting of test date</a>, and
+the addition of <a href="#debuglog">debug logs</a>.  If you still have <a href="#usernum">USER</a> numbers, it's time to stop
+now.</p>
+
+</div>
+
+<p class="contents">Contents</p>
+<p style="margin:.1em 3em;"><i>(This table of contents proceeds in rough order of time for a user of the suite: you acquire a
+platform, ensure that you are familiar with the rules, build the benchmarks, run them, generate reports, and occasionally use
+utilities and other features.)</i></p>
+<p class="contentsl1"><a href="#newsys">New systems supported</a></p>
+<p class="contentsl1"><a href="#sysdrop">Systems no longer supported</a></p>
+<p class="contentsl1"><a href="#benchmarks">Benchmark source code changes</a></p>
+   <p class="contentsl3"><a href="#bmark400.perlbench">400.perlbench</a></p>
+   <p class="contentsl3"><a href="#bmark403.gcc">403.gcc</a></p>
+   <p class="contentsl3"><a href="#bmark435.gromacs">435.gromacs</a></p>
+   <p class="contentsl3"><a href="#bmark445.gobmk">445.gobmk</a></p>
+   <p class="contentsl3"><a href="#bmark447.dealII">447.dealII</a></p>
+   <p class="contentsl3"><a href="#bmark450.soplex">450.soplex</a></p>
+   <p class="contentsl3"><a href="#bmark453.povray">453.povray</a></p>
+   <p class="contentsl3"><a href="#bmark462.libquantum">462.libquantum</a></p>
+   <p class="contentsl3"><a href="#bmark464.h264ref">464.h264ref</a></p>
+   <p class="contentsl3"><a href="#bmark471.omnetpp">471.omnetpp</a></p>
+   <p class="contentsl3"><a href="#bmark481.wrf">481.wrf</a></p>
+   <p class="contentsl3"><a href="#bmark483.xalancbmk">483.xalancbmk</a></p>
+<p class="contentsl1"><a href="#rules">Run Rules</a></p>
+   <p class="contentsl3"><a href="#ruleestimates">1.6</a> estimates</p>
+   <p class="contentsl3"><a href="#ruleidentifiers">2.1.1</a> identifiers</p>
+   <p class="contentsl3"><a href="#rulesystemstate">3.1.2</a> system state</p>
+   <p class="contentsl3"><a href="#ruleparallelsetup">3.2.5</a> parallel setup</p>
+   <p class="contentsl3"><a href="#ruleautopar">4.2.3</a> automatic parallelization</p>
+   <p class="contentsl3"><a href="#ruleuserbuilt">4.2.6</a> user-built systems</p>
+   <p class="contentsl3"><a href="#rulespeed">4.3.2</a> speed conversion</p>
+   <p class="contentsl3"><a href="#ruledisclosure">4.6</a> required disclosures</p>
+<p class="contentsl1"><a href="#building">Building Benchmarks</a></p>
+   <p class="contentsl2"><a href="#builddir">1.&nbsp;</a> Build directories separated</p>
+   <p class="contentsl2"><a href="#bundle">2.&nbsp;</a> Bundle up binaries and config file</p>
+   <p class="contentsl2"><a href="#parallelbuild">3.&nbsp;</a> Parallel builds on Windows too</p>
+   <p class="contentsl2"><a href="#unexpectedrebuilds">4.&nbsp;</a> Unexpected rebuilds reduced</p>
+<p class="contentsl1"><a href="#running">Running the Suite</a> </p>
+   <p class="contentsl2"><a href="#parallelsetup">1.&nbsp;</a> Parallel setup</p>
+   <p class="contentsl2"><a href="#basepeakcopies">2.&nbsp;</a> Per-benchmark basepeak and copies - behavior change</p>
+   <p class="contentsl2"><a href="#bind">3.&nbsp;</a> Per-benchmark bind </p>
+   <p class="contentsl2"><a href="#preenv">4.&nbsp;</a> PreENV allows setting of environment variables</p>
+   <p class="contentsl2"><a href="#monitor">5.&nbsp;</a> Runtime monitoring </p>
+   <p class="contentsl2"><a href="#usernum">6.&nbsp;</a> $SPECUSERNUM no longer recognized </p>
+<p class="contentsl1"><a href="#reporting">Reports</a></p>
+   <p class="contentsl2"><a href="#parallelreporting">1.&nbsp;</a> Auto Parallel - changes to handle common cases</p>
+   <p class="contentsl2"><a href="#csv">2.&nbsp;</a> CSV updated</p>
+   <p class="contentsl2"><a href="#flagreporting">3.&nbsp;</a> Flag reporting - multiple files supported, flag order
+   preserved, report readability </p>
+   <p class="contentsl2"><a href="#graphs">4.&nbsp;</a> Graphs cleaned up</p>
+   <p class="contentsl2"><a href="#graphs">5.&nbsp;</a> Links and attachments </p>
+   <p class="contentsl2"><a href="#reportnames">6.&nbsp;</a> Report names have changed</p>
+   <p class="contentsl2"><a href="#seconds">7.&nbsp;</a> Seconds are reported with more digits</p>
+   <p class="contentsl2"><a href="#subcheck">8.&nbsp;</a> Submission check automatically included with rawformat</p>
+   <p class="contentsl2"><a href="#testdate">9.&nbsp;</a> Test date automatically set</p>
+<p class="contentsl1"><a href="#utility">Utilities</a></p>
+   <p class="contentsl2"><a href="#convert">1.&nbsp;</a> Convert to Development</p>
+   <p class="contentsl2"><a href="#dumpsrcalt">2.&nbsp;</a> Dump alternative source</p>
+   <p class="contentsl2"><a href="#index">3.&nbsp;</a> Index </p>
+   <p class="contentsl2"><a href="#makesrcalt">4.&nbsp;</a> Make alternative source</p>
+   <p class="contentsl2"><a href="#ogotop">5.&nbsp;</a> ogo top takes you to $GO</p>
+   <p class="contentsl2"><a href="#portprogress">6.&nbsp;</a> port_progress </p>
+   <p class="contentsl2"><a href="#specrxp">7.&nbsp;</a> specrxp</p>
+   <p class="contentsl2"><a href="#speed">8.&nbsp;</a> Speed metric from rate run</p>
+<p class="contentsl1"><a href="#other">Other New and Changed Tools Features</a></p>
+   <p class="contentsl2"><a href="#bmarklist">1.&nbsp;</a> Benchmark lists and sets can be referenced</p>
+   <p class="contentsl2"><a href="#debuglog">2.&nbsp;</a> Debug logs</p>
+   <p class="contentsl2"><a href="#keeptmp">3.&nbsp;</a> Keeping temporaries</p>
+   <p class="contentsl2"><a href="#submitcontinued">4.&nbsp;</a> Submit lines continued</p>
+   <p class="contentsl2"><a href="#submitnotes">5.&nbsp;</a> Submit notes</p>
+   <p class="contentsl2"><a href="#trailingspaces">6.&nbsp;</a> Trailing spaces in config files</p>
+<p class="contentsl1"><a href="#docs">Documentation</a></p>
+<p class="contentsl1"><a href="#featureindex">Updated Feature Index</a></p>
+
+<hr />
+
+      <p class="commentarystart" style="margin-top:.5em"> <i>Note:</i> links to SPEC CPU2006 documents on this web page
+      assume that you are reading the page from a directory that also contains the other SPEC CPU2006 documents.  If by
+      some chance you are reading this web page from a location where the links do not work, try accessing the referenced
+      documents at one of the following locations:</p>
+      <ul class="commentaryul">
+      <li class="commentaryli"><a class="external" href="http://www.spec.org/cpu2006/Docs/">www.spec.org/cpu2006/Docs/</a></li> 
+      <li class="commentaryli">The <span class="ttnobr">$SPEC/Docs/</span> (Unix) or <span class="ttnobr">%SPEC%\Docs\</span>
+      (Windows) directory on a system where SPEC CPU2006 has been installed.</li>
+      <li class="commentaryli">The <span class="tt">Docs/</span> directory on your SPEC CPU2006 distribution DVD.</li>
+      </ul>
+      <p class="commentaryend"></p>
+
+<h2 id="newsys">New systems supported</h2>
+<p>With this release of SPEC CPU2006, new support is added for:</p>
+<ul>
+<li>HP-UX 11iv1 on PA-RISC systems</li>
+<li>MacOS X 10.1 on PowerPC systems</li>
+</ul>
+
+<h2 id="sysdrop">Systems no longer supported</h2>
+<p>With this release of SPEC CPU2006, support is removed for:</p>
+<ul>
+<li>RHAS 3r2 to RHAS 4r3 on Itanium systems</li>
+<li>Linux on PowerPC-based systems with GLIBC 2.2.1-2.2.4</li>
+</ul>
+
+
+
+
+<h2 id="benchmarks">Changes to benchmarks</h2>
+
+<p>The following benchmark changes were made in V1.1:</p>
+<ul>
+<li id="bmark400.perlbench"><p class="snugbot"><b>400.perlbench</b></p>
+   <ul>
+      <li>Added new portability flag <span class="ttnobr">-DSPEC_CPU_NEED_POSIX_IDS</span> to include the POSIX symbols 
+      <span class="ttnobr">uid_t</span>, <span class="ttnobr">gid_t</span>, and <span class="ttnobr">mode_t</span> on
+      Windows.  Note that this flag is the default for some Windows compilers.</li>
+
+      <li>Compiling 400.perlbench on Solaris with gcc, or gcc-compatible compilers, used to fail with messages such
+      as 
+<pre>perlio.c:2872: error: 'FILE' has no member named '_file'</pre>
+      because of a change in the Solaris FILE structure.  This problem has been fixed by removing the outdated code.
+      </li>
+
+      <li><p>Under V1.0 of SPEC CPU2006, if you compiled 400.perlbench with gcc on ia64/Linux, the benchmark would sometimes
+      abort abnormally with an unaligned access error, due to a jmpbuf on some Linux systems whose alignment violated the
+      ABI.  You can now optionally set <span class="ttnobr">SPEC_CPU_IA64_GCC_ALIGNMENT</span> to force jmpenv (in scope.h)
+      to be better aligned.</p></li>
+
+   </ul>
+</li> 
+
+<li id="bmark403.gcc"><p class="snugbot"><b>403.gcc</b> </p>
+   <ul>
+      <li>Removed '<tt>#line</tt>' directives from c-parse.c  </li>
+      <li>Several code segments which were protected by <br />
+      <span class="ttnobr">#if !defined(SPEC_CPU2006)</span> <br />
+      should have said <span class="ttnobr">SPEC_CPU</span>, and were fixed.  The effect of the change is to increase the degree to which
+      both gcc and non-gcc compilers are presented with the same souce code when compiling <span
+      class="ttnobr">403.gcc</span>.  </li>
+   </ul>
+</li>
+
+<li id="bmark435.gromacs"><p class="snugbot"><b>435.gromacs</b></p>
+   <ul>
+     <li>Internal system calls which set the OS scheduling priority were disabled.  The effect of this change is minimal,
+     because when it is run from the SPEC harness, the GROMACS line option '-nice 0' is included, which also disables these
+     system calls.  For V1.0, a user studying 435.gromacs outside the runspec harness might have encountered inconsistent
+     measurements if '-nice 0' was not used.</li>
+
+     <li>Replaced a GPL version of the C99 math function "erfc" with a public domain version.</li>
+     <li>Added new portability flag '<span class="ttnobr">-DSPEC_CPU_HAVE_ERF</span>' to have the benchmark use a system's
+     "erfc" library function instead of the version included with the benchmark.  This flag is the default on some
+     platforms.</li>
+   </ul>
+</li>
+
+<li id="bmark445.gobmk"><p class="snugbot"><b>445.gobmk</b></p>
+   <ul>
+      <li>Rename <span class="ttnobr">_getopt_internal</span> to <span class="ttnobr">getopt_internal</span> to avoid
+      possible name clash (user functions are not supposed to start with underscore).</li>
+      <li>Added explicit inclusion of cstring header file.</li>
+   </ul>
+</li>
+
+
+<li id="bmark447.dealII"><p class="snugbot"><b>447.dealII</b></p>
+   <ul>
+      <li>Added explicit inclusion of cstring header file in vector.templates.h</li>
+      <li>Added some missing prototypes in quadrature.h and tria.h</li>
+   </ul>
+</li>
+
+<li id="bmark450.soplex"><p class="snugbot"><b>450.soplex</b></p>
+   <ul>
+      <li>In V1.0, some output was written to stderr.  That output is now written to regular files.  SPEC's validation has
+      been adjusted to validate the new output.</li>
+   </ul>
+</li>
+
+<li id="bmark453.povray"><p class="snugbot"><b>453.povray</b></p>
+   <ul>
+      <li>In V1.0, approximately 25,000 lines of output were duplicated to both the log file and to standard error.  The
+      duplicate output has been elimated from stderr.  </li>
+   </ul>
+</li>
+
+<li id="bmark462.libquantum"><p class="snugbot"><b>462.libquantum</b></p>
+   <ul>
+      <li>In config.h, there is a list of platforms that have &lt;complex.h&gt; included.  Additional platforms can now be
+      accomodated by setting <span class="ttnobr">-DSPEC_CPU_NEED_COMPLEX_H.</span></li>
+   </ul>
+</li>
+
+<li id="bmark464.h264ref"><p class="snugbot"><b>464.h264ref</b></p>
+   <ul>
+      <li><p class="snugbot">Some compilers object to having TRUE and FALSE used in this enum in parsetcommon.h:</p>
+<pre>
+typedef enum {
+  FALSE,
+  TRUE
+} Boolean; 
+</pre>
+      <p class="snugtop">which implicitly redefines FALSE to 0 and TRUE to 1.  Although these are the same values they
+      already had, some compilers object to the redefinition.  A simple solution is to undefine these just before the enum,
+      which can be done by setting the new flag <span class="ttnobr">-DSPEC_CPU_REDEF_TRUE_FALSE.</span></p>
+      </li>
+   </ul>
+</li>
+
+<li id="bmark471.omnetpp"><p class="snugbot"><b>471.omnetpp</b></p>
+   <ul>
+      <li>Renamed <tt>random.h</tt> to avoid clashes with system headers.
+      </li>
+   </ul>
+</li>
+
+
+
+<li id="bmark481.wrf"><p class="snugbot"><b>481.wrf</b></p>
+    <ul>
+      <li>Added new portability flag <span class="ttnobr">-DSPEC_CPU_NEED_IO_H</span> to include the header file <span
+      class="ttnobr">io.h</span> on Windows.  Previously, <span class="ttnobr">io.h</span> was only included if <span
+      class="ttnobr">_MSC_VER</span> was defined by the compiler.</li>
+      <li><p>Fixed a Fortran 90 standards violation where two associated dummy arguments were defined during the execution of a
+      subprogram.  Note that this update used the same fix as WRF version 2.2.  (481.wrf is based on WRF version 2.1).  </p>
+
+      <p>In a bit more detail: There is a subroutine in <span class="ttnobr">module_bl_ysu.F90</span> that is called in
+      violation of the Fortran standard about variable overlapping.  The routine <span class="ttnobr">tridin</span> has three
+      variables <span class="ttnobr">(cu,r1,r2)</span> that are passed in the same parameters as <span
+      class="ttnobr">(au,a1,a2)</span> in both calls.  The new code has fixed this problem by making copies of the read-only
+      versions of the duplicated parameters before the call.</p></li>
+    </ul>
+ </li>      
+
+<li id="bmark483.xalancbmk"><p class="snugbot"><b>483.xalancbmk</b></p>
+    <ul>
+       <li>Added explicit inclusion of cstring header file.</li>
+       <li>Multiple portability changes for use with the PGI C++ compiler on Windows.</li>
+       <li>Added multiple portability changes for use with the ParallelNavi compiler on Solaris.  To use, you'll need to set
+       <span class="ttnobr">-DSPEC_CPU_PARANAVI</span></li>
+     </ul>
+ </li>
+
+</ul>
+
+
+<h2 id="rules">Run Rules Changes</h2> <ul> 
+
+   <li id="ruleestimates">Explain a philosophy of estimates in rule <a class="external" href="runrules.html#rule_1.6">1.6</a>, and
+   clarify marking of estimates in rule <a class="external" href="runrules.html#rule_4.8">4.8</a>.  </li> 
+   <li id="ruleidentifiers">Tweak rule <a class="external" href="runrules.html#rule_2.1.1">2.1.1</a> to clarify that the rule is
+   discussing "benchmark" source code.</li> 
+   <li id="rulesystemstate">Clarify documentation of system state and tuning, in rules <a class="external"
+   href="runrules.html#rule_3.1.2">3.1.2</a>, <a class="external" href="runrules.html#rule_4.2.3">4.2.3</a> (paragraphs b and g),
+   and <a class="external" href="runrules.html#rule_4.2.4">4.2.4</a> (paragraphs f, g).</li> 
+   <li id="ruleparallelsetup">Add rule <a class="external" href="runrules.html#rule_3.2.5">3.2.5</a> for parallel setup and
+   parallel test</li> 
+   <li id="ruleautopar">Expand rule <a class="external" href="runrules.html#rule_4.2.3">4.2.3</a> on automatic parallelization and
+   reporting thereof.</li> 
+   <li id="ruleuserbuilt">Add new rule <a class="external" href="runrules.html#rule_4.2.6">4.2.6</a> regarding disclosure of
+   configurations for user-built systems.</li> 
+   <li id="rulespeed">In rule <a class="external" href="runrules.html#rule_4.3.2">4.3.2</a> allow conversions in both directions
+   between SPECspeed metrics and 1 copy SPECrate metrics.</li> 
+   <li id="ruledisclosure">In rule <a class="external" href="runrules.html#rule_4.6">4.6</a> note that a required disclosure is
+   considered public information.</li> 
+</ul>
+
+<h2 id="building">Building Benchmarks</h2>
+<ol>
+
+<li id="builddir"><p><b>Build directories separated:</b> Benchmarks are now built in directories named <span
+class="ttnobr">benchspec/CPU2006/nnn.benchmark/build/build...</span> (or, on Windows, <span
+class="ttnobr">benchspec\CPU2006\nnn.benchmark\build\build...</span>), rather than under the benchmark's <span
+class="ttnobr">run</span> subdirectory.  The change is intended to make it easier to copy, backup, or delete build and run
+directories separately from each other.  (It may also make problem diagnosis easier in some situations, since your habit of
+removing all the run directories will no longer destroy essential evidence 10 minutes before the compiler developer says
+"Wait - what exactly happened at build time?").</p>
+
+<p>If you prefer the V1.0 behavior, you can revert to it by setting <a class="external"
+href="config.html#build_in_build_dir">build_in_build_dir</a> to 0.</p> 
+</li>
+
+<li id="bundle"><p>You can now <b><a class="external" href="runspec.html#make_bundle">bundle up</a></b> a set of binaries and
+their associated config file, for easy transportation and use on other systems.</p> 
+<p style="font-size:115%;padding:.3em;border:thin solid red;margin:.3em 4em;" class="alarm">WARNING: Although the features to create
+and use bundles are intended to make it easier to run SPEC CPU2006, the <span class="u">tester</span> remains responsible for
+compliance with the run rules.  And, of course, both the creators and the users of bundles are responsible for compliance with any
+applicable software licenses. </p>
+</li>
+
+<li id="parallelbuild"><p class="snugbot"><b>Parallel builds on Windows too:</b> Users of Microsoft Windows systems can now use
+multiple processors to do parallel builds, by setting <a class="external" href="config.html#makeflags">makeflags</a>, for example:
+</p> 
+<pre>makeflags = -j N</pre> 
+<p class="snugtop">This feature has worked with SPEC CPU testing on Unix for many years; what's new in CPU2006 V1.1 is the
+ability to use it on Windows.  
+<b>Note</b> that requesting a parallel build with <span class="ttnobr">makeflags = -j N</span>
+causes multiple processors to be used at <i>build</i> time.  It has no effect on whether multiple processors are used at run
+time, and so does not affect how you <a href="#parallelreporting">report</a> on parallelism. </p></li>
+
+<li id="unexpectedrebuilds"><b>Unexpected rebuilds reduced:</b> In V1.0, the tools were much more likely to trigger <a
+class="external" href="config.html#about.auto.rebuilds">automatic rebuilds</a> of the benchmark binaries than they are in V1.1,
+because unrecognized options (e.g. a mis-spelled <span class="ttnobr">CXXOPTIMZIE</span>, or a user-defined option such as <span
+class="ttnobr">MY_OPTS</span>) would be passed to <span class="ttnobr">specmake</span>, and the tools had no way to know what
+<span class="ttnobr">specmake</span> did with such options.  Now, the tools record only what is actually used by <span
+class="ttnobr">specmake</span>, plus the options that are sent to the shell (e.g. via <span class="ttnobr">fdo_pre0</span>). With
+this more careful recording, config file changes do not trigger rebuilds unless they actually affect the generated binary.</li> 
+</ol>
+
+<h2 id="running">Running Benchmarks</h2>
+<ol>
+
+<li id="parallelsetup"><p><b>Parallel Setup:</b> For reportable runs, substantial time may be required during the setup phase, as
+the tools write run directories for every copy, and validate that benchmark binaries get the correct answers for the (non-timed)
+test/train workloads.  SPEC CPU2006 V1.1 provides several new features to allow these operations to complete more quickly by
+optionally doing more operations in parallel: <a class="external" href="config.html#parallel_setup">parallel_setup</a>, <a
+class="external" href="config.html#parallel_test">parallel_test</a>, <a class="external"
+href="config.html#parallel_setup_type">parallel_setup_type</a>, <a class="external"
+href="config.html#parallel_setup_prefork">parallel_setup_prefork</a>, <a class="external"
+href="config.html#bench_post_setup">bench_post_setup</a>, and <a class="external" href="config.html#post_setup">post_setup</a>.
+</p> 
+<p>During testing of V1.1, a very large server (with over 600 hw_threads) was observed to complete the binary validation
+phase about 8x faster using parallel_test, and the ref directory setup phase more than 2x faster with parallel_setup.  The
+net time saved on this very large server was more than 10 hours.  </p>
+<p class="snugbot">Your mileage may vary:</p>
+<ul>
+<li>The effects of these options are much less pronounced on small servers.</li>
+<li>The effects are strongly affected by your disk setup.</li>
+<li>Asking your disk system to do more than it can handle may make your setup phase slower, not faster.  For example, asking
+a disk with a single actuator arm to do parallel setup of 30 copies may cause the disk to spend most of its time seeking.  </li> 
+</ul> <p class="snugtop">When considering your disk layout options, bear in mind that the <a class="external"
+href="runrules.html#rule_3.1.1">run rules</a> require use of a single file system.  </p> 
+<p class="snugbot"><b>Note</b> that these setup features (<span class="ttnobr">parallel_setup</span>, <span
+class="ttnobr">parallel_test</span>, <span class="ttnobr">parallel_setup_type</span>, and <span
+class="ttnobr">parallel_setup_prefork</span>) control parallelism during the <i>preparation</i> phase for running the
+benchmarks, not the actual runs.  Therefore, <span style="text-decoration:underline;"><i>they have no effect on the setting
+of the report field</i></span></p>  
+<p style="margin:.2em 3em;font-family:serif;font-weight:bold;">Auto Parallel: Yes/No</p>
+<p class="snugtop">... discussed <a href="#parallelreporting">below</a></p>
+</li>
+
+
+<li id="basepeakcopies"><p><b>Per-benchmark basepeak and copies - behavior change:</b> If you select <a class="external"
+href="config.html#basepeak">basepeak=1</a> for an individual benchmark, the number of <a class="external"
+href="config.html#copies">copies</a> in peak will be forced to be the same as in base.  Note that in SPEC CPU2006 V1.0, you could
+set basepeak for a benchmark, and still change the number of copies in peak; this was deemed to be an error.  If you want to run
+the same tuning in both base and peak, while changing the number of copies, you will need to build two binaries with the same
+compiler switches.</p> 
+</li>
+
+<li id="bind"><p><b>Per-benchmark bind:</b> The <a class="external" href="config.html#bind">bind</a> list can now differ on a
+per-benchmark basis in peak.  Allowing this difference was viewed as a convenience, since the <a class="external"
+href="runrules.html#submit">run rules</a> already allow the submit command to differ on a per-benchmark basis in peak.</p></li> 
+<li id="preenv"><p>The <a class="external" href="config.html#preenv">PreENV</a> config file option  allows setting of environment
+variables prior to the exectuion of <tt>runspec</tt>.</p></li> 
+<li id="monitor"><p><b>Run-time monitoring:</b> The <a class="external" href="monitors.html">monitor hooks</a> have been a
+little-known feature of the SPEC CPU toolset for many years.  They were first described in the ACM SIGARCH article <a
+class="external" href="http://www.spec.org/cpu2006/publications/SIGARCH-2007-03/11_cpu2006_tools.pdf">SPEC CPU2006 Benchmark
+Tools</a> and are now further described in <a class="external" href="monitors.html">monitors.html</a>.  The monitor hooks allow
+advanced users to instrument the suite in a variety of ways.  SPEC can provide only limited <a class="external"
+href="techsupport.html">support</a> for their use; if your monitors break files or processes that the suite expects to find, you
+should be prepared to do significant diagnostic work on your own.</p></li> 
+<li id="usernum"><p><b>$SPECUSERNUM no longer recognized:</b>  The field <span class="ttnobr">$SPECUSERNUM</span> was deprecated
+in V1.0 of SPEC CPU2006, in favor of <a class="external" href="config.html#SPECCOPYNUM">$SPECOPYNUM</a>.  <span
+class="ttnobr">$SPECUSERNUM</span> is no longer recognized in V1.1.  No error message is printed.  If you still have user numbers
+lurking in your config file, make them into copy numbers, please.</p></li> 
+</ol>
+
+
+<h2 id="reporting">Reporting</h2>
+
+<ol>
+
+<li id="parallelreporting"> <p class="snugbot"><b>Auto Parallel - changes to handle common cases:</b> If benchmarks are
+automatically optimized to use multiple threads, cores, and/or chips at run time, the tester needs to indicate this in the
+report as</p>
+<p style="margin:.2em 3em;font-family:serif;font-weight:bold;font-size:115%;">Auto Parallel: Yes</p>  
+<p class="snugtop">For V1.0, it was sometimes difficult to ensure that reports were accurate, in part because there can be
+multiple sources of run-time parallelism (as described in the <a class="external" href="runrules.html#autopar">run rules</a>).</p> <p>With SPEC CPU2006 V1.1, the V1.0 method of filling out the above field, <a class="external"
+href="config.html#sw_auto_parallel">sw_auto_parallel</a>, has been retired, and three new features have been introduced to better
+reflect these sources of parallelism. </p> 
+<ul style="list-style-type:lower-roman;">
+<li>When writing a flags file, the <a class="external" href="flag-description.html#parallel">parallel</a> flag attribute should be
+set for compiler flags that cause binaries to be multi-threaded.  Then, when binaries that use those flags are run, the report
+type will be listed as "Auto Parallel: Yes".  </li> 
+<li>The config file field <a class="external" href="config.html#sw_parallel_other">sw_parallel_other</a> should be set when there
+are other (non-compiler) sources of parallelism.</li> 
+<li>A rawfile-only field, <a class="external" href="config.html#sw_parallel_defeat">sw_parallel_defeat</a>, can be used to
+indicate that, despite any other settings,  a tested system has been forced to run in a single-threaded mode (for example, by
+removing all but one processor).  </li></ul> 
+<p class="snugbot">The intent is that the most common case will be handled automatically:</p>
+
+<ul class="snug"> 
+
+<li class="snug">Commonly, the SPEC tools will use (i) to automatically determine whether the run is parallel.
+For this case, (ii) and (iii) will not be needed. </li>  
+<li class="snug">If your source of parallelism is not visible to the SPEC toolset, you can set (ii).  </li>
+<li class="snug">Rarely, you can take a software stack which appears to be parallel, but explain 
+with (iii) why it was not.  </li>
+</ul>
+
+<p class="snugbut ">Overall, the setting of the <b>Auto Parallel</b> field in reports can be thought of as if it were derived 
+from this logic:</p>
+<pre>   (i | ii) &amp; (&not; iii)</pre>
+<p class="snug">... or for the benefit of those readers who think in FORTRAN, it is as if the derivation were:</p>
+<pre>  ( I .OR. II ) .AND. ( .NOT. III) 
+</pre>
+
+</li>
+
+<li id="csv"><p><b>CSV format updated</b> - If you populate spreadsheets from your runs, you probably shouldn't be doing
+cut/paste of text files; you'll get more accurate data by using <span class="ttnobr">--output_format csv</span>.  The V1.1
+CSV output now has a format that includes much more of the information in the other reports.  All runs times are now
+included, and the selected run times are listed separately. The flags used are also included.  Although details of the new
+features are not shown in the documentation, you should explore them, by taking the new CSV out for a test drive.  It is
+hoped that you will find the V1.1 format more complete and more useful.</p></li>
+
+
+<li id="flagreporting"><p><b>Flag reporting - multiple files supported, flag order preserved, report readability </b>  There
+are several changes to reporting on compiler flags:</p>
+
+   <ol style="list-style-type:lower-alpha;">
+
+      <li><p>You can now format a single result using multiple flags files.  This feature is intended to make it easier for
+      multiple results to share what should be shared, while separating what should be separated.  Common elements (such as a
+      certain version of a compiler) can be placed into one flags file, while the elements that differ from one system to another
+      (such as platform notes) can be maintained separately.  Suggestions on use of this feature can be found in <a
+      class="external" href="flag-description.html#combiningflagsfiles">flag-description.html</a>.</p></li> 
+      <li><p>The flag reporter now does a better job of reporting flags in the same order in which they appeared on the command
+      line.</p></li>
+
+      <li><p class="snugbot">Flag reporting has been re-organized in an attempt to improve readability:</p>  
+      <ol style="list-style-type:lower-roman"> 
+         <li>Within the Optimization Flags section, the report no longer prints phrases such as "Fortran benchmarks (except as
+         noted below):" because readers may not remember which benchmarks are in Fortran.  Instead, all the Fortran benchmarks
+         are enumerated, and if some use the same flags as others, that fact is noted in line, rather than at the top of the
+         list.  </li>
+         <li>Within the Portability Flags section, benchmarks appear in order by number, rather than ordered by language.  </li>
+         <li>When the reporter detects that base and peak are sufficiently different from each other (e.g. different compilers,
+         or different portability options) the flags report is ordered to put all the base information first, then all the peak
+         information - for example:
+   
+<pre>
+       Base Compiler Invocation
+       Base Portability Flags
+       Base Optimization
+       Peak Compiler Invocation
+       Peak Portability Flags
+       Peak Optimization</pre>
+   </li>
+      </ol>
+      </li>
+   </ol>
+</li>
+
+<li id="graphs"><p class="snugbot" style="margin-top:1.5em;"><b>Graphs cleaned up:</b></p> 
+<table style="border:none;"><tr style="border:none;">
+<td style="border:none;">
+<a class="external" href="images/v1.0graph.gif" target="_blank">V1.0 format:<br /><img alt="oldgraph" width="171" height="132"
+src="images/v1.0graph.small.gif" /></a> </td> 
+<td style="border:none;">
+<a class="external" href="images/v1.1graph.gif" target="_blank">V1.1 format:<br /><img alt="newgraph" width="172" height="132"
+src="images/v1.1graph.small.gif" /></a> </td> 
+<td style="vertical-align:middle;border:none;"> Graphs have been changed to reduce the amount of shading, and to reduce
+painting of other pixels that were not essential to the data being presented (with a tip of the hat to Professor Tufte's
+notion of reducing "chartjunk", or apologies, depending on the reader's opinion of the change).  </td>
+</tr></table>
+</li>
+
+
+<li id="reportlinks"><p style="margin-top:1.5em;"><b><a class="external" href="config.html#links">Links</a> and <a
+class="external" href="config.html#attachments">attachments</a></b> can now be added to reports.</p></li> 
+<li id="reportnames"><p class="snugbot" style="margin-top:1.5em;"><b>Report names have changed:</b> </p>
+<p class="snugbot">In CPU2006 V1.0, final reports had names of the form </p>
+
+<pre>&lt;suite&gt;.&lt;nnn&gt;.&lt;type&gt;</pre>
+
+<p class="snugtop">for example,
+<span class="ttnobr">CINT2006.003.ps</span>,
+<span class="ttnobr">CINT2006.003.txt</span>, 
+<span class="ttnobr">CFP2006.022.pdf</span>,
+and so forth.  The form of the file names has changed to now be </p>
+
+<pre>&lt;suite&gt;.&lt;nnn&gt;.&lt;workload&gt;.&lt;type&gt;</pre>
+
+<p class="snugtop">for example,
+<span class="ttnobr">CINT2006.003.ref.ps</span>,
+<span class="ttnobr">CINT2006.003.ref.txt</span>, 
+<span class="ttnobr">CFP2006.022.ref.pdf</span>.
+</p>
+
+<p>There are two reasons for this change:</p>
+<ul>
+<li>For CPU2006, all "reportable" runs use a workload named "ref", but this is not necessarily true for other benchmarks that
+use the same toolset.  Designating the workload in the file name reduces possible ambiguity.</li>
+
+<li>If you select the test or train workloads (with the <a class="external" href="runspec.html#size">--size</a> switch), output
+files for V1.0 were already tagged with the workload designator; this change causes ref to match the other two.</li> 
+</ul>
+
+<p>Note: For V1.0, a reportable run would generate three 
+<span class="ttnobr">.rsf</span> files:
+<span class="ttnobr">CPU2006.nnn.test.rsf</span>,
+<span class="ttnobr">CPU2006.nnn.train.rsf</span>, and
+<span class="ttnobr">CPU2006.nnn.rsf</span>.  For V1.1, for a reportable run, you will see <span class="u">only</span> 
+<span class="ttnobr">CPU2006.nnn.ref.rsf</span>.  You won't see 
+<span class="ttnobr">CPU2006.nnn.test.rsf</span> or 
+<span class="ttnobr">CPU2006.nnn.train.rsf</span> unless you say
+<span class="ttnobr">--size test</span> or
+<span class="ttnobr">--size train</span> in your <span class="ttnobr">runspec</span> command.</p>
+
+</li>
+
+
+<li id="seconds"><p class="snugbot" style="margin-top:1.5em;"><b>Seconds are reported with more digits:</b> </p>
+    <ul>
+    <li><p class="snugtop">Background: For certain values, the SPEC tools print 3 significant digits. This is intentional.
+    For example, if one system has a SPECint_rate2006 performance of 1234.456 and another has a SPECint_rate2006 performance
+    of 1229.987, it is arguable that the performance of these systems is not materially different. Given the reality of
+    run-to-run variation (which is, sometimes, on the order of 1%), it makes sense to report both systems' SPECint_rate2006
+    as 1230.</p>
+    <p>Although there is agreement that it is acceptable to round SPEC's <b>computed metrics</b> to 3 significant digits, it
+    has been noted that the argument is weaker for rounding of <b>original observations</b>. In particular, if we wish to
+    acknowledge the reality of run to run variation, then it seems reasonable to report a time of 1234.456 seconds using an
+    integral number of seconds (1234), rather than rounding to the three significant digits, which in this case would be
+    rounding to the nearest 10 seconds (1230).</p></li>
+    <li><p><b>Change made:</b> Ever since the release of V1.0 of SPEC CPU2006, results posted on SPEC's web site (such as the
+    HTML, PDF, and text formats) have used 3 significant digits for computed metrics, and seconds larger than 1000 have been
+    reported as an integral number of seconds.  As of V1.1, reports produced on your own test systems now behave the same
+    way.</p></li>
+    </ul>
+</li>
+
+<li id="subcheck"><p>The <b>Submission Check report is now automatically included in the <a class="external"
+href="runspec.html#output_format">output_format</a> list when using <a class="external"
+href="utility.html#rawformat">rawformat</a></b>.  This change was made because the typical use of <span
+class="ttnobr">rawformat</span> is to create final (submission quality) reports.  Even if you don't plan to submit your result to
+SPEC, the checks that are done by Submission Check can help you to create reports that are more complete and more
+readable.</p></li> 
+<li id="testdate"><p>The <a class="external" href="config.html#test_date">test_date</a> is now automatically set from the system
+clock, and you should not set it yourself.</p></li> 
+</ol>
+
+
+<h2 id="utility">New Utilities Features</h2>
+<ol>
+
+<li id="convert"><p><b>Convert to Development:</b> In order to assist with compliance with the run rules (so that results are
+meaningful and comparable), the SPEC CPU tools perform various checks to ensure that benchmark code, workloads, and tools
+match the original distribution.  Sometimes, though, researchers or developers may want to work in an environment without
+these checks, for example, when modifying code to add performance instrumentation.</p>
+
+<p>Prior to V1.1, doing so typically required that you <a class="external" href="runspec-avoidance.html">abandon the tools</a>. 
+With V1.1, you now have another choice: you can continue using the SPEC supplied toolset in a development sandbox, via the <a
+class="external" href="utility.html#convert_to_development">convert_to_development</a> utility.</p></li> 
+<li id="dumpsrcalt"><b>Dump alternative source:</b> <a class="external" href="utility.html#dumpsrcalt">dumpsrcalt</a> is a utility
+which shows you the content of src.alts</li> 
+<li id="index">The <a class="external" href="utility.html#index">index</a> utility remains UNSUPPORTED, but is now documented for
+the first time</li> 
+<li id="makesrcalt"><b>Make alternative source:</b> <a class="external" href="utility.html#makesrcalt">makesrcalt</a> is a utility
+which is used to create packages with newly developed alternative sources.  This utility is ehanced in, and is documented for the
+first time in, V1.1.</li> 
+<li id="ogotop"><b>ogo top:</b> If you type <a class="external" href="utility.html#ogo">ogo</a> without any parameters, or if you
+type <span class="ttnobr">ogo top</span>, the command sets your current directory to <span class="ttnobr">$GO</span> instead of to
+<span class="ttnobr">$SPEC</span>.</li> 
+<li id="portprogress">The <a class="external" href="utility.html#port_progress">port_progress</a> utility is documented now.</li> 
+<li id="specrxp">The <a class="external" href="utility.html#specrxp">specrxp</a> utility validates flags files.  It is called
+automatically, or you can call it directly if you wish.</li> 
+<li id="speed"><b>SPECspeed metrics from SPECrate test:</b> Using rawformat, you can now convert a 1-copy SPECrate result to a <a
+class="external" href="runspec.html#speed">SPECspeed</a> result.</li> 
+</ol>
+
+
+<h2 id="other">Other New and Changed Tools Features</h2>
+<ol>
+
+<li id="bmarklist"><b>Benchmark lists and sets:</b> Two formerly undocumented features are now documented: your config file can
+reference benchmark <a class="external" href="config.html#benchmarklists">lists</a> and <a class="external"
+href="config.html#bsets">sets</a>.  Set references use the various "bset" files that are found <span
+class="ttnobr">$SPEC/benchspec/CPU2006</span> or <span class="ttnobr">%SPEC%\benchspec\CPU2006</span>.  If you are a user who
+already has noticed this feature, please note that the definitions of the bsets have changed, and the number of bsets has been
+reduced.</li> 
+<li id="debuglog"><a class="external" href="config.html#debuglogs">Debug logs</a>: Failed runs now leave behind additional detail,
+in files such as <span class="ttnobr">CPU2006.001.log.debug</span>.  Temporary files are also left behind after a failed run.  If
+you are managing disk space on a tight budget, you'll need to <a class="external" href="runspec.html#diskspace">adjust your
+cleaning methods</a>. </li> 
+<li id="keeptmp"><p><b>Keeping temporaries:</b>  If you are having trouble debugging your test setup (for example, if your new <a
+class="external" href="config.html#submit">submit</a> command or <a class="external"
+href="config.html#parallel_test">parallel_test</a> option is failing), you may want to try the new <a class="external"
+href="config.html#keeptmp">keeptmp</a> feature.  When this option is set, the above-mentioned debug log is kept, along with the
+various temporary files that it mentions.</p> 
+<p>If you leave keeptmp at its default setting, temporary files will be automatically deleted after a successful run.  If you are
+managing disk space on a tight budget, and keeping temporaries, you'll almost certainly need to <a class="external"
+href="runspec.html#diskspace">adjust your cleaning methods</a>.</p> 
+</li> 
+
+<li id="submitcontinued"><p><b><a class="external" href="config.html#submit">submit</a> lines continued</b>: It is now possible to
+append a numeral to submit lines, to continue your submit commands over several lines.  This feature is intended to improve the
+readability of your config file when using the submit feature.</p></li> 
+<li id="submitnotes"><p><b><a class="external" href="config.html#submitnotes">Submit notes</a>:</b> The tools will now
+automatically insert a section with notes on your submit command for runs that use submit.  You can customize the
+section.</p></li> 
+<li id="trailingspaces"><p><b>Trailing spaces are now stripped</b> in config files, unless preceded by a backslash, as described
+in the section on <a class="external" href="config.html#whitespace">whitespace</a>.</p></li> 
+</ol>
+
+<h2 id="docs">Documentation Updates</h2>
+
+<p>Documentation has been added for the new features mentioned in this document.  Most of the changes are linked from the
+descriptions above.  A few items might not be immediately obvious from the above links, and are called out here:</p>
+
+<table>
+<tr>
+   <th>config.html</th>
+   <td>
+      <ul style="margin-top:0em;">
+      <li style="margin-top:0em;">A new chapter <a class="external" href="config.html#aboutsrc.alt">About Alternate Sources</a>
+      was added.</li> 
+      <li>A new section on <a class="external" href="config.html#about.auto.rebuilds">automatic rebuilds</a> suggests a way to
+      test whether proposed changes would force a rebuild (without actually doing the build).</li> 
+      <li>More examples are provided for how to specify a <a class="external" href="config.html#bind">bind</a> list, including use
+      of a here document.</li> 
+      <li>Explain that you are allowed to change the <a class="external" href="config.html#fdo.intro">feedback options</a>, and
+      show how to find out the default options.  Provide a couple of <a class="external" href="config.html#fdo.mod">examples of
+      fdo modification</a>.</li> 
+      <li>The discussion of <a class="external" href="config.html#free.form.notes">free form notes</a> for readers has been
+      substantially expanded.</li> 
+      <li>The documentation now tells you what happens with <a class="external" href="config.html#macro.notdefined">macros that
+      aren't defined</a> if you try to use them.</li> 
+      <li>All <a class="external" href="config.html#Dtoc_II">options that affect runspec</a> are described together.  In V1.0,
+      there were two tables, one for the options that could be mentioned either on the command line or in the config file, and a
+      separate table for options that can only be mentioned in a config file.</li> 
+      <li>A sidebar about <a class="external" href="config.html#sidebar.quoting">quoting</a> was added, to try to help reduce
+      confusion when you are trying to ensure that variables are interpreted by the correct software.</li> 
+      <li>The documentation of log files now suggests some useful <a class="external" href="config.html#usefulsearch">search
+      strings</a> that can help you as you try to find your way through a log.</li> 
+      <li>The documentation of <a class="external" href="config.html#submit">submit</a> was rewritten and expanded.</li> 
+      </ul>
+   </td>
+</tr>
+
+<tr>
+   <th>flag-description.html</th>
+   <td>
+      <ul style="margin-top:0em;">
+
+      <li style="margin-top:0em;">Flag <a class="external" href="flag-description.html#for00001">file types</a> have been
+      clarified, using an example that points to the three files for result #00001, as posted at www.spec.org.</li> 
+      <li>A complete example is provided to show how you can edit a flags file and use <a class="external"
+      href="flag-description.html#rawformat">rawformat</a> to incorporate it.</li> 
+      <li>A "<a class="external" href="flag-description.html#good">Recommended Practices</a>" section has been added. </li> 
+      <li>The discussions of <a class="external" href="flag-description.html#example.flag.text">replacement of example text</a> -
+      both <span class="ttnobr">&lt;example&gt;</span> and <span class="ttnobr">&lt;ex_replacement&gt;</span> - has been
+      considerably expanded to explain the difference between the two, and examples of their use are shown.  </li> 
+      </ul> 
+   </td>
+</tr>
+
+<tr>
+   <th>runspec.html</th>
+   <td>
+      <ul style="margin-top:0em;">
+      <li style="margin-top:0em;">The description of directory sharing via <a class="external"
+      href="runspec.html#output_root">output_root</a> now starts with a simple summary of the steps.</li> 
+      <li>More details are given about <a class="external" href="runspec.html#review">--review</a>.</li> 
+      <li>The documentation now describes the <a class="external" href="runspec.html#runorder">run order</a> for reportable
+      runs.</li> 
+      <li>The output format <a class="external" href="runspec.html#subcheck">subcheck</a> is explained.</li> 
+      <li>The description of <a class="external" href="runspec.html#update">--update</a> now explains that additional items might
+      be updated, not just your flags files.</li> 
+      </ul>
+   </td>
+</tr>
+
+</table>
+
+
+<h2 id="featureindex">Updated Feature Index</h2>
+
+<p>These user-visible features are new, updated, or newly documented for SPEC CPU2006 V1.1:</p>
+
+<table><tr>
+<td>
+<ol class="snug">
+<li class="snug"><a class="external" href="config.html#attachments">attachments</a> to results</li> 
+<li class="snug"><a href="#basepeakcopies">basepeak</a>, effect on copies</li>
+<li class="snug"><a class="external" href="config.html#bench_post_setup">bench_post_setup</a></li> 
+<li class="snug"><a class="external" href="config.html#bind">bind</a>, per-benchmark</li> 
+<li class="snug"><a class="external" href="config.html#build_in_build_dir">build_in_build_dir</a></li> 
+<li class="snug"><a class="external" href="monitors.html#build_post_bench">build_post_bench</a></li> 
+<li class="snug"><a class="external" href="monitors.html#build_pre_bench">build_pre_bench</a></li> 
+<li class="snug"><a class="external" href="utility.html#convert_to_development">convert_to_development</a> </li> 
+<li class="snug"><a href="#csv">CSV format</a></li>
+<li class="snug"><a class="external" href="config.html#debuglogs">debug logs</a></li> 
+<li class="snug"><a class="external" href="utility.html#dumpsrcalt">dumpsrcalt</a> </li> 
+<li class="snug"><a class="external" href="flag-description.html#combiningflagsfiles">flags files</a>, multiple</li> 
+<li class="snug"><a href="#graphs">graphs</a>, format thereof</li>
+<li class="snug"><a class="external" href="utility.html#index">index</a> utility</li> 
+<li class="snug"><a class="external" href="config.html#keeptmp">keeptmp</a></li> 
+<li class="snug"><a class="external" href="config.html#links">links</a> in results</li> 
+<li class="snug"><a class="external" href="config.html#benchmarklists">lists</a> of benchmarks</li> 
+<li class="snug"><a class="external" href="config.html#makeflags">makeflags</a>, on Windows</li> 
+<li class="snug"><a class="external" href="utility.html#makesrcalt">makesrcalt</a></li> 
+<li class="snug"><a class="external" href="runspec.html#make_bundle">make_bundle</a></li> 
+<li class="snug"><a class="external" href="monitors.html#monitor_post">monitor_post</a></li> 
+<li class="snug"><a class="external" href="monitors.html#monitor_post_bench">monitor_post_bench</a></li> 
+<li class="snug"><a class="external" href="monitors.html#monitor_pre">monitor_pre</a></li> 
+<li class="snug"><a class="external" href="monitors.html#monitor_pre_bench">monitor_pre_bench</a></li> 
+<li class="snug"><a class="external" href="monitors.html#monitor_specrun_wrapper">monitor_specrun_wrapper</a></li> 
+<li class="snug"><a class="external" href="monitors.html#monitor_wrapper">monitor_wrapper</a></li> 
+<li class="snug"><a class="external" href="utility.html#ogo">ogo top</a>, destination of</li> 
+<li class="snug"><a class="external" href="flag-description.html#parallel">parallel</a> flag attribute</li> 
+<li class="snug"><a class="external" href="config.html#parallel_setup">parallel_setup</a></li> 
+<li class="snug"><a class="external" href="config.html#parallel_setup_prefork">parallel_setup_prefork</a> </li> 
+</ol>
+</td>
+<td>
+<ol start="31" class="snug">
+<li class="snug"><a class="external" href="config.html#parallel_setup_type">parallel_setup_type</a> </li> 
+<li class="snug"><a class="external" href="config.html#parallel_test">parallel_test</a> </li> 
+<li class="snug"><a class="external" href="utility.html#port_progress">port_progress</a> </li> 
+<li class="snug"><a class="external" href="config.html#post_setup">post_setup</a></li> 
+<li class="snug"><a class="external" href="config.html#preenv">preenv</a> </li> 
+<li class="snug"><a href="#unexpectedrebuilds">rebuilds</a>, reduced</li>
+<li class="snug"><a href="#reportnames">reports</a>, names of</li>
+<li class="snug"><a class="external" href="config.html#usefulsearch">search strings</a> in logfiles</li> 
+<li class="snug"><a href="#seconds">seconds</a>, reporting thereof</li>
+<li class="snug"><a class="external" href="config.html#bsets">sets</a> of benchmarks</li> 
+<li class="snug"><a class="external" href="utility.html#specrxp">specrxp</a></li> 
+<li class="snug"><a class="external" href="config.html#SPECUSERNUM">SPECUSERNUM</a>, removed feature</li> 
+<li class="snug"><a style="font-size:90%;" href="#bmark435.gromacs">SPEC_CPU_HAVE_ERF</a> (435.gromacs)</li>
+<li class="snug"><a style="font-size:90%;" href="#bmark400.perlbench">SPEC_CPU_IA64_GCC_ALIGNMENT</a> (400.perlbench)</li>
+<li class="snug"><a style="font-size:90%;" href="#bmark462.libquantum">SPEC_CPU_NEED_COMPLEX_H</a> (462.libquantum)</li>
+<li class="snug"><a style="font-size:90%;" href="#bmark481.wrf">SPEC_CPU_NEED_IO_H</a> (481.wrf)</li>
+<li class="snug"><a style="font-size:90%;" href="#bmark400.perlbench">SPEC_CPU_NEED_POSIX_IDS</a> (400.perlbench)</li>
+<li class="snug"><a style="font-size:90%;" href="#bmark483.xalancbmk">SPEC_CPU_PARANAVI</a> (483.xalancbmk)</li>
+<li class="snug"><a style="font-size:90%;" href="#bmark464.h264ref">SPEC_CPU_REDEF_TRUE_FALSE.</a> (464.h264ref)</li>
+<li class="snug"><a class="external" href="runspec.html#speed">SPECspeed</a>, rawformat from SPECrate</li> 
+<li class="snug"><a href="#subcheck">Submission Check</a>, included with rawformat</li>
+<li class="snug"><a class="external" href="config.html#submitnotes">submit notes</a></li> 
+<li class="snug"><a class="external" href="config.html#submitcontinuation">submit</a>, continuation of</li> 
+<li class="snug"><a class="external" href="config.html#sw_auto_parallel">sw_auto_parallel</a>, removed feature</li> 
+<li class="snug"><a class="external" href="config.html#sw_parallel_defeat">sw_parallel_defeat</a></li> 
+<li class="snug"><a class="external" href="config.html#sw_parallel_other">sw_parallel_other</a> </li> 
+<li class="snug"><a class="external" href="config.html#test_date">test_date</a> </li> 
+<li class="snug"><a class="external" href="config.html#whitespace">trailing spaces</a>, stripped</li> 
+<li class="snug"><a class="external" href="runspec.html#unpack_bundle">unpack_bundle</a></li> 
+<li class="snug"><a class="external" href="runspec.html#use_bundle">use_bundle</a></li> 
+</ol>
+</td></tr></table>
+
+<hr />
+<p>Copyright 2008-2011 Standard Performance Evaluation Corporation
+<br />All Rights Reserved</p>
+
+<!-- this space intentionally left blank: some empty space at the bottom increases the probability that clicking on a link in
+the table of contents will actually position the desired section at the top of your browser window -->
+<p><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br
+/><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br
+/><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br
+/><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></p>
+
+
+</body>
+</html>

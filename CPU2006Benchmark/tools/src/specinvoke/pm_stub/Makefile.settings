@@ -1,0 +1,13 @@
+#
+# Makefile.settings - set dependencies, etc for the performance monitor
+#                     module
+#
+# $Id: Makefile.settings 6361 2011-03-03 22:29:36Z cloyce $
+#
+# This is included in the top-level Makefile, so paths should be relative
+# to that.
+
+# List of dependencies for pmfuncs.o (which is what must be produced)
+PM_DIR=pm_stub
+PM_DEPS=$(PM_DIR)/specinvoke_pm.h $(PM_DIR)/pmfuncs.c
+
