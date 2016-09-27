@@ -21,6 +21,29 @@
 
 \documentclass[letterpaper,twocolumn,10pt]{article}
 \usepackage{usenix,epsfig,endnotes}
+\usepackage{algorithmic}
+\usepackage[resetcount, ruled, linesnumbered, plain]{algorithm2e}
+\usepackage{stackengine}
+\usepackage{tikz}
+\lstset{
+  language=C++,
+  xleftmargin=.05\textwidth,      % <-- change this to a suitable length
+%   xrightmargin=.05\textwidth,  % <-- change this to a suitable negative length
+  numbersep=2pt,        % default 10pt
+  numbers=left,
+  numberstyle=\ttfamily\scriptsize,
+  basicstyle=\ttfamily\scriptsize,
+  breaklines=true,
+  keywordstyle=\bfseries,
+  showstringspaces=false,
+  numbers=left, 
+  numbersymbol=$.$,
+  firstnumber=0,
+  keepspaces=true,
+  moredelim=[is][\underbar]{+}{+},
+  commentstyle=\color{ForestGreen},
+  morekeywords={try, return, include, printf, extern, true, false, logic}
+}
 \begin{document}
 
 %don't want date printed
@@ -54,6 +77,87 @@ A paragraph of text goes here.  Lots of text.  Plenty of interesting
 text. \\
 
 More fascinating text. Features\endnote{Remember to use endnotes, not footnotes!} galore, plethora of promises.\\
+
+\section{Alg.}
+
+\section{Alg. example}
+\IncMargin{1.3em} 
+\begin{algorithm}[t!]
+\caption{Quick fix locations searching and patches generation}
+\label{alg:one}
+\algsetup{linenosize=\tiny}
+  \scriptsize
+\SetAlgoLined
+\KwIn{Satisfiable program execution paths set $S_{Paths}:=$ \{$s_k\arrowvert$ 0 $\leq$ k $\leq$n, $\forall$ n $\geq$ 0 \}}
+
+\KwOut{Refactorings set $R_{set}:=$ \{$r_j\arrowvert$ 0 $\leq$ j $\textless$ 2 \}} 
+
+$W_{set}:=$ \{$w_k\arrowvert$ 0 $\leq$ k $\leq$ n,$\forall$ n $\geq$ 0 \}; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// set of working lists, k'th list}}}\\
+$N_{set}:=$ \{$n_t\arrowvert$ 0 $\leq$ t $\leq$ n,$\forall$ n $\geq$ 0 \}; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// set of nodes}}}\\
+ 
+$N_{set}:=\emptyset;  W_{set}:=\emptyset;$ \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// initializing both nodes set and working list set to empty set}}}\\
+
+$countBP:$=0; $countGQF:$=0; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// init. counters, count buggy paths and generated fixes}}}\
+
+$R_{set}:$=$\emptyset$; 
+
+ \While{(($Sat_{paths}$.hasNext))}{
+     
+     \If{(hasBug($s_k$)}{ 
+        
+        $countBP$ := $countBP$ + 1; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// count the buggy paths}}}\\
+       
+        $i:= $ \textit{startIndex($s_k$)}; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// set the start index of the path}}}\\
+       
+        $w_k:= $ \textit{setWorkList($s_k$)}; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// set the detected buggy path into the work list}}}\\
+        
+        $NLocs:=1;$ \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// number of quick fix locations}}}\\
+        
+        $C:=0; $ \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// quick fix locations counter}}}\\
+        
+        \ \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// if the work list length greater than 0 else skip path}}}\\
+             
+             \If{(getLength($w_k$) \textgreater \ 0) }{  
+               
+               $n_t$ := \textit{initNode($w_k$)}; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// the node at which the bug was detected}}}\
+               
+               $N_{set}:$=$N_{set}$ $\cup$ \{$n_t$\}; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// add a node for the in-place fix}}}\
+		
+		$r_j$ := \textit{refact($n_t$)}; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// create a new bug refactoring}}}\
+		
+		$R_{set}:$=$R_{set}$ $\cup$ \{$r_j$\}; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// add new refactoring to the set R}}}\
+		 
+		 \While{($i$ \textgreater 0 $\wedge$ $C$ \textless $NLocs$)}{
+		   
+		   $fNode$ := \{$w_k,_i$\};  \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// get next node from work list located at index i}}}\ 
+		
+		  \If{(isQuickFixNode($fNode$))}{
+		
+		   $n_{t+1}$ := $fNode$; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// store current node}}}\       
+                   
+                   $N_{set}$:=$N_{set}$ $\cup$ \{$n_{t+1}$\};  \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// add the node for a not in-place fix}}}\  
+		     
+		     \textit{setConsObject($w_k$)}; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// store constraint}}}\       
+			
+			  \If{(notAffectedPaths($S_{Paths}$, $n_{t+1}$))}{ 
+                             $pLoc$ := \textit{probLoc($n_{t+1}$)};  \\
+			      \textit{putMarker($pLoc$)}; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// put new marker}}}\ \\
+			      $r_{j+1}$ := \textit{refact($n_{t+1}$)}; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// create a new bug refactoring}}}\  \\
+			      $R_{set}:$=$R_{set}$ $\cup$ \{$r_{j+1}$\}; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// add refactoring}}}\  \\
+                              $countGQF$ := $countGQF$ + 1; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// count the generated fixes}}}\\
+
+                          }
+
+			$C$ := $C$ + 1; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// increase not in-place quick fix locations counter}}}\
+	         }
+		 $i$ := $i$ - 1; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// go one step backwards on the path}}}\
+		}
+	      }
+	$k$ := $k$ + 1; \textcolor{ForestGreen}{\textbf{\fontfamily{cmtt}\selectfont{// get next satisfiable program execution path}}}\ \\
+     }
+  }
+\end{algorithm}
+
 
 \section{This is Another Section}
 
