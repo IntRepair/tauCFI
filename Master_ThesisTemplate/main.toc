@@ -1,0 +1,27 @@
+\select@language {english}
+\select@language {croatian}
+\select@language {german}
+\select@language {english}
+\contentsline {chapter}{Acknowledgements}{vii}{section*.1}
+\contentsline {chapter}{Abstract}{ix}{section*.2}
+\contentsline {chapter}{Outline of the Thesis}{xiii}{section*.4}
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Latex Introduction}{1}{section.1.1}
+\contentsline {chapter}{\numberline {2}Motivation}{3}{chapter.2}
+\contentsline {chapter}{\numberline {3}Overview}{5}{chapter.3}
+\contentsline {section}{\numberline {3.1}Motivation}{5}{section.3.1}
+\contentsline {chapter}{\numberline {4}Evaluation}{7}{chapter.4}
+\contentsline {section}{\numberline {4.1}Methodology}{7}{section.4.1}
+\contentsline {section}{\numberline {4.2}Classification}{7}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Callsites}{7}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Calltargets}{7}{subsection.4.2.2}
+\contentsline {section}{\numberline {4.3}Patching Policies}{7}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}AT}{7}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}ParamCount}{7}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}ParamType}{7}{subsection.4.3.3}
+\contentsline {section}{\numberline {4.4}Security Evaluation}{7}{section.4.4}
+\contentsline {section}{\numberline {4.5}Performance}{7}{section.4.5}
+\contentsline {chapter}{\numberline {5}Related Work}{9}{chapter.5}
+\contentsline {chapter}{\numberline {6}Discussion}{11}{chapter.6}
+\contentsline {chapter}{\numberline {7}Conclusion and Future Work}{13}{chapter.7}
+\contentsline {chapter}{\nonumberline Bibliography}{15}{chapter*.7}
