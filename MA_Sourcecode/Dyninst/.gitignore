@@ -96,6 +96,8 @@ Makefile
 */Makefile
 *.eps
 *log.*
+!*log.h
+!*log.C
 *.rej
 install_manifest.txt
 binutils

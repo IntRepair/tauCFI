@@ -1,0 +1,12 @@
+bin/di-opt
+di-opt/di-opt
+.vscode
+nginx-*/inst
+nginx-*/objs
+*.o
+*.pyc
+build_llvm/*
+type_experiment/*
+tests/*
+tmp/*
+*.log
