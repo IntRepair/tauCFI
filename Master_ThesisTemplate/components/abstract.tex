@@ -6,10 +6,6 @@
 \phantomsection
 \addcontentsline{toc}{chapter}{Abstract}	
 
-
-
-
-
 \vspace*{2cm}
 \begin{center}
 {\Large \bf Abstract}
@@ -17,3 +13,42 @@
 \vspace{1cm}
 
 An abstracts abstracts the thesis!
+
+This is just an example that shows how long the abstract should be
+and which parts an abstract should contain. \\
+
+
+Many applications such as the Chrome and Firefox
+browsers are largely implemented in C++ for its perfor-
+mance and modularity. Type casting, which converts one
+type of an object to another, plays an essential role in en-
+abling polymorphism in C++ because it allows a program
+to utilize certain general or specific implementations in
+the class hierarchies. However, if not correctly used, it
+may return unsafe and incorrectly casted values, leading
+to so-called bad-casting or type-confusion vulnerabili-
+ties. Since a bad-casted pointer violates a programmer’s
+intended pointer semantics and enables an attacker to
+corrupt memory, bad-casting has critical security implica-
+tions similar to those of other memory corruption vulner-
+abilities. Despite the increasing number of bad-casting
+vulnerabilities, the bad-casting detection problem has not
+been addressed by the security community.
+
+In this paper, we present C A V ER , a runtime bad-casting
+detection tool. It performs program instrumentation
+at compile time and uses a new runtime type tracing
+mechanism—the type hierarchy table—to overcome the
+limitation of existing approaches and efficiently verify
+type casting dynamically. In particular, C A V ER can be
+easily and automatically adopted to target applications,
+achieves broader detection coverage, and incurs reason-
+able runtime overhead. We have applied C A V ER to large-
+scale software including Chrome and Firefox browsers,
+and discovered 11 previously unknown security vulnera-
+bilities: nine in GNU libstdc++ and two in Firefox, all
+of which have been confirmed and subsequently fixed by
+vendors. Our evaluation showed that C A V ER imposes up
+to 7.6\% and 64.6\% overhead for performance-intensive
+benchmarks on the Chromium and Firefox browsers, re-
+spectively.

@@ -1,24 +1,110 @@
 \chapter{Introduction}
 \label{chapter:Introduction}
+Control-Flow Integrity (CFI)~\cite{abadi:cfi, abadi:cfi2} is one of the most used techniques
+to secure program execution flows against advanced Code-Reuse Attacks (CRAs).
+
+Advanced CRAs such as COOP~\cite{schuster:coop}
 
 
+ ----------------
+ ROP and its manifestations (RILC, JIT-ROP, COP, COOP, JOP, Stiching Numbers ROP, Defcon 22, etc.) 
+can be addressed with binary rewriting (user space application and OS kernel),
+source code recompilation or runtime monitoring such as: 
+\textit{(i)} fine-grained CFI with hardware support PathArmor~\cite{veen:cfi},
+\textit((ii)) respectivelly coarse-grained CFI such as CCFIR~\cite{ccfir:zhang},
+\textit{(iii)} coarse-grained CFI based on binary loader CFCI~\cite{cfci:zhang}
+\textit{(iv)} fine-grained code randomization O-CFI~\cite{mohan:opaque}
+\textit{(v)} cryptografy with hardware support based CCFI~\cite{ccfi:jose}
+\textit{(vi)} based on the ROP stack pivoting, PBlocker~\cite{pblocker:prakash}
+\textit{(vii)} canary based as DynaGuard~\cite{dynaguard:petsios}
+\textit{(viii)} checking vTable integrity for protecting against COOP based on CFI for source code auch as SafeDispatch~\cite{safedispatch:jang}, 
+vtv~\cite{vtv:tice} LLVM and GCC compiler based vor vTable protection 
+and binary rewriting such as vfGuard~\cite{vfuard:aravind}, vTint~\cite{vtint:zhang} and~\cite{trap:crane}
+\textit{(ix)} with runtime hardware support based on a combination of LBR, PMU and BTS registers CFIGuard~\cite{cfiguard:yuan}
+\textit{(x)} with code recompilation with CFI and/or randomization enforcement against 
+JIT-ROP, MCFI~\cite{mcfi:niu}, RockJIT~\cite{rockjit:niu} and PiCFI~\cite{perinput:niu}
+and any combination of the above.
+ ----------------
 
-Here starts the thesis with an introduction. Please use nice latex and bibtex entries \cite{latex}. Do not spend time on formating your thesis, but on its content. 
 
-The five points which I gave you.
+Proposal: Name for our tool: 
+
+CCTypeMapper (Caller Calle Type Mapper) \\ 
+ 
+TypeShild \\ 
+ 
+TypeProtector \\ 
+
+CCTS (caller/calle type securer or shilder) \\ 
+
+TypeFlower \\ 
+
+you can also make your sugestion here. \\ 
+
+Proposal: \\ 
+
+Citation example:~\cite{latex}. 
+
+The introduction should answer this questions:
+\\
+
+1.What is the problem? 
+\\
+
+Specify The Problem statement. 
+\\
+2-3 sentences.
+
+2.What are the current solutions?
+\\
+talk about TypeArmor~\cite{veen:typearmor}....\\
+
+3.Where the solutions lack?
+\\
+
+4.What is your idea?
+\\
+
+5.Contributions.
+\\
 
 In summary, we make the following contributions:
+
 \begin{enumerate}
- \item We
+ \item We did this 
  
- \item We
+ \item We did this 
  
- \item We
+ \item We did this.
+ 
+ The rest of the MA is organized as follows.
  
 \end{enumerate}
 
-\section{Latex Introduction}
-There is no need for a latex introduction since there is plenty of literature out there.
- 
+\section{Motivation}
+here coms the Motivation.
+\\
+2-3 sentences.
+
+\section{Research Goals}
+here coms the Motivation.
+\\
+2-3 sentences.
+
+\section{Outline}
+here coms the Motivation.
+\\
+2-3 sentences.
+
+example: 
+
+The remainder of this thesis is organized as follows. Chapter 2 provides a profound
+background regarding VMs, VMI, and modern rootkits. We relate our work to previous
+research in Chapter 3. The design and architecture of WhiteRabbit is discussed in
+Chapter 4. This chapter comprises assumptions and necessary means that are required
+to meet the goals previously stated in Section 1.2. The WhiteRabbit prototype implementation
+is discussed and evaluated in Chapter 5 and Chapter 6, respectively. Finally,
+we provide an outlook concerning future work in Chapter 7 and conclude this thesis
+with a brief recapitulation in Chapter 8.
 
 

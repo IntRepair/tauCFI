@@ -2,26 +2,54 @@
 \select@language {croatian}
 \select@language {german}
 \select@language {english}
-\contentsline {chapter}{Acknowledgements}{vii}{section*.1}
-\contentsline {chapter}{Abstract}{ix}{section*.2}
-\contentsline {chapter}{Outline of the Thesis}{xiii}{section*.4}
+\contentsline {chapter}{Acknowledgements}{ix}{section*.1}
+\contentsline {chapter}{Abstract}{xi}{section*.2}
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
-\contentsline {section}{\numberline {1.1}Latex Introduction}{1}{section.1.1}
-\contentsline {chapter}{\numberline {2}Motivation}{3}{chapter.2}
-\contentsline {chapter}{\numberline {3}Overview}{5}{chapter.3}
-\contentsline {section}{\numberline {3.1}Motivation}{5}{section.3.1}
-\contentsline {chapter}{\numberline {4}Evaluation}{7}{chapter.4}
-\contentsline {section}{\numberline {4.1}Methodology}{7}{section.4.1}
-\contentsline {section}{\numberline {4.2}Classification}{7}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Callsites}{7}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}Calltargets}{7}{subsection.4.2.2}
-\contentsline {section}{\numberline {4.3}Patching Policies}{7}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}AT}{7}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}ParamCount}{7}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}ParamType}{7}{subsection.4.3.3}
-\contentsline {section}{\numberline {4.4}Security Evaluation}{7}{section.4.4}
-\contentsline {section}{\numberline {4.5}Performance}{7}{section.4.5}
-\contentsline {chapter}{\numberline {5}Related Work}{9}{chapter.5}
-\contentsline {chapter}{\numberline {6}Discussion}{11}{chapter.6}
-\contentsline {chapter}{\numberline {7}Conclusion and Future Work}{13}{chapter.7}
-\contentsline {chapter}{\nonumberline Bibliography}{15}{chapter*.7}
+\contentsline {section}{\numberline {1.1}Motivation}{2}{section.1.1}
+\contentsline {section}{\numberline {1.2}Research Goals}{2}{section.1.2}
+\contentsline {section}{\numberline {1.3}Outline}{2}{section.1.3}
+\contentsline {chapter}{\numberline {2}Technical Overview}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Types Inference/Recovery from Binaries}{3}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Types Recovery in General}{3}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Function Parameter Types Recovery}{3}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Caller/Callee Parameter Types Recovery}{3}{subsection.2.1.3}
+\contentsline {section}{\numberline {2.2}Code-Reuse Attacks}{3}{section.2.2}
+\contentsline {section}{\numberline {2.3}Control-Flow Integrity}{3}{section.2.3}
+\contentsline {section}{\numberline {2.4}Cntrol-Flow Integrity}{3}{section.2.4}
+\contentsline {part}{\numberline {I}Snippets}{5}{part.1}
+\contentsline {chapter}{\numberline {3}Snippet [AddressTaken]}{7}{chapter.3}
+\contentsline {section}{\numberline {3.1}step 1}{7}{section.3.1}
+\contentsline {section}{\numberline {3.2}step 2}{8}{section.3.2}
+\contentsline {chapter}{\numberline {4}Implementation}{9}{chapter.4}
+\contentsline {chapter}{\numberline {5}Evaluation}{11}{chapter.5}
+\contentsline {section}{\numberline {5.1}R1: Effectiveness of our Tool}{12}{section.5.1}
+\contentsline {section}{\numberline {5.2}R2: Precision of our Tool}{12}{section.5.2}
+\contentsline {section}{\numberline {5.3}R3: Performance overhead of our Tool}{12}{section.5.3}
+\contentsline {section}{\numberline {5.4}R4: Instrumentation overhead of our Tool}{12}{section.5.4}
+\contentsline {section}{\numberline {5.5}R5: Security coverage of our tool}{12}{section.5.5}
+\contentsline {section}{\numberline {5.6}R6: Which kind of attacks can our tool defend off}{12}{section.5.6}
+\contentsline {section}{\numberline {5.7}R7: Whar are the limitations of our Tool}{12}{section.5.7}
+\contentsline {section}{\numberline {5.8}R8: To Do.}{12}{section.5.8}
+\contentsline {section}{\numberline {5.9}Classification}{12}{section.5.9}
+\contentsline {subsection}{\numberline {5.9.1}Callsites}{12}{subsection.5.9.1}
+\contentsline {subsection}{\numberline {5.9.2}Calltargets}{12}{subsection.5.9.2}
+\contentsline {section}{\numberline {5.10}Patching Policies}{12}{section.5.10}
+\contentsline {subsection}{\numberline {5.10.1}AT}{12}{subsection.5.10.1}
+\contentsline {subsection}{\numberline {5.10.2}ParamCount}{12}{subsection.5.10.2}
+\contentsline {subsection}{\numberline {5.10.3}ParamType}{12}{subsection.5.10.3}
+\contentsline {section}{\numberline {5.11}Security Evaluation}{13}{section.5.11}
+\contentsline {section}{\numberline {5.12}Performance}{13}{section.5.12}
+\contentsline {chapter}{\numberline {6}Related Work}{15}{chapter.6}
+\contentsline {section}{\numberline {6.1}Binary-level CFI}{15}{section.6.1}
+\contentsline {section}{\numberline {6.2}Source-level CFI}{15}{section.6.2}
+\contentsline {section}{\numberline {6.3}TypeArmor Paper}{15}{section.6.3}
+\contentsline {chapter}{\numberline {7}Discussion}{17}{chapter.7}
+\contentsline {section}{\numberline {7.1}How to make the type inference more precise?}{17}{section.7.1}
+\contentsline {section}{\numberline {7.2}Comparison with TypeArmor and why are we better than TypeArmor?}{17}{section.7.2}
+\contentsline {section}{\numberline {7.3}Whys is not TypeArmor working as it should to?}{17}{section.7.3}
+\contentsline {section}{\numberline {7.4}What is not clear bout TypeArmor?}{17}{section.7.4}
+\contentsline {section}{\numberline {7.5}What can for sure not work as in TypeArmor paper explained?}{17}{section.7.5}
+\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{19}{chapter.8}
+\contentsline {section}{\numberline {8.1}Conclusion}{19}{section.8.1}
+\contentsline {section}{\numberline {8.2}Future Work}{19}{section.8.2}
+\contentsline {chapter}{\nonumberline Bibliography}{21}{chapter*.4}

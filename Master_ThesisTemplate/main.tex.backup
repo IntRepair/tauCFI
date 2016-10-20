@@ -49,15 +49,16 @@
 	
 	
 	\input{components/cover}
+%	\clearemptydoublepage
+%	
+%	\input{components/titlepage}
+	
+	
+%	\input{components/cover_maschmeyer}
 	\clearemptydoublepage
 	
 	\input{components/titlepage}
 	
-	
-	%\input{components/cover_maschmeyer}
-	\clearemptydoublepage
-	
-	\input{components/titlepage}
 	
 	\input{components/disclaimer}
 	
@@ -67,7 +68,7 @@
 
 	\tableofcontents
   
-        %\input{components/outline}
+  \input{components/outline}
 
 	\mainmatter
 	
@@ -183,12 +184,6 @@ M.~Wang et al., {Binary Code Continent: Finer-Grained Control Flow Integrity for
 V.~van der Veen et al., {Practical Context-Sensiticve CFI}, In
 \emph{Proceedings of the 22nd ACM SIGSAC Conference on Computer and Communications Security}, (CCS), 2015.
 
-\bibitem{veen:typearmor}
-Victor van der Veen, Enes Goktas, Moritz Contag, Andre Pawlowski, Xi Chen, Sanjay Rawat, 
-Herbert Bos, Thorsten Holz, Elias Athanasopoulos, and Cristiano Giuffrida,
-{A Tough call: Mitigating Advanced Code-Reuse Attacks At The Binary Level}, In
-\emph{Proceedings of the 2016 IEEE Symposium on Security and Privacy}, (S\&P), 2016.
-
 \bibitem{trap:crane}
 S.~Crane et al., {It\'s a TRaP: Table Rndomization and Protection against Function-Reuse Attacks}, In
 \emph{Proceedings of the 22nd ACM SIGSAC Conference on Computer and Communications Security}, (CCS), 2015.
@@ -228,11 +223,6 @@ A.~Prakash et al., {Strict Protection for Virtual Function Calls in COTS C++ Bin
 \bibitem{safedispatch:jang}
 D.~Jang et al., {safeDispatch: Securing C++ Virtual Calls from Memory Corruption Attacks}, In
 \emph{Symposium on Network and Distributed System Security}, (NDSS), 2014.
-
-\bibitem{schuster:coop}
-Felix Schuster, Thomas Tendyck, Christopher Liebchen, Lucas Davi, Ahmad-Reza Sadeghi, Thorsten Holz, 
-{Counterfeit Object-oriented Programming}, In
-\emph{Proceedings of the 2015 IEEE Symposium on Security and Privacy}, (S\&P), 2015.
 
 \end{thebibliography}
 	

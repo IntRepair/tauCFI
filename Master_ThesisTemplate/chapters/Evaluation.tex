@@ -1,8 +1,59 @@
 \chapter{Evaluation}
 \label{chapter:Evaluation}
+We evaluated our tool X with Y popular servers, by instrumenting them with our tool.
+We performed runtime performance test with the following applications.
 
-\section{Methodology}
+Our Evaluation aims to answer the following research questions:
+\begin{itemize}
+ \item \textbf{R1:} How efective is out tool in securing binary programs against the COOP attack?
+ 
+ \item \textbf{R2:} How precise is our tool in detecting the types of the caller/caller pairs?
+ 
+ \item \textbf{R3:} What is the performance overhead of our tool?
+ 
+ \item \textbf{R4:} What are the instumentation overheads imposed by our tool 
+ 
+ \item \textbf{R5:} How many caller/called pairs are secured by our tool and how many remain unsecured?
+ 
+ \item \textbf{R6:} Against which kind of attacks can our tool secure programs?
+ 
+ \item \textbf{R7:} What are the Limitations of our Tool?
+ 
+ \item \textbf{R8:} List is not exauhustive. Give another relevant research question. if there is one.
+ 
+\end{itemize}
 
+\textbf{Comparison methods.} Example: We used UBSAN (compare with TypeArmor), the state-of-art
+tool for detecting bad-casting bugs, as our comparison tar-
+get of C A V ER . Also, We used C A V ER - NAIVE , which dis-
+abled the two optimization techniques described in §4.4,
+to show their effectiveness on runtime performance opti-
+mization.
+
+\textbf{Experimental setup.} Example: All experiments were run on
+Ubuntu 13.10 (Linux Kernel 3.11) with a quad-core 3.40
+GHz CPU (Intel Xeon E3-1245), 16 GB RAM, and 1 TB
+SSD-based storage.
+
+
+\section{R1: Effectiveness of our Tool}
+
+\section{R2: Precision of our Tool}
+
+\section{R3: Performance overhead of our Tool}
+
+\section{R4: Instrumentation overhead of our Tool}
+
+\section{R5: Security coverage of our tool}
+
+\section{R6: Which kind of attacks can our tool defend off}
+
+\section{R7: Whar are the limitations of our Tool}
+
+\section{R8: To Do.}
+
+
+it is easier for the reader if we can directly map those section from underneath on the section from above.
 
 \section{Classification}
 \subsection{Callsites}

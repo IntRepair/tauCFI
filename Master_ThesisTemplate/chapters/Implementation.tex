@@ -1,0 +1,33 @@
+\chapter{Implementation}
+\label{chapter:Related_Work}
+
+
+In the Master thesis this section should be no longer than 1 DIN A page:
+
+example of implementation text from USENIX caver Paper.
+
+Please write in the same style.
+
+
+We implemented C A V ER based on the LLVM Compiler
+project [43] (revision 212782, version 3.5.0). The static in-
+strumentation module is implemented in Clang’s CodeGen
+module and LLVM’s Instrumentation module. The
+runtime library is implemented using the compiler-rt
+module based on LLVM’s Sanitizer code base. In to-
+tal, C A V ER is implemented in 3,540 lines of C++ code
+(excluding empty lines and comments).
+C A V ER is currently implemented for the Linux x86
+platform, and there are a few platform-dependent mech-
+anisms. For example, the type and tracing functions for
+global objects are placed in the .ctors section of ELF . As
+these platform-dependent features can also be found in
+other platforms, we believe C A V ER can be ported to other
+platforms as well. C A V ER interposes threading functions
+to maintain thread contexts and hold a per-thread red-
+black tree for stack objects. C A V ER also maintains the
+top and bottom addresses of stack segments to efficiently
+check pointer membership on the stack. We also modified
+the front-end drivers of Clang so that users of C A V ER can
+easily build and secure their target applications with one
+extra compilation flag and linker flag, respectively.
