@@ -6,32 +6,12 @@ to secure program execution flows against advanced Code-Reuse Attacks (CRAs).
 Advanced CRAs such as COOP~\cite{schuster:coop}
 
 
- ----------------
- ROP and its manifestations (RILC, JIT-ROP, COP, COOP, JOP, Stiching Numbers ROP, Defcon 22, etc.) 
-can be addressed with binary rewriting (user space application and OS kernel),
-source code recompilation or runtime monitoring such as: 
-\textit{(i)} fine-grained CFI with hardware support PathArmor~\cite{veen:cfi},
-\textit((ii)) respectivelly coarse-grained CFI such as CCFIR~\cite{ccfir:zhang},
-\textit{(iii)} coarse-grained CFI based on binary loader CFCI~\cite{cfci:zhang}
-\textit{(iv)} fine-grained code randomization O-CFI~\cite{mohan:opaque}
-\textit{(v)} cryptografy with hardware support based CCFI~\cite{ccfi:jose}
-\textit{(vi)} based on the ROP stack pivoting, PBlocker~\cite{pblocker:prakash}
-\textit{(vii)} canary based as DynaGuard~\cite{dynaguard:petsios}
-\textit{(viii)} checking vTable integrity for protecting against COOP based on CFI for source code auch as SafeDispatch~\cite{safedispatch:jang}, 
-vtv~\cite{vtv:tice} LLVM and GCC compiler based vor vTable protection 
-and binary rewriting such as vfGuard~\cite{vfuard:aravind}, vTint~\cite{vtint:zhang} and~\cite{trap:crane}
-\textit{(ix)} with runtime hardware support based on a combination of LBR, PMU and BTS registers CFIGuard~\cite{cfiguard:yuan}
-\textit{(x)} with code recompilation with CFI and/or randomization enforcement against 
-JIT-ROP, MCFI~\cite{mcfi:niu}, RockJIT~\cite{rockjit:niu} and PiCFI~\cite{perinput:niu}
-and any combination of the above.
- ----------------
-
-
 Proposal: Name for our tool: 
 
 CCTypeMapper (Caller Calle Type Mapper) \\ 
  
-TypeShild \\ 
+\textbf{TypeShild} \\ 
+i have selected this name for our tool.
  
 TypeProtector \\ 
 

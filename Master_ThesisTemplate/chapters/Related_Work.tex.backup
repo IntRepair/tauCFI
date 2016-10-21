@@ -59,7 +59,7 @@ and the quality of the execuatble disasembly fits our needs.
 For a more comprehensive review on the capabilities of DynInst and other tools we
 advice the reader to have a look at~\cite{andriesse:indepth}.
 
-Second, alias analysis in binares is undecidable in theory and intractable in practice~\cite{alan:mycroft}.
+Second, pointer deferece reconstruction from binares is undecidable~\cite{}.
 There are several most promising tools such as: Rewards~\cite{lin:rewards}, BAP~\cite{bap:brumley}, 
 SmartDec~\cite{fokin:smartdec}, and Divine~\cite{divine:balakrishnan}.
 These tools try with more or less success to recover 

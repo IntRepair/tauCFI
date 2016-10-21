@@ -36,16 +36,18 @@
 \BOOKMARK [1][-]{section.5.11}{Security Evaluation}{chapter.5}% 36
 \BOOKMARK [1][-]{section.5.12}{Performance}{chapter.5}% 37
 \BOOKMARK [0][-]{chapter.6}{Related Work}{part.1}% 38
-\BOOKMARK [1][-]{section.6.1}{Binary-level CFI}{chapter.6}% 39
-\BOOKMARK [1][-]{section.6.2}{Source-level CFI}{chapter.6}% 40
-\BOOKMARK [1][-]{section.6.3}{TypeArmor Paper}{chapter.6}% 41
-\BOOKMARK [0][-]{chapter.7}{Discussion}{part.1}% 42
-\BOOKMARK [1][-]{section.7.1}{How to make the type inference more precise?}{chapter.7}% 43
-\BOOKMARK [1][-]{section.7.2}{Comparison with TypeArmor and why are we better than TypeArmor?}{chapter.7}% 44
-\BOOKMARK [1][-]{section.7.3}{Whys is not TypeArmor working as it should to?}{chapter.7}% 45
-\BOOKMARK [1][-]{section.7.4}{What is not clear bout TypeArmor?}{chapter.7}% 46
-\BOOKMARK [1][-]{section.7.5}{What can for sure not work as in TypeArmor paper explained?}{chapter.7}% 47
-\BOOKMARK [0][-]{chapter.8}{Conclusion and Future Work}{part.1}% 48
-\BOOKMARK [1][-]{section.8.1}{Conclusion}{chapter.8}% 49
-\BOOKMARK [1][-]{section.8.2}{Future Work}{chapter.8}% 50
-\BOOKMARK [0][-]{chapter*.4}{Bibliography}{part.1}% 51
+\BOOKMARK [1][-]{section.6.1}{Mitigation of Advanced Code-Reuse Attacks}{chapter.6}% 39
+\BOOKMARK [1][-]{section.6.2}{Tyepe-Inference on Executables}{chapter.6}% 40
+\BOOKMARK [1][-]{section.6.3}{Binary-based Protection against COOP}{chapter.6}% 41
+\BOOKMARK [1][-]{section.6.4}{Source Code based Protection against COOP}{chapter.6}% 42
+\BOOKMARK [1][-]{section.6.5}{Runtime-based Protection against COOP}{chapter.6}% 43
+\BOOKMARK [0][-]{chapter.7}{Discussion}{part.1}% 44
+\BOOKMARK [1][-]{section.7.1}{How to make the type inference more precise?}{chapter.7}% 45
+\BOOKMARK [1][-]{section.7.2}{Comparison with TypeArmor and why are we better than TypeArmor?}{chapter.7}% 46
+\BOOKMARK [1][-]{section.7.3}{Whys is not TypeArmor working as it should to?}{chapter.7}% 47
+\BOOKMARK [1][-]{section.7.4}{What is not clear bout TypeArmor?}{chapter.7}% 48
+\BOOKMARK [1][-]{section.7.5}{What can for sure not work as in TypeArmor paper explained?}{chapter.7}% 49
+\BOOKMARK [0][-]{chapter.8}{Conclusion and Future Work}{part.1}% 50
+\BOOKMARK [1][-]{section.8.1}{Conclusion}{chapter.8}% 51
+\BOOKMARK [1][-]{section.8.2}{Future Work}{chapter.8}% 52
+\BOOKMARK [0][-]{chapter*.4}{Bibliography}{part.1}% 53

@@ -6,7 +6,7 @@ As of now we used the full set of possible calltargets, which is the set of addr
 
 Based on the notions of \cite{ZhangSekar00}, introduced several types of indirect control flow targets of which only {!shorthand! Code Pointer Constants (CK)} and {!shorthand! Computed Code Pointers (CC)} are of interest to us. The reason for that is that the others are usually the target of indirect jumps, however we are (as of now) only interested in callsites.
 
-\definition{!shorthand! Code Pointer Constants (CK)} { are, as the name suggests, code addresses in the binary that are computed during compile time. In \cite{ZhangSekar00} it is furthermore stated that they only consider thos addresses that point to instruction boundaries or are within the range of addresses of the current module. However, we restrict that even further to only the set of addresses that point to entry blocks of functions within our current module, as these are the only valid targets of function calls. }
+% \definition{!shorthand! Code Pointer Constants (CK)} { are, as the name suggests, code addresses in the binary that are computed during compile time. In \cite{ZhangSekar00} it is furthermore stated that they only consider thos addresses that point to instruction boundaries or are within the range of addresses of the current module. However, we restrict that even further to only the set of addresses that point to entry blocks of functions within our current module, as these are the only valid targets of function calls.}
 
 {!optional!
 \definition{!shorthand! Computed Code Pointers (CC)} { are, addresses that are computed during binary execution. In \cite{ZhangSekar00}  this set only contains targets to intraprocedural indirect jumps and is thus of no interest for us} }
