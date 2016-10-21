@@ -23,33 +23,33 @@
 \contentsline {chapter}{\numberline {4}Implementation}{9}{chapter.4}
 \contentsline {chapter}{\numberline {5}Evaluation}{11}{chapter.5}
 \contentsline {section}{\numberline {5.1}R1: Effectiveness of our Tool}{11}{section.5.1}
-\contentsline {section}{\numberline {5.2}R2: Precision of our Tool}{13}{section.5.2}
-\contentsline {section}{\numberline {5.3}R3: Performance overhead of our Tool}{13}{section.5.3}
-\contentsline {section}{\numberline {5.4}R4: Instrumentation overhead of our Tool}{13}{section.5.4}
-\contentsline {section}{\numberline {5.5}R5: Security coverage of our tool}{13}{section.5.5}
-\contentsline {section}{\numberline {5.6}R6: Which kind of attacks can our tool defend off}{13}{section.5.6}
-\contentsline {section}{\numberline {5.7}R7: Whar are the limitations of our Tool}{13}{section.5.7}
-\contentsline {section}{\numberline {5.8}R8: To Do.}{13}{section.5.8}
-\contentsline {section}{\numberline {5.9}Classification}{13}{section.5.9}
-\contentsline {subsection}{\numberline {5.9.1}Callsites}{13}{subsection.5.9.1}
-\contentsline {subsection}{\numberline {5.9.2}Calltargets}{13}{subsection.5.9.2}
-\contentsline {section}{\numberline {5.10}Patching Policies}{13}{section.5.10}
-\contentsline {subsection}{\numberline {5.10.1}AT}{13}{subsection.5.10.1}
-\contentsline {subsection}{\numberline {5.10.2}ParamCount}{13}{subsection.5.10.2}
-\contentsline {subsection}{\numberline {5.10.3}ParamType}{13}{subsection.5.10.3}
-\contentsline {section}{\numberline {5.11}Security Evaluation}{14}{section.5.11}
-\contentsline {section}{\numberline {5.12}Performance}{14}{section.5.12}
-\contentsline {chapter}{\numberline {6}Related Work}{15}{chapter.6}
-\contentsline {section}{\numberline {6.1}Binary-level CFI}{15}{section.6.1}
-\contentsline {section}{\numberline {6.2}Source-level CFI}{15}{section.6.2}
-\contentsline {section}{\numberline {6.3}TypeArmor Paper}{15}{section.6.3}
-\contentsline {chapter}{\numberline {7}Discussion}{17}{chapter.7}
-\contentsline {section}{\numberline {7.1}How to make the type inference more precise?}{17}{section.7.1}
-\contentsline {section}{\numberline {7.2}Comparison with TypeArmor and why are we better than TypeArmor?}{17}{section.7.2}
-\contentsline {section}{\numberline {7.3}Whys is not TypeArmor working as it should to?}{17}{section.7.3}
-\contentsline {section}{\numberline {7.4}What is not clear bout TypeArmor?}{17}{section.7.4}
-\contentsline {section}{\numberline {7.5}What can for sure not work as in TypeArmor paper explained?}{17}{section.7.5}
-\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{19}{chapter.8}
-\contentsline {section}{\numberline {8.1}Conclusion}{19}{section.8.1}
-\contentsline {section}{\numberline {8.2}Future Work}{19}{section.8.2}
-\contentsline {chapter}{\nonumberline Bibliography}{21}{chapter*.4}
+\contentsline {section}{\numberline {5.2}R2: Precision of our Tool}{15}{section.5.2}
+\contentsline {section}{\numberline {5.3}R3: Performance overhead of our Tool}{15}{section.5.3}
+\contentsline {section}{\numberline {5.4}R4: Instrumentation overhead of our Tool}{15}{section.5.4}
+\contentsline {section}{\numberline {5.5}R5: Security coverage of our tool}{15}{section.5.5}
+\contentsline {section}{\numberline {5.6}R6: Which kind of attacks can our tool defend off}{15}{section.5.6}
+\contentsline {section}{\numberline {5.7}R7: Whar are the limitations of our Tool}{15}{section.5.7}
+\contentsline {section}{\numberline {5.8}R8: To Do.}{15}{section.5.8}
+\contentsline {section}{\numberline {5.9}Classification}{15}{section.5.9}
+\contentsline {subsection}{\numberline {5.9.1}Callsites}{15}{subsection.5.9.1}
+\contentsline {subsection}{\numberline {5.9.2}Calltargets}{15}{subsection.5.9.2}
+\contentsline {section}{\numberline {5.10}Patching Policies}{15}{section.5.10}
+\contentsline {subsection}{\numberline {5.10.1}AT}{15}{subsection.5.10.1}
+\contentsline {subsection}{\numberline {5.10.2}ParamCount}{15}{subsection.5.10.2}
+\contentsline {subsection}{\numberline {5.10.3}ParamType}{15}{subsection.5.10.3}
+\contentsline {section}{\numberline {5.11}Security Evaluation}{16}{section.5.11}
+\contentsline {section}{\numberline {5.12}Performance}{16}{section.5.12}
+\contentsline {chapter}{\numberline {6}Related Work}{17}{chapter.6}
+\contentsline {section}{\numberline {6.1}Binary-level CFI}{17}{section.6.1}
+\contentsline {section}{\numberline {6.2}Source-level CFI}{17}{section.6.2}
+\contentsline {section}{\numberline {6.3}TypeArmor Paper}{17}{section.6.3}
+\contentsline {chapter}{\numberline {7}Discussion}{19}{chapter.7}
+\contentsline {section}{\numberline {7.1}How to make the type inference more precise?}{19}{section.7.1}
+\contentsline {section}{\numberline {7.2}Comparison with TypeArmor and why are we better than TypeArmor?}{19}{section.7.2}
+\contentsline {section}{\numberline {7.3}Whys is not TypeArmor working as it should to?}{19}{section.7.3}
+\contentsline {section}{\numberline {7.4}What is not clear bout TypeArmor?}{19}{section.7.4}
+\contentsline {section}{\numberline {7.5}What can for sure not work as in TypeArmor paper explained?}{19}{section.7.5}
+\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{21}{chapter.8}
+\contentsline {section}{\numberline {8.1}Conclusion}{21}{section.8.1}
+\contentsline {section}{\numberline {8.2}Future Work}{21}{section.8.2}
+\contentsline {chapter}{\nonumberline Bibliography}{23}{chapter*.4}

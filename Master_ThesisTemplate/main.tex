@@ -36,6 +36,36 @@
 % include commands
 \input{components/commands}
 
+\usepackage{tikz}
+\usepackage{verbatim}
+
+\begin{comment}
+:Title: Borrowers and lenders
+
+An illustration inspired by Figure 1.1 in Howells, Peter og Bain, Keith (2007), 
+Financial markets and institutions. 5th ed. Essex: Pearson Education.
+
+\end{comment}
+
+\usetikzlibrary{arrows,positioning} 
+\tikzset{
+    %Define standard arrow tip
+    >=stealth',
+    %Define style for boxes
+    punkt/.style={
+           rectangle,
+           rounded corners,
+           draw=black, very thick,
+           text width=6.5em,
+           minimum height=2em,
+           text centered},
+    % Define arrow style
+    pil/.style={
+           ->,
+           thick,
+           shorten <=2pt,
+           shorten >=2pt,}
+}
 
 %\makeindex
 	%% inter line spacing
