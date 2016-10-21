@@ -4,25 +4,26 @@ We evaluated our tool X with Y popular servers, by instrumenting them with our t
 We performed runtime performance test with the following applications.
 
 Our Evaluation aims to answer the following research questions:
-\begin{enumerate}
+\begin{itemize}
  \item \textbf{R1:} How efective is out tool in securing binary programs against the COOP attack?
  
  \item \textbf{R2:} How precise is our tool in detecting the types of the caller/caller pairs?
  
- \item \textbf{R3:} What are the instumentation overheads imposer by our tool and how many caller/called pairs 
- are secured by our tool?
+ \item \textbf{R3:} What is the performance overhead of our tool?
  
- \item \textbf{R4:} Against which kind of attacks can our tool secure programs?
+ \item \textbf{R4:} What are the instumentation overheads imposed by our tool 
  
- \item \textbf{R5:} How many caller/callee pairs remain unprotected after applying our tool?
+ \item \textbf{R5:} How many caller/called pairs are secured by our tool and how many remain unsecured?
  
- \item \textbf{R6:} What are the Limitations of our Tool?
+ \item \textbf{R6:} Against which kind of attacks can our tool secure programs?
  
- \item \textbf{R7:} List is not exauhustive. Give another relevant research question.
+ \item \textbf{R7:} What are the Limitations of our Tool?
  
-\end{enumerate}
+ \item \textbf{R8:} List is not exauhustive. Give another relevant research question. if there is one.
+ 
+\end{itemize}
 
-\textbf{Comparison methods.} Example: We used UBSAN , the state-of-art
+\textbf{Comparison methods.} Example: We used UBSAN (compare with TypeArmor), the state-of-art
 tool for detecting bad-casting bugs, as our comparison tar-
 get of C A V ER . Also, We used C A V ER - NAIVE , which dis-
 abled the two optimization techniques described in §4.4,
@@ -35,10 +36,122 @@ GHz CPU (Intel Xeon E3-1245), 16 GB RAM, and 1 TB
 SSD-based storage.
 
 
-\section{Pre}
+\section{R1: Effectiveness of our Tool}
+\begin{table}[H]
+\centering
+\caption{Classification CS}
+\label{Integer overflow bug detection in CWE-190}
+\resizebox{.99\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|} \hline
+\textbf{target}  &\textbf{opt} & \textbf{\#CS}     & \textbf{problems}    &\textbf{0} & \textbf{-1}  & \textbf{-2} &\textbf{-3} &\textbf{-4} &\textbf{-5} &\textbf{-6}  &\textbf{non-void-ok}  &\textbf{non-void-probl.}   \\ \hline 
+x                &x            &x                  &x                     &x          &x             &x            &x           &x           &x           &x            &x                     &x                          \\ \hline
+
+\end{tabular}}
+%  \vspace{-2.5em}
+\end{table}
 
 
+\begin{table}[H]
+\centering
+\caption{Compound}
+\label{Integer overflow bug detection in CWE-190}
+\resizebox{.99\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|} \hline
+\textbf{opt}  & \textbf{\#CS}     & \textbf{cs args (perfect \%)}    &\textbf{cs args (problem \%)} & \textbf{cs non-void (correct \%)}  & \textbf{cs non-void (probl. \%)} &\textbf{\#ct} &\textbf{ct args (perfect \%)} &\textbf{ct args (probl. \%)} &\textbf{ct void (correct \%)}  &\textbf{ct void (correct \%)}   \\ \hline 
+x             &x                  &x                                 &x                             &x                                   &x                                 &x             &x                             &x                            &x                              &x                               \\ \hline
 
+\end{tabular}}
+%  \vspace{-2.5em}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Classification CT}
+\label{Integer overflow bug detection in CWE-190}
+% \resizebox{.99\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|} \hline
+\textbf{target}  &\textbf{opt} & \textbf{\#CS}     & \textbf{problems}    &\textbf{0} & \textbf{-1}  & \textbf{-2} &\textbf{-3} &\textbf{-4} &\textbf{-5} &\textbf{-6}  &\textbf{non-void-ok}  &\textbf{non-void-probl.}   \\ \hline 
+x                &x            &x                  &x                     &x          &x             &x            &x           &x           &x           &x            &x                     &x                          \\ \hline
+
+\end{tabular}
+% }
+%  \vspace{-2.5em}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\caption{Overestimation}
+\label{Integer overflow bug detection in CWE-190}
+% \resizebox{.99\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|} \hline
+\textbf{target}  & \textbf{opt}     & \textbf{problematic}    &\textbf{+0} & \textbf{+1}  & \textbf{+2} &\textbf{+3} &\textbf{+4} &\textbf{+5} &\textbf{+6}  \\ \hline 
+x                &x                 &x                        &x           &x             &x            &x           &x           &x           &x            \\ \hline
+
+\end{tabular}
+% }
+%  \vspace{-2.5em}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Callsite Classification Tbl. for Param count}
+\label{Integer overflow bug detection in CWE-190}
+% \resizebox{.99\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|} \hline
+\textbf{target}  & \textbf{opt}     & \textbf{problematic}    &\textbf{-0} & \textbf{-1}  & \textbf{-2} &\textbf{-3} &\textbf{-4} &\textbf{-5} &\textbf{-6}  \\ \hline 
+x                &x                 &x                        &x           &x             &x            &x           &x           &x           &x            \\ \hline
+
+\end{tabular}
+% }
+%  \vspace{-2.5em}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Calltarget Classification for param count}
+\label{Integer overflow bug detection in CWE-190}
+% \resizebox{.99\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|} \hline
+\textbf{target}  & \textbf{opt}     & \textbf{\#}    &\textbf{Callsites: param \%, probl \%} & \textbf{\#}  & \textbf{Callsites: param \%, probl \%}  \\ \hline 
+x                &x                 &x               &x                                      &x             &x                                        \\ \hline
+
+\end{tabular}
+% }
+%  \vspace{-2.5em}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\caption{Compound table cs ct perfect matching}
+\label{Integer overflow bug detection in CWE-190}
+% \resizebox{.99\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|} \hline
+\textbf{target}  & \textbf{opt}     & \textbf{ct}    &\textbf{Ct probl.} & \textbf{at}  & \textbf{at prob.} &\textbf{cs} & \textbf{clang cs probl.}  & \textbf{padyn cs probl.}  \\ \hline 
+x                &x                 &x               &x                  &x             &x                  &x           &x                          &x   \\ \hline
+
+\end{tabular}
+% }
+%  \vspace{-2.5em}
+\end{table}
+
+\section{R2: Precision of our Tool}
+
+\section{R3: Performance overhead of our Tool}
+
+\section{R4: Instrumentation overhead of our Tool}
+
+\section{R5: Security coverage of our tool}
+
+\section{R6: Which kind of attacks can our tool defend off}
+
+\section{R7: Whar are the limitations of our Tool}
+
+\section{R8: To Do.}
+
+
+it is easier for the reader if we can directly map those section from underneath on the section from above.
 
 \section{Classification}
 \subsection{Callsites}
