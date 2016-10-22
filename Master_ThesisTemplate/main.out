@@ -4,7 +4,7 @@
 \BOOKMARK [1][-]{section.1.1}{Motivation}{chapter.1}% 4
 \BOOKMARK [1][-]{section.1.2}{Research Goals}{chapter.1}% 5
 \BOOKMARK [1][-]{section.1.3}{Outline}{chapter.1}% 6
-\BOOKMARK [0][-]{chapter.2}{Technical Overview}{}% 7
+\BOOKMARK [0][-]{chapter.2}{Overview}{}% 7
 \BOOKMARK [1][-]{section.2.1}{Types Inference/Recovery from Binaries}{chapter.2}% 8
 \BOOKMARK [2][-]{subsection.2.1.1}{Types Recovery in General}{section.2.1}% 9
 \BOOKMARK [2][-]{subsection.2.1.2}{Function Parameter Types Recovery}{section.2.1}% 10
@@ -35,19 +35,21 @@
 \BOOKMARK [2][-]{subsection.5.10.3}{ParamType}{section.5.10}% 35
 \BOOKMARK [1][-]{section.5.11}{Security Evaluation}{chapter.5}% 36
 \BOOKMARK [1][-]{section.5.12}{Performance}{chapter.5}% 37
-\BOOKMARK [0][-]{chapter.6}{Related Work}{part.1}% 38
-\BOOKMARK [1][-]{section.6.1}{Mitigation of Advanced Code-Reuse Attacks}{chapter.6}% 39
-\BOOKMARK [1][-]{section.6.2}{Tyepe-Inference on Executables}{chapter.6}% 40
-\BOOKMARK [1][-]{section.6.3}{Binary-based Protection against COOP}{chapter.6}% 41
-\BOOKMARK [1][-]{section.6.4}{Source Code based Protection against COOP}{chapter.6}% 42
-\BOOKMARK [1][-]{section.6.5}{Runtime-based Protection against COOP}{chapter.6}% 43
-\BOOKMARK [0][-]{chapter.7}{Discussion}{part.1}% 44
-\BOOKMARK [1][-]{section.7.1}{How to make the type inference more precise?}{chapter.7}% 45
-\BOOKMARK [1][-]{section.7.2}{Comparison with TypeArmor and why are we better than TypeArmor?}{chapter.7}% 46
-\BOOKMARK [1][-]{section.7.3}{Whys is not TypeArmor working as it should to?}{chapter.7}% 47
-\BOOKMARK [1][-]{section.7.4}{What is not clear bout TypeArmor?}{chapter.7}% 48
-\BOOKMARK [1][-]{section.7.5}{What can for sure not work as in TypeArmor paper explained?}{chapter.7}% 49
-\BOOKMARK [0][-]{chapter.8}{Conclusion and Future Work}{part.1}% 50
-\BOOKMARK [1][-]{section.8.1}{Conclusion}{chapter.8}% 51
-\BOOKMARK [1][-]{section.8.2}{Future Work}{chapter.8}% 52
-\BOOKMARK [0][-]{chapter*.4}{Bibliography}{part.1}% 53
+\BOOKMARK [0][-]{chapter.6}{Discussion}{part.1}% 38
+\BOOKMARK [1][-]{section.6.1}{How to make the type inference more precise?}{chapter.6}% 39
+\BOOKMARK [1][-]{section.6.2}{Comparison with TypeArmor and why are we better than TypeArmor?}{chapter.6}% 40
+\BOOKMARK [1][-]{section.6.3}{Whys is not TypeArmor working as it should to?}{chapter.6}% 41
+\BOOKMARK [1][-]{section.6.4}{What is not clear bout TypeArmor?}{chapter.6}% 42
+\BOOKMARK [1][-]{section.6.5}{What can for sure not work as in TypeArmor paper explained?}{chapter.6}% 43
+\BOOKMARK [0][-]{chapter.7}{Related Work}{part.1}% 44
+\BOOKMARK [1][-]{section.7.1}{Mitigation of Advanced Code-Reuse Attacks}{chapter.7}% 45
+\BOOKMARK [1][-]{section.7.2}{Tyepe-Inference on Executables}{chapter.7}% 46
+\BOOKMARK [1][-]{section.7.3}{Binary-based Protection against COOP}{chapter.7}% 47
+\BOOKMARK [1][-]{section.7.4}{Source Code based Protection against COOP}{chapter.7}% 48
+\BOOKMARK [1][-]{section.7.5}{Runtime-based Protection against COOP}{chapter.7}% 49
+\BOOKMARK [0][-]{chapter.8}{Conclusion}{part.1}% 50
+\BOOKMARK [1][-]{section.8.1}{Future Work}{chapter.8}% 51
+\BOOKMARK [0][-]{chapter.9}{Conclusion}{part.1}% 52
+\BOOKMARK [1][-]{section.9.1}{Conclusion}{chapter.9}% 53
+\BOOKMARK [0][-]{chapter*.10}{Acronyms}{part.1}% 54
+\BOOKMARK [0][-]{chapter*.13}{Bibliography}{part.1}% 55

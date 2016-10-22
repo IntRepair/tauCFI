@@ -5,49 +5,54 @@ to secure program execution flows against advanced Code-Reuse Attacks (CRAs).
 
 Advanced CRAs such as COOP~\cite{schuster:coop}
 
+Present the virtual function concept in C++, What does it is good for and what security implications does it have?
 
-Proposal: Name for our tool: 
+Talk about the security implications of vptr corruptions and give some CVEs numbers here.
 
-CCTypeMapper (Caller Calle Type Mapper) \\ 
- 
-\textbf{TypeShild} \\ 
-i have selected this name for our tool.
- 
-TypeProtector \\ 
+Briefly talk about source code based solutions which protect against vptr corruptions and n the 
+end against COOP. Talk about SafeDispatch, ShrinkWrap, Bounov et al, IFCC/VTV etc.
 
-CCTS (caller/calle type securer or shilder) \\ 
 
-TypeFlower \\ 
+Give a presentation of TypeArmor
 
-you can also make your sugestion here. \\ 
-
-Proposal: \\ 
-
-Citation example:~\cite{latex}. 
+TypeArmor~\cite{veen:typearmor} is a run-time based
+tool which enforces a fine-grained forward edge policy
+in executables based on caller/callee matching based on 
+parameter count. 
 
 The introduction should answer this questions:
-\\
 
 1.What is the problem? 
-\\
+There are no mechanisms in C++ implemented which check during late binding
+(realized through virtal call sited, indirect call sites in binaries) that
+the target of an indirect call site is legitimate or illegitimate.
 
 Specify The Problem statement. 
-\\
-2-3 sentences.
+In this thesis we want to develop a tool which can mitigate one 
+of the most dangerous attack which exploits the missing security checks from above.
 
 2.What are the current solutions?
-\\
-talk about TypeArmor~\cite{veen:typearmor}....\\
+There are three lines of defence against COOP attacks, source code based,
+binary based and runtime based (thre is no real application which can really defend against).
+
+TypeArmor~\cite{veen:typearmor} is the most similar tool to \textit{TypeShild} and it used
+function parameter coundting by enforcing a fine-grained policy on valid indirect caller/callee pairs
+inside a binary. The policy is checked during run-time by cheching that the number of parameters which 
+an indirect call site provides matches with the number of parameter the calle expects. This invariant
+helps to defend against COOP and Control Flow Jujutsu.
+
+\todo[inline]{@Matthias: add some limitations of type Armor.}
 
 3.Where the solutions lack?
-\\
+TypeArmor lacks in precision w.r.t. caller/calle matching since it relies only on parameter counting.
 
 4.What is your idea?
-\\
+Our insight is to enforce a fine-grained CFI policy by combining function parameter count, type matching.
+This offers higher precision than TypeArmot and probably higher performance than TypeArmor has since we 
+add less checks in the binary. Thus checking fewer checks in the binary results in a better performance 
+overhead than comparable solutions.
 
 5.Contributions.
-\\
-
 In summary, we make the following contributions:
 
 \begin{enumerate}
@@ -72,19 +77,17 @@ here coms the Motivation.
 2-3 sentences.
 
 \section{Outline}
-here coms the Motivation.
-\\
-2-3 sentences.
-
-example: 
-
-The remainder of this thesis is organized as follows. Chapter 2 provides a profound
-background regarding VMs, VMI, and modern rootkits. We relate our work to previous
-research in Chapter 3. The design and architecture of WhiteRabbit is discussed in
-Chapter 4. This chapter comprises assumptions and necessary means that are required
-to meet the goals previously stated in Section 1.2. The WhiteRabbit prototype implementation
-is discussed and evaluated in Chapter 5 and Chapter 6, respectively. Finally,
-we provide an outlook concerning future work in Chapter 7 and conclude this thesis
-with a brief recapitulation in Chapter 8.
+The remainder of this thesis is organized as follows.
+We start by giving an overview of how \textit{TypeShild}
+is designed to mitigate COOP attacks. 
+Chapter~\ref{chapter:Overview} gives an overview of the technique
+used in \textit{TypeShild}.
+Chapter~\ref{chapter:Implementation} presents briefly the implementation
+details of our tool.
+The \textit{TypeShild} implementation is evaluated and discussed in
+Chapter~\ref{chapter:Evaluation} and Chapter~\ref{chapter:Discussion}, respectively.
+Chapter~\ref{chapter:Related_Work} surveys related work.
+Finally, Chapter~\ref{chapter:Future_Work} highlights several future steps and
+Chapter~\ref{chapter:Conclusion} concludes this thesis.
 
 

@@ -18,6 +18,7 @@
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
 \bibstyle{plain}
+\reset@newl@bel
 \select@language{english}
 \@writefile{toc}{\select@language{english}}
 \@writefile{lof}{\select@language{english}}
@@ -39,19 +40,21 @@
 \citation{abadi:cfi}
 \citation{abadi:cfi2}
 \citation{schuster:coop}
-\citation{latex}
+\citation{veen:typearmor}
 \citation{veen:typearmor}
 \@writefile{toc}{\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \newlabel{chapter:Introduction}{{1}{1}{Introduction}{chapter.1}{}}
+\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color  {orange}o}}\ @Matthias: add some limitations of type Armor.}{1}{section*.4}}
+\pgfsyspdfmark {pgfid1}{20659988}{16986228}
 \@writefile{toc}{\contentsline {section}{\numberline {1.1}Motivation}{2}{section.1.1}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.2}Research Goals}{2}{section.1.2}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.3}Outline}{2}{section.1.3}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {2}Technical Overview}{3}{chapter.2}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {2}Overview}{3}{chapter.2}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chapter:Technical Overview}{{2}{3}{Technical Overview}{chapter.2}{}}
+\newlabel{chapter:Overview}{{2}{3}{Overview}{chapter.2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.1}Types Inference/Recovery from Binaries}{3}{section.2.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}Types Recovery in General}{3}{subsection.2.1.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}Function Parameter Types Recovery}{3}{subsection.2.1.2}}
@@ -73,7 +76,7 @@
 \@writefile{toc}{\contentsline {chapter}{\numberline {4}Implementation}{9}{chapter.4}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chapter:Related_Work}{{4}{9}{Implementation}{chapter.4}{}}
+\newlabel{chapter:Implementation}{{4}{9}{Implementation}{chapter.4}{}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {5}Evaluation}{11}{chapter.5}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
@@ -112,6 +115,8 @@
 \newlabel{matching}{{5.14}{14}{policy baseline}{table.5.14}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.2}R2: Precision of our Tool}{15}{section.5.2}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.3}R3: Performance overhead of our Tool}{15}{section.5.3}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.15}{\ignorespaces Performance Tabble, more better is a bar chart here!}}{15}{table.5.15}}
+\newlabel{Integer overflow bug detection in CWE-190}{{5.15}{15}{Performance Tabble, more better is a bar chart here!}{table.5.15}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.4}R4: Instrumentation overhead of our Tool}{15}{section.5.4}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.5}R5: Security coverage of our tool}{15}{section.5.5}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.6}R6: Which kind of attacks can our tool defend off}{15}{section.5.6}}
@@ -123,9 +128,18 @@
 \@writefile{toc}{\contentsline {section}{\numberline {5.10}Patching Policies}{15}{section.5.10}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.10.1}AT}{15}{subsection.5.10.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.10.2}ParamCount}{15}{subsection.5.10.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.10.3}ParamType}{15}{subsection.5.10.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.10.3}ParamType}{16}{subsection.5.10.3}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.11}Security Evaluation}{16}{section.5.11}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.12}Performance}{16}{section.5.12}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}Discussion}{17}{chapter.6}}
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{chapter:Discussion}{{6}{17}{Discussion}{chapter.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}How to make the type inference more precise?}{17}{section.6.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}Comparison with TypeArmor and why are we better than TypeArmor?}{17}{section.6.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.3}Whys is not TypeArmor working as it should to?}{17}{section.6.3}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.4}What is not clear bout TypeArmor?}{17}{section.6.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.5}What can for sure not work as in TypeArmor paper explained?}{17}{section.6.5}}
 \citation{schuster:coop}
 \citation{subversive-c:lettner}
 \citation{trap:crane}
@@ -148,12 +162,12 @@
 \citation{rockjit:niu}
 \citation{perinput:niu}
 \citation{andriesse:indepth}
-\@writefile{toc}{\contentsline {chapter}{\numberline {6}Related Work}{17}{chapter.6}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {7}Related Work}{19}{chapter.7}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chapter:Related_Work}{{6}{17}{Related Work}{chapter.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.1}Mitigation of Advanced Code-Reuse Attacks}{17}{section.6.1}}
-\newlabel{Mitigation of Advanced Code-Reuse Attacks}{{6.1}{17}{Mitigation of Advanced Code-Reuse Attacks}{section.6.1}{}}
+\newlabel{chapter:Related_Work}{{7}{19}{Related Work}{chapter.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.1}Mitigation of Advanced Code-Reuse Attacks}{19}{section.7.1}}
+\newlabel{Mitigation of Advanced Code-Reuse Attacks}{{7.1}{19}{Mitigation of Advanced Code-Reuse Attacks}{section.7.1}{}}
 \citation{alan:mycroft}
 \citation{lin:rewards}
 \citation{bap:brumley}
@@ -168,32 +182,42 @@
 \citation{crane:readactor++}
 \citation{volodymyr:cpi}
 \citation{bounov:interleaving}
-\@writefile{toc}{\contentsline {section}{\numberline {6.2}Tyepe-Inference on Executables}{18}{section.6.2}}
-\newlabel{Tyepe-Inference on Executables}{{6.2}{18}{Tyepe-Inference on Executables}{section.6.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.3}Binary-based Protection against COOP}{18}{section.6.3}}
-\newlabel{Binary-based Protection against COOP}{{6.3}{18}{Binary-based Protection against COOP}{section.6.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.4}Source Code based Protection against COOP}{18}{section.6.4}}
-\newlabel{Source Code based Protection agaisnt COOP}{{6.4}{18}{Source Code based Protection against COOP}{section.6.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.2}Tyepe-Inference on Executables}{20}{section.7.2}}
+\newlabel{Tyepe-Inference on Executables}{{7.2}{20}{Tyepe-Inference on Executables}{section.7.2}{}}
+\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color  {orange}o}}\ add here 3-4 sentences here about the differences and commonalities between our tool and smartdec}{20}{section*.5}}
+\pgfsyspdfmark {pgfid2}{21262424}{32384178}
+\@writefile{toc}{\contentsline {section}{\numberline {7.3}Binary-based Protection against COOP}{20}{section.7.3}}
+\newlabel{Binary-based Protection against COOP}{{7.3}{20}{Binary-based Protection against COOP}{section.7.3}{}}
+\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color  {orange}o}}\ add here 2-3 sentences here to round up this section, present another interesting fact.}{20}{section*.6}}
+\pgfsyspdfmark {pgfid3}{21262424}{19002910}
+\@writefile{toc}{\contentsline {section}{\numberline {7.4}Source Code based Protection against COOP}{20}{section.7.4}}
+\newlabel{Source Code based Protection agaisnt COOP}{{7.4}{20}{Source Code based Protection against COOP}{section.7.4}{}}
 \citation{intel:cet}
 \citation{windows:cfguard}
 \citation{veen:cfi}
-\@writefile{toc}{\contentsline {section}{\numberline {6.5}Runtime-based Protection against COOP}{19}{section.6.5}}
-\newlabel{Runtime-based Protection against COOP}{{6.5}{19}{Runtime-based Protection against COOP}{section.6.5}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {7}Discussion}{21}{chapter.7}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.5}Runtime-based Protection against COOP}{21}{section.7.5}}
+\newlabel{Runtime-based Protection against COOP}{{7.5}{21}{Runtime-based Protection against COOP}{section.7.5}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {8}Conclusion}{23}{chapter.8}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chapter:Discussion}{{7}{21}{Discussion}{chapter.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.1}How to make the type inference more precise?}{21}{section.7.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.2}Comparison with TypeArmor and why are we better than TypeArmor?}{21}{section.7.2}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.3}Whys is not TypeArmor working as it should to?}{21}{section.7.3}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.4}What is not clear bout TypeArmor?}{21}{section.7.4}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.5}What can for sure not work as in TypeArmor paper explained?}{21}{section.7.5}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{23}{chapter.8}}
+\newlabel{chapter:Future_Work}{{8}{23}{Conclusion}{chapter.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.1}Future Work}{23}{section.8.1}}
+\newlabel{Future Work}{{8.1}{23}{Future Work}{section.8.1}{}}
+\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color  {orange}o}}\ to do}{23}{section*.7}}
+\pgfsyspdfmark {pgfid4}{20659988}{33423037}
+\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color  {orange}o}}\ to do}{23}{section*.8}}
+\pgfsyspdfmark {pgfid5}{20659988}{30267035}
+\@writefile{toc}{\contentsline {chapter}{\numberline {9}Conclusion}{25}{chapter.9}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chapter:Conclusion_and_Future_Work}{{8}{23}{Conclusion and Future Work}{chapter.8}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8.1}Conclusion}{23}{section.8.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {8.2}Future Work}{23}{section.8.2}}
+\newlabel{chapter:Conclusion}{{9}{25}{Conclusion}{chapter.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9.1}Conclusion}{25}{section.9.1}}
+\newlabel{Conclusion}{{9.1}{25}{Conclusion}{section.9.1}{}}
+\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color  {orange}o}}\ you can extend this up to a page. If you do than please keep (comment it out) also the old version of the conclusion comment it out}{25}{section*.9}}
+\pgfsyspdfmark {pgfid6}{20659988}{25847072}
+\@writefile{toc}{\contentsline {chapter}{Acronyms}{27}{chapter*.10}}
+\newacro{CRA}[\AC@hyperlink{CRA}{CRA}]{Code Reuse Attack}
+\newacro{BLA}[\AC@hyperlink{BLA}{BLA}]{kkk}
 \bibstyle{IEEEtran}
 \bibcite{mingwei:sekar}{1}
 \bibcite{safedispatch:jang}{2}
@@ -207,7 +231,7 @@
 \bibcite{haller:shrinkwrap}{10}
 \bibcite{volodymyr:cpi}{11}
 \bibcite{bounov:interleaving}{12}
-\@writefile{toc}{\contentsline {chapter}{\nonumberline Bibliography}{25}{chapter*.4}}
+\@writefile{toc}{\contentsline {chapter}{\nonumberline Bibliography}{33}{chapter*.13}}
 \bibcite{zhang:vtrust}{13}
 \bibcite{crane:readactor++}{14}
 \bibcite{crane:readactor++}{15}

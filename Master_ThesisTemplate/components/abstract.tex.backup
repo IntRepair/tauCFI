@@ -1,0 +1,57 @@
+% Abstract for the TUM report document
+% Included by MAIN.TEX
+
+
+\clearemptydoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Abstract}	
+
+\vspace*{2cm}
+\begin{center}
+{\Large \bf Abstract}
+\end{center}
+\vspace{1cm}
+
+High performance, high availability and high security
+applications such as the Firefox and Chrome web browsers 
+are implemented in C++ for modularity, performance and 
+compatibility to name just few.
+Virtual functions, which facilitate late binding,
+is a key ingredient in facilitating run-time polymorphism
+in C++ because it allows and object to use general (its own) 
+or specific functions (inherited) contained in the class hierarchy.
+However, because of the specific implementation of late binding,
+which performs no checks in order to check where an indirect call site 
+(virtual object dispatch through virtual pointers (vptrs)) is allow to call inside the class hierarchy,
+this opens a large attack surface which was successfully exploited by
+the COOP attack.
+Since manipulation (changing or inserting new vptrs) violates the 
+programmer initial pointer semantics and allows an attacker to
+redirect the control flow of the program as he desires, vptrs corruption
+has serious security consequences similar to those of other 
+data-only corruption vulnerabilities.
+Despite the alarmingly high number of vptr corruption
+vulnerabilities, the vptr corruption problem has not
+been sufficiently addressed by the security researchers.
+
+In this paper, we present \textit{TypeShild}, a runtime vptr corruption
+detection tool. It is based on program instrumentation at load time
+and uses a novel runtime type 
+
+In this paper, we present C A V ER , a runtime bad-casting
+detection tool. It performs program instrumentation
+at compile time and uses a new runtime type tracing
+mechanism—the type hierarchy table—to overcome the
+limitation of existing approaches and efficiently verify
+type casting dynamically. In particular, C A V ER can be
+easily and automatically adopted to target applications,
+achieves broader detection coverage, and incurs reason-
+able runtime overhead. We have applied C A V ER to large-
+scale software including Chrome and Firefox browsers,
+and discovered 11 previously unknown security vulnera-
+bilities: nine in GNU libstdc++ and two in Firefox, all
+of which have been confirmed and subsequently fixed by
+vendors. Our evaluation showed that C A V ER imposes up
+to 7.6\% and 64.6\% overhead for performance-intensive
+benchmarks on the Chromium and Firefox browsers, re-
+spectively.
