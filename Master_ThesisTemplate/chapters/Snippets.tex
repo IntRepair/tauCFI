@@ -1,6 +1,6 @@
 \part{Snippets} 
 
-\chapter{Snippet [AddressTaken]}
+% \chapter{Snippet [AddressTaken]}
 
 As of now we used the full set of possible calltargets, which is the set of addresses of all function entry basic blocks. To further restrict the possible calltargets per callsite, we explored the notion of incorporating an address taken analysis into our application. The notion is that any indirect control flow instruction might only target addresses that are considered {taken}. An Address is considered to be a {taken} address, if it is loaded to memory or a register usually this is a constant, {!optional! however it is also possible that simple calculations using multiplication and/or addition are used. We are not concerned with more complex calculations, because we have not observed compilers resorting to more complex methods and literature so far does agree \cite{ZhangSekar00}}.
 
@@ -14,13 +14,13 @@ Based on the notions of \cite{ZhangSekar00}, introduced several types of indirec
 Our approach of indentifying taken addresses is a two pronged approach. First, we iterate over the raw binary content of data segments additionally identifying possible dereferencable addresses. Second, we iterate over all instructions in functions within the disassembled binary.
 
 
-\section{step 1} We rely on Dyninst to tell us the boundaries of the .plt section {!todo! add more information here} and the .text section, which contain the executable part of the binary and thus are use to precheck any addresses that we might find in this step.
+% \section{step 1} We rely on Dyninst to tell us the boundaries of the .plt section {!todo! add more information here} and the .text section, which contain the executable part of the binary and thus are use to precheck any addresses that we might find in this step.
 
 As suggested in \cite{ZhangSekar00}, we slide a {!todo!, how much byte ? 4 or 8 ? what happens on X86-64 compared to x86}window over the data sections of the binary (namely the .data, the .rodata and the .dynsym).
 
 
 
-\section{step 2}
+% \section{step 2}
 We rely on Dyninst \cite{dyninst00} to supply us with the correct function bounadries and addresses of instructions, which we then pass onto our instruction decoder, which is based on DynamoRIO. In essence there are types of analysis that are performed on each instruction. First we identify all relevant constants from the instruction
 \begin{enumerate}
 \item If the instructions is a control flow instructions, we completely ignore it, as it cannot give us any information that is relevant. {!todo! can we trace back from memory addresses and registers, what essentially is being called ?}

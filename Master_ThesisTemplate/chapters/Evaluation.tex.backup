@@ -11,14 +11,12 @@ Our Evaluation aims to answer the following research questions:
  
  \item \textbf{R3:} What is the instrumentation overhead of \textit{TypeShild}?
   
- \item \textbf{R4:} What is the performance overhead of \textit{TypeShild}?
+ \item \textbf{R4:} What is the performance overhead of  \textit{TypeShild}?
  
- \item \textbf{R5:} What is the protection coverage of \textit{TypeShild}?
- How many caller/called pairs are secured by \textit{TypeShild} and how many remain unsecured?
+ \item \textbf{R5:} What are the instrumentation overheads imposed by  \textit{TypeShild}?
  
- \item \textbf{R6:} What level of security does \textit{TypeShild} offer for a protected executable? 
- see typeArmor paper VIII Sec. Analysis.
-  
+ \item \textbf{R6:} How many caller/called pairs are secured by \textit{TypeShild} and how many remain unsecured?
+ 
  \item \textbf{R7:} Against which kind of attacks can \textit{TypeShild} secure executables?
  
 \end{itemize}
@@ -392,36 +390,24 @@ x                &x                 &x                        &x           &x   
 \end{table}
 
 
+\section{R6: Which kind of attacks can our tool defend off}
+\label{R6: Which kind of attacks can our tool defend off}
+Basically it protects against COOP and other vptr corruption attacks.
+Also does it protect against Control Jujutsu?
+
+
+
 \section{R5: Protection Coverage}
 \label{R5: Protection Coverage}
-here we will compare \textit{TypeShild} with TypeArmor w.r.t. the protection coverage
-during instrumentation.
+here 
 
-\begin{table}[H]
-\centering
-\caption{TypeShild vs TypeArmor}
-\label{Integer overflow bug detection in CWE-190}
-% \resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|} \hline
-\textbf{Spec Prog. Name}  & \textbf{number of checks added at the callsite  and calle TypeShild vs TypeArmor}     & \textbf{number of verifications done during runtime TypeShild vs TypeArmor} \\ \hline 
-x                         &x                                                                                      &x                     \\ \hline
-
-\end{tabular}
-% }
-%  \vspace{-2.5em}
-\end{table}
-
-\section{R6: Security Analysis}
+\section{Security Analysis}
 \label{Security Evaluation}
 
 Patching Policies
 Two types of diagrams. Table 5 from TypeArmor and a CDF to compare param count and param type. (baseline)
-here we put the CDF graphs from. There is no accurate security metrics to asses the security level of the enforced policy.
 
-\section{R7: Which kind of attacks can our tool defend off}
-\label{R6: Which kind of attacks can our tool defend off}
-Basically it protects against COOP and other vptr corruption attacks.
-Also does it protect against Control Jujutsu?
+
 
 
 
