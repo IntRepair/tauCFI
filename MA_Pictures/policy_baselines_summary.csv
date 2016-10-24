@@ -1,0 +1,25 @@
+target,opt,policy,safe cts,conserv cts,our cts
+proftpd,O2,AT,1015$\pm$ 0,391$\pm$ 0,390$\pm$ 0
+proftpd,O2,COUNT*,860.93 $\pm$ 174.9,349.96 $\pm$ 59.56,353.64 $\pm$ 60.97
+proftpd,O2,TYPE*,727.95 $\pm$ 129.0,334.59 $\pm$ 55.44,332.65 $\pm$ 55.14
+vsftpd,O2,AT,318$\pm$ 0,9$\pm$ 0,10$\pm$ 0
+vsftpd,O2,COUNT*,213.85 $\pm$ 58.27,7.85 $\pm$ 1.35,8.14 $\pm$ 1.8
+vsftpd,O2,TYPE*,173.71 $\pm$ 62.79,5.0 $\pm$ 3.16,5.28 $\pm$ 3.61
+lighttpd,O2,AT,290$\pm$ 0,55$\pm$ 0,59$\pm$ 0
+lighttpd,O2,COUNT*,215.91 $\pm$ 83.03,36.51 $\pm$ 14.8,38.43 $\pm$ 17.17
+lighttpd,O2,TYPE*,180.64 $\pm$ 66.89,30.06 $\pm$ 9.68,30.56 $\pm$ 10.7
+nginx,O2,AT,921$\pm$ 0,479$\pm$ 0,543$\pm$ 0
+nginx,O2,COUNT*,520.19 $\pm$ 243.08,279.39 $\pm$ 130.14,313.87 $\pm$ 150.2
+nginx,O2,TYPE*,501.34 $\pm$ 234.86,277.09 $\pm$ 129.69,311.06 $\pm$ 149.36
+mysqld,O2,AT,9742$\pm$ 0,6110$\pm$ 0,5879$\pm$ 0
+mysqld,O2,COUNT*,8715.96 $\pm$ 2827.94,6383.99 $\pm$ 1705.05,6309.84 $\pm$ 1681.68
+mysqld,O2,TYPE*,8041.52 $\pm$ 2118.28,6083.39 $\pm$ 1352.68,5995.2 $\pm$ 1325.29
+postgres,O2,AT,6930$\pm$ 0,566$\pm$ 0,2490$\pm$ 0
+postgres,O2,COUNT*,4743.89 $\pm$ 1752.2,388.21 $\pm$ 186.32,2092.77 $\pm$ 714.8
+postgres,O2,TYPE*,3867.06 $\pm$ 1293.56,301.34 $\pm$ 138.07,1973.52 $\pm$ 662.27
+memcached,O2,AT,133$\pm$ 0,11$\pm$ 0,14$\pm$ 0
+memcached,O2,COUNT*,203.0 $\pm$ 0.0,12.0 $\pm$ 0.0,21.0 $\pm$ 0.0
+memcached,O2,TYPE*,160.0 $\pm$ 0.0,10.0 $\pm$ 0.0,14.0 $\pm$ 0.0
+node,O2,AT,20638$\pm$ 0,7425$\pm$ 0,7527$\pm$ 0
+node,O2,COUNT*,13626.22 $\pm$ 4610.72,5628.49 $\pm$ 1613.25,5705.04 $\pm$ 1649.92
+node,O2,TYPE*,12250.84 $\pm$ 3501.64,5216.01 $\pm$ 1237.21,5279.89 $\pm$ 1269.09

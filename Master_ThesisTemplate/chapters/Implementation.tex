@@ -1,5 +1,11 @@
 \chapter{Implementation}
 \label{chapter:Implementation}
+We implemented {!todo! name} based on the di-opt environment from patharmor\cite{patharmor}, which relies on the Dyninst library \cite{dyninst} (updated to version 9.2.0). We provided our own pass to analyze and patch given binaries, which consists of {!todo! measure locs} lines of C++ code. The core part of our pass is an instruction analyzer, which relies on the DynamoRIO library \cite{dynamorio} (version 6.6.1) to decode instructions an provide information. This analyser is then used to implement an address taken analysis and configurable versions of the backward reaching definitions algorithm and the forward liveness analysis algorithm, which are both based on the algorithms presented in \cite{typearmor}. Callsites and calltargets are then analyzed using those two algorithms, which are configured based on the origin and the chosen policy, which is decided during compilation time.
+
+Additionally to measure the quality of our tool, we wrote a \texttt{MachineFunction} pass for llvm/clang version 4.0.0 (trunk 283889) in the x86 target code generation portion, to have the lowest possible difference between the binary and the IR of llvm. This pass provides us with ground truth data regarding callsites and calltargets, which we then use in our python evaluation and test environment. We are able to measure various metrics using this environment, which we present in this work.
+
+Our current implementation allows for analysis and patching of any native elf binary on linux x86-64. 
+
 
 We implemented \textit{TypeShild} based on the DynInst~\cite{bernat:dyninst}
 binary Instrumentation framework (revision X, version X).
