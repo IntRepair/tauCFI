@@ -1,15 +1,23 @@
-\chapter{Bad C++ Forward Indirect Calls Exposed}
+\chapter{Forbidden C++ Forward Indirect Calls Exposed}
 \label{C++ Bad Forward Indirect Calls}
+
 
 \section{Late Binding in C++}
 \label{Late Binding in C++}
-
+Explain how late binding is implemented in C++ and which role virtual functions play.
+How is late binding basically implemented.
 
 \section{Virtual Dispatch in Practice}
 \label{Virtual Dispatch in Practice}
 
-\section{Security Implications of Virtual Dispatch}
+\section{Security Implications of Forbidden C++ Forward Indirect Calls}
 \label{Security Implications of Virtual Dispatch}
+
+How can Forbidden C++ Forward Indirect Calls exploited?
+First through COOP attacks,
+vptr corruption and then fake vtable insertion an reuse
+or reuse of avaialble v tables.
 
 \section{Running Example: CVE X}
 \label{Running Example: CVE X}
+CVE-2014-3176

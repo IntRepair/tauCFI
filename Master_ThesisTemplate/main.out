@@ -1,0 +1,71 @@
+\BOOKMARK [0][-]{section*.1}{Acknowledgements}{}% 1
+\BOOKMARK [0][-]{section*.2}{Abstract}{}% 2
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 3
+\BOOKMARK [1][-]{section.1.1}{Motivation}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.2}{Research Goals}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.3}{Outline}{chapter.1}% 6
+\BOOKMARK [0][-]{chapter.2}{Forbidden C++ Forward Indirect Calls Exposed}{}% 7
+\BOOKMARK [1][-]{section.2.1}{Late Binding in C++}{chapter.2}% 8
+\BOOKMARK [1][-]{section.2.2}{Virtual Dispatch in Practice}{chapter.2}% 9
+\BOOKMARK [1][-]{section.2.3}{Security Implications of Forbidden C++ Forward Indirect Calls}{chapter.2}% 10
+\BOOKMARK [1][-]{section.2.4}{Running Example: CVE X}{chapter.2}% 11
+\BOOKMARK [0][-]{chapter.3}{TypeShild Overview}{}% 12
+\BOOKMARK [1][-]{section.3.1}{1. Select Important Point from Design Chapter}{chapter.3}% 13
+\BOOKMARK [1][-]{section.3.2}{2. Select Important Point from Design Chapter}{chapter.3}% 14
+\BOOKMARK [1][-]{section.3.3}{3. Select Important Point from Design Chapter}{chapter.3}% 15
+\BOOKMARK [1][-]{section.3.4}{Adversary Model}{chapter.3}% 16
+\BOOKMARK [1][-]{section.3.5}{TypeShild: Invariants for Targets and Callsites}{chapter.3}% 17
+\BOOKMARK [1][-]{section.3.6}{TypeShild Impact on COOP}{chapter.3}% 18
+\BOOKMARK [0][-]{chapter.4}{Design}{}% 19
+\BOOKMARK [1][-]{section.4.1}{Static Analysis}{chapter.4}% 20
+\BOOKMARK [2][-]{subsection.4.1.1}{Callee Analysis}{section.4.1}% 21
+\BOOKMARK [2][-]{subsection.4.1.2}{Callsite Analysis}{section.4.1}% 22
+\BOOKMARK [2][-]{subsection.4.1.3}{Return Values}{section.4.1}% 23
+\BOOKMARK [1][-]{section.4.2}{Runtime Enforcement}{chapter.4}% 24
+\BOOKMARK [2][-]{subsection.4.2.1}{Shadow Code Memory Preparation}{section.4.2}% 25
+\BOOKMARK [2][-]{subsection.4.2.2}{CFI Enforcement}{section.4.2}% 26
+\BOOKMARK [2][-]{subsection.4.2.3}{CFC Enforcement}{section.4.2}% 27
+\BOOKMARK [0][-]{chapter.5}{Implementation}{}% 28
+\BOOKMARK [0][-]{chapter.6}{Evaluation}{}% 29
+\BOOKMARK [1][-]{section.6.1}{R1: Effectiveness of our Tool}{chapter.6}% 30
+\BOOKMARK [2][-]{subsection.6.1.1}{Mitigation of Advanced Code-Reuse Attacks}{section.6.1}% 31
+\BOOKMARK [2][-]{subsection.6.1.2}{Effectiveness against COOP}{section.6.1}% 32
+\BOOKMARK [2][-]{subsection.6.1.3}{Stopping COOP Exploits in Practice}{section.6.1}% 33
+\BOOKMARK [2][-]{subsection.6.1.4}{Control Jujutsu}{section.6.1}% 34
+\BOOKMARK [2][-]{subsection.6.1.5}{COOP Extensions}{section.6.1}% 35
+\BOOKMARK [2][-]{subsection.6.1.6}{Pure Data-only Attacks}{section.6.1}% 36
+\BOOKMARK [1][-]{section.6.2}{R2: Precision of our Tool}{chapter.6}% 37
+\BOOKMARK [1][-]{section.6.3}{R3: Instrumentation overhead of our Tool}{chapter.6}% 38
+\BOOKMARK [1][-]{section.6.4}{R4: Performance overhead of our Tool}{chapter.6}% 39
+\BOOKMARK [1][-]{section.6.5}{R5: Protection Coverage}{chapter.6}% 40
+\BOOKMARK [1][-]{section.6.6}{R6: Security Analysis}{chapter.6}% 41
+\BOOKMARK [1][-]{section.6.7}{R7: Which kind of attacks can our tool defend off}{chapter.6}% 42
+\BOOKMARK [0][-]{chapter.7}{Discussion}{}% 43
+\BOOKMARK [1][-]{section.7.1}{How to make the type inference more precise?}{chapter.7}% 44
+\BOOKMARK [1][-]{section.7.2}{Comparison with TypeArmor and why are we better than TypeArmor?}{chapter.7}% 45
+\BOOKMARK [1][-]{section.7.3}{Whys is not TypeArmor working as it should to?}{chapter.7}% 46
+\BOOKMARK [1][-]{section.7.4}{What is not clear bout TypeArmor?}{chapter.7}% 47
+\BOOKMARK [1][-]{section.7.5}{What can for sure not work as in TypeArmor paper explained?}{chapter.7}% 48
+\BOOKMARK [1][-]{section.7.6}{What are the limitations of TypeShild?}{chapter.7}% 49
+\BOOKMARK [0][-]{chapter.8}{Related Work}{}% 50
+\BOOKMARK [1][-]{section.8.1}{Mitigation of Advanced Code-Reuse Attacks}{chapter.8}% 51
+\BOOKMARK [1][-]{section.8.2}{Tyepe-Inference on Executables}{chapter.8}% 52
+\BOOKMARK [1][-]{section.8.3}{Binary-based Protection against COOP}{chapter.8}% 53
+\BOOKMARK [1][-]{section.8.4}{Source Code based Protection against COOP}{chapter.8}% 54
+\BOOKMARK [1][-]{section.8.5}{Runtime-based Protection against COOP}{chapter.8}% 55
+\BOOKMARK [0][-]{chapter.9}{Future Work}{}% 56
+\BOOKMARK [1][-]{section.9.1}{Future Work}{chapter.9}% 57
+\BOOKMARK [0][-]{chapter.10}{Conclusion}{}% 58
+\BOOKMARK [1][-]{section.10.1}{Conclusion}{chapter.10}% 59
+\BOOKMARK [-1][]{part.1}{SNIPPETS}{}% 60
+\BOOKMARK [0][-]{chapter.11}{Snippet [COUNT policy]}{part.1}% 61
+\BOOKMARK [0][-]{chapter.12}{Snippet [TYPE policy]}{part.1}% 62
+\BOOKMARK [0][-]{chapter.13}{Snippet [Matching]}{part.1}% 63
+\BOOKMARK [0][-]{chapter.14}{Snippet [Theoretical Limits]}{part.1}% 64
+\BOOKMARK [0][-]{chapter.15}{Snippet [Patching Schema]}{part.1}% 65
+\BOOKMARK [0][-]{chapter.16}{Snippet [Baseline COUNT Implementation]}{part.1}% 66
+\BOOKMARK [0][-]{chapter.17}{Snippet [AddressTaken]}{part.1}% 67
+\BOOKMARK [1][-]{section.17.1}{Analysis}{chapter.17}% 68
+\BOOKMARK [1][-]{section.17.2}{Evaluation}{chapter.17}% 69
+\BOOKMARK [0][-]{chapter*.21}{Acronyms}{part.1}% 70
+\BOOKMARK [0][-]{chapter*.24}{Bibliography}{part.1}% 71
