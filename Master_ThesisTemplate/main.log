@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  24 OCT 2016 09:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  24 OCT 2016 11:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -98,16 +98,16 @@ Package scrextend Info: Switching compatibility level to `first'.
 \ta@temp=\skip44
 \footheight=\skip45
 Package typearea Info: These are the values describing the layout:
-(typearea)             DIV  = 13
-(typearea)             BCOR = 34.1433pt
+(typearea)             DIV  = 10
+(typearea)             BCOR = 56.9055pt
 (typearea)             \paperwidth      = 597.50793pt
-(typearea)              \textwidth      = 433.35742pt
-(typearea)              DIV departure   = -10%
-(typearea)              \evensidemargin = 14.40149pt
-(typearea)              \oddsidemargin  = 5.20905pt
+(typearea)              \textwidth      = 378.4217pt
+(typearea)              DIV departure   = 0%
+(typearea)              \evensidemargin = 35.8505pt
+(typearea)              \oddsidemargin  = 38.69576pt
 (typearea)             \paperheight     = 845.04694pt
-(typearea)              \textheight     = 623.00027pt
-(typearea)              \topmargin      = -7.26639pt
+(typearea)              \textheight     = 555.00024pt
+(typearea)              \topmargin      = 12.2347pt
 (typearea)              \headheight     = 17.0pt
 (typearea)              \headsep        = 20.40001pt
 (typearea)              \topskip        = 11.0pt
@@ -912,14 +912,44 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip62
 ))
-(./components/commands.tex
-\c@theorem=\count127
+(/usr/share/texlive/texmf-dist/tex/latex/todonotes/todonotes.sty
+Package: todonotes 2012/07/25 .dtx Todonotes source and documentation.
+Package: todonotes 2012/07/25
+
+(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2014/05/25 v2.7 package option processing (HA)
+
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks31
+\XKV@tempa@toks=\toks32
+)
+\XKV@depth=\count127
+File: xkeyval.tex 2014/05/25 v2.7 key=value parser (HA)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+LaTeX Info: Redefining \color on input line 702.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
+Package xcolor Info: Model `RGB' extended on input line 1353.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
-\pgfutil@everybye=\toks31
+\pgfutil@everybye=\toks33
 \pgfutil@tempdima=\dimen139
 \pgfutil@tempdimb=\dimen140
 
@@ -954,9 +984,9 @@ Package: pgfsys 2013/11/30 v3.0.0 (rcs-revision 1.47)
 \c@pgf@countb=\count129
 \c@pgf@countc=\count130
 \c@pgf@countd=\count131
-\t@pgf@toka=\toks32
-\t@pgf@tokb=\toks33
-\t@pgf@tokc=\toks34
+\t@pgf@toka=\toks34
+\t@pgf@tokb=\toks35
+\t@pgf@tokc=\toks36
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
 File: pgf.cfg 2008/05/14  (rcs-revision 1.7)
@@ -979,24 +1009,7 @@ File: pgfsyssoftpath.code.tex 2013/09/09  (rcs-revision 1.9)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.
 tex
 File: pgfsysprotocol.code.tex 2006/10/16  (rcs-revision 1.4)
-)) (/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
-Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
-
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
-File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
-)
-Package xcolor Info: Driver file: pdftex.def on input line 225.
-LaTeX Info: Redefining \color on input line 702.
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
-Package xcolor Info: Model `RGB' extended on input line 1353.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
-)
+))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
 Package: pgfcore 2010/04/11 v3.0.0 (rcs-revision 1.7)
 
@@ -1007,9 +1020,9 @@ Package: pgfcore 2010/04/11 v3.0.0 (rcs-revision 1.7)
 \pgfmath@dimen=\dimen149
 \pgfmath@count=\count134
 \pgfmath@box=\box34
-\pgfmath@toks=\toks35
-\pgfmath@stack@operand=\toks36
-\pgfmath@stack@operation=\toks37
+\pgfmath@toks=\toks37
+\pgfmath@stack@operand=\toks38
+\pgfmath@stack@operation=\toks39
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code
@@ -1146,8 +1159,8 @@ Package: pgffor 2013/12/13 v3.0.0 (rcs-revision 1.25)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
 \pgffor@iter=\dimen176
 \pgffor@skip=\dimen177
-\pgffor@stack=\toks38
-\pgffor@toks=\toks39
+\pgffor@stack=\toks40
+\pgffor@toks=\toks41
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
 Package: tikz 2013/12/13 v3.0.0 (rcs-revision 1.142)
@@ -1185,10 +1198,32 @@ File: pgfmodulematrix.code.tex 2013/09/17  (rcs-revision 1.8)
 zlibrarytopaths.code.tex
 File: tikzlibrarytopaths.code.tex 2008/06/17 v3.0.0 (rcs-revision 1.2)
 )))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarypositioning.code.tex
+File: tikzlibrarypositioning.code.tex 2008/10/06 v3.0.0 (rcs-revision 1.7)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count147
+\calc@Bcount=\count148
+\calc@Adimen=\dimen185
+\calc@Bdimen=\dimen186
+\calc@Askip=\skip63
+\calc@Bskip=\skip64
+LaTeX Info: Redefining \setlength on input line 75.
+LaTeX Info: Redefining \addtolength on input line 76.
+\calc@Ccount=\count149
+\calc@Cskip=\skip65
+)
+\c@@todonotes@numberoftodonotes=\count150
+)
+(./components/commands.tex
+\c@theorem=\count151
+)
 (/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty
 Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
-\every@verbatim=\toks40
-\verbatim@line=\toks41
+\every@verbatim=\toks42
+\verbatim@line=\toks43
 \verbatim@in@stream=\read3
 )
 (/usr/share/texlive/texmf-dist/tex/latex/acronym/acronym.sty
@@ -1200,12 +1235,12 @@ Package: suffix 2006/07/15 1.5 Variant command support
 (/usr/share/texlive/texmf-dist/tex/generic/xstring/xstring.sty
 (/usr/share/texlive/texmf-dist/tex/generic/xstring/xstring.tex
 \@xs@message=\write5
-\integerpart=\count147
-\decimalpart=\count148
+\integerpart=\count152
+\decimalpart=\count153
 )
 Package: xstring 2013/10/13  v1.7c  String manipulations (C Tellechea)
 )
-\AC@clearlist=\toks42
+\AC@clearlist=\toks44
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 43.
 
@@ -1221,12 +1256,8 @@ File: tikzlibraryarrows.code.tex 2008/01/09 v3.0.0 (rcs-revision 1.1)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.code.
 tex
 File: pgflibraryarrows.code.tex 2013/09/23 v3.0.0 (rcs-revision 1.16)
-\arrowsize=\dimen185
-))
-(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
-zlibrarypositioning.code.tex
-File: tikzlibrarypositioning.code.tex 2008/10/06 v3.0.0 (rcs-revision 1.7)
-) (./main.aux
+\arrowsize=\dimen187
+)) (./main.aux
 
 LaTeX Warning: Label `Callee Analysis' multiply defined.
 
@@ -1376,44 +1407,44 @@ LaTeX Warning: Label `vfuard:aravind' multiply defined.
 )
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 87.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 87.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 89.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 89.
  (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Try loading font information for OT1+ppl on input line 87.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Try loading font information for OT1+ppl on input line 89.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count149
-\scratchdimen=\dimen186
+\scratchcounter=\count154
+\scratchdimen=\dimen188
 \scratchbox=\box44
-\nofMPsegments=\count150
-\nofMParguments=\count151
-\everyMPshowfont=\toks43
-\MPscratchCnt=\count152
-\MPscratchDim=\dimen187
-\MPnumerator=\count153
-\makeMPintoPDFobject=\count154
-\everyMPtoPDFconversion=\toks44
+\nofMPsegments=\count155
+\nofMParguments=\count156
+\everyMPshowfont=\toks45
+\MPscratchCnt=\count157
+\MPscratchDim=\dimen189
+\MPnumerator=\count158
+\makeMPintoPDFobject=\count159
+\everyMPtoPDFconversion=\toks46
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -1429,7 +1460,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \AtBeginShipoutBox=\box45
-Package hyperref Info: Link coloring ON on input line 87.
+Package hyperref Info: Link coloring ON on input line 89.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -1437,22 +1468,48 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count155
+\c@section@level=\count160
 )
-LaTeX Info: Redefining \ref on input line 87.
-LaTeX Info: Redefining \pageref on input line 87.
-LaTeX Info: Redefining \nameref on input line 87.
+LaTeX Info: Redefining \ref on input line 89.
+LaTeX Info: Redefining \pageref on input line 89.
+LaTeX Info: Redefining \nameref on input line 89.
 
 (./main.out) (./main.out)
 \@outlinefile=\write6
 \openout6 = `main.out'.
 
  ABD: EveryShipout initializing macros
-Overfull \hbox (10.95pt too wide) in paragraph at lines 88--90
+Overfull \hbox (10.95pt too wide) in paragraph at lines 90--91
 [][] 
  []
 
-(./components/cover.tex
+LaTeX Font Info:    Try loading font information for OMX+yhex on input line 91.
+
+(/usr/share/texlive/texmf-dist/tex/latex/yhmath/OMXyhex.fd
+File: OMXyhex.fd 
+File: OMXyhex.fd 2013/07/03 v1.1 YH's humble contribution to TeX maths (NP)
+)
+LaTeX Font Info:    External font `yhcmex10' loaded for size
+(Font)              <10.95> on input line 91.
+LaTeX Font Info:    External font `yhcmex10' loaded for size
+(Font)              <8> on input line 91.
+LaTeX Font Info:    External font `yhcmex10' loaded for size
+(Font)              <6> on input line 91.
+LaTeX Font Info:    Try loading font information for U+msa on input line 91.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 91.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2
+
+
+] (./components/cover.tex
 
 Class scrbook Warning: Usage of deprecated font command `\bf'!
 (scrbook)              You should note, that in 1994 font command `\bf' has
@@ -1469,62 +1526,33 @@ Class scrbook Warning: Usage of deprecated font command `\bf'!
 
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <20.74> not available
 (Font)              Font shape `OT1/ppl/b/n' tried instead on input line 43.
-<styles/informat.png, id=290, 355.3275pt x 355.3275pt>
+<styles/informat.png, id=301, 355.3275pt x 355.3275pt>
 File: styles/informat.png Graphic file (type png)
 
 <use styles/informat.png>
 Package pdftex.def Info: styles/informat.png used on input line 55.
 (pdftex.def)             Requested size: 113.81102pt x 113.81012pt.
+) [1 <./styles/informat.png>] [2
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-) [1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2 <./styles/informat.png>
-] (./components/titlepage.tex
-LaTeX Font Info:    Try loading font information for OMX+yhex on input line 46.
-
-
-(/usr/share/texlive/texmf-dist/tex/latex/yhmath/OMXyhex.fd
-File: OMXyhex.fd 
-File: OMXyhex.fd 2013/07/03 v1.1 YH's humble contribution to TeX maths (NP)
-)
-LaTeX Font Info:    External font `yhcmex10' loaded for size
-(Font)              <10.95> on input line 46.
-LaTeX Font Info:    External font `yhcmex10' loaded for size
-(Font)              <8> on input line 46.
-LaTeX Font Info:    External font `yhcmex10' loaded for size
-(Font)              <6> on input line 46.
-LaTeX Font Info:    Try loading font information for U+msa on input line 46.
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Try loading font information for U+msb on input line 46.
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
+]
+(./components/titlepage.tex
 File: styles/informat.png Graphic file (type png)
-
-<use styles/informat.png>
+ <use styles/informat.png>
 Package pdftex.def Info: styles/informat.png used on input line 57.
 (pdftex.def)             Requested size: 113.81102pt x 113.81012pt.
-) [3
+) [3] [4
 
-] [4
-
-] (./components/titlepage.tex
+]
+(./components/titlepage.tex
 File: styles/informat.png Graphic file (type png)
-
-<use styles/informat.png>
+ <use styles/informat.png>
 Package pdftex.def Info: styles/informat.png used on input line 57.
 (pdftex.def)             Requested size: 113.81102pt x 113.81012pt.
-) (./components/disclaimer.tex [5] [6
+)
+(./components/disclaimer.tex [5] [6
 
-] [7])
-(./components/acknowledgements.tex [8
+] [7]) (./components/acknowledgements.tex
+[8
 
 ]
 
@@ -1560,11 +1588,13 @@ Class scrbook Warning: Usage of deprecated font command `\bf'!
 (scrbook)              But for now, KOMA-Script will replace deprecated `\bf'
 (scrbook)              by `\normalfont \bfseries ' on input line 11.
 
+Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
+ine 56.
 ) [11] [12
 
 ]
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 107.
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 109.
  (./main.toc [13]
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ppl/b/n' tried instead on input line 80.
@@ -1593,17 +1623,17 @@ Class scrbook Warning: \float@addtolists detected!
 (scrbook)              deprecated \float@addtolist interface .
 
 
-Overfull \hbox (8.20789pt too wide) in paragraph at lines 12--14
-\OT1/ppl/m/n/10.95 and n the end against COOP. Talk about SafeDis-patch, Shrink
-Wrap, Bounov et al, IFCC/VTV
+Overfull \hbox (17.04309pt too wide) in paragraph at lines 38--43
+\OT1/ppl/m/n/10.95 ram-e-ter coundt-ing by en-forc-ing a fine-grained pol-icy o
+n valid in-di-rect caller/callee
  []
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.63  \item W
-             e did this. [1
+l.54 
+      [1
 
 ]) (./chapters/Forward_Indirect_Callsites.texpdfTeX warning (ext4): destination
  with the same identifier (name{page.2}) has been already used, duplicate ignor
@@ -1613,47 +1643,23 @@ ed
 l.1 \chapter
             {Forbidden C++ Forward Indirect Calls Exposed} [2]
 Chapter 2.
-) (./chapters/TypeShild_Overview.texpdfTeX warning (ext4): destination with the
- same identifier (name{page.3}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.1 \chapter
-            {TypeShild Overview} [3
 
-]pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has
- been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.1 \chapter
-            {TypeShild Overview} [4
+Overfull \hbox (2.60118pt too wide) in paragraph at lines 16--20
+\OT1/ppl/m/n/10.95 How can For-bid-den C++ For-ward In-di-rect Calls ex-ploited
+? First through COOP
+ []
+
+) (./chapters/TypeShild_Overview.tex [3
+
+] [4
 
 ]
 Chapter 3.
-pdfTeX warning (ext4): destination with the same identifier (name{page.5}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.55 
-      [5]) (./chapters/Design.texpdfTeX warning (ext4): destination with the sa
-me identifier (name{page.6}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.1 \chapter
-            {Design} [6]
+[5]) (./chapters/Design.tex [6]
 Chapter 4.
-pdfTeX warning (ext4): destination with the same identifier (name{page.7}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.58 \subsubsection
-                   {Backward Analysis} [7
+[7
 
-]pdfTeX warning (ext4): destination with the same identifier (name{page.8}) has
- been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.109 \subsection
-                 {CFI Enforcement} [8]
+] [8]
 
 LaTeX Warning: Citation `ZhangSekar00' on page 9 undefined on input line 125.
 
@@ -1663,24 +1669,14 @@ LaTeX Warning: Citation `ZhangSekar00' on page 9 undefined on input line 127.
 
 LaTeX Warning: Citation `ZhangSekar00' on page 9 undefined on input line 132.
 
+[9]
 
-LaTeX Warning: Citation `ZhangSekar00' on page 9 undefined on input line 139.
+LaTeX Warning: Citation `ZhangSekar00' on page 10 undefined on input line 139.
 
 
-LaTeX Warning: Citation `dyninst00' on page 9 undefined on input line 144.
+LaTeX Warning: Citation `dyninst00' on page 10 undefined on input line 144.
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.9}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.149 
-       [9]) (./chapters/Implementation.texpdfTeX warning (ext4): destination wi
-th the same identifier (name{page.10}) has been already used, duplicate ignored
-
-<to be read again> 
-                   \relax 
-l.1 \chapter
-            {Implementation} [10]
+) (./chapters/Implementation.tex [10]
 Chapter 5.
 
 LaTeX Warning: Citation `patharmor' on page 11 undefined on input line 3.
@@ -1694,159 +1690,154 @@ LaTeX Warning: Citation `dynamorio' on page 11 undefined on input line 3.
 
 LaTeX Warning: Citation `typearmor' on page 11 undefined on input line 3.
 
+
+Overfull \hbox (16.10216pt too wide) in paragraph at lines 3--4
+\OT1/ppl/m/n/10.95 We im-ple-mented !todo! name based on the di-opt en-vi-ron-m
+ent from patharmor[[]],
+ []
+
 LaTeX Font Info:    Try loading font information for OT1+pcr on input line 5.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)pdfTeX warning (ext4): destination with the same identifier (name{page.11}) ha
-s been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.41 
-      [11
+)
+Overfull \hbox (12.09541pt too wide) in paragraph at lines 5--6
+[]\OT1/ppl/m/n/10.95 Additionally to mea-sure the qual-ity of our tool, we wrot
+e a \OT1/pcr/m/n/10.95 MachineFunction
+ []
 
-]) (./chapters/Evaluation.texpdfTeX warning (ext4): destination with the same i
-dentifier (name{page.12}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.1 \chapter
-            {Evaluation} [12]
+[11
+
+]) (./chapters/Evaluation.tex [12]
 Chapter 6.
 LaTeX Font Info:    Try loading font information for TS1+ppl on input line 8.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
-)pdfTeX warning (ext4): destination with the same identifier (name{page.13}) ha
-s been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.72 \subsection
-                {COOP Extensions} [13
+)
+Overfull \hbox (2.10867pt too wide) in paragraph at lines 16--18
+[]\OT1/ppl/b/n/10.95 R5: \OT1/ppl/m/n/10.95 What is the pro-tec-tion cov-er-age
+ of \OT1/ppl/m/it/10.95 Type-Shild\OT1/ppl/m/n/10.95 ? How many caller/called
+ []
+
+[13
 
 ]
-Overfull \hbox (42.59232pt too wide) in paragraph at lines 111--118
+Overfull \hbox (97.52803pt too wide) in paragraph at lines 111--118
+ [][] 
+ []
+
+[14]
+Overfull \hbox (83.77443pt too wide) in paragraph at lines 154--161
  [][] 
  []
 
 
-Overfull \hbox (28.83871pt too wide) in paragraph at lines 154--161
+Overfull \hbox (37.68971pt too wide) in paragraph at lines 169--176
  [][] 
  []
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.14}) has
- been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.177 
-       [14]
-<figures/impact_of_cfi_and_cfc.pdf, id=537, 362.35374pt x 380.42125pt>
+[15] <figures/impact_of_cfi_and_cfc.pdf, id=571, 362.35374pt x 380.42125pt>
 File: figures/impact_of_cfi_and_cfc.pdf Graphic file (type pdf)
 
 <use figures/impact_of_cfi_and_cfc.pdf>
 Package pdftex.def Info: figures/impact_of_cfi_and_cfc.pdf used on input line 2
 72.
-(pdftex.def)             Requested size: 216.67871pt x 227.48827pt.
+(pdftex.def)             Requested size: 189.21085pt x 198.64445pt.
 
-<figures/liveness_iteration.pdf, id=538, 795.97375pt x 308.15125pt>
+<figures/liveness_iteration.pdf, id=572, 795.97375pt x 308.15125pt>
 File: figures/liveness_iteration.pdf Graphic file (type pdf)
 
 <use figures/liveness_iteration.pdf>
 Package pdftex.def Info: figures/liveness_iteration.pdf used on input line 278.
 
-(pdftex.def)             Requested size: 390.01903pt x 150.99072pt.
+(pdftex.def)             Requested size: 340.57722pt x 131.84886pt.
 
-<figures/reaching_iteration.pdf, id=539, 795.97375pt x 308.15125pt>
+<figures/reaching_iteration.pdf, id=573, 795.97375pt x 308.15125pt>
 File: figures/reaching_iteration.pdf Graphic file (type pdf)
 
 <use figures/reaching_iteration.pdf>
 Package pdftex.def Info: figures/reaching_iteration.pdf used on input line 284.
 
-(pdftex.def)             Requested size: 390.01903pt x 150.99072pt.
-pdfTeX warning (ext4): destination with the same identifier (name{page.15}) has
- been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.322 
-       [15]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.16}) has
- been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.339 
-       [16 <./figures/impact_of_cfi_and_cfc.pdf> <./figures/liveness_iteration.
-pdf
+(pdftex.def)             Requested size: 340.57722pt x 131.84886pt.
+ [16 <./figures/impact_of_cfi_and_cfc.pdf> <./figures/liveness_iteration.pdf
 
 pdfTeX warning: /usr/bin/pdflatex (file ./figures/liveness_iteration.pdf): PDF 
 inclusion: multiple pdfs with page group included in a single page
 >] [17 <./figures/reaching_iteration.pdf>]
-Overfull \hbox (409.37852pt too wide) in paragraph at lines 405--412
+Overfull \hbox (464.31424pt too wide) in paragraph at lines 405--412
  [][] 
  []
 
-) (./chapters/Discussion.tex [18]
+[18]) (./chapters/Discussion.tex [19] [20
+
+]
 Chapter 7.
 
 Underfull \hbox (badness 10000) in paragraph at lines 6--7
 
  []
 
-) (./chapters/Related_Work.tex [19
-
-] [20
+) (./chapters/Related_Work.tex [21] [22
 
 ]
 Chapter 8.
-
-Overfull \hbox (1.59329pt too wide) in paragraph at lines 48--51
-[]\OT1/ppl/m/n/10.95 Notice that the above tech-niques are use-less against the
- afore-men-tioned ad-vanced CRAs,
+[23] [24]
+Overfull \hbox (4.13365pt too wide) in paragraph at lines 111--117
+\OT1/ppl/m/n/10.95 tech-niques can re-cu-per-ate pro-gram based se-man-tic in-f
+or-ma-tion from ex-e-cutable
  []
 
-
-Underfull \vbox (badness 1748) has occurred while \output is active []
-
- [21]
-[22]) (./chapters/Future_Work.tex [23] [24
-
-]
+[25]) (./chapters/Future_Work.tex [26]
 Chapter 9.
-) (./chapters/Conclusion.tex [25] [26
+) (./chapters/Conclusion.tex [27
+
+] [28
 
 ]
 Chapter 10.
-) (./chapters/Snippets.tex [27] [28
+
+Overfull \hbox (21.40157pt too wide) in paragraph at lines 10--27
+\OT1/ppl/m/n/10.95 gines, FTP servers and large-scale soft-ware in-clud-ing Chr
+ome and Fire-fox browsers.
+ []
+
+) (./chapters/Snippets.tex [29] [30
 
 ]
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <24.88> not available
 (Font)              Font shape `OT1/ppl/b/n' tried instead on input line 1.
- [29] [30]
+ [31] [32]
 Chapter 11.
 
-LaTeX Warning: Citation `typearmor' on page 31 undefined on input line 35.
+Underfull \hbox (badness 10000) in paragraph at lines 31--31
+[][]\OT1/ppl/m/n/10.95 COUNT pol-icy
+ []
 
-[31
 
-] [32
+LaTeX Warning: Citation `typearmor' on page 33 undefined on input line 35.
 
-]
+[33
+
+] [34]
 Chapter 12.
-[33] [34]
-Chapter 13.
-
-LaTeX Warning: Reference `matchingquality' on page 35 undefined on input line 1
-68.
-
 [35
 
 ] [36]
-Chapter 14.
+Chapter 13.
+
+LaTeX Warning: Reference `matchingquality' on page 37 undefined on input line 1
+68.
+
 [37
 
-] [38
+] [38]
+Chapter 14.
+[39
+
+] [40
 
 ]
 Chapter 15.
-[39] [40
+[41] [42
 
 ]
 Chapter 16.
@@ -1854,217 +1845,264 @@ Chapter 16.
 Package wrapfig Warning: Collision between wrapping environments on input line 
 219.
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [41]
-[42]
+[43] [44]
 Chapter 17.
 
-LaTeX Warning: Citation `ZhangSekar00' on page 43 undefined on input line 278.
+LaTeX Warning: Citation `ZhangSekar00' on page 45 undefined on input line 278.
 
 
-LaTeX Warning: Citation `ZhangSekar00' on page 43 undefined on input line 282.
+LaTeX Warning: Citation `ZhangSekar00' on page 45 undefined on input line 282.
 
 
-LaTeX Warning: Citation `ZhangSekar00' on page 43 undefined on input line 284.
+LaTeX Warning: Citation `ZhangSekar00' on page 45 undefined on input line 284.
 
 
-LaTeX Warning: Citation `ZhangSekar00' on page 43 undefined on input line 289.
+LaTeX Warning: Citation `ZhangSekar00' on page 45 undefined on input line 289.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 289--290
 
  []
 
-
-LaTeX Warning: Citation `ZhangSekar00' on page 43 undefined on input line 293.
-
-[43
+[45
 
 ]
+
+LaTeX Warning: Citation `ZhangSekar00' on page 46 undefined on input line 293.
+
 LaTeX Font Info:    External font `yhcmex10' loaded for size
 (Font)              <9> on input line 298.
 LaTeX Font Info:    External font `yhcmex10' loaded for size
 (Font)              <5> on input line 298.
 
-Underfull \hbox (badness 2435) in paragraph at lines 316--317
-[][]\OT1/ppl/m/n/10.95 As we can see in ta-ble [][]17.1[][],
+Overfull \hbox (3.4678pt too wide) in paragraph at lines 300--301
+[]\OT1/ppl/m/n/10.95 !shorthand! ad-dress taken (AT) func-tions ex-ist-ing in b
+oth data sets $\OMS/cmsy/m/n/10.95 F[] \OT1/cmr/m/n/10.95 =
+ []
+
+[46]
+Overfull \hbox (8.16551pt too wide) in paragraph at lines 316--317
+\OT1/ppl/m/n/10.95 ing prob-lem-atic and over-
  []
 
 
-Underfull \hbox (badness 1881) in paragraph at lines 316--317
-\OT1/ppl/m/n/10.95 the rest, which is not prob-lem-
+Overfull \hbox (10.00494pt too wide) in paragraph at lines 316--317
+\OT1/ppl/m/n/10.95 higher per-cent-age in over-
  []
 
-[44]) [45] [46
 
-] (./chapters/Acronyms.tex) [47] [48
+Underfull \hbox (badness 1852) in paragraph at lines 316--317
+\OT1/ppl/m/n/10.95 our pos-si-ble call-tar-get
+ []
+
+
+Underfull \hbox (badness 1320) in paragraph at lines 316--317
+\OT1/ppl/m/n/10.95 re-duc-tion ef-fect. The
+ []
+
+) [47] [48] (./chapters/Acronyms.tex) [49
+
+] [50
 
 ] (./main.lof)
 \tf@lof=\write8
 \openout8 = `main.lof'.
 
- [49] [50
-
-]
-(./main.lot
-Overfull \hbox (2.11955pt too wide) in paragraph at lines 35--35
- \OT1/ppl/m/n/10.95 ver-ify and test en-vi-ron-ment, re-gard-ing call-sites and
- call-tar-gets. Miss-matches 
- []
-
-)
-\tf@lot=\write9
-\openout9 = `main.lot'.
-
  [51] [52
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 222--224
-[]\OT1/ppl/m/n/10.95 Intel, In-tel CET, [][]$\OT1/pcr/m/n/10.95 http : / / blog
-s . intel . com / evangelists / 2016 / 06 / 09 /
+(./main.lot
+Overfull \hbox (7.44133pt too wide) in paragraph at lines 39--39
+ [][] [][][]\OT1/ppl/m/n/10.95 Table shows the over-es-ti-ma-tion of the pa-ram
+-e-ter count in matched 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 222--224
-\OT1/pcr/m/n/10.95 intel -[] release -[] new -[] technology -[] specifications 
--[] protect -[] rop -[]
+Overfull \hbox (14.94206pt too wide) in paragraph at lines 40--40
+ [][] [][][]\OT1/ppl/m/n/10.95 Table shows the un-der-es-ti-ma-tion of the pa-r
+am-e-ter count in matched 
  []
 
-[53
+
+Overfull \hbox (1.10081pt too wide) in paragraph at lines 40--40
+ \OT1/ppl/m/n/10.95 call-tar-gets that is hap-pen-ing in our im-ple-men-ta-tion
+ of the basline 
+ []
+
+
+Overfull \hbox (16.15709pt too wide) in paragraph at lines 41--41
+ \OT1/ppl/m/n/10.95 sites and call-tar-gets ex-hib-ited by our im-ple-men-ta-ti
+on of the COUNT 
+ []
+
+[53])
+\tf@lot=\write9
+\openout9 = `main.lot'.
+
+ [54] [55
+
 
 pdfTeX warning (ext4): destination with the same identifier (name{cite.safedisp
 atch:jang}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.235 
+l.219 
       pdfTeX warning (ext4): destination with the same identifier (name{cite.vt
 v:tice}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.235 
+l.219 
       pdfTeX warning (ext4): destination with the same identifier (name{cite.tr
 ap:crane}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.235 
-      ] [54pdfTeX warning (ext4): destination with the same identifier (name{ci
-te.crane:readactor++}) has been already used, duplicate ignored
+l.219 
+      ]
+Underfull \hbox (badness 1418) in paragraph at lines 221--223
+[]\OT1/ppl/m/n/10.95 Intel, In-tel CET, [][]$\OT1/pcr/m/n/10.95 http : / / blog
+s . intel . com / evangelists / 2016 /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 221--223
+\OT1/pcr/m/n/10.95 06 / 09 / intel -[] release -[] new -[] technology -[] speci
+fications -[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 225--228
+\OT1/pcr/m/n/10.95 com / en -[] us / library / windows / desktop / mt637065(v =
+ vs . 85 )
+ []
+
+
+Underfull \hbox (badness 2600) in paragraph at lines 236--239
+[]\OT1/ppl/m/n/10.95 I. Haller, E. Gok-tas, E. Athana-sopou-los, G. Por-toka-li
+dis, H. Bos,
+ []
+
+[56pdfTeX warning (ext4): destination with the same identifier (name{cite.crane
+:readactor++}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.296 
-      ]
-Underfull \hbox (badness 10000) in paragraph at lines 313--316
+l.267 \bibitem{caballero:inference}
+                                   ]
+Overfull \hbox (42.81989pt too wide) in paragraph at lines 302--305
+[]\OT1/ppl/m/n/10.95 Alan My-croft, Lec-ture Notes, In \OT1/ppl/m/it/10.95 http
+s://www.cl.cam.ac.uk/ am21/papers/sas07slides.pdf\OT1/ppl/m/n/10.95 ,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 312--315
 []\OT1/ppl/m/n/10.95 Dynamic In-stru-men-ta-tion Tool Plat-form Dy-namoRIO, In
  []
 
-[55]pdfTeX warning (ext4): destination with the same identifier (name{cite.skow
-yra:systemetic}) has been already used, duplicate ignored
+[57] [58]pdfTeX warning (ext4): destination with the same identifier (name{cite
+.skowyra:systemetic}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.400 \bibitem{skowyra:systemetic}
+l.399 \bibitem{skowyra:systemetic}
                                   pdfTeX warning (ext4): destination with the s
 ame identifier (name{cite.mcfi:niu}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.405 \bibitem{mcfi:niu}
+l.404 \bibitem{mcfi:niu}
                         pdfTeX warning (ext4): destination with the same identi
 fier (name{cite.cfiguard:yuan}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.409 \bibitem{cfiguard:yuan}
+l.408 \bibitem{cfiguard:yuan}
                              pdfTeX warning (ext4): destination with the same i
 dentifier (name{cite.goktas:outofcontrol}) has been already used, duplicate ign
 ored
 <to be read again> 
                    \relax 
-l.414 \bibitem{goktas:outofcontrol}
+l.413 \bibitem{goktas:outofcontrol}
                                    pdfTeX warning (ext4): destination with the 
 same identifier (name{cite.abadi:cfi2}) has been already used, duplicate ignore
 d
 <to be read again> 
                    \relax 
-l.418 \bibitem{abadi:cfi2}
+l.417 \bibitem{abadi:cfi2}
                           pdfTeX warning (ext4): destination with the same iden
 tifier (name{cite.rockjit:niu}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.422 \bibitem{rockjit:niu}
+l.421 \bibitem{rockjit:niu}
                            pdfTeX warning (ext4): destination with the same ide
 ntifier (name{cite.perinput:niu}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.426 \bibitem{perinput:niu}
+l.425 \bibitem{perinput:niu}
                             pdfTeX warning (ext4): destination with the same id
 entifier (name{cite.abadi:cfi}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.430 \bibitem{abadi:cfi}
-                          [56]pdfTeX warning (ext4): destination with the same 
+l.429 \bibitem{abadi:cfi}
+                          [59]pdfTeX warning (ext4): destination with the same 
 identifier (name{cite.rop:carlini}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.434 \bibitem{rop:carlini}
+l.433 \bibitem{rop:carlini}
                            pdfTeX warning (ext4): destination with the same ide
 ntifier (name{cite.minghua:binary}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.438 \bibitem{minghua:binary}
+l.437 \bibitem{minghua:binary}
                               pdfTeX warning (ext4): destination with the same 
 identifier (name{cite.ccfi:jose}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.442 \bibitem{ccfi:jose}
+l.441 \bibitem{ccfi:jose}
                          pdfTeX warning (ext4): destination with the same ident
 ifier (name{cite.mohan:opaque}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.446 \bibitem{mohan:opaque}
+l.445 \bibitem{mohan:opaque}
                             pdfTeX warning (ext4): destination with the same id
 entifier (name{cite.vtint:zhang}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.450 \bibitem{vtint:zhang}
+l.449 \bibitem{vtint:zhang}
                            pdfTeX warning (ext4): destination with the same ide
 ntifier (name{cite.ccfir:zhang}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.454 \bibitem{ccfir:zhang}
+l.453 \bibitem{ccfir:zhang}
                            pdfTeX warning (ext4): destination with the same ide
 ntifier (name{cite.cfci:zhang}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.458 \bibitem{cfci:zhang}
+l.457 \bibitem{cfci:zhang}
                           pdfTeX warning (ext4): destination with the same iden
 tifier (name{cite.dynaguard:petsios}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.462 \bibitem{dynaguard:petsios}
+l.461 \bibitem{dynaguard:petsios}
                                  pdfTeX warning (ext4): destination with the sa
 me identifier (name{cite.pblocker:prakash}) has been already used, duplicate ig
 nored
 <to be read again> 
                    \relax 
-l.466 \bibitem{pblocker:prakash}
+l.465 \bibitem{pblocker:prakash}
                                 pdfTeX warning (ext4): destination with the sam
 e identifier (name{cite.vfuard:aravind}) has been already used, duplicate ignor
 ed
 <to be read again> 
                    \relax 
-l.470 \bibitem{vfuard:aravind}
-                               [57]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 480.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 480.
+l.469 \bibitem{vfuard:aravind}
+                               [60]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 479.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 479.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 480.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 480.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 479.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 479.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 8B2C28C940C4B94F9A6F59ED5903856E;5019.
+(rerunfilecheck)             Checksum: C6931363A909B9913C43D1017A9D7FE8;5019.
 
 
 LaTeX Warning: There were undefined references.
@@ -2072,16 +2110,16 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 480.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 479.
  ) 
 Here is how much of TeX's memory you used:
- 22022 strings out of 493105
- 405868 string characters out of 6137072
- 526752 words of memory out of 5000000
- 24692 multiletter control sequences out of 15000+600000
+ 22566 strings out of 493105
+ 416366 string characters out of 6137072
+ 538537 words of memory out of 5000000
+ 25192 multiletter control sequences out of 15000+600000
  28050 words of font info for 75 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 61i,11n,61p,1324b,700s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,11n,80p,1324b,706s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/
@@ -2093,10 +2131,10 @@ a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/
 share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texliv
 e/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on main.pdf (73 pages, 298057 bytes).
+Output written on main.pdf (78 pages, 303247 bytes).
 PDF statistics:
- 1005 PDF objects out of 1200 (max. 8388607)
- 899 compressed objects within 9 object streams
- 236 named destinations out of 1000 (max. 500000)
+ 1059 PDF objects out of 1200 (max. 8388607)
+ 947 compressed objects within 10 object streams
+ 263 named destinations out of 1000 (max. 500000)
  601 words of extra memory for PDF output out of 10000 (max. 10000000)
 

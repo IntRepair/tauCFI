@@ -14,9 +14,9 @@
 
 %% Draft document mode
 %% Final document
-\documentclass[11pt,a4paper,bibtotoc,idxtotoc,headsepline,footsepline,footexclude,BCOR12mm,DIV13]{scrbook}
+% \documentclass[11pt,a4paper,bibtotoc,idxtotoc,headsepline,footsepline,footexclude,BCOR12mm,DIV13]{scrbook}
 
-%\documentclass[11pt,a4paper,bibtotoc,idxtotoc,headsepline,footsepline,footexclude,BCOR20mm,DIV10]{scrbook}
+\documentclass[11pt,a4paper,bibtotoc,idxtotoc,headsepline,footsepline,footexclude,BCOR20mm,DIV10]{scrbook}
 
 % KOMA-Optionen:
 %  bibtotoc: include bibliography in table of contents
@@ -36,17 +36,19 @@
 % include commands
 \input{components/commands}
 
+
 \usepackage{tikz}
 \usepackage{verbatim}
 \usepackage{acronym}
-% \usepackage[colorinlistoftodos]{todonotes}
 \hypersetup{linkcolor = black, colorlinks=true, citecolor=blue, urlcolor=black, pagebackref}
+
 
 %%% Allow more line breaks in URLs.
 \usepackage{url}
 \makeatletter
 \g@addto@macro{\UrlBreaks}{\UrlOrds}
 \makeatother
+
 
 
 \begin{comment}
@@ -86,7 +88,7 @@ Financial markets and institutions. 5th ed. Essex: Pearson Education.
 
 \begin{document}
         \rule{\linewidth}{1pt}
-%         \makeglossary
+        \frontmatter
 
 	\input{components/cover}
 	\clearemptydoublepage
@@ -161,8 +163,6 @@ Financial markets and institutions. 5th ed. Essex: Pearson Education.
    \listoffigures
    \listoftables
 	
-
-
   \clearemptydoublepage
   
   %\bibliography{bibliography/literature}
@@ -191,7 +191,6 @@ D.~Jang et al., {safeDispatch: Securing C++ Virtual Calls from Memory Corruption
 \bibitem{schuster:coop}
 Felix Schuster, Thomas Tendyck, Christopher Liebchen, Lucas Davi, Ahmad-Reza Sadeghi, Thorsten Holz, 
 {Counterfeit Object-oriented Programming}, In
-
 \emph{Proceedings of the IEEE Symposium on Security and Privacy (S\&P)}, 2015.
 
 \bibitem{vtv:tice}
