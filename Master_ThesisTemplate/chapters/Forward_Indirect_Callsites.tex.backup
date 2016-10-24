@@ -36,12 +36,10 @@ call sites which are generated when objects are invoking these type
 of functions. More precisely, 
 \textit{1)} load-time enforcement: as calling each indirect call site (callee) requires 
 a fix number of parameters which are passed each time the caller is calling, we
-enforce a fine-grained CFI policy by statically determining the number and types of all function parameter
-that belong to an indirect call site.
-\textit{2)} run-time verification: as checking during run-time legitimate from
-illegitimate indirect caller/callee pairs requires parameter type (along parameter number),
-we check during run-rime before each indirect call-site if the caller matches to the callee 
-based on the previously added checks.
+enforce a fine-grained CFI policy which checks the number and types of all function parameter
+that belong to a indirect call site.
+\textit{1)} run-time verification:
+
 
 
 allows an object of one type to access
