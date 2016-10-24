@@ -38,9 +38,8 @@
 
 \usepackage{tikz}
 \usepackage{verbatim}
-<<<<<<< HEAD
 \usepackage{acronym}
-\usepackage[colorinlistoftodos]{todonotes}
+% \usepackage[colorinlistoftodos]{todonotes}
 \hypersetup{linkcolor = black, colorlinks=true, citecolor=blue, urlcolor=black, pagebackref}
 
 %%% Allow more line breaks in URLs.
@@ -49,9 +48,6 @@
 \g@addto@macro{\UrlBreaks}{\UrlOrds}
 \makeatother
 
-
-=======
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \begin{comment}
 :Title: Borrowers and lenders
@@ -85,30 +81,18 @@ Financial markets and institutions. 5th ed. Essex: Pearson Education.
 	%% inter line spacing
 %\linespread{1.0}
 
-<<<<<<< HEAD
+
 % \makeglossary
 
 \begin{document}
         \rule{\linewidth}{1pt}
-=======
-\makeglossary
+%         \makeglossary
 
-\begin{document}
-
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
-	\frontmatter
-	
-	
 	\input{components/cover}
 	\clearemptydoublepage
 	
 	\input{components/titlepage}
-<<<<<<< HEAD
 
-=======
-	
-	
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 	%\input{components/cover_maschmeyer}
 	\clearemptydoublepage
 	
@@ -135,7 +119,6 @@ Financial markets and institutions. 5th ed. Essex: Pearson Education.
 		%\part[Introduction and Theory]{Introduction and Theory}
 		%\label{part:introAndBackgroundTheory}
 		\input{chapters/Introduction}
-<<<<<<< HEAD
 		\input{chapters/Forward_Indirect_Callsites}
 		\input{chapters/TypeShild_Overview}
 		\input{chapters/Design}
@@ -145,19 +128,7 @@ Financial markets and institutions. 5th ed. Essex: Pearson Education.
 		\input{chapters/Related_Work}
 		\input{chapters/Future_Work}
 		\input{chapters/Conclusion}
-		
-=======
-                \input{chapters/Design}
-                \input{chapters/Implementation}
-		\input{chapters/Typeshild_Overview}
-		\input{chapters/Evaluation}
-		\input{chapters/Related_Work}
-		\input{chapters/Discussion}
-		\input{chapters/Future_Work}
-		\input{chapters/Conclusion}
 		\input{chapters/Snippets}
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
-		
 		
 		%
 		%% ---------------------------------------------------------------------------
@@ -182,7 +153,6 @@ Financial markets and institutions. 5th ed. Essex: Pearson Education.
 		
 		%\input{chapters/oneAppendix}
 		
-<<<<<<< HEAD
 		
    \chapter*{Acronyms}
    \addcontentsline{toc}{chapter}{Acronyms}
@@ -190,45 +160,38 @@ Financial markets and institutions. 5th ed. Essex: Pearson Education.
   
    \listoffigures
    \listoftables
-=======
 	
 
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
   \clearemptydoublepage
   
   %\bibliography{bibliography/literature}
   
   % \balance
-<<<<<<< HEAD
 \begin{thebibliography}{50}
-=======
-\begin{thebibliography}{30}
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \bibliographystyle{IEEEtran}
 
 %cited 
 \bibitem{mingwei:sekar}
 M.~Zhang and R. Sekar, {Control Flow Integrity for COTS Binaries}, In
-<<<<<<< HEAD
+
 \emph{Proceedings of the USENIX conference on Security (USENIX SEC)}, ACM, pp. 337-352, 2013.
 
 \bibitem{safedispatch:jang}
 D.~Jang et al., {safeDispatch: Securing C++ Virtual Calls from Memory Corruption Attacks}, In
 \emph{Symposium on Network and Distributed System Security (NDSS)}, 2014.
-=======
+
 \emph{Proceedings of the 22nd USENIX conference on Security}, (USENIX Sec), ACM, pp. 337-352, 2013.
 
 \bibitem{safedispatch:jang}
 D.~Jang et al., {safeDispatch: Securing C++ Virtual Calls from Memory Corruption Attacks}, In
 \emph{Symposium on Network and Distributed System Security}, (NDSS), 2014.
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \bibitem{schuster:coop}
 Felix Schuster, Thomas Tendyck, Christopher Liebchen, Lucas Davi, Ahmad-Reza Sadeghi, Thorsten Holz, 
 {Counterfeit Object-oriented Programming}, In
-<<<<<<< HEAD
+
 \emph{Proceedings of the IEEE Symposium on Security and Privacy (S\&P)}, 2015.
 
 \bibitem{vtv:tice}
@@ -238,7 +201,7 @@ C.~Tice~et al., {Enforcing Forward-Edge Control-Flow Integrity in GCC and LLVM},
 \bibitem{trap:crane}
 S.~Crane et al., {It's a TRaP: Table Rndomization and Protection against Function-Reuse Attacks}, In
 \emph{Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)}, 2015.
-=======
+
 \emph{Proceedings of the 2015 IEEE Symposium on Security and Privacy}, (S\&P), 2015.
 
 \bibitem{vtv:tice}
@@ -248,25 +211,15 @@ C.~Tice~et al., {Enforcing Forward-Edge Control-Flow Integrity in GCC and LLVM},
 \bibitem{trap:crane}
 S.~Crane et al., {It\'s a TRaP: Table Rndomization and Protection against Function-Reuse Attacks}, In
 \emph{Proceedings of the 22nd ACM SIGSAC Conference on Computer and Communications Security}, (CCS), 2015.
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \bibitem{subversive-c:lettner}
 Julian Lettner, Benjamin Kollenda, Andrei Homescu, Per Larsen, Felix Schuster,
 Lucas Davi, Ahmad-Reza Sadeghi, Thorsten Holz, Michael Franz,
 {Subversive-C: Abusing and Protecting Dynamic Message Dispatch}, In
-<<<<<<< HEAD
-\emph{USENIX Annual Technical Conference (USENIX ATC)}, 2016.
-
-\bibitem{intel:cet}
-Intel,
-{Intel CET}, 
-=======
 \emph{USENIX Annual Technical Conference}, (ATC), 2016.
 
 \bibitem{intel:cet}
-Intel,
-{Intel CET},
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
+Intel, {Intel CET},
 \url{http://blogs.intel.com/evangelists/2016/06/09/intel-release-new-technology-specifications-protect-rop-attacks/}, 2016.
 
 \bibitem{windows:cfguard}
@@ -278,67 +231,39 @@ Microsoft,
 Victor van der Veen, Enes Goktas, Moritz Contag, Andre Pawlowski, Xi Chen, Sanjay Rawat, 
 Herbert Bos, Thorsten Holz, Elias Athanasopoulos, and Cristiano Giuffrida,
 {A Tough call: Mitigating Advanced Code-Reuse Attacks At The Binary Level}, In
-<<<<<<< HEAD
 \emph{Proceedings of the IEEE Symposium on Security and Privacy (S\&P)}, 2016.
-=======
-\emph{Proceedings of the 2016 IEEE Symposium on Security and Privacy}, (S\&P), 2016.
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \bibitem{haller:shrinkwrap}
 I. Haller, E. Goktas, E. Athanasopoulos, G. Portokalidis, H. Bos,
 { ShrinkWrap: VTable Protection Without Loose Ends}, In
-<<<<<<< HEAD
-\emph{Annual Computer Security Applications Conference (ACSAC)}, 2015.
-=======
 \emph{Annual Computer Security Applications Conference}, (ACSAC), 2015.
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \bibitem{volodymyr:cpi}
 Volodymyr Kuznetsov, László Szekeres, Mathias Payer†, George Candea, R. Sekar, Dawn Song,
 {Code-Pointer Integrity}, In
-<<<<<<< HEAD
 \emph{Proceedings of the USENIX Symposium on Operating Systems Design and Implementation (OSDI)}, 2014.
-=======
-\emph{Proceedings of the 11th USENIX Symposium on Operating Systems Design and Implementation}, (OSDI), 2014.
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \bibitem{bounov:interleaving}
 Dimitar Bounov, Rami Gökhan Kici, and Sorin Lerner,
 {Protecting C++ Dynamic Dispatch Through VTable Interleaving}, In
-<<<<<<< HEAD
 \emph{Symposium on Network and Distributed System Security (NDSS)}, 2016.
-=======
-\emph{Symposium on Network and Distributed System Security}, (NDSS), 2016.
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \bibitem{zhang:vtrust}
 Chao Zhang, Scott A. Carr, Tongxin Li, Yu Ding, Chengyu Song, Mathias Payer and Dawn Song,
 {VTrust: Regaining Trust on Virtual Calls}, In
-<<<<<<< HEAD
 \emph{Symposium on Network and Distributed System Security (NDSS)}, 2016.
-=======
-\emph{Symposium on Network and Distributed System Security}, (NDSS), 2016.
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \bibitem{crane:readactor++}
 Stephen Crane, Stijn Volckaert, Felix Schuster, Christopher Liebchen, Per Larsen,
 Lucas Davi, Ahmad-Reza Sadeghi, Thorsten Holz, Bjorn De Sutter, Michael Franz,
 {It’s a TRaP: Table Randomization and Protection against Function-Reuse Attacks}, In
-<<<<<<< HEAD
 \emph{Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)}, 2015.
-=======
-\emph{Proceedings of the 22nd ACM SIGSAC Conference on Computer and Communications Security}, (CCS), 2015.
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \bibitem{crane:readactor++}
 Stephen Crane, Stijn Volckaert, Felix Schuster, Christopher Liebchen, Per Larsen,
 Lucas Davi, Ahmad-Reza Sadeghi, Thorsten Holz, Bjorn De Sutter, Michael Franz,
 {It’s a TRaP: Table Randomization and Protection against Function-Reuse Attacks}, In
-<<<<<<< HEAD
 \emph{Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)}, 2015.
-=======
-\emph{Proceedings of the 22nd ACM SIGSAC Conference on Computer and Communications Security}, (CCS), 2015.
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \bibitem{caballero:inference}
 Juan Caballero, and Zhiqiang Lin,
@@ -347,63 +272,38 @@ Juan Caballero, and Zhiqiang Lin,
 
 \bibitem{veen:cfi}
 V.~van der Veen et al., {Practical Context-Sensiticve CFI}, In
-<<<<<<< HEAD
 \emph{Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)}, 2015.
-=======
-\emph{Proceedings of the 22nd ACM SIGSAC Conference on Computer and Communications Security}, (CCS), 2015.
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \bibitem{andriesse:indepth}
 D. Andriesse, X. Chen, V. van der Veen, A. Slowinska, and H. Bos, 
 {An In-Depth Analysis of Disassembly on Full-Scale x86/x64 Binaries}, In
-<<<<<<< HEAD
 \emph{Proceedings of the USENIX Conference on Security (USENIX SEC)}, 2016.
-=======
-\emph{Proceedings of the USENIX Conference on Security}, (USENIX Sec), 2016.
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \bibitem{lin:rewards}
 Zhiqiang Lin Xiangyu Zhang Dongyan Xu,
 {Automatic Reverse Engineering of Data Structures from Binary Execution}, In
-<<<<<<< HEAD
 \emph{Symposium on Network and Distributed System Security (NDSS)}, 2010.
-=======
-\emph{Symposium on Network and Distributed System Security}, (NDSS), 2010.
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \bibitem{bap:brumley}
 David Brumley, Ivan Jager, Thanassis Avgerinos, and Edward J. Schwartz,
 {BAP: A Binary Analysis Platform}, 
-<<<<<<< HEAD
 In \emph{Proceedings of Computer Aided Verification (CAV)}, 2011.
-=======
-In \emph{Proceedings of Computer Aided Verification}, (CAV), 2011.
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \bibitem{fokin:smartdec}
 Alexander Fokin, Yegor Derevenets, Alexander Chernov, and Katerina Troshina,
 {SmartDec: Approaching C++ decompilation}, 
-<<<<<<< HEAD
 In \emph{Working Conference on Reverse Engineering (WCRE)}, 2011.
-=======
-In \emph{Working Conference on Reverse Engineering}, (WCRE), 2011.
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \bibitem{divine:balakrishnan}
 G. Balakrishnan and T. Reps,
 {DIVINE: Discovering variables in executables}, 
-<<<<<<< HEAD
 In \emph{International Conference on Verification, Model Checking, and Abstract Interpretation (VMCAI)}, 2007.
-=======
-In \emph{International Conference on Verification, Model Checking, and Abstract Interpretation}, (VMCAI), 2007.
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 \bibitem{alan:mycroft}
 Alan Mycroft,
 {Lecture Notes}, 
 In \emph{https://www.cl.cam.ac.uk/~am21/papers/sas07slides.pdf}, 2007.
 
-<<<<<<< HEAD
 \bibitem{bernat:dyninst}
 Andrew R. Bernat and Barton P. Miller,
 {Anywhere, Any-Time Binary Instrumentation}, 
@@ -413,24 +313,14 @@ In \emph{Proceedings of the 10th ACM SIGPLAN-SIGSOFT workshop on Program analysi
 Dynamic Instrumentation Tool Platform
 {DynamoRIO}, 
 In \emph{http://dynamorio.org/home.html}.
-=======
+
 
 %not cited
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
-
-
-
-
-<<<<<<< HEAD
-%not cited
-=======
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
 
 
 \bibitem{carlini:bending}
 N.~Carlini~et al., {Control-Flow Bending: On the Effectiveness of Control-Flow Integrity}, In
-<<<<<<< HEAD
 \emph{Proceedings of the USENIX conference on Security (USENIX SEC)}, ACM, 2015.
 
 \bibitem{skowyra:systemetic}
@@ -549,9 +439,6 @@ N.~Carlini et al., {ROP is still dangerous: Breaking Modern Defenses}, In
 M.~Wang et al., {Binary Code Continent: Finer-Grained Control Flow Integrity for Stripped Binaries}, In
 \emph{Annual Computer Security Applications Conference}, (ACSAC), 2015.
 
-
-
-
 \bibitem{ccfi:jose}
 A. J.~Mashtizadeh et al., {CCFI: Cryptograhically Enforced Control Flow Integrity}, In
 \emph{Proceedings of the 22nd ACM SIGSAC Conference on Computer and Communications Security}, (CCS), 2015.
@@ -583,7 +470,7 @@ A.~Prakash et al., {Defeating ROP Through Denial of Stack Pivot}, In
 \bibitem{vfuard:aravind}
 A.~Prakash et al., {Strict Protection for Virtual Function Calls in COTS C++ Binaries}, In
 \emph{Symposium on Network and Distributed System Security}, (NDSS), 2015.
->>>>>>> 07637e3b88e8f1173cd74482a1b3b33bcf469806
+
 
 
 
