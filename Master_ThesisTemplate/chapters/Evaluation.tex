@@ -5,21 +5,21 @@ We performed runtime performance test with the following applications.
 
 Our Evaluation aims to answer the following research questions:
 \begin{itemize}
- \item \textbf{R1:} How efective is out tool in securing binary programs against the COOP attack?
+ \item \textbf{R1:} How effective is \textit{TypeShild} in securing binary programs against the COOP attack?
  
- \item \textbf{R2:} How precise is our tool in detecting the types of the caller/caller pairs?
+ \item \textbf{R2:} How precise is  \textit{TypeShild} in detecting the types of the caller/caller pairs?
  
- \item \textbf{R3:} What is the performance overhead of our tool?
+ \item \textbf{R3:} What is the instrumentation overhead of \textit{TypeShild}?
+  
+ \item \textbf{R4:} What is the performance overhead of \textit{TypeShild}?
  
- \item \textbf{R4:} What are the instumentation overheads imposed by our tool 
+ \item \textbf{R5:} What is the protection coverage of \textit{TypeShild}?
+ How many caller/called pairs are secured by \textit{TypeShild} and how many remain unsecured?
  
- \item \textbf{R5:} How many caller/called pairs are secured by our tool and how many remain unsecured?
- 
- \item \textbf{R6:} Against which kind of attacks can our tool secure programs?
- 
- \item \textbf{R7:} What are the Limitations of our Tool?
- 
- \item \textbf{R8:} List is not exauhustive. Give another relevant research question. if there is one.
+ \item \textbf{R6:} What level of security does \textit{TypeShild} offer for a protected executable? 
+ see typeArmor paper VIII Sec. Analysis.
+  
+ \item \textbf{R7:} Against which kind of attacks can \textit{TypeShild} secure executables?
  
 \end{itemize}
 
@@ -37,6 +37,45 @@ SSD-based storage.
 
 
 \section{R1: Effectiveness of our Tool}
+\label{R1: Effectiveness of our Tool}
+
+\subsection{Mitigation of Advanced Code-Reuse Attacks}
+\label{Mitigation of Advanced Code-Reuse Attacks}
+
+In this section, we discuss how effective \textit{TypeShild} is 
+stopping advance code-reuse attacks (CRAs).
+
+\begin{table}[H]
+\centering
+\caption{Classification CS}
+\label{Integer overflow bug detection in CWE-190}
+\resizebox{.99\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|} \hline
+\textbf{Exploit}  &\textbf{Stopped?} & \textbf{Notes}   \\ \hline 
+x                 &x                 &x                 \\ \hline
+
+\end{tabular}}
+%  \vspace{-2.5em}
+\end{table}
+
+\subsection{Effectiveness against COOP}
+\label{Effectiveness against COOP}
+
+\subsection{Stopping COOP Exploits in Practice}
+\label{Stopping COOP Exploits in Practice}
+
+\subsection{Control Jujutsu}
+\label{Control Jujutsu}
+yes no?
+
+
+\subsection{COOP Extensions}
+\label{COOP Extensions}
+
+\subsection{Pure Data-only Attacks}
+\label{Pure Data-only Attacks}
+
+
 \begin{table}[H]
 \centering
 \caption{Classification CS}
@@ -300,40 +339,90 @@ vsftpd           &x                 &x                &x              &x        
 
 
 \section{R2: Precision of our Tool}
+\label{R2: Precision of our Tool}
+here we have to show how precise is our tool and compare it to TypeArmor.
+Precision means. Correct identified Callsites and Callees with respect to number of params and types of the params.
 
-\section{R3: Performance overhead of our Tool}
+Classification
+Callsites
 
-\section{R4: Instrumentation overhead of our Tool}
+this has to do with precision of our tool! So put in the right R from above.
 
-\section{R5: Security coverage of our tool}
-
-\section{R6: Which kind of attacks can our tool defend off}
-
-\section{R7: Whar are the limitations of our Tool}
-
-\section{R8: To Do.}
-
-
-it is easier for the reader if we can directly map those section from underneath on the section from above.
-
-\section{Classification}
-\subsection{Callsites}
 overestimation param count. table.
 number of parameters.
 
-\subsection{Calltargets}
+Calltargets
 underestimation param table.
 
-\section{Patching Policies}
-Two types of diagrams. Table 5 from TypeArmor and a CDF to compare param count and param type. (baseline).
-\subsection{AT}
-\subsection{ParamCount}
+AT
+ParamCount
 table, cdf, baseline vs. server. approximations.
 
-\subsection{ParamType}
+ParamType
+has to do with precision and effectiveness so move it up in the right R from above!
+
 table, cdf, baseline vs. server. approximations.
 
-\section{Security Evaluation}
 
-\section{Performance}
+this has to do with precision of our tool! So put in the right R from above.
+
+
+\section{R3: Instrumentation overhead of our Tool}
+\label{R4: Instrumentation overhead of our Tool}
+Here we measure how much the binaries increased in size after the instrumentation was added to the binaries.
+
+\section{R4: Performance overhead of our Tool}
+\label{R3: Performance overhead of our Tool}
+Here we measure how much performance overhead the instrumeentation incurs.
+Here we measure with the same SPEC2006 programs that was used in the TypeArmor paper.
 spec 2006.
+
+\begin{table}[H]
+\centering
+\caption{Performance Tabble, more better is a bar chart here!}
+\label{Integer overflow bug detection in CWE-190}
+% \resizebox{.99\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|} \hline
+\textbf{target}  & \textbf{opt}     & \textbf{problematic}    &\textbf{+0} & \textbf{+1}  & \textbf{+2} &\textbf{+3} &\textbf{+4} &\textbf{+5} &\textbf{+6}  \\ \hline 
+x                &x                 &x                        &x           &x             &x            &x           &x           &x           &x            \\ \hline
+
+\end{tabular}
+% }
+%  \vspace{-2.5em}
+\end{table}
+
+
+\section{R5: Protection Coverage}
+\label{R5: Protection Coverage}
+here we will compare \textit{TypeShild} with TypeArmor w.r.t. the protection coverage
+during instrumentation.
+
+\begin{table}[H]
+\centering
+\caption{TypeShild vs TypeArmor}
+\label{Integer overflow bug detection in CWE-190}
+% \resizebox{.99\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|} \hline
+\textbf{Spec Prog. Name}  & \textbf{number of checks added at the callsite  and calle TypeShild vs TypeArmor}     & \textbf{number of verifications done during runtime TypeShild vs TypeArmor} \\ \hline 
+x                         &x                                                                                      &x                     \\ \hline
+
+\end{tabular}
+% }
+%  \vspace{-2.5em}
+\end{table}
+
+\section{R6: Security Analysis}
+\label{Security Evaluation}
+
+Patching Policies
+Two types of diagrams. Table 5 from TypeArmor and a CDF to compare param count and param type. (baseline)
+here we put the CDF graphs from. There is no accurate security metrics to asses the security level of the enforced policy.
+
+\section{R7: Which kind of attacks can our tool defend off}
+\label{R6: Which kind of attacks can our tool defend off}
+Basically it protects against COOP and other vptr corruption attacks.
+Also does it protect against Control Jujutsu?
+
+
+
+

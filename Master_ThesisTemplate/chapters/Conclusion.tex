@@ -1,0 +1,31 @@
+\chapter{Conclusion}
+\label{chapter:Conclusion}
+This chapter contains in section~\ref{Conclusion} the conclusion and respectively,
+in section~\ref{Future Work} the future work.
+
+\section{Conclusion} 
+\label{Conclusion} 
+
+%this is the short conclusion version. This can be extended if needed
+The COOP attack which can manifest due to a series of factors such as
+a memory corruption, layout leackage of the binary and presence of useful
+gadgets in sufficient large execuatbles is a serious security threat.
+We have developed \textit{TypeShild}, a runtime fine grained CFI enforcing
+tool which can precissely filter legitimate from illegitimate indirect forward
+gadgets in executables.
+It uses a novel run-time type checking technique based on function parameter
+type checking and parameter counting in order to efficiently filter-out legitimate
+and illegitimate forward edges.
+\textit{TypeShild} provides more precise coverage than existing approaches with
+smaller performance overhead.
+We have implemented \textit{TypeShild} and applied it to real software such as:
+web servers, JavaScript engines, FTP servers and 
+large-scale software including Chrome and Firefox browsers.
+We demonstrated through extensive experiments and comparisons with related software
+that \textit{TypeShild} has higher precision and lower performance overhead than 
+the existing state-of-the-art tools.
+
+\todo[inline]{you can extend this up to a page. If you do than please keep (comment it out) also the old version of the 
+conclusion comment it out}
+
+

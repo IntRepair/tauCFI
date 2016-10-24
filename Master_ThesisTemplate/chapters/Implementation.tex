@@ -1,5 +1,5 @@
 \chapter{Implementation}
-\label{chapter:Related_Work}
+\label{chapter:Implementation}
 We implemented {!todo! name} based on the di-opt environment from patharmor\cite{patharmor}, which relies on the Dyninst library \cite{dyninst} (updated to version 9.2.0). We provided our own pass to analyze and patch given binaries, which consists of {!todo! measure locs} lines of C++ code. The core part of our pass is an instruction analyzer, which relies on the DynamoRIO library \cite{dynamorio} (version 6.6.1) to decode instructions an provide information. This analyser is then used to implement an address taken analysis and configurable versions of the backward reaching definitions algorithm and the forward liveness analysis algorithm, which are both based on the algorithms presented in \cite{typearmor}. Callsites and calltargets are then analyzed using those two algorithms, which are configured based on the origin and the chosen policy, which is decided during compilation time.
 
 Additionally to measure the quality of our tool, we wrote a \texttt{MachineFunction} pass for llvm/clang version 4.0.0 (trunk 283889) in the x86 target code generation portion, to have the lowest possible difference between the binary and the IR of llvm. This pass provides us with ground truth data regarding callsites and calltargets, which we then use in our python evaluation and test environment. We are able to measure various metrics using this environment, which we present in this work.
@@ -7,33 +7,36 @@ Additionally to measure the quality of our tool, we wrote a \texttt{MachineFunct
 Our current implementation allows for analysis and patching of any native elf binary on linux x86-64. 
 
 
+We implemented \textit{TypeShild} based on the DynInst~\cite{bernat:dyninst}
+binary Instrumentation framework (revision X, version X).
+The static instrumentation module is implemented based on DynInst
+and an additional patch which we added in order to make DynInst to
+better deal with patching indirect caller and callee pairs.
+The type inference module is implemented based on DynamoRIO~\cite{dynamorio:drmemory}.
+In total, \textit{TypeShild} is implemented in X lines of C++ 
+code (excluding empty lines and comments).
+\textit{TypeShild} is at this stage of development implemented 
+for the Linux x86-64 bit platform, but it is important to notice that there are
+no platform-dependent APIs used.
+For example, \textit{TypeShild} uses for instrumentation
+DynInst and for the type inference of the function parameter variables
+DynamoRIO. As all theses platform-dependent features can be used on other platforms,
+we believe that \textit{TypeShild} can be easily ported to other platforms as well.
 
-In the Master thesis this section should be no longer than 1 DIN A page:
+\textit{TypeShild} uses an effective mechanism for path merging which allows
+our tool to ... please complete the sentence.
 
-example of implementation text from USENIX caver Paper.
+\textit{TypeShild} ``mention another main characteristic about our tool similar to the one above''
 
-Please write in the same style.
+\textit{TypeShild} ``mention yet another mai characteristic about our tool similar to the one above, if there is one.''
 
-
-We implemented C A V ER based on the LLVM Compiler
-project [43] (revision 212782, version 3.5.0). The static in-
-strumentation module is implemented in Clang’s CodeGen
-module and LLVM’s Instrumentation module. The
-runtime library is implemented using the compiler-rt
-module based on LLVM’s Sanitizer code base. In to-
-tal, C A V ER is implemented in 3,540 lines of C++ code
-(excluding empty lines and comments).
-C A V ER is currently implemented for the Linux x86
-platform, and there are a few platform-dependent mech-
-anisms. For example, the type and tracing functions for
-global objects are placed in the .ctors section of ELF . As
-these platform-dependent features can also be found in
-other platforms, we believe C A V ER can be ported to other
-platforms as well. C A V ER interposes threading functions
-to maintain thread contexts and hold a per-thread red-
-black tree for stack objects. C A V ER also maintains the
+example: C A V ER also maintains the
 top and bottom addresses of stack segments to efficiently
-check pointer membership on the stack. We also modified
-the front-end drivers of Clang so that users of C A V ER can
-easily build and secure their target applications with one
-extra compilation flag and linker flag, respectively.
+check pointer membership on the stack. 
+
+We also changed the DynInst patching mechanism in oder to facilitate blaa. `` please finish sentence''.
+
+\todo[inline]{@Matthias: add numeric values at the end. and the missing point from above. The best would be if
+the Implementation chapter would be exact a page.! Please accomplish this.}
+
+

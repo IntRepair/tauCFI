@@ -1,6 +1,6 @@
 \chapter{Related Work}
 \label{chapter:Related_Work}
-In this section we shortly review the main techniques and tools which are related 
+This chapter we shortly review the main techniques and tools which are related 
 to \textit{TypeShild}. 
 Section~\ref{Mitigation of Advanced Code-Reuse Attacks} presents 
 several techniques which can not fully defend against advanced CRAs.
@@ -72,6 +72,9 @@ For a more exhaustive review of such tools we advice the reader to
 have a look at the review of Caballero et al.~\cite{caballero:inference}.
 Intresting to notice is that the code from only a few of this tools is available.
 
+\textit{TypeShild} is most similar to SmartDec since it uses a similar lattice model to
+represent the possible variable types. 
+\todo[inline]{add here 3-4 sentences here about the differences and commonalities between our tool and smartdec}
 
 \section{Binary-based Protection against COOP}
 \label{Binary-based Protection against COOP}
@@ -86,6 +89,9 @@ policy is also based on the types of the function parameters. This results in a
 more precise selection of caller/calle pairs on which the fine-grained CFI policy is enforced.
 Thus, we achieve a reduced runtime overhead than TypeArmor since we enfoce 
 our CFI policy on fewer caller/callee pairs than TypeArmor.
+
+\todo[inline]{add here 2-3 sentences here to round up this section, present another interesting fact.}
+
 
 \section{Source Code based Protection against COOP}
 \label{Source Code based Protection agaisnt COOP}
@@ -115,7 +121,7 @@ further raises the bar w.r.t. what is possible when defending against COOP attac
 
 \section{Runtime-based Protection against COOP}
 \label{Runtime-based Protection against COOP}
-\textit{There is something available out there but I can not used it: anonymus}.
+``There is something available out there but I can not used it'' \textit{Anonymous}.
 Long story short conclusion: There are several promissing runtime-based line of defenses against
 advanced CRAs but none of them can succesfully protect against the COOP attack.
 
