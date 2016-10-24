@@ -9,3 +9,53 @@ Which are usually dry (trocken).m
 \section{1. Select Important Point from Design Chapter}
 \section{2. Select Important Point from Design Chapter}
 \section{3. Select Important Point from Design Chapter}
+
+\section{Adversary Model}
+\label{Adversary Model}
+this section is just an example from the typearmor paper, of course we can 
+replace it with our one but we need to address roughly the same points, namely
+how TypeShild defends against COOP.
+
+example from coop paper:
+
+In general, code reuse attacks against C++ applications
+oftentimes start by hijacking a C++ object and its vptr.
+Attackers achieve this by exploiting a spatial or temporal
+memory corruption vulnerability such as an overflow in a
+buffer adjacent to a C++ object or a use-after-free condition.
+When the application subsequently invokes a virtual function
+on the hijacked object, the attacker-controlled vptr is deref-
+erenced and a vfptr is loaded from a memory location of the
+attacker’s choice. At this point, the attacker effectively controls
+the program counter (rip in x64) of the corresponding thread
+in the target application. Generally for code reuse attacks,
+controlling the program counter is one of the two basic
+requirements. The other one is gaining (partial) knowledge on
+the layout of the target application’s address space. Depending
+on the context, there may exist different techniques to achieve
+this [8], [28], [44], [48].
+For COOP, we assume that the attacker controls a C++
+object with a vptr and that she can infer the base address of
+this object or another auxiliary buffer of sufficient size under
+her control. Further, she needs to be able to infer the base
+addresses of a set of C++ modules whose binary layouts are
+(partly) known to her. For instance, in practice, knowledge on
+the base address of a single publicly available C++ library in
+the target address space can be sufficient.
+These assumptions conform to the attacker settings of most
+defenses against code reuse attacks. In fact, many of these
+defenses assume far more powerful adversaries that are, e. g.,
+able to read and write large (or all) parts of an a
+
+\section{TypeShild: Invariants for Targets and Callsites}
+\label{TypeShild: Invariants for Targets and Callsites}
+this section is just an example from the typearmor paper, of course we can 
+replace it with our one but we need to address roughly the same points, namely
+how TypeShild defends against COOP.
+
+\section{TypeShild Impact on COOP}
+\label{TypeShild Impact on COOP}
+this section is just an example from the typearmor paper, of course we can 
+replace it with our one but we need to address roughly the same points, namely
+how TypeShild defends against COOP.
+
