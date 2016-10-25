@@ -55,38 +55,67 @@ There is compile time Polymorphism and there is run time polymorphism.
 Compile time polymorphism is realized through early binding and run time
 polymorphism is realized through late binding.
 
+
+\newsavebox{\firstlisting}
+\begin{lrbox}{\firstlisting}
+\begin{minipage}[c]{0.48\textwidth}
 \begin{minted}[
 % frame=lines,
-% framesep=2mm,
+framesep=2mm,
+linenos,
+frame=none,
+firstnumber=1,
+framesep = 1.0cm,
 % baselinestretch=1.2,
 % bgcolor=LightGray,
-% fontsize=\footnotesize,
-linenos
+fontsize=\footnotesize,
 ]{C++}
-class SVGElement: public Element { ... }; 
-
-Element *pDom = new Element();
-SVGElement *pCanvas = new SVGElement();
-
-// (1) valid upcast from pCanvas to pEle
-Element *pEle = static_cast<Element*>(pCanvas);
-
-// (2) valid downcast from pEle to pCanvasAgain (== pCanvas)
-SVGElement *pCanvasAgain = static_cast<SVGElement*>(pEle);
-
-// (3) invalid downcast (-> undefined behavior)
-SVGElement *p = static_cast<SVGElement*>(pDom);
-
-// (4) leads to memory corruption
-p->m_className = "my-canvas";
-
-// (5) invalid downcast with dynamic_cast, but no corruption
-SVGElement *p = dynamic_cast<SVGElement*>(pDom);
-
-if (p) {
-p->m_className = "my-canvas";
+class nsMultiplexInputStream final 
+ :public nsIMultiplexInputStream 
+ ,public nsISeekableStream //B1
+ ,public nsIIPCSerializableInputStream //B2
+ ,public nsICloneableInputStream{ //B3
+nsTArray<nsCOMPtr<nsIInputStream>> mStreams;
+NS_IMETHODIMP nsMultiplexInputStream::Close(){
+  MutexAutoLock lock(mLock);
+  mStatus = NS_BASE_STREAM_CLOSED;
+  //set NS_OK flag
+  nsresult rv = NS_OK;
+  //get array length
+  uint32_t len = mStreams.Length();
+  //array-based main loop gadget
+ for (uint32_t i = 0; i<len; ++i){
+  //(1) hijacked indirect call
+  nsresult rv2=mStreams[i]->Close();
+  if (NS_FAILED(rv2)) {
+      rv = rv2;
+  }
+ }
+  return rv;
 }
 \end{minted}
+\end{minipage}
+\end{lrbox}
+
+\begin{figure}
+ \begin{minipage}{.48\textwidth}
+\usebox{\firstlisting}
+\end{minipage}%%
+\hfill
+%&
+%
+\hspace{2.2cm}
+\begin{minipage}{.48\textwidth}
+    \includegraphics[width=0.95\textwidth]{figures/loop.pdf}
+\end{minipage}
+\caption{bla}
+\end{figure}
+
+%%second pic
+\begin{figure}
+    \includegraphics[width=0.7\textwidth]{figures/class_hierarchy.pdf}
+\caption{bla 2}
+\end{figure}
 
 \section{Virtual Dispatch in Practice}
 \label{Virtual Dispatch in Practice}

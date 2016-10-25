@@ -36,9 +36,8 @@
 % include commands
 \input{components/commands}
 
-
-\usepackage{tikz}
 % \usepackage{subfig}
+\usepackage{tikz}
 \usepackage{verbatim}
 \usepackage{acronym}
 \hypersetup{linkcolor = black, colorlinks=true, citecolor=blue, urlcolor=black, pagebackref}
