@@ -8,85 +8,85 @@
 \contentsline {section}{\numberline {1.1}Motivation}{2}{section.1.1}
 \contentsline {section}{\numberline {1.2}Research Goals}{2}{section.1.2}
 \contentsline {section}{\numberline {1.3}Outline}{2}{section.1.3}
-\contentsline {chapter}{\numberline {2}Forbidden C++ Forward Indirect Calls Exposed}{3}{chapter.2}
+\contentsline {chapter}{\numberline {2}C++ Forbidden Calls Exposed}{3}{chapter.2}
 \contentsline {section}{\numberline {2.1}Polymorphism in C++}{3}{section.2.1}
-\contentsline {section}{\numberline {2.2}Virtual Dispatch in Practice}{4}{section.2.2}
-\contentsline {section}{\numberline {2.3}Security Implications of Forbidden C++ Forward Indirect Calls}{4}{section.2.3}
-\contentsline {section}{\numberline {2.4}Running Example: CVE X}{5}{section.2.4}
-\contentsline {chapter}{\numberline {3}TypeShild Overview}{7}{chapter.3}
-\contentsline {section}{\numberline {3.1}1. Select Important Point from Design Chapter}{7}{section.3.1}
-\contentsline {section}{\numberline {3.2}2. Select Important Point from Design Chapter}{7}{section.3.2}
-\contentsline {section}{\numberline {3.3}3. Select Important Point from Design Chapter}{7}{section.3.3}
-\contentsline {section}{\numberline {3.4}Adversary Model}{7}{section.3.4}
-\contentsline {section}{\numberline {3.5}TypeShild: Invariants for Targets and Callsites}{8}{section.3.5}
-\contentsline {section}{\numberline {3.6}TypeShild Impact on COOP}{8}{section.3.6}
-\contentsline {chapter}{\numberline {4}Design}{9}{chapter.4}
-\contentsline {section}{\numberline {4.1}Static Analysis}{9}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Callee Analysis}{9}{subsection.4.1.1}
-\contentsline {subsubsection}{\nonumberline Forward Analysis}{9}{section*.6}
-\contentsline {subsubsection}{\nonumberline Merging Paths}{9}{section*.7}
-\contentsline {subsubsection}{\nonumberline Argument Count}{9}{section*.8}
-\contentsline {subsubsection}{\nonumberline Type Inference}{9}{section*.9}
-\contentsline {subsubsection}{\nonumberline Variadic Functions}{9}{section*.10}
-\contentsline {subsubsection}{\nonumberline Conservativeness}{10}{section*.11}
-\contentsline {subsubsection}{\nonumberline Example of Operation}{10}{section*.12}
-\contentsline {subsection}{\numberline {4.1.2}Callsite Analysis}{10}{subsection.4.1.2}
-\contentsline {subsubsection}{\nonumberline Backward Analysis}{10}{section*.13}
-\contentsline {subsubsection}{\nonumberline Merging Paths}{10}{section*.14}
-\contentsline {subsubsection}{\nonumberline Argument Count}{10}{section*.15}
-\contentsline {subsubsection}{\nonumberline Type Inference}{10}{section*.16}
-\contentsline {subsubsection}{\nonumberline Compiler Optimizations}{10}{section*.17}
-\contentsline {subsubsection}{\nonumberline Conservativeness}{10}{section*.18}
-\contentsline {subsubsection}{\nonumberline Example of Operation}{10}{section*.19}
-\contentsline {subsection}{\numberline {4.1.3}Return Values}{10}{subsection.4.1.3}
-\contentsline {subsubsection}{\nonumberline Non-void Callsites}{11}{section*.20}
-\contentsline {subsubsection}{\nonumberline Void Callees}{11}{section*.21}
-\contentsline {section}{\numberline {4.2}Runtime Enforcement}{11}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Shadow Code Memory Preparation}{11}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}CFI Enforcement}{11}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}CFC Enforcement}{11}{subsection.4.2.3}
-\contentsline {chapter}{\numberline {5}Implementation}{13}{chapter.5}
-\contentsline {chapter}{\numberline {6}Evaluation}{15}{chapter.6}
-\contentsline {section}{\numberline {6.1}R1: Effectiveness of our Tool}{15}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}Mitigation of Advanced Code-Reuse Attacks}{15}{subsection.6.1.1}
-\contentsline {subsection}{\numberline {6.1.2}Effectiveness against COOP}{16}{subsection.6.1.2}
-\contentsline {subsection}{\numberline {6.1.3}Stopping COOP Exploits in Practice}{16}{subsection.6.1.3}
-\contentsline {subsection}{\numberline {6.1.4}Control Jujutsu}{16}{subsection.6.1.4}
-\contentsline {subsection}{\numberline {6.1.5}COOP Extensions}{16}{subsection.6.1.5}
-\contentsline {subsection}{\numberline {6.1.6}Pure Data-only Attacks}{16}{subsection.6.1.6}
-\contentsline {section}{\numberline {6.2}R2: Precision of our Tool}{19}{section.6.2}
-\contentsline {section}{\numberline {6.3}R3: Instrumentation overhead of our Tool}{20}{section.6.3}
-\contentsline {section}{\numberline {6.4}R4: Performance overhead of our Tool}{20}{section.6.4}
-\contentsline {section}{\numberline {6.5}R5: Protection Coverage}{20}{section.6.5}
-\contentsline {section}{\numberline {6.6}R6: Security Analysis}{21}{section.6.6}
-\contentsline {section}{\numberline {6.7}R7: Which kind of attacks can our tool defend off}{21}{section.6.7}
-\contentsline {chapter}{\numberline {7}Discussion}{23}{chapter.7}
-\contentsline {section}{\numberline {7.1}How to make the type inference more precise?}{23}{section.7.1}
-\contentsline {section}{\numberline {7.2}Comparison with TypeArmor and why are we better than TypeArmor?}{23}{section.7.2}
-\contentsline {section}{\numberline {7.3}Whys is not TypeArmor working as it should to?}{23}{section.7.3}
-\contentsline {section}{\numberline {7.4}What is not clear bout TypeArmor?}{23}{section.7.4}
-\contentsline {section}{\numberline {7.5}What can for sure not work as in TypeArmor paper explained?}{23}{section.7.5}
-\contentsline {section}{\numberline {7.6}What are the limitations of TypeShild?}{23}{section.7.6}
-\contentsline {chapter}{\numberline {8}Related Work}{25}{chapter.8}
-\contentsline {section}{\numberline {8.1}Mitigation of Advanced Code-Reuse Attacks}{25}{section.8.1}
-\contentsline {section}{\numberline {8.2}Tyepe-Inference on Executables}{26}{section.8.2}
-\contentsline {section}{\numberline {8.3}Binary-based Protection against COOP}{26}{section.8.3}
-\contentsline {section}{\numberline {8.4}Source Code based Protection against COOP}{27}{section.8.4}
-\contentsline {section}{\numberline {8.5}Runtime-based Protection against COOP}{27}{section.8.5}
-\contentsline {chapter}{\numberline {9}Future Work}{29}{chapter.9}
-\contentsline {section}{\numberline {9.1}Future Work}{29}{section.9.1}
-\contentsline {chapter}{\numberline {10}Conclusion}{31}{chapter.10}
-\contentsline {section}{\numberline {10.1}Conclusion}{31}{section.10.1}
-\contentsline {part}{\numberline {I}SNIPPETS}{33}{part.1}
-\contentsline {chapter}{\numberline {11}Snippet [COUNT policy]}{35}{chapter.11}
-\contentsline {chapter}{\numberline {12}Snippet [TYPE policy]}{37}{chapter.12}
-\contentsline {chapter}{\numberline {13}Snippet [Matching]}{39}{chapter.13}
-\contentsline {chapter}{\numberline {14}Snippet [Theoretical Limits]}{41}{chapter.14}
-\contentsline {chapter}{\numberline {15}Snippet [Patching Schema]}{43}{chapter.15}
-\contentsline {chapter}{\numberline {16}Snippet [Baseline COUNT Implementation]}{45}{chapter.16}
-\contentsline {chapter}{\numberline {17}Snippet [AddressTaken]}{47}{chapter.17}
-\contentsline {section}{\numberline {17.1}Analysis}{47}{section.17.1}
-\contentsline {paragraph}{\nonumberline !shorthand! Code Pointer Constants (CK)}{47}{section*.28}
-\contentsline {section}{\numberline {17.2}Evaluation}{48}{section.17.2}
-\contentsline {chapter}{Acronyms}{51}{chapter*.29}
-\contentsline {chapter}{\nonumberline Bibliography}{57}{chapter*.32}
+\contentsline {section}{\numberline {2.2}Checking Indirect Forward-Edge Calls in Practice}{5}{section.2.2}
+\contentsline {section}{\numberline {2.3}Security Implications of Forbidden Indirect Calls}{6}{section.2.3}
+\contentsline {section}{\numberline {2.4}Real COOP Attack Example}{7}{section.2.4}
+\contentsline {chapter}{\numberline {3}TypeShild Overview}{9}{chapter.3}
+\contentsline {section}{\numberline {3.1}1. Select Important Point from Design Chapter}{9}{section.3.1}
+\contentsline {section}{\numberline {3.2}2. Select Important Point from Design Chapter}{9}{section.3.2}
+\contentsline {section}{\numberline {3.3}3. Select Important Point from Design Chapter}{9}{section.3.3}
+\contentsline {section}{\numberline {3.4}Adversary Model}{9}{section.3.4}
+\contentsline {section}{\numberline {3.5}TypeShild: Invariants for Targets and Callsites}{10}{section.3.5}
+\contentsline {section}{\numberline {3.6}TypeShild Impact on COOP}{10}{section.3.6}
+\contentsline {chapter}{\numberline {4}Design}{11}{chapter.4}
+\contentsline {section}{\numberline {4.1}Static Analysis}{11}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Callee Analysis}{11}{subsection.4.1.1}
+\contentsline {subsubsection}{\nonumberline Forward Analysis}{11}{section*.6}
+\contentsline {subsubsection}{\nonumberline Merging Paths}{11}{section*.7}
+\contentsline {subsubsection}{\nonumberline Argument Count}{11}{section*.8}
+\contentsline {subsubsection}{\nonumberline Type Inference}{11}{section*.9}
+\contentsline {subsubsection}{\nonumberline Variadic Functions}{11}{section*.10}
+\contentsline {subsubsection}{\nonumberline Conservativeness}{12}{section*.11}
+\contentsline {subsubsection}{\nonumberline Example of Operation}{12}{section*.12}
+\contentsline {subsection}{\numberline {4.1.2}Callsite Analysis}{12}{subsection.4.1.2}
+\contentsline {subsubsection}{\nonumberline Backward Analysis}{12}{section*.13}
+\contentsline {subsubsection}{\nonumberline Merging Paths}{12}{section*.14}
+\contentsline {subsubsection}{\nonumberline Argument Count}{12}{section*.15}
+\contentsline {subsubsection}{\nonumberline Type Inference}{12}{section*.16}
+\contentsline {subsubsection}{\nonumberline Compiler Optimizations}{12}{section*.17}
+\contentsline {subsubsection}{\nonumberline Conservativeness}{12}{section*.18}
+\contentsline {subsubsection}{\nonumberline Example of Operation}{12}{section*.19}
+\contentsline {subsection}{\numberline {4.1.3}Return Values}{12}{subsection.4.1.3}
+\contentsline {subsubsection}{\nonumberline Non-void Callsites}{13}{section*.20}
+\contentsline {subsubsection}{\nonumberline Void Callees}{13}{section*.21}
+\contentsline {section}{\numberline {4.2}Runtime Enforcement}{13}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Shadow Code Memory Preparation}{13}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}CFI Enforcement}{13}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}CFC Enforcement}{13}{subsection.4.2.3}
+\contentsline {chapter}{\numberline {5}Implementation}{15}{chapter.5}
+\contentsline {chapter}{\numberline {6}Evaluation}{17}{chapter.6}
+\contentsline {section}{\numberline {6.1}R1: Effectiveness of our Tool}{17}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Mitigation of Advanced Code-Reuse Attacks}{17}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}Effectiveness against COOP}{18}{subsection.6.1.2}
+\contentsline {subsection}{\numberline {6.1.3}Stopping COOP Exploits in Practice}{18}{subsection.6.1.3}
+\contentsline {subsection}{\numberline {6.1.4}Control Jujutsu}{18}{subsection.6.1.4}
+\contentsline {subsection}{\numberline {6.1.5}COOP Extensions}{18}{subsection.6.1.5}
+\contentsline {subsection}{\numberline {6.1.6}Pure Data-only Attacks}{18}{subsection.6.1.6}
+\contentsline {section}{\numberline {6.2}R2: Precision of our Tool}{21}{section.6.2}
+\contentsline {section}{\numberline {6.3}R3: Instrumentation overhead of our Tool}{22}{section.6.3}
+\contentsline {section}{\numberline {6.4}R4: Performance overhead of our Tool}{22}{section.6.4}
+\contentsline {section}{\numberline {6.5}R5: Protection Coverage}{22}{section.6.5}
+\contentsline {section}{\numberline {6.6}R6: Security Analysis}{23}{section.6.6}
+\contentsline {section}{\numberline {6.7}R7: Which kind of attacks can our tool defend off}{23}{section.6.7}
+\contentsline {chapter}{\numberline {7}Discussion}{25}{chapter.7}
+\contentsline {section}{\numberline {7.1}How to make the type inference more precise?}{25}{section.7.1}
+\contentsline {section}{\numberline {7.2}Comparison with TypeArmor and why are we better than TypeArmor?}{25}{section.7.2}
+\contentsline {section}{\numberline {7.3}Whys is not TypeArmor working as it should to?}{25}{section.7.3}
+\contentsline {section}{\numberline {7.4}What is not clear bout TypeArmor?}{25}{section.7.4}
+\contentsline {section}{\numberline {7.5}What can for sure not work as in TypeArmor paper explained?}{25}{section.7.5}
+\contentsline {section}{\numberline {7.6}What are the limitations of TypeShild?}{25}{section.7.6}
+\contentsline {chapter}{\numberline {8}Related Work}{27}{chapter.8}
+\contentsline {section}{\numberline {8.1}Mitigation of Advanced Code-Reuse Attacks}{27}{section.8.1}
+\contentsline {section}{\numberline {8.2}Tyepe-Inference on Executables}{28}{section.8.2}
+\contentsline {section}{\numberline {8.3}Binary-based Protection against COOP}{28}{section.8.3}
+\contentsline {section}{\numberline {8.4}Source Code based Protection against COOP}{29}{section.8.4}
+\contentsline {section}{\numberline {8.5}Runtime-based Protection against COOP}{29}{section.8.5}
+\contentsline {chapter}{\numberline {9}Future Work}{31}{chapter.9}
+\contentsline {section}{\numberline {9.1}Future Work}{31}{section.9.1}
+\contentsline {chapter}{\numberline {10}Conclusion}{33}{chapter.10}
+\contentsline {section}{\numberline {10.1}Conclusion}{33}{section.10.1}
+\contentsline {part}{\numberline {I}SNIPPETS}{35}{part.1}
+\contentsline {chapter}{\numberline {11}Snippet [COUNT policy]}{37}{chapter.11}
+\contentsline {chapter}{\numberline {12}Snippet [TYPE policy]}{39}{chapter.12}
+\contentsline {chapter}{\numberline {13}Snippet [Matching]}{41}{chapter.13}
+\contentsline {chapter}{\numberline {14}Snippet [Theoretical Limits]}{43}{chapter.14}
+\contentsline {chapter}{\numberline {15}Snippet [Patching Schema]}{45}{chapter.15}
+\contentsline {chapter}{\numberline {16}Snippet [Baseline COUNT Implementation]}{47}{chapter.16}
+\contentsline {chapter}{\numberline {17}Snippet [AddressTaken]}{49}{chapter.17}
+\contentsline {section}{\numberline {17.1}Analysis}{49}{section.17.1}
+\contentsline {paragraph}{\nonumberline !shorthand! Code Pointer Constants (CK)}{49}{section*.28}
+\contentsline {section}{\numberline {17.2}Evaluation}{50}{section.17.2}
+\contentsline {chapter}{Acronyms}{53}{chapter*.29}
+\contentsline {chapter}{\nonumberline Bibliography}{59}{chapter*.32}

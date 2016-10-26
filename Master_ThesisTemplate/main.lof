@@ -4,23 +4,23 @@
 \select@language {english}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces bla}}{4}{figure.2.1}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces bla 2}}{5}{figure.2.2}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Code example used to illustrate how a COOP loop gadget works}}{4}{figure.2.1}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Class inheritance hierarchy of the classes involved in the COOP proof of concept exploit against the Firefox browser. Red letters indicate forbidden vTble entries and green letters indicate allowed vTable entries for the given indirect call site.}}{7}{figure.2.2}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces impact of CFI and CFC}}{18}{figure.6.1}
-\contentsline {figure}{\numberline {6.2}{\ignorespaces liveness iteration, dummy}}{18}{figure.6.2}
-\contentsline {figure}{\numberline {6.3}{\ignorespaces reaching iteration, dummy}}{19}{figure.6.3}
+\contentsline {figure}{\numberline {6.1}{\ignorespaces impact of CFI and CFC}}{20}{figure.6.1}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces liveness iteration, dummy}}{20}{figure.6.2}
+\contentsline {figure}{\numberline {6.3}{\ignorespaces reaching iteration, dummy}}{21}{figure.6.3}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {11.1}{\ignorespaces COUNT policy schema}}{35}{figure.11.1}
+\contentsline {figure}{\numberline {11.1}{\ignorespaces COUNT policy schema}}{37}{figure.11.1}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {12.1}{\ignorespaces TYPE policy schema for callsites and calltargets}}{38}{figure.12.1}
+\contentsline {figure}{\numberline {12.1}{\ignorespaces TYPE policy schema for callsites and calltargets}}{40}{figure.12.1}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

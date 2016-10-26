@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  25 OCT 2016 19:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  26 OCT 2016 18:45
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1242,11 +1242,11 @@ Package: xstring 2013/10/13  v1.7c  String manipulations (C Tellechea)
 )
 \AC@clearlist=\toks44
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 44.
+Package hyperref Info: Option `colorlinks' set `true' on input line 45.
 
 
 Package hyperref Warning: Option `pagebackref' has already been used,
-(hyperref)                setting the option has no effect on input line 44.
+(hyperref)                setting the option has no effect on input line 45.
 
 (/usr/share/texlive/texmf-dist/tex/latex/minted/minted.sty
 Package: minted 2011/09/17 v1.7 Yet another Pygments shim for LaTeX
@@ -1378,12 +1378,6 @@ ed.
 LaTeX Warning: Label `safedispatch:jang' multiply defined.
 
 
-LaTeX Warning: Label `vtv:tice' multiply defined.
-
-
-LaTeX Warning: Label `trap:crane' multiply defined.
-
-
 LaTeX Warning: Label `crane:readactor++' multiply defined.
 
 
@@ -1443,27 +1437,27 @@ LaTeX Warning: Label `vfuard:aravind' multiply defined.
 )
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 93.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 93.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 94.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 94.
  (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Try loading font information for OT1+ppl on input line 93.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 94.
+LaTeX Font Info:    ... okay on input line 94.
+LaTeX Font Info:    Try loading font information for OT1+ppl on input line 94.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
@@ -1496,7 +1490,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \AtBeginShipoutBox=\box47
-Package hyperref Info: Link coloring ON on input line 93.
+Package hyperref Info: Link coloring ON on input line 94.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -1506,9 +1500,9 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count164
 )
-LaTeX Info: Redefining \ref on input line 93.
-LaTeX Info: Redefining \pageref on input line 93.
-LaTeX Info: Redefining \nameref on input line 93.
+LaTeX Info: Redefining \ref on input line 94.
+LaTeX Info: Redefining \pageref on input line 94.
+LaTeX Info: Redefining \nameref on input line 94.
 
 (./main.out) (./main.out)
 \@outlinefile=\write8
@@ -1518,28 +1512,28 @@ LaTeX Info: Redefining \nameref on input line 93.
 runsystem(pygmentize -S default -f latex > main.pyg)...executed.
 
  (./main.pyg)
-Overfull \hbox (10.95pt too wide) in paragraph at lines 94--95
+Overfull \hbox (10.95pt too wide) in paragraph at lines 95--96
 [][] 
  []
 
-LaTeX Font Info:    Try loading font information for OMX+yhex on input line 95.
+LaTeX Font Info:    Try loading font information for OMX+yhex on input line 96.
 
 (/usr/share/texlive/texmf-dist/tex/latex/yhmath/OMXyhex.fd
 File: OMXyhex.fd 
 File: OMXyhex.fd 2013/07/03 v1.1 YH's humble contribution to TeX maths (NP)
 )
 LaTeX Font Info:    External font `yhcmex10' loaded for size
-(Font)              <10.95> on input line 95.
+(Font)              <10.95> on input line 96.
 LaTeX Font Info:    External font `yhcmex10' loaded for size
-(Font)              <8> on input line 95.
+(Font)              <8> on input line 96.
 LaTeX Font Info:    External font `yhcmex10' loaded for size
-(Font)              <6> on input line 95.
-LaTeX Font Info:    Try loading font information for U+msa on input line 95.
+(Font)              <6> on input line 96.
+LaTeX Font Info:    Try loading font information for U+msa on input line 96.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 95.
+LaTeX Font Info:    Try loading font information for U+msb on input line 96.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1633,7 +1627,7 @@ ine 56.
 
 ]
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 113.
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 114.
  (./main.toc [13]
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ppl/b/n' tried instead on input line 80.
@@ -1680,7 +1674,7 @@ ed
 <to be read again> 
                    \relax 
 l.1 \chapter
-            {Forbidden C++ Forward Indirect Calls Exposed} [2]
+            {C++ Forbidden Calls Exposed} [2]
 Chapter 2.
 [3
 
@@ -1706,67 +1700,67 @@ runsystem(rm main.out.pyg)...executed.
 
 runsystem(rm main.pyg)...executed.
 
-<figures/loop.pdf, id=483, 390.45876pt x 556.0775pt>
+<figures/loop.pdf, id=488, 390.45876pt x 556.0775pt>
 File: figures/loop.pdf Graphic file (type pdf)
  <use figures/loop.pdf>
-Package pdftex.def Info: figures/loop.pdf used on input line 109.
+Package pdftex.def Info: figures/loop.pdf used on input line 114.
 (pdftex.def)             Requested size: 172.5582pt x 245.75246pt.
 
-Overfull \hbox (49.53635pt too wide) in paragraph at lines 101--111
+Overfull \hbox (52.3818pt too wide) in paragraph at lines 106--116
 []$[]$   $[]$ 
  []
 
-<figures/class_hierarchy.pdf, id=484, 538.01pt x 411.5375pt>
+[4 <./figures/loop.pdf>]
+Overfull \hbox (5.34996pt too wide) in paragraph at lines 149--160
+\OT1/ppl/m/n/10.95 ing based on the class hi-er-ar-chy. Re-search work was done
+ in the ShrinkWrap [[]]
+ []
+
+[5] [6] <figures/class_hierarchy.pdf, id=554, 538.01pt x 411.5375pt>
 File: figures/class_hierarchy.pdf Graphic file (type pdf)
 
 <use figures/class_hierarchy.pdf>
-Package pdftex.def Info: figures/class_hierarchy.pdf used on input line 116.
+Package pdftex.def Info: figures/class_hierarchy.pdf used on input line 229.
 (pdftex.def)             Requested size: 264.89403pt x 202.6222pt.
-
-Overfull \hbox (2.60118pt too wide) in paragraph at lines 126--130
-\OT1/ppl/m/n/10.95 How can For-bid-den C++ For-ward In-di-rect Calls ex-ploited
-? First through COOP
- []
-
-[4 <./figures/loop.pdf>]) (./chapters/TypeShild_Overview.tex [5 <./figures/clas
-s_hierarchy.pdf>] [6
-
-]
+ [7 <./figures/class_hierarchy.pdf>])
+(./chapters/TypeShild_Overview.tex [8]
 Chapter 3.
-[7]) (./chapters/Design.tex [8]
-Chapter 4.
 [9
 
-] [10]
+]) (./chapters/Design.tex [10]
+Chapter 4.
+[11
 
-LaTeX Warning: Citation `ZhangSekar00' on page 11 undefined on input line 125.
+] [12]
 
-
-LaTeX Warning: Citation `ZhangSekar00' on page 11 undefined on input line 127.
-
-
-LaTeX Warning: Citation `ZhangSekar00' on page 11 undefined on input line 132.
-
-[11]
-
-LaTeX Warning: Citation `ZhangSekar00' on page 12 undefined on input line 139.
+LaTeX Warning: Citation `ZhangSekar00' on page 13 undefined on input line 125.
 
 
-LaTeX Warning: Citation `dyninst00' on page 12 undefined on input line 144.
+LaTeX Warning: Citation `ZhangSekar00' on page 13 undefined on input line 127.
 
-) (./chapters/Implementation.tex [12]
+
+LaTeX Warning: Citation `ZhangSekar00' on page 13 undefined on input line 132.
+
+[13]
+
+LaTeX Warning: Citation `ZhangSekar00' on page 14 undefined on input line 139.
+
+
+LaTeX Warning: Citation `dyninst00' on page 14 undefined on input line 144.
+
+) (./chapters/Implementation.tex [14]
 Chapter 5.
 
-LaTeX Warning: Citation `patharmor' on page 13 undefined on input line 3.
+LaTeX Warning: Citation `patharmor' on page 15 undefined on input line 3.
 
 
-LaTeX Warning: Citation `dyninst' on page 13 undefined on input line 3.
+LaTeX Warning: Citation `dyninst' on page 15 undefined on input line 3.
 
 
-LaTeX Warning: Citation `dynamorio' on page 13 undefined on input line 3.
+LaTeX Warning: Citation `dynamorio' on page 15 undefined on input line 3.
 
 
-LaTeX Warning: Citation `typearmor' on page 13 undefined on input line 3.
+LaTeX Warning: Citation `typearmor' on page 15 undefined on input line 3.
 
 
 Overfull \hbox (16.10216pt too wide) in paragraph at lines 3--4
@@ -1780,9 +1774,9 @@ Overfull \hbox (12.09541pt too wide) in paragraph at lines 5--6
 e a \OT1/pcr/m/n/10.95 MachineFunction
  []
 
-[13
+[15
 
-]) (./chapters/Evaluation.tex [14]
+]) (./chapters/Evaluation.tex [16]
 Chapter 6.
 LaTeX Font Info:    Try loading font information for TS1+ppl on input line 8.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ppl.fd
@@ -1793,14 +1787,14 @@ Overfull \hbox (2.10867pt too wide) in paragraph at lines 16--18
  of \OT1/ppl/m/it/10.95 Type-Shild\OT1/ppl/m/n/10.95 ? How many caller/called
  []
 
-[15
+[17
 
 ]
 Overfull \hbox (97.52803pt too wide) in paragraph at lines 111--118
  [][] 
  []
 
-[16]
+[18]
 Overfull \hbox (83.77443pt too wide) in paragraph at lines 154--161
  [][] 
  []
@@ -1810,7 +1804,7 @@ Overfull \hbox (37.68971pt too wide) in paragraph at lines 169--176
  [][] 
  []
 
-[17] <figures/impact_of_cfi_and_cfc.pdf, id=626, 362.35374pt x 380.42125pt>
+[19] <figures/impact_of_cfi_and_cfc.pdf, id=663, 362.35374pt x 380.42125pt>
 File: figures/impact_of_cfi_and_cfc.pdf Graphic file (type pdf)
 
 <use figures/impact_of_cfi_and_cfc.pdf>
@@ -1818,7 +1812,7 @@ Package pdftex.def Info: figures/impact_of_cfi_and_cfc.pdf used on input line 2
 72.
 (pdftex.def)             Requested size: 189.21085pt x 198.64445pt.
 
-<figures/liveness_iteration.pdf, id=627, 795.97375pt x 308.15125pt>
+<figures/liveness_iteration.pdf, id=664, 795.97375pt x 308.15125pt>
 File: figures/liveness_iteration.pdf Graphic file (type pdf)
 
 <use figures/liveness_iteration.pdf>
@@ -1826,23 +1820,23 @@ Package pdftex.def Info: figures/liveness_iteration.pdf used on input line 278.
 
 (pdftex.def)             Requested size: 340.57722pt x 131.84886pt.
 
-<figures/reaching_iteration.pdf, id=628, 795.97375pt x 308.15125pt>
+<figures/reaching_iteration.pdf, id=665, 795.97375pt x 308.15125pt>
 File: figures/reaching_iteration.pdf Graphic file (type pdf)
 
 <use figures/reaching_iteration.pdf>
 Package pdftex.def Info: figures/reaching_iteration.pdf used on input line 284.
 
 (pdftex.def)             Requested size: 340.57722pt x 131.84886pt.
- [18 <./figures/impact_of_cfi_and_cfc.pdf> <./figures/liveness_iteration.pdf
+ [20 <./figures/impact_of_cfi_and_cfc.pdf> <./figures/liveness_iteration.pdf
 
 pdfTeX warning: /usr/bin/pdflatex (file ./figures/liveness_iteration.pdf): PDF 
 inclusion: multiple pdfs with page group included in a single page
->] [19 <./figures/reaching_iteration.pdf>]
+>] [21 <./figures/reaching_iteration.pdf>]
 Overfull \hbox (464.31424pt too wide) in paragraph at lines 405--412
  [][] 
  []
 
-[20]) (./chapters/Discussion.tex [21] [22
+[22]) (./chapters/Discussion.tex [23] [24
 
 ]
 Chapter 7.
@@ -1851,21 +1845,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 6--7
 
  []
 
-) (./chapters/Related_Work.tex [23] [24
+) (./chapters/Related_Work.tex [25] [26
 
 ]
 Chapter 8.
-[25] [26]
+[27] [28]
 Overfull \hbox (4.13365pt too wide) in paragraph at lines 111--117
 \OT1/ppl/m/n/10.95 tech-niques can re-cu-per-ate pro-gram based se-man-tic in-f
 or-ma-tion from ex-e-cutable
  []
 
-[27]) (./chapters/Future_Work.tex [28]
+[29]) (./chapters/Future_Work.tex [30]
 Chapter 9.
-) (./chapters/Conclusion.tex [29
+) (./chapters/Conclusion.tex [31
 
-] [30
+] [32
 
 ]
 Chapter 10.
@@ -1875,12 +1869,12 @@ Overfull \hbox (21.40157pt too wide) in paragraph at lines 10--27
 ome and Fire-fox browsers.
  []
 
-) (./chapters/Snippets.tex [31] [32
+) (./chapters/Snippets.tex [33] [34
 
 ]
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <24.88> not available
 (Font)              Font shape `OT1/ppl/b/n' tried instead on input line 1.
- [33] [34]
+ [35] [36]
 Chapter 11.
 
 Underfull \hbox (badness 10000) in paragraph at lines 31--31
@@ -1888,31 +1882,31 @@ Underfull \hbox (badness 10000) in paragraph at lines 31--31
  []
 
 
-LaTeX Warning: Citation `typearmor' on page 35 undefined on input line 35.
+LaTeX Warning: Citation `typearmor' on page 37 undefined on input line 35.
 
-[35
-
-] [36]
-Chapter 12.
 [37
 
 ] [38]
-Chapter 13.
-
-LaTeX Warning: Reference `matchingquality' on page 39 undefined on input line 1
-68.
-
+Chapter 12.
 [39
 
 ] [40]
-Chapter 14.
+Chapter 13.
+
+LaTeX Warning: Reference `matchingquality' on page 41 undefined on input line 1
+68.
+
 [41
 
-] [42
+] [42]
+Chapter 14.
+[43
+
+] [44
 
 ]
 Chapter 15.
-[43] [44
+[45] [46
 
 ]
 Chapter 16.
@@ -1920,30 +1914,30 @@ Chapter 16.
 Package wrapfig Warning: Collision between wrapping environments on input line 
 219.
 
-[45] [46]
+[47] [48]
 Chapter 17.
 
-LaTeX Warning: Citation `ZhangSekar00' on page 47 undefined on input line 278.
+LaTeX Warning: Citation `ZhangSekar00' on page 49 undefined on input line 278.
 
 
-LaTeX Warning: Citation `ZhangSekar00' on page 47 undefined on input line 282.
+LaTeX Warning: Citation `ZhangSekar00' on page 49 undefined on input line 282.
 
 
-LaTeX Warning: Citation `ZhangSekar00' on page 47 undefined on input line 284.
+LaTeX Warning: Citation `ZhangSekar00' on page 49 undefined on input line 284.
 
 
-LaTeX Warning: Citation `ZhangSekar00' on page 47 undefined on input line 289.
+LaTeX Warning: Citation `ZhangSekar00' on page 49 undefined on input line 289.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 289--290
 
  []
 
-[47
+[49
 
 ]
 
-LaTeX Warning: Citation `ZhangSekar00' on page 48 undefined on input line 293.
+LaTeX Warning: Citation `ZhangSekar00' on page 50 undefined on input line 293.
 
 LaTeX Font Info:    External font `yhcmex10' loaded for size
 (Font)              <9> on input line 298.
@@ -1955,7 +1949,7 @@ Overfull \hbox (3.4678pt too wide) in paragraph at lines 300--301
 oth data sets $\OMS/cmsy/m/n/10.95 F[] \OT1/cmr/m/n/10.95 =
  []
 
-[48]
+[50]
 Overfull \hbox (8.16551pt too wide) in paragraph at lines 316--317
 \OT1/ppl/m/n/10.95 ing prob-lem-atic and over-
  []
@@ -1975,15 +1969,15 @@ Underfull \hbox (badness 1320) in paragraph at lines 316--317
 \OT1/ppl/m/n/10.95 re-duc-tion ef-fect. The
  []
 
-) [49] [50] (./chapters/Acronyms.tex) [51
+) [51] [52] (./chapters/Acronyms.tex) [53
 
-] [52
+] [54
 
 ] (./main.lof)
 \tf@lof=\write10
 \openout10 = `main.lof'.
 
- [53] [54
+ [55] [56
 
 ]
 (./main.lot
@@ -2010,11 +2004,29 @@ Overfull \hbox (16.15709pt too wide) in paragraph at lines 41--41
 on of the COUNT 
  []
 
-[55])
+[57])
 \tf@lot=\write11
 \openout11 = `main.lot'.
 
- [56] [57
+ [58]
+Underfull \hbox (badness 1418) in paragraph at lines 216--218
+[]\OT1/ppl/m/n/10.95 Intel, In-tel CET, [][]$\OT1/pcr/m/n/10.95 http : / / blog
+s . intel . com / evangelists / 2016 /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 216--218
+\OT1/pcr/m/n/10.95 06 / 09 / intel -[] release -[] new -[] technology -[] speci
+fications -[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 220--223
+\OT1/pcr/m/n/10.95 com / en -[] us / library / windows / desktop / mt637065(v =
+ vs . 85 )
+ []
+
+[59
 
 
 pdfTeX warning (ext4): destination with the same identifier (name{cite.safedisp
@@ -2023,161 +2035,132 @@ atch:jang}) has been already used, duplicate ignored
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
 l.223 
-      pdfTeX warning (ext4): destination with the same identifier (name{cite.vt
-v:tice}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.223 
-      pdfTeX warning (ext4): destination with the same identifier (name{cite.tr
-ap:crane}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.223 
       ]
-Underfull \hbox (badness 1418) in paragraph at lines 225--227
-[]\OT1/ppl/m/n/10.95 Intel, In-tel CET, [][]$\OT1/pcr/m/n/10.95 http : / / blog
-s . intel . com / evangelists / 2016 /
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 225--227
-\OT1/pcr/m/n/10.95 06 / 09 / intel -[] release -[] new -[] technology -[] speci
-fications -[]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 229--232
-\OT1/pcr/m/n/10.95 com / en -[] us / library / windows / desktop / mt637065(v =
- vs . 85 )
- []
-
-
-Underfull \hbox (badness 2600) in paragraph at lines 240--243
+Underfull \hbox (badness 2600) in paragraph at lines 231--234
 []\OT1/ppl/m/n/10.95 I. Haller, E. Gok-tas, E. Athana-sopou-los, G. Por-toka-li
 dis, H. Bos,
  []
 
-[58pdfTeX warning (ext4): destination with the same identifier (name{cite.crane
+[60pdfTeX warning (ext4): destination with the same identifier (name{cite.crane
 :readactor++}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.271 \bibitem{caballero:inference}
-                                   ]
-Overfull \hbox (42.81989pt too wide) in paragraph at lines 306--309
+l.275 
+      ]
+Overfull \hbox (42.81989pt too wide) in paragraph at lines 297--300
 []\OT1/ppl/m/n/10.95 Alan My-croft, Lec-ture Notes, In \OT1/ppl/m/it/10.95 http
 s://www.cl.cam.ac.uk/ am21/papers/sas07slides.pdf\OT1/ppl/m/n/10.95 ,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 316--319
+Underfull \hbox (badness 10000) in paragraph at lines 307--310
 []\OT1/ppl/m/n/10.95 Dynamic In-stru-men-ta-tion Tool Plat-form Dy-namoRIO, In
  []
 
-[59] [60]pdfTeX warning (ext4): destination with the same identifier (name{cite
+[61] [62]pdfTeX warning (ext4): destination with the same identifier (name{cite
 .skowyra:systemetic}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.410 \bibitem{skowyra:systemetic}
+l.406 \bibitem{skowyra:systemetic}
                                   pdfTeX warning (ext4): destination with the s
 ame identifier (name{cite.mcfi:niu}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.415 \bibitem{mcfi:niu}
+l.411 \bibitem{mcfi:niu}
                         pdfTeX warning (ext4): destination with the same identi
 fier (name{cite.cfiguard:yuan}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.419 \bibitem{cfiguard:yuan}
+l.415 \bibitem{cfiguard:yuan}
                              pdfTeX warning (ext4): destination with the same i
 dentifier (name{cite.goktas:outofcontrol}) has been already used, duplicate ign
 ored
 <to be read again> 
                    \relax 
-l.424 \bibitem{goktas:outofcontrol}
+l.420 \bibitem{goktas:outofcontrol}
                                    pdfTeX warning (ext4): destination with the 
 same identifier (name{cite.abadi:cfi2}) has been already used, duplicate ignore
 d
 <to be read again> 
                    \relax 
-l.428 \bibitem{abadi:cfi2}
+l.424 \bibitem{abadi:cfi2}
                           pdfTeX warning (ext4): destination with the same iden
 tifier (name{cite.rockjit:niu}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.432 \bibitem{rockjit:niu}
+l.428 \bibitem{rockjit:niu}
                            pdfTeX warning (ext4): destination with the same ide
 ntifier (name{cite.perinput:niu}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.436 \bibitem{perinput:niu}
+l.432 \bibitem{perinput:niu}
                             pdfTeX warning (ext4): destination with the same id
 entifier (name{cite.abadi:cfi}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.440 \bibitem{abadi:cfi}
-                          [61]pdfTeX warning (ext4): destination with the same 
-identifier (name{cite.rop:carlini}) has been already used, duplicate ignored
+l.436 \bibitem{abadi:cfi}
+                         pdfTeX warning (ext4): destination with the same ident
+ifier (name{cite.rop:carlini}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.444 \bibitem{rop:carlini}
-                           pdfTeX warning (ext4): destination with the same ide
-ntifier (name{cite.minghua:binary}) has been already used, duplicate ignored
+l.440 \bibitem{rop:carlini}
+                            [63]pdfTeX warning (ext4): destination with the sam
+e identifier (name{cite.minghua:binary}) has been already used, duplicate ignor
+ed
 <to be read again> 
                    \relax 
-l.448 \bibitem{minghua:binary}
+l.444 \bibitem{minghua:binary}
                               pdfTeX warning (ext4): destination with the same 
 identifier (name{cite.ccfi:jose}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.452 \bibitem{ccfi:jose}
+l.448 \bibitem{ccfi:jose}
                          pdfTeX warning (ext4): destination with the same ident
 ifier (name{cite.mohan:opaque}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.456 \bibitem{mohan:opaque}
+l.452 \bibitem{mohan:opaque}
                             pdfTeX warning (ext4): destination with the same id
 entifier (name{cite.vtint:zhang}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.460 \bibitem{vtint:zhang}
+l.456 \bibitem{vtint:zhang}
                            pdfTeX warning (ext4): destination with the same ide
 ntifier (name{cite.ccfir:zhang}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.464 \bibitem{ccfir:zhang}
+l.460 \bibitem{ccfir:zhang}
                            pdfTeX warning (ext4): destination with the same ide
 ntifier (name{cite.cfci:zhang}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.468 \bibitem{cfci:zhang}
+l.464 \bibitem{cfci:zhang}
                           pdfTeX warning (ext4): destination with the same iden
 tifier (name{cite.dynaguard:petsios}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.472 \bibitem{dynaguard:petsios}
+l.468 \bibitem{dynaguard:petsios}
                                  pdfTeX warning (ext4): destination with the sa
 me identifier (name{cite.pblocker:prakash}) has been already used, duplicate ig
 nored
 <to be read again> 
                    \relax 
-l.476 \bibitem{pblocker:prakash}
+l.472 \bibitem{pblocker:prakash}
                                 pdfTeX warning (ext4): destination with the sam
 e identifier (name{cite.vfuard:aravind}) has been already used, duplicate ignor
 ed
 <to be read again> 
                    \relax 
-l.480 \bibitem{vfuard:aravind}
-                               [62]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 490.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 490.
+l.476 \bibitem{vfuard:aravind}
+                               [64]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 486.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 486.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 490.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 490.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 486.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 486.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: EC238EBDF1140A1FBD03C4BDED71073E;5019.
+(rerunfilecheck)             Checksum: 27708814D972E343D526AE145DD2466F;5012.
 
 
 LaTeX Warning: There were undefined references.
@@ -2185,13 +2168,13 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 490.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 486.
  ) 
 Here is how much of TeX's memory you used:
- 23285 strings out of 493105
- 427571 string characters out of 6137072
- 556648 words of memory out of 5000000
- 25874 multiletter control sequences out of 15000+600000
+ 23309 strings out of 493105
+ 428182 string characters out of 6137072
+ 557223 words of memory out of 5000000
+ 25895 multiletter control sequences out of 15000+600000
  29697 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  71i,11n,80p,1324b,706s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2208,10 +2191,10 @@ hare/texlive/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texlive
 fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino
 /uplri8a.pfb>
-Output written on main.pdf (80 pages, 395754 bytes).
+Output written on main.pdf (82 pages, 408906 bytes).
 PDF statistics:
- 1124 PDF objects out of 1200 (max. 8388607)
- 992 compressed objects within 10 object streams
- 268 named destinations out of 1000 (max. 500000)
+ 1160 PDF objects out of 1200 (max. 8388607)
+ 1025 compressed objects within 11 object streams
+ 271 named destinations out of 1000 (max. 500000)
  611 words of extra memory for PDF output out of 10000 (max. 10000000)
 

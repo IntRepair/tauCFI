@@ -38,7 +38,8 @@
 
 
 \usepackage{tikz}
-% \usepackage{subfig}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
 \usepackage{verbatim}
 \usepackage{acronym}
 \hypersetup{linkcolor = black, colorlinks=true, citecolor=blue, urlcolor=black, pagebackref}
@@ -203,17 +204,7 @@ C.~Tice~et al., {Enforcing Forward-Edge Control-Flow Integrity in GCC and LLVM},
 
 \bibitem{trap:crane}
 S.~Crane et al., {It's a TRaP: Table Rndomization and Protection against Function-Reuse Attacks}, In
-\emph{Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)}, 2015.
-
 \emph{Proceedings of the 2015 IEEE Symposium on Security and Privacy}, (S\&P), 2015.
-
-\bibitem{vtv:tice}
-C.~Tice~et al., {Enforcing Forward-Edge Control-Flow Integrity in GCC and LLVM}, In
-\emph{Proceedings of the 23nd USENIX conference on Security}, (USENIX Sec), ACM, 2014.
-
-\bibitem{trap:crane}
-S.~Crane et al., {It\'s a TRaP: Table Rndomization and Protection against Function-Reuse Attacks}, In
-\emph{Proceedings of the 22nd ACM SIGSAC Conference on Computer and Communications Security}, (CCS), 2015.
 
 \bibitem{subversive-c:lettner}
 Julian Lettner, Benjamin Kollenda, Andrei Homescu, Per Larsen, Felix Schuster,
@@ -321,6 +312,11 @@ In \emph{http://dynamorio.org/home.html}.
 I. JTC1/SC22WG21,
 {ISO/IEC 14882:2013 Programming Language C++ (N3690)}, 
 In \emph{https://isocpp.org/files/papers/N3690.pdf}, 2013.
+
+\bibitem{byoungyoung:typecasting}
+Byoungyoung Lee, Chengyu Song, Taesoo Kim, and Wenke Lee, 
+{Type Casting Verification: Stopping an Emerging Attack Vector}, In
+\emph{Proceedings of the USENIX Conference on Security (USENIX SEC)}, 2015.
 
 
 
