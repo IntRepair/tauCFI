@@ -19,7 +19,7 @@ runtime-based mitigation techniques against COOP.
 COOP~\cite{schuster:coop}, Subversive-C~\cite{subversive-c:lettner} and Recursive-COOP~\cite{trap:crane} 
 are advanced CRAs since these attacks:
 \textit{i)} can not be addressed with shadow stacks techniques (i.e., do not violate the caller/calle convention), 
-\textit{ii)} coarse-grained CFI techniques are useless against these attacks, 
+\textit{ii)} coarse-grained Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} techniques are useless against these attacks, 
 \textit{iii)} hardware based approaches such as Intel CET~\cite{intel:cet} can not mitigate this attack for the same reason as in \textit{i)}, and 
 \textit{iv)} OS-based approaches such as Windows Control Flow Guard~\cite{windows:cfguard} 
 does not defend against COOP since the precomputed CFG does not contain edges for indirect call sites which are explicitly exploited
