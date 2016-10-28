@@ -39,8 +39,8 @@
 \@writefile{toc}{\contentsline {chapter}{Abstract}{xi}{section*.2}}
 \@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color  {orange}o}}\ @Matthias: add final \% values at the end, when the evaluation is done.}{xi}{section*.3}}
 \pgfsyspdfmark {pgfid1}{21054439}{11621629}
-\citation{abadi:cfi}
 \citation{abadi:cfi2}
+\citation{abadi:cfi}
 \citation{schuster:coop}
 \citation{veen:typearmor}
 \citation{veen:typearmor}
@@ -63,7 +63,7 @@
 \newlabel{C++ Bad Forward Indirect Calls}{{2}{3}{C++ Forbidden Calls Exposed}{chapter.2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.1}Polymorphism in C++}{3}{section.2.1}}
 \newlabel{Polymorphism in C++}{{2.1}{3}{Polymorphism in C++}{section.2.1}{}}
-\citation{trap:crane}
+\citation{crane:readactor++}
 \@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces Code example used to illustrate how a COOP loop gadget works}}{4}{figure.2.1}}
 \newlabel{Code example used to illustrate how a COOP loop gadget works}{{2.1}{4}{Code example used to illustrate how a COOP loop gadget works}{figure.2.1}{}}
 \citation{vtv:tice}
@@ -80,7 +80,7 @@
 \@writefile{toc}{\contentsline {section}{\numberline {2.3}Security Implications of Forbidden Indirect Calls}{6}{section.2.3}}
 \newlabel{Security Implications of Forbidden Forward Indirect Calls}{{2.3}{6}{Security Implications of Forbidden Indirect Calls}{section.2.3}{}}
 \citation{schuster:coop}
-\citation{trap:crane}
+\citation{crane:readactor++}
 \@writefile{toc}{\contentsline {section}{\numberline {2.4}Real COOP Attack Example}{7}{section.2.4}}
 \newlabel{Running Example: CVE X}{{2.4}{7}{Real COOP Attack Example}{section.2.4}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces Class inheritance hierarchy of the classes involved in the COOP attack against the Firefox browser. Red letters indicate forbidden vTble entries and green letters indicate allowed vTable entries for the given indirect call site contained in the main loop gadget.}}{8}{figure.2.2}}
@@ -250,13 +250,15 @@
 \@writefile{toc}{\contentsline {section}{\numberline {7.5}What can for sure not work as in TypeArmor paper explained?}{25}{section.7.5}}
 \@writefile{toc}{\contentsline {section}{\numberline {7.6}What are the limitations of TypeShild?}{25}{section.7.6}}
 \newlabel{What are the limitations of TypeShild ?}{{7.6}{25}{What are the limitations of TypeShild?}{section.7.6}{}}
-\citation{schuster:coop}
-\citation{subversive-c:lettner}
-\citation{trap:crane}
-\citation{abadi:cfi2}
-\citation{abadi:cfi}
-\citation{intel:cet}
-\citation{windows:cfguard}
+\citation{dep}
+\citation{ASLR}
+\citation{ROP}
+\citation{kornau:rop}
+\citation{rop:shacham}
+\citation{JOP1}
+\citation{JOP2}
+\citation{JOP3}
+\citation{rop:carlini}
 \citation{veen:cfi}
 \citation{ccfir:zhang}
 \citation{cfci:zhang}
@@ -264,11 +266,6 @@
 \citation{ccfi:jose}
 \citation{pblocker:prakash}
 \citation{dynaguard:petsios}
-\citation{safedispatch:jang}
-\citation{vtv:tice}
-\citation{vfuard:aravind}
-\citation{vtint:zhang}
-\citation{trap:crane}
 \citation{cfiguard:yuan}
 \citation{mcfi:niu}
 \citation{rockjit:niu}
@@ -278,8 +275,23 @@
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\addvspace {10\p@ }}
 \newlabel{chapter:Related_Work}{{8}{27}{Related Work}{chapter.8}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8.1}Mitigation of Advanced Code-Reuse Attacks}{27}{section.8.1}}
-\newlabel{Mitigation of Advanced Code-Reuse Attacks}{{8.1}{27}{Mitigation of Advanced Code-Reuse Attacks}{section.8.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.1}Mitigation of Code-Reuse Attacks}{27}{section.8.1}}
+\newlabel{Code-Reuse Attacks}{{8.1}{27}{Mitigation of Code-Reuse Attacks}{section.8.1}{}}
+\citation{schuster:coop}
+\citation{subversive-c:lettner}
+\citation{crane:readactor++}
+\citation{abadi:cfi2}
+\citation{abadi:cfi}
+\citation{intel:cet}
+\citation{windows:cfguard}
+\citation{safedispatch:jang}
+\citation{vtv:tice}
+\citation{crane:readactor++}
+\citation{zhang:vtrust}
+\citation{volodymyr:cpi}
+\citation{vfuard:aravind}
+\citation{vtint:zhang}
+\citation{veen:typearmor}
 \citation{andriesse:indepth}
 \citation{alan:mycroft}
 \citation{lin:rewards}
@@ -287,13 +299,11 @@
 \citation{fokin:smartdec}
 \citation{divine:balakrishnan}
 \citation{caballero:inference}
+\@writefile{toc}{\contentsline {section}{\numberline {8.2}Mitigation of Advanced Code-Reuse Attacks}{28}{section.8.2}}
+\newlabel{Mitigation of Advanced Code-Reuse Attacks}{{8.2}{28}{Mitigation of Advanced Code-Reuse Attacks}{section.8.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.3}Tyepe-Inference on Executables}{28}{section.8.3}}
+\newlabel{Tyepe-Inference on Executables}{{8.3}{28}{Tyepe-Inference on Executables}{section.8.3}{}}
 \citation{veen:typearmor}
-\@writefile{toc}{\contentsline {section}{\numberline {8.2}Tyepe-Inference on Executables}{28}{section.8.2}}
-\newlabel{Tyepe-Inference on Executables}{{8.2}{28}{Tyepe-Inference on Executables}{section.8.2}{}}
-\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color  {orange}o}}\ add here 3-4 sentences here about the differences and commonalities between our tool and smartdec}{28}{section*.23}}
-\pgfsyspdfmark {pgfid9}{20867972}{19760439}
-\@writefile{toc}{\contentsline {section}{\numberline {8.3}Binary-based Protection against COOP}{28}{section.8.3}}
-\newlabel{Binary-based Protection against COOP}{{8.3}{28}{Binary-based Protection against COOP}{section.8.3}{}}
 \citation{haller:shrinkwrap}
 \citation{vtv:tice}
 \citation{safedispatch:jang}
@@ -301,133 +311,148 @@
 \citation{crane:readactor++}
 \citation{volodymyr:cpi}
 \citation{bounov:interleaving}
+\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color  {orange}o}}\ add here 3-4 sentences here about the differences and commonalities between our tool and smartdec}{29}{section*.23}}
+\pgfsyspdfmark {pgfid9}{21054439}{36432404}
+\@writefile{toc}{\contentsline {section}{\numberline {8.4}Binary-based Protection against COOP}{29}{section.8.4}}
+\newlabel{Binary-based Protection against COOP}{{8.4}{29}{Binary-based Protection against COOP}{section.8.4}{}}
 \@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color  {orange}o}}\ add here 2-3 sentences here to round up this section, present another interesting fact.}{29}{section*.24}}
-\pgfsyspdfmark {pgfid10}{21054439}{41734011}
-\@writefile{toc}{\contentsline {section}{\numberline {8.4}Source Code based Protection against COOP}{29}{section.8.4}}
-\newlabel{Source Code based Protection agaisnt COOP}{{8.4}{29}{Source Code based Protection against COOP}{section.8.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8.5}Runtime-based Protection against COOP}{29}{section.8.5}}
-\newlabel{Runtime-based Protection against COOP}{{8.5}{29}{Runtime-based Protection against COOP}{section.8.5}{}}
+\pgfsyspdfmark {pgfid10}{21054439}{21726119}
+\@writefile{toc}{\contentsline {section}{\numberline {8.5}Source Code based Protection against COOP}{29}{section.8.5}}
+\newlabel{Source Code based Protection agaisnt COOP}{{8.5}{29}{Source Code based Protection against COOP}{section.8.5}{}}
 \citation{intel:cet}
 \citation{windows:cfguard}
 \citation{veen:cfi}
-\@writefile{toc}{\contentsline {chapter}{\numberline {9}Future Work}{31}{chapter.9}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.6}Runtime-based Protection against COOP}{30}{section.8.6}}
+\newlabel{Runtime-based Protection against COOP}{{8.6}{30}{Runtime-based Protection against COOP}{section.8.6}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {9}Future Work}{33}{chapter.9}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\addvspace {10\p@ }}
-\newlabel{chapter:Future_Work}{{9}{31}{Future Work}{chapter.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {9.1}Future Work}{31}{section.9.1}}
-\newlabel{Future Work}{{9.1}{31}{Future Work}{section.9.1}{}}
-\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color  {orange}o}}\ to do}{31}{section*.25}}
+\newlabel{chapter:Future_Work}{{9}{33}{Future Work}{chapter.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9.1}Future Work}{33}{section.9.1}}
+\newlabel{Future Work}{{9.1}{33}{Future Work}{section.9.1}{}}
+\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color  {orange}o}}\ to do}{33}{section*.25}}
 \pgfsyspdfmark {pgfid11}{21054439}{32145014}
-\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color  {orange}o}}\ to do}{31}{section*.26}}
+\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color  {orange}o}}\ to do}{33}{section*.26}}
 \pgfsyspdfmark {pgfid12}{21054439}{28989012}
-\@writefile{toc}{\contentsline {chapter}{\numberline {10}Conclusion}{33}{chapter.10}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {10}Conclusion}{35}{chapter.10}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\addvspace {10\p@ }}
-\newlabel{chapter:Conclusion}{{10}{33}{Conclusion}{chapter.10}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {10.1}Conclusion}{33}{section.10.1}}
-\newlabel{Conclusion}{{10.1}{33}{Conclusion}{section.10.1}{}}
-\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color  {orange}o}}\ you can extend this up to a page. If you do than please keep (comment it out) also the old version of the conclusion comment it out}{33}{section*.27}}
+\newlabel{chapter:Conclusion}{{10}{35}{Conclusion}{chapter.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {10.1}Conclusion}{35}{section.10.1}}
+\newlabel{Conclusion}{{10.1}{35}{Conclusion}{section.10.1}{}}
+\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{orange}{\leavevmode {\color  {orange}o}}\ you can extend this up to a page. If you do than please keep (comment it out) also the old version of the conclusion comment it out}{35}{section*.27}}
 \pgfsyspdfmark {pgfid13}{21054439}{22715069}
-\@writefile{toc}{\contentsline {part}{\numberline {I}SNIPPETS}{35}{part.1}}
+\@writefile{toc}{\contentsline {part}{\numberline {I}SNIPPETS}{37}{part.1}}
 \citation{typearmor}
-\@writefile{toc}{\contentsline {chapter}{\numberline {11}Snippet [COUNT policy]}{37}{chapter.11}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {11}Snippet [COUNT policy]}{39}{chapter.11}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\addvspace {10\p@ }}
-\@writefile{lof}{\contentsline {figure}{\numberline {11.1}{\ignorespaces COUNT policy schema}}{37}{figure.11.1}}
-\newlabel{fig:COUNTschema}{{11.1}{37}{COUNT policy schema}{figure.11.1}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {12}Snippet [TYPE policy]}{39}{chapter.12}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11.1}{\ignorespaces COUNT policy schema}}{39}{figure.11.1}}
+\newlabel{fig:COUNTschema}{{11.1}{39}{COUNT policy schema}{figure.11.1}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {12}Snippet [TYPE policy]}{41}{chapter.12}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\addvspace {10\p@ }}
-\@writefile{lof}{\contentsline {figure}{\numberline {12.1}{\ignorespaces TYPE policy schema for callsites and calltargets}}{40}{figure.12.1}}
-\newlabel{fig:TYPEschema}{{12.1}{40}{TYPE policy schema for callsites and calltargets}{figure.12.1}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {13}Snippet [Matching]}{41}{chapter.13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12.1}{\ignorespaces TYPE policy schema for callsites and calltargets}}{42}{figure.12.1}}
+\newlabel{fig:TYPEschema}{{12.1}{42}{TYPE policy schema for callsites and calltargets}{figure.12.1}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {13}Snippet [Matching]}{43}{chapter.13}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\addvspace {10\p@ }}
-\@writefile{lot}{\contentsline {table}{\numberline {13.1}{\ignorespaces Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets. Missmatches are basically the result of discrepancies between llvm/IR and the actual binary }}{42}{table.13.1}}
-\newlabel{tbl:matchingquality}{{13.1}{42}{Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets. Missmatches are basically the result of discrepancies between llvm/IR and the actual binary}{table.13.1}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {14}Snippet [Theoretical Limits]}{43}{chapter.14}}
+\@writefile{lot}{\contentsline {table}{\numberline {13.1}{\ignorespaces Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets. Missmatches are basically the result of discrepancies between llvm/IR and the actual binary }}{44}{table.13.1}}
+\newlabel{tbl:matchingquality}{{13.1}{44}{Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets. Missmatches are basically the result of discrepancies between llvm/IR and the actual binary}{table.13.1}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {14}Snippet [Theoretical Limits]}{45}{chapter.14}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {chapter}{\numberline {15}Snippet [Patching Schema]}{45}{chapter.15}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {15}Snippet [Patching Schema]}{47}{chapter.15}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {chapter}{\numberline {16}Snippet [Baseline COUNT Implementation]}{47}{chapter.16}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {16}Snippet [Baseline COUNT Implementation]}{49}{chapter.16}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\addvspace {10\p@ }}
-\@writefile{lot}{\contentsline {table}{\numberline {16.1}{\ignorespaces Table shows the overestimation of the parameter count in matched callsites that is happening in our implementation of the basline implementation of the COUNT policy, with -x denoting problematic callsites}}{47}{table.16.1}}
-\newlabel{tbl:baselinecs}{{16.1}{47}{Table shows the overestimation of the parameter count in matched callsites that is happening in our implementation of the basline implementation of the COUNT policy, with -x denoting problematic callsites}{table.16.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {16.2}{\ignorespaces Table shows the underestimation of the parameter count in matched calltargets that is happening in our implementation of the basline implementation of the COUNT policy, with -x denoting problematic calltargets}}{47}{table.16.2}}
-\newlabel{tbl:baselinect}{{16.2}{47}{Table shows the underestimation of the parameter count in matched calltargets that is happening in our implementation of the basline implementation of the COUNT policy, with -x denoting problematic calltargets}{table.16.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {16.3}{\ignorespaces Table shows the ability of inferring the parameter count for callsites and calltargets exhibited by our implementation of the COUNT policy. }}{48}{table.16.3}}
-\newlabel{tbl:baselinecompcsct}{{16.3}{48}{Table shows the ability of inferring the parameter count for callsites and calltargets exhibited by our implementation of the COUNT policy}{table.16.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {16.4}{\ignorespaces Table shows the ability of inferring the voidness for callsites and calltargets exhibited by our implementation of the COUNT policy. }}{48}{table.16.4}}
-\newlabel{tbl:baselinecompvoid}{{16.4}{48}{Table shows the ability of inferring the voidness for callsites and calltargets exhibited by our implementation of the COUNT policy}{table.16.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {16.1}{\ignorespaces Table shows the overestimation of the parameter count in matched callsites that is happening in our implementation of the basline implementation of the COUNT policy, with -x denoting problematic callsites}}{49}{table.16.1}}
+\newlabel{tbl:baselinecs}{{16.1}{49}{Table shows the overestimation of the parameter count in matched callsites that is happening in our implementation of the basline implementation of the COUNT policy, with -x denoting problematic callsites}{table.16.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {16.2}{\ignorespaces Table shows the underestimation of the parameter count in matched calltargets that is happening in our implementation of the basline implementation of the COUNT policy, with -x denoting problematic calltargets}}{49}{table.16.2}}
+\newlabel{tbl:baselinect}{{16.2}{49}{Table shows the underestimation of the parameter count in matched calltargets that is happening in our implementation of the basline implementation of the COUNT policy, with -x denoting problematic calltargets}{table.16.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {16.3}{\ignorespaces Table shows the ability of inferring the parameter count for callsites and calltargets exhibited by our implementation of the COUNT policy. }}{50}{table.16.3}}
+\newlabel{tbl:baselinecompcsct}{{16.3}{50}{Table shows the ability of inferring the parameter count for callsites and calltargets exhibited by our implementation of the COUNT policy}{table.16.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {16.4}{\ignorespaces Table shows the ability of inferring the voidness for callsites and calltargets exhibited by our implementation of the COUNT policy. }}{50}{table.16.4}}
+\newlabel{tbl:baselinecompvoid}{{16.4}{50}{Table shows the ability of inferring the voidness for callsites and calltargets exhibited by our implementation of the COUNT policy}{table.16.4}{}}
 \citation{ZhangSekar00}
 \citation{ZhangSekar00}
 \citation{ZhangSekar00}
 \citation{ZhangSekar00}
-\@writefile{toc}{\contentsline {chapter}{\numberline {17}Snippet [AddressTaken]}{49}{chapter.17}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {17}Snippet [AddressTaken]}{51}{chapter.17}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {17.1}Analysis}{49}{section.17.1}}
-\@writefile{toc}{\contentsline {paragraph}{\nonumberline !shorthand! Code Pointer Constants (CK)}{49}{section*.28}}
+\@writefile{toc}{\contentsline {section}{\numberline {17.1}Analysis}{51}{section.17.1}}
+\@writefile{toc}{\contentsline {paragraph}{\nonumberline !shorthand! Code Pointer Constants (CK)}{51}{section*.28}}
 \citation{ZhangSekar00}
-\@writefile{toc}{\contentsline {section}{\numberline {17.2}Evaluation}{50}{section.17.2}}
-\@writefile{lot}{\contentsline {table}{\numberline {17.1}{\ignorespaces Table that shows how much our address taken analysis differs from the ground truth provided by our clang/llvm passs}}{51}{table.17.1}}
-\newlabel{tbl:atmatching}{{17.1}{51}{Table that shows how much our address taken analysis differs from the ground truth provided by our clang/llvm passs}{table.17.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {17.2}{\ignorespaces Table shows the effect of the various AT filtering versions on the policies AT, COUNT* (theoretical limit of COUNT policy) and TYPE* (theoretical limit of TYPE policy) for all of our test targets}}{52}{table.17.2}}
-\newlabel{tbl:attheoreticaleffect}{{17.2}{52}{Table shows the effect of the various AT filtering versions on the policies AT, COUNT* (theoretical limit of COUNT policy) and TYPE* (theoretical limit of TYPE policy) for all of our test targets}{table.17.2}{}}
-\@writefile{toc}{\contentsline {chapter}{Acronyms}{53}{chapter*.29}}
+\@writefile{toc}{\contentsline {section}{\numberline {17.2}Evaluation}{52}{section.17.2}}
+\@writefile{lot}{\contentsline {table}{\numberline {17.1}{\ignorespaces Table that shows how much our address taken analysis differs from the ground truth provided by our clang/llvm passs}}{53}{table.17.1}}
+\newlabel{tbl:atmatching}{{17.1}{53}{Table that shows how much our address taken analysis differs from the ground truth provided by our clang/llvm passs}{table.17.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {17.2}{\ignorespaces Table shows the effect of the various AT filtering versions on the policies AT, COUNT* (theoretical limit of COUNT policy) and TYPE* (theoretical limit of TYPE policy) for all of our test targets}}{54}{table.17.2}}
+\newlabel{tbl:attheoreticaleffect}{{17.2}{54}{Table shows the effect of the various AT filtering versions on the policies AT, COUNT* (theoretical limit of COUNT policy) and TYPE* (theoretical limit of TYPE policy) for all of our test targets}{table.17.2}{}}
+\@writefile{toc}{\contentsline {chapter}{Acronyms}{55}{chapter*.29}}
 \newacro{CRA}[\AC@hyperlink{CRA}{CRA}]{Code Reuse Attack}
 \newacro{BLA}[\AC@hyperlink{BLA}{BLA}]{kkk}
-\@writefile{toc}{\contentsline {chapter}{List of Figures}{55}{chapter*.30}}
-\@writefile{toc}{\contentsline {chapter}{List of Tables}{57}{chapter*.31}}
+\@writefile{toc}{\contentsline {chapter}{List of Figures}{57}{chapter*.30}}
+\@writefile{toc}{\contentsline {chapter}{List of Tables}{59}{chapter*.31}}
 \bibstyle{IEEEtran}
 \bibcite{mingwei:sekar}{1}
 \bibcite{safedispatch:jang}{2}
 \bibcite{schuster:coop}{3}
 \bibcite{vtv:tice}{4}
-\bibcite{trap:crane}{5}
-\bibcite{subversive-c:lettner}{6}
-\bibcite{intel:cet}{7}
-\bibcite{windows:cfguard}{8}
-\bibcite{veen:typearmor}{9}
-\@writefile{toc}{\contentsline {chapter}{\nonumberline Bibliography}{61}{chapter*.33}}
-\bibcite{haller:shrinkwrap}{10}
-\bibcite{volodymyr:cpi}{11}
-\bibcite{bounov:interleaving}{12}
-\bibcite{zhang:vtrust}{13}
-\bibcite{crane:readactor++}{14}
-\bibcite{crane:readactor++}{15}
-\bibcite{caballero:inference}{16}
-\bibcite{veen:cfi}{17}
-\bibcite{andriesse:indepth}{18}
-\bibcite{lin:rewards}{19}
-\bibcite{bap:brumley}{20}
-\bibcite{fokin:smartdec}{21}
-\bibcite{divine:balakrishnan}{22}
-\bibcite{alan:mycroft}{23}
-\bibcite{bernat:dyninst}{24}
-\bibcite{dynamorio:drmemory}{25}
-\bibcite{iso:iecN3690}{26}
-\bibcite{byoungyoung:typecasting}{27}
-\bibcite{abadi:cfi2}{28}
-\bibcite{abadi:cfi}{29}
-\bibcite{mcfi:niu}{30}
-\bibcite{rockjit:niu}{31}
-\bibcite{perinput:niu}{32}
-\bibcite{vtint:zhang}{33}
-\bibcite{vfuard:aravind}{34}
-\bibcite{dynaguard:petsios}{35}
-\bibcite{pblocker:prakash}{36}
-\bibcite{mohan:opaque}{37}
+\bibcite{subversive-c:lettner}{5}
+\bibcite{intel:cet}{6}
+\bibcite{windows:cfguard}{7}
+\bibcite{veen:typearmor}{8}
+\bibcite{haller:shrinkwrap}{9}
+\@writefile{toc}{\contentsline {chapter}{\nonumberline Bibliography}{63}{chapter*.33}}
+\bibcite{volodymyr:cpi}{10}
+\bibcite{bounov:interleaving}{11}
+\bibcite{zhang:vtrust}{12}
+\bibcite{crane:readactor++}{13}
+\bibcite{caballero:inference}{14}
+\bibcite{veen:cfi}{15}
+\bibcite{andriesse:indepth}{16}
+\bibcite{lin:rewards}{17}
+\bibcite{bap:brumley}{18}
+\bibcite{fokin:smartdec}{19}
+\bibcite{divine:balakrishnan}{20}
+\bibcite{alan:mycroft}{21}
+\bibcite{bernat:dyninst}{22}
+\bibcite{dynamorio:drmemory}{23}
+\bibcite{iso:iecN3690}{24}
+\bibcite{byoungyoung:typecasting}{25}
+\bibcite{abadi:cfi2}{26}
+\bibcite{abadi:cfi}{27}
+\bibcite{mcfi:niu}{28}
+\bibcite{rockjit:niu}{29}
+\bibcite{perinput:niu}{30}
+\bibcite{vtint:zhang}{31}
+\bibcite{vfuard:aravind}{32}
+\bibcite{dynaguard:petsios}{33}
+\bibcite{pblocker:prakash}{34}
+\bibcite{mohan:opaque}{35}
+\bibcite{cfci:zhang}{36}
+\bibcite{ccfir:zhang}{37}
+\bibcite{cfiguard:yuan}{38}
+\bibcite{ccfi:jose}{39}
+\bibcite{dep}{40}
+\bibcite{ASLR}{41}
+\bibcite{ROP}{42}
+\bibcite{JOP1}{43}
+\bibcite{JOP2}{44}
+\bibcite{JOP3}{45}
+\bibcite{rop:carlini}{46}
+\bibcite{kornau:rop}{47}
+\bibcite{rop:shacham}{48}
 \global\@altsecnumformattrue
