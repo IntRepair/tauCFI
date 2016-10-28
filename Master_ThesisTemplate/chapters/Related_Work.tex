@@ -2,19 +2,44 @@
 \label{chapter:Related_Work}
 This Chapter we shortly review the main techniques and tools which are related 
 to \textit{TypeShild}. 
-Section~\ref{Mitigation of Advanced Code-Reuse Attacks} presents 
-several techniques which can not fully defend against advanced CRAs.
 Section~\ref{Tyepe-Inference on Executables} gives an overview of tools used to
 recover type inference from binaries.
-Section~\ref{Binary-based Protection against COOP} highlights several tools which can
-mitigate against the COOP attack on the binary level.
-Section~\ref{Source Code based Protection agaisnt COOP} presents tools which can
-mitigate against the COOP source code level.
-Finaly, Section~\ref{Runtime-based Protection against COOP} shows some of the most promissing 
-runtime-based mitigation techniques against COOP.
+Section~\ref{Mitigation of Code-Reuse Attacks} depicts several techniques
+used to mitigate code reuse attacks in general.
+Finally, Section~\ref{Mitigation of Advanced Code-Reuse Attacks} presents 
+several source code, binary and runtime techniques which can be used to 
+mitigate COOP attacks.
+
+\section{Tyepe-Inference on Executables}
+\label{Tyepe-Inference on Executables}
+Recovering variable types from executable programs
+is very hard in general for several reasons. 
+First, the quality of the disasembly can very much from used
+framework to another. \textit{TypeShild} is based on DynInst 
+and the quality of the execuatble disasembly fits our needs. 
+For a more comprehensive review on the capabilities of DynInst and other tools we
+advice the reader to have a look at~\cite{andriesse:indepth}.
+
+Second, alias analysis in binares is undecidable in theory and intractable in practice~\cite{alan:mycroft}.
+There are several most promising tools such as: Rewards~\cite{lin:rewards}, BAP~\cite{bap:brumley}, 
+SmartDec~\cite{fokin:smartdec}, and Divine~\cite{divine:balakrishnan}.
+These tools try with more or less success to recover 
+type information from binary programs with different goals.
+Typical goals are: 
+\textit{i)} full program reconstruction (binary to code convertion, reversing), 
+\textit{ii)} checking for buffer overflows, 
+\textit{iii)} integer overflows and other types of memory corruptions.
+For a more exhaustive review of such tools we advice the reader to
+have a look at the review of Caballero et al.~\cite{caballero:inference}.
+Intresting to notice is that the code from only a few of this tools is available.
+
+\textit{TypeShild} is most similar to SmartDec since it uses a similar lattice model to
+represent the possible variable types. 
+\todo[inline]{add here 3-4 sentences here about the differences and commonalities between our tool and smartdec}
+
 
 \section{Mitigation of Code-Reuse Attacks}
-\label{Code-Reuse Attacks}
+\label{Mitigation of Code-Reuse Attacks}
 In the last couple of years researchers have provided many versions of new Code Reuse Attacks (CRAs).
 These new attacks were possible since DEP~\cite{dep} and ASLR~\cite{ASLR} were successfully bypassed mostly based
 on Return Oriented Programming (ROP)~\cite{ROP, kornau:rop, rop:shacham} on one hand and on 
@@ -47,6 +72,7 @@ The above list is not exhaustive and new protection techniques can be obtained b
 or by using newly available hardware features or software exploits. However, none of the above techniques and tools 
 can mitigate against COOP attacks.
 
+
 \section{Mitigation of Advanced Code-Reuse Attacks}
 \label{Mitigation of Advanced Code-Reuse Attacks}
 
@@ -60,67 +86,14 @@ since the precomputed CFG does not contain edges for indirect call sites which a
 
 However, the following tools can protect against COOP attacks:
 
-\textit{(a) source code based:} indirect callsite targets are checked based on vTable integrity.
+\textbf{Source code based:} indirect callsite targets are checked based on vTable integrity.
 Different types of CFI policies are used such as in the following tools:
 SafeDispatch~\cite{safedispatch:jang}, IFCC/VTV~\cite{vtv:tice} LLVM and GCC compiler.
 Additionally, the Redactor++~\cite{crane:readactor++} uses randomization 
 vTrust~\cite{zhang:vtrust} checks call target function signatures, 
-CPI~\cite{volodymyr:cpi} uses memory memory safety technique
-in order to ensure COOP attack protection.
+CPI~\cite{volodymyr:cpi} uses a memory safety technique
+in order to protect against the COOP attack.
 
-\textit{(b) binary code based:} vTable protection is addressed through binary instrumentation in tools
-such as: vfGuard~\cite{vfuard:aravind}, vTint~\cite{vtint:zhang}. However, none of these tools can
-help to mitigate against COOP. The only binary based tool which we are aware of that
-can mitigate protect against COOP is TypeArmor~\cite{veen:typearmor}.  
-TypeArmor uses a fine-grained CFI policy based on caller(only indirect call sites)/callee matching 
-which consists in checking during runtime if the number of provided and needed parameters match.
-
-\section{Tyepe-Inference on Executables}
-\label{Tyepe-Inference on Executables}
-Recovering variable types from executable programs
-is very hard in general for several reasons. 
-First, the quality of the disasembly can very much from used
-framework to another. \textit{TypeShild} is based on DynInst 
-and the quality of the execuatble disasembly fits our needs. 
-For a more comprehensive review on the capabilities of DynInst and other tools we
-advice the reader to have a look at~\cite{andriesse:indepth}.
-
-Second, alias analysis in binares is undecidable in theory and intractable in practice~\cite{alan:mycroft}.
-There are several most promising tools such as: Rewards~\cite{lin:rewards}, BAP~\cite{bap:brumley}, 
-SmartDec~\cite{fokin:smartdec}, and Divine~\cite{divine:balakrishnan}.
-These tools try with more or less success to recover 
-type information from binary programs with different goals.
-Typical goals are: 
-\textit{i)} full program reconstruction (binary to code convertion, reversing), 
-\textit{ii)} checking for buffer overflows, 
-\textit{iii)} integer overflows and other types of memory corruptions.
-For a more exhaustive review of such tools we advice the reader to
-have a look at the review of Caballero et al.~\cite{caballero:inference}.
-Intresting to notice is that the code from only a few of this tools is available.
-
-\textit{TypeShild} is most similar to SmartDec since it uses a similar lattice model to
-represent the possible variable types. 
-\todo[inline]{add here 3-4 sentences here about the differences and commonalities between our tool and smartdec}
-
-\section{Binary-based Protection against COOP}
-\label{Binary-based Protection against COOP}
-\textit{TypeShild} is most similar to TypeArmor~\cite{veen:typearmor} since
-we also enforce strong binary-level invariants on the number of function
-paramters. \textit{TypeShild} similarly to TypeArmor targets 
-exclusive protection against advanced exploitation techniques 
-which can bypass fine-grained CFI schemes and VTable protections at the binary level.
-
-However, \textit{TypeShild} is much more precise than TypeArmor since its enforcing 
-policy is also based on the types of the function parameters. This results in a
-more precise selection of caller/calle pairs on which the fine-grained CFI policy is enforced.
-Thus, we achieve a reduced runtime overhead than TypeArmor since we enfoce 
-our CFI policy on fewer caller/callee pairs than TypeArmor.
-
-\todo[inline]{add here 2-3 sentences here to round up this section, present another interesting fact.}
-
-
-\section{Source Code based Protection against COOP}
-\label{Source Code based Protection agaisnt COOP}
 There are several source code based tools 
 which can succesfully protect against the COOP attack.
 Such tools are: ShrinkWrap~\cite{haller:shrinkwrap}, IFCC/VTV~\cite{vtv:tice}, 
@@ -145,8 +118,29 @@ Rather than claiming that the invariants offered by \textit{TypeShild} are suffi
 to mitigate all versions of the COOP attack we take a more conservative path by claiming that \textit{TypeShild} 
 further raises the bar w.r.t. what is possible when defending against COOP attacks on the binary level.
 
-\section{Runtime-based Protection against COOP}
-\label{Runtime-based Protection against COOP}
+\textbf{Binary based:} vTable protection is addressed through binary instrumentation in tools
+such as: vfGuard~\cite{vfuard:aravind}, vTint~\cite{vtint:zhang}. However, none of these tools can
+help to mitigate against COOP. The only binary based tool which we are aware of that
+can mitigate protect against COOP is TypeArmor~\cite{veen:typearmor}.  
+TypeArmor uses a fine-grained CFI policy based on caller (only indirect call sites)/callee matching 
+which consists in checking during runtime if the number of provided and needed parameters match.
+
+\textit{TypeShild} is most similar to TypeArmor~\cite{veen:typearmor} since
+we also enforce strong binary-level invariants on the number of function
+paramters. \textit{TypeShild} similarly to TypeArmor targets 
+exclusive protection against advanced exploitation techniques 
+which can bypass fine-grained CFI schemes and VTable protections at the binary level.
+
+However, \textit{TypeShild} is much more precise than TypeArmor since its enforcing 
+policy is also based on the types of the function parameters. This results in a
+more precise selection of caller/calle pairs on which the fine-grained CFI policy is enforced.
+Thus, we achieve a reduced runtime overhead than TypeArmor since we enfoce 
+our CFI policy on fewer caller/callee pairs than TypeArmor.
+
+\todo[inline]{add here 2-3 sentences here to round up this section, present another interesting fact.}
+
+
+\textbf{Runtime based:}
 ``There is something available out there but I can not used it'' \textit{Anonymous}.
 Long story short conclusion: There are several promissing runtime-based line of defenses against
 advanced CRAs but none of them can succesfully protect against the COOP attack.
