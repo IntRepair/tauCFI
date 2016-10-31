@@ -2,7 +2,7 @@
 \BOOKMARK [0][-]{section*.2}{Abstract}{}% 2
 \BOOKMARK [0][-]{chapter.1}{Introduction}{}% 3
 \BOOKMARK [1][-]{section.1.1}{Motivation}{chapter.1}% 4
-\BOOKMARK [1][-]{section.1.2}{Research Goals}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.2}{Contribution}{chapter.1}% 5
 \BOOKMARK [1][-]{section.1.3}{Outline}{chapter.1}% 6
 \BOOKMARK [0][-]{chapter.2}{C++ Forbidden Calls Exposed}{}% 7
 \BOOKMARK [1][-]{section.2.1}{Polymorphism in C++}{chapter.2}% 8
@@ -65,7 +65,7 @@
 \BOOKMARK [0][-]{chapter.17}{Snippet [AddressTaken]}{part.1}% 65
 \BOOKMARK [1][-]{section.17.1}{Analysis}{chapter.17}% 66
 \BOOKMARK [1][-]{section.17.2}{Evaluation}{chapter.17}% 67
-\BOOKMARK [0][-]{chapter*.29}{Acronyms}{part.1}% 68
-\BOOKMARK [0][-]{chapter*.30}{List of Figures}{part.1}% 69
-\BOOKMARK [0][-]{chapter*.31}{List of Tables}{part.1}% 70
-\BOOKMARK [0][-]{chapter*.33}{Bibliography}{part.1}% 71
+\BOOKMARK [0][-]{chapter*.30}{Acronyms}{part.1}% 68
+\BOOKMARK [0][-]{chapter*.31}{List of Figures}{part.1}% 69
+\BOOKMARK [0][-]{chapter*.32}{List of Tables}{part.1}% 70
+\BOOKMARK [0][-]{chapter*.34}{Bibliography}{part.1}% 71

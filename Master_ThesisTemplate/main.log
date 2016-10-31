@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  28 OCT 2016 18:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  31 OCT 2016 17:13
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1610,17 +1610,16 @@ been already used, duplicate ignored
 l.54 
       [1
 
-]) (./chapters/Forward_Indirect_Callsites.texpdfTeX warning (ext4): destination
- with the same identifier (name{page.2}) has been already used, duplicate ignor
-ed
+]pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
+ been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1 \chapter
-            {C++ Forbidden Calls Exposed} [2]
-Chapter 2.
-[3
+l.106 
+       [2]) (./chapters/Forward_Indirect_Callsites.tex [3] [4
 
 ]
+Chapter 2.
+[5]
 \firstlisting=\box48
 \openout6 = `main.pyg'.
 
@@ -1642,7 +1641,7 @@ runsystem(rm main.out.pyg)...executed.
 
 runsystem(rm main.pyg)...executed.
 
-<figures/loop.pdf, id=488, 390.45876pt x 556.0775pt>
+<figures/loop.pdf, id=494, 390.45876pt x 556.0775pt>
 File: figures/loop.pdf Graphic file (type pdf)
  <use figures/loop.pdf>
 Package pdftex.def Info: figures/loop.pdf used on input line 116.
@@ -1652,7 +1651,7 @@ Overfull \hbox (52.3818pt too wide) in paragraph at lines 108--118
 []$[]$   $[]$ 
  []
 
-[4 <./figures/loop.pdf>]
+[6 <./figures/loop.pdf>]
 Overfull \hbox (2.96016pt too wide) in paragraph at lines 164--176
 \OT1/ppl/m/n/10.95 Bounov et al [[]] pre-sented a tool ($\OMS/cmsy/m/n/10.95 ^^
 Y$ \OT1/ppl/m/n/10.95 1% run-time over-head) for in-di-rect forward-
@@ -1664,7 +1663,7 @@ Overfull \hbox (1.94357pt too wide) in paragraph at lines 164--176
 tch-ing (coarse grained,
  []
 
-[5] [6] <figures/class_hierarchy.pdf, id=555, 585.18625pt x 483.8075pt>
+[7] [8] <figures/class_hierarchy.pdf, id=562, 585.18625pt x 483.8075pt>
 File: figures/class_hierarchy.pdf Graphic file (type pdf)
 
 <use figures/class_hierarchy.pdf>
@@ -1674,32 +1673,32 @@ Package pdftex.def Info: figures/class_hierarchy.pdf used on input line 235.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[7]) (./chapters/TypeShild_Overview.tex [8 <./figures/class_hierarchy.pdf>]
+[9]) (./chapters/TypeShild_Overview.tex [10 <./figures/class_hierarchy.pdf>]
 Chapter 3.
-[9
-
-]) (./chapters/Design.tex [10]
-Chapter 4.
 [11
 
-] [12]
+]) (./chapters/Design.tex [12]
+Chapter 4.
+[13
 
-LaTeX Warning: Citation `ZhangSekar00' on page 13 undefined on input line 125.
+] [14]
 
-
-LaTeX Warning: Citation `ZhangSekar00' on page 13 undefined on input line 127.
-
-
-LaTeX Warning: Citation `ZhangSekar00' on page 13 undefined on input line 132.
-
-[13]
-
-LaTeX Warning: Citation `ZhangSekar00' on page 14 undefined on input line 139.
+LaTeX Warning: Citation `ZhangSekar00' on page 15 undefined on input line 125.
 
 
-LaTeX Warning: Citation `dyninst00' on page 14 undefined on input line 144.
+LaTeX Warning: Citation `ZhangSekar00' on page 15 undefined on input line 127.
 
-) (./chapters/Implementation.tex [14]
+
+LaTeX Warning: Citation `ZhangSekar00' on page 15 undefined on input line 132.
+
+[15]
+
+LaTeX Warning: Citation `ZhangSekar00' on page 16 undefined on input line 139.
+
+
+LaTeX Warning: Citation `dyninst00' on page 16 undefined on input line 144.
+
+) (./chapters/Implementation.tex [16]
 Chapter 5.
 
 Overfull \hbox (12.09541pt too wide) in paragraph at lines 13--18
@@ -1707,9 +1706,9 @@ Overfull \hbox (12.09541pt too wide) in paragraph at lines 13--18
 e a \OT1/pcr/m/n/10.95 MachineFunction
  []
 
-[15
+[17
 
-]) (./chapters/Evaluation.tex [16]
+]) (./chapters/Evaluation.tex [18]
 Chapter 6.
 LaTeX Font Info:    Try loading font information for TS1+ppl on input line 8.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ppl.fd
@@ -1720,14 +1719,14 @@ Overfull \hbox (2.10867pt too wide) in paragraph at lines 16--18
  of \OT1/ppl/m/it/10.95 Type-Shild\OT1/ppl/m/n/10.95 ? How many caller/called
  []
 
-[17
+[19
 
 ]
 Overfull \hbox (97.52803pt too wide) in paragraph at lines 111--118
  [][] 
  []
 
-[18]
+[20]
 Overfull \hbox (83.77443pt too wide) in paragraph at lines 154--161
  [][] 
  []
@@ -1737,7 +1736,7 @@ Overfull \hbox (37.68971pt too wide) in paragraph at lines 169--176
  [][] 
  []
 
-[19] <figures/impact_of_cfi_and_cfc.pdf, id=673, 362.35374pt x 380.42125pt>
+[21] <figures/impact_of_cfi_and_cfc.pdf, id=679, 362.35374pt x 380.42125pt>
 File: figures/impact_of_cfi_and_cfc.pdf Graphic file (type pdf)
 
 <use figures/impact_of_cfi_and_cfc.pdf>
@@ -1745,7 +1744,7 @@ Package pdftex.def Info: figures/impact_of_cfi_and_cfc.pdf used on input line 2
 72.
 (pdftex.def)             Requested size: 189.21085pt x 198.64445pt.
 
-<figures/liveness_iteration.pdf, id=674, 795.97375pt x 308.15125pt>
+<figures/liveness_iteration.pdf, id=680, 795.97375pt x 308.15125pt>
 File: figures/liveness_iteration.pdf Graphic file (type pdf)
 
 <use figures/liveness_iteration.pdf>
@@ -1753,23 +1752,23 @@ Package pdftex.def Info: figures/liveness_iteration.pdf used on input line 278.
 
 (pdftex.def)             Requested size: 340.57722pt x 131.84886pt.
 
-<figures/reaching_iteration.pdf, id=675, 795.97375pt x 308.15125pt>
+<figures/reaching_iteration.pdf, id=681, 795.97375pt x 308.15125pt>
 File: figures/reaching_iteration.pdf Graphic file (type pdf)
 
 <use figures/reaching_iteration.pdf>
 Package pdftex.def Info: figures/reaching_iteration.pdf used on input line 284.
 
 (pdftex.def)             Requested size: 340.57722pt x 131.84886pt.
- [20 <./figures/impact_of_cfi_and_cfc.pdf> <./figures/liveness_iteration.pdf
+ [22 <./figures/impact_of_cfi_and_cfc.pdf> <./figures/liveness_iteration.pdf
 
 pdfTeX warning: /usr/bin/pdflatex (file ./figures/liveness_iteration.pdf): PDF 
 inclusion: multiple pdfs with page group included in a single page
->] [21 <./figures/reaching_iteration.pdf>]
+>] [23 <./figures/reaching_iteration.pdf>]
 Overfull \hbox (464.31424pt too wide) in paragraph at lines 405--412
  [][] 
  []
 
-[22]) (./chapters/Discussion.tex [23] [24
+[24]) (./chapters/Discussion.tex [25] [26
 
 ]
 Chapter 7.
@@ -1778,11 +1777,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 6--7
 
  []
 
-) (./chapters/Related_Work.tex [25] [26
+) (./chapters/Related_Work.tex [27] [28
 
 ]
 Chapter 8.
-[27]
+[29]
 Overfull \hbox (1.60408pt too wide) in paragraph at lines 53--70
 \OT1/ppl/m/n/10.95 tografy with hard-ware sup-port, CCFI [[]], \OT1/ppl/m/it/10
 .95 (f) \OT1/ppl/m/n/10.95 ROP stack piv-ot-ing, PBlocker [[]],
@@ -1794,7 +1793,7 @@ Overfull \hbox (1.2331pt too wide) in paragraph at lines 79--86
 vanced CRAs since
  []
 
-[28]
+[30]
 Overfull \hbox (6.91513pt too wide) in paragraph at lines 97--109
 []\OT1/ppl/m/n/10.95 There are sev-eral source code based tools which can suc-c
 es-fully pro-tect against
@@ -1812,11 +1811,11 @@ Overfull \hbox (5.02115pt too wide) in paragraph at lines 128--133
 -mor [[]] since we also en-force strong binary-
  []
 
-[29]) (./chapters/Future_Work.tex [30]
+[31]) (./chapters/Future_Work.tex [32]
 Chapter 9.
-) (./chapters/Conclusion.tex [31
+) (./chapters/Conclusion.tex [33
 
-] [32
+] [34
 
 ]
 Chapter 10.
@@ -1826,12 +1825,12 @@ Overfull \hbox (21.40157pt too wide) in paragraph at lines 10--27
 ome and Fire-fox browsers.
  []
 
-) (./chapters/Snippets.tex [33] [34
+) (./chapters/Snippets.tex [35] [36
 
 ]
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <24.88> not available
 (Font)              Font shape `OT1/ppl/b/n' tried instead on input line 1.
- [35] [36]
+ [37] [38]
 Chapter 11.
 
 Underfull \hbox (badness 10000) in paragraph at lines 31--31
@@ -1839,31 +1838,31 @@ Underfull \hbox (badness 10000) in paragraph at lines 31--31
  []
 
 
-LaTeX Warning: Citation `typearmor' on page 37 undefined on input line 35.
+LaTeX Warning: Citation `typearmor' on page 39 undefined on input line 35.
 
-[37
-
-] [38]
-Chapter 12.
 [39
 
 ] [40]
-Chapter 13.
-
-LaTeX Warning: Reference `matchingquality' on page 41 undefined on input line 1
-68.
-
+Chapter 12.
 [41
 
 ] [42]
-Chapter 14.
+Chapter 13.
+
+LaTeX Warning: Reference `matchingquality' on page 43 undefined on input line 1
+68.
+
 [43
 
-] [44
+] [44]
+Chapter 14.
+[45
+
+] [46
 
 ]
 Chapter 15.
-[45] [46
+[47] [48
 
 ]
 Chapter 16.
@@ -1871,30 +1870,30 @@ Chapter 16.
 Package wrapfig Warning: Collision between wrapping environments on input line 
 219.
 
-[47] [48]
+[49] [50]
 Chapter 17.
 
-LaTeX Warning: Citation `ZhangSekar00' on page 49 undefined on input line 278.
+LaTeX Warning: Citation `ZhangSekar00' on page 51 undefined on input line 278.
 
 
-LaTeX Warning: Citation `ZhangSekar00' on page 49 undefined on input line 282.
+LaTeX Warning: Citation `ZhangSekar00' on page 51 undefined on input line 282.
 
 
-LaTeX Warning: Citation `ZhangSekar00' on page 49 undefined on input line 284.
+LaTeX Warning: Citation `ZhangSekar00' on page 51 undefined on input line 284.
 
 
-LaTeX Warning: Citation `ZhangSekar00' on page 49 undefined on input line 289.
+LaTeX Warning: Citation `ZhangSekar00' on page 51 undefined on input line 289.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 289--290
 
  []
 
-[49
+[51
 
 ]
 
-LaTeX Warning: Citation `ZhangSekar00' on page 50 undefined on input line 293.
+LaTeX Warning: Citation `ZhangSekar00' on page 52 undefined on input line 293.
 
 LaTeX Font Info:    External font `yhcmex10' loaded for size
 (Font)              <9> on input line 298.
@@ -1906,7 +1905,7 @@ Overfull \hbox (3.4678pt too wide) in paragraph at lines 300--301
 oth data sets $\OMS/cmsy/m/n/10.95 F[] \OT1/cmr/m/n/10.95 =
  []
 
-[50]
+[52]
 Overfull \hbox (8.16551pt too wide) in paragraph at lines 316--317
 \OT1/ppl/m/n/10.95 ing prob-lem-atic and over-
  []
@@ -1926,22 +1925,22 @@ Underfull \hbox (badness 1320) in paragraph at lines 316--317
 \OT1/ppl/m/n/10.95 re-duc-tion ef-fect. The
  []
 
-) [51] [52] (./chapters/Acronyms.tex) [53
+) [53] [54] (./chapters/Acronyms.tex) [55
 
-] [54
+] [56
 
 ] (./main.toc)
 \tf@toc=\write10
 \openout10 = `main.toc'.
 
- [55] [56
+ [57] [58
 
 ]
 (./main.lof)
 \tf@lof=\write11
 \openout11 = `main.lof'.
 
- [57] [58
+ [59] [60
 
 ] (./main.lot
 Overfull \hbox (7.44133pt too wide) in paragraph at lines 39--39
@@ -1967,11 +1966,11 @@ Overfull \hbox (16.15709pt too wide) in paragraph at lines 41--41
 on of the COUNT 
  []
 
-[59])
+[61])
 \tf@lot=\write12
 \openout12 = `main.lot'.
 
- [60]
+ [62]
 Underfull \hbox (badness 10000) in paragraph at lines 227--229
 \OT1/pcr/m/n/10.95 06 / 09 / intel -[] release -[] new -[] technology -[] speci
 fications -[]
@@ -1994,10 +1993,10 @@ Underfull \hbox (badness 2600) in paragraph at lines 242--245
 dis, H. Bos,
  []
 
-[61
+[63
 
 
-] [62]
+] [64]
 Underfull \hbox (badness 3199) in paragraph at lines 304--307
 []\OT1/ppl/m/n/10.95 Alan My-croft, ``Lec-ture Notes, In [][]$\OT1/pcr/m/n/10.9
 5 https : / / www . cl . cam . ac . uk /
@@ -2015,7 +2014,7 @@ Underfull \hbox (badness 4660) in paragraph at lines 319--322
  . org / files / papers / N3690 .
  []
 
-[63]
+[65]
 Underfull \hbox (badness 1406) in paragraph at lines 400--402
 []\OT1/ppl/m/n/10.95 Microsoft, Changes to Func-tion-al-ity in Mi-crosoft Win-d
 ows XP Ser-
@@ -2027,7 +2026,7 @@ Underfull \hbox (badness 2707) in paragraph at lines 404--406
 T1/pcr/m/n/10.95 https : / / pax .
  []
 
-[64]
+[66]
 Underfull \hbox (badness 1210) in paragraph at lines 423--426
 []\OT1/ppl/m/n/10.95 L. Davi, A. Dmitrienko, A.-R. Sadeghi, and M. Winandy, ``R
 eturn-
@@ -2045,14 +2044,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 433--436
 com / downloads / kornau -[] tim -[]
  []
 
-[65]
+[67]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 478.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 478.
  (./main.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 478.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 478.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 7EED76E47A2F22716C2DF1DF661DC4D2;4953.
+(rerunfilecheck)             Checksum: 3BAB104095018D493BB1FF7C5C5F06E5;4951.
 
 
 LaTeX Warning: There were undefined references.
@@ -2063,10 +2062,10 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 478.
  ) 
 Here is how much of TeX's memory you used:
- 23316 strings out of 493105
- 427945 string characters out of 6137072
- 557140 words of memory out of 5000000
- 25897 multiletter control sequences out of 15000+600000
+ 23323 strings out of 493105
+ 428048 string characters out of 6137072
+ 557280 words of memory out of 5000000
+ 25904 multiletter control sequences out of 15000+600000
  29697 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  71i,11n,80p,1324b,706s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2083,10 +2082,10 @@ hare/texlive/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texlive
 fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino
 /uplri8a.pfb>
-Output written on main.pdf (83 pages, 420629 bytes).
+Output written on main.pdf (85 pages, 424665 bytes).
 PDF statistics:
- 1199 PDF objects out of 1200 (max. 8388607)
- 1061 compressed objects within 11 object streams
+ 1206 PDF objects out of 1440 (max. 8388607)
+ 1066 compressed objects within 11 object streams
  274 named destinations out of 1000 (max. 500000)
  611 words of extra memory for PDF output out of 10000 (max. 10000000)
 
