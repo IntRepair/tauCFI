@@ -1,0 +1,9 @@
+opt,target,cs,cs args perfect,cs args perfect pct,cs args problem,cs args problem pct,cs non-void correct,cs non-void correct pct,cs non-void problem,cs non-void problem pct,ct,ct args perfect,ct args perfect pct,ct args problem,ct args problem pct,ct void correct,ct void correct pct,ct void problem,ct void problem pct
+O3,proftpd,136,74,54.41,0,0.0,111,81.61,0,0.0,1007,877,87.09,0,0.0,818,81.23,42,4.17
+O3,vsftpd,18,6,33.33,0,0.0,18,100.0,0,0.0,314,231,73.56,0,0.0,160,50.95,20,6.36
+O3,lighttpd,49,2,4.08,0,0.0,46,93.87,0,0.0,289,268,92.73,0,0.0,227,78.54,5,1.73
+O3,nginx,240,69,28.75,4,1.66,222,92.5,0,0.0,908,708,77.97,0,0.0,732,80.61,9,0.99
+O3,mysqld,6946,2037,29.32,110,1.58,5701,82.07,0,0.0,9703,6655,68.58,0,0.0,7016,72.3,264,2.72
+O3,postgres,613,207,33.76,0,0.0,582,94.94,0,0.0,6848,5803,84.74,0,0.0,4661,68.06,173,2.52
+O3,memcached,47,30,63.82,0,0.0,47,100.0,0,0.0,133,117,87.96,0,0.0,66,49.62,2,1.5
+O3,node,8599,2187,25.43,102,1.18,7151,83.16,3,0.03,20638,15626,75.71,0,0.0,13350,64.68,969,4.69
