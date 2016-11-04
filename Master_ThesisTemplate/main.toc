@@ -2,8 +2,8 @@
 \select@language {croatian}
 \select@language {german}
 \select@language {english}
-\contentsline {chapter}{Acknowledgements}{ix}{section*.1}
-\contentsline {chapter}{Abstract}{xi}{section*.2}
+\contentsline {chapter}{Acknowledgements}{vii}{section*.1}
+\contentsline {chapter}{Abstract}{ix}{section*.2}
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Motivation}{2}{section.1.1}
 \contentsline {section}{\numberline {1.2}Contribution}{3}{section.1.2}
