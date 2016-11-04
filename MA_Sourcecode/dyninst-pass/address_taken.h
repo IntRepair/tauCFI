@@ -12,7 +12,8 @@ class CADecoder;
 
 struct TakenAddressSource
 {
-    TakenAddressSource(std::string source_name_, BPatch_object *object_, uint64_t address_)
+    TakenAddressSource(std::string source_name_, BPatch_object *object_,
+                       uint64_t address_)
         : source_name(std::move(source_name_)), object(object_), address(address_)
     {
     }
@@ -31,18 +32,18 @@ TakenAddresses address_taken_analysis(BPatch_object *object, BPatch_image *image
 
 #include "to_string.h"
 
-template <> std::string to_string(TakenAddressSource const &address_source)
+template <> inline std::string to_string(TakenAddressSource const &address_source)
 {
-    return "\t[ <" + address_source.source_name + "> " + address_source.object->name() + " @ " +
-           int_to_hex(address_source.address) + "]";
+    return "\t[ <" + address_source.source_name + "> " + address_source.object->name() +
+           " @ " + int_to_hex(address_source.address) + "]";
 }
 
-template <> std::string to_string(TakenAddress const &address)
+template <> inline std::string to_string(TakenAddress const &address)
 {
     return "<AT> " + int_to_hex(address.first) + ":\n" + to_string(address.second);
 }
 
-template <> std::string to_string(TakenAddresses const &addresses)
+template <> inline std::string to_string(TakenAddresses const &addresses)
 {
     std::stringstream ss;
 

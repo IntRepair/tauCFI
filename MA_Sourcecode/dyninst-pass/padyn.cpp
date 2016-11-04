@@ -56,16 +56,52 @@ class PadynPass : public ModulePass
 
         CADecoder decoder;
 
-        instrument_image_objects(image, [&decoder, image](BPatch_object *object) {
-            LOG_INFO(LOG_FILTER_GENERAL, "Processing object %s", object->name().c_str());
-            if ((object->name() != "binops.u8.u8.u8") && (object->name() != "nginx"))
+        auto const is_system = [](BPatch_object *object) {
+            std::vector<BPatch_module *> modules;
+            object->modules(modules);
+            if (modules.size() != 1)
+                return false;
+            return modules[0]->isSystemLib();
+        };
+
+        auto const is_shared = [](BPatch_object *object) {
+            std::vector<BPatch_module *> modules;
+            object->modules(modules);
+            if (modules.size() != 1)
+                return false;
+            return modules[0]->isSharedLib();
+        };
+
+        auto const is_excluded_library = [](BPatch_object *object) {
+            const std::array<std::string, 12> excluded_libraries{
+                "libdyninstAPI_RT.so", "libpthread.so", "libz.so",    "libdl.so",
+                "libcrypt.so",         "libnsl.so",     "libm.so",    "libstdc++.so",
+                "libgcc_s.so",         "libc.so",       "libpcre.so", "libcrypto.so",
+            };
+
+            auto const library_name = object->name();
+            for (auto const &exclude : excluded_libraries)
+            {
+                if (exclude.length() <= library_name.length())
+                    if (std::equal(exclude.begin(), exclude.end(), library_name.begin()))
+                        return true;
+            }
+            return false;
+        };
+
+        instrument_image_objects(image, [&](BPatch_object *object) {
+
+            if (is_system(object) || is_shared(object) || is_excluded_library(object))
                 return;
+
+            LOG_INFO(LOG_FILTER_GENERAL, "Processing object %s", object->name().c_str());
 
             LOG_INFO(LOG_FILTER_GENERAL, "Performing address taken analysis...");
             auto taken_addresses = address_taken_analysis(object, image, &decoder);
 
             LOG_INFO(LOG_FILTER_GENERAL, "Performing relative callee analysis...");
-            auto calltargets = calltarget_analysis(object, image, &decoder, taken_addresses);
+            auto calltargets =
+                calltarget_analysis(object, image, &decoder, taken_addresses);
 
             LOG_INFO(LOG_FILTER_GENERAL, "Performing relative callsite analysis...");
             auto callsites = callsite_analysis(object, image, &decoder, calltargets);
@@ -74,16 +110,16 @@ class PadynPass : public ModulePass
                      "Found %lu taken_addresses, %lu calltargets and %lu callsites",
                      taken_addresses.size(), calltargets.size(), callsites.size());
 
-            LOG_INFO(LOG_FILTER_GENERAL, "Performing binary patching...");
-            binary_patching(object, image, &decoder, calltargets, callsites);
-
             verification::pairing(object, image, taken_addresses, calltargets, callsites);
 
+            //LOG_INFO(LOG_FILTER_GENERAL, "Performing binary patching...");
+            //binary_patching(object, image, &decoder, calltargets, callsites,
+            //                taken_addresses);
         });
 
         LOG_INFO(LOG_FILTER_GENERAL, "Finished Dyninst setup, returning to target");
 
-        return false;
+        return true;
     }
 };
 }

@@ -2,11 +2,13 @@
 
 #include "instrumentation.h"
 #include "systemv_abi.h"
+#include "utils.h"
 
 #include <BPatch_flowGraph.h>
 #include <PatchCFG.h>
 
 #include <boost/range/adaptor/reversed.hpp>
+#include <boost/optional.hpp>
 
 using Dyninst::PatchAPI::PatchBlock;
 
@@ -15,300 +17,137 @@ template <> reaching::state_t convert_state(RegisterState reg_state)
     switch (reg_state)
     {
     case REGISTER_UNTOUCHED:
-        return reaching::REGISTER_UNKNOWN;
     case REGISTER_READ:
         return reaching::REGISTER_UNKNOWN;
     case REGISTER_WRITE:
-        return reaching::REGISTER_SET;
     case REGISTER_READ_WRITE:
-        return reaching::REGISTER_SET;
+        return reaching::REGISTER_SET_FULL;
+    default:
+        assert(false);
     }
+}
+
+template <> reaching::state_t convert_state(RegisterStateEx reg_state)
+{
+    if (reg_state == REGISTER_EX_UNTOUCHED)
+        return reaching::REGISTER_UNKNOWN;
+
+    return (((reg_state & REGISTER_EX_WRITE_64) == REGISTER_EX_WRITE_64)
+                ? reaching::REGISTER_SET_64
+                : reaching::REGISTER_UNKNOWN) |
+           (((reg_state & REGISTER_EX_WRITE_32) == REGISTER_EX_WRITE_32)
+                ? reaching::REGISTER_SET_32
+                : reaching::REGISTER_UNKNOWN) |
+           (((reg_state & REGISTER_EX_WRITE_16) == REGISTER_EX_WRITE_16)
+                ? reaching::REGISTER_SET_16
+                : reaching::REGISTER_UNKNOWN) |
+           (((reg_state & REGISTER_EX_WRITE_8) == REGISTER_EX_WRITE_8)
+                ? reaching::REGISTER_SET_8
+                : reaching::REGISTER_UNKNOWN);
 }
 
 namespace reaching
 {
+
 namespace
 {
-bool has_undefined_param_regs(RegisterStates &reg_state)
+static boost::optional<RegisterStates> block_analysis(
+    AnalysisConfig &config, BPatch_basicBlock *block,
+    std::vector<BPatch_basicBlock *> path = std::vector<BPatch_basicBlock *>());
+
+static boost::optional<RegisterStates> block_analysis(
+    AnalysisConfig &config, BPatch_basicBlock *block, Dyninst::Address end_address,
+    std::vector<BPatch_basicBlock *> path = std::vector<BPatch_basicBlock *>());
+
+static boost::optional<RegisterStates> blocks_analysis(
+    AnalysisConfig &config, std::vector<BPatch_basicBlock *> blocks,
+    std::vector<BPatch_basicBlock *> path = std::vector<BPatch_basicBlock *>())
 {
-    bool undefined_regs = false;
-    for (auto i = static_cast<size_t>(RegisterStates::min_index);
-         i <= static_cast<size_t>(RegisterStates::max_index); ++i)
+    std::vector<RegisterStates> states;
+
+    for (auto block : blocks)
     {
-        if (is_parameter_register(i))
-            undefined_regs |= (reg_state[i] == REGISTER_UNKNOWN);
+        auto block_state = block_analysis(config, block, path);
+        if (block_state)
+            states.push_back(*block_state);
     }
-    return undefined_regs;
+
+    boost::optional<RegisterStates> register_state;
+    if (states.size() > 0)
+        register_state = (*config.merge_horizontal_intra)(states);
+
+    return register_state;
 }
 
-bool has_undefined_return_regs(RegisterStates &reg_state)
+boost::optional<RegisterStates> interfn_analysis(
+    AnalysisConfig &config, std::vector<FnCallReverse> blocks,
+    std::vector<BPatch_basicBlock *> path = std::vector<BPatch_basicBlock *>())
 {
-    bool undefined_regs = false;
-    for (auto i = static_cast<size_t>(RegisterStates::min_index);
-         i <= static_cast<size_t>(RegisterStates::max_index); ++i)
+    std::vector<RegisterStates> states;
+
+    for (auto block : blocks)
     {
-        if (is_return_register(i))
-            undefined_regs |= (reg_state[i] == REGISTER_UNKNOWN);
+        auto block_state = block_analysis(config, block.first, block.second, path);
+        if (block_state)
+            states.push_back(*block_state);
     }
-    return undefined_regs;
-}
+
+    boost::optional<RegisterStates> register_state;
+    if (states.size() > 0)
+        register_state = (*config.merge_horizontal_inter)(states);
+
+    return register_state;
 }
 
-namespace base
+static RegisterStates source_analysis(
+    AnalysisConfig &config, BPatch_basicBlock *block,
+    std::vector<BPatch_basicBlock *> path = std::vector<BPatch_basicBlock *>())
 {
-template <typename merge_fun_t>
-static RegisterStates merge_horizontal(std::vector<RegisterStates> states,
-                                       merge_fun_t reg_merge_fun)
-{
-    RegisterStates target_state;
-    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t\tMerging states horizontal:");
-    for (auto const &state : states)
-        LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t\t\t%s", to_string(state).c_str());
-    if (states.size() == 1)
+    BPatch_Vector<BPatch_basicBlock *> sources;
+    block->getSources(sources);
+
+    RegisterStates state;
+
+    // in case we find no sources, we have to assume that the block prepares the maximum
+    // amount
+    if (block->isEntryBlock())
     {
-        target_state = states[0];
+        state = system_v::get_maximum_reaching_state();
     }
-    else if (states.size() > 1)
+
+    auto source_state = blocks_analysis(config, sources, path);
+    if (source_state)
     {
-        target_state =
-            std::accumulate(++(states.begin()), states.end(), states.front(), reg_merge_fun);
+        state = (*config.merge_horizontal_entry)(util::make_vector(*source_state, state));
     }
-    return target_state;
-}
-}
 
-namespace calltarget
-{
+    if (block->isEntryBlock())
+    {
+        auto &min_liveness = config.min_liveness;
+        if (min_liveness.count(block) > 0 && config.use_min_liveness)
+        {
+            state = (*config.merge_horizontal_mlive)(
+                util::make_vector(min_liveness[block], state));
+        }
 
-static RegisterStates merge_horizontal(std::vector<RegisterStates> states)
-{
-    return base::merge_horizontal(states, [](RegisterStates current, RegisterStates delta) {
-        return transform(current, delta, [](state_t current, state_t delta) {
-            if (delta == REGISTER_TRASHED)
-                current = REGISTER_TRASHED;
-            if (current == REGISTER_UNKNOWN)
-                current = delta;
-            return current;
-        });
-    });
-}
-
-static RegisterStates merge_vertical(RegisterStates current, RegisterStates delta)
-{
-    return transform(current, delta, [](state_t current, state_t delta) {
-        return (current == REGISTER_UNKNOWN) ? delta : current;
-    });
-}
-
-AnalysisConfig init(CADecoder *decoder, BPatch_image *image, BPatch_object *object)
-{
-    AnalysisConfig config;
-
-    config.decoder = decoder;
-    config.image = image;
-    config.merge_vertical = &merge_vertical;
-    config.merge_horizontal_inter = &merge_horizontal;
-    config.merge_horizontal_union = &merge_horizontal;
-    config.can_change = has_undefined_return_regs;
-    config.follow_return_edges = true;
-    config.follow_into_callers = false;
-
-    return config;
-}
-};
-
-namespace callsite
-{
-static RegisterStates merge_horizontal_union(std::vector<RegisterStates> states)
-{
-    return base::merge_horizontal(states, [](RegisterStates current, RegisterStates delta) {
-        return transform(current, delta, [](state_t current, state_t delta) {
-            if (delta == REGISTER_TRASHED)
-                current = REGISTER_TRASHED;
-            if (current == REGISTER_UNKNOWN)
-                current = delta;
-            return current;
-        });
-    });
-}
-
-static RegisterStates merge_horizontal_inter(std::vector<RegisterStates> states)
-{
-    return base::merge_horizontal(states, [](RegisterStates current, RegisterStates delta) {
-        return transform(current, delta, [](state_t current, state_t delta) {
-
-            if (current != delta)
-                current = REGISTER_TRASHED;
-            return current;
-        });
-    });
-}
-
-static RegisterStates merge_vertical(RegisterStates current, RegisterStates delta)
-{
-    return transform(current, delta, [](state_t current, state_t delta) {
-        return (current == REGISTER_UNKNOWN) ? delta : current;
-    });
-}
-
-static FunctionCallReverseLookup calculate_block_callers(AnalysisConfig &config,
-                                                         BPatch_object *object)
-{
-    FunctionCallReverseLookup block_callers;
-
-    auto decoder = config.decoder;
-    auto image = config.image;
-
-    using Insns = Dyninst::PatchAPI::PatchBlock::Insns;
-    instrument_object_basicBlocks_unordered(object, [&](BPatch_basicBlock *block) {
-        instrument_basicBlock_instructions(block, [&](Insns::value_type &instruction) {
-
-            auto address = reinterpret_cast<uint64_t>(instruction.first);
-            Instruction::Ptr instruction_ptr = instruction.second;
-            decoder->decode(address, instruction_ptr);
-
-            if (decoder->is_call())
+        if (config.follow_into_callers && config.block_callers)
+        {
+            auto call_sources = (*config.block_callers)[block];
+            auto call_state = interfn_analysis(config, call_sources, path);
+            if (call_state)
             {
-                auto source_addr = decoder->get_src(0);
-                auto function = image->findFunction(source_addr);
-                BPatch_flowGraph *cfg = function->getCFG();
-
-                std::vector<BPatch_basicBlock *> entry_blocks;
-                if (!cfg->getEntryBasicBlock(entry_blocks))
-                {
-                    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
-                              "\tCOULD NOT DETERMINE ENTRY BASIC_BLOCKS FOR FUNCTION");
-                }
-
-                BPatch_basicBlock *entry_block = nullptr;
-                if (entry_blocks.size() == 1)
-                    entry_block = entry_blocks[0];
-                else
-                {
-                    auto itr = std::find_if(std::begin(entry_blocks), std::end(entry_blocks),
-                                            [source_addr](BPatch_basicBlock *block) {
-                                                return block->getStartAddress() == source_addr;
-                                            });
-                    if (itr != std::end(entry_blocks))
-                    {
-                        entry_block = (*itr);
-                    }
-                    else
-                    {
-                        LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
-                                  "\tCOULD NOT DETERMINE CORRECT ENTRY BASIC_BLOCK FOR FUNCTION");
-                    }
-                }
-
-                if (entry_block)
-                    block_callers[entry_block].push_back(std::make_pair(block, address));
+                state = (*config.merge_horizontal_entry)(
+                    util::make_vector(*call_state, state));
             }
-        });
-    });
-
-    return block_callers;
-}
-
-static FunctionMinLivenessLookup calculate_min_liveness(CallTargets &targets)
-{
-    FunctionMinLivenessLookup min_liveness;
-    for (auto &target : targets)
-    {
-        RegisterStates reg_states;
-
-        auto param = target.parameters;
-        for (int i = 0; i < 6; ++i)
-        {
-            if (param[i] == 'x')
-                reg_states[get_parameter_register_from_index(i)] = REGISTER_SET;
-        }
-
-        auto function = target.function;
-        BPatch_flowGraph *cfg = function->getCFG();
-
-        std::vector<BPatch_basicBlock *> entry_blocks;
-
-        if (cfg->getEntryBasicBlock(entry_blocks))
-        {
-            for (auto block : entry_blocks)
-                min_liveness[block] = reg_states;
         }
     }
 
-    return min_liveness;
+    return state;
 }
 
-AnalysisConfig init(CADecoder *decoder, BPatch_image *image, BPatch_object *object,
-                    CallTargets &targets)
-{
-    AnalysisConfig config;
-
-    config.decoder = decoder;
-    config.image = image;
-    config.merge_vertical = &merge_vertical;
-    config.merge_horizontal_inter = &merge_horizontal_inter;
-    config.merge_horizontal_union = &merge_horizontal_union;
-    config.can_change = has_undefined_param_regs;
-    config.follow_return_edges = false;
-    config.follow_into_callers = true;
-    config.block_callers = calculate_block_callers(config, object);
-    config.min_liveness = calculate_min_liveness(targets);
-    return config;
-}
-};
-
-static RegisterStates
-analysis(AnalysisConfig &config, BPatch_basicBlock *block,
-         std::vector<BPatch_basicBlock *> path = std::vector<BPatch_basicBlock *>());
-
-RegisterStates analysis(AnalysisConfig &config, std::vector<BPatch_basicBlock *> blocks,
-                        std::vector<BPatch_basicBlock *> path = std::vector<BPatch_basicBlock *>())
-{
-    std::vector<RegisterStates> states;
-
-    for (auto block : blocks)
-        states.push_back(analysis(config, block, path));
-    return (*config.merge_horizontal_union)(states);
-}
-
-static RegisterStates interfn_analysis(AnalysisConfig &config, std::vector<FnCallReverse> blocks)
-{
-    std::vector<RegisterStates> states;
-
-    for (auto block : blocks)
-        states.push_back(analysis(config, block.first, block.second));
-    return (*config.merge_horizontal_inter)(states);
-}
-
-static RegisterStates
-analyze_sources(AnalysisConfig &config, BPatch_basicBlock *block,
-                std::vector<BPatch_basicBlock *> path = std::vector<BPatch_basicBlock *>())
-{
-    path.push_back(block);
-
-    if (block->isEntryBlock() && config.follow_into_callers)
-    {
-        auto sources = config.block_callers[block];
-        LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "EntryBlock %lx : %lx found %lu sources",
-                  block->getStartAddress(), block->getEndAddress(), sources.size());
-
-        return (*config.merge_horizontal_union)(std::vector<RegisterStates>{
-            interfn_analysis(config, sources), config.min_liveness[block]});
-    }
-    else
-    {
-        BPatch_Vector<BPatch_basicBlock *> sources;
-        block->getSources(sources);
-
-        for (auto const &path_block : path)
-            sources.erase(std::remove(std::begin(sources), std::end(sources), path_block),
-                          std::end(sources));
-
-        return analysis(config, sources, path);
-    }
-}
-
-RegisterStates analysis(AnalysisConfig &config, BPatch_function *function)
+static RegisterStates function_analysis(
+    AnalysisConfig &config, BPatch_function *function,
+    std::vector<BPatch_basicBlock *> path = std::vector<BPatch_basicBlock *>())
 {
     char funcname[BUFFER_STRING_LEN];
     function->getName(funcname, BUFFER_STRING_LEN);
@@ -316,37 +155,45 @@ RegisterStates analysis(AnalysisConfig &config, BPatch_function *function)
     Dyninst::Address start, end;
     function->getAddressRange(start, end);
 
-    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\tANALYZING FUNCTION %s [%lx:0x%lx[", funcname, start,
-              end);
-    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\tFUN+----------------------------------------- %s",
-              funcname);
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\tANALYZING FUNCTION %s [%lx:0x%lx[",
+              funcname, start, end);
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
+              "\tFUN+----------------------------------------- %s", funcname);
 
     RegisterStates state;
 
     BPatch_flowGraph *cfg = function->getCFG();
 
+    if (!cfg)
+    {
+        LOG_ERROR(LOG_FILTER_REACHING_ANALYSIS,
+                  "\tCOULD NOT DETERMINE CFG FOR FUNCTION %s", funcname);
+    }
+
     std::vector<BPatch_basicBlock *> exit_blocks;
     if (!cfg->getExitBasicBlock(exit_blocks))
     {
-        LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
-                  "\tCOULD NOT DETERMINE EXIT BASIC_BLOCKS FOR FUNCTION");
+        LOG_ERROR(LOG_FILTER_REACHING_ANALYSIS,
+                  "\tCOULD NOT DETERMINE EXIT BASIC_BLOCKS FOR FUNCTION %s", funcname);
     }
     else
     {
         LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\tProcessing Exit Blocks");
 
-        state = analysis(config, exit_blocks);
+        auto exit_states = blocks_analysis(config, exit_blocks, path);
+        if (exit_states)
+            state = *exit_states;
     }
 
-    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\tFUN------------------------------------------ %s",
-              funcname);
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
+              "\tFUN------------------------------------------ %s", funcname);
     return state;
 }
 
-static void process_instruction(AnalysisConfig &config,
-                                PatchBlock::Insns::value_type const &instruction,
-                                uint64_t end_address, RegisterStates &block_state,
-                                bool &change_possible)
+static void process_instruction(
+    AnalysisConfig &config, PatchBlock::Insns::value_type const &instruction,
+    uint64_t end_address, RegisterStates &block_state, bool &change_possible,
+    std::vector<BPatch_basicBlock *> path = std::vector<BPatch_basicBlock *>())
 {
     auto address = reinterpret_cast<uint64_t>(instruction.first);
     auto decoder = config.decoder;
@@ -356,10 +203,16 @@ static void process_instruction(AnalysisConfig &config,
 
     if (change_possible && ((address < end_address) || !end_address))
     {
-        decoder->decode(address, instruction_ptr);
+        if (!decoder->decode(address, instruction_ptr))
+        {
+            LOG_ERROR(LOG_FILTER_REACHING_ANALYSIS, "Could not decode instruction @%lx",
+                      address);
+            return;
+        }
         LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\tProcessing instruction %lx", address);
 
-        if (decoder->is_indirect_call() || (!config.follow_return_edges && decoder->is_call()))
+        if (decoder->is_indirect_call() ||
+            ((!config.follow_return_edges || config.depth == 0) && decoder->is_call()))
         {
 
             LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\tInstruction is %sdirect call",
@@ -369,37 +222,62 @@ static void process_instruction(AnalysisConfig &config,
             {
                 auto &reg_state = block_state[reg_index];
 
-                // Usually a (in)direct call is at the end of a basic block, however in case it is
-                // not, we still want to be sure that we do not overwrite information
+                // Usually a (in)direct call is at the end of a basic block, however in
+                // case it is not, we still want to be sure that we do not overwrite
+                // information
                 if (reg_state == REGISTER_UNKNOWN)
                 {
-                    if (is_return_register(reg_index))
-                        reg_state = REGISTER_SET;
-                    else if (!is_preserved_register(reg_index))
+                    if (system_v::is_return_register(reg_index))
+                        reg_state = REGISTER_SET_FULL;
+                    else if (!system_v::is_preserved_register(reg_index))
                         reg_state = REGISTER_TRASHED;
                 }
             }
 
-            change_possible =
-                (*config.can_change)(block_state); // block_state.state_exists(REGISTER_UNKNOWN);
+            change_possible = (*config.can_change)(block_state);
         }
-        else if (decoder->is_call() && config.follow_return_edges)
+        else if (decoder->is_call() && config.follow_return_edges && config.depth > 0)
         {
             LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\tInstruction is a direct call");
 
             LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t PREVIOUS STATE %s",
                       to_string(block_state).c_str());
 
-            auto function = image->findFunction(decoder->get_src(0));
-            auto state_delta = analysis(config, function);
-            LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t DELTA STATE %s",
-                      to_string(state_delta).c_str());
-            block_state = (*config.merge_vertical)(block_state, state_delta);
-            LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t RESULT STATE %s",
-                      to_string(block_state).c_str());
+            if (auto function = image->findFunction(decoder->get_src(0)))
+            {
+                config.depth -= 1;
+                auto state_delta = function_analysis(config, function, path);
+                LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t DELTA STATE %s",
+                          to_string(state_delta).c_str());
+                block_state = (*config.merge_vertical)(block_state, state_delta);
+                LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t RESULT STATE %s",
+                          to_string(block_state).c_str());
 
-            change_possible =
-                (*config.can_change)(block_state); // block_state.state_exists(REGISTER_UNKNOWN);
+                config.depth += 1;
+
+                change_possible = (*config.can_change)(block_state);
+            }
+            else
+            {
+                auto range = decoder->get_register_range();
+                for (int reg_index = range.first; reg_index <= range.second; ++reg_index)
+                {
+                    auto &reg_state = block_state[reg_index];
+
+                    // Usually a (in)direct call is at the end of a basic block, however
+                    // in case it is not, we still want to be sure that we do not
+                    // overwrite information
+                    if (reg_state == REGISTER_UNKNOWN)
+                    {
+                        if (system_v::is_return_register(reg_index))
+                            reg_state = REGISTER_SET_FULL;
+                        else if (!system_v::is_preserved_register(reg_index))
+                            reg_state = REGISTER_TRASHED;
+                    }
+                }
+
+                change_possible = (*config.can_change)(block_state);
+            }
         }
         else if (decoder->is_return())
         {
@@ -411,18 +289,18 @@ static void process_instruction(AnalysisConfig &config,
 
                 // the simple abstraction is that after returning from a function
                 // the preserved are restored and the non preserved stay as they are
-                if (is_preserved_register(reg_index))
+                if (system_v::is_preserved_register(reg_index))
                     reg_state = REGISTER_UNKNOWN;
             }
-            change_possible =
-                (*config.can_change)(block_state); // block_state.state_exists(REGISTER_UNKNOWN);
+            change_possible = (*config.can_change)(block_state);
         }
-        else
+        else if (!config.ignore_nops || (config.ignore_nops && !decoder->is_nop()))
         {
-            LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\tInstruction is a normal instruction");
+            LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
+                      "\tInstruction is a normal instruction");
             LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t PREVIOUS STATE %s",
                       to_string(block_state).c_str());
-            auto register_states = decoder->get_register_state();
+            auto register_states = decoder->get_register_state_ex();
             LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t DECODER STATE %s",
                       to_string(register_states).c_str());
             auto state_delta = convert_states<state_t>(register_states);
@@ -432,17 +310,25 @@ static void process_instruction(AnalysisConfig &config,
             LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t RESULT STATE %s",
                       to_string(block_state).c_str());
 
-            change_possible =
-                (*config.can_change)(block_state); // block_state.state_exists(REGISTER_UNKNOWN);
+            change_possible = (*config.can_change)(block_state);
         }
     }
 }
 
-static RegisterStates analysis(AnalysisConfig &config, BPatch_basicBlock *block,
-                               std::vector<BPatch_basicBlock *> path)
+static boost::optional<RegisterStates>
+block_analysis(AnalysisConfig &config, BPatch_basicBlock *block,
+               std::vector<BPatch_basicBlock *> path)
 {
+    boost::optional<RegisterStates> block_state_opt;
+
+    if (util::contains(path, block))
+        return block_state_opt;
+
+    path.push_back(block);
+
     auto bb_start_address = block->getStartAddress();
-    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "Processing BasicBlock %lx", bb_start_address);
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "Processing BasicBlock %lx",
+              bb_start_address);
 
     auto &block_states = config.block_states;
 
@@ -451,52 +337,63 @@ static RegisterStates analysis(AnalysisConfig &config, BPatch_basicBlock *block,
 
     if (itr_bool.second)
     {
+
         LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
                   "\tBB+----------------------------------------- %lx", bb_start_address);
+        bool change_possible = true;
         LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "Information not in Storage");
         PatchBlock::Insns insns;
         Dyninst::PatchAPI::convert(block)->getInsns(insns);
 
-        bool change_possible = true;
-
         for (auto &instruction : boost::adaptors::reverse(insns))
         {
-            process_instruction(config, instruction, 0, block_state, change_possible);
+            process_instruction(config, instruction, 0, block_state, change_possible,
+                                path);
         }
         LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "Final merging for BasicBlock %lx",
                   bb_start_address);
 
+        block_state_opt = block_state;
+
         if (change_possible)
         {
-            auto delta_state = analyze_sources(config, block, path);
+            auto delta_state = source_analysis(config, block, path);
 
             LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t PREVIOUS STATE %s",
-                      to_string(block_state).c_str());
+                      to_string(*block_state_opt).c_str());
 
             LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t DELTA STATE %s",
                       to_string(delta_state).c_str());
 
-            block_state = (*config.merge_vertical)(block_state, delta_state);
+            block_state_opt = (*config.merge_vertical)(*block_state_opt, delta_state);
             LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t RESULT STATE %s",
-                      to_string(block_state).c_str());
+                      to_string(*block_state_opt).c_str());
         }
         LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
                   "\tBB------------------------------------------ %lx", bb_start_address);
     }
-    return block_state;
+    return block_state_opt;
 }
 
-RegisterStates analysis(AnalysisConfig &config, BPatch_basicBlock *block,
-                        Dyninst::Address end_address)
+static boost::optional<RegisterStates>
+block_analysis(AnalysisConfig &config, BPatch_basicBlock *block,
+               Dyninst::Address end_address, std::vector<BPatch_basicBlock *> path)
 {
+    boost::optional<RegisterStates> block_state_opt;
+
+    if (util::contains(path, block))
+        return block_state_opt;
+
+    path.push_back(block);
+
     auto bb_start_address = block->getStartAddress();
     LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
-              "Processing History of BasicBlock %lx before reaching %lx", bb_start_address,
-              end_address);
+              "Processing History of BasicBlock %lx before reaching %lx",
+              bb_start_address, end_address);
 
     LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
-              "BB_History+----------------------------------------- %lx : %lx", bb_start_address,
-              end_address);
+              "BB_History+----------------------------------------- %lx : %lx",
+              bb_start_address, end_address);
 
     RegisterStates block_state;
     PatchBlock::Insns insns;
@@ -506,14 +403,16 @@ RegisterStates analysis(AnalysisConfig &config, BPatch_basicBlock *block,
 
     for (auto &instruction : boost::adaptors::reverse(insns))
     {
-        process_instruction(config, instruction, end_address, block_state, change_possible);
+        process_instruction(config, instruction, end_address, block_state,
+                            change_possible, path);
     }
 
     if (change_possible)
     {
-        LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "Final merging for BasicBlock History %lx : %lx",
-                  bb_start_address, end_address);
-        auto delta_state = analyze_sources(config, block);
+        LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
+                  "Final merging for BasicBlock History %lx : %lx", bb_start_address,
+                  end_address);
+        auto delta_state = source_analysis(config, block, path);
 
         LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t PREVIOUS STATE %s",
                   to_string(block_state).c_str());
@@ -526,9 +425,22 @@ RegisterStates analysis(AnalysisConfig &config, BPatch_basicBlock *block,
                   to_string(block_state).c_str());
     }
     LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
-              "BB_History------------------------------------------ %lx : %lx", bb_start_address,
-              end_address);
+              "BB_History------------------------------------------ %lx : %lx",
+              bb_start_address, end_address);
 
-    return block_state;
+    block_state_opt = block_state;
+    return block_state_opt;
+}
+};
+
+RegisterStates analysis(AnalysisConfig &config, BPatch_function *function)
+{
+    return function_analysis(config, function);
+}
+
+RegisterStates analysis(AnalysisConfig &config, BPatch_basicBlock *block,
+                        Dyninst::Address end_address)
+{
+    return *block_analysis(config, block, end_address);
 }
 };

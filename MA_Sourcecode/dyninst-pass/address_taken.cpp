@@ -1,308 +1,209 @@
 #include "address_taken.h"
 
+#include <AddrLookup.h>
+#include <BPatch_module.h>
 #include <Symtab.h>
+#include <unordered_set>
 
 #include "ca_decoder.h"
 #include "instrumentation.h"
 #include "logging.h"
+#include "region_data.h"
+#include "utils.h"
 
 using Dyninst::SymtabAPI::Region;
-using Dyninst::PatchAPI::PatchBlock;
+using util::contains_if;
 
-void dump_starting_functions(BPatch_image *image, uint64_t address)
+namespace
+{
+static bool is_function_start(BPatch_image *image, uint64_t address)
 {
     std::vector<BPatch_function *> functions;
     image->findFunction(address, functions);
 
-    char funcname[BUFFER_STRING_LEN];
-    Dyninst::Address start, end;
+    return contains_if(functions, [address](BPatch_function *function) {
+        Dyninst::Address start, end;
+        return function->getAddressRange(start, end) && (start == address);
+    });
+}
 
-    for (auto function : functions)
+template <typename window_t, typename analysis_t>
+static void analyze_region(region_data const &data, analysis_t analysis)
+{
+    auto const raw_end = data.raw + data.size - sizeof(window_t);
+
+    for (auto ptr = data.raw; ptr < raw_end; ++ptr)
     {
-        function->getName(funcname, BUFFER_STRING_LEN);
-        function->getAddressRange(start, end);
-        LOG_INFO(LOG_FILTER_TAKEN_ADDRESS, "%s, %lx -> %lx", funcname, start, end);
+        auto const raw_value = *reinterpret_cast<window_t const *>(ptr);
+        auto const value = static_cast<uint64_t>(raw_value);
+        auto const value_address = ptr - data.raw + data.start;
+
+        if (sizeof(window_t) == 4)
+        {
+            LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS,
+                      "%" PRIx64 " : %" PRIx32 " -> %" PRIx64 " [%" PRIx8 ", %" PRIx8
+                      ", %" PRIx8 ", %" PRIx8 "]",
+                      value_address, raw_value, value, ptr[0], ptr[1], ptr[2], ptr[3]);
+        }
+
+        if (sizeof(window_t) == 8)
+        {
+            LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS,
+                      "%" PRIx64 " : %" PRIx64 " -> %" PRIx64 " [%" PRIx8 ", %" PRIx8
+                      ", %" PRIx8 ", %" PRIx8 ", %" PRIx8 ", %" PRIx8 ", %" PRIx8
+                      ", %" PRIx8 "]",
+                      value_address, raw_value, value, ptr[0], ptr[1], ptr[2], ptr[3],
+                      ptr[4], ptr[5], ptr[6], ptr[7]);
+        }
+
+        analysis(value, value_address);
     }
 }
-
-bool is_function_start(BPatch_image *image, const uint64_t val)
-{
-    std::vector<BPatch_function *> functions;
-    image->findFunction(val, functions);
-
-    return std::find_if(std::begin(functions), std::end(functions),
-                        [val](BPatch_function *function) {
-                            Dyninst::Address start, end;
-                            return function->getAddressRange(start, end) && (start == val);
-                        }) != std::end(functions);
-}
+};
 
 TakenAddresses address_taken_analysis(BPatch_object *object, BPatch_image *image,
                                       CADecoder *decoder)
 {
-    std::map<uint64_t, uint64_t> reference_map;
+    LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "Processing object %s", object->name().c_str());
+
     std::unordered_map<uint64_t, std::vector<TakenAddressSource>> taken_addresses;
     auto symtab = Dyninst::SymtabAPI::convert(object);
 
-    LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "Processing object %s", object->name().c_str());
-
     Region *region = nullptr;
     auto const found_text = symtab->findRegion(region, ".text");
-    auto const text_start = region->getMemOffset();
-    auto const text_end = text_start + region->getMemSize();
-    LOG_TRACE(LOG_FILTER_TAKEN_ADDRESS, "TEXT(mem)  %lx -> %lx", text_start, text_end);
+    auto const text = region_data::create(region);
+    LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "TEXT(mem)  %lx -> %lx", text.start, text.end);
 
+    region = nullptr;
     auto const found_plt = symtab->findRegion(region, ".plt");
-    auto const plt_start = region->getMemOffset();
-    auto const plt_end = plt_start + region->getMemSize();
-    LOG_TRACE(LOG_FILTER_TAKEN_ADDRESS, "PLT(mem)  %lx -> %lx", plt_start, plt_end);
+    auto const plt = region_data::create(region);
+    LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "PLT(mem)  %lx -> %lx", plt.start, plt.end);
 
-// TODO: Only if we want to secure PLT and GOT (requires runtime module)
-#if 0
-    if (!symtab->findRegion(region, ".got"))
-        return false;
-    auto const got_start = region->getMemOffset();
-    auto const got_size = region->getMemSize();
-        LOG_TRACE(LOG_FILTER_TAKEN_ADDRESS, "GOT(mem)  %lx -> %lx", got_start, got_end);
-
-    if (!symtab->findRegion(region, ".data"))
-        return false;
-    auto const data_start = region->getMemOffset();
-    auto const data_size = region->getMemSize();
-        LOG_TRACE(LOG_FILTER_TAKEN_ADDRESS, "DATA(mem)  %lx -> %lx", data_start, data_end);
-#endif
+    auto const is_shared = [&]() {
+        std::vector<BPatch_module *> modules;
+        object->modules(modules);
+        if (modules.size() != 1)
+            return false;
+        return modules[0]->isSharedLib();
+    }();
 
     if (!found_plt || !found_text)
     {
-        LOG_ERROR(LOG_FILTER_TAKEN_ADDRESS, ".plt or .text section not found -> could not process");
+        LOG_ERROR(LOG_FILTER_TAKEN_ADDRESS,
+                  ".plt or .text section not found -> could not process");
+        return taken_addresses;
     }
-    else
+
+    for (auto &&region_name : {".data", ".rodata", ".dynsym"})
     {
-        for (auto &&region_name : {".data", ".rodata", ".dynsym"})
-        {
-            if (symtab->findRegion(region, region_name))
+        auto type_fn = [&](uint64_t value, uint64_t address) {
+            if (plt.contains_address(value))
             {
-                auto const region_data_begin = static_cast<uint8_t *>(region->getPtrToRawData());
-                auto const region_offset = region->getMemOffset();
-                auto const region_size = region->getMemSize();
-                auto const region_data_end = region_data_begin + region_size - sizeof(uint64_t);
-                for (auto value_ptr = region_data_begin; value_ptr < region_data_end; ++value_ptr)
+                LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "%lx:%lx,.plt", address, value);
+                return ".plt";
+            }
+
+            if (std::string(region_name) == std::string(".rodata"))
+            {
+                LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "%lx:%lx,.data", address, value);
+                return ".data";
+            }
+
+            LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "%lx:%lx,%s", address, value,
+                      region_name);
+            return region_name;
+        };
+
+        auto const analysis = [&](uint64_t value, uint64_t address) {
+            if (!text.contains_address(value) && !plt.contains_address(value))
+                return;
+
+            auto const type = type_fn(value, address);
+
+            if (is_shared)
+            {
+                value = translate_address(object, value);
+                address = translate_address(object, address);
+            }
+
+            // PLT here means, statically, in data section, pointer point to PLT are
+            // found. In this case, dyninst sometimes do not conclude that a plt  entry is
+            // a function, so add it no matter what
+            if (std::string(type) == std::string(".plt"))
+            {
+                taken_addresses[value].emplace_back(std::string("plt"), object, address);
+                LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "<PLT>%lx:%lx", address, value);
+            }
+            // For the rest case, where pointer stored into data/rodata section
+            else if (std::string(type) == std::string(".data"))
+            {
+                if (is_function_start(image, value))
                 {
-                    uint64_t value = *reinterpret_cast<uint64_t *>(value_ptr);
-                    uint64_t value_offset = value_ptr - region_data_begin + region_offset;
-
-                    auto type_fn = [plt_start, plt_end, value_offset,
-                                    &region_name](uint64_t value) {
-                        if (plt_start <= value && value <= plt_end)
-                        {
-                            LOG_TRACE(LOG_FILTER_TAKEN_ADDRESS, "%lx:%lx,.plt", value_offset,
-                                      value);
-                            return ".plt";
-                        }
-
-                        if (region_name == ".rodata")
-                        {
-                            LOG_TRACE(LOG_FILTER_TAKEN_ADDRESS, "%lx:%lx,.data", value_offset,
-                                      value);
-                            return ".data";
-                        }
-
-                        LOG_TRACE(LOG_FILTER_TAKEN_ADDRESS, "%lx:%lx,%s", value_offset, value,
-                                  region_name);
-                        return region_name;
-                    };
-
-                    if ((text_start <= value && value <= text_end) ||
-                        (plt_start <= value && value <= plt_end))
-                    {
-                        auto type = type_fn(value);
-                        // PLT here means, statically, in data section, pointer point to PLT are
-                        // found. In this case, dyninst sometimes do not conclude that a plt entry
-                        // is a function So add it no matter what
-                        if (type == ".plt")
-                        {
-                            taken_addresses[value].emplace_back(std::string("plt"), object,
-                                                                value_offset);
-                            LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "<PLT>%lx:%lx", value_offset,
-                                      value);
-                        }
-                        // For the rest case, where pointer stored into data/rodata section
-                        else if (is_function_start(image, value))
-                        {
-                            reference_map[value_offset] = value;
-
-                            if (type == ".data")
-                                taken_addresses[value].emplace_back(std::string("data"), object,
-                                                                    value_offset);
-
-                            LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "<DATA>%lx:%lx", value_offset,
-                                      value);
-                        }
-                    }
+                    taken_addresses[value].emplace_back(std::string("data"), object,
+                                                        address);
+                    LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "<AT>%lx:%lx", address, value);
                 }
             }
-        }
-    }
+        };
 
-// TODO: Only if we want to secure GOT and PLT (requires runtime module)
-#if 0
-    /*
-    def read_plt_entries():
-        global PLT_ENTRY
-
-        f = open("./plt.log","r");
-        d = f.readlines();
-        f.close();
-
-        for l in d:
-            addr = int(l.split(" ")[0],16);
-            name = l.split("<")[1].split("@plt>:")[0];
-            PLT_ENTRY[name] = addr;
-        return;
-
-    def search_plt_entries(ename):
-        global PLT_ENTRY
-
-        strip_name = ename;
-        if (ename.find(" ")!=-1):
-            strip_name = ename.split(" ")[0];
-
-        if strip_name in PLT_ENTRY.keys():
-            return PLT_ENTRY[strip_name];
-
-        return 0;
-    */
-
-    // is an array of struct Elf64_Rela objects (see /usr/include/elf.h)
-    //    typedef struct
-    //    {
-    //      Elf64_Addr	    r_offset;		/* Address */
-    //      Elf64_Xword	    r_info;			/* Relocation type and symbol index */
-    //      Elf64_Sxword	r_addend;		/* Addend */
-    //    } Elf64_Rela;
-    struct elf64_rela
-    {
-        uint64 address;
-        uint64 info;
-        uint64 addend;
-    };
-
-    using rela_entry_t = elf64_rela;
-
-    if (symtab->findRegion(region, ".rela.dyn"))
-    {
-        auto const relocs = region->getRelocations();
-
-        LOG_TRACE(LOG_FILTER_TAKEN_ADDRESS, ".rela.dyn %lu entries:", relocs.size());
-
-        for (auto &&reloc : relocs)
+        region = nullptr;
+        if (!symtab->findRegion(region, region_name))
         {
-            LOG_TRACE(LOG_FILTER_TAKEN_ADDRESS, "\t tar: %lu rel: %lu add: %lu", reloc.target_addr(),
-                  reloc.rel_addr(), reloc.addend());
+            LOG_ERROR(LOG_FILTER_TAKEN_ADDRESS, "Could not find region %s", region_name);
         }
-        /*
-              #read rela.dyn table
-              k = 0;
-              while (k<len(d))and(d[k].find("Relocation section '.rela.dyn'")==-1):
-                  k += 1;
-              if (k >= len(d)):
-                  return;
-              d = d[k+2:]
-              rela_dyn_dict = dict();
-              for l in d:
-                  if (l == "\n"):
-                      break;
-                  items = read_rela_section_line(l);
-                  offset = int(items[0],16);
-                  val = int(items[3],16);
-                  name = items[4];
-                  if (name != ""):
-                      rela_dyn_dict[name] = offset;
-
-                  if ((val >= _TEXT_START)and(val <= _TEXT_END)or((val >= _PLT_START)and(val <=
-             _PLT_END))):
-                      print "%x:%x,.got"%(offset,val);
-          */
-    }
-
-    if (symtab->findRegion(region, ".rela.plt"))
-    {
-        auto const relocs = region->getRelocations();
-
-        LOG_TRACE(LOG_FILTER_TAKEN_ADDRESS, ".rela.plt %lu entries:", relocs.size());
-        for (auto &&reloc : relocs)
+        else
         {
-            LOG_TRACE(LOG_FILTER_TAKEN_ADDRESS, "\t tar: %lu rel: %lu add: %lu", reloc.target_addr(),
-                  reloc.rel_addr(), reloc.addend());
+            auto const data = region_data::create(region);
+            LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "%s(mem)  %lx -> %lx", region_name,
+                      data.start, data.end);
+            analyze_region<uint32_t>(data, analysis);
+            analyze_region<uint64_t>(data, analysis);
         }
-        /*
-            #read rela.plt table
-            k = 0;
-            while (k<len(d))and(d[k].find("Relocation section '.rela.plt'")==-1):
-                k += 1;
-            if (k >= len(d)):
-                return;
-            d = d[k+2:]
-            rela_plt_dict = dict();
-            for l in d:
-                if (l == "\n"):
-                    break;
-                items = read_rela_section_line(l);
-                offset = int(items[0],16);
-                val = int(items[3],16);
-                name = items[4];
-                if (val==0):
-                    val = search_plt_entries(name);
-                if (name in rela_dyn_dict.keys()):
-                    #means the .rela.dyn have same entry for this plt entry, but the offset may
-           differ, so add both
-                    if ((rela_dyn_dict[name]>=_DATA_START)and(rela_dyn_dict[name]<=_DATA_END)):
-                        print "%x:%x,.data"%(rela_dyn_dict[name],val);
-                    else:
-                        print "%x:%x,.rela.plt"%(rela_dyn_dict[name],val);
-
-                print "%x:%x,.rela.plt"%(offset,val);
-        */
     }
-#endif
 
-    instrument_object_instructions_unordered(
-        object, [&](PatchBlock::Insns::value_type &instruction) {
-            // get instruction bytes
-            auto const address = reinterpret_cast<uint64_t>(instruction.first);
-            Instruction::Ptr instruction_ptr = instruction.second;
+    std::unordered_set<uint64_t> visited_addresses;
 
-            decoder->decode(address, instruction_ptr);
-            uint64_t const deref_address = decoder->get_src_abs_addr();
-            LOG_TRACE(LOG_FILTER_INSTRUMENTATION, "Processing instruction %lx : %lx", address,
-                      deref_address);
+    instrument_object_decoded_unordered(object, decoder, [&](CADecoder *instr_decoder) {
+        auto const address = instr_decoder->get_address();
+        if (visited_addresses.count(address) > 0)
+            return;
 
-            if (deref_address == 0)
+        visited_addresses.insert(address);
+
+        auto src_addresses = instr_decoder->get_src_abs_addr();
+
+        auto const address_analysis = [&](uint64_t value) {
+            if (value == 0)
                 return;
 
-            if (is_function_start(image, deref_address))
+            if (is_shared)
             {
-                LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "<AT>%lx:%lx", address, deref_address);
-                taken_addresses[deref_address].emplace_back(std::string("insns(direct)"), object,
-                                                            address);
+                value = translate_address(object, value);
             }
 
-            if (reference_map.count(deref_address) > 0)
+            if (is_function_start(image, value))
             {
-                //    if (address!=reference_map[deref_address])
-                auto deref_ref = reference_map[deref_address];
-                LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "<CK>%lx:%lx", address, deref_ref);
-                taken_addresses[deref_ref].emplace_back(std::string("insns(indir)"), object,
-                                                        address);
+                LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "<AT>%lx:%lx", address, value);
+                taken_addresses[value].emplace_back(std::string("insns(direct)"), object,
+                                                    address);
             }
+            if (plt.start <= value && value <= plt.end)
+            {
+                LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "<PLT>%lx:%lx", address, value);
+                taken_addresses[value].emplace_back(std::string("insns(plt)"), object,
+                                                    address);
+            }
+        };
 
-            if (plt_start <= deref_address && deref_address <= plt_end)
-            {
-                LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "<PLT>%lx:%lx", address, deref_address);
-                taken_addresses[deref_address].emplace_back(std::string("insns(plt)"), object,
-                                                            address);
-            }
-        });
+        for (auto &&src_address : src_addresses)
+        {
+            uint64_t const translated_src_address =
+                translate_address(object, src_address);
+            address_analysis(src_address);
+            if (src_address != translated_src_address)
+                address_analysis(translated_src_address);
+        }
+    });
 
     return taken_addresses;
 }

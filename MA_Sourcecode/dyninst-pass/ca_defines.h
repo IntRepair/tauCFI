@@ -1,5 +1,5 @@
 #pragma once
-//in fact that the size should not longer than 16, however, some of them can be 17
+// in fact that the size should not longer than 16, however, some of them can be 17
 #define MAX_RAW_INSN_SIZE 32
 #define BUFFER_STRING_LEN 1024
 #define FS_SEGMENT_REG_VAL 0x8000

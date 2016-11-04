@@ -9,17 +9,19 @@ CADecoder::CADecoder() { set_x86_mode(drcontext, false); }
 
 CADecoder::~CADecoder() {}
 
-void CADecoder::decode(uint64_t addr, Instruction::Ptr iptr)
+bool CADecoder::decode(uint64_t addr, Instruction::Ptr iptr)
 {
     auto nbytes = iptr->size();
     auto ins_addr = addr;
+    address = addr;
     for (size_t i = 0; i < nbytes; i++)
     {
         raw_byte[i] = iptr->rawByte(i);
     }
     raw_byte[nbytes] = '\0';
     instr_init(drcontext, &instr);
-    decode_from_copy(drcontext, (byte *)raw_byte, (byte *)ins_addr, &instr);
+    return NULL !=
+           decode_from_copy(drcontext, (byte *)raw_byte, (byte *)ins_addr, &instr);
 #if 0
 	char dis_buf[1024];
 	size_t size_of_dis;
@@ -29,70 +31,63 @@ void CADecoder::decode(uint64_t addr, Instruction::Ptr iptr)
 #endif
 }
 
-uint64_t CADecoder::get_src_abs_addr()
+std::vector<uint64_t> CADecoder::get_src_abs_addr()
 {
-    opnd_t src_opnd;
-    int src_idx;
+    std::vector<uint64_t> addresses;
+
+    if (instr_is_cti(&instr) && !is_indirect_call())
+        return addresses;
+
     uint64_t abs_addr;
-    int nr_src, i;
-
-    if (instr_is_cti(&instr))
-        return 0;
-
     if (instr_is_mov_constant(&instr, (ptr_int_t *)(&abs_addr)))
-        return abs_addr;
-
-    if (instr_get_opcode(&instr) == OP_lea)
     {
-        nr_src = instr_num_srcs(&instr);
-        for (i = 0; i < nr_src; i++)
-        {
-            src_opnd = instr_get_src(&instr, i);
-            if (opnd_is_abs_addr(src_opnd))
-            {
-                return (uint64_t)opnd_get_addr(src_opnd);
-            }
-        }
+        addresses.push_back(abs_addr);
+        return addresses;
     }
 
-    // Now src should PC relative if there is address
-    abs_addr = 0;
-    if (needs_depie())
-    {
-        src_idx = instr_get_rel_addr_src_idx(&instr);
-        if (src_idx != -1)
-        {
-            src_opnd = instr_get_src(&instr, (uint)src_idx);
-            abs_addr = (uint64_t)opnd_get_disp(src_opnd);
-        }
-    }
+//    if (instr_get_opcode(&instr) == OP_lea)
+//    {
+//        auto const nr_src = instr_num_srcs(&instr);
+//        for (int i = 0; i < nr_src; i++)
+//        {
+//            auto src_opnd = instr_get_src(&instr, i);
+//            if (opnd_is_abs_addr(src_opnd))
+//            {
+//                addresses.push_back(reinterpret_cast<uint64_t>(opnd_get_addr(src_opnd)));
+//            }
+//        }
+//    }
+//
+//    // check for RIP based addresses displacement(rip)
+//    if (instr_has_rel_addr_reference(&instr))
+//    {
+//        if (instr_get_rel_addr_src_idx(&instr) != -1)
+//        {
+//            unsigned char *ptr;
+//            if (instr_get_rel_addr_target(&instr, &ptr))
+//                addresses.push_back(reinterpret_cast<uint64_t>(ptr));
+//        }
+//    }
 
-    return abs_addr;
+    return addresses;
 }
 
 uint64_t CADecoder::get_src(int index)
 {
-    auto opnd = instr_get_src(&instr, index);
-
-    if (opnd_is_pc(opnd))
-        return reinterpret_cast<uint64_t>(opnd_get_pc(opnd));
-    else if (opnd_is_abs_addr(opnd))
-        return reinterpret_cast<uint64_t>(opnd_get_addr(opnd));
-#if 0
-    else if (instr_has_rel_addr_reference(&instr))
+    auto const nr_src = instr_num_srcs(&instr);
+    if (index < nr_src)
     {
-        unsigned char *ptr;
-        if (instr_get_rel_addr_target(&instr, &ptr))
-            return reinterpret_cast<uint64_t>(ptr);
+        auto opnd = instr_get_src(&instr, index);
+
+        if (opnd_is_pc(opnd))
+            return reinterpret_cast<uint64_t>(opnd_get_pc(opnd));
+        else if (opnd_is_abs_addr(opnd))
+            return reinterpret_cast<uint64_t>(opnd_get_addr(opnd));
     }
-#endif
     return 0;
 }
 
-bool CADecoder::is_indirect_call()
-{
-    return instr_is_call_indirect(&instr); // instr_is_mbr(&instr) && !is_return();
-}
+bool CADecoder::is_indirect_call() { return instr_is_call_indirect(&instr); }
 
 bool CADecoder::is_call() { return instr_is_call_direct(&instr); }
 
@@ -104,7 +99,7 @@ bool CADecoder::is_constant_write()
     return instr_is_mov_constant(&instr, &value);
 }
 
-bool CADecoder::needs_depie() { return instr_has_rel_addr_reference(&instr); }
+bool CADecoder::is_nop() { return instr_is_nop(&instr); }
 
 bool CADecoder::is_reg_source(int index, int reg)
 {
@@ -116,6 +111,19 @@ bool CADecoder::is_reg_source(int index, int reg)
     return false;
 }
 
+boost::optional<int> CADecoder::get_reg_source(int index)
+{
+    boost::optional<int> result;
+
+    auto opnd = instr_get_src(&instr, index);
+    if (opnd_is_reg(opnd))
+    {
+        result = opnd_get_reg(opnd);
+    }
+
+    return result;
+}
+
 bool CADecoder::is_target_stackpointer_disp(int index)
 {
     if (index < instr_num_dsts(&instr))
@@ -123,6 +131,40 @@ bool CADecoder::is_target_stackpointer_disp(int index)
         auto opnd = instr_get_dst(&instr, index);
         if (opnd_is_base_disp(opnd))
             return opnd_get_base(opnd) == DR_REG_XSP;
+    }
+    return false;
+}
+
+bool CADecoder::is_target_register_disp(int index)
+{
+    if (index < instr_num_dsts(&instr))
+    {
+        auto opnd = instr_get_dst(&instr, index);
+        return opnd_is_base_disp(opnd);
+    }
+    return false;
+}
+
+boost::optional<int> CADecoder::get_reg_disp_target_register(int index)
+{
+    boost::optional<int> result;
+
+    if (index < instr_num_dsts(&instr))
+    {
+        auto opnd = instr_get_dst(&instr, index);
+        if (opnd_is_base_disp(opnd))
+            result = opnd_get_base(opnd);
+    }
+
+    return result;
+}
+
+bool CADecoder::is_move_to(int reg)
+{
+    if (instr_is_mov(&instr) && 0 < instr_num_dsts(&instr))
+    {
+        auto opnd = instr_get_dst(&instr, 0);
+        return opnd_get_reg(opnd) == reg;
     }
     return false;
 }
@@ -149,8 +191,79 @@ uint64_t CADecoder::get_address_store_address()
     return 0;
 }
 
-void CADecoder::operand_information()
+static reg_id_t get_parent_register(reg_id_t reg)
 {
+    return reg_resize_to_opsz(reg, OPSZ_8);
+}
+
+static RegisterStateEx calculate_read_change(reg_id_t reg)
+{
+    // These registers are occupying the upper half of the 16bit register, thus we set the
+    // REGISTER_EX_READ_16 flag, however they do not touch the lowever 8 bits, we do not
+    // set the REGISTER_EX_READ_8 flag
+    switch (reg)
+    {
+    case DR_REG_AH: /**< The "ah" register. */
+    case DR_REG_CH: /**< The "ch" register. */
+    case DR_REG_DH: /**< The "dh" register. */
+    case DR_REG_BH: /**< The "bh" register. */
+        return REGISTER_EX_READ_16;
+    }
+
+    RegisterStateEx state = REGISTER_EX_UNTOUCHED;
+    switch (opnd_size_in_bits(reg_get_size(reg)))
+    {
+    case 64:
+        state |= REGISTER_EX_READ_64;
+    case 32:
+        state |= REGISTER_EX_READ_32;
+    case 16:
+        state |= REGISTER_EX_READ_16;
+    case 8:
+        state |= REGISTER_EX_READ_8;
+    }
+
+    return state;
+}
+
+static RegisterStateEx calculate_write_change(reg_id_t reg)
+{
+    // These registers are occupying the upper half of the 16bit register, thus we set the
+    // REGISTER_EX_WRITE_16 flag, however they do not touch the lowever 8 bits, we do not
+    // set the REGISTER_EX_WRITE_8 flag
+    switch (reg)
+    {
+    case DR_REG_AH: /**< The "ah" register. */
+    case DR_REG_CH: /**< The "ch" register. */
+    case DR_REG_DH: /**< The "dh" register. */
+    case DR_REG_BH: /**< The "bh" register. */
+        return REGISTER_EX_WRITE_16;
+    }
+
+    RegisterStateEx state = REGISTER_EX_UNTOUCHED;
+    switch (opnd_size_in_bits(reg_get_size(reg)))
+    {
+    case 64:
+        state |= REGISTER_EX_WRITE_64;
+    case 32:
+        state |= REGISTER_EX_WRITE_32;
+    case 16:
+        state |= REGISTER_EX_WRITE_16;
+    case 8:
+        state |= REGISTER_EX_WRITE_8;
+    }
+
+    return state;
+}
+
+__register_states_t<min_register(), max_register(), RegisterStateEx>
+CADecoder::get_register_state_ex()
+{
+    __register_states_t<min_register(), max_register(), RegisterStateEx> reg_state;
+
+    if (is_nop())
+        return reg_state;
+
     auto src_count = instr_num_srcs(&instr);
     for (auto pos = 0; pos < src_count; ++pos)
     {
@@ -159,8 +272,8 @@ void CADecoder::operand_information()
         for (auto reg_index = 0; reg_index < regs; ++reg_index)
         {
             auto reg = opnd_get_reg_used(opnd, reg_index);
-            LOG_INFO(LOG_FILTER_TYPE_ANALYSIS, "Register %s READ [size: %d]",
-                     get_register_name(reg), opnd_size_in_bits(reg_get_size(reg)));
+            if (reg_is_gpr(reg))
+                reg_state[get_parent_register(reg)] |= calculate_read_change(reg);
         }
     }
 
@@ -174,27 +287,29 @@ void CADecoder::operand_information()
             for (auto reg_index = 0; reg_index < regs; ++reg_index)
             {
                 auto reg = opnd_get_reg_used(opnd, reg_index);
-                LOG_INFO(LOG_FILTER_TYPE_ANALYSIS, "Register %s READ [size: %d]",
-                         get_register_name(reg), opnd_size_in_bits(reg_get_size(reg)));
+                if (reg_is_gpr(reg))
+                    reg_state[get_parent_register(reg)] |= calculate_read_change(reg);
             }
         }
         else
         {
             auto reg = opnd_get_reg(opnd);
-            LOG_INFO(LOG_FILTER_TYPE_ANALYSIS, "Register %s WRITTEN [size: %d]",
-                     get_register_name(reg), opnd_size_in_bits(reg_get_size(reg)));
+            if (reg_is_gpr(reg) && instr_writes_to_reg(&instr, reg, DR_QUERY_DEFAULT))
+            {
+                reg_state[get_parent_register(reg)] |= calculate_write_change(reg);
+            }
         }
     }
 
-    for (int reg = DR_REG_RAX; reg <= DR_REG_DIL; ++reg)
+    for (reg_id_t reg = DR_REG_RAX; reg <= DR_REG_DIL; ++reg)
     {
-        RegisterState state = REGISTER_UNTOUCHED;
         if (instr_writes_to_exact_reg(&instr, reg, DR_QUERY_DEFAULT))
-            state = static_cast<RegisterState>(state | REGISTER_WRITE);
-        if (state != 0)
-            LOG_INFO(LOG_FILTER_TYPE_ANALYSIS, "Register %s %s", get_register_name(reg),
-                     to_string(state).c_str());
+        {
+            if (reg_is_gpr(reg))
+                reg_state[get_parent_register(reg)] |= calculate_write_change(reg);
+        }
     }
+    return reg_state;
 }
 
 RegisterState CADecoder::__get_register_state(std::size_t reg)

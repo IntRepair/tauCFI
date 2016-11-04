@@ -129,7 +129,7 @@ public:
   }
 
   virtual void print() const {
-      errs() << Name << "_pass_secs = " << std::setiosflags(ios::fixed) << std::setprecision(3) << elapsed << std::endl;
+      errs() << Name << "_pass_secs = " << std::setiosflags(std::ios::fixed) << std::setprecision(3) << elapsed << std::endl;
   }
 };
 

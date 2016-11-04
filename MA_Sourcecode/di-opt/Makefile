@@ -3,7 +3,7 @@ SRCS = di-opt.cpp
 all: di-opt
 
 ECHO=echo
-CXX=g++
+CXX=g++ #clang++ -fsanitize=undefined
 CFLAGS += -I../include
 CFLAGS += -fasynchronous-unwind-tables
 CFLAGS += -fPIC
@@ -33,8 +33,12 @@ INCLUDES += -I$(DYNINST_ROOT)/proccontrol/h
 INCLUDES += -I$(DYNINST_ROOT)/symtabAPI/h
 INCLUDES += -I$(DYNINST_ROOT)/stackwalk/h
 
-LDFLAGS += -ldl -lrt -rdynamic #  -lcommon
-
+LDFLAGS += -ldl -lrt
+LDFLAGS += -rdynamic
+#LDFLAGS += -Wl,-undefined,error
+#LDFLAGS += -Wl,--export-dynamic
+LDFLAGS += -L$(DYNINST_ROOT)/dynC_API -ldynC_API
+LDFLAGS += -L$(DYNINST_ROOT)/common -lcommon
 LDFLAGS += -L$(DYNINST_ROOT)/dyninstAPI -ldyninstAPI
 LDFLAGS += -L$(DYNINST_ROOT)/instructionAPI -linstructionAPI
 LDFLAGS += -L$(DYNINST_ROOT)/parseAPI -lparseAPI

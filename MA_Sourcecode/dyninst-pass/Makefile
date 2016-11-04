@@ -8,18 +8,24 @@ OBJS	+= callsites.o
 OBJS	+= calltargets.o
 OBJS	+= ca_decoder.o
 OBJS	+= liveness_analysis.o
+OBJS	+= liveness_count.o
+OBJS	+= liveness_count_ext.o
+OBJS	+= liveness_type.o
 OBJS	+= reaching_analysis.o
+OBJS	+= reaching_count.o
+OBJS	+= reaching_count_ext.o
+OBJS	+= reaching_type.o
 OBJS	+= patching.o
-OBJS	+= simple_type_analysis_callsite.o
-OBJS	+= simple_type_analysis_calltarget.o
 OBJS	+= verification.o
 OBJS	+= register_states.o
+OBJS	+= region_data.o
 
 
 # Dyninst headers
 include ../Makefile.inc
 INCLUDES += -I$(DYNINST_ROOT)/common/h
 INCLUDES += -I$(DYNINST_ROOT)/dataflowAPI/h
+INCLUDES += -I$(DYNINST_ROOT)/dynC_API/h
 INCLUDES += -I$(DYNINST_ROOT)/dyninstAPI/h
 INCLUDES += -I$(DYNINST_ROOT)/elf/h
 INCLUDES += -I$(DYNINST_ROOT)/instructionAPI/h
@@ -42,17 +48,34 @@ CFLAGS += -Darch_x86_64
 CFLAGS += -Dx86_64_unknown_linux2_4
 CFLAGS += -DARCH=x64
 CFLAGS += --std=c++11
-CFLAGS += -rdynamic
+#CFLAGS += -rdynamic
+CFLAGS += -O3
+CFLAGS += -Wall
+
+# comment out for type base policy
+ CFLAGS += -D__PADYN_TYPE_POLICY
+# comment out for extended count policy
+# CFLAGS += -D__PADYN_COUNT_EXT_POLICY
 
 # Make DynamoRIO happy
 FFLAGS += -DLINUX
 FFLAGS += -DX86_64
 
-LDFLAGS += -L$(DYNAMORIO_ROOT)/lib64/release
-LDFLAGS += -ldynamorio
+#LDFLAGS += -Wl,-undefined,error
+#LDFLAGS += -Wl,--export-dynamic
+LDFLAGS += -ldl -lrt -rdynamic
+LDFLAGS += -L$(DYNINST_ROOT)/common -lcommon
+LDFLAGS += -L$(DYNINST_ROOT)/dynC_API -ldynC_API
+LDFLAGS += -L$(DYNINST_ROOT)/dyninstAPI -ldyninstAPI
+LDFLAGS += -L$(DYNINST_ROOT)/instructionAPI -linstructionAPI
+LDFLAGS += -L$(DYNINST_ROOT)/parseAPI -lparseAPI
+LDFLAGS += -L$(DYNINST_ROOT)/patchAPI -lpatchAPI
+LDFLAGS += -L$(DYNINST_ROOT)/symtabAPI -lsymtabAPI
+LDFLAGS += -L$(DYNAMORIO_ROOT)/lib64/release -ldynamorio
 
-CC=gcc
-CXX=g++
+
+CC=gcc #clang -fsanitize=undefined
+CXX=g++ #clang++ -fsanitize=undefined
 ECHO=echo
 
 PASSLIBNAME =$(PASSNAME).di

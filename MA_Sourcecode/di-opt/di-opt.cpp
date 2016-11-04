@@ -9,6 +9,26 @@
 #include <assert.h>
 
 #include <sys/time.h>
+#include <execinfo.h>
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+void handler(int sig)
+{
+    void *array[10];
+    size_t size;
+
+    // get void*'s for all entries on the stack
+    size = backtrace(array, 10);
+
+    // print out all the frames to stderr
+    fprintf(stderr, "Error: signal %d:", sig);
+    backtrace_symbols_fd(array, size, STDERR_FILENO);
+    exit(1);
+}
+
 
 OPT_CLI_ONCE();
 PASSICLI_ONCE();
@@ -20,7 +40,7 @@ void EXIT(int status)
 
 void exit_usage(string err, OptParamParser *parser)
 {
-    cerr << err << endl;
+    cerr << err << std::endl;
     cerr << parser->usage();
     EXIT(1);
 }
@@ -43,6 +63,8 @@ void exit_usage(string err, OptParamParser *parser)
 
 int main(int argc, char **argv)
 {
+    signal(SIGSEGV, handler); // install our handler
+
     int ret;
     bool retB;
     bool modified = false;

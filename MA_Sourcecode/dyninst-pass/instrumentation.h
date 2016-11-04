@@ -3,6 +3,7 @@
 
 #include <BPatch.h>
 #include <BPatch_basicBlock.h>
+#include <PatchCFG.h>
 #include <BPatch_flowGraph.h>
 #include <BPatch_function.h>
 #include <BPatch_module.h>
@@ -20,14 +21,16 @@ void instrument_image_objects(BPatch_image *image, instr_op_t instr_op, arg_ts &
     for (auto object : objects)
     {
         // Instrument object
-        LOG_TRACE(LOG_FILTER_INSTRUMENTATION, "Processing object %s", object->name().c_str());
+        LOG_TRACE(LOG_FILTER_INSTRUMENTATION, "Processing object %s",
+                  object->name().c_str());
 
         instr_op(object, std::forward<arg_ts>(args)...);
     }
 }
 
 template <typename instr_op_t, typename... arg_ts>
-void instrument_object_functions(BPatch_object *object, instr_op_t instr_op, arg_ts &&... args)
+void instrument_object_functions(BPatch_object *object, instr_op_t instr_op,
+                                 arg_ts &&... args)
 {
     std::vector<BPatch_module *> modules;
     object->modules(modules);
@@ -55,8 +58,8 @@ void instrument_object_functions(BPatch_object *object, instr_op_t instr_op, arg
 }
 
 template <typename instr_op_t, typename... arg_ts>
-void instrument_function_basicBlocks_unordered(BPatch_function *function, instr_op_t instr_op,
-                                               arg_ts &&... args)
+void instrument_function_basicBlocks_unordered(BPatch_function *function,
+                                               instr_op_t instr_op, arg_ts &&... args)
 {
     std::set<BPatch_basicBlock *> blocks;
     BPatch_flowGraph *cfg = function->getCFG();
@@ -86,7 +89,8 @@ void instrument_basicBlock_instructions(BPatch_basicBlock *block, instr_op_t ins
                                         arg_ts &&... args)
 {
     Dyninst::PatchAPI::PatchBlock::Insns insns;
-    Dyninst::PatchAPI::convert(block)->getInsns(insns);
+    auto patch_block = Dyninst::PatchAPI::convert(block);
+    patch_block->getInsns(insns);
     for (auto &instruction : insns)
     {
         // Instrument Instruction
@@ -96,24 +100,52 @@ void instrument_basicBlock_instructions(BPatch_basicBlock *block, instr_op_t ins
     }
 }
 
-template <typename instr_op_t, typename... arg_ts>
-void instrument_function_instructions_unordered(BPatch_function *function, instr_op_t instr_op,
-                                                arg_ts &&... args)
+template <typename instr_op_t, typename decoder_t, typename... arg_ts>
+void instrument_basicBlock_decoded(BPatch_basicBlock *block, decoder_t *decoder,
+                                   instr_op_t instr_op, arg_ts &&... args)
+{
+
+    Dyninst::PatchAPI::PatchBlock::Insns insns;
+    auto patch_block = Dyninst::PatchAPI::convert(block);
+    patch_block->getInsns(insns);
+    for (auto &instruction : insns)
+    {
+        auto const address = reinterpret_cast<uint64_t>(instruction.first);
+        Dyninst::InstructionAPI::Instruction::Ptr instruction_ptr = instruction.second;
+
+        LOG_TRACE(LOG_FILTER_INSTRUMENTATION, "Processing instruction %lx", address);
+        if (!decoder->decode(address, instruction_ptr))
+        {
+            LOG_ERROR(LOG_FILTER_INSTRUMENTATION, "Could not decode instruction %lx",
+                      address);
+        }
+        else
+        {
+            instr_op(decoder, std::forward<arg_ts>(args)...);
+        }
+    }
+}
+
+template <typename instr_op_t, typename decoder_t, typename... arg_ts>
+void instrument_function_decoded_unordered(BPatch_function *function, decoder_t *decoder,
+                                           instr_op_t instr_op, arg_ts &&... args)
 {
     instrument_function_basicBlocks_unordered(
-        function, [&instr_op, &args...](BPatch_basicBlock *block) {
-            instrument_basicBlock_instructions(block, instr_op, std::forward<arg_ts>(args)...);
+        function, [&instr_op, &decoder, &args...](BPatch_basicBlock *block) {
+            instrument_basicBlock_decoded(block, decoder, instr_op,
+                                          std::forward<arg_ts>(args)...);
         });
 }
 
-template <typename instr_op_t, typename... arg_ts>
-void instrument_object_instructions_unordered(BPatch_object *object, instr_op_t instr_op,
-                                              arg_ts &&... args)
+template <typename instr_op_t, typename decoder_t, typename... arg_ts>
+void instrument_object_decoded_unordered(BPatch_object *object, decoder_t *decoder,
+                                         instr_op_t instr_op, arg_ts &&... args)
 {
-    instrument_object_functions(object, [&instr_op, &args...](BPatch_function *function) {
-        instrument_function_instructions_unordered(function, instr_op,
-                                                   std::forward<arg_ts>(args)...);
-    });
+    instrument_object_functions(
+        object, [&instr_op, &decoder, &args...](BPatch_function *function) {
+            instrument_function_decoded_unordered(function, decoder, instr_op,
+                                                  std::forward<arg_ts>(args)...);
+        });
 }
 
 #endif /* __INSTRUMENTATION_H */

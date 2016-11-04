@@ -13,7 +13,10 @@
 #include <assert.h>
 #include <limits.h>
 
-using namespace std;
+using std::string;
+using std::vector;
+using std::ostringstream;
+using std::cerr;
 
 class Pass;
 
@@ -361,10 +364,10 @@ inline bool OptParamParser::hasIO()
 inline string OptParamParser::usage()
 {
     ostringstream oss;
-    oss << "Usage: ... [opts] [-o <output_file> <input_file> | -args <args>]" << endl;
-    oss << "Valid [opts]: " << endl;
-    oss << "    -load=/path/to/plugin: Specifies plugin containing passes." << endl;
-    oss << "    -pass-name: Specifies pass to run over the input file." << endl;
+    oss << "Usage: ... [opts] [-o <output_file> <input_file> | -args <args>]" << std::endl;
+    oss << "Valid [opts]: " << std::endl;
+    oss << "    -load=/path/to/plugin: Specifies plugin containing passes." << std::endl;
+    oss << "    -pass-name: Specifies pass to run over the input file." << std::endl;
     return oss.str();
 }
 

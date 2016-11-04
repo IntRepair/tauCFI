@@ -1,21 +1,73 @@
 #include "calltargets.h"
 
+#include <Symtab.h>
+
 #include "ca_decoder.h"
 #include "instrumentation.h"
 #include "liveness_analysis.h"
 #include "logging.h"
 #include "reaching_analysis.h"
-#include "simple_type_analysis.h"
+#include "region_data.h"
 #include "systemv_abi.h"
+#include "utils.h"
 
-CallTargets calltarget_analysis(BPatch_object *object, BPatch_image *image, CADecoder *decoder,
-                                TakenAddresses &taken_addresses)
+#if (not defined(__PADYN_COUNT_EXT_POLICY)) && (not (defined (__PADYN_TYPE_POLICY)))
+CallTargets calltarget_analysis(BPatch_object *object, BPatch_image *image,
+                                CADecoder *decoder, TakenAddresses &taken_addresses)
+#else
+std::vector<CallTargets> calltarget_analysis(BPatch_object *object, BPatch_image *image,
+                                             CADecoder *decoder,
+                                             TakenAddresses &taken_addresses)
+#endif
 {
-    std::vector<CallTarget> call_targets;
+#if (not defined(__PADYN_COUNT_EXT_POLICY)) && (not (defined (__PADYN_TYPE_POLICY)))
+    CallTargets call_targets;
+#endif
 
-    auto liveness_config = liveness::calltarget::init(decoder, image, object);
-    auto reaching_config = reaching::calltarget::init(decoder, image, object);
-    auto type_states = type_analysis::simple::calltarget::init();
+    auto symtab = Dyninst::SymtabAPI::convert(object);
+
+    Dyninst::SymtabAPI::Region *region = nullptr;
+    symtab->findRegion(region, ".plt");
+    auto const plt = region_data::create(region);
+
+    auto const is_shared = [&]() {
+        std::vector<BPatch_module *> modules;
+        object->modules(modules);
+        if (modules.size() != 1)
+            return false;
+        return modules[0]->isSharedLib();
+    }();
+
+    LOG_DEBUG(LOG_FILTER_TAKEN_ADDRESS, "PLT(mem)  %lx -> %lx", plt.start, plt.end);
+
+#ifdef __PADYN_TYPE_POLICY
+    auto liveness_configs = liveness::type::calltarget::init(decoder, image, object);
+    auto reaching_configs = reaching::type::calltarget::init(decoder, image, object);
+
+    std::vector<CallTargets> call_targets_vector;
+
+    for (auto index = 0; index < liveness_configs.size(); ++index)
+    {
+        auto& liveness_config = liveness_configs[index];
+        auto& reaching_config = reaching_configs[index];
+
+        CallTargets call_targets;
+#elif defined(__PADYN_COUNT_EXT_POLICY)
+    auto liveness_configs = liveness::count_ext::calltarget::init(decoder, image, object);
+    auto reaching_configs = reaching::count_ext::calltarget::init(decoder, image, object);
+
+    std::vector<CallTargets> call_targets_vector;
+
+    for (auto index = 0; index < liveness_configs.size(); ++index)
+    {
+        auto& liveness_config = liveness_configs[index];
+        auto& reaching_config = reaching_configs[index];
+
+        CallTargets call_targets;
+#else
+    auto liveness_config = liveness::count::calltarget::init(decoder, image, object);
+    auto reaching_config = reaching::count::calltarget::init(decoder, image, object);
+#endif
 
     instrument_object_functions(object, [&](BPatch_function *function) {
         // Instrument function
@@ -25,14 +77,13 @@ CallTargets calltarget_analysis(BPatch_object *object, BPatch_image *image, CADe
         function->getName(funcname, BUFFER_STRING_LEN);
         function->getAddressRange(start, end);
 
+// disabled for now, we simply tag the calltarget
 #if 0
         if (taken_addresses.count(start) > 0)
 #endif
         {
-            auto params = function->getParams();
-            auto ret_type = function->getReturnType();
-
-            LOG_DEBUG(LOG_FILTER_CALL_TARGET, "<CT> Function %s[%lx]", funcname, start);
+            LOG_DEBUG(LOG_FILTER_CALL_TARGET, "Looking at Function %s[%lx]", funcname,
+                      start);
 
             auto liveness_state = liveness::analysis(liveness_config, function);
             LOG_DEBUG(LOG_FILTER_CALL_TARGET, "\tREGISTER_STATE %s",
@@ -42,20 +93,36 @@ CallTargets calltarget_analysis(BPatch_object *object, BPatch_image *image, CADe
             LOG_DEBUG(LOG_FILTER_CALL_TARGET, "\tRETURN_REGISTER_STATE %s",
                       to_string(reaching_state).c_str());
 
-            type_analysis::simple::calltarget::analysis(decoder, image, function, type_states);
+            auto parameters = system_v::calltarget::generate_paramlist(
+                function, start, reaching_state, liveness_state);
 
-            LOG_INFO(LOG_FILTER_CALL_TARGET,
-                     "<CT> Function %s[%lx] requires atleast %d args and is %s", funcname, start,
-                     count_args_calltarget(liveness_state),
-                     (is_void_calltarget(reaching_state) ? "<void>" : "<possibly non-void>"));
+            auto const is_plt = [&]() {
+                if (is_shared)
+                {
+                    auto const plt_start = translate_address(object, plt.start);
+                    auto const plt_end = plt_start + plt.size;
+                    auto const address = translate_address(object, start);
 
-            std::array<uint8_t, 7> parameters;
-            std::fill(parameters.begin(), parameters.end(), '0');
-            std::fill_n(parameters.begin(), count_args_calltarget(liveness_state), 'x');
-            parameters[6] = is_void_calltarget(reaching_state) ? '0' : 'x';
-            call_targets.emplace_back(function, parameters);
+                    return (plt_start <= address) && (address < plt_end);
+                }
+
+                return plt.contains_address(start);
+            }();
+
+            call_targets.emplace_back(function, taken_addresses.count(start) > 0, is_plt,
+                                      parameters);
         }
     });
 
+#if defined(__PADYN_COUNT_EXT_POLICY) || defined(__PADYN_TYPE_POLICY)
+        liveness_config.block_states.clear();
+        reaching_config.block_states.clear();
+
+        call_targets_vector.push_back(call_targets);
+    }
+
+    return call_targets_vector;
+#else
     return call_targets;
+#endif
 }

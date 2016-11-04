@@ -24,9 +24,10 @@ enum PatchingPolicy
     POLICY_PARAM_TYPE_EXT
 };
 
-static const constexpr PatchingPolicy PATCHING_POLICY = POLICY_NONE;
+static const constexpr PatchingPolicy PATCHING_POLICY = POLICY_ADDRESS_TAKEN;
 
-void binary_patching(BPatch_object *object, BPatch_image* image, CADecoder *decoder, CallTargets calltargets,
-                     CallSites callsites);
+void binary_patching(BPatch_object *object, BPatch_image *image, CADecoder *decoder,
+                     CallTargets const &calltargets, CallSites const &callsites,
+                     TakenAddresses const &taken_addresses);
 
 #endif /* __PATCHING_H */

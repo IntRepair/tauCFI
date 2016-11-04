@@ -6,7 +6,11 @@
 #include <string>
 #include <vector>
 
+#include <type_traits>
+
 #include "mpl.h"
+
+#include <BPatch_basicBlock.h>
 
 template <typename int_t> std::string int_to_hex(int_t value)
 {
@@ -15,14 +19,7 @@ template <typename int_t> std::string int_to_hex(int_t value)
     return ss.str();
 }
 
-template <typename object_t> static std::string to_string(object_t const &object);
-
-template <> std::string to_string(uint8_t const &object)
-{
-    std::stringstream ss;
-    ss << object;
-    return ss.str();
-}
+template <typename object_t> std::string to_string(object_t const &object);
 
 template <typename object_t> std::string to_string(std::vector<object_t> const &objects)
 {
@@ -34,17 +31,25 @@ template <typename object_t> std::string to_string(std::vector<object_t> const &
     return ss.str();
 }
 
-template <typename object_t, size_t count>
-std::string to_string(std::array<object_t, count> const &objects)
+static inline std::string param_to_string(std::array<char, 7> const &params)
 {
     std::stringstream ss;
 
-    for (auto const &object : objects)
-        ss << to_string<typename mpl::unqualified_type<object_t>::type>(object) << " ";
+    for (auto const &param : params)
+        ss << param << " ";
 
     return ss.str();
 }
 
-template <> std::string to_string(std::string const &string) { return string; }
+template <> inline std::string to_string(BPatch_basicBlock *const &block)
+{
+    std::stringstream ss;
+
+    ss << "BasicBlock Path element" << std::hex << block->getStartAddress();
+
+    return ss.str();
+}
+
+template <> inline std::string to_string(std::string const &string) { return string; }
 
 #endif /* __TO_STRING_H */
