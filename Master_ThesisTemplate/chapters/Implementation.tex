@@ -1,41 +1,17 @@
 \chapter{Implementation}
 \label{chapter:Implementation}
-We implemented {!todo! name} based on the di-opt environment from patharmor\cite{patharmor}, which relies on the Dyninst library \cite{dyninst} (updated to version 9.2.0). We provided our own pass to analyze and patch given binaries, which consists of {!todo! measure locs} lines of C++ code. The core part of our pass is an instruction analyzer, which relies on the DynamoRIO library \cite{dynamorio} (version 6.6.1) to decode instructions an provide information. This analyser is then used to implement an address taken analysis and configurable versions of the backward reaching definitions algorithm and the forward liveness analysis algorithm, which are both based on the algorithms presented in \cite{typearmor}. Callsites and calltargets are then analyzed using those two algorithms, which are configured based on the origin and the chosen policy, which is decided during compilation time.
 
-Additionally to measure the quality of our tool, we wrote a \texttt{MachineFunction} pass for llvm/clang version 4.0.0 (trunk 283889) in the x86 target code generation portion, to have the lowest possible difference between the binary and the IR of llvm. This pass provides us with ground truth data regarding callsites and calltargets, which we then use in our python evaluation and test environment. We are able to measure various metrics using this environment, which we present in this work.
+We implemented TypeShield as a module pass for the di-opt environment from patharmor\cite{patharmor}, which relies on the DynInst \cite{bernat:dyninst} instrumentation framewewor (we are using version 9.2.0). However, converting to a standalone executable is also possible, as we do not rely on any patharor feature except for the pass abstraction.
 
-Our current implementation allows for analysis and patching of any native elf binary on linux x86-64. 
+Our module pass relies on Dyninst, to resolve the structure of the binaries that we analyse. The core part of our pass is an instruction analyzer, which relies on the DynamoRIO \cite{dynamorio:drmemory} library (version 6.6.1) to decode single instructions and provide access to its information. This analyzer is then used to implement basic analyses, especially our version of the reaching and liveness analyses, which can be customized with relative ease, as we allow for arbitrary path merging functions, however we provide the three basic versions (destructive, intersection and union).
 
+Furthermore, we had to patch the DynInst library to allow for local annotation of calltargets with arbitrary information, leveraging its relocation schema, which relies on the BasicBlock abstraction.
 
-We implemented \textit{TypeShild} based on the DynInst~\cite{bernat:dyninst}
-binary Instrumentation framework (revision X, version X).
-The static instrumentation module is implemented based on DynInst
-and an additional patch which we added in order to make DynInst to
-better deal with patching indirect caller and callee pairs.
-The type inference module is implemented based on DynamoRIO~\cite{dynamorio:drmemory}.
-In total, \textit{TypeShild} is implemented in X lines of C++ 
-code (excluding empty lines and comments).
-\textit{TypeShild} is at this stage of development implemented 
-for the Linux x86-64 bit platform, but it is important to notice that there are
-no platform-dependent APIs used.
-For example, \textit{TypeShild} uses for instrumentation
-DynInst and for the type inference of the function parameter variables
-DynamoRIO. As all theses platform-dependent features can be used on other platforms,
-we believe that \textit{TypeShild} can be easily ported to other platforms as well.
+Additionally, to measure the quality and performance of our tool, we wrote a pass for the llvm/clang \cite{clang} framework version 4.0.0 (trunk 283889) in the x86 target code generation portion, to generate ground truth data. This data is then used to verify the output of our tool for several testtargets, which is done in our python evaluation and test environment.
 
-\textit{TypeShild} uses an effective mechanism for path merging which allows
-our tool to ... please complete the sentence.
+In total we implemented TypeShield in X lines of C++ code, our clang/llvm-pass in X lines of C++ codeand our test environment in X lines of python code (all line of code information is given excluding empty lines and comments).
 
-\textit{TypeShild} ``mention another main characteristic about our tool similar to the one above''
+At this stage of development we are restricted to analysis and instrumentation of x86-64 bit elf binaries using the SystemV call convention, because the DynInst library does not yet support the Windows platform. However, there is currently work being done to allow DynInst to also work with Windows binaries. We restricted ourselves to the SystemV call convention as most C/C++ compilers on linux implement this ABI, however we encapsulated most ABI dependent behaviour, so it should be possible to implement other ABIs with relative ease. Therefore, we deem it possible to implement TypeShield for the Windows platform in the near future, as we do not use any other platform-dependent API's. 
 
-\textit{TypeShild} ``mention yet another mai characteristic about our tool similar to the one above, if there is one.''
-
-example: C A V ER also maintains the
-top and bottom addresses of stack segments to efficiently
-check pointer membership on the stack. 
-
-We also changed the DynInst patching mechanism in oder to facilitate blaa. `` please finish sentence''.
-
-\todo[inline]{@Matthias: add numeric values at the end. and the missing point from above. The best would be if
-the Implementation chapter would be exact a page.! Please accomplish this.}
+\todo[inline]{@Matthias: add numeric values at the end.}
 
