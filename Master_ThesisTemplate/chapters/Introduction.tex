@@ -1,6 +1,6 @@
 \chapter{Introduction}
 \label{chapter:Introduction}
-Control-Flow Integrity (CFI)~\cite{abadi:cfi, abadi:cfi2} is one of the most used techniques
+Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} is one of the most used techniques
 to secure program execution flows against advanced Code-Reuse Attacks (CRAs).
 
 Advanced CRAs such as COOP~\cite{schuster:coop}
@@ -54,29 +54,84 @@ overhead than comparable solutions.
 
 5.Contributions.
 In summary, we make the following contributions:
+See contribution section, down.
 
-\begin{enumerate}
- \item We did this 
- 
- \item We did this 
- 
- \item We did this.
- 
- The rest of the MA is organized as follows.
- 
-\end{enumerate}
+% \begin{enumerate}
+%  \item We did this 
+%  
+%  \item We did this 
+%  
+%  \item We did this.
+%  
+%  The rest of the MA is organized as follows.
+%  
+% \end{enumerate}
 
 \section{Motivation}
-here coms the Motivation.
-\\
-2-3 sentences.
+\label{Motivation}
 
-\section{Research Goals}
-here coms the Motivation.
-\\
-2-3 sentences.
+this should be up to a din A4 page, example (remove afterwards):
+\todo[inline]{@Matthias: remove and add your motivation}
+
+The development of various defense mechanisms, such as the introduction of data
+execution prevention (DEP) [18], stack smashing protection (SSP) [13], and address
+space layout randomization (ASLR) [42], have raised the bar for reliable exploit devel-
+opment significantly. Nevertheless, a dedicated attacker is still able to achieve code
+execution [33, 25]. Information leaks are utilized to counter ASLR and reveal the lay-
+out of the address space or other valuable information [40, 33]. To circumvent DEP
+the attackers have added code-reuse attacks, such as return-oriented programming
+(ROP) [39, 9, 26], jump-oriented programming (JOP) [16, 11, 5], and call-oriented
+programming (COP) [10], to their repertoire. Code-reuse attacks do not inject new
+code but chain together small chunks of existing code, called gadgets, to achieve ar-
+bitrary code execution.
+In response to this success, the defensive research was driven to find protection
+methods against code-reuse attacks. Some results of this research are kBouncer [32],
+ROPecker [12], EMET [19]/ROPGuard [21], BinCFI [53], and CCFIR [52]. These
+defenses incorporate two main ideas. The first is to enforce control-flow integrity
+(CFI) [1, 2]. With perfect CFI the control-flow can neither be hijacked by code-
+injection nor by code-reuse [22]. However, the overhead of perfect CFI is too high
+to be practical. Therefore the proposed defense methods try to find the sweet spot
+between security and tolerable overhead. The second idea is to detect code-reuse at-
+tacks by known characteristics of an attack like a certain amount of gadgets chained
+together. All of those schemes defend attacks on the x86/x86-64 architecture. For
+other architectures the research is lacking behind [15].
+Several generic attack vectors have been published by the offensive side to high-
+light the limitations of the proposed defense methods. Although single implementa-
+tions can be disabled with common code-reuse attacks by exploiting a vulnerability
+in the implementation [14, 7], the generic ones rely on longer and more complex
+gadgets [22, 17, 37, 10, 23]. Since the gadgets loose their simplicity by becom-
+ing longer it also becomes harder to find specific gadgets and chain them together.
+To our knowledge there is no gadget finder available to search CFI resistant gad-
+gets.
+
+\section{Contribution}
+\label{Contribution}
+example remove afterwards:
+
+The objective of this thesis is to develop a tool that assists the exploit developer at
+locating gadgets which circumvent CFI and heuristic checks. All changes to registers
+and memory space must be immediately evident to the exploit developer. For this
+reason, we analyze the gadgets and categorize every register and every memory write
+by a set of semantic definitions. We use an IL for the analysis to support different
+architectures without the effort of adjusting the algorithms to new architectures.
+Because of the high architecture coverage, VEX [44] is our choice for the IL. VEX is
+part of Valgrind, an instrumentation framework intended for dynamic use [43]. To
+use VEX statically pyvex [51] is utilized. We instrument the SMT solver Z3 [48]
+for the analysis itself. Unfortunately, there is no interface from VEX or pyvex to
+Z3 available. Hence, we develop a translation from VEX to Z3. A wrapper adds
+the architecture layouts to Z3, thus making Z3 suitable for symbolic execution and
+path constrain analysis of the gadgets. To sum up, our thesis makes the following
+contributions:
+1. We develop a tool to discover CFI and heuristic check resistant gadgets in an
+architecture independent offline search.
+
+2. We provide semantic definitions for a convenient search of the gadgets.
+
+3. We provide a modular translation unit from VEX/pyvex to Z3, including a
+symbolic execution engine implemented for x86, x86-64, and ARM.
 
 \section{Outline}
+\label{Outline}
 The remainder of this thesis is organized as follows.
 We start by giving an overview of how \textit{TypeShild}
 is designed to mitigate COOP attacks. 

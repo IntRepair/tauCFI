@@ -64,6 +64,20 @@ Financial markets and institutions. 5th ed. Essex: Pearson Education.
 
 \end{comment}
 
+%%% Allow more line breaks in URLs.
+% \makeatletter
+% \g@addto@macro{\UrlBreaks}{%
+%   \do\/\do\a\do\b\do\c\do\d\do\e\do\f%
+%   \do\g\do\h\do\i\do\j\do\k\do\l\do\m%
+%   \do\n\do\o\do\p\do\q\do\r\do\s\do\t%
+%   \do\u\do\v\do\w\do\x\do\y\do\z%
+%   \do\A\do\B\do\C\do\D\do\E\do\F\do\G%
+%   \do\H\do\I\do\J\do\K\do\L\do\M\do\N%
+%   \do\O\do\P\do\Q\do\R\do\S\do\T\do\U%
+%   \do\V\do\W\do\X\do\Y\do\Z}
+% \g@addto@macro\UrlBreaks{\do\-\.}
+% \makeatother
+
 \usetikzlibrary{arrows,positioning} 
 \tikzset{
     %Define standard arrow tip
@@ -101,9 +115,7 @@ Financial markets and institutions. 5th ed. Essex: Pearson Education.
 	\input{components/titlepage}
 
 	%\input{components/cover_maschmeyer}
-	\clearemptydoublepage
-	
-	\input{components/titlepage}
+% 	\clearemptydoublepage
 	
 	\input{components/disclaimer}
 	
@@ -164,11 +176,15 @@ Financial markets and institutions. 5th ed. Essex: Pearson Education.
    \chapter*{Acronyms}
    \addcontentsline{toc}{chapter}{Acronyms}
    \input{chapters/Acronyms}
-  
+   
+   \tableofcontents
+   \addcontentsline{toc}{chapter}{\listfigurename}
    \listoffigures
+  
+   \addcontentsline{toc}{chapter}{\listtablename}
    \listoftables
-	
-  \clearemptydoublepage
+  
+   \clearemptydoublepage
   
   %\bibliography{bibliography/literature}
   
@@ -179,303 +195,277 @@ Financial markets and institutions. 5th ed. Essex: Pearson Education.
 
 %cited 
 \bibitem{mingwei:sekar}
-M.~Zhang and R. Sekar, {Control Flow Integrity for COTS Binaries}, In
-
+Mingwei Zhang and R. Sekar,
+``{Control Flow Integrity for COTS Binaries}'', In
 \emph{Proceedings of the USENIX conference on Security (USENIX SEC)}, ACM, pp. 337-352, 2013.
 
 \bibitem{safedispatch:jang}
-D.~Jang et al., {safeDispatch: Securing C++ Virtual Calls from Memory Corruption Attacks}, In
+Dongseok Jang, Zachary Tatlock, and Sorin Lerner,
+``{SafeDispatch: Securing C++ Virtual Calls from Memory Corruption Attacks}'', In
 \emph{Symposium on Network and Distributed System Security (NDSS)}, 2014.
-
-\emph{Proceedings of the 22nd USENIX conference on Security}, (USENIX Sec), ACM, pp. 337-352, 2013.
-
-\bibitem{safedispatch:jang}
-D.~Jang et al., {safeDispatch: Securing C++ Virtual Calls from Memory Corruption Attacks}, In
-\emph{Symposium on Network and Distributed System Security}, (NDSS), 2014.
 
 \bibitem{schuster:coop}
 Felix Schuster, Thomas Tendyck, Christopher Liebchen, Lucas Davi, Ahmad-Reza Sadeghi, Thorsten Holz, 
-{Counterfeit Object-oriented Programming}, In
+``{Counterfeit Object-oriented Programming}'', In
 \emph{Proceedings of the IEEE Symposium on Security and Privacy (S\&P)}, 2015.
 
 \bibitem{vtv:tice}
-C.~Tice~et al., {Enforcing Forward-Edge Control-Flow Integrity in GCC and LLVM}, In
+Caroline Tice, Tom Roeder, Peter Collingbourne, Stephen Checkoway, 
+Úlfar Erlingsson, Luis Lozano, and Geoff Pike, 
+``{Enforcing Forward-Edge Control-Flow Integrity in GCC and LLVM}'', In
 \emph{Proceedings of the USENIX conference on Security (USENIX SEC)}, ACM, 2014.
-
-\bibitem{trap:crane}
-S.~Crane et al., {It's a TRaP: Table Rndomization and Protection against Function-Reuse Attacks}, In
-\emph{Proceedings of the 2015 IEEE Symposium on Security and Privacy}, (S\&P), 2015.
 
 \bibitem{subversive-c:lettner}
 Julian Lettner, Benjamin Kollenda, Andrei Homescu, Per Larsen, Felix Schuster,
 Lucas Davi, Ahmad-Reza Sadeghi, Thorsten Holz, Michael Franz,
-{Subversive-C: Abusing and Protecting Dynamic Message Dispatch}, In
-\emph{USENIX Annual Technical Conference}, (ATC), 2016.
+``{Subversive-C: Abusing and Protecting Dynamic Message Dispatch}'', In
+\emph{USENIX Annual Technical Conference (USENIX ATC)}, 2016.
 
 \bibitem{intel:cet}
-Intel, {Intel CET},
+Intel, ``{Intel CET},
 \url{http://blogs.intel.com/evangelists/2016/06/09/intel-release-new-technology-specifications-protect-rop-attacks/}, 2016.
 
 \bibitem{windows:cfguard}
 Microsoft,
-{Windows Control Flow Guard},
+``{Windows Control Flow Guard}'',
 \url{https://msdn.microsoft.com/en-us/library/windows/desktop/mt637065(v=vs.85).aspx}, 2015.
 
 \bibitem{veen:typearmor}
 Victor van der Veen, Enes Goktas, Moritz Contag, Andre Pawlowski, Xi Chen, Sanjay Rawat, 
 Herbert Bos, Thorsten Holz, Elias Athanasopoulos, and Cristiano Giuffrida,
-{A Tough call: Mitigating Advanced Code-Reuse Attacks At The Binary Level}, In
-\emph{Proceedings of the IEEE Symposium on Security and Privacy (S\&P)}, 2016.
+``{A Tough call: Mitigating Advanced Code-Reuse Attacks At The Binary Level}'', In
+\emph{Proceedings oaravindf the IEEE Symposium on Security and Privacy (S\&P)}, 2016.
 
 \bibitem{haller:shrinkwrap}
 I. Haller, E. Goktas, E. Athanasopoulos, G. Portokalidis, H. Bos,
-{ ShrinkWrap: VTable Protection Without Loose Ends}, In
-\emph{Annual Computer Security Applications Conference}, (ACSAC), 2015.
+``{ShrinkWrap: VTable Protection Without Loose Ends}'', In
+\emph{Annual Computer Security Applications Conference (ACSAC)}, 2015.
 
 \bibitem{volodymyr:cpi}
 Volodymyr Kuznetsov, László Szekeres, Mathias Payer†, George Candea, R. Sekar, Dawn Song,
-{Code-Pointer Integrity}, In
+``{Code-Pointer Integrity}'', In
 \emph{Proceedings of the USENIX Symposium on Operating Systems Design and Implementation (OSDI)}, 2014.
 
 \bibitem{bounov:interleaving}
 Dimitar Bounov, Rami Gökhan Kici, and Sorin Lerner,
-{Protecting C++ Dynamic Dispatch Through VTable Interleaving}, In
-\emph{Symposium on Network and Distributed System Security (NDSS)}, 2016.
+``{Protecting C++ Dynamic Dispatch Through VTable Interleaving}'', In
+\emph{Symposium on aravindNetwork and Distributed System Security (NDSS)}, 2016.
 
 \bibitem{zhang:vtrust}
 Chao Zhang, Scott A. Carr, Tongxin Li, Yu Ding, Chengyu Song, Mathias Payer and Dawn Song,
-{VTrust: Regaining Trust on Virtual Calls}, In
+``{VTrust: Regaining Trust on Virtual Calls}'', In
 \emph{Symposium on Network and Distributed System Security (NDSS)}, 2016.
 
 \bibitem{crane:readactor++}
 Stephen Crane, Stijn Volckaert, Felix Schuster, Christopher Liebchen, Per Larsen,
 Lucas Davi, Ahmad-Reza Sadeghi, Thorsten Holz, Bjorn De Sutter, Michael Franz,
-{It’s a TRaP: Table Randomization and Protection against Function-Reuse Attacks}, In
-\emph{Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)}, 2015.
-
-\bibitem{crane:readactor++}
-Stephen Crane, Stijn Volckaert, Felix Schuster, Christopher Liebchen, Per Larsen,
-Lucas Davi, Ahmad-Reza Sadeghi, Thorsten Holz, Bjorn De Sutter, Michael Franz,
-{It’s a TRaP: Table Randomization and Protection against Function-Reuse Attacks}, In
+``{It’s a TRaP: Table Randomization and Protection against Function-Reuse Attacks}'', In
 \emph{Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)}, 2015.
 
 \bibitem{caballero:inference}
 Juan Caballero, and Zhiqiang Lin,
-{Type Inference on Executables}, In
-\emph{ACM Computing Surveys}, (CSUR), 2016.
+``{Type Inference on Executables}'', In
+\emph{ACM Computing Surveys (CSUR)}, 2016.
 
 \bibitem{veen:cfi}
-V.~van der Veen et al., {Practical Context-Sensiticve CFI}, In
+Victor van der Veen, Dennis Andriesse, Enes Göktas, Ben Gras.
+Lionel Sambuc, Asia Slowinska, Herbert Bos, and Cristiano Giuffrida,
+``{Practical Context-Sensiticve CFI}'', In
 \emph{Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)}, 2015.
 
 \bibitem{andriesse:indepth}
 D. Andriesse, X. Chen, V. van der Veen, A. Slowinska, and H. Bos, 
-{An In-Depth Analysis of Disassembly on Full-Scale x86/x64 Binaries}, In
+``{An In-Depth Analysis of Disassembly on Full-Scale x86/x64 Binaries}'', In
 \emph{Proceedings of the USENIX Conference on Security (USENIX SEC)}, 2016.
 
 \bibitem{lin:rewards}
 Zhiqiang Lin Xiangyu Zhang Dongyan Xu,
-{Automatic Reverse Engineering of Data Structures from Binary Execution}, In
+``{Automatic Reverse Engineering of Data Structures from Binary Execution}'', In
 \emph{Symposium on Network and Distributed System Security (NDSS)}, 2010.
 
 \bibitem{bap:brumley}
 David Brumley, Ivan Jager, Thanassis Avgerinos, and Edward J. Schwartz,
-{BAP: A Binary Analysis Platform}, 
-In \emph{Proceedings of Computer Aided Verification (CAV)}, 2011.
+``{BAP: A Binary Analysis Platform}'', 
+In \emph{Proceedings of Computer AidedVTint: Protecting Virtual Function Tab Verification (CAV)}, 2011.
 
 \bibitem{fokin:smartdec}
 Alexander Fokin, Yegor Derevenets, Alexander Chernov, and Katerina Troshina,
-{SmartDec: Approaching C++ decompilation}, 
+``{SmartDec: Approaching C++ decompilation}'', 
 In \emph{Working Conference on Reverse Engineering (WCRE)}, 2011.
 
 \bibitem{divine:balakrishnan}
 G. Balakrishnan and T. Reps,
-{DIVINE: Discovering variables in executables}, 
+``{DIVINE: Discovering variables in executables}v, 
 In \emph{International Conference on Verification, Model Checking, and Abstract Interpretation (VMCAI)}, 2007.
 
 \bibitem{alan:mycroft}
 Alan Mycroft,
-{Lecture Notes}, 
-In \emph{https://www.cl.cam.ac.uk/~am21/papers/sas07slides.pdf}, 2007.
+``{Lecture Notes}, 
+In \url{https://www.cl.cam.ac.uk/~am21/papers/sas07slides.pdf}, 2007.
 
 \bibitem{bernat:dyninst}
 Andrew R. Bernat and Barton P. Miller,
-{Anywhere, Any-Time Binary Instrumentation}, 
+``{Anywhere, Any-Time Binary Instrumentation}'', 
 In \emph{Proceedings of the 10th ACM SIGPLAN-SIGSOFT workshop on Program analysis for software tools, (PASTE)}, 2011.
 
 \bibitem{dynamorio:drmemory}
 Dynamic Instrumentation Tool Platform
-{DynamoRIO}, 
-In \emph{http://dynamorio.org/home.html}.
+``{DynamoRIO}'', 
+In \url{http://dynamorio.org/home.html}.
 
 \bibitem{iso:iecN3690}
 I. JTC1/SC22WG21,
-{ISO/IEC 14882:2013 Programming Language C++ (N3690)}, 
-In \emph{https://isocpp.org/files/papers/N3690.pdf}, 2013.
+``{ISO/IEC 14882:2013 Programming Language C++ (N3690)}'', 
+In \url{https://isocpp.org/files/papers/N3690.pdf}, 2013.
 
 \bibitem{byoungyoung:typecasting}
 Byoungyoung Lee, Chengyu Song, Taesoo Kim, and Wenke Lee, 
-{Type Casting Verification: Stopping an Emerging Attack Vector}, In
+``{Type Casting Verification: Stopping an Emerging Attack Vector}'', In
 \emph{Proceedings of the USENIX Conference on Security (USENIX SEC)}, 2015.
 
+\bibitem{abadi:cfi2}
+Martin Abadi, Mihai Budiu, Úlfar Erlingsson, and Jay Ligatti,
+``{Control Flow Integrity}'', In
+\emph{the 12th ACM Conference on Computer and Communications Security (CCS)}, 2005.
 
-
-
-%not cited
-
-
-
-\bibitem{carlini:bending}
-N.~Carlini~et al., {Control-Flow Bending: On the Effectiveness of Control-Flow Integrity}, In
-\emph{Proceedings of the USENIX conference on Security (USENIX SEC)}, ACM, 2015.
-
-\bibitem{skowyra:systemetic}
-R.~Skowyra~et al., {Systematic Analysis of Defenses Against Return-Oriented Programming}, In
-\emph{Proceedings of the International Symposium on Research in Attacks, Intrusions, and Defenses (RAID)}, 2013.
+\bibitem{abadi:cfi}
+Martin Abadi, Mihai Budiu, Úlfar Erlingsson, and Jay Ligatti,
+``{Control Flow Integrity Principles, Implementations, and Applications}'', In
+\emph{ACM Transactions on Information and System Security (TISSEC)}, 2009.
 
 \bibitem{mcfi:niu}
-B.~Niu~et al., {Modular Control-Flow Integrity}, In
+Ben Niu, and Gang Tan,
+``{Modular Control-Flow VTint: Protecting Virtual Function TabIntegrity}'', In
 \emph{ACM Conferece on Programming Language Design and Implementation (PLDI)}, 2014.
 
-\bibitem{cfiguard:yuan}
-R.~Skowyra~et al., {Hardware-Assisted Fine-Grained Code-Reuse Attack Detection}, In
-\emph{Proceedings of the International Symposium on Research in Attacks, Intrusions, and Defenses (RAID)}, 2015.
-
-\bibitem{goktas:outofcontrol}
-E.~G\"{o}kta\c{s} et al., {Out Of Control: Overcoming Control-Flow Integrity}, In
-\emph{Proceedings of the IEEE Symposium on Security and Privacy (S\&P)}, 2014.
-
-\bibitem{abadi:cfi2}
-M.~Abadi et al., {Control Flow Integrity}, In
-\emph{Proceedings of the ACM Conference on Computer and Communications Security (CCS)}, 2005.
-
 \bibitem{rockjit:niu}
-B.~Niu et al., {RockJIT: Securing Just-In-Time Compilation Using Modular Control-Flow Inegrity}, In
+Ben Niu, and Gang Tan, 
+``{RockJIT: Securing Just-In-Time Compilation Using Modular Control-Flow Inegrity}'', In
 \emph{Proceedings of the ACM Conference on Computer and Communications Security (CCS)}, 2014.
 
 \bibitem{perinput:niu}
-B.~Niu et al., {Per-Input Control-Flow Integrity}, In
+Ben Niu, and Gang Tan,
+``{Per-Input Control-Flow Integrity}'', In
 \emph{Proceedings the ACM Conference on Computer and Communications Security (CCS)}, 2015.
 
-\bibitem{abadi:cfi}
-M.~Abadi et al., {Control Flow Integrity Principles, Implementations, and Applications}, In
-\emph{ACM Transactions on Information and System Security (TISSEC)}, 2009.
-
-\bibitem{rop:carlini}
-N.~Carlini et al., {ROP is still dangerous: Breaking Modern Defenses}, In
-\emph{Proceedings of the USENIX conference on Security (USENIX SEC)}, ACM, 2014.
-
-\bibitem{minghua:binary}
-M.~Wang et al., {Binary Code Continent: Finer-Grained Control Flow Integrity for Stripped Binaries}, In
-\emph{Annual Computer Security Applications Conference (ACSAC)}, 2015.
-
-\bibitem{ccfi:jose}
-A. J.~Mashtizadeh et al., {CCFI: Cryptograhically Enforced Control Flow Integrity}, In
-\emph{Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)}, 2015.
-
-\bibitem{mohan:opaque}
-V.~Mohan et al., {Opaque Control-Flow Integrity}, In
-\emph{Symposium on Network and Distributed System Security (NDSS)}, 2015.
-
 \bibitem{vtint:zhang}
-C.~Zhang et al., {VTint: Protecting Virtual Function Tables\' Integrity}, In
+Chao Zhang, Chengyu Song, Kevin Zhijie Chen, Zhaofeng Chen, and Dawn Song,
+``{VTint: Protecting Virtual Function Tables\' Integrity}'', In
 \emph{Proceedings of the Symposium on Network and Distributed System Security (NDSS)}, 2015.
 
-\bibitem{ccfir:zhang}
-C.~Zhang et al., {Practical Control Flow Integrity \& Randomization for Binary Executables}, In
-\emph{Proceedings of the IEEE Symposium on Security and Privacy (S\&P)}, 2013.
-
-\bibitem{cfci:zhang}
-M.~Zhang et al., {Control Flow and Code Integrity for COTS binaries: An Effective Defense Against Real-ROP Attcks}, In
-\emph{Annual Computer Security Applications Conference (ACSAC)}, 2015.
+\bibitem{vfuard:aravind}
+Aravind Prakash, Xunchao Hu, and Heng Yin,
+``{Strict Protection for Virtual Function Calls in COTS C++ Binaries}'', In
+\emph{Symposium on Network and Distributed System Security (NDSS)}, 2015.
 
 \bibitem{dynaguard:petsios}
-T.~Petsios et al., {DynaGuard: Armoring Canary-based Protections against Brute-force Attacks}, In
+Theofilos Petsios, Vasileios P. Kemerlis, Michalis Polychronakis, and Angelos D. Keromytis,	
+``{DynaGuard: Armoring Canary-based Protections against Brute-force Attacks}'', In
 \emph{Annual Computer Security Applications Conference (ACSAC)}, 2015.
 
 \bibitem{pblocker:prakash}
-A.~Prakash et al., {Defeating ROP Through Denial of Stack Pivot}, In
+Aravind Prakash, and Heng Yin,
+``{Defeating ROP Through Denial of Stack Pivot}'', In
 \emph{Annual Computer Security Applications Conference (ACSAC)}, 2015.
-
-\bibitem{vfuard:aravind}
-A.~Prakash et al., {Strict Protection for Virtual Function Calls in COTS C++ Binaries}, In
-\emph{Symposium on Network and Distributed System Security (NDSS)}, 2015.
-=======
-\emph{Proceedings of the 24nd USENIX conference on Security}, ACM, 2015.
-
-\bibitem{skowyra:systemetic}
-R.~Skowyra~et al., {Systematic Analysis of Defenses Against Return-Oriented Programming}, In
-\emph{Proceedings of the 16th International Symposium on Research in Attacks, Intrusions, and Defenses},
-(RAID), 2013.
-
-\bibitem{mcfi:niu}
-B.~Niu~et al., {Modular Control-Flow Integrity}, In
-\emph{ACM Conferece on Programming Language Design and Implementation}, (PLDI), 2014.
-
-\bibitem{cfiguard:yuan}
-R.~Skowyra~et al., {Hardware-Assisted Fine-Grained Code-Reuse Attack Detection}, In
-\emph{Proceedings of the 18th International Symposium on Research in Attacks, Intrusions, and Defenses},
-(RAID), 2015.
-
-\bibitem{goktas:outofcontrol}
-E.~G\"{o}kta\c{s} et al., {Out Of Control: Overcoming Control-Flow Integrity}, In
-\emph{Proceedings of the 2014 IEEE Symposium on Security and Privacy}, (S\&P), 2014.
-
-\bibitem{abadi:cfi2}
-M.~Abadi et al., {Control Flow Integrity}, In
-\emph{the 12th ACM Conference on Computer and Communications Security}, (CCS), 2005.
-
-\bibitem{rockjit:niu}
-B.~Niu et al., {RockJIT: Securing Just-In-Time Compilation Using Modular Control-Flow Inegrity}, In
-\emph{the 21th ACM Conference on Computer and Communications Security}, (CCS), 2014.
-
-\bibitem{perinput:niu}
-B.~Niu et al., {Per-Input Control-Flow Integrity}, In
-\emph{the 22th ACM Conference on Computer and Communications Security}, (CCS), 2015.
-
-\bibitem{abadi:cfi}
-M.~Abadi et al., {Control Flow Integrity Principles, Implementations, and Applications}, In
-\emph{ACM Transactions on Information and System Security}, (TISSEC), 2009.
-
-\bibitem{rop:carlini}
-N.~Carlini et al., {ROP is still dangerous: Breaking Modern Defenses}, In
-\emph{Proceedings of the 23nd USENIX conference on Security}, (USENIX Sec), ACM, 2014.
-
-\bibitem{minghua:binary}
-M.~Wang et al., {Binary Code Continent: Finer-Grained Control Flow Integrity for Stripped Binaries}, In
-\emph{Annual Computer Security Applications Conference}, (ACSAC), 2015.
-
-\bibitem{ccfi:jose}
-A. J.~Mashtizadeh et al., {CCFI: Cryptograhically Enforced Control Flow Integrity}, In
-\emph{Proceedings of the 22nd ACM SIGSAC Conference on Computer and Communications Security}, (CCS), 2015.
 
 \bibitem{mohan:opaque}
-V.~Mohan et al., {Opaque Control-Flow Integrity}, In
-\emph{Symposium on Network and Distributed System Security}, (NDSS), 2015.
-
-\bibitem{vtint:zhang}
-C.~Zhang et al., {VTint: Protecting Virtual Function Tables\' Integrity}, In
-\emph{Symposium on Network and Distributed System Security}, (NDSS), 2015.
-
-\bibitem{ccfir:zhang}
-C.~Zhang et al., {Practical Control Flow Integrity \& Randomization for Binary Executables}, In
-\emph{Proceedings of the 2013 IEEE Symposium on Security and Privacy}, (S\&P), 2013.
+Vishwath Mohan, Per Larsen, Stefan Brunthaler, Kevin W. Hamlen, and Michael Franz,
+``{Opaque Control-Flow Integrity}'', In
+\emph{Symposium on Network and Distributed System Security (NDSS)}, 2015.
 
 \bibitem{cfci:zhang}
-M.~Zhang et al., {Control Flow and Code Integrity for COTS binaries: An Effective Defense Against Real-ROP Attcks}, In
-\emph{Annual Computer Security Applications Conference}, (ACSAC), 2015.
+Mingwei Zhang,  and R. Sekar,
+``{Control Flow and Code Integrity for COTS binaries: An Effective Defense Against Real-ROP Attcks}'', In
+\emph{Annual Computer Security Applications Conference (ACSAC)}, 2015.
 
-\bibitem{dynaguard:petsios}
-T.~Petsios et al., {DynaGuard: Armoring Canary-based Protections against Brute-force Attacks}, In
-\emph{Annual Computer Security Applications Conference}, (ACSAC), 2015.
+\bibitem{ccfir:zhang}
+Chao Zhang, Tao Wei, Zhaofeng Chen, Lei Duan,
+Laszlo Szekeres, Stephen McCamant, Dawn Song, and Wei Zou,
+``{Practical Control Flow Integrity \& Randomization for Binary Executables}'', In
+\emph{Proceedings of the IEEE Symposium on Security and Privacy (S\&P)}, 2013.
 
-\bibitem{pblocker:prakash}
-A.~Prakash et al., {Defeating ROP Through Denial of Stack Pivot}, In
-\emph{Annual Computer Security Applications Conference}, (ACSAC), 2015.
+\bibitem{cfiguard:yuan}
+Pinghai Yuan, Qingkai Zeng, and Xuhua Ding,
+``{Hardware-Assisted Fine-Grained Code-Reuse Attack Detection}'', In
+\emph{Proceedings of the International Symposium on Research in Attacks, Intrusions, and Defenses (RAID)}, 2015.
 
-\bibitem{vfuard:aravind}
-A.~Prakash et al., {Strict Protection for Virtual Function Calls in COTS C++ Binaries}, In
-\emph{Symposium on Network and Distributed System Security}, (NDSS), 2015.
+\bibitem{ccfi:jose}
+Ali José Mashtizadeh, Andrea Bittau, Dan Boneh, and  David Mazières
+``{CCFI: Cryptograhically Enforced Control Flow Integrity}'', In
+\emph{Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)}, 2015.
+
+\bibitem{dep}
+Microsoft, Changes to Functionality in Microsoft Windows XP Service Pack 2.,
+\url{https://technet.microsoft.com/en-us/library/bb457151.aspx.}
+
+\bibitem{ASLR}
+PaX Team. Address Space Layout Randomization,
+\url{https://pax.grsecurity.net/docs/aslr.txt}, 2001.
+
+\bibitem{ROP}
+E. Buchanan, R. Roemer, H. Shacham, and S. Savage, 
+``{When Good Instructions Go Bad: Generalizing Return-oriented Programming to RISC}'', In
+\emph{ACM Conference on Computer and Communications Security (CCS)}, 2008.
+
+\bibitem{JOP1}
+T. Bletsch, X. Jiang, V. W. Freeh, and Z. Liang,
+``{Jump-Oriented Programming: A New Class of Code-Reuse Attack}'', In
+\emph{ACM Symposium on Information, Computer and Communications Security (ASIACCS)}, 2011.
+
+\bibitem{JOP2}
+S. Checkoway, L. Davi, A. Dmitrienko, A.-R. Sadeghi, H. Shacham, and M. Winandy,
+``{Return-oriented Programming Without Returns}'', In
+\emph{ACM Conference on Computer and Communications Security (CCS)}, 2010.
+
+\bibitem{JOP3}
+L. Davi, A. Dmitrienko, A.-R. Sadeghi, and M. Winandy,
+``{Return-Oriented Programming without Returns on ARM}'', In
+\emph{Technical report, Technical Report HGI-TR-2010-002, Ruhr-University Bochum}, 2010.
+
+\bibitem{rop:carlini}
+Nicholas Carlini, and David Wagner,
+``{ROP is still dangerous: Breaking Modern Defenses}'', In
+\emph{Proceedings of the USENIX conference on Security (USENIX SEC)}, ACM, 2014.
+
+\bibitem{kornau:rop}
+T. Kornau, 
+``{Return-Oriented Programming for the ARM Architecture}'',
+\url{http://www.zynamics.com/downloads/kornau-tim--diplomarbeit--rop.pdf}, 2009.
+
+\bibitem{rop:shacham}
+H. Shacham,
+``{The Geometry of Innocent Flesh on the Bone: Return-into-Libc without Function Calls (On the x86)}'', In
+\emph{ACM Conference on Computer and
+Communications Security (CCS)}, 2007.
+
+
+
+
+%not cited---------------------can be added if needed, we sh have around 50
+% \bibitem{carlini:bending}
+% Nicolas Carlini, Antonio Barresi, Mathias Payer, David Wagner, Thomas R. Gross,
+% {Control-Flow Bending: On the Effectiveness of Control-Flow Integrity}, In
+% \emph{Proceedings of the USENIX conference on Security (USENIX SEC)}, ACM, 2015.
+% 
+% \bibitem{skowyra:systemetic}
+% R. Skowyra, K. Casteel, H. Okhravi, N. Zeldovich, and W. Streilein,
+% {Systematic Analysis of Defenses Against Return-Oriented Programming}, In
+% \emph{Proceedings of the International Symposium on Research in Attacks, Intrusions, and Defenses (RAID)}, 2013.
+% 
+% 
+% \bibitem{goktas:outofcontrol}
+% Enes Göktas, Elias Athanasopoulos, Herbert Bos, and Georgios Portokalidis	
+% {Out Of Control: Overcoming Control-Flow Integrity}, In
+% \emph{Proceedings of the IEEE Symposium on Security and Privacy (S\&P)}, 2014.
+% 
+% 
+% \bibitem{minghua:binary}
+% Minghua Wang, Heng Yin, Abhishek Vasisht Bhaskar, Purui Su, and Dengguo Feng,
+% {Binary Code Continent: Finer-Grained Control Flow Integrity for Stripped Binaries}, In
+% \emph{Annual Computer Security Applications Conference (ACSAC)}, 2015.
+% 
+
+
 
 
 
