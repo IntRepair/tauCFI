@@ -12,35 +12,28 @@
 \chapter{Design}
 \label{chapter:Design}
 
+In the design of Typeshield, we cover various aspects, first of all we introduce the details of the COUNT policy - as introduced by \cite{typearmor} and the new TYPE policy. Then we need to implement the analysis for calltargets callsites for the the respective policy. For further restriction capabilities we introduce a version of address taken analysis based on \cite{atpaper}. 
+%At last we introduce a patching schema for callsites and calltargets to enforce the invariants we inferred.
 
 \section{COUNT Policy}
 \label{section:countpolicy}
 
 \begin{wrapfigure}{r}{0pt}
 \resizebox{0.4\textwidth}{!}{
-
 \begin{tikzpicture}
-
 
 \fill[black!40!white] (0,0) rectangle (9,9);
 \fill[black!30!white] (0,0) rectangle (7,7);
 \fill[black!20!white] (0,0) rectangle (4,4);
 \fill[black!10!white] (0,0) rectangle (2,2);
 
-
 \draw (0,0) --node[anchor=south] {0 params} (2,0)  -- (2,2) -- (0,2) -- (0,0) ;
-
 \draw (0,0) -- (2,0) --node[anchor=south] {1 param} (4,0) -- (4,4) -- (0,4) -- (0,0);
-
-
 \draw (0,0) --(4,0) --node[anchor=south] {2 ... 5 params} (7,0) -- (7,7) -- (0,7) -- (0,0);
-
 \draw (0,0) --(7,0) --node[anchor=south] {6 params} (9,0) -- (9,9) -- (0,9) -- (0,0);
-
 \draw[dashed] (4,4) -- (7,7);
-	
-\end{tikzpicture}
 
+\end{tikzpicture}
 }
 \caption{COUNT policy schema}
 \label{fig:COUNTschema}
@@ -51,9 +44,6 @@ What we call the COUNT policy is essentially the policy introduced by typearmor\
 	\forall cs_1, cs_2.  c_{cs_1} \leq c_{cs_2} \Longrightarrow  \| \{ct \in \mathcal{F} | c_{ct} \leq c_{cs_1} \} \| \leq \| \{ct \in \mathcal{F} | c_{ct} \leq c_{cs_2}  \} \|
 \]
 One possible remedy would be the ability to introduce an upper bound for the classification deviation of parameter counts, however as of now, this does not seem feasible with current technology. Another possibility would be the overall reduction of callsites, which can access the same set of calltargets, a route we will explore within this work.
-
-
-
 
 \section{TYPE Policy}
 \label{section:typepolicy}
@@ -135,22 +125,25 @@ Again we allow any callsite $cs$ call any calltarget $ct$, when it fulfillst the
 
 \section{Instruction Analysis}
 \label{section:instructionanalysis}
-Usually dataflow analysis algorithms are based on a variable sets or sets of definitions, which are basically unbounded. However, we are analyzing the state of registers, which are baked into hardware and therefore their number is given, thus we need to adapt dataflow theory.
+Usually data-flow analysis algorithms are based on set of variable or sets of definitions, which both are basically unbounded. However, we are analysing the state of registers, which are baked into hardware and therefore their number is given, thus requiring us to adapt the data-flow theory to work on tuples.
 
-An instruction i can non-exlusively perform two kinds of operations on any number of existing registers:
+The set $\mathcal{I}$ describes all possible instructions that can occur within the executable section of a binary. (in our case this is based on the instruction set for x86-64 processors)
+
+An instruction $i \in \mathcal{I}$ can non-exclusively perform two kinds of operations on any number of existing registers:
 \begin{enumerate}
-\item Read bits from the register within the spectrum of 64, 32, 16 or 8 bits
-\item Write bits from the register within the spectrum of 64, 32, 16 or 8 bits
+\item Read $n$ bits from the register with $n \in \{ 64, 32, 16, 8 \}$
+\item Write $n$ bits to the register with $n \in \{ 64, 32, 16, 8 \}$
 \end{enumerate}
-Thus we describe the possible change that can occur on one register caused through one instruction by $S = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. Note that 0 signals the absence of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore a bitcount of $n$ implies all lower bitcounts, excluding 0 (e.g. $r64$ implies $r32$)
+Thus we describe the possible change that occurs in one register with the set $S = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. Note that 0 signals the absence of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ with $m \in \{64,32,16,8\}$ and $m < n$ (e.g. $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.
 
-SystemV ABI specifies 16 general purpose integer registers, thus for our purpose we represent the change occuring by one instruction with $\mathcal{S} = S^{16}$.
+SystemV ABI specifies 16 general purpose integer registers, thus for our purpose we represent the change occurring at the processor level as $\mathcal{S} = S^{16}$.
 
-At last we declare a function, which calculates the change occuring in the processor state, when executing an instruction from the set of valid instructions $\mathcal{I}^{x86-64}$, which is the x86-64 instruction set:
+At last we declare a function, which calculates the change occurring in the processor state, when executing an instruction from $\mathcal{I}$:
 \[
 decode : \mathcal{I} \mapsto \mathcal{S}
 \]
-However, we do not go into detail how this function actually calculates this value and rely on external libraries to perform this task. Implementing this function ourself is out of scope due to the lengthy work required, as the x86-64 instruction set is quite large.
+
+However, we do not go into detail how this function actually calculates this sate, because we rely on external libraries to perform this task. Implementing this function ourself is out of scope due to the lengthy work required, as the x86-64 instruction set is quite large.
 
 \section{Calltarget Analysis}
 \label{section:calltargetanalysis}
@@ -173,29 +166,77 @@ Out_n &:= \left\{
 \right. \label{eq:livenessbasedefOut}
 \end{align}
 \end{subequations}
-$Bl$ is the default state at the end of a path of execution and in our case reaching that state would mean that a variable has never been used (neither written nor read). The set $Kill_n$ describes all variables that are no longer live after the block $n$, meaning that a variable occuring within this set has been written to. The set $Gen_n$ describes all variables that are alive due to the block $n$, meaning that a variable occuring within this set has been read before it was written to.
+$Bl$ is the default state at the end of a path of execution and in our case reaching that state would mean that a variable has never been used (neither written nor read). The set $Kill_n$ describes all variables that are no longer live after the block $n$, meaning that a variable occurring within this set has been written to. The set $Gen_n$ describes all variables that are alive due to the block $n$, meaning that a variable occurring within this set has been read before it was written to.
 
-However, we cannot use variable liveness analysis as is, because the analysis is based on potentially unbound variable sets, while we are restricted to a finite number of registers and states. We also require an underestimation of live variables an not an overestimation as provided by standard livness analysis. Furthermore we have to define how to interpret the changes occuring withing one block based on the the change caused by its instructions. Considering this, we arrive at the following defintion of a configurable liveness analysis:
+However, we cannot use variable liveness analysis as is, because the analysis is based on potentially unbound variable sets, while we are restricted to a finite number of registers and states. We also require an underestimation of live variables an not an overestimation as provided by standard liveness analysis. Furthermore we have to define how to interpret the changes occurring within one block based on the the change caused by its instructions. Considering this, we arrive at the following algorithm to compute the liveness state at the start of a basic block:\\
+\begin{algorithm}[H]
+	\SetAlgoLined
+	\SetKwProg{Fn}{Function}{ is}{end}
+	\Fn{analyze(block : BasicBlock) : $\mathcal{S}^\mathcal{L}$}
+	{
+ 	state = Bl
+ 	
+ 	\ForEach{inst $\in$ block}{
+ 	
+ 		state' = analyze\_instr(inst)
+ 		
+		state = merge\_v(state, state')
+	}
+
+	states = {}
+	
+	blocks = succ(block)
+	
+	\ForEach{block' $\in$ blocks} {
+	
+ 		state' = analyse(block')
+ 		
+		states = states $\cup$ \{ state' \}
+	}
+
+	state' = merge\_h (states)
+
+	\Return merge\_v(state, state')
+
+	}
+\end{algorithm}
+This algorithm relies on various functions that can be used to configure its behaviour. We need to define the function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function $analyze\_instr$. The function $succ$, which retrieves all possible successors of a block won't be implemented by us, because we rely on the DynInst instrumentation framework to achieve this.
 \begin{subequations}
 \label{eq:livenesscustom}
 \begin{align}
-In_n &:= merge\_v(n, Out_n)\label{eq:livenesscustomIn} \\
-Out_n &:= \left\{
-  \begin{array}{lr}
-    Bl & \text{n has no successors}\\
-    merge\_h( \{ In_s | s \in succ(n) \} & \text{otherwise}
-  \end{array}
-\right. \label{eq:livenesscustomOut}\\
-merge\_v &: \mathcal{I} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}\\
-merge\_h &: \mathcal{P}(\mathcal{S}^\mathcal{L})  \mapsto \mathcal{S}^\mathcal{L}\\
-succ &: \mathcal{I} \times \mathcal{P}(\mathcal{I})
+merge\_v &: \mathcal{S}^\mathcal{L} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}\\
+merge\_h &: \mathcal{P}(\mathcal{S}^\mathcal{L}) \mapsto \mathcal{S}^\mathcal{L}\\
+analyze\_instr &: \mathcal {I} \mapsto \mathcal{S}^\mathcal{L} \\
+succ &: \mathcal{I} \mapsto \mathcal{P}(\mathcal{I})
 \end{align}
 \end{subequations}
-We have yet to define the functions $merge\_v$, which describes how to compound a function and the outgoing state, the function $merge\_h$, which describes how to merge the states of several paths and the function $succc$, which essentially gives us the successors of the current instruction. To prevent cycles we keep track of the instructions visited within the current path and omit any instruction on the current path from the result of $succ$. These functions, the liveness state $\mathcal{S}^\mathcal{L}$ and its interpretation into parameters will be defined in the following subsections.
 
-\subsection{Forward Graph Traversal}
-\label{subsection:forwardgraphtraversal}
+%\begin{subequations}
+%\label{eq:livenesscustom}
+%\begin{align}
+%In_n &:= merge\_v(n, Out_n)\label{eq:livenesscustomIn} \\
+%Out_n &:= \left\{
+%  \begin{array}{lr}
+%    Bl & \text{n has no successors}\\
+%    merge\_h( \{ In_s | s \in succ(n) \} & \text{otherwise}
+%  \end{array}
+%\right. \label{eq:livenesscustomOut}\\
+%merge\_v &: \mathcal{I} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}\\
+%merge\_h &: \mathcal{P}(\mathcal{S}^\mathcal{L})  \mapsto \mathcal{S}^\mathcal{L}\\
+%succ &: \mathcal{I} \times \mathcal{P}(\mathcal{I})
+%\end{align}
+%\end{subequations}
+%We have yet to define the functions $merge\_v$, which describes how to compound a function and the outgoing state, the function $merge\_h$, which describes how to merge the states of several paths and the function $succc$, which essentially gives us the successors of the current instruction. To prevent cycles we keep track of the instructions visited within the current path and omit any instruction on the current path from the result of $succ$. These functions, the liveness state $\mathcal{S}^\mathcal{L}$ and its interpretation into parameters will be defined in the following subsections.
 
+As the $analyze\_instr$ function calculates the effect of an instruction and is the heart of the analyze function. It will also handle non jump and non fallthrough successors, as these are not handled by Dyninst in our case. We essentially have four cases that we handle:
+\begin{enumerate}
+\item if the instruction is an indirect call or a direct call but we chose not follow calls, then return a state where all registers are considered written
+\item if the instruction is a diect call and we chose to follow calls, then we spawn a new analysis and return its result 
+\item if the instruction is a constant write (e.g. xor of two registers) then we remove the read portion before we return the decoded state
+\item in all other cases we simply return the decoded state
+\end{enumerate}
+
+This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
 
 \subsection{Required Parameter Count}
 \label{subsection:requiredparamcount}
@@ -285,6 +326,58 @@ We apply the liveness analysis for each function with the entry block of the fun
 
 \subsection{Variadic Functions}
 \label{subsection:variadicfunctions}
+Variadic functions are special functions in C/C++ that have a basic set of parameters, which they always require and a variadic set of parameters, which as the name suggests may vary. A prominent example of this would be the $printf$ function, which is used to output text to $stdout$.
+
+The problem with these functions is that to allow for easier processing of parameters usually all potential variadic parameters are moved into a contiguous block of memory, as can be seen in the assembly in figure \ref{fig:asmvariadic}. Our analysis interprets that as a read access on all parameters and we arrive at a problematic overestimation. 
+
+\newsavebox\myv
+\begin{lrbox}{\myv}
+\begin{minipage}{\textwidth}
+\begin{verbatim}
+00000000004222f0 <make_cmd>:
+  4222f0:       push   %r15
+  4222f2:       push   %r14
+  4222f4:       push   %rbx
+  4222f5:       sub    $0xd0,%rsp
+  4222fc:       mov    %esi,%r15d
+  4222ff:       mov    %rdi,%r14
+  422302:       test   %al,%al
+  422304:       je     42233d <make_cmd+0x4d>
+  422306:       movaps %xmm0,0x50(%rsp)
+  42230b:       movaps %xmm1,0x60(%rsp)
+  422310:       movaps %xmm2,0x70(%rsp)
+  422315:       movaps %xmm3,0x80(%rsp)
+  42231d:       movaps %xmm4,0x90(%rsp)
+  422325:       movaps %xmm5,0xa0(%rsp)
+  42232d:       movaps %xmm6,0xb0(%rsp)
+  422335:       movaps %xmm7,0xc0(%rsp)
+  42233d:       mov    %r9,0x48(%rsp)
+  422342:       mov    %r8,0x40(%rsp)
+  422347:       mov    %rcx,0x38(%rsp)
+  42234c:       mov    %rdx,0x30(%rsp)
+  422351:       mov    $0x50,%esi
+  422356:       mov    %r14,%rdi
+  422359:       callq  409430 <pcalloc>
+\end{verbatim}
+\end{minipage}
+\end{lrbox}
+
+\begin{figure}[h]
+\resizebox{\textwidth}{!}{\usebox\myv}
+
+\caption{ASM code of the \texttt{make\_cmd} function with optimize level O2, which has a variadic parameter list}
+\label{fig:asmvariadic}
+\end{figure}
+
+
+Our solution to this problem is to find these spurious reads and ignore them. A compiler will implement this type of operation very similar foll all cases, thus we can achieve this using the following steps:
+\begin{enumerate}
+\item Look for what we call the xmm-passthrough block, which entierly consist of moving the values of registers \texttt{xmm0} to \texttt{xmm7} into contiguous memory (in our case basic block [\texttt{0x422306}, \texttt{0x42233d} [ )
+
+\item Look at the predecessor of the xmm-passthrough block, which we call the entry block (in our case basic block [\texttt{0x4222f0}, \texttt{0x4222f2} [ ). Check if the successors of the entry block consist of the xmm-passthrough block and the successor of the xmm-passthrough block, which we call the param-passthrough block (in our case basic block [\texttt{0x42233d}, \texttt{0x42235e} [ ).
+\item Look at the param-passthrough block and set all instructions that move the value of a parameter register into memory to be ignored (in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \texttt{0x422347} and \texttt{0x42234c})
+\end{enumerate}
+
 
 \section{Callsite Analysis}
 \label{section:callsiteanalysis}
@@ -311,27 +404,64 @@ Out_n &:= (In_n - Kill_n) \cup Gen_n \label{eq:reachingbasedefOut}
 $Bl$ is the default state at the start of a path of execution and in our case reaching that state would mean that we do not know whether a value has been provided for the variable and therefore we assume that one has been provided, reaching an overestimation. The set $Kill_n$ describes all definitions that are removed within this block, meaning that the value of a variable has been overwritten. The set $Gen_n$ describes the new defintions that have been provided by the block $n$, meaning that the value of a variable has been assigned. Considering this, we can assume that $Gen_n \subseteq Kill_n$, as we can always create new definitions, but not simply remove definitions without assigning a new value to the variable.
 
 
-However, we cannot use reaching definition analysis as is, because the analysis is again based on potentially unbound variable sets, while we are restricted to a finite number of registers and states. This time however the analysis provides us with an overestimation, we hower want to get a result as close as possible so we again want to customize merge functions. Furthermore we have to define how to interpret the changes occuring withing one block based on the the change caused by its instructions. Considering this, we arrive at the following defintion of a configurable reaching defintions analysis:
+However, we cannot use reaching definition analysis as is, because the analysis is again based on potentially unbound variable sets, while we are restricted to a finite number of registers and states. This time however the analysis provides us with an overestimation, we hower want to get a result as close as possible so we again want to customize merge functions. Furthermore we have to define how to interpret the changes occuring withing one block based on the the change caused by its instructions. Considering this, we arrive at the following algorithm to compute the liveness state at the start of a basic block:\\
+\begin{algorithm}[H]
+	\SetAlgoLined
+	\SetKwProg{Fn}{Function}{ is}{end}
+	\Fn{analyze(block : BasicBlock) : $\mathcal{S}^\mathcal{L}$}
+	{
+ 	state = Bl
+ 	
+ 	\ForEach{inst $\in$ reversed(block)}{
+ 	
+ 		state' = analyze\_instr(inst)
+ 		
+		state = merge\_v(state, state')
+	}
+
+	states = {}
+	
+	blocks = pred(block)
+	
+	\ForEach{block' $\in$ blocks} {
+	
+ 		state' = analyse(block')
+ 		
+		states = states $\cup$ \{ state' \}
+	}
+
+	state' = merge\_h (states)
+
+	\Return merge\_v(state, state')
+
+	}
+\end{algorithm}
+This algorithm relies on various functions that can be used to configure its behaviour. We need to define the function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function $analyze\_instr$. The function $pred$, which retrieves all possible predecessors of a block won't be implemented by us, because we rely on the DynInst instrumentation framework to achieve this.
 \begin{subequations}
-\label{eq:reachingcustom}
+\label{eq:livenesscustom}
 \begin{align}
-In_n &:= \left\{
-  \begin{array}{lr}
-    Bl & \text{n has no predecessors}\\
-    merge\_h( \{ Out_p | p \in pred(n) \} & \text{otherwise}
-  \end{array}
-\right. \label{eq:livenesscustomOut}\\
-Out_n &:= merge\_v(n, In_n)\label{eq:livenesscustomIn} \\
-merge\_v &: \mathcal{I} \times \mathcal{S}^\mathcal{R} \mapsto \mathcal{S}^\mathcal{R}\\
-merge\_h &: \mathcal{P}(\mathcal{S}^\mathcal{R})  \mapsto \mathcal{S}^\mathcal{R}\\
-pred &: \mathcal{I} \times \mathcal{P}(\mathcal{I})
+merge\_v &: \mathcal{S}^\mathcal{L} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}\\
+merge\_h &: \mathcal{P}(\mathcal{S}^\mathcal{L}) \mapsto \mathcal{S}^\mathcal{L}\\
+analyze\_instr &: \mathcal {I} \mapsto \mathcal{S}^\mathcal{L} \\
+pred &: \mathcal{I} \mapsto \mathcal{P}(\mathcal{I})
 \end{align}
 \end{subequations}
-We have yet to define the functions $merge\_v$, which describes how to compound a function and the outgoing state, the function $merge\_h$, which describes how to merge the states of several paths and the function $pred$, which essentially gives us the predecessors of the current instruction. To prevent cycles we keep track of the instructions visited within the current path and omit any instruction on the current path from the result of $pred$. These functions, the reaching state $\mathcal{S}^\mathcal{R}$  and its interpretation into parameters will be defined in the following subsections.
 
+As the $analyze\_instr$ function calculates the effect of an instruction and is the heart of the analyze function. It will also handle non jump and non fallthrough successors, as these are not handled by Dyninst in our case. We essentially have three cases that we handle:
+\begin{enumerate}
+\item if the instruction is an indirect call or a direct call but we chose not follow calls, then return a state where all trashed are considered written
+\item if the instruction is a diect call and we chose to follow calls, then we spawn a new analysis and return its result 
+%\item if the instruction is a constant write (e.g. xor of two registers) then we remove the read portion before we return the decoded state
+\item in all other cases we simply return the decoded state
+\end{enumerate}
 
-\subsection{Backward Graph Traversal}
-\label{subsection:backwardgraphtraversal}
+This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
+
+%We have yet to define the functions $merge\_v$, which describes how to compound a function and the outgoing state, the function $merge\_h$, which describes how to merge the states of several paths and the function $pred$, which essentially gives us the predecessors of the current instruction. To prevent cycles we keep track of the instructions visited within the current path and omit any instruction on the current path from the result of $pred$. These functions, the reaching state $\mathcal{S}^\mathcal{R}$  and its interpretation into parameters will be defined in the following subsections.
+%
+%
+%\subsection{Backward Graph Traversal}
+%\label{subsection:backwardgraphtraversal}
 
 \subsection{Provided Parameter Count}
 \label{subsection:providedparamcount}
@@ -428,8 +558,12 @@ T & T & S & T\\
 \subsection{Provided Parameter Wideness}
 \label{subsection:providedparamwideness}
 
-\subsection{Compiler Optimizations}
-\label{subsection:compileroptimizations}
+
+
+Initial experiments with this implementation showed two problems regarding provided wideness detection.  Parameter lists with ``holes'' and address wideness underestimation.
+
+\paragraph{Parameter lists with ``holes''} refers to parameter lists that show one or more \texttt{void} parameters between start to the last actual parameter. These are not existant in actual code but our analysis has the possibility of generating them through the merge operations. An example would be the following: A parameter list of $(64, 0, 64, 0, 0, 0)$ is concluded, although the actual parameter list might be $(64, 32, 64, 0, 0, 0)$. While the trailing 0es are what we expect, the 0 at the second parameter position will cause trouble, because it is an underestimation at the single parameter level, which we need to avoid.
+Our solution is to simply scan our reaching analysis result for these holes and replace them with the wideness $64$, causing a (possible) overestimation.
 
 \section{Address Taken Analysis}
 \label{section:addresstakenanalysis}
@@ -444,31 +578,28 @@ Based on the notions of \cite{ZhangSekar00}, which classified taken addresses in
 
 \item {!shorthand! Computed code pointers (CC)} are the result of simple pointer arithmetic, however these are only used for intra procedural jumps\cite{ZhangSekar00}. We rely on Dyninst to resolve those and only focus on indirect callsites, therefore these are of no interest to us.
 
-\item{!shorthand! Exception handling addresses (EH)}
+\item{!shorthand! Exception handling addresses (EH)} are used to handle exceptions within C++ functions and are modelled as jumps within the function. These are therefore within the normal controlflow that we rely on Dyninst to resolve for us.
 
-\item{!shorthand! Exported function addresses (ES)}
+\item{!shorthand! Exported function addresses (ES)} are essentially functions that point outside of our current module (usually to dynamically linked libraries) and are implemented as jumps, which are of no concern to us, because our analysis is only concerned about the current object.
 
 \item {!shorthand! Return addresses (RA)}, which are the addresses next to a call instruction, are also of no interest to us, because we only implement forward {!shorthand! control flow integrity}.
 \end{itemize}
 
 \subsection{Binary Analysis}
-Our approach of identifying taken addresses consists of two steps: First, we iterate over the raw binary content of data sections. Second, we iterate over all functions within the disassembled binary. We rely on Dyninst to provide us with the boundaries of the sections inside the binary and in case of shared libraries with the needed translation to current memory addresses.
+Our approach of identifying taken addresses consists of two steps: First, we iterate over the raw binary content of data sections. Second, we iterate over all functions within the disassembled binary. We rely on Dyninst to provide us with the boundaries of the sections inside the binary and in case of shared libraries with the needed translation to current memory addresses:
 
-In the first step, we look at three different data sections of the binary, which could possibly contain taken addresses: the .data, .rodata and .dynsym sections. As \cite{ZhangSekar00} proposed, we slide a four and an eight byte window over the data within those sections and look for addresses that point to function entry blocks. In case of shared libraries, we need to let Dyninst translate the raw address, we exctracted, so we can perform the function check.
+\begin{enumerate}
+\item We look at three different data sections of the binary, which could possibly contain taken addresses: the .data, .rodata and .dynsym sections. As \cite{ZhangSekar00} proposed, we slide a four and an eight byte window over the data within those sections and look for addresses that point to function entry blocks. In case of shared libraries, we need to let Dyninst translate the raw address, we extracted, so we can perform the function check.
 
-In the second step we specifically look for instructions that load a constant value into a register or memory, and again check whether the address points to the entry block of a function.
-
-\section{Runtime Enforcement}
-\label{section:runtimeenforcement}
-
-
-
-\subsection{Calltarget Annotation}
-\label{subsection:patchingschema}
-
-\subsection{Callsite Instrumentation}
-\label{subsection:patchingschema}
-
-
+\item We specifically look for instructions that load a constant value into a register or memory, and again check whether the address points to the entry block of a function.
+\end{enumerate}
+%\section{Runtime Enforcement}
+%\label{section:runtimeenforcement}
+%
+%\subsection{Calltarget Annotation}
+%\label{subsection:patchingschema}
+%
+%\subsection{Callsite Instrumentation}
+%\label{subsection:patchingschema}
 
 
