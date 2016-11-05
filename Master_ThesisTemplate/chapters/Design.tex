@@ -324,6 +324,10 @@ We apply the liveness analysis for each function with the entry block of the fun
 \subsection{Required Parameter Wideness}
 \label{subsection:requiredparamwideness}
 
+The results of our experiments with the implementation of calltarget classification gave presented us with essentially one possible candidate that we can base our horizontal merge function on, namely the union operator with an analysis function that follows into direct calls.
+
+
+
 \subsection{Variadic Functions}
 \label{subsection:variadicfunctions}
 Variadic functions are special functions in C/C++ that have a basic set of parameters, which they always require and a variadic set of parameters, which as the name suggests may vary. A prominent example of this would be the $printf$ function, which is used to output text to $stdout$.
