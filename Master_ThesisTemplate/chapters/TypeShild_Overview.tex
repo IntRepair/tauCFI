@@ -12,6 +12,54 @@ Which are usually dry (trocken).m
 
 \section{Adversary Model}
 \label{Adversary Model}
+
+We consider a powerful, yet realistic adversary model that
+is consistent with previous work on code-reuse attacks and
+mitigations [give COOP reference here]. We rely on several existing
+and complementary mitigations for comprehensive coverage.
+
+Adversarial Capabilities.
+ 1. System Conguration: The adversary is aware of
+the applied defenses and has access to the source and
+non-randomized binary of the target application.
+
+
+2. Vulnerability: The target application suffers from a
+memory corruption vulnerability that allows the adversary
+to corrupt memory objects. We assume that the
+attacker can exploit this
+aw to read from and write
+to arbitrary memory addresses.
+
+
+3. Scripting Environment: The attacker can exploit
+a scripting environment to process memory disclosure information at run time, adjust the attack payload, and
+subsequently launch a code-reuse attack.
+
+B. Defensive Requirements.
+1. Writable Executable Memory: The target system
+ensures that memory can be either writable or
+executable, but not both. This prevents an attacker
+from either injecting new code or modifying existing
+executable code.
+
+2. Execute-only Memory: We build on previous systems
+which enforce execute-only memory pages, i.e., the
+CPU can fetch instructions but normal read or write
+accesses trigger an access violation. See Section 5.2 for
+further discussion of this component.
+
+3. JIT Protection: We assume mitigations are in place
+to prevent code injection into the JIT code cache and
+prevent reuse of JIT compiled code [11, 18, 36]. These
+protections are orthogonal to Readactor++.
+
+4. Brute-forcing Mitigation: We require that the protected
+software does not automatically restart after
+hitting a booby trap which terminates execution. In
+the browser context, this may be accomplished by displaying
+a warning message
+
 this section is just an example from the typearmor paper, of course we can 
 replace it with our one but we need to address roughly the same points, namely
 how TypeShild defends against COOP.
