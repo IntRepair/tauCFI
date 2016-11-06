@@ -8,19 +8,10 @@
 \contentsline {figure}{\numberline {2.2}{\ignorespaces Class inheritance hierarchy of the classes involved in the COOP attack against the Firefox browser. Red letters indicate forbidden vTble entries and green letters indicate allowed vTable entries for the given indirect call site contained in the main loop gadget.}}{10}{figure.2.2}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces \emph {count} policy classification schema}}{15}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces \emph {type} policy schema for callsites and calltargets}}{17}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces ASM code of the \texttt {make\_cmd} function with optimize level O2, which has a variadic parameter list}}{24}{figure.4.3}
 \addvspace {10\p@ }
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces impact of CFI and CFC}}{22}{figure.6.1}
-\contentsline {figure}{\numberline {6.2}{\ignorespaces liveness iteration, dummy}}{22}{figure.6.2}
-\contentsline {figure}{\numberline {6.3}{\ignorespaces reaching iteration, dummy}}{23}{figure.6.3}
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {11.1}{\ignorespaces COUNT policy schema}}{39}{figure.11.1}
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {12.1}{\ignorespaces TYPE policy schema for callsites and calltargets}}{42}{figure.12.1}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
