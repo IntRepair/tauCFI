@@ -18,16 +18,16 @@ We evaluated our \textit{TypeShield} by instrumenting various open source applic
 
 We setup our environment within a VirtualBox (version 5.0.26r) instance, which runs Kubuntu 16.04 LTS (Linux Kernel version 4.4.0) and has access to 3GB of RAM and 4 of 8 provided hardware threads (Intel i7-4170HQ @ 2.50 GHz).
 
-\section{Precision of TypeShield}
+\section{Precision of \textit{TypeShield}}
 \label{section:typeshieldprecision}
 
-To measure the precision of TypeShield, we need to compare the classification of callsites and calltargets as is given by our tool to some sort of ground truth for our testtargets. We generate this ground truth by compiling our testtargets using a custom compiled clang/llvm compiler (version 4.0.0 trunk 283889) with a MachineFunction pass inside the x86 code generation implementation of llvm. We essentially collect three data points for each callsite/calltarget from our llvm-pass:
+To measure the precision of \textit{TypeShield}, we need to compare the classification of callsites and calltargets as is given by our tool to some sort of ground truth for our testtargets. We generate this ground truth by compiling our testtargets using a custom compiled clang/llvm compiler (version 4.0.0 trunk 283889) with a MachineFunction pass inside the x86 code generation implementation of llvm. We essentially collect three data points for each callsite/calltarget from our llvm-pass:
 \begin{enumerate}
 \item the point of origination, which is either the name of the calltarget or the name of the function the callsite resides in
 \item the return type that is either expected by the callsite or provided by the calltarget
 \item the parameter list that is provided by the callsite or expected by the calltarget, which discards the variadic argument list
 \end{enumerate}
-However, before we can proceed to measure the quality and precision of TypeShield's classification of calltargets and callsites using our ground truth, we need to evaluate the quality and applicability of the ground truth, we collected.
+However, before we can proceed to measure the quality and precision of \textit{TypeShield}'s classification of calltargets and callsites using our ground truth, we need to evaluate the quality and applicability of the ground truth, we collected.
 
 \subsection{Quality and Applicability of Ground Truth}
 \label{subsection:typeshieldprecision}
@@ -37,12 +37,12 @@ To assess the applicability of our collected ground truth, we essentially need t
 The table \ref{tbl:matchingquality} shows three data points regarding calltargets for optimization levels O0, O1, O2 and O3:
 \begin{enumerate}
 \item The number of comparable calltargets that are found in both datasets
-\item The number of calltargets that are found by TypeShield but not by our clang/llvm pass, named clang miss
-\item The number of calltargets that are found by our clang/llvm pass but not by TypeShield, named tool miss
+\item The number of calltargets that are found by \textit{TypeShield} but not by our clang/llvm pass, named clang miss
+\item The number of calltargets that are found by our clang/llvm pass but not by \textit{TypeShield}, named tool miss
 \end{enumerate}
-The problematic column is the clang miss column, as these might indicate problems with TypeShield, however as these numbers are relatively low (below 1\%) throughout optimization levels, with only node showing a significant higher value than the rest of around 1.6\%. The column labeled tool miss lists higher numbers, however these are of no real concern to us, as our ground truth pass possibly collects more data. The data of all source files used during the compilation of our testtargets is collected, which might generate more than one binary and therefore not necessary all sourcefiles are used for our testtarget.
+The problematic column is the clang miss column, as these might indicate problems with \textit{TypeShield}, however as these numbers are relatively low (below 1\%) throughout optimization levels, with only node showing a significant higher value than the rest of around 1.6\%. The column labeled tool miss lists higher numbers, however these are of no real concern to us, as our ground truth pass possibly collects more data. The data of all source files used during the compilation of our testtargets is collected, which might generate more than one binary and therefore not necessary all sourcefiles are used for our testtarget.
 
-Considering this, we can safely state that our structural matching between ground truth and TypeShield regarding calltargets is nearly perfect (\textgreater 98\%)
+Considering this, we can safely state that our structural matching between ground truth and \textit{TypeShield} regarding calltargets is nearly perfect (\textgreater 98\%)
 
 \begin{table}
 \resizebox{\textwidth}{!}{
@@ -112,7 +112,7 @@ Considering this, we can safely state that our structural matching between groun
 	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
     	\end{tabular}
 }
-		\caption {Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with optimization levels O0 through O3. The label clang miss denotes elements not found in the dataset of the clang/llvm pass. The label tool miss denotes elements not found in the dataset of TypeShield}
+		\caption {Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with optimization levels O0 through O3. The label clang miss denotes elements not found in the dataset of the clang/llvm pass. The label tool miss denotes elements not found in the dataset of \textit{TypeShield}}
 	\label{tbl:matchingquality}
 \end{table}
 
@@ -122,7 +122,7 @@ Considering this, we can safely state that our structural matching between groun
 The table \ref{tbl:matchingquality} shows three data points regarding callsites for optimization levels O0, O1, O2 and O3:
 \begin{enumerate}
 \item The number of comparable callsites that are found in both datasets
-\item The number of callsites that are discarded due to mismatch from the dataset of TypeShield, named clang miss
+\item The number of callsites that are discarded due to mismatch from the dataset of \textit{TypeShield}, named clang miss
 \item The number of callsites that are discarded due to mismatch from the dataset of our clang/llvm pass, named tool miss
 \end{enumerate}
 
@@ -1026,7 +1026,7 @@ We are going to group our results into two classes based on the optimization lev
 %\end{table}
 
 
-%\subsection{Precision of TypeShield's Callsite Classification}
+%\subsection{Precision of \textit{TypeShield}'s Callsite Classification}
 %\label{subsection:typeshieldprecision}
 %
 %
@@ -1651,7 +1651,7 @@ We are going to group our results into two classes based on the optimization lev
 \newpage
 \newpage
 
-\section{Effectiveness of TypeShield}
+\section{Effectiveness of \textit{TypeShield}}
 \label{section:typeshieldeffectiveness}
 
 \subsection{Theoretical Limit for the Reduction of Calltargets per Callsite}
@@ -1796,7 +1796,7 @@ We are going to group our results into two classes based on the optimization lev
 \end{table}
 
 
-\subsection{TypeShield vs Theoretical Limit}
+\subsection{\textit{TypeShield} vs Theoretical Limit}
 \label{subsection:typeshieldvslimit}
 
 
@@ -2040,7 +2040,7 @@ We are going to group our results into two classes based on the optimization lev
 		\label{tbl:policycompat}
 \end{table}
 
-\section{Security Analysis of TypeShield}
+\section{Security Analysis of \textit{TypeShield}}
 \label{section:typeshieldsecurityanalysis}
 
 In this section, we discuss how effective \textit{TypeShield} is 
@@ -2066,7 +2066,7 @@ We look at our implementation conceptually and assess qualitatievly whether our 
 \label{Pure Data-only Attacks}
 
 %
-%\section{Performance overhead of TypeShield}
+%\section{Performance overhead of \textit{TypeShield}}
 %\label{section:typeshieldoverheadperformance}
 %Here we measure how much performance overhead the instrumeentation incurs.
 %Here we measure with the same SPEC2006 programs that was used in the TypeArmor paper.
@@ -2074,7 +2074,7 @@ We look at our implementation conceptually and assess qualitatievly whether our 
 %DELAYED!
 %
 %
-%\section{Instrumentation overhead of TypeShield}
+%\section{Instrumentation overhead of \textit{TypeShield}}
 %\label{section:typeshieldoverheadinstrumentation}
 %Here we measure how much the binaries increased in size after the instrumentation was added to the binaries.
 %DELAYED!

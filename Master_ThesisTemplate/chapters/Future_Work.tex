@@ -2,9 +2,9 @@
 \label{chapter:Future_Work}
 We see at least five different possible ways of future venues of research, which range from improving the structural matching between ground truth and binary based data to expanding our schema alltogether by incorporating aliasing and tracking memory operations.\\
 
-\textbf{Improving the structural matching capability} is the most important further venue of research, as we need a reliable way to match a ground truth against the resulting binary. This is important, because it is a preqrequisite to the ability to generate reliable measurements and reduces the current uncertainy (we rely on the number of calltargets per callsite to match callsites and furthermore assume that the order within ground truth and binary is the same).\\
+\textbf{Improving the structural matching capability} is the most important further venue of research, as we need a reliable way to match a ground truth against the resulting binary. This is important, because it is a prerequisite to the ability to generate reliable measurements and reduces the current uncertainy (we rely on the number of calltargets per callsite to match callsites and furthermore assume that the order within ground truth and binary is the same).\\
 
-\textbf{Finding a better suited callsite analysis} would present itself as another important possibility, as we have still relatively high - up to16\% - number of underestimated callsites. However, this venue should only be attempted after significant improvements to the structural matching of callsites.\\
+\textbf{Finding a better suited callsite analysis} would present itself as another important possibility, as we still have a relatively high - up to16\% - number of underestimated callsites. However, this venue should only be attempted after significant improvements to the structural matching of callsites.\\
 
 \textbf{Devising a patching schema} that is based on Dyninst functionality, which allows annotation of calltargets so they can hold at least 4 bytes of arbitrary data. This is required to hold the type data that we generate using our classification. Keeping the runtime overhead of said patching schema low should be the second goal of this venue after satisfying stability.\\
 

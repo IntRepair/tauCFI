@@ -1,8 +1,8 @@
 \chapter{Related Work}
 \label{chapter:Related_Work}
 This Chapter we shortly review the main techniques and tools which are related 
-to \textit{TypeShild}. 
-Section~\ref{Tyepe-Inference on Executables} gives an overview of tools used to
+to \textit{TypeShield}. 
+Section~\ref{Type-Inference on Executables} gives an overview of tools used to
 recover type inference from binaries.
 Section~\ref{Mitigation of Code-Reuse Attacks} depicts several techniques
 used to mitigate code reuse attacks in general.
@@ -10,12 +10,12 @@ Finally, Section~\ref{Mitigation of Advanced Code-Reuse Attacks} presents
 several source code, binary and runtime techniques which can be used to 
 mitigate COOP attacks.
 
-\section{Tyepe-Inference on Executables}
-\label{Tyepe-Inference on Executables}
+\section{Type-Inference on Executables}
+\label{Type-Inference on Executables}
 Recovering variable types from executable programs
 is very hard in general for several reasons. 
 First, the quality of the disasembly can very much from used
-framework to another. \textit{TypeShild} is based on DynInst 
+framework to another. \textit{TypeShield} is based on DynInst 
 and the quality of the execuatble disasembly fits our needs. 
 For a more comprehensive review on the capabilities of DynInst and other tools we
 advice the reader to have a look at~\cite{andriesse:indepth}.
@@ -33,10 +33,8 @@ For a more exhaustive review of such tools we advice the reader to
 have a look at the review of Caballero et al.~\cite{caballero:inference}.
 Intresting to notice is that the code from only a few of this tools is available.
 
-\textit{TypeShild} is most similar to SmartDec since it uses a similar lattice model to
-represent the possible variable types. 
-\todo[inline]{add here 3-4 sentences here about the differences and commonalities between our tool and smartdec}
-
+While smartde seemed promising due to its simple type lattice that we wanted to leverage for our classification schema. Its integration into our DynInst based environment was not successful mostly for time constraints, as it was deemed to time consuming to extract the whole machinery and implemnt an interface to the DynInst disassembler.
+Therefore we finally implemented our own version of type analysis and only focused on the wideness of the types, resulting in a simpler lattice than we initially wanted.
 
 \section{Mitigation of Code-Reuse Attacks}
 \label{Mitigation of Code-Reuse Attacks}
@@ -111,11 +109,11 @@ We are aware that there is still a long research path to go until binary based t
 recuperate program based semantic information from executable with the same precision as compiler based tools.
 These path could be even endless since compilers are optimized for speed and are designed to remove as much as possbile semantic information
 from an executable in order to make the program run as fast as possible. In light of this fact,
-\textit{TypeShild} is another attempt to recuperate just the needed semantic information (types and number of function parameters from
+\textit{TypeShield} is another attempt to recuperate just the needed semantic information (types and number of function parameters from
 indirect call sites) in order to be able to enforce a precise and with low overhead primitive against COOP attacks.
 
-Rather than claiming that the invariants offered by \textit{TypeShild} are suffiecient
-to mitigate all versions of the COOP attack we take a more conservative path by claiming that \textit{TypeShild} 
+Rather than claiming that the invariants offered by \textit{TypeShield} are suffiecient
+to mitigate all versions of the COOP attack we take a more conservative path by claiming that \textit{TypeShield} 
 further raises the bar w.r.t. what is possible when defending against COOP attacks on the binary level.
 
 \textbf{Binary based:} vTable protection is addressed through binary instrumentation in tools
@@ -125,23 +123,16 @@ can mitigate protect against COOP is TypeArmor~\cite{veen:typearmor}.
 TypeArmor uses a fine-grained CFI policy based on caller (only indirect call sites)/callee matching 
 which consists in checking during runtime if the number of provided and needed parameters match.
 
-\textit{TypeShild} is most similar to TypeArmor~\cite{veen:typearmor} since
+\textit{TypeShield} is most similar to TypeArmor~\cite{veen:typearmor} since
 we also enforce strong binary-level invariants on the number of function
-paramters. \textit{TypeShild} similarly to TypeArmor targets 
+paramters. \textit{TypeShield} similarly to TypeArmor targets 
 exclusive protection against advanced exploitation techniques 
 which can bypass fine-grained CFI schemes and VTable protections at the binary level.
 
-However, \textit{TypeShild} is much more precise than TypeArmor since its enforcing 
-policy is also based on the types of the function parameters. This results in a
-more precise selection of caller/calle pairs on which the fine-grained CFI policy is enforced.
-Thus, we achieve a reduced runtime overhead than TypeArmor since we enfoce 
-our CFI policy on fewer caller/callee pairs than TypeArmor.
-
-\todo[inline]{add here 2-3 sentences here to round up this section, present another interesting fact.}
-
+However, \textit{TypeShield} offers a better restriction of calltargets to callsites, since we not only restrict based on the number of parameters but also on the wideness of their types. This results in much smaller buckets that in turn can only target a smaller subset of all address taken functions. However, we rely for that on the variety of parameter types and when there is none, we will degrade into a parameter count policy.
 
 \textbf{Runtime based:}
-``There is something available out there but I can not used it'' \textit{Anonymous}.
+``There is something available out there but I can not use it'' \textit{Anonymous}.
 Long story short conclusion: There are several promissing runtime-based line of defenses against
 advanced CRAs but none of them can succesfully protect against the COOP attack.
 
