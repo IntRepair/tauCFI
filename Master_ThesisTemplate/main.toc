@@ -2,7 +2,8 @@
 \select@language {croatian}
 \select@language {german}
 \select@language {english}
-\contentsline {chapter}{Abstract}{v}{section*.1}
+\contentsline {chapter}{Acknowledgements}{v}{section*.1}
+\contentsline {chapter}{Abstract}{vii}{section*.2}
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Motivation}{2}{section.1.1}
 \contentsline {section}{\numberline {1.2}Contribution}{3}{section.1.2}
@@ -32,8 +33,8 @@
 \contentsline {subsection}{\numberline {4.5.1}Reaching Definitions Theory}{25}{subsection.4.5.1}
 \contentsline {subsection}{\numberline {4.5.2}Provided Parameter Count}{27}{subsection.4.5.2}
 \contentsline {subsection}{\numberline {4.5.3}Provided Parameter Wideness}{29}{subsection.4.5.3}
-\contentsline {paragraph}{\nonumberline Parameter lists with ``holes''}{30}{section*.6}
-\contentsline {paragraph}{\nonumberline Address wideness unterestimation}{30}{section*.7}
+\contentsline {paragraph}{\nonumberline Parameter lists with ``holes''}{30}{section*.7}
+\contentsline {paragraph}{\nonumberline Address wideness unterestimation}{30}{section*.8}
 \contentsline {section}{\numberline {4.6}Address Taken Analysis}{31}{section.4.6}
 \contentsline {subsection}{\numberline {4.6.1}Address Taken Targets}{31}{subsection.4.6.1}
 \contentsline {subsection}{\numberline {4.6.2}Binary Analysis}{32}{subsection.4.6.2}
@@ -41,34 +42,34 @@
 \contentsline {chapter}{\numberline {6}Evaluation}{35}{chapter.6}
 \contentsline {section}{\numberline {6.1}Precision of TypeShield}{35}{section.6.1}
 \contentsline {subsection}{\numberline {6.1.1}Quality and Applicability of Ground Truth}{36}{subsection.6.1.1}
-\contentsline {paragraph}{\nonumberline Calltargets}{36}{section*.8}
-\contentsline {paragraph}{\nonumberline Callsites}{37}{section*.9}
+\contentsline {paragraph}{\nonumberline Calltargets}{36}{section*.9}
+\contentsline {paragraph}{\nonumberline Callsites}{37}{section*.10}
 \contentsline {subsection}{\numberline {6.1.2}Precision Calltarget Classification (COUNT)}{39}{subsection.6.1.2}
-\contentsline {paragraph}{\nonumberline Experiment Setup}{39}{section*.10}
-\contentsline {paragraph}{\nonumberline Results for unoptimized targets}{39}{section*.11}
+\contentsline {paragraph}{\nonumberline Experiment Setup}{39}{section*.11}
+\contentsline {paragraph}{\nonumberline Results for unoptimized targets}{39}{section*.12}
 \contentsline {paragraph}{\nonumberline Results for optimized targets}{39}{table.6.3}
 \contentsline {subsection}{\numberline {6.1.3}Precision Callsite Classification (COUNT)}{42}{subsection.6.1.3}
-\contentsline {subsubsection}{\nonumberline Without interprocedural Analysis}{42}{section*.13}
-\contentsline {paragraph}{\nonumberline Experiment Setup}{42}{section*.14}
-\contentsline {paragraph}{\nonumberline Results for unoptimized targets}{42}{section*.15}
+\contentsline {subsubsection}{\nonumberline Without interprocedural Analysis}{42}{section*.14}
+\contentsline {paragraph}{\nonumberline Experiment Setup}{42}{section*.15}
+\contentsline {paragraph}{\nonumberline Results for unoptimized targets}{42}{section*.16}
 \contentsline {paragraph}{\nonumberline Results for optimized targets}{42}{table.6.6}
-\contentsline {subsubsection}{\nonumberline With interprocedural Analysis}{46}{section*.17}
-\contentsline {paragraph}{\nonumberline Experiment Setup}{46}{section*.18}
-\contentsline {paragraph}{\nonumberline Results for unoptimized targets}{46}{section*.19}
+\contentsline {subsubsection}{\nonumberline With interprocedural Analysis}{46}{section*.18}
+\contentsline {paragraph}{\nonumberline Experiment Setup}{46}{section*.19}
+\contentsline {paragraph}{\nonumberline Results for unoptimized targets}{46}{section*.20}
 \contentsline {paragraph}{\nonumberline Results for optimized targets}{46}{table.6.9}
 \contentsline {subsection}{\numberline {6.1.4}Precision Calltarget Classification (TYPE)}{50}{subsection.6.1.4}
-\contentsline {paragraph}{\nonumberline Experiment Setup}{50}{section*.21}
-\contentsline {paragraph}{\nonumberline Results for unoptimized targets}{50}{section*.22}
-\contentsline {paragraph}{\nonumberline Results for optimized targets}{50}{section*.23}
+\contentsline {paragraph}{\nonumberline Experiment Setup}{50}{section*.22}
+\contentsline {paragraph}{\nonumberline Results for unoptimized targets}{50}{section*.23}
+\contentsline {paragraph}{\nonumberline Results for optimized targets}{50}{section*.24}
 \contentsline {subsection}{\numberline {6.1.5}Precision Enhanced Callsite Classification (TYPE)}{53}{subsection.6.1.5}
-\contentsline {paragraph}{\nonumberline Experiment Setup}{53}{section*.24}
-\contentsline {paragraph}{\nonumberline Results for unoptimized targets}{53}{section*.25}
-\contentsline {paragraph}{\nonumberline Results for optimized targets}{53}{section*.26}
+\contentsline {paragraph}{\nonumberline Experiment Setup}{53}{section*.25}
+\contentsline {paragraph}{\nonumberline Results for unoptimized targets}{53}{section*.26}
+\contentsline {paragraph}{\nonumberline Results for optimized targets}{53}{section*.27}
 \contentsline {section}{\numberline {6.2}Effectiveness of TypeShield}{56}{section.6.2}
 \contentsline {subsection}{\numberline {6.2.1}Theoretical Limit for the Reduction of Calltargets per Callsite}{56}{subsection.6.2.1}
 \contentsline {subsection}{\numberline {6.2.2}TypeShield vs Theoretical Limit}{56}{subsection.6.2.2}
-\contentsline {subsubsection}{\nonumberline COUNT policy}{56}{section*.27}
-\contentsline {subsubsection}{\nonumberline TYPE policy}{58}{section*.28}
+\contentsline {subsubsection}{\nonumberline COUNT policy}{56}{section*.28}
+\contentsline {subsubsection}{\nonumberline TYPE policy}{58}{section*.29}
 \contentsline {subsection}{\numberline {6.2.3}Effect of our AddressTaken Analysis}{59}{subsection.6.2.3}
 \contentsline {section}{\numberline {6.3}Security Analysis of TypeShield}{59}{section.6.3}
 \contentsline {section}{\numberline {6.4}Mitigation of Advanced Code-Reuse Attacks}{59}{section.6.4}
@@ -88,7 +89,7 @@
 \contentsline {section}{\numberline {8.3}Mitigation of Advanced Code-Reuse Attacks}{68}{section.8.3}
 \contentsline {chapter}{\numberline {9}Future Work}{71}{chapter.9}
 \contentsline {chapter}{\numberline {10}Conclusion}{73}{chapter.10}
-\contentsline {chapter}{Acronyms}{75}{chapter*.31}
-\contentsline {chapter}{List of Figures}{77}{chapter*.32}
-\contentsline {chapter}{List of Tables}{79}{chapter*.33}
-\contentsline {chapter}{\nonumberline Bibliography}{83}{chapter*.35}
+\contentsline {chapter}{Acronyms}{75}{chapter*.32}
+\contentsline {chapter}{List of Figures}{77}{chapter*.33}
+\contentsline {chapter}{List of Tables}{79}{chapter*.34}
+\contentsline {chapter}{\nonumberline Bibliography}{83}{chapter*.36}

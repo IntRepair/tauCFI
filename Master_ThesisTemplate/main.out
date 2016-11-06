@@ -1,67 +1,68 @@
-\BOOKMARK [0][-]{section*.1}{Abstract}{}% 1
-\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 2
-\BOOKMARK [1][-]{section.1.1}{Motivation}{chapter.1}% 3
-\BOOKMARK [1][-]{section.1.2}{Contribution}{chapter.1}% 4
-\BOOKMARK [1][-]{section.1.3}{Outline}{chapter.1}% 5
-\BOOKMARK [0][-]{chapter.2}{Background: Forward C++ Forbidden Calls Exposed}{}% 6
-\BOOKMARK [1][-]{section.2.1}{Polymorphism in C++}{chapter.2}% 7
-\BOOKMARK [1][-]{section.2.2}{Checking Indirect Forward-Edge Calls in Practice}{chapter.2}% 8
-\BOOKMARK [1][-]{section.2.3}{Security Implications of Forbidden Indirect Calls}{chapter.2}% 9
-\BOOKMARK [1][-]{section.2.4}{Real COOP Attack Example}{chapter.2}% 10
-\BOOKMARK [0][-]{chapter.3}{TypeShild Overview}{}% 11
-\BOOKMARK [1][-]{section.3.1}{1. Select Important Point from Design Chapter}{chapter.3}% 12
-\BOOKMARK [1][-]{section.3.2}{2. Select Important Point from Design Chapter}{chapter.3}% 13
-\BOOKMARK [1][-]{section.3.3}{3. Select Important Point from Design Chapter}{chapter.3}% 14
-\BOOKMARK [1][-]{section.3.4}{Adversary Model}{chapter.3}% 15
-\BOOKMARK [1][-]{section.3.5}{TypeShild: Invariants for Targets and Callsites}{chapter.3}% 16
-\BOOKMARK [1][-]{section.3.6}{TypeShild Impact on COOP}{chapter.3}% 17
-\BOOKMARK [0][-]{chapter.4}{Design}{}% 18
-\BOOKMARK [1][-]{section.4.1}{count Policy}{chapter.4}% 19
-\BOOKMARK [1][-]{section.4.2}{type Policy}{chapter.4}% 20
-\BOOKMARK [1][-]{section.4.3}{Instruction Analysis}{chapter.4}% 21
-\BOOKMARK [1][-]{section.4.4}{Calltarget Analysis}{chapter.4}% 22
-\BOOKMARK [2][-]{subsection.4.4.1}{Variable Liveness Analysis Theory}{section.4.4}% 23
-\BOOKMARK [2][-]{subsection.4.4.2}{Required Parameter Count}{section.4.4}% 24
-\BOOKMARK [2][-]{subsection.4.4.3}{Required Parameter Wideness}{section.4.4}% 25
-\BOOKMARK [2][-]{subsection.4.4.4}{Variadic Functions}{section.4.4}% 26
-\BOOKMARK [1][-]{section.4.5}{Callsite Analysis}{chapter.4}% 27
-\BOOKMARK [2][-]{subsection.4.5.1}{Reaching Definitions Theory}{section.4.5}% 28
-\BOOKMARK [2][-]{subsection.4.5.2}{Provided Parameter Count}{section.4.5}% 29
-\BOOKMARK [2][-]{subsection.4.5.3}{Provided Parameter Wideness}{section.4.5}% 30
-\BOOKMARK [1][-]{section.4.6}{Address Taken Analysis}{chapter.4}% 31
-\BOOKMARK [2][-]{subsection.4.6.1}{Address Taken Targets}{section.4.6}% 32
-\BOOKMARK [2][-]{subsection.4.6.2}{Binary Analysis}{section.4.6}% 33
-\BOOKMARK [0][-]{chapter.5}{Implementation}{}% 34
-\BOOKMARK [0][-]{chapter.6}{Evaluation}{}% 35
-\BOOKMARK [1][-]{section.6.1}{Precision of TypeShield}{chapter.6}% 36
-\BOOKMARK [2][-]{subsection.6.1.1}{Quality and Applicability of Ground Truth}{section.6.1}% 37
-\BOOKMARK [2][-]{subsection.6.1.2}{Precision Calltarget Classification \(COUNT\)}{section.6.1}% 38
-\BOOKMARK [2][-]{subsection.6.1.3}{Precision Callsite Classification \(COUNT\)}{section.6.1}% 39
-\BOOKMARK [2][-]{subsection.6.1.4}{Precision Calltarget Classification \(TYPE\)}{section.6.1}% 40
-\BOOKMARK [2][-]{subsection.6.1.5}{Precision Enhanced Callsite Classification \(TYPE\)}{section.6.1}% 41
-\BOOKMARK [1][-]{section.6.2}{Effectiveness of TypeShield}{chapter.6}% 42
-\BOOKMARK [2][-]{subsection.6.2.1}{Theoretical Limit for the Reduction of Calltargets per Callsite}{section.6.2}% 43
-\BOOKMARK [2][-]{subsection.6.2.2}{TypeShield vs Theoretical Limit}{section.6.2}% 44
-\BOOKMARK [2][-]{subsection.6.2.3}{Effect of our AddressTaken Analysis}{section.6.2}% 45
-\BOOKMARK [1][-]{section.6.3}{Security Analysis of TypeShield}{chapter.6}% 46
-\BOOKMARK [1][-]{section.6.4}{Mitigation of Advanced Code-Reuse Attacks}{chapter.6}% 47
-\BOOKMARK [2][-]{subsection.6.4.1}{COOP}{section.6.4}% 48
-\BOOKMARK [2][-]{subsection.6.4.2}{COOP Extensions}{section.6.4}% 49
-\BOOKMARK [2][-]{subsection.6.4.3}{Pure Data-only Attacks}{section.6.4}% 50
-\BOOKMARK [0][-]{chapter.7}{Discussion}{}% 51
-\BOOKMARK [1][-]{section.7.1}{Comparison with TypeArmor}{chapter.7}% 52
-\BOOKMARK [2][-]{subsection.7.1.1}{Precision of Classification}{section.7.1}% 53
-\BOOKMARK [2][-]{subsection.7.1.2}{Reduction of Available Calltargets}{section.7.1}% 54
-\BOOKMARK [1][-]{section.7.2}{Discrepancies or Problems}{chapter.7}% 55
-\BOOKMARK [1][-]{section.7.3}{Limitations of TypeShield}{chapter.7}% 56
-\BOOKMARK [1][-]{section.7.4}{Possible Venues of Improvement}{chapter.7}% 57
-\BOOKMARK [0][-]{chapter.8}{Related Work}{}% 58
-\BOOKMARK [1][-]{section.8.1}{Tyepe-Inference on Executables}{chapter.8}% 59
-\BOOKMARK [1][-]{section.8.2}{Mitigation of Code-Reuse Attacks}{chapter.8}% 60
-\BOOKMARK [1][-]{section.8.3}{Mitigation of Advanced Code-Reuse Attacks}{chapter.8}% 61
-\BOOKMARK [0][-]{chapter.9}{Future Work}{}% 62
-\BOOKMARK [0][-]{chapter.10}{Conclusion}{}% 63
-\BOOKMARK [0][-]{chapter*.31}{Acronyms}{}% 64
-\BOOKMARK [0][-]{chapter*.32}{List of Figures}{}% 65
-\BOOKMARK [0][-]{chapter*.33}{List of Tables}{}% 66
-\BOOKMARK [0][-]{chapter*.35}{Bibliography}{}% 67
+\BOOKMARK [0][-]{section*.1}{Acknowledgements}{}% 1
+\BOOKMARK [0][-]{section*.2}{Abstract}{}% 2
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 3
+\BOOKMARK [1][-]{section.1.1}{Motivation}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.2}{Contribution}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.3}{Outline}{chapter.1}% 6
+\BOOKMARK [0][-]{chapter.2}{Background: Forward C++ Forbidden Calls Exposed}{}% 7
+\BOOKMARK [1][-]{section.2.1}{Polymorphism in C++}{chapter.2}% 8
+\BOOKMARK [1][-]{section.2.2}{Checking Indirect Forward-Edge Calls in Practice}{chapter.2}% 9
+\BOOKMARK [1][-]{section.2.3}{Security Implications of Forbidden Indirect Calls}{chapter.2}% 10
+\BOOKMARK [1][-]{section.2.4}{Real COOP Attack Example}{chapter.2}% 11
+\BOOKMARK [0][-]{chapter.3}{TypeShild Overview}{}% 12
+\BOOKMARK [1][-]{section.3.1}{1. Select Important Point from Design Chapter}{chapter.3}% 13
+\BOOKMARK [1][-]{section.3.2}{2. Select Important Point from Design Chapter}{chapter.3}% 14
+\BOOKMARK [1][-]{section.3.3}{3. Select Important Point from Design Chapter}{chapter.3}% 15
+\BOOKMARK [1][-]{section.3.4}{Adversary Model}{chapter.3}% 16
+\BOOKMARK [1][-]{section.3.5}{TypeShild: Invariants for Targets and Callsites}{chapter.3}% 17
+\BOOKMARK [1][-]{section.3.6}{TypeShild Impact on COOP}{chapter.3}% 18
+\BOOKMARK [0][-]{chapter.4}{Design}{}% 19
+\BOOKMARK [1][-]{section.4.1}{count Policy}{chapter.4}% 20
+\BOOKMARK [1][-]{section.4.2}{type Policy}{chapter.4}% 21
+\BOOKMARK [1][-]{section.4.3}{Instruction Analysis}{chapter.4}% 22
+\BOOKMARK [1][-]{section.4.4}{Calltarget Analysis}{chapter.4}% 23
+\BOOKMARK [2][-]{subsection.4.4.1}{Variable Liveness Analysis Theory}{section.4.4}% 24
+\BOOKMARK [2][-]{subsection.4.4.2}{Required Parameter Count}{section.4.4}% 25
+\BOOKMARK [2][-]{subsection.4.4.3}{Required Parameter Wideness}{section.4.4}% 26
+\BOOKMARK [2][-]{subsection.4.4.4}{Variadic Functions}{section.4.4}% 27
+\BOOKMARK [1][-]{section.4.5}{Callsite Analysis}{chapter.4}% 28
+\BOOKMARK [2][-]{subsection.4.5.1}{Reaching Definitions Theory}{section.4.5}% 29
+\BOOKMARK [2][-]{subsection.4.5.2}{Provided Parameter Count}{section.4.5}% 30
+\BOOKMARK [2][-]{subsection.4.5.3}{Provided Parameter Wideness}{section.4.5}% 31
+\BOOKMARK [1][-]{section.4.6}{Address Taken Analysis}{chapter.4}% 32
+\BOOKMARK [2][-]{subsection.4.6.1}{Address Taken Targets}{section.4.6}% 33
+\BOOKMARK [2][-]{subsection.4.6.2}{Binary Analysis}{section.4.6}% 34
+\BOOKMARK [0][-]{chapter.5}{Implementation}{}% 35
+\BOOKMARK [0][-]{chapter.6}{Evaluation}{}% 36
+\BOOKMARK [1][-]{section.6.1}{Precision of TypeShield}{chapter.6}% 37
+\BOOKMARK [2][-]{subsection.6.1.1}{Quality and Applicability of Ground Truth}{section.6.1}% 38
+\BOOKMARK [2][-]{subsection.6.1.2}{Precision Calltarget Classification \(COUNT\)}{section.6.1}% 39
+\BOOKMARK [2][-]{subsection.6.1.3}{Precision Callsite Classification \(COUNT\)}{section.6.1}% 40
+\BOOKMARK [2][-]{subsection.6.1.4}{Precision Calltarget Classification \(TYPE\)}{section.6.1}% 41
+\BOOKMARK [2][-]{subsection.6.1.5}{Precision Enhanced Callsite Classification \(TYPE\)}{section.6.1}% 42
+\BOOKMARK [1][-]{section.6.2}{Effectiveness of TypeShield}{chapter.6}% 43
+\BOOKMARK [2][-]{subsection.6.2.1}{Theoretical Limit for the Reduction of Calltargets per Callsite}{section.6.2}% 44
+\BOOKMARK [2][-]{subsection.6.2.2}{TypeShield vs Theoretical Limit}{section.6.2}% 45
+\BOOKMARK [2][-]{subsection.6.2.3}{Effect of our AddressTaken Analysis}{section.6.2}% 46
+\BOOKMARK [1][-]{section.6.3}{Security Analysis of TypeShield}{chapter.6}% 47
+\BOOKMARK [1][-]{section.6.4}{Mitigation of Advanced Code-Reuse Attacks}{chapter.6}% 48
+\BOOKMARK [2][-]{subsection.6.4.1}{COOP}{section.6.4}% 49
+\BOOKMARK [2][-]{subsection.6.4.2}{COOP Extensions}{section.6.4}% 50
+\BOOKMARK [2][-]{subsection.6.4.3}{Pure Data-only Attacks}{section.6.4}% 51
+\BOOKMARK [0][-]{chapter.7}{Discussion}{}% 52
+\BOOKMARK [1][-]{section.7.1}{Comparison with TypeArmor}{chapter.7}% 53
+\BOOKMARK [2][-]{subsection.7.1.1}{Precision of Classification}{section.7.1}% 54
+\BOOKMARK [2][-]{subsection.7.1.2}{Reduction of Available Calltargets}{section.7.1}% 55
+\BOOKMARK [1][-]{section.7.2}{Discrepancies or Problems}{chapter.7}% 56
+\BOOKMARK [1][-]{section.7.3}{Limitations of TypeShield}{chapter.7}% 57
+\BOOKMARK [1][-]{section.7.4}{Possible Venues of Improvement}{chapter.7}% 58
+\BOOKMARK [0][-]{chapter.8}{Related Work}{}% 59
+\BOOKMARK [1][-]{section.8.1}{Tyepe-Inference on Executables}{chapter.8}% 60
+\BOOKMARK [1][-]{section.8.2}{Mitigation of Code-Reuse Attacks}{chapter.8}% 61
+\BOOKMARK [1][-]{section.8.3}{Mitigation of Advanced Code-Reuse Attacks}{chapter.8}% 62
+\BOOKMARK [0][-]{chapter.9}{Future Work}{}% 63
+\BOOKMARK [0][-]{chapter.10}{Conclusion}{}% 64
+\BOOKMARK [0][-]{chapter*.32}{Acronyms}{}% 65
+\BOOKMARK [0][-]{chapter*.33}{List of Figures}{}% 66
+\BOOKMARK [0][-]{chapter*.34}{List of Tables}{}% 67
+\BOOKMARK [0][-]{chapter*.36}{Bibliography}{}% 68

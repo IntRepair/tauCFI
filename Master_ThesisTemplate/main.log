@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  6 NOV 2016 15:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  6 NOV 2016 16:00
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1492,7 +1492,7 @@ Package pdftex.def Info: styles/informat.png used on input line 56.
 ] [2
 
 ] [3])
-(./components/abstract.tex [4
+(./components/acknowledgements.tex [4
 
 ]
 
@@ -1511,24 +1511,41 @@ Class scrbook Warning: Usage of deprecated font command `\bf'!
 
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <14.4> not available
 (Font)              Font shape `OT1/ppl/b/n' tried instead on input line 11.
+) (./components/abstract.tex [5] [6
+
+]
+
+Class scrbook Warning: Usage of deprecated font command `\bf'!
+(scrbook)              You should note, that in 1994 font command `\bf' has
+(scrbook)              been defined for compatiblitiy to Script 2.0 only.
+(scrbook)              Now, after two decades of LaTeX2e and NFSS2, you
+(scrbook)              shouldn't use such commands any longer and within
+(scrbook)              KOMA-Script usage of `\bf' is definitely deprecated.
+(scrbook)              See `fntguide.pdf' for more information about
+(scrbook)              recommended font commands.
+(scrbook)              Note also, that KOMA-Script will remove the definition
+(scrbook)              of `\bf' anytime until release of about version 3.20.
+(scrbook)              But for now, KOMA-Script will replace deprecated `\bf'
+(scrbook)              by `\normalfont \bfseries ' on input line 11.
+
 Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
 ine 56.
-) [5] [6
+) [7] [8
 
 ]
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <10.95> not available
 (Font)              Font shape `OT1/ppl/b/n' tried instead on input line 126.
- (./main.toc [7]
+ (./main.toc [9]
 Overfull \hbox (3.37892pt too wide) in paragraph at lines 68--68
  [][] [][][]\OT1/ppl/m/n/10.95 Theoretical Limit for the Re-duc-tion of Call-ta
 r-gets per Call- 
  []
 
-[8])
+[10])
 \tf@toc=\write8
 \openout8 = `main.toc'.
 
- [9] [10
+ [11] [12
 
 
 ] (./chapters/Introduction.tex
@@ -1689,7 +1706,7 @@ Overfull \hbox (1219.08543pt too wide) in paragraph at lines 69--104
 \OML/cmm/m/it/9 Close\OT1/cmr/m/n/9 ()[]$ 
  []
 
-<figures/loop.pdf, id=448, 390.45876pt x 556.0775pt>
+<figures/loop.pdf, id=458, 390.45876pt x 556.0775pt>
 File: figures/loop.pdf Graphic file (type pdf)
  <use figures/loop.pdf>
 Package pdftex.def Info: figures/loop.pdf used on input line 116.
@@ -1714,7 +1731,7 @@ Overfull \hbox (1.94357pt too wide) in paragraph at lines 164--176
 tch-ing (coarse grained,
  []
 
-[7] [8] <figures/class_hierarchy.pdf, id=518, 585.18625pt x 483.8075pt>
+[7] [8] <figures/class_hierarchy.pdf, id=527, 585.18625pt x 483.8075pt>
 File: figures/class_hierarchy.pdf Graphic file (type pdf)
 
 <use figures/class_hierarchy.pdf>
@@ -2162,9 +2179,15 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 476.
  (./main.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 476.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 476.
-Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 506CD22F21C3E7C6B3AB9664E7F23034;4838.
 
+
+Package rerunfilecheck Warning: File `main.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `main.out':
+(rerunfilecheck)             Before: 506CD22F21C3E7C6B3AB9664E7F23034;4838
+(rerunfilecheck)             After:  67038390099EDE7B74265767C5259B3A;4891.
 
 LaTeX Warning: There were undefined references.
 
@@ -2174,35 +2197,38 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 476.
  ) 
 Here is how much of TeX's memory you used:
- 24676 strings out of 493105
- 448501 string characters out of 6137072
+ 24686 strings out of 493105
+ 448721 string characters out of 6137072
  639584 words of memory out of 5000000
- 27119 multiletter control sequences out of 15000+600000
+ 27122 multiletter control sequences out of 15000+600000
  26657 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  71i,17n,80p,1718b,733s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/p
-alatino/uplbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/upl
-r8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/yhmath/yhcmex.pfb>
-Output written on main.pdf (99 pages, 544914 bytes).
+pdfTeX warning (dest): name{chapter*.31} has been referenced but does not exi
+st, replaced by a fixed one
+
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/pal
+atino/uplbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8
+a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/yhmath/yhcmex.pfb>
+Output written on main.pdf (101 pages, 545410 bytes).
 PDF statistics:
- 1400 PDF objects out of 1440 (max. 8388607)
- 1247 compressed objects within 13 object streams
- 362 named destinations out of 1000 (max. 500000)
+ 1410 PDF objects out of 1440 (max. 8388607)
+ 1255 compressed objects within 13 object streams
+ 366 named destinations out of 1000 (max. 500000)
  564 words of extra memory for PDF output out of 10000 (max. 10000000)
 
