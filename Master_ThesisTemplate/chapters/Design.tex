@@ -77,7 +77,7 @@ What we call the \emph{count} policy is essentially the policy introduced by Typ
 
 \end{tikzpicture}
 }
-\caption{\emph{count} policy classification schema}
+\caption{\emph{Count} policy classification schema for callsites and calltargets.}
 \label{fig:COUNTschema}
 \end{figure}
 
@@ -149,7 +149,7 @@ What we call the \emph{type} policy is the idea of not only relying on the param
 \end{tikzpicture}
 }
 
-\caption{\emph{type} policy schema for callsites and calltargets}
+\caption{\emph{Type} policy schema for callsites and calltargets}
 \label{fig:TYPEschema}
 \end{figure}
 
@@ -361,7 +361,7 @@ W & W & W & W
 \end{tabular}
 
 
-\caption{Different mappings for combining two liveness state values in horizontal matching for the \emph{count} policy}
+\caption{Different mappings for combining two liveness state values in horizontal matching for the \emph{count} policy.}
 
 \label{fig:COUNTlivenessmapping}
 \end{table}
@@ -408,7 +408,7 @@ W & W & W & W & W\\
 \hline
 RW & RW & $\text{R}^{\cup}$W & W & RW\\
 \end{tabular}
-\caption{The union mapping operator for liveness in the \emph{type} policy}
+\caption{The union mapping operator for liveness in the \emph{type} policy.}
 \label{tbl:TYPECTunion}
 \end{table}
 
@@ -445,7 +445,7 @@ The problem with these functions is that to allow for easier processing of param
   422356:       mov    %r14,%rdi
   422359:       callq  409430 <pcalloc>
 \end{BVerbatim}
-\caption{ASM code of the \texttt{make\_cmd} function with optimize level O2, which has a variadic parameter list}
+\caption{ASM code of the \texttt{make\_cmd} function with optimize level O2, which has a variadic parameter list.}
 \label{fig:asmvariadic}
 \end{figure}
 
@@ -512,7 +512,7 @@ $Bl$ is the default state at the start of a path of execution and in our case re
 	\Return merge\_v(state, state')
 
 	}
-\caption{Algorithm to analyse the reaching definitions of a Basic Block}
+\caption{Algorithm to analyse the reaching definitions of a Basic Block.}
 \label{alg:reaching}
 \end{algorithm}
 
@@ -625,7 +625,7 @@ T & T & S & T
 \end{tabular}
 }
 
-\caption{Different mappings for combining two reaching state values in horizontal matching for the \emph{count} policy}
+\caption{Different mappings for combining two reaching state values in horizontal matching for the \emph{count} policy.}
 
 \label{fig:COUNTreachingmapping}
 \end{table}
@@ -697,7 +697,7 @@ S & S & $\text{S}^{\cup{}{}}$ & T\\
 T & T & T & T
 \end{tabular}
 
-\caption{Different mappings for combining two reaching state values in horizontal matching for the \emph{type} policy}
+\caption{Different mappings for combining two reaching state values in horizontal matching for the \emph{type} policy.}
 \label{fig:TYPEreachingmapping}
 \end{table}
 
