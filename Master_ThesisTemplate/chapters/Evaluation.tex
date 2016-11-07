@@ -1,13 +1,13 @@
 \chapter{Evaluation}
 \label{chapter:Evaluation}
-As we do not have access to the source code of typearmour, we implemented two modes in \textit{TypeShield}. The first mode of our tool is an approximate implementation of what we understand is the \textit{count} policy implemented by typearmor. The second mode is our implementation of the \textit{type} policy on top of our implementation of the \textit{count} policy. In our evaluation of the two modes of \textit{TypeShield}, we are trying to answer the following three questions:
+As we do not have access to the source code of typearmour, we implemented two modes in \textit{TypeShield}. The first mode of our tool is an approximate implementation of what we understand is the \textit{count} policy implemented by typearmor. The second mode is our implementation of the \textit{type} policy on top of our implementation of the \textit{count} policy. In our evaluation of the two modes of \textit{TypeShield}, we are trying to answer the following two questions:
 \begin{enumerate}
 
  \item[R1] How precise is \textit{TypeShield} in recovering parameter count and type information for callsites and calltargets from a given binary?
 
  \item[R2] How effective is \textit{TypeShield} in restricting the possible number of calltargets per callsite?
 
- \item[R3]  What level of security does \textit{TypeShield} offer ?
+% \item[R3]  What level of security does \textit{TypeShield} offer ?
 %
 % \item[R5] What is the performance overhead introduced by \textit{TypeShield}?
 %
@@ -1460,8 +1460,6 @@ To choose the best possible combination operator for the callsite analysis in im
 For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to underestimations.
 \paragraph{Result} The series exp3 easily holds the lowest rate of problematic classification and therefore we designate it the setup for a safe implementation of callsite analysis for the \textit{type} policy. The results for the series exp1 and the series exp2 are the same exhibiting a geometric mean of 57.30\% for precision in O2. Therefore it does not matter which of the two setups we choose for the precision implementation of callsite analysis for the \textit{type} policy.
 
-
-\newpage
 \begin{table}[!htbp]
 \centering
 \resizebox{\textwidth}{!}{
@@ -1632,7 +1630,6 @@ For each possible version we measured two data points per testtarget, the number
 		\caption {The results for enhanced callsite analysis for exp3 of the \textit{type} policy throughout different optimizations}
 		\label{tbl:CSexp34TYPE}
 \end{table}
-\newpage
 \newpage
 
 \section{Effectiveness of \textit{TypeShield}}
@@ -1809,6 +1806,13 @@ calculate the calltarget invariant. For the callsite invariant, we chose the uni
 For each series we collected three data points per test target, the average number of calltargets per callsite, the standard deviation $\sigma$ and the median.
 
 \paragraph{Results}
+\begin{enumerate}
+\item The average number of available targets provided by the safe implementation of the \textit{count} schema has an overall geometric mean of  1283 possible calltargets, which is 71.87\% of the geometric mean of total available calltargets. This is 33.78\% more than the theoretical limit of available calltargets per callsite.
+\item The average number of available targets provided by the precise implementation of the \textit{count} schema has an overall geometric mean of  1030 possible calltargets, which is 57.70\% of the geometric mean of total available calltargets. This is 7.40\% more than the theoretical limit of available calltargets per callsite.
+\end{enumerate}
+
+When compared, the precise implementation of of the \textit{count} policy allows about 20\% less available calltargets in the geomean in O2 than the safe implementation of the \textit{count} policy.
+
 
 \begin{table}[!htbp]
 \resizebox{\textwidth}{!}{
@@ -1863,12 +1867,19 @@ We explore the effectiveness of our safe and precise versions for the \textit{ty
 
 \paragraph{Experiment Setup} We setup our two experiment series based on our previous evaluations regarding the classification precision for the \textit{type} policy.
 \begin{enumerate}
-\item For the safe version, we chose the union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that unions all reads until the first write to calculate the calltarget invariant. For the callsite invariant, we chose the union combination operator with an $analyze$ function that does not follow into occurring direct calls  with backward inter-procedural analysis.  See table \ref{tbl:policycompcount} for results. 
-\item For the precise version, we chose union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that unions all reads until the first write to calculate the calltarget invariant. For the callsite invariant, we chose the intersection combination operator that intersects when both paths are set with an $analyze$ function that does follow into occurring direct calls with backward inter-procedural analysis. See table \ref{tbl:policycompcount} for results. 
+\item For the safe version, we chose the union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that unions all reads until the first write to calculate the calltarget invariant. For the callsite invariant, we chose the union combination operator with an $analyze$ function that does not follow into occurring direct calls  with backward inter-procedural analysis.  See table \ref{tbl:policycomptype} for results. 
+\item For the precise version, we chose union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that unions all reads until the first write to calculate the calltarget invariant. For the callsite invariant, we chose the intersection combination operator that intersects when both paths are set with an $analyze$ function that does follow into occurring direct calls with backward inter-procedural analysis. See table \ref{tbl:policycomptype} for results. 
 \end{enumerate}
 For each series we collected three data points per test target, the average number of calltargets per callsite, the standard deviation $\sigma$ and the median.
 
 \paragraph{Results}
+\begin{enumerate}
+\item The average number of available targets provided by the safe implementation of the \textit{type} schema has an overall geometric mean of  1144 possible calltargets, which is 64.08\% of the geometric mean of total available calltargets. This is 39.00\% more than the theoretical limit of available calltargets per callsite.
+\item The average number of available targets provided by the precise implementation of the \textit{type} schema has an overall geometric mean of  907 possible calltargets, which is 50.81\% of the geometric mean of total available calltargets.This is 10.20\% more than the theoretical limit of available calltargets per callsite
+\end{enumerate}
+
+When compared, the precise implementation of of the \textit{count} policy allows about 21\% less available calltargets in the geomean in O2 than the safe implementation of the \textit{count} policy.
+
 
 \begin{table}[!htbp]
 \resizebox{\textwidth}{!}{
@@ -2075,98 +2086,98 @@ Overall we were able to reduce the number of available calltargets per callsite 
 		\label{tbl:policycompattype}
 \end{table}
 
-
-\newpage
-\section{Security Analysis of \textit{TypeShield}}
-\label{section:typeshieldsecurityanalysis}
-
-In this section, we discuss how effective \textit{TypeShield} is 
-stopping advance code-reuse attacks (CRAs).
-Patching Policies
-Two types of diagrams. Table 5 from TypeArmor and a CDF to compare param count and param type. (baseline)
-here we put the CDF graphs from. There is no accurate security metrics to asses the security level of the enforced policy.
-
-
-
-\begin{table}
-\centering
-\resizebox{0.8\textwidth}{!}{
-	\begin{tabular}{l|c|c|c|c|c|c|c|c|c}%
-	\toprule
-	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{} & \multicolumn{8}{|c}{ {\bfseries parameters}} \\
-	\bfseries Target & \bfseries \#CS & \bfseries -x & \bfseries +0 & \bfseries +1 & \bfseries +2 & \bfseries +3 & \bfseries +4 & \bfseries +5 & \bfseries +6 % specify table head
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_cs.O0.csv}{
-		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
-	}
-	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
-
-	\multicolumn{1}{c}{\bfseries O1}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_cs.O1.csv}{
-		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
-	}
-	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi}% specify your coloumns here
-
-	\multicolumn{1}{c}{\bfseries O2}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_cs.O2.csv}{
-		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
-	}
-	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi}% specify your coloumns here
-
-	\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_cs.O3.csv}{
-		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
-	}
-	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi}% specify your coloumns here
-
-
-    	\end{tabular}
-	}
-		\caption {Table shows the overestimation of the parameter count in matched callsites occurring in our precision focussed implementation of the \textit{count} policy, with -x denoting problematic callsites, when compiling with optimization levels O0 through O3}
-	\label{tbl:baselinecs}
-\end{table}
-
-\begin{figure}
-\includegraphics[width=0.5\textwidth]{../MA_Pictures/vsftpd.pdf}
-\includegraphics[width=0.5\textwidth]{../MA_Pictures/lighttpd.pdf}\\
-\includegraphics[width=0.5\textwidth]{../MA_Pictures/memcached.pdf}
-\includegraphics[width=0.5\textwidth]{../MA_Pictures/mysql.pdf}\\
-\includegraphics[width=0.5\textwidth]{../MA_Pictures/nginx.pdf}
-\includegraphics[width=0.5\textwidth]{../MA_Pictures/node.pdf}\\
-\includegraphics[width=0.5\textwidth]{../MA_Pictures/postgresql.pdf}
-\includegraphics[width=0.5\textwidth]{../MA_Pictures/proftpd.pdf}
-\end{figure}
-
-
-
 %
-%\section{Mitigation of Advanced Code-Reuse Attacks}
-%\label{section:mitiagtion}
-%We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
+%\newpage
+%\section{Security Analysis of \textit{TypeShield}}
+%\label{section:typeshieldsecurityanalysis}
 %
-%\subsection{COOP}
-%\label{Effectiveness against COOP}
-%
-%\subsection{COOP Extensions}
-%\label{COOP Extensions}
-%
-%\subsection{Pure Data-only Attacks}
-%\label{Pure Data-only Attacks}
-
-%
-%\section{Performance overhead of \textit{TypeShield}}
-%\label{section:typeshieldoverheadperformance}
-%Here we measure how much performance overhead the instrumeentation incurs.
-%Here we measure with the same SPEC2006 programs that was used in the TypeArmor paper.
-%spec 2006.
-%DELAYED!
+%In this section, we discuss how effective \textit{TypeShield} is 
+%stopping advance code-reuse attacks (CRAs).
+%Patching Policies
+%Two types of diagrams. Table 5 from TypeArmor and a CDF to compare param count and param type. (baseline)
+%here we put the CDF graphs from. There is no accurate security metrics to asses the security level of the enforced policy.
 %
 %
-%\section{Instrumentation overhead of \textit{TypeShield}}
-%\label{section:typeshieldoverheadinstrumentation}
-%Here we measure how much the binaries increased in size after the instrumentation was added to the binaries.
-%DELAYED!
+%
+%\begin{table}
+%\centering
+%\resizebox{0.8\textwidth}{!}{
+%	\begin{tabular}{l|c|c|c|c|c|c|c|c|c}%
+%	\toprule
+%	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{} & \multicolumn{8}{|c}{ {\bfseries parameters}} \\
+%	\bfseries Target & \bfseries \#CS & \bfseries -x & \bfseries +0 & \bfseries +1 & \bfseries +2 & \bfseries +3 & \bfseries +4 & \bfseries +5 & \bfseries +6 % specify table head
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_cs.O0.csv}{
+%		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
+%	}
+%	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
+%
+%	\multicolumn{1}{c}{\bfseries O1}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_cs.O1.csv}{
+%		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
+%	}
+%	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi}% specify your coloumns here
+%
+%	\multicolumn{1}{c}{\bfseries O2}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_cs.O2.csv}{
+%		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
+%	}
+%	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi}% specify your coloumns here
+%
+%	\multicolumn{1}{c}{\bfseries O3}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_cs.O3.csv}{
+%		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
+%	}
+%	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi}% specify your coloumns here
+%
+%
+%    	\end{tabular}
+%	}
+%		\caption {Table shows the overestimation of the parameter count in matched callsites occurring in our precision focussed implementation of the \textit{count} policy, with -x denoting problematic callsites, when compiling with optimization levels O0 through O3}
+%	\label{tbl:baselinecs}
+%\end{table}
+%
+%\begin{figure}
+%\includegraphics[width=0.5\textwidth]{../MA_Pictures/vsftpd.pdf}
+%\includegraphics[width=0.5\textwidth]{../MA_Pictures/lighttpd.pdf}\\
+%\includegraphics[width=0.5\textwidth]{../MA_Pictures/memcached.pdf}
+%\includegraphics[width=0.5\textwidth]{../MA_Pictures/mysql.pdf}\\
+%\includegraphics[width=0.5\textwidth]{../MA_Pictures/nginx.pdf}
+%\includegraphics[width=0.5\textwidth]{../MA_Pictures/node.pdf}\\
+%\includegraphics[width=0.5\textwidth]{../MA_Pictures/postgresql.pdf}
+%\includegraphics[width=0.5\textwidth]{../MA_Pictures/proftpd.pdf}
+%\end{figure}
+%
+%
+%
+%%
+%%\section{Mitigation of Advanced Code-Reuse Attacks}
+%%\label{section:mitiagtion}
+%%We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
+%%
+%%\subsection{COOP}
+%%\label{Effectiveness against COOP}
+%%
+%%\subsection{COOP Extensions}
+%%\label{COOP Extensions}
+%%
+%%\subsection{Pure Data-only Attacks}
+%%\label{Pure Data-only Attacks}
+%
+%%
+%%\section{Performance overhead of \textit{TypeShield}}
+%%\label{section:typeshieldoverheadperformance}
+%%Here we measure how much performance overhead the instrumeentation incurs.
+%%Here we measure with the same SPEC2006 programs that was used in the TypeArmor paper.
+%%spec 2006.
+%%DELAYED!
+%%
+%%
+%%\section{Instrumentation overhead of \textit{TypeShield}}
+%%\label{section:typeshieldoverheadinstrumentation}
+%%Here we measure how much the binaries increased in size after the instrumentation was added to the binaries.
+%%DELAYED!
 

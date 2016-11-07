@@ -249,7 +249,7 @@ $Bl$ is the default state at the end of a path of execution and in our case reac
 \label{alg:liveness}
 \end{algorithm}
 
-However, we cannot use variable liveness analysis as is, because the analysis is based on potentially unbound variable sets, while we are restricted to a finite number of registers and states. We also require an underestimation of live variables an not an overestimation as provided by standard liveness analysis. Furthermore we have to define how to interpret the changes occurring within one block based on the the change caused by its instructions. Considering this, we arrive at algorithm\ref{alg:liveness} to compute the liveness state at the start of a basic block.
+However, we cannot use variable liveness analysis as is, because the analysis is based on potentially unbound variable sets, while we are restricted to a finite number of registers and states. We also require an underestimation of live variables an not an overestimation as provided by standard liveness analysis. Furthermore we have to define how to interpret the changes occurring within one block based on the the change caused by its instructions. Considering this, we arrive at algorithm \ref{alg:liveness} to compute the liveness state at the start of a basic block.
 
 This algorithm relies on various functions that can be used to configure its behaviour. We need to define the function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function $analyze\_instr$. The function $succ$, which retrieves all possible successors of a block won't be implemented by us, because we rely on the DynInst instrumentation framework to achieve this.
 
@@ -482,7 +482,7 @@ Out_n &:= (In_n - Kill_n) \cup Gen_n \label{eq:reachingbasedefOut}
 \end{subequations}
 $Bl$ is the default state at the start of a path of execution and in our case reaching that state would mean that we do not know whether a value has been provided for the variable and therefore we assume that one has been provided, reaching an overestimation. The set $Kill_n$ describes all definitions that are removed within this block, meaning that the value of a variable has been overwritten. The set $Gen_n$ describes the new defintions that have been provided by the block $n$, meaning that the value of a variable has been assigned. Considering this, we can assume that $Gen_n \subseteq Kill_n$, as we can always create new definitions, but not simply remove definitions without assigning a new value to the variable.
 
-{\centering \begin{algorithm}[H]
+\begin{algorithm}[!h]
 	\SetAlgoLined
 	\SetKwProg{Fn}{Function}{ is}{end}
 	\Fn{analyze(block : BasicBlock) : $\mathcal{S}^\mathcal{R}$}
@@ -515,10 +515,8 @@ $Bl$ is the default state at the start of a path of execution and in our case re
 \caption{Algorithm to analyse the reaching definitions of a Basic Block}
 \label{alg:reaching}
 \end{algorithm}
-}
 
-
-However, we cannot use reaching definition analysis as is, because the analysis is again based on potentially unbound variable sets, while we are restricted to a finite number of registers and states. This time however the analysis provides us with an overestimation, we hower want to get a result as close as possible so we again want to customize merge functions. Furthermore we have to define how to interpret the changes occuring withing one block based on the the change caused by its instructions. Considering this, w, we arrive at algorithm\ref{alg:reaching} to compute the liveness state at the start of a basic block.
+However, we cannot use reaching definition analysis as is, because the analysis is again based on potentially unbound variable sets, while we are restricted to a finite number of registers and states. This time however the analysis provides us with an overestimation, we hower want to get a result as close as possible so we again want to customize merge functions. Furthermore we have to define how to interpret the changes occuring withing one block based on the the change caused by its instructions. Considering this, w, we arrive at algorithm \ref{alg:reaching} to compute the liveness state at the start of a basic block.
 
 This algorithm relies on various functions that can be used to configure its behaviour. We need to define the function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function $analyze\_instr$. The function $pred$, which retrieves all possible predecessors of a block won't be implemented by us, because we rely on the DynInst instrumentation framework to achieve this.
 \begin{subequations}
