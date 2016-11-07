@@ -1,9 +1,10 @@
 \chapter{Discussion}
 \label{chapter:Discussion}
 
-We are going to discuss several aspects of interest that came up when comparing against TypeArmor, which are our first two topics. Namely the comparison of results between TypeArmor and \textit{TypeShield} and whether we found any discrepancies between the data we got from their paper and the data we collected. The second part of our discussion is concerned with the limitations of \textit{TypeShield} and possible venues of improvement.
+We are going to discuss several aspects of interest that came up when comparing against TypeArmor, which are our first two topics. Namely the comparison of results between TypeArmor and \textit{TypeShield} in Section \ref{section:comptype} and whether we found any discrepancies between the data we got from their paper and the data we collected in Section \ref{section:discrep}. The second part of our discussion is concerned with the limitations of \textit{TypeShield} in Section \ref{section:limit} and finally, possible venues of improvement in Section \ref{section:venuesimp}.
 
 \section{Comparison with TypeArmor}
+\label{section:comptype}
 We are looking at two sets of results. First of all, we compare the overall precision of our implementation of the COUNT policy with the results from TypeArmor to set the perspective for the precision of our TYPE policy. We cannot compare data regarding overestimations of calltargets or underestimations of callsites, as TypeArmor did not provide sufficient data. The second point of comparison is the reduction of calltargets per callsite, however, this comparison is rather crude, as we most surely do not have the same measuring environment and not sufficient data to infer its quality.
 
 \subsection{Precision of Classification}
@@ -16,17 +17,20 @@ While our count based precision focused implementation achieves a reduction in t
 
 
 \section{Discrepancies or Problems}
+\label{section:discrep}
 Our main problem is that we had no access to source code, which is why we implemented an approximation of TypeArmor. Using this approximation we found some discrepancies between the data that we collected and data that was presented.
 A minor discrepancy between our results and the results of TypeArmor is that, while they basically implemented what we call a destructive merge operator for the liveness analysis. However, our data suggestes that this operator is marginally inferior to the union pathmerge operator, when we compared them in our implementation.
 A major concern is the classification of calltargets, while we were able to reduce the number of overerstimations of calltargets regarding parameter counts to essentially 0, the number of underestimations of calltarget did stay at a geometric mean of 7\%. This error rate is rather large when compared to the reported 0\% underestimation of TypeArmor, however we are not entirely sure what has caused this discrepancy. A possibility is the differing test environments, or a bug within our implementation that we are not aware of, or simply reaching defintions analysis alone is not the best possible algorithm for this particular problem.
 
 \section{Limitations of \textit{TypeShield}}
+\label{section:limit}
 First of all, we are limited by the capabilities of the DynInst Instrumentation Environment, the main problem, we are facing here is that non returning functions like exit are not detected reliably in some cases, which is why we were not able to test the Pure-FTP server, as it heavily relies on these functions. The problem is that those non returning functions usually appear as a second branch within a function that occurs after the normal control flow, causing basic blocks from the following function to be attributed to the current function. This results in a malformed control flow graph and erroneous attribution of callsites and problematic misclassifications for both calltargets and callsites.
 
 Another limitation of \textit{TypeShield} is it reliance on variety within the binary, in particular we rely on the fact that functions use more than only 64bit values or pointers within their parameter list. Should this scenario occur, our analysis has nothing to work with and essentially degrades into a parameter count based implementation. Thankfully this occurrence is quite rare, as we experienced within our experiments. When working based on source level information, we could not detect a difference between our TYPE and a COUNT policies. However when leveraging our tool, we were able to detect differences, which reinforces the fact, that we do not rely on declaration of parameters but usage of those.
 
 
 \section{Possible Venues of Improvement}
+\label{section:venuesimp}
 To improve our typeanalysis, we see atleast two possibilities. Incorporating refined dataflow analysis and expanding the scope to also include memory. The main point of improvement is not the precision but for now more importantly the reduction of underestimations in the callsite analysis.
 
 To refine the dataflow analysis, we propse the actual tracking of data values and simple operations, as these can be used to better differentiate the actual wideness stored within the current register. The highest gain, we see here would be the establishment of upper and lower bounds regarding values within the register, which would allow for more sophisticated callsite and calltarget invariants. Essentially we would have to resort to symbolic execution or some other sort of precise abstract interpretation.
