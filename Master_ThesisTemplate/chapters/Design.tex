@@ -9,6 +9,17 @@
 }
 \makeatother
 
+\makeatletter
+\let\oldnl\nl% Store \nl in \oldnl
+\newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}}% Remove line number for one line
+\makeatother
+
+\let\oldalgorithm\algorithm
+\let\oldendalgorithm\endalgorithm
+
+  \let\algorithm\figure
+  \let\endalgorithm\endfigure
+
 \chapter{Design}
 \label{chapter:Design}
 
@@ -76,7 +87,7 @@ What we call the \emph{count} policy is essentially the policy introduced by Typ
 \]
 One possible remedy would be the ability to introduce an upper bound for the classification deviation of parameter counts, however as of now, this does not seem feasible with current technology. Another possibility would be the overall reduction of callsites, which can access the same set of calltargets, a route we will explore within this work.
 
-\section{\emph{type} Policy}
+\section{\emph{Type} Policy}
 \label{section:typepolicy}
 
 What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the type of a parameter. However due to complexity reasons, we are restricting ourselves to the general purpose registers, which the SystemV ABI designates as parameter registers. Furthermore we are not inferring the actual type of the data but the wideness of the data stored in the register. The schema again is that we have calltargets requiring wideness and the callsite providing wideness as depicted in figure \ref{fig:TYPEschema}.
@@ -204,7 +215,7 @@ Out_n &:= \left\{
 \end{subequations}
 $Bl$ is the default state at the end of a path of execution and in our case reaching that state would mean that a variable has never been used (neither written nor read). The set $Kill_n$ describes all variables that are no longer live after the block $n$, meaning that a variable occurring within this set has been written to. The set $Gen_n$ describes all variables that are alive due to the block $n$, meaning that a variable occurring within this set has been read before it was written to.
 
-{\centering\begin{algorithm}[!h]
+\begin{algorithm}[!h]
 	\SetAlgoLined
 	\SetKwProg{Fn}{Function}{ is}{end}
 	\Fn{analyze(block : BasicBlock) : $\mathcal{S}^\mathcal{L}$}
@@ -237,7 +248,6 @@ $Bl$ is the default state at the end of a path of execution and in our case reac
 \caption{Algorithm to analyse the liveness of a Basic Block}
 \label{alg:liveness}
 \end{algorithm}
-}
 
 However, we cannot use variable liveness analysis as is, because the analysis is based on potentially unbound variable sets, while we are restricted to a finite number of registers and states. We also require an underestimation of live variables an not an overestimation as provided by standard liveness analysis. Furthermore we have to define how to interpret the changes occurring within one block based on the the change caused by its instructions. Considering this, we arrive at algorithm\ref{alg:liveness} to compute the liveness state at the start of a basic block.
 
@@ -363,9 +373,9 @@ We apply the liveness analysis for each function with the entry block of the fun
 \label{subsection:requiredparamwideness}
 To implement the \emph{type} policy, we need a finer representation of the state of one register, thus we are interested in the following three different not neccessarily exlusive informations:
 \begin{enumerate}
-\item Was the register written to before its value could be read ? \\ We represent this with the state W.
-\item How much was read from the register before its value was overwritten? \\ We represent this with the states \{ r8, r16, r32, r64 \} using R as a placeholder for arbitrary reads.
-\item Did neither read nor write access occur for the register ? \\ We represent this with the state C.
+\item Was the register written to before its value could be read ? \\ We represent this with the state $W$.
+\item How much was read from the register before its value was overwritten? \\ We represent this with the states $\{ r8, r16, r32, r64 \}$ using $R$ as a placeholder for arbitrary reads.
+\item Did neither read nor write access occur for the register ? \\ We represent this with the state $C$.
 \end{enumerate}
 This gives us the following register state $S^\mathcal{L} = \{ C, r8, r16, r32, r64, W \}$ which translates to the register superstate $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
 Now, we assume that unless the instructions we are looking at does discard the value it is reading (\texttt{xor rax rax} would be such an instruction that we call const\_write) that reading does preced the writing withing one instruction.
@@ -629,7 +639,7 @@ T & T & S & T
 To implement the \emph{type} policy, we need a finer representation of the state of one register, thus we are interested in the following three informations:
 \begin{enumerate}
 \item Was the register value trashed ? \\ We represent this with the state T.
-\item Was the register written to and how much ? \\ We represent this with the states \{ s64, s32, s16, s8 \} using S as a placeholder for arbitrary writes.
+\item Was the register written to and how much ? \\ We represent this with the states $\{ s64, s32, s16, s8 \}$ using S as a placeholder for arbitrary writes.
 \item Was the register neither trashed nor written to ? \\ We represent this with the state U.
 \end{enumerate}
 This gives us the following register state $S^\mathcal{L} = \{ T, s64, s32, s16, s8, U \}$ which translates to the register superstate $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
