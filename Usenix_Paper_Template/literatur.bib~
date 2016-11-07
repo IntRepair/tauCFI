@@ -162,8 +162,8 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
 }
 
 @inproceedings{dynamorio:drmemory,
- author = "Dynamic Instrumentation Tool Platform",
- title = "{DynamoRIO}",
+ author = "",
+ title = "{DynamoRIO: Dynamic Instrumentation Tool Platform}",
  note={\url{http://dynamorio.org/home.html}}
 }
 
@@ -272,86 +272,98 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
  year = "2015",
 }
 
-\bibitem{}
+@inproceedings{ccfi:jose,
+ author = "Mashtizadeh, Ali José and Bittau, Andrea and Boneh, Dan and Mazières, David",
+ title = "{CCFI: Cryptograhically Enforced Control Flow Integrity}",
+ booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS),},
+ year = "2015",
+}
 
-{}, In
-\emph{}, 2015.
+@inproceedings{dep,
+ author = "Microsoft, Changes to Functionality in Microsoft Windows XP Service Pack 2.",
+ note={\url{https://technet.microsoft.com/en-us/library/bb457151.aspx.}}
+}
 
-\bibitem{ccfi:jose}
-Ali José Mashtizadeh, Andrea Bittau, Dan Boneh, and  David Mazières
-{CCFI: Cryptograhically Enforced Control Flow Integrity}, In
-\emph{Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)}, 2015.
+@inproceedings{ASLR,
+ author = "PaX Team. Address Space Layout Randomization,",
+ note={\url{https://pax.grsecurity.net/docs/aslr.txt}},
+ year = "2001",
+}
 
-\bibitem{dep}
-Microsoft, Changes to Functionality in Microsoft Windows XP Service Pack 2.,
-\url{https://technet.microsoft.com/en-us/library/bb457151.aspx.}
+@inproceedings{ROP,
+ author = "Buchanan, E. and Roemer, R. and Shacham, H. and Savage, S.",
+ title = "{When Good Instructions Go Bad: Generalizing Return-oriented Programming to RISC}",
+ booktitle = {ACM Conference on Computer and Communications Security (CCS),},
+ year = "2008",
+}
 
-\bibitem{ASLR}
-PaX Team. Address Space Layout Randomization,
-\url{https://pax.grsecurity.net/docs/aslr.txt}, 2001.
+@inproceedings{JOP1,
+ author = "Bletsch, T. and Jiang, X. and Freeh, V. W. and Liang, Z.",
+ title = "{Jump-Oriented Programming: A New Class of Code-Reuse Attack}",
+ booktitle = {ACM Symposium on Information, Computer and Communications Security (ASIACCS),},
+ year = "2011",
+}
 
-\bibitem{ROP}
-E. Buchanan, R. Roemer, H. Shacham, and S. Savage, 
-{When Good Instructions Go Bad: Generalizing Return-oriented Programming to RISC}, In
-\emph{ACM Conference on Computer and Communications Security (CCS)}, 2008.
+@inproceedings{JOP2,
+ author = "Checkoway, S. and Davi, L. and Dmitrienko, A. and Sadeghi, A.-R. and Shacham, H. and Winandy, M.",
+ title = "{Return-oriented Programming Without Returns}",
+ booktitle = {ACM Conference on Computer and Communications Security (CCS),},
+ year = "2010",
+}
 
-\bibitem{JOP1}
-T. Bletsch, X. Jiang, V. W. Freeh, and Z. Liang,
-{Jump-Oriented Programming: A New Class of Code-Reuse Attack}, In
-\emph{ACM Symposium on Information, Computer and Communications Security (ASIACCS)}, 2011.
+@inproceedings{JOP3,
+ author = "Davi, L. and Dmitrienko, A. and Sadeghi, A.-R. and Winandy, M.",
+ title = "{Return-Oriented Programming without Returns on ARM}",
+ booktitle = {Technical report, Technical Report HGI-TR-2010-002, Ruhr-University Bochum,},
+ year = "2010",
+}
 
-\bibitem{JOP2}
-S. Checkoway, L. Davi, A. Dmitrienko, A.-R. Sadeghi, H. Shacham, and M. Winandy,
-{Return-oriented Programming Without Returns}, In
-\emph{ACM Conference on Computer and Communications Security (CCS)}, 2010.
+@inproceedings{rop:carlini,
+ author = "Carlini, Nicholas and Wagner, David",
+ title = "{ROP is still dangerous: Breaking Modern Defenses}",
+ booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC),},
+ year = "2014",
+}
 
-\bibitem{JOP3}
-L. Davi, A. Dmitrienko, A.-R. Sadeghi, and M. Winandy,
-{Return-Oriented Programming without Returns on ARM}, In
-\emph{Technical report, Technical Report HGI-TR-2010-002, Ruhr-University Bochum}, 2010.
+@inproceedings{kornau:rop,
+ author = "Kornau, T.",
+ title = "{Return-Oriented Programming for the ARM Architecture}",
+ note={\url{http://www.zynamics.com/downloads/kornau-tim--diplomarbeit--rop.pdf}}
+ year = "2009",
+}
 
-\bibitem{rop:carlini}
-Nicholas Carlini, and David Wagner,
-{ROP is still dangerous: Breaking Modern Defenses}, In
-\emph{Proceedings of the USENIX conference on Security (USENIX SEC)}, ACM, 2014.
+@inproceedings{rop:shacham,
+ author = "Shacham, H.",
+ title = "{The Geometry of Innocent Flesh on the Bone: Return-into-Libc without Function Calls (On the x86)}",
+ booktitle = {ACM Conference on Computer and Communications Security (CCS),},
+ year = "2007",
+}
 
-\bibitem{kornau:rop}
-T. Kornau, 
-{Return-Oriented Programming for the ARM Architecture},
-\url{http://www.zynamics.com/downloads/kornau-tim--diplomarbeit--rop.pdf}, 2009.
+@inproceedings{carlini:bending,
+ author = "Carlini, Nicolas and Barresi, Antonio and Payer, Mathias and Wagner, David and Gross, Thomas R.",
+ title = "{Control-Flow Bending: On the Effectiveness of Control-Flow Integrity}",
+ booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC),},
+ year = "2015",
+}
 
-\bibitem{rop:shacham}
-H. Shacham,
-{The Geometry of Innocent Flesh on the Bone: Return-into-Libc without Function Calls (On the x86)}, In
-\emph{ACM Conference on Computer and
-Communications Security (CCS)}, 2007.
+@inproceedings{skowyra:systemetic,
+ author = "Skowyra, R. and Casteel, K. and Okhravi, H. and Zeldovich, N. and Streilein, W.",
+ title = "{Systematic Analysis of Defenses Against Return-Oriented Programming}",
+ booktitle = {Proceedings of the International Symposium on Research in Attacks, Intrusions, and Defenses (RAID),},
+ year = "2013",
+}
 
+@inproceedings{goktas:outofcontrol,
+ author = "Göktas, Enes and Athanasopoulos, Elias and Bos, Herbert and Portokalidis, Georgios",
+ title = "{Out Of Control: Overcoming Control-Flow Integrity}",
+ booktitle = {Proceedings of the IEEE Symposium on Security and Privacy (S\&P),},
+ year = "2014",
+}
 
-
-
-%not cited---------------------can be added if needed, we sh have around 50
-\bibitem{carlini:bending}
-Nicolas Carlini, Antonio Barresi, Mathias Payer, David Wagner, Thomas R. Gross,
-{Control-Flow Bending: On the Effectiveness of Control-Flow Integrity}, In
-\emph{Proceedings of the USENIX conference on Security (USENIX SEC)}, ACM, 2015.
-
-
-\bibitem{skowyra:systemetic}
-R. Skowyra, K. Casteel, H. Okhravi, N. Zeldovich, and W. Streilein,
-{Systematic Analysis of Defenses Against Return-Oriented Programming}, In
-\emph{Proceedings of the International Symposium on Research in Attacks, Intrusions, and Defenses (RAID)}, 2013.
-
-
-\bibitem{goktas:outofcontrol}
-Enes Göktas, Elias Athanasopoulos, Herbert Bos, and Georgios Portokalidis	
-{Out Of Control: Overcoming Control-Flow Integrity}, In
-\emph{Proceedings of the IEEE Symposium on Security and Privacy (S\&P)}, 2014.
-
-
-\bibitem{minghua:binary}
-Minghua Wang, Heng Yin, Abhishek Vasisht Bhaskar, Purui Su, and Dengguo Feng,
-{Binary Code Continent: Finer-Grained Control Flow Integrity for Stripped Binaries}, In
-\emph{Annual Computer Security Applications Conference (ACSAC)}, 2015.
-
-
+@inproceedings{minghua:binary,
+ author = "Wang, Minghua and Yin, Heng and Bhaskar, Abhishek Vasisht and Su, Purui and Feng, Dengguo",
+ title = "{Binary Code Continent: Finer-Grained Control Flow Integrity for Stripped Binaries}",
+ booktitle = {Annual Computer Security Applications Conference (ACSAC),},
+ year = "2015",
+}
 

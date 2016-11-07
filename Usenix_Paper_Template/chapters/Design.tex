@@ -167,7 +167,7 @@ $
 Again we allow any callsite $cs$ call any calltarget $ct$, when it fulfills the requirement $ct \leq cs$. The way we represent this is by letting the type for a calltarget parameter progress from 64bit to 0bit - If a calltarget requires a 32bit value in its 1st parameter, it also should accept a 64bit value from its callsite - and similarly we let the type for a callsite progress from 0bit to 64bit - If a callsite provides a 32bit value in its 1st parameter it also provides a 16bit, 8bit and 0bit to a calltarget. Now the advantage of the \emph{type} policy in comparison to the \emph{count} policy is that while our type comparison implies the count comparison, the other direction does not hold. Meaning, just having an equal or lesser number of parameters than a callsite, does no longer allow a calltarget being called there, thus restricting the number of calltargets per callsite even further. A function that requires 64bit in its first parameter, and 0bit in all other parameters, would have been callable by a callsite providing 8bit in its first and second parameter when using the \emph{count} policy, however in the \emph{type} policy this is no longer possible.
 
 
-\section{Instruction Analysis}
+\textbf{Instruction Analysis.}
 \label{section:instructionanalysis}
 Usually data-flow analysis algorithms are based on set of variable or sets of definitions, which both are basically unbounded. However, we are analysing the state of registers, which are baked into hardware and therefore their number is given, thus requiring us to adapt the data-flow theory to work on tuples.
 
@@ -191,11 +191,11 @@ $
 
 However, we do not go into detail how this function actually calculates this sate, because we rely on external libraries to perform this task. Implementing this function ourself is out of scope due to the lengthy work required, as the x86-64 instruction set is quite large.
 
-\textbf{Calltarget Analysis}
+\textbf{Calltarget Analysis.}
 \label{section:calltargetanalysis}
 For either \emph{count} or \emph{type} policy to work, we need to arrive at an underestimation of the required parameters by any function existing within the targeted binary. We will employ a modified version of liveness analysis that tracks registers instead of variables to generate the needed underestimation. As our algorithm will be customizable, we look at the required merge functions to implement \emph{count} and \emph{type} policy. Furthermore we need to eliminate the passing of variadic parameter lists from variadic functions, as this might cause our analysis to overestimate the required parameters.
 
-\subsection{Variable Liveness Analysis Theory}
+\textbf{Variable Liveness Analysis Theory.}
 \label{subsection:livenessanalysis}
 A variable is alive before the execution of an instrucction, if at least one of the originating paths contains a read access before the variable is written to again. We employ liveness analysis, because we are looking for the  parameters a function requires. This essentially requires read before write access, however global variables usually would also fall into this category, however these would not reside within parameter registers at the start of a function.
 
@@ -297,7 +297,7 @@ As the $analyze\_instr$ function calculates the effect of an instruction and is 
 
 This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
 
-\subsection{Required Parameter Count}
+\textbf{Required Parameter Count.}
 \label{subsection:requiredparamcount}
 
 To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we are interested in the following three different exclusive informations:
@@ -376,7 +376,7 @@ W & W & W & W
 We apply the liveness analysis for each function with the entry block of the function as start and the return blocks as end and after an analysis run for a function, the index of highest parameter register based on the used callconvention that has the state R is considered to be the number of parameters a function at least requires to be prepared by a callsite.
 
 
-\subsection{Required Parameter Wideness}
+\textbf{Required Parameter Wideness.}
 \label{subsection:requiredparamwideness}
 To implement the \emph{type} policy, we need a finer representation of the state of one register, thus we are interested in the following three different not neccessarily exlusive informations:
 \begin{enumerate}
@@ -419,7 +419,7 @@ RW & RW & $\text{R}^{\cup}$W & W & RW\\
 \label{tbl:TYPECTunion}
 \end{table}
 
-\subsection{Variadic Functions}
+\textbf{Variadic Functions.}
 \label{subsection:variadicfunctions}
 Variadic functions are special functions in C/C++ that have a basic set of parameters, which they always require and a variadic set of parameters, which as the name suggests may vary. A prominent example of this would be the $printf$ function, which is used to output text to $stdout$.
 
@@ -466,13 +466,12 @@ Our solution to this problem is to find these spurious reads and ignore them. A 
 \end{enumerate}
 
 
-\textbf{Callsite Analysis}
+\textbf{Callsite Analysis.}
 \label{section:callsiteanalysis}
 For either \emph{count} or \emph{type} policy to work, we need to arrive at an overestimation of the provided parameters by any indirect callsite existing within the targeted binary. We will employ a modified version of reaching analysis that tracks registers instead of variables to generate the needed overestimation. As our algorithm will be customizable, we look at the required merge functions to implement \emph{count} and \emph{type} policy. 
 
-\subsection{Reaching Definitions Theory}
+\textbf{Reaching Definitions Theory.}
 \label{subsection:reachindefinitionstheory}
-
 An assignment of a value to a variable is a reaching definition at the end of a block $n$, if that definition is present within at least one path from start to the end of the block $n$ without being overwritten by another value assignment to the same variable. We employ reaching definitions analysis, because we are looking for the parameters a callsite provides. This essentially requires the last known set of definitions that reach the actual callinstruction within the parameter registers.
 
 The book ``Data Flow Analysis - Theory and Practice'' \cite{khedker2009data} defines reaching definition analysis on blocks in the following manner:
@@ -553,7 +552,7 @@ This leaves us with the two merge functions remaining undefined and we will leav
 %\subsection{Backward Graph Traversal}
 %\label{subsection:backwardgraphtraversal}
 
-\subsection{Provided Parameter Count}
+\textbf{Provided Parameter Count.}
 \label{subsection:providedparamcount}
 
 To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we are interested in the following three different exclusive informations:
@@ -640,7 +639,7 @@ T & T & S & T
 \end{table}
 
 
-\subsection{Provided Parameter Wideness}
+\textbf{Provided Parameter Wideness.}
 \label{subsection:providedparamwideness}
 
 To implement the \emph{type} policy, we need a finer representation of the state of one register, thus we are interested in the following three informations:
@@ -722,12 +721,12 @@ Our solution is to simply scan our reaching analysis result for these holes and 
 Our solution is to enhance our instruction analysis to watch out for constant writes. In case a 32bit constant value write is detected, we check if the value is an addess within the ``.bss'', ``.data'' or ``.rodata'' section of the binary. If this is the case, we simply return a write access of 64bits instead of 32bits. (This is not problematic, because we are looking for an overestimation of parameter wideness)
 It should be noted that the same problem can arise when a constant write causes the value 0 to be written to a 32bit register. We use the same solution and set the wideness to 64bits instead of 32bits.
 
-\textbf{Address Taken Analysis}
+\textbf{Address Taken Analysis.}
 \label{section:addresstakenanalysis}
 
 As of now, we use the maximum available set of calltargets - the set of all function entry basic blocks - as input for our algorithm. To restrict the number of calltargets per callsite even further, we explored the possibility of incorporating an address taken analysis into our application. We base our theory on the paper by Zhang and Sekar\cite{mingwei:sekar}, which introduced various types of taken addresses. An address is considered to be taken, when it is loaded into memory or a register.
 
-\subsection{Address Taken Targets}
+\textbf{Address Taken Targets.}
 Based on the notions of \cite{mingwei:sekar}, which classified taken addresses into several types of indirect control flow targets, we only chose { Code Pointer Constants (CK)} and discarded the others:
 \begin{itemize}
 
@@ -742,7 +741,7 @@ Based on the notions of \cite{mingwei:sekar}, which classified taken addresses i
 \item { Return addresses (RA)}, which are the addresses next to a call instruction, are also of no interest to us, because we only implement forward { control flow integrity}.
 \end{itemize}
 
-\subsection{Binary Analysis}
+\textbf{Binary Analysis.}
 Our approach of identifying taken addresses consists of two steps: First, we iterate over the raw binary content of data sections. Second, we iterate over all functions within the disassembled binary. We rely on DynInst to provide us with the boundaries of the sections inside the binary and in case of shared libraries with the needed translation to current memory addresses:
 
 \begin{enumerate}

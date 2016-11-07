@@ -1,5 +1,9 @@
 \begin{thebibliography}{10}
 
+\bibitem{dynamorio:drmemory}
+{DynamoRIO: Dynamic Instrumentation Tool Platform}.
+\newblock \url{http://dynamorio.org/home.html}.
+
 \bibitem{windows:cfguard}
 {Windows Control Flow Guard}.
 \newblock
@@ -212,11 +216,6 @@
   Attacks}.
 \newblock In {\em Annual Computer Security Applications Conference (ACSAC),\/}
   (2015).
-
-\bibitem{dynamorio:drmemory}
-{\sc Platform, D. I.~T.}
-\newblock {DynamoRIO}.
-\newblock \url{http://dynamorio.org/home.html}.
 
 \bibitem{vfuard:aravind}
 {\sc Prakash, A., Hu, X., and Yin, H.}
