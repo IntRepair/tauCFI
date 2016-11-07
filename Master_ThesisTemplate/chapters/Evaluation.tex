@@ -139,12 +139,12 @@ We are going to present the experiments and values to find the best possible com
 \paragraph{Experiment Setup}
 To choose the best possible combination operator for the calltarget analysis in implementing the \textit{count} policy, we generated data for all six possible versions of liveness analysis.
 \begin{enumerate}
-\item Destructive combination operator with an $analyze$ function that does not follow into occuring call functions see Table \ref{tbl:CTdestinterCOUNT} for results.
-\item Destructive combination operator with an $analyze$ function that follows into occuring call functions see Table \ref{tbl:CTdestinterCOUNT} for results.
-\item Intersection combination operator with an $analyze$ function that does not follow into occuring call functions see Table \ref{tbl:CTdestinterCOUNT} for results.
-\item Intersection combination operator with an $analyze$ function that follows into occuring call functions see Table \ref{tbl:CTdestinterCOUNT} for results.
-\item Union combination operator with an $analyze$ function that does not follow into occuring call functions see Table \ref{tbl:CTunionCOUNT} for results.
-\item Union combination operator with an $analyze$ function that follows into occuring call functions see Table \ref{tbl:CTunionCOUNT} for results.
+\item Destructive combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CTdestinterCOUNT} for results.
+\item Destructive combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CTdestinterCOUNT} for results.
+\item Intersection combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CTdestinterCOUNT} for results.
+\item Intersection combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CTdestinterCOUNT} for results.
+\item Union combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CTunionCOUNT} for results.
+\item Union combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CTunionCOUNT} for results.
 \end{enumerate}
 For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to overestimations.
 \paragraph{Results} The results of destructive combination and intersection combination are the same. Regardless of operator choice the problem rate is extrmely low (under 0.1\%). Overall there is a slight improvement when following calls in all result sets. The union operator (geometric mean for O2: 82.24\%) is slightly more precise than the destructive/intersection operator (geometric mean for O2: 79.93\%). Which presents us the union combination operator as the best possible option here.
@@ -324,17 +324,17 @@ For each possible version we measured two data points per testtarget, the number
 \subsection{Precision Callsite Classification (\textit{count})}
 \label{subsection:typeshieldprecision}
 We are going to present two series of experiments and values to find the best possible combination operator for the callsite analysis in the \textit{count} policy.
-\subsubsection{Without interprocedural Analysis}
+\subsubsection{Without inter-procedural Analysis}
 
 \paragraph{Experiment Setup}
-To choose the best possible combination operator for the callsite analysis in implementing the \textit{count} policy without a backward interprocedural analysis, we generated data for all eight possible versions of reaching definition analysis.
+To choose the best possible combination operator for the callsite analysis in implementing the \textit{count} policy without a backward inter-procedural analysis, we generated data for all eight possible versions of reaching definition analysis.
 \begin{enumerate}
-\item Destructive/intersection combination operator with an $analyze$ function that does not follow into occuring call functions see Table \ref{tbl:CSdestinterCOUNTnointer} for results.
-\item Destructive/intersection combination operator with an $analyze$ function that follows into occuring call functions see Table \ref{tbl:CSdestinterCOUNTnointer} for results.
-\item Union combination operator with an $analyze$ function that does not follow into occuring call functions see Table \ref{tbl:CSunionCOUNTnointer} for results.
-\item Union combination operator with an $analyze$ function that follows into occuring call functions see Table \ref{tbl:CSunionCOUNTnointer} for results.
-\item Union combination operator with an $analyze$ function that does not follow into occuring call functions see Table \ref{tbl:CStrueunionCOUNTnointer} for results.
-\item Union combination operator with an $analyze$ function that follows into occuring call functions see Table \ref{tbl:CStrueunionCOUNTnointer} for results.
+\item Destructive/intersection combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CSdestinterCOUNTnointer} for results.
+\item Destructive/intersection combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CSdestinterCOUNTnointer} for results.
+\item Union combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CSunionCOUNTnointer} for results.
+\item Union combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CSunionCOUNTnointer} for results.
+\item Union combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CStrueunionCOUNTnointer} for results.
+\item Union combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CStrueunionCOUNTnointer} for results.
 \end{enumerate}
 For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to underestimations.
 
@@ -419,7 +419,7 @@ For each possible version we measured two data points per testtarget, the number
 
     	\end{tabular}
 }
-		\caption {The results for callsite analysis using the destructive/intersection combination operator for the \textit{count} without interprocedural analysis policy throughout different optimizations}
+		\caption {The results for callsite analysis using the destructive/intersection combination operator for the \textit{count} without inter-procedural analysis policy throughout different optimizations}
 		\label{tbl:CSdestinterCOUNTnointer}
 \end{table}
 
@@ -505,7 +505,7 @@ For each possible version we measured two data points per testtarget, the number
 
     	\end{tabular}
 }
-		\caption {The results for callsite analysis using the union combination operator for the \textit{count} without interprocedural analysis policy throughout different optimizations}
+		\caption {The results for callsite analysis using the union combination operator for the \textit{count} without inter-procedural analysis policy throughout different optimizations}
 		\label{tbl:CSunionCOUNTnointer}
 \end{table}
 
@@ -590,27 +590,27 @@ For each possible version we measured two data points per testtarget, the number
 
     	\end{tabular}
 }
-		\caption {The results for callsite analysis using the true union combination operator for the \textit{count} without interprocedural analysis policy throughout different optimizations}
+		\caption {The results for callsite analysis using the true union combination operator for the \textit{count} without inter-procedural analysis policy throughout different optimizations}
 		\label{tbl:CStrueunionCOUNTnointer}
 \end{table}
 
 \newpage
 
-\subsubsection{With interprocedural Analysis}
+\subsubsection{With inter-procedural Analysis}
 
 \paragraph{Experiment Setup}
-To choose the best possible combination operator for the callsite analysis in implementing the \textit{count} policy with a backward interprocedural analysis, we generated data for all eight possible versions of reaching definition analysis.
+To choose the best possible combination operator for the callsite analysis in implementing the \textit{count} policy with a backward inter-procedural analysis, we generated data for all eight possible versions of reaching definition analysis.
 \begin{enumerate}
-\item Destructive/Intersection combination operator with an $analyze$ function that does not follow into occuring call functions see Table \ref{tbl:CSdestinterCOUNTinter} for results.
-\item Destructive/Intersection combination operator with an $analyze$ function that follows into occuring call functions see Table \ref{tbl:CSdestinterCOUNTinter} for results.
-\item Union combination operator with an $analyze$ function that does not follow into occuring call functions see Table \ref{tbl:CSunionCOUNTinter} for results.
-\item Union combination operator with an $analyze$ function that follows into occuring call functions see Table \ref{tbl:CSunionCOUNTinter} for results.
-\item Union combination operator with an $analyze$ function that does not follow into occuring call functions see Table \ref{tbl:CStrueunionCOUNTinter} for results.
-\item Union combination operator with an $analyze$ function that follows into occuring call functions see Table \ref{tbl:CStrueunionCOUNTinter} for results.
+\item Destructive/Intersection combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CSdestinterCOUNTinter} for results.
+\item Destructive/Intersection combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CSdestinterCOUNTinter} for results.
+\item Union combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CSunionCOUNTinter} for results.
+\item Union combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CSunionCOUNTinter} for results.
+\item Union combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CStrueunionCOUNTinter} for results.
+\item Union combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CStrueunionCOUNTinter} for results.
 \end{enumerate}
 For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to underestimations.
 
-\paragraph{Results} The results are essentially the same as in the experiment series without interprocedural analysis, but with slightly higher precision. The results of destructive combination and intersection combination are the same. The true union operator is overall inferior to the union operator. The union operator exhibts the lowest error rate when not following calls and is therefore designated the safe version of the callsite combination operator, as it is superior in precision (geometric mean for O2: 35.79\%) to the non interprocedural version (geometric mean for O2: 26.55\%). The destructive/intersection operator exhibts the highest precision (geometric mean for O2: 87.85\%) and is therefore designated the best operator for the precision version of the callsite combination operator (we chose the version that follows functions).
+\paragraph{Results} The results are essentially the same as in the experiment series without inter-procedural analysis, but with slightly higher precision. The results of destructive combination and intersection combination are the same. The true union operator is overall inferior to the union operator. The union operator exhibts the lowest error rate when not following calls and is therefore designated the safe version of the callsite combination operator, as it is superior in precision (geometric mean for O2: 35.79\%) to the non inter-procedural version (geometric mean for O2: 26.55\%). The destructive/intersection operator exhibts the highest precision (geometric mean for O2: 87.85\%) and is therefore designated the best operator for the precision version of the callsite combination operator (we chose the version that follows functions).
 
 \begin{table}[!htbp]
 \resizebox{\textwidth}{!}{
@@ -691,7 +691,7 @@ For each possible version we measured two data points per testtarget, the number
 
     	\end{tabular}
 }
-		\caption {The results for callsite analysis using the destructive/intersection combination operator for the \textit{count} with interprocedural analysis policy throughout different optimizations}
+		\caption {The results for callsite analysis using the destructive/intersection combination operator for the \textit{count} with inter-procedural analysis policy throughout different optimizations}
 		\label{tbl:CSdestinterCOUNTinter}
 \end{table}
 
@@ -777,7 +777,7 @@ For each possible version we measured two data points per testtarget, the number
 
     	\end{tabular}
 }
-		\caption {The results for callsite analysis using the union combination operator for the \textit{count} with interprocedural analysis policy throughout different optimizations}
+		\caption {The results for callsite analysis using the union combination operator for the \textit{count} with inter-procedural analysis policy throughout different optimizations}
 		\label{tbl:CSunionCOUNTinter}
 \end{table}
 
@@ -864,7 +864,7 @@ For each possible version we measured two data points per testtarget, the number
 }
 
 
-		\caption {The results for callsite analysis using the true union combination operator for the \textit{count} with interprocedural analysis policy throughout different optimizations}
+		\caption {The results for callsite analysis using the true union combination operator for the \textit{count} with inter-procedural analysis policy throughout different optimizations}
 		\label{tbl:CStrueunionCOUNTinter}
 \end{table}
 %\begin{table}
@@ -1063,10 +1063,10 @@ We are going to present a series of experiments and values to find the best poss
 \paragraph{Experiment Setup}
 To choose the best possible combination operator for the calltarget analysis in implementing the \textit{type} policy, we conducted three experiments based on the data of the Precision Calltarget Classification(\textit{count}) experiment and the proposed implementations for the \textit{type} policy:
 \begin{enumerate}
-\item[exp1] union combination operator with an $analyze$ function that does follow into occuring call functions and a vertical merge that only accepts the first change see Table \ref{tbl:CTdestinterexp12TYPE} for results.
-\item[exp2] union combination operator with an $analyze$ function that does follow into occuring call functions  and a vertical merge that unions all reads until the first write see Table \ref{tbl:CTdestinterexp12TYPE} for results.
-\item[exp3] union combination operator with an $analyze$ function that does follow into occuring call functions  and a vertical merge that intersects all reads until the first write see Table \ref{tbl:CTdestinterexp34TYPE} for results.
-%\item[exp4] full union combination operator with an $analyze$ function that does not follow into occuring call functions and a vertical merge that unions all reads until the first write  see Table \ref{tbl:CTdestinterexp34TYPE} for results.
+\item[exp1] union combination operator with an $analyze$ function that does follow into occurring direct calls and a vertical merge that only accepts the first change see Table \ref{tbl:CTdestinterexp12TYPE} for results.
+\item[exp2] union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that unions all reads until the first write see Table \ref{tbl:CTdestinterexp12TYPE} for results.
+\item[exp3] union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that intersects all reads until the first write see Table \ref{tbl:CTdestinterexp34TYPE} for results.
+%\item[exp4] full union combination operator with an $analyze$ function that does not follow into occurring direct calls and a vertical merge that unions all reads until the first write  see Table \ref{tbl:CTdestinterexp34TYPE} for results.
 \end{enumerate}
 For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to overestimations.
 \paragraph{Result} The series exp2 shows the lowest problem rate of the three series. Regarding precision the values are as follows relatively equal:
@@ -1255,13 +1255,13 @@ Due to exp2 exhibiting the lowest error value, we designate this setup as the be
 %\paragraph{Experiment Setup}
 %To choose the best possible combination operator for the callsite analysis in implementing the \textit{type} policy, we conducted four experiments based on the data of the two Precision Callsite Classification(\textit{count}) experiments:
 %\begin{enumerate}
-%\item[exp1] intersection combination operator that intersects when both paths are set with an $analyze$ function that does follow into occuring call functions with backward interprocedural analysis see Table \ref{tbl:CSexp12TYPE} for results.
+%\item[exp1] intersection combination operator that intersects when both paths are set with an $analyze$ function that does follow into occurring direct calls with backward inter-procedural analysis see Table \ref{tbl:CSexp12TYPE} for results.
 %
-%\item[exp2] intersection combination operator that unions when both paths are set with an $analyze$ function that does follow into occuring call functions  with backward interprocedural analysis  see Table \ref{tbl:CSexp12TYPE} for results.
+%\item[exp2] intersection combination operator that unions when both paths are set with an $analyze$ function that does follow into occurring direct calls  with backward inter-procedural analysis  see Table \ref{tbl:CSexp12TYPE} for results.
 %
-%\item[exp3] union combination operator with an $analyze$ function that does not follow into occuring call functions  with backward interprocedural analysis  see Table \ref{tbl:CSexp34TYPE} for results.
+%\item[exp3] union combination operator with an $analyze$ function that does not follow into occurring direct calls  with backward inter-procedural analysis  see Table \ref{tbl:CSexp34TYPE} for results.
 %
-%\item[exp4] general intersection operator with an $analyze$ function that does not follow into occuring call functions  with backward interprocedural analysis  see Table \ref{tbl:CSexp34TYPE} for results.
+%\item[exp4] general intersection operator with an $analyze$ function that does not follow into occurring direct calls  with backward inter-procedural analysis  see Table \ref{tbl:CSexp34TYPE} for results.
 %\end{enumerate}
 %For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to overestimations.
 %
@@ -1449,13 +1449,13 @@ We are going to present a series of experiments and values to find the best poss
 \paragraph{Experiment Setup}
 To choose the best possible combination operator for the callsite analysis in implementing the \textit{type} policy, we conducted three  experiments based on the data of the two Precision Callsite Classification(\textit{count}) experiments and the proposed implementations for the \textit{type} policy:
 \begin{enumerate}
-\item[exp1] intersection combination operator that intersects when both paths are set with an $analyze$ function that does follow into occuring call functions with backward interprocedural analysis see Table \ref{tbl:CSexp12TYPE} for results.
+\item[exp1] intersection combination operator that intersects when both paths are set with an $analyze$ function that does follow into occurring direct calls with backward inter-procedural analysis see Table \ref{tbl:CSexp12TYPE} for results.
 
-\item[exp2] intersection combination operator that unions when both paths are set with an $analyze$ function that does follow into occuring call functions  with backward interprocedural analysis  see Table \ref{tbl:CSexp12TYPE} for results.
+\item[exp2] intersection combination operator that unions when both paths are set with an $analyze$ function that does follow into occurring direct calls  with backward inter-procedural analysis  see Table \ref{tbl:CSexp12TYPE} for results.
 
-\item[exp3] union combination operator with an $analyze$ function that does not follow into occuring call functions  with backward interprocedural analysis  see Table \ref{tbl:CSexp34TYPE} for results.
+\item[exp3] union combination operator with an $analyze$ function that does not follow into occurring direct calls  with backward inter-procedural analysis  see Table \ref{tbl:CSexp34TYPE} for results.
 
-%\item[exp4] general intersection operator with an $analyze$ function that does not follow into occuring call functions  with backward interprocedural analysis  see Table \ref{tbl:CSexp34TYPE} for results.
+%\item[exp4] general intersection operator with an $analyze$ function that does not follow into occurring direct calls  with backward inter-procedural analysis  see Table \ref{tbl:CSexp34TYPE} for results.
 \end{enumerate}
 For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to underestimations.
 \paragraph{Result} The series exp3 easily holds the lowest rate of problematic classification and therefore we designate it the setup for a safe implementation of callsite analysis for the \textit{type} policy. The results for the series exp1 and the series exp2 are the same exhibiting a geometric mean of 57.30\% for precision in O2. Therefore it does not matter which of the two setups we choose for the precision implementation of callsite analysis for the \textit{type} policy.
@@ -1637,10 +1637,20 @@ For each possible version we measured two data points per testtarget, the number
 
 \section{Effectiveness of \textit{TypeShield}}
 \label{section:typeshieldeffectiveness}
-We are now going to evaluate the effectiveness of \textit{TypeShield} leveraging the result of several experiment runs: First we are going to establish a baseline using the data collected from 
+We are now going to evaluate the effectiveness of \textit{TypeShield} leveraging the result of several experiment runs: First we are going to establish a baseline using the data collected from our Clang/LLVM pass, which are the theoretical limits our implementation can reach. Second we are going to evaluate the effectiveness of our \textit{count} policy and third we are going to evaluate the effectiveness of our \textit{type} policy. At last we are going to look at the effect our address taken analysis had on the results.
 
-\subsection{Theoretical Limit for the Reduction of Calltargets per Callsite}
+\subsection{Theoretical Limits}
 \label{subsection:theoreticallimit}
+We explore the theoretical limits regarding the effectiveness of the \textit{count} and \textit{type} policies by relying on the collected ground truth data, which is essentially assume perfect classification.
+
+\paragraph{Experiment Setup} Based on the type information collected by our Clang/LLVM pass, we conducted two experiment series:
+\begin{enumerate}
+\item We derived the \textit{count} schema using the ground truth and calculated the available number of calltargets for each callsite, see table \ref{tbl:policycomp} for results.
+\item We derived the \textit{type} schema using the ground truth and calculated the available number of calltargets for each callsite, see table \ref{tbl:policycomp} for results.
+\end{enumerate}
+For each series we collected three data points per test target, the average number of calltargets per callsite, the standard deviation $\sigma$ and the median.
+
+\paragraph{Results}
 
 %
 %\begin{table}[!htbp]
@@ -1779,12 +1789,20 @@ We are now going to evaluate the effectiveness of \textit{TypeShield} leveraging
 		\label{tbl:policycomp}
 \end{table}
 
+\newpage
+\subsection{\textit{TypeShield} implementation of the \textit{count} policy}
+\label{subsection:typeshieldvslimitcount}
+We explore the effectiveness of our safe and precise versions for the \textit{count} policy implementation.
 
-\subsection{\textit{TypeShield} vs Theoretical Limit}
-\label{subsection:typeshieldvslimit}
+\paragraph{Experiment Setup} We setup our two experiment series based on our previous evaluations regarding the classification precision for the \textit{count} policy.
+\begin{enumerate}
+\item For the safe version, we chose the union combination operator, with $analyse$ that follows into occurring direct calls to 
+calculate the calltarget invariant. For the callsite invariant, we chose the union operator that does not follow into occurring direct calls with backwards inter-procedural analysis.  See table \ref{tbl:policycompcount} for results. 
+\item For the precise version, we chose the union combination operator, with $analyse$ that follows into occurring direct calls to calculate the calltarget invariant. For the callsite invariant, we chose the intersection operator that follows into occurring direct calls with backwards inter-procedural analysis. See table \ref{tbl:policycompcount} for results. 
+\end{enumerate}
+For each series we collected three data points per test target, the average number of calltargets per callsite, the standard deviation $\sigma$ and the median.
 
-
-\subsubsection{\textit{count} policy}
+\paragraph{Results}
 
 \begin{table}[!htbp]
 \resizebox{\textwidth}{!}{
@@ -1828,12 +1846,23 @@ We are now going to evaluate the effectiveness of \textit{TypeShield} leveraging
     	\end{tabular}
 }
 		\caption {The results of comparing \textit{count} safe and precision implementation throughout different optimizations}
-		\label{tbl:policycomp}
+		\label{tbl:policycompcount}
 \end{table}
 
 \newpage
 
-\subsubsection{\textit{type} policy}
+\subsection{\textit{TypeShield} implementation of the \textit{type} policy}
+\label{subsection:typeshieldvslimitcount}
+We explore the effectiveness of our safe and precise versions for the \textit{type} policy implementation.
+
+\paragraph{Experiment Setup} We setup our two experiment series based on our previous evaluations regarding the classification precision for the \textit{type} policy.
+\begin{enumerate}
+\item For the safe version, we chose the union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that unions all reads until the first write to calculate the calltarget invariant. For the callsite invariant, we chose the union combination operator with an $analyze$ function that does not follow into occurring direct calls  with backward inter-procedural analysis.  See table \ref{tbl:policycompcount} for results. 
+\item For the precise version, we chose union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that unions all reads until the first write to calculate the calltarget invariant. For the callsite invariant, we chose the intersection combination operator that intersects when both paths are set with an $analyze$ function that does follow into occurring direct calls with backward inter-procedural analysis. See table \ref{tbl:policycompcount} for results. 
+\end{enumerate}
+For each series we collected three data points per test target, the average number of calltargets per callsite, the standard deviation $\sigma$ and the median.
+
+\paragraph{Results}
 
 \begin{table}[!htbp]
 \resizebox{\textwidth}{!}{
@@ -1877,7 +1906,7 @@ We are now going to evaluate the effectiveness of \textit{TypeShield} leveraging
     	\end{tabular}
 }
 		\caption {The results of comparing \textit{type} safe and precision implementation throughout different optimizations}
-		\label{tbl:policycomp}
+		\label{tbl:policycomptype}
 \end{table}
 
 \newpage
@@ -1885,8 +1914,25 @@ We are now going to evaluate the effectiveness of \textit{TypeShield} leveraging
 
 \subsection{Effect of our AddressTaken Analysis}
 \label{subsection:effectivenessaddresstaken}
-We conducted the same three experiments as before but with the initial set of calltargets filtered by our implementation of address taken analysis.
+We are providing experiment results and an evaluation regarding the impact of our address taken analysis on the theoretical limits and our various policy implementations, namely the safe and precise versions of the \textit{count} and \textit{type} policies.
+\paragraph{Experiment Setup} We conducted the same three experiments as before but with the initial set of calltargets filtered by our implementation of address taken analysis:
+\begin{enumerate}
+\item We setup the same experiment regarding theoretical limits as described in subsection \ref{subsection:theoreticallimit} but with restricting the possible calltargets to only address taken functions. The results are presented in table \ref{tbl:policycompat}
+\item We setup the same experiment regarding the \textit{count} policy as described in subsection \ref{subsection:theoreticallimit} but with restricting the possible calltargets to only address taken functions. The results are presented in table \ref{tbl:policycompatcount}
+\item We setup the same experiment regarding the \textit{type} policy as described as in subsection \ref{subsection:theoreticallimit} but with restricting the possible calltargets to only address taken functions. The results are presented in table \ref{tbl:policycompattype}
+\end{enumerate}
+For each series we collected three data points per test target, the average number of calltargets per callsite, the standard deviation $\sigma$ and the median.
 
+\paragraph{Results} First of all we observed an overall reduction of the geometric mean of overall available calltargets to 64\% before our policies were applied. Notable outliers are memcached, which had a 90\% reduction of available calltargets and vsftpd, which even achieved a 97\% reduction in available calltargets.
+\begin{enumerate}
+\item The theoretical available targets were overall reduced to 25.96\% in the \textit{count} policy case  (geometric mean of 249 in O2) and to 27.27\% in the \textit{type} policy case  (geometric mean of 224 in O2). The difference between their geometric means shrank from about 15\% to about 10\%.
+\item The average targets provided by the safe and the precise implementation of the \textit{count} policy were reduced to 25.33\% (geometric mean of 325 in O2) and 25.92\% (geometric mean of 267) respectively. The difference between their geometric means shrank from about 20\% to about 18\%.
+\item The average targets provided by the safe and the precise implementation of the \textit{count} policy were reduced to 26.13\% (geometric mean of 299 in O2) and 26.79\% (geometric mean of 243) respectively. The difference between their geometric means shrank from about 20\% to about 18\%.
+\end{enumerate}
+
+When comparing the precision focused implementations of our \textit{type} policy and our \textit{count}, we observe that the difference between them shrank to about 9\% when comparing their geometric means.
+
+Overall we were able to reduce the number of available calltargets per callsite from 1785 to 243 using our precision focussed implementation of the \textit{type} policy, which is an overall reduction to 13.61\%.
 
 \begin{table}[!htbp]
 \resizebox{\textwidth}{!}{
@@ -1975,7 +2021,7 @@ We conducted the same three experiments as before but with the initial set of ca
     	\end{tabular}
 }
 		\caption {The results of comparing \textit{count} safe and precision implementation restricted using an address taken analysis throughout different optimizations}
-		\label{tbl:policycompat}
+		\label{tbl:policycompatcount}
 \end{table}
 
 \begin{table}[!htbp]
@@ -2020,9 +2066,11 @@ We conducted the same three experiments as before but with the initial set of ca
     	\end{tabular}
 }
 		\caption {The results of comparing \textit{type} safe and precision implementation restricted using an address taken analysis throughout different optimizations}
-		\label{tbl:policycompat}
+		\label{tbl:policycompattype}
 \end{table}
 
+
+\newpage
 \section{Security Analysis of \textit{TypeShield}}
 \label{section:typeshieldsecurityanalysis}
 
@@ -2034,19 +2082,73 @@ here we put the CDF graphs from. There is no accurate security metrics to asses 
 
 
 
+\begin{table}
+\centering
+\resizebox{0.8\textwidth}{!}{
+	\begin{tabular}{l|c|c|c|c|c|c|c|c|c}%
+	\toprule
+	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{} & \multicolumn{8}{|c}{ {\bfseries parameters}} \\
+	\bfseries Target & \bfseries \#CS & \bfseries -x & \bfseries +0 & \bfseries +1 & \bfseries +2 & \bfseries +3 & \bfseries +4 & \bfseries +5 & \bfseries +6 % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_cs.O0.csv}{
+		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
+	}
+	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
 
-\section{Mitigation of Advanced Code-Reuse Attacks}
-\label{section:mitiagtion}
-We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
+	\multicolumn{1}{c}{\bfseries O1}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_cs.O1.csv}{
+		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
+	}
+	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi}% specify your coloumns here
 
-\subsection{COOP}
-\label{Effectiveness against COOP}
+	\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_cs.O2.csv}{
+		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
+	}
+	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi}% specify your coloumns here
 
-\subsection{COOP Extensions}
-\label{COOP Extensions}
+	\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_cs.O3.csv}{
+		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
+	}
+	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi}% specify your coloumns here
 
-\subsection{Pure Data-only Attacks}
-\label{Pure Data-only Attacks}
+
+    	\end{tabular}
+	}
+		\caption {Table shows the overestimation of the parameter count in matched callsites occurring in our precision focussed implementation of the \textit{count} policy, with -x denoting problematic callsites, when compiling with optimization levels O0 through O3}
+	\label{tbl:baselinecs}
+\end{table}
+
+\begin{figure}
+\includegraphics[width=0.5\textwidth]{../MA_Pictures/vsftpd.pdf}
+\includegraphics[width=0.5\textwidth]{../MA_Pictures/lighttpd.pdf}\\
+\includegraphics[width=0.5\textwidth]{../MA_Pictures/memcached.pdf}
+\includegraphics[width=0.5\textwidth]{../MA_Pictures/mysql.pdf}\\
+\includegraphics[width=0.5\textwidth]{../MA_Pictures/nginx.pdf}
+\includegraphics[width=0.5\textwidth]{../MA_Pictures/node.pdf}\\
+\includegraphics[width=0.5\textwidth]{../MA_Pictures/postgresql.pdf}
+\includegraphics[width=0.5\textwidth]{../MA_Pictures/proftpd.pdf}
+\end{figure}
+
+
+
+%
+%\section{Mitigation of Advanced Code-Reuse Attacks}
+%\label{section:mitiagtion}
+%We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
+%
+%\subsection{COOP}
+%\label{Effectiveness against COOP}
+%
+%\subsection{COOP Extensions}
+%\label{COOP Extensions}
+%
+%\subsection{Pure Data-only Attacks}
+%\label{Pure Data-only Attacks}
 
 %
 %\section{Performance overhead of \textit{TypeShield}}
