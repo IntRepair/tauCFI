@@ -1,0 +1,41 @@
+\section{Future Work}
+\label{chapter:Future_Work}
+We see at least five different possible ways of future venues of research, 
+which range from improving the structural matching between ground 
+truth and binary based data to expanding our schema alltogether 
+by incorporating aliasing and tracking memory operations.\\
+
+\textbf{Improving the structural matching capability.} is the most 
+important further venue of research, as we need a reliable way to 
+match a ground truth against the resulting binary. This is important, 
+because it is a prerequisite to the ability to generate reliable 
+measurements and reduces the current uncertainy (we rely on the 
+number of calltargets per callsite to match callsites and furthermore
+assume that the order within ground truth and binary is the same).\\
+
+\textbf{Finding a better suited callsite analysis.} would present 
+itself as another important possibility, as we still have a relatively 
+high---up to16\%---number of underestimated callsites. 
+However, this venue should only be attempted after significant 
+improvements to the structural matching of callsites.\\
+
+\textbf{Devising a patching schema.} that is based on Dyninst functionality, 
+which allows annotation of calltargets so they can hold at least 
+4 bytes of arbitrary data. This is required to hold the type data that
+we generate using our classification. Keeping the runtime overhead
+of said patching schema low should be the second goal of this venue 
+after satisfying stability.\\
+
+\textbf{Expanding our schema to return values.} is another viable venue
+of further work, as we were not able to reliably reduce the number of 
+problematic classification regarding the return values of functions to 
+managable levels. Should one attempt this, it should be noted that the
+responsibilities of callsites and calltargets are reversed in this 
+case: The callsite requires return value wideness, while the calltarget
+needs to provide it.\\
+
+\textbf{Introducing pointer/memory analysis.} to distinguish simple 
+32/64bit values and actual addresses to even further restrict the 
+possible number of calltargets per callsite. This would require more 
+precise dataflow analysis, as in calculating value possibilities for 
+registers at each instruction.

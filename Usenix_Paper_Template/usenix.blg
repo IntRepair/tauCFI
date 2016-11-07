@@ -2,10 +2,13 @@ This is BibTeX, Version 0.99d (TeX Live 2015/dev/Debian)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: usenix.aux
 The style file: acm.bst
-Database file #1: sample.bib
+Database file #1: literatur.bib.bib
+Warning--I didn't find a database entry for "Chaum1981"
+Warning--I didn't find a database entry for "Diffie1976"
+Warning--I didn't find a database entry for "latex"
 You've used 1 entry,
             2253 wiz_defined-function locations,
-            536 strings with 4039 characters,
+            541 strings with 4089 characters,
 and the built_in function-call counts, 311 in all, are:
 = -- 31
 > -- 7
@@ -44,3 +47,4 @@ warning$ -- 0
 while$ -- 4
 width$ -- 2
 write$ -- 12
+(There were 3 warnings)

@@ -1,0 +1,156 @@
+\section{Related Work}
+\label{chapter:Related_Work}
+This Chapter briefly reviews the main techniques and tools which are related 
+to \textit{TypeShield}. 
+Section~\ref{Type-Inference on Executables} gives an overview of tools used to
+recover type inference from binaries.
+Section~\ref{Mitigation of Code-Reuse Attacks} depicts several techniques
+used to mitigate code reuse attacks in general.
+Finally, Section~\ref{Mitigation of Advanced Code-Reuse Attacks} presents 
+several source code, binary and runtime techniques which can be used to 
+mitigate COOP attacks.
+
+\textbf{Type-Inference on Executables.}
+\label{Type-Inference on Executables}
+Recovering variable types from executable programs
+is very hard in general for several reasons. 
+First, the quality of the disasembly can very much from used
+framework to another. \textit{TypeShield} is based on DynInst 
+and the quality of the execuatble disasembly fits our needs. 
+For a more comprehensive review on the capabilities of DynInst and other tools we
+advice the reader to have a look at~\cite{andriesse:indepth}.
+
+Second, alias analysis in binares is undecidable in theory and intractable in practice~\cite{alan:mycroft}.
+There are several most promising tools such as: Rewards~\cite{lin:rewards}, BAP~\cite{bap:brumley}, 
+SmartDec~\cite{fokin:smartdec}, and Divine~\cite{divine:balakrishnan}.
+These tools try with more or less success to recover 
+type information from binary programs with different goals.
+Typical goals are: 
+\textit{i)} full program reconstruction (binary to code convertion, reversing), 
+\textit{ii)} checking for buffer overflows, 
+\textit{iii)} integer overflows and other types of memory corruptions.
+For a more exhaustive review of such tools we advice the reader to
+have a look at the review of Caballero et al.~\cite{caballero:inference}.
+Intresting to notice is that the code from only a few of this tools is available.
+
+While smartde seemed promising due to its simple type lattice that we wanted to leverage for our classification schema. Its integration into our DynInst based environment was not successful mostly for time constraints, as it was deemed to time consuming to extract the whole machinery and implemnt an interface to the DynInst disassembler.
+Therefore we finally implemented our own version of type analysis and only focused on the wideness of the types, resulting in a simpler lattice than we initially wanted.
+
+\textbf{Mitigation of Code-Reuse Attacks.}
+\label{Mitigation of Code-Reuse Attacks}
+In the last couple of years researchers have provided many versions of new Code Reuse Attacks (CRAs).
+These new attacks were possible since DEP~\cite{dep} and ASLR~\cite{ASLR} were successfully bypassed mostly based
+on Return Oriented Programming (ROP)~\cite{ROP, kornau:rop, rop:shacham} on one hand and on 
+the other hand due to the discovery of new exploitable hardware and software primitives.
+
+ROP started to present itself in the last couple of years in many faceted ways such as:
+Jump Oriented Programming (JOP)~\cite{JOP1, JOP2, JOP3} which uses jumps in order to divert the control flow to the next gadget and 
+Call Oriented Programming (COP)~\cite{rop:carlini} which uses calls in order to chain gadgets together.
+CRAs have many manifestations and it is out of scope of this work to list them all.
+
+On one hand, CRAs can be mitigated in general in the following ways: 
+\textit{(i)} binary instrumentation,
+\textit{(ii)} source code recompilation and 
+\textit{(iii)} runtime application monitoring.
+On the other hand, there is a plethora of tools and techniques which try to enforce CFI based
+primitives in executables, source code and during runtime. Next we briefly
+present the solution landscape together with the approaches and the techniques on which these are based:
+\textit{(a)} fine-grained CFI with hardware support, PathArmor~\cite{veen:cfi},
+\textit((b)) coarse-grained CFI used for binary instrumentation, CCFIR~\cite{ccfir:zhang},
+\textit{(c)} coarse-grained CFI based on binary loader, CFCI~\cite{cfci:zhang}
+\textit{(d)} fine-grained code randomization, O-CFI~\cite{mohan:opaque},
+\textit{(e)} cryptografy with hardware support, CCFI~\cite{ccfi:jose},
+\textit{(f)} ROP stack pivoting, PBlocker~\cite{pblocker:prakash},
+\textit{(g)} canary based protection, DynaGuard~\cite{dynaguard:petsios},
+\textit{(h)} runtime and hardware support based on a combination of LBR, PMU and BTS registers CFIGuard~\cite{cfiguard:yuan}, and
+\textit{(i)} source code recompilation with CFI and/or randomization enforcement against JIT-ROP attacks, MCFI~\cite{mcfi:niu}, 
+RockJIT~\cite{rockjit:niu} and PiCFI~\cite{perinput:niu}.
+
+The above list is not exhaustive and new protection techniques can be obtained by combining available techniques
+or by using newly available hardware features or software exploits. However, none of the above techniques and tools 
+can mitigate against COOP attacks.
+
+
+\textbf{Mitigation of Advanced Code-Reuse Attacks.}
+\label{Mitigation of Advanced Code-Reuse Attacks}
+COOP~\cite{schuster:coop}, Subversive-C~\cite{subversive-c:lettner} and Recursive-COOP~\cite{crane:readactor++}
+are advanced CRAs since these attacks which can not be addressed:
+\textit{i)}  with shadow stacks techniques (i.e., do not violate the caller/calle convention), 
+\textit{ii)} coarse-grained Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} techniques are useless against these attacks, 
+\textit{iii)} hardware based approaches such as Intel CET~\cite{intel:cet} can not mitigate this attack for the same reason as in \textit{i)}, and 
+\textit{iv)} with OS-based approaches such as Windows Control Flow Guard~\cite{windows:cfguard} 
+since the precomputed CFG does not contain edges for indirect call sites which are explicitly exploited during the COOP attack.
+
+However, the following tools can protect against COOP attacks:
+
+\textbf{Source code based:} indirect callsite targets are checked based on vTable integrity.
+Different types of CFI policies are used such as in the following tools:
+SafeDispatch~\cite{safedispatch:jang}, IFCC/VTV~\cite{vtv:tice} LLVM and GCC compiler.
+Additionally, the Redactor++~\cite{crane:readactor++} uses randomization 
+vTrust~\cite{zhang:vtrust} checks call target function signatures, 
+CPI~\cite{volodymyr:cpi} uses a memory safety technique
+in order to protect against the COOP attack.
+
+There are several source code based tools 
+which can succesfully protect against the COOP attack.
+Such tools are: ShrinkWrap~\cite{haller:shrinkwrap}, IFCC/VTV~\cite{vtv:tice}, 
+SafeDispatch~\cite{safedispatch:jang}, vTrust~\cite{zhang:vtrust}, Readactor++~\cite{crane:readactor++}, CPI~\cite{volodymyr:cpi} and the
+tool presented by Bounov et al.~\cite{bounov:interleaving}. These tools profit from high precision
+since they have access to the full semantic context of the program though the scope
+of the compiler on which they are based. 
+Because of this reason these tools target mostly other types of security problems than binary-based 
+tools address. For example some last advancec in compile based protection against 
+code reuse attacks address mainly performance issues.
+Currently, most of the above presented tools are only forward
+edge enforcers of fine-grained CFI policies with an overhead from 1\% up to 15\%.
+
+We are aware that there is still a long research path to go until binary based techniques can 
+recuperate program based semantic information from executable with the same precision as compiler based tools.
+These path could be even endless since compilers are optimized for speed and are designed to remove as much as possbile semantic information
+from an executable in order to make the program run as fast as possible. In light of this fact,
+\textit{TypeShield} is another attempt to recuperate just the needed semantic information (types and number of function parameters from
+indirect call sites) in order to be able to enforce a precise and with low overhead primitive against COOP attacks.
+
+Rather than claiming that the invariants offered by \textit{TypeShield} are suffiecient
+to mitigate all versions of the COOP attack we take a more conservative path by claiming that \textit{TypeShield} 
+further raises the bar w.r.t. what is possible when defending against COOP attacks on the binary level.
+
+\textbf{Binary based:} vTable protection is addressed through binary instrumentation in tools
+such as: vfGuard~\cite{vfuard:aravind}, vTint~\cite{vtint:zhang}. However, none of these tools can
+help to mitigate against COOP. The only binary based tool which we are aware of that
+can mitigate protect against COOP is TypeArmor~\cite{veen:typearmor}.  
+TypeArmor uses a fine-grained CFI policy based on caller (only indirect call sites)/callee matching 
+which consists in checking during runtime if the number of provided and needed parameters match.
+
+\textit{TypeShield} is most similar to TypeArmor~\cite{veen:typearmor} since
+we also enforce strong binary-level invariants on the number of function
+paramters. \textit{TypeShield} similarly to TypeArmor targets 
+exclusive protection against advanced exploitation techniques 
+which can bypass fine-grained CFI schemes and VTable protections at the binary level.
+
+However, \textit{TypeShield} offers a better restriction of calltargets to callsites, since we not only restrict based on the number of parameters but also on the wideness of their types. This results in much smaller buckets that in turn can only target a smaller subset of all address taken functions. However, we rely for that on the variety of parameter types and when there is none, we will degrade into a parameter count policy.
+
+\textbf{Runtime based:}
+``There is something available out there but I can not use it'' \textit{Anonymous}.
+Long story short conclusion: There are several promissing runtime-based line of defenses against
+advanced CRAs but none of them can succesfully protect against the COOP attack.
+
+IntelCET~\cite{intel:cet} is based on, \texttt{ENDBRANCH}, a new CPU instruction which can be used to enforce
+an efficient shadow stack mechanism. The shadow stack can be used to check during program execution if caller/return pais match.
+Since the COOP attack reuses whole functions as gadgets and does not violate the caller/return convention than the 
+new feature provided by interl is useless in the face of this attack. Nevertheless other highly notorious CRAs may not be possible
+after this feature will be implemented main stream in OSs and compilers.
+
+Windows Control Flow Guard~\cite{windows:cfguard} is based on a user-space and kernel-space components which
+by working closelly together can enforce an efficient fine-grained CFI policy based on a precomputed CFG.
+These new feature available in Windows 10 can considerably rise the bar for future attacks but in our opinion advanced CRAs
+such as COOP are still possible due the typical characteristics of COOP.
+
+PathArmor~\cite{veen:cfi} is yet another tool which is based on a precomputed CFG and on the LBR register which can give a string of 16 up to
+32 pairs of from/to addressed of different types of indirect instructions such as \texttt{call}, \texttt{ret}, and \texttt{jump}. 
+Because of the sporadic query of the LBR register (only during invocation of certain function calls) and because of the sheer amount of 
+data which passes thorugh the LBR register this apporach has in our opinion a fair potential to catch different types of CRAs but
+we think that against COOP this tool can not be used. First, because of the fact that the precomputed CFG does not contain edges for all
+possible indirect call sites which are accessed during runtime and second, the LBR buffer can be easily triked by adding
+legitimate indirect call sites  during the COOP attack.
+
