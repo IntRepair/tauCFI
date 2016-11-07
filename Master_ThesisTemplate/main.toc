@@ -5,91 +5,85 @@
 \contentsline {chapter}{Acknowledgements}{v}{section*.1}
 \contentsline {chapter}{Abstract}{vii}{section*.2}
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
-\contentsline {section}{\numberline {1.1}Motivation}{2}{section.1.1}
-\contentsline {section}{\numberline {1.2}Contribution}{3}{section.1.2}
+\contentsline {section}{\numberline {1.1}Motivation}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Contribution}{2}{section.1.2}
 \contentsline {section}{\numberline {1.3}Outline}{3}{section.1.3}
 \contentsline {chapter}{\numberline {2}Background: Forward C++ Forbidden Calls Exposed}{5}{chapter.2}
 \contentsline {section}{\numberline {2.1}Polymorphism in C++}{5}{section.2.1}
 \contentsline {section}{\numberline {2.2}Checking Indirect Forward-Edge Calls in Practice}{7}{section.2.2}
 \contentsline {section}{\numberline {2.3}Security Implications of Forbidden Indirect Calls}{8}{section.2.3}
 \contentsline {section}{\numberline {2.4}Real COOP Attack Example}{9}{section.2.4}
-\contentsline {chapter}{\numberline {3}TypeShild Overview}{11}{chapter.3}
-\contentsline {section}{\numberline {3.1}1. Select Important Point from Design Chapter}{11}{section.3.1}
-\contentsline {section}{\numberline {3.2}2. Select Important Point from Design Chapter}{11}{section.3.2}
-\contentsline {section}{\numberline {3.3}3. Select Important Point from Design Chapter}{11}{section.3.3}
-\contentsline {section}{\numberline {3.4}Adversary Model}{11}{section.3.4}
-\contentsline {section}{\numberline {3.5}TypeShild: Invariants for Targets and Callsites}{12}{section.3.5}
-\contentsline {section}{\numberline {3.6}TypeShild Impact on COOP}{13}{section.3.6}
-\contentsline {chapter}{\numberline {4}Design}{15}{chapter.4}
-\contentsline {section}{\numberline {4.1}\emph {count} Policy}{15}{section.4.1}
-\contentsline {section}{\numberline {4.2}\emph {type} Policy}{16}{section.4.2}
-\contentsline {section}{\numberline {4.3}Instruction Analysis}{18}{section.4.3}
-\contentsline {section}{\numberline {4.4}Calltarget Analysis}{18}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Variable Liveness Analysis Theory}{19}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Required Parameter Count}{21}{subsection.4.4.2}
-\contentsline {subsection}{\numberline {4.4.3}Required Parameter Wideness}{22}{subsection.4.4.3}
-\contentsline {subsection}{\numberline {4.4.4}Variadic Functions}{23}{subsection.4.4.4}
-\contentsline {section}{\numberline {4.5}Callsite Analysis}{25}{section.4.5}
-\contentsline {subsection}{\numberline {4.5.1}Reaching Definitions Theory}{25}{subsection.4.5.1}
-\contentsline {subsection}{\numberline {4.5.2}Provided Parameter Count}{27}{subsection.4.5.2}
-\contentsline {subsection}{\numberline {4.5.3}Provided Parameter Wideness}{29}{subsection.4.5.3}
-\contentsline {paragraph}{\nonumberline Parameter lists with ``holes''}{30}{section*.7}
-\contentsline {paragraph}{\nonumberline Address wideness unterestimation}{30}{section*.8}
-\contentsline {section}{\numberline {4.6}Address Taken Analysis}{31}{section.4.6}
-\contentsline {subsection}{\numberline {4.6.1}Address Taken Targets}{31}{subsection.4.6.1}
-\contentsline {subsection}{\numberline {4.6.2}Binary Analysis}{32}{subsection.4.6.2}
-\contentsline {chapter}{\numberline {5}Implementation}{33}{chapter.5}
-\contentsline {chapter}{\numberline {6}Evaluation}{35}{chapter.6}
-\contentsline {section}{\numberline {6.1}Precision of TypeShield}{35}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}Quality and Applicability of Ground Truth}{36}{subsection.6.1.1}
-\contentsline {paragraph}{\nonumberline Calltargets}{36}{section*.9}
-\contentsline {paragraph}{\nonumberline Callsites}{37}{section*.10}
-\contentsline {subsection}{\numberline {6.1.2}Precision Calltarget Classification (COUNT)}{39}{subsection.6.1.2}
-\contentsline {paragraph}{\nonumberline Experiment Setup}{39}{section*.11}
-\contentsline {paragraph}{\nonumberline Results for unoptimized targets}{39}{section*.12}
-\contentsline {paragraph}{\nonumberline Results for optimized targets}{39}{table.6.3}
-\contentsline {subsection}{\numberline {6.1.3}Precision Callsite Classification (COUNT)}{42}{subsection.6.1.3}
-\contentsline {subsubsection}{\nonumberline Without interprocedural Analysis}{42}{section*.14}
-\contentsline {paragraph}{\nonumberline Experiment Setup}{42}{section*.15}
-\contentsline {paragraph}{\nonumberline Results for unoptimized targets}{42}{section*.16}
-\contentsline {paragraph}{\nonumberline Results for optimized targets}{42}{table.6.6}
-\contentsline {subsubsection}{\nonumberline With interprocedural Analysis}{46}{section*.18}
-\contentsline {paragraph}{\nonumberline Experiment Setup}{46}{section*.19}
-\contentsline {paragraph}{\nonumberline Results for unoptimized targets}{46}{section*.20}
-\contentsline {paragraph}{\nonumberline Results for optimized targets}{46}{table.6.9}
-\contentsline {subsection}{\numberline {6.1.4}Precision Calltarget Classification (TYPE)}{50}{subsection.6.1.4}
-\contentsline {paragraph}{\nonumberline Experiment Setup}{50}{section*.22}
-\contentsline {paragraph}{\nonumberline Results for unoptimized targets}{50}{section*.23}
-\contentsline {paragraph}{\nonumberline Results for optimized targets}{50}{section*.24}
-\contentsline {subsection}{\numberline {6.1.5}Precision Enhanced Callsite Classification (TYPE)}{53}{subsection.6.1.5}
-\contentsline {paragraph}{\nonumberline Experiment Setup}{53}{section*.25}
-\contentsline {paragraph}{\nonumberline Results for unoptimized targets}{53}{section*.26}
-\contentsline {paragraph}{\nonumberline Results for optimized targets}{53}{section*.27}
-\contentsline {section}{\numberline {6.2}Effectiveness of TypeShield}{56}{section.6.2}
-\contentsline {subsection}{\numberline {6.2.1}Theoretical Limit for the Reduction of Calltargets per Callsite}{56}{subsection.6.2.1}
-\contentsline {subsection}{\numberline {6.2.2}TypeShield vs Theoretical Limit}{56}{subsection.6.2.2}
-\contentsline {subsubsection}{\nonumberline COUNT policy}{56}{section*.28}
-\contentsline {subsubsection}{\nonumberline TYPE policy}{58}{section*.29}
-\contentsline {subsection}{\numberline {6.2.3}Effect of our AddressTaken Analysis}{59}{subsection.6.2.3}
-\contentsline {section}{\numberline {6.3}Security Analysis of TypeShield}{59}{section.6.3}
-\contentsline {section}{\numberline {6.4}Mitigation of Advanced Code-Reuse Attacks}{59}{section.6.4}
-\contentsline {subsection}{\numberline {6.4.1}COOP}{59}{subsection.6.4.1}
-\contentsline {subsection}{\numberline {6.4.2}COOP Extensions}{59}{subsection.6.4.2}
-\contentsline {subsection}{\numberline {6.4.3}Pure Data-only Attacks}{59}{subsection.6.4.3}
-\contentsline {chapter}{\numberline {7}Discussion}{63}{chapter.7}
-\contentsline {section}{\numberline {7.1}Comparison with TypeArmor}{63}{section.7.1}
-\contentsline {subsection}{\numberline {7.1.1}Precision of Classification}{63}{subsection.7.1.1}
-\contentsline {subsection}{\numberline {7.1.2}Reduction of Available Calltargets}{64}{subsection.7.1.2}
-\contentsline {section}{\numberline {7.2}Discrepancies or Problems}{64}{section.7.2}
-\contentsline {section}{\numberline {7.3}Limitations of TypeShield}{65}{section.7.3}
-\contentsline {section}{\numberline {7.4}Possible Venues of Improvement}{65}{section.7.4}
-\contentsline {chapter}{\numberline {8}Related Work}{67}{chapter.8}
-\contentsline {section}{\numberline {8.1}Tyepe-Inference on Executables}{67}{section.8.1}
-\contentsline {section}{\numberline {8.2}Mitigation of Code-Reuse Attacks}{67}{section.8.2}
-\contentsline {section}{\numberline {8.3}Mitigation of Advanced Code-Reuse Attacks}{68}{section.8.3}
-\contentsline {chapter}{\numberline {9}Future Work}{71}{chapter.9}
-\contentsline {chapter}{\numberline {10}Conclusion}{73}{chapter.10}
-\contentsline {chapter}{Acronyms}{75}{chapter*.32}
-\contentsline {chapter}{List of Figures}{77}{chapter*.33}
-\contentsline {chapter}{List of Tables}{79}{chapter*.34}
-\contentsline {chapter}{\nonumberline Bibliography}{83}{chapter*.36}
+\contentsline {chapter}{\numberline {3}\textit {TypeShield} Overview}{11}{chapter.3}
+\contentsline {section}{\numberline {3.1}Adversary Model and Assumptions}{11}{section.3.1}
+\contentsline {section}{\numberline {3.2}Invariants for Targets and Callsites}{11}{section.3.2}
+\contentsline {section}{\numberline {3.3}\textit {TypeShield} Impact on COOP}{12}{section.3.3}
+\contentsline {chapter}{\numberline {4}Design}{13}{chapter.4}
+\contentsline {section}{\numberline {4.1}\emph {Count} Policy}{13}{section.4.1}
+\contentsline {section}{\numberline {4.2}\emph {Type} Policy}{14}{section.4.2}
+\contentsline {section}{\numberline {4.3}Instruction Analysis}{15}{section.4.3}
+\contentsline {section}{\numberline {4.4}Calltarget Analysis}{16}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Variable Liveness Analysis Theory}{17}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Required Parameter Count}{19}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Required Parameter Wideness}{20}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.4}Variadic Functions}{21}{subsection.4.4.4}
+\contentsline {section}{\numberline {4.5}Callsite Analysis}{23}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Reaching Definitions Theory}{23}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}Provided Parameter Count}{25}{subsection.4.5.2}
+\contentsline {subsection}{\numberline {4.5.3}Provided Parameter Wideness}{27}{subsection.4.5.3}
+\contentsline {paragraph}{\nonumberline Parameter lists with ``holes''}{28}{section*.4}
+\contentsline {paragraph}{\nonumberline Address wideness unterestimation}{28}{section*.5}
+\contentsline {section}{\numberline {4.6}Address Taken Analysis}{29}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}Address Taken Targets}{29}{subsection.4.6.1}
+\contentsline {subsection}{\numberline {4.6.2}Binary Analysis}{30}{subsection.4.6.2}
+\contentsline {chapter}{\numberline {5}Implementation}{31}{chapter.5}
+\contentsline {chapter}{\numberline {6}Evaluation}{33}{chapter.6}
+\contentsline {section}{\numberline {6.1}Precision of \textit {TypeShield}}{33}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Quality and Applicability of Ground Truth}{34}{subsection.6.1.1}
+\contentsline {paragraph}{\nonumberline Calltargets}{34}{section*.6}
+\contentsline {paragraph}{\nonumberline Callsites}{35}{section*.7}
+\contentsline {subsection}{\numberline {6.1.2}Precision Calltarget Classification (\textit {count})}{37}{subsection.6.1.2}
+\contentsline {paragraph}{\nonumberline Experiment Setup}{37}{section*.8}
+\contentsline {paragraph}{\nonumberline Results}{37}{section*.9}
+\contentsline {subsection}{\numberline {6.1.3}Precision Callsite Classification (\textit {count})}{40}{subsection.6.1.3}
+\contentsline {subsubsection}{\nonumberline Without inter-procedural Analysis}{40}{section*.10}
+\contentsline {paragraph}{\nonumberline Experiment Setup}{40}{section*.11}
+\contentsline {paragraph}{\nonumberline Results}{40}{section*.12}
+\contentsline {subsubsection}{\nonumberline With inter-procedural Analysis}{44}{section*.13}
+\contentsline {paragraph}{\nonumberline Experiment Setup}{44}{section*.14}
+\contentsline {paragraph}{\nonumberline Results}{44}{section*.15}
+\contentsline {subsection}{\numberline {6.1.4}Precision Calltarget Classification (\textit {type})}{48}{subsection.6.1.4}
+\contentsline {paragraph}{\nonumberline Experiment Setup}{48}{section*.16}
+\contentsline {paragraph}{\nonumberline Result}{48}{section*.17}
+\contentsline {subsection}{\numberline {6.1.5}Precision Callsite Classification (\textit {type})}{51}{subsection.6.1.5}
+\contentsline {paragraph}{\nonumberline Experiment Setup}{51}{section*.18}
+\contentsline {paragraph}{\nonumberline Result}{51}{section*.19}
+\contentsline {section}{\numberline {6.2}Effectiveness of \textit {TypeShield}}{54}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Theoretical Limits}{54}{subsection.6.2.1}
+\contentsline {paragraph}{\nonumberline Experiment Setup}{54}{section*.20}
+\contentsline {paragraph}{\nonumberline Results}{54}{section*.21}
+\contentsline {subsection}{\numberline {6.2.2}\textit {TypeShield} implementation of the \textit {count} policy}{56}{subsection.6.2.2}
+\contentsline {paragraph}{\nonumberline Experiment Setup}{56}{section*.22}
+\contentsline {paragraph}{\nonumberline Results}{56}{section*.23}
+\contentsline {subsection}{\numberline {6.2.3}\textit {TypeShield} implementation of the \textit {type} policy}{58}{subsection.6.2.3}
+\contentsline {paragraph}{\nonumberline Experiment Setup}{58}{section*.24}
+\contentsline {paragraph}{\nonumberline Results}{58}{section*.25}
+\contentsline {subsection}{\numberline {6.2.4}Effect of our AddressTaken Analysis}{60}{subsection.6.2.4}
+\contentsline {paragraph}{\nonumberline Experiment Setup}{60}{section*.26}
+\contentsline {paragraph}{\nonumberline Results}{60}{section*.27}
+\contentsline {chapter}{\numberline {7}Discussion}{65}{chapter.7}
+\contentsline {section}{\numberline {7.1}Comparison with TypeArmor}{65}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}Precision of Classification}{65}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}Reduction of Available Calltargets}{66}{subsection.7.1.2}
+\contentsline {section}{\numberline {7.2}Discrepancies or Problems}{66}{section.7.2}
+\contentsline {section}{\numberline {7.3}Limitations of \textit {TypeShield}}{67}{section.7.3}
+\contentsline {section}{\numberline {7.4}Venues of Improvement}{67}{section.7.4}
+\contentsline {chapter}{\numberline {8}Related Work}{69}{chapter.8}
+\contentsline {section}{\numberline {8.1}Type-Inference on Executables}{69}{section.8.1}
+\contentsline {section}{\numberline {8.2}Mitigation of Code-Reuse Attacks}{70}{section.8.2}
+\contentsline {section}{\numberline {8.3}Mitigation of Advanced Code-Reuse Attacks}{70}{section.8.3}
+\contentsline {chapter}{\numberline {9}Future Work}{73}{chapter.9}
+\contentsline {chapter}{\numberline {10}Conclusion}{75}{chapter.10}
+\contentsline {chapter}{Acronyms}{77}{chapter*.28}
+\contentsline {chapter}{List of Figures}{77}{chapter*.28}
+\contentsline {chapter}{List of Tables}{79}{chapter*.29}
+\contentsline {chapter}{\nonumberline Bibliography}{83}{chapter*.31}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  6 NOV 2016 16:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  7 NOV 2016 09:48
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1316,6 +1316,30 @@ Package hyperref Info: Option `colorlinks' set `true' on input line 45.
 Package hyperref Warning: Option `pagebackref' has already been used,
 (hyperref)                setting the option has no effect on input line 45.
 
+(/usr/share/texlive/texmf-dist/tex/latex/minted/minted.sty
+Package: minted 2011/09/17 v1.7 Yet another Pygments shim for LaTeX
+
+(/usr/share/texlive/texmf-dist/tex/latex/ifplatform/ifplatform.sty
+Package: ifplatform 2010/10/22 v0.4 Testing for the operating system
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/catchfile.sty
+Package: catchfile 2011/03/01 v1.6 Catch the contents of a file (HO)
+)
+runsystem(uname -s > "main.w18")...executed.
+
+ (./main.w18)
+runsystem(rm -- "main.w18")...executed.
+
+)
+\minted@bgbox=\box53
+\minted@code=\write7
+\@float@every@listing=\toks46
+\c@listing=\count162
+)
+runsystem(which pygmentize && touch main.aex)...executed.
+
+runsystem(rm main.aex)...executed.
+
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
 zlibraryarrows.code.tex
@@ -1342,16 +1366,7 @@ LaTeX Warning: Label `subsection:typeshieldprecision' multiply defined.
 LaTeX Warning: Label `subsection:typeshieldprecision' multiply defined.
 
 
-LaTeX Warning: Label `tbl:policycomp' multiply defined.
-
-
-LaTeX Warning: Label `tbl:policycomp' multiply defined.
-
-
-LaTeX Warning: Label `tbl:policycompat' multiply defined.
-
-
-LaTeX Warning: Label `tbl:policycompat' multiply defined.
+LaTeX Warning: Label `subsection:typeshieldvslimitcount' multiply defined.
 
 )
 \openout1 = `main.aux'.
@@ -1385,17 +1400,17 @@ File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count162
+\scratchcounter=\count163
 \scratchdimen=\dimen195
-\scratchbox=\box53
-\nofMPsegments=\count163
-\nofMParguments=\count164
-\everyMPshowfont=\toks46
-\MPscratchCnt=\count165
+\scratchbox=\box54
+\nofMPsegments=\count164
+\nofMParguments=\count165
+\everyMPshowfont=\toks47
+\MPscratchCnt=\count166
 \MPscratchDim=\dimen196
-\MPnumerator=\count166
-\makeMPintoPDFobject=\count167
-\everyMPtoPDFconversion=\toks47
+\MPnumerator=\count167
+\makeMPintoPDFobject=\count168
+\everyMPtoPDFconversion=\toks48
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -1410,7 +1425,7 @@ Package grfext Info: Graphics extension search list:
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\AtBeginShipoutBox=\box54
+\AtBeginShipoutBox=\box55
 Package hyperref Info: Link coloring ON on input line 108.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
@@ -1419,17 +1434,20 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count168
+\c@section@level=\count169
 )
 LaTeX Info: Redefining \ref on input line 108.
 LaTeX Info: Redefining \pageref on input line 108.
 LaTeX Info: Redefining \nameref on input line 108.
 
 (./main.out) (./main.out)
-\@outlinefile=\write7
-\openout7 = `main.out'.
+\@outlinefile=\write8
+\openout8 = `main.out'.
 
  ABD: EveryShipout initializing macros
+runsystem(pygmentize -S default -f latex > main.pyg)...executed.
+
+ (./main.pyg)
 (./components/cover.tex
 
 Class scrbook Warning: Usage of deprecated font command `\bf'!
@@ -1447,7 +1465,7 @@ Class scrbook Warning: Usage of deprecated font command `\bf'!
 
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <20.74> not available
 (Font)              Font shape `OT1/ppl/b/n' tried instead on input line 43.
-<styles/informat.png, id=274, 355.3275pt x 355.3275pt>
+<styles/informat.png, id=249, 355.3275pt x 355.3275pt>
 File: styles/informat.png Graphic file (type png)
 
 <use styles/informat.png>
@@ -1458,7 +1476,7 @@ Package pdftex.def Info: styles/informat.png used on input line 55.
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./styles/informat.png>] [2
 
 ] (./components/titlepage.tex
-LaTeX Font Info:    Try loading font information for OMX+yhex on input line 46.
+LaTeX Font Info:    Try loading font information for OMX+yhex on input line 45.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/yhmath/OMXyhex.fd
@@ -1466,17 +1484,17 @@ File: OMXyhex.fd
 File: OMXyhex.fd 2013/07/03 v1.1 YH's humble contribution to TeX maths (NP)
 )
 LaTeX Font Info:    External font `yhcmex10' loaded for size
-(Font)              <10.95> on input line 46.
+(Font)              <10.95> on input line 45.
 LaTeX Font Info:    External font `yhcmex10' loaded for size
-(Font)              <8> on input line 46.
+(Font)              <8> on input line 45.
 LaTeX Font Info:    External font `yhcmex10' loaded for size
-(Font)              <6> on input line 46.
-LaTeX Font Info:    Try loading font information for U+msa on input line 46.
+(Font)              <6> on input line 45.
+LaTeX Font Info:    Try loading font information for U+msa on input line 45.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 46.
+LaTeX Font Info:    Try loading font information for U+msb on input line 45.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1484,7 +1502,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: styles/informat.png Graphic file (type png)
 
 <use styles/informat.png>
-Package pdftex.def Info: styles/informat.png used on input line 56.
+Package pdftex.def Info: styles/informat.png used on input line 55.
 (pdftex.def)             Requested size: 113.81102pt x 113.81012pt.
 ) (./components/disclaimer.tex [1
 
@@ -1528,27 +1546,19 @@ Class scrbook Warning: Usage of deprecated font command `\bf'!
 (scrbook)              But for now, KOMA-Script will replace deprecated `\bf'
 (scrbook)              by `\normalfont \bfseries ' on input line 11.
 
-Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
-ine 56.
 ) [7] [8
 
 ]
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <10.95> not available
 (Font)              Font shape `OT1/ppl/b/n' tried instead on input line 126.
- (./main.toc [9]
-Overfull \hbox (3.37892pt too wide) in paragraph at lines 68--68
- [][] [][][]\OT1/ppl/m/n/10.95 Theoretical Limit for the Re-duc-tion of Call-ta
-r-gets per Call- 
- []
+ (./main.toc
+LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <10.95> not available
+(Font)              Font shape `OT1/ppl/b/it' tried instead on input line 16.
+ [9])
+\tf@toc=\write9
+\openout9 = `main.toc'.
 
-[10])
-\tf@toc=\write8
-\openout8 = `main.toc'.
-
- [11] [12
-
-
-] (./chapters/Introduction.tex
+ [10] (./chapters/Introduction.tex
 Chapter 1.
 
 Class scrbook Warning: \float@addtolists detected!
@@ -1566,147 +1576,52 @@ Class scrbook Warning: \float@addtolists detected!
 (scrbook)              deprecated \float@addtolist interface .
 
 
-Overfull \hbox (17.04309pt too wide) in paragraph at lines 38--43
-\OT1/ppl/m/n/10.95 ram-e-ter coundt-ing by en-forc-ing a fine-grained pol-icy o
-n valid in-di-rect caller/callee
+Overfull \hbox (3.24683pt too wide) in paragraph at lines 14--15
+\OT1/ppl/m/n/10.95 checks dur-ing the com-pi-la-tion of the pro-gram like SafeD
+is-patch [[]], ShrinkWrap
  []
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.54 
+l.19 
       [1
+
+
 
 ]pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.106 
-       [2]) (./chapters/Forward_Indirect_Callsites.tex [3] [4
+l.47 
+      [2]) (./chapters/Forward_Indirect_Callsites.tex [3] [4
 
 ]
 Chapter 2.
 [5]
-\firstlisting=\box55
+\firstlisting=\box56
+\openout3 = `main.pyg'.
 
+runsystem(pygmentize -l C++ -f latex -F tokenmerge            -P linenos -P "ve
+rboptions= ,framesep=2mm,frame=none,firstnumber=1,framesep=1.0cm,fontsize=\foot
+notesize " -o main.out.pyg main.pyg)...executed.
 
-! LaTeX Error: Environment minted undefined.
+ (./main.out.pyg
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 1.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <9> not available
+(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 2.
+LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
+(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 4.
+)
+runsystem(rm main.out.pyg)...executed.
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.69 \begin{minted}
-                   [
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
+runsystem(rm main.pyg)...executed.
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.86 NS_
-        IMETHODIMP nsMultiplexInputStream::Close(){
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-LaTeX Font Info:    External font `yhcmex10' loaded for size
-(Font)              <9> on input line 86.
-LaTeX Font Info:    External font `yhcmex10' loaded for size
-(Font)              <5> on input line 86.
-
-! LaTeX Error: \begin{minipage} on input line 68 ended by \end{minted}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.103 \end{minted}
-                  
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.103 \end{minted}
-                  
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-! Missing } inserted.
-<inserted text> 
-                }
-l.103 \end{minted}
-                  
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 69--104
-[]\OT1/ppl/m/n/10.95 [ frame-sep=2mm, linenos,
- []
-
-
-Underfull \hbox (badness 1521) in paragraph at lines 69--104
-\OT1/ppl/m/n/10.95 frame=none, first-num-ber=1, frame-
- []
-
-
-Underfull \hbox (badness 4072) in paragraph at lines 69--104
-\OT1/ppl/m/n/10.95 sep = 1.0cm, font-size=\OT1/ppl/m/n/9 , ]C++ class
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 69--104
-\OT1/ppl/m/n/9 ns-Mul-ti-plex-In-put-Stream fi-nal :pub-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 69--104
-\OT1/ppl/m/n/9 lic nsI-Mul-ti-plex-In-put-Stream ,pub-lic
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 69--104
-\OT1/ppl/m/n/9 nsISeek-ableStream //A1 ,pub-lic nsI-IPC-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 69--104
-\OT1/ppl/m/n/9 Se-ri-al-iz-ableIn-put-Stream //A2 ,pub-lic
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 69--104
-\OT1/ppl/m/n/9 nsI-Clone-ableIn-put-Stream //A3 nsTAr-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 69--104
-\OT1/ppl/m/n/9 ray<nsCOMPtr<nsIInputStream>> mStreams;
- []
-
-
-Overfull \hbox (18.37236pt too wide) in paragraph at lines 69--104
-\OT1/ppl/m/n/9 NS$[]\OML/cmm/m/it/9 METHODIMPnsMultiplexInputStream \OT1/cmr/m/
-n/9 ::
- []
-
-
-Overfull \hbox (1219.08543pt too wide) in paragraph at lines 69--104
-\OML/cmm/m/it/9 Close\OT1/cmr/m/n/9 ()[]$ 
- []
-
-<figures/loop.pdf, id=458, 390.45876pt x 556.0775pt>
+<figures/loop.pdf, id=430, 390.45876pt x 556.0775pt>
 File: figures/loop.pdf Graphic file (type pdf)
  <use figures/loop.pdf>
 Package pdftex.def Info: figures/loop.pdf used on input line 116.
@@ -1716,10 +1631,7 @@ Overfull \hbox (52.3818pt too wide) in paragraph at lines 108--118
 []$[]$   $[]$ 
  []
 
-
-Underfull \vbox (badness 2556) has occurred while \output is active []
-
- [6 <./figures/loop.pdf>]
+[6 <./figures/loop.pdf>]
 Overfull \hbox (2.96016pt too wide) in paragraph at lines 164--176
 \OT1/ppl/m/n/10.95 Bounov et al [[]] pre-sented a tool ($\OMS/cmsy/m/n/10.95 ^^
 Y$ \OT1/ppl/m/n/10.95 1% run-time over-head) for in-di-rect forward-
@@ -1731,7 +1643,7 @@ Overfull \hbox (1.94357pt too wide) in paragraph at lines 164--176
 tch-ing (coarse grained,
  []
 
-[7] [8] <figures/class_hierarchy.pdf, id=527, 585.18625pt x 483.8075pt>
+[7] [8] <figures/class_hierarchy.pdf, id=495, 585.18625pt x 483.8075pt>
 File: figures/class_hierarchy.pdf Graphic file (type pdf)
 
 <use figures/class_hierarchy.pdf>
@@ -1741,278 +1653,174 @@ Package pdftex.def Info: figures/class_hierarchy.pdf used on input line 235.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 242.
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-) [9])
-(./chapters/TypeShild_Overview.tex [10 <./figures/class_hierarchy.pdf>]
+[9]) (./chapters/TypeShild_Overview.tex [10 <./figures/class_hierarchy.pdf>]
 Chapter 3.
-
-Overfull \hbox (10.9447pt too wide) in paragraph at lines 46--51
-[]\OT1/ppl/m/n/10.95 2. Execute-only Mem-ory: We build on pre-vi-ous sys-tems w
-hich en-force execute-
- []
-
+LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <20.74> not available
+(Font)              Font shape `OT1/ppl/b/it' tried instead on input line 1.
+LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <14.4> not available
+(Font)              Font shape `OT1/ppl/b/it' tried instead on input line 22.
 [11
 
-] [12]) (./chapters/Design.tex [13] [14
+]
+Overfull \hbox (14.5585pt too wide) in paragraph at lines 28--29
+[]\OT1/ppl/m/n/10.95 Calltargets re-quire a min-i-mum wid-ness of value for eac
+h pa-ram-e-ter(possibly
+ []
+
+) (./chapters/Design.tex [12]
+Chapter 4.
+[13
 
 ]
-Chapter 4.
-LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <14.4> not available
-(Font)              Font shape `OT1/ppl/b/it' tried instead on input line 18.
-[15]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-LaTeX Font Info:    Try loading font information for TS1+ppl on input line 139.
+LaTeX Font Info:    Try loading font information for TS1+ppl on input line 165.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
-) [16] [17] [18]
+) [14] [15]
 LaTeX Font Info:    Font shape `OT1/ppl/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 182.
+(Font)              Font shape `OT1/ppl/b/n' tried instead on input line 207.
+ [16]
+LaTeX Font Info:    Try loading font information for OMS+ppl on input line 255.
 
-
-LaTeX Warning: Citation `khedker2009data' on page 19 undefined on input line 18
-6.
-
-LaTeX Font Info:    Try loading font information for OMS+ppl on input line 232.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsppl.fd
 File: omsppl.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ppl/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 232.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[19] [20] [21] [22] [23] [24]
-Overfull \hbox (5.67834pt too wide) in paragraph at lines 440--441
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 255.
+ [17] [18] [19]
+[20] [21] [22]
+Overfull \hbox (5.67834pt too wide) in paragraph at lines 465--466
 \OT1/ppl/m/n/10.95 and the suc-ces-sor of the xmm-passthrough block, which we c
 all the param-
  []
 
 
-LaTeX Warning: Citation `khedker2009data' on page 25 undefined on input line 45
-4.
+Underfull \vbox (badness 1019) has occurred while \output is active []
 
-[25] [26] [27]
+ [23]
+[24] [25]
 
-Package array Warning: Column ? is already defined on input line 572.
+Package array Warning: Column ? is already defined on input line 593.
 
-[28] [29] [30] [31]) (./chapters/Implementation.tex [32]
+[26] [27] [28] [29]) (./chapters/Implementation.tex [30]
 Chapter 5.
 
-Overfull \hbox (8.24014pt too wide) in paragraph at lines 12--13
-[]\OT1/ppl/m/n/10.95 In to-tal we im-ple-mented Type-Shield in 5123 lines of C+
-+ code, our clang/llvm-
+Overfull \hbox (13.7595pt too wide) in paragraph at lines 12--13
+[]\OT1/ppl/m/n/10.95 In to-tal we im-ple-mented \OT1/ppl/m/it/10.95 Type-Shield
+ \OT1/ppl/m/n/10.95 in 5123 lines of C++ code, our Clang/LLVM-
  []
 
-) (./chapters/Evaluation.tex [33
+) (./chapters/Evaluation.tex [31
 
-] [34
+] [32
 
 ]
 Chapter 6.
+[33] [34]
+Overfull \hbox (6.33461pt too wide) in paragraph at lines 43--44
+\OT1/ppl/m/n/10.95 prob-lems with \OT1/ppl/m/it/10.95 Type-Shield\OT1/ppl/m/n/1
+0.95 . These num-bers are rel-a-tively low (be-low 1%) through-
+ []
+
 [35] [36]
-LaTeX Font Info:    Try loading font information for OML+ppl on input line 45.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlppl.fd
-File: omlppl.fd 
-)
-LaTeX Font Info:    Font shape `OML/ppl/m/n' in size <10.95> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 45.
- [37]
-[38] [39] [40] [41] [42] [43] [44] [45] [46] [47] [48] [49] [50]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+LaTeX Font Info:    Font shape `OT1/ppl/bx/it' in size <12> not available
+(Font)              Font shape `OT1/ppl/b/it' tried instead on input line 135.
 
- [51]
-[52] [53] [54] [55]
-Runaway argument?
-{ late after line=\\, late after last line=\\\midrule ,file={../MA_Pi\ETC.
-! Paragraph ended before \csvloop was complete.
-<to be read again> 
-                   \par 
-l.1793 }
-        
-I suspect you've forgotten a `}', causing me to apply this
-control sequence to too much text. How can we recover?
-My plan is to forget the whole thing and hope for the best.
+Underfull \hbox (badness 1527) in paragraph at lines 232--232
+\OT1/ppl/m/n/10.95 com-bi-na-tion op-er-a-tor for the \OT1/ppl/m/it/10.95 count
+ \OT1/ppl/m/n/10.95 pol-icy through-out dif-fer-ent
+ []
 
-! Extra }, or forgotten \endgroup.
-\csv@reader ...oop {#1,file={#2},column names={#3}
-                                                  ,command=\csv@@body }
-l.1793 }
-        
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
 
-! Undefined control sequence.
-\csv@@body ...x & $\pm $ & \csvcolxx & \csvcolxxi 
-                                                  
-l.1793 }
-        
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
+LaTeX Warning: Float too large for page by 18.36743pt on input line 234.
 
-! Extra }, or forgotten \endgroup.
-<recently read> }
-                 
-l.1793 }
-        
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
+[37] [38] [39]
 
-! Misplaced \omit.
-\multispan ->\omit 
-                   \@multispan 
-l.1793 }
-        
-I expect to see \omit only after tab marks or the \cr of
-an alignment. Proceed, and I'll ignore this case.
+LaTeX Warning: Float too large for page by 11.29672pt on input line 424.
 
-Runaway argument?
-{ late after line=\\, late after last line=\\\midrule ,file={../MA_Pi\ETC.
-! Paragraph ended before \csvloop was complete.
-<to be read again> 
-                   \par 
-l.1846 }
-        
-I suspect you've forgotten a `}', causing me to apply this
-control sequence to too much text. How can we recover?
-My plan is to forget the whole thing and hope for the best.
 
-! Extra }, or forgotten \endgroup.
-\csv@reader ...oop {#1,file={#2},column names={#3}
-                                                  ,command=\csv@@body }
-l.1846 }
-        
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
+LaTeX Warning: Float too large for page by 25.63898pt on input line 510.
 
-! Extra }, or forgotten \endgroup.
-\csv@reader ...umn names={#3},command=\csv@@body }
-                                                  
-l.1846 }
-        
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
 
-! Misplaced \omit.
-\multispan ->\omit 
-                   \@multispan 
-l.1846 }
-        
-I expect to see \omit only after tab marks or the \cr of
-an alignment. Proceed, and I'll ignore this case.
+LaTeX Warning: Float too large for page by 25.63898pt on input line 595.
 
-[56] [57]
-Runaway argument?
-{ late after line=\\, late after last line=\\\midrule ,file={../MA_Pi\ETC.
-! Paragraph ended before \csvloop was complete.
-<to be read again> 
-                   \par 
-l.1896 }
-        
-I suspect you've forgotten a `}', causing me to apply this
-control sequence to too much text. How can we recover?
-My plan is to forget the whole thing and hope for the best.
+[40] [41] [42] [43]
+Overfull \hbox (17.80963pt too wide) in paragraph at lines 602--603
+\OT1/ppl/m/n/10.95 call-site anal-y-sis in im-ple-ment-ing the \OT1/ppl/m/it/10
+.95 count \OT1/ppl/m/n/10.95 pol-icy with a back-ward inter-procedural
+ []
 
-! Extra }, or forgotten \endgroup.
-\csv@reader ...oop {#1,file={#2},column names={#3}
-                                                  ,command=\csv@@body }
-l.1896 }
-        
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
 
-! Extra }, or forgotten \endgroup.
-\csv@reader ...umn names={#3},command=\csv@@body }
-                                                  
-l.1896 }
-        
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
+LaTeX Warning: Float too large for page by 11.29672pt on input line 696.
 
-! Misplaced \omit.
-\multispan ->\omit 
-                   \@multispan 
-l.1896 }
-        
-I expect to see \omit only after tab marks or the \cr of
-an alignment. Proceed, and I'll ignore this case.
 
-[58]) (./chapters/Discussion.tex [59] [60] [61] [62]
+LaTeX Warning: Float too large for page by 25.63898pt on input line 782.
+
+
+LaTeX Warning: Float too large for page by 25.63898pt on input line 869.
+
+[44] [45] [46] [47] [48] [49] [50] [51] [52] [53]
+Overfull \hbox (11.78854pt too wide) in paragraph at lines 1643--1644
+ []\OT1/ppl/b/n/10.95 Experiment Setup[] \OT1/ppl/m/n/10.95 Based on the type i
+n-for-ma-tion col-lected by our Clang/LLVM
+ []
+
+[54] [55]
+Overfull \hbox (10.54015pt too wide) in paragraph at lines 1802--1804
+[]\OT1/ppl/m/n/10.95 For the safe ver-sion, we chose the union com-bi-na-tion o
+p-er-a-tor, with $\OML/cmm/m/it/10.95 analyse$
+ []
+
+[56] [57] [58] [59] [60]) (./chapters/Discussion.tex [61] [62] [63] [64]
 Chapter 7.
-[63
+[65
 
 ]
 Underfull \vbox (badness 5847) has occurred while \output is active []
 
- [64]
-Overfull \hbox (2.04222pt too wide) in paragraph at lines 32--33
-\OT1/ppl/m/n/10.95 would be the es-tab-lish-ment of up-per and lower bounds re-
-gard-ing val-ues within
- []
-
-) (./chapters/Related_Work.tex [65] [66
+ [66])
+(./chapters/Related_Work.tex [67] [68
 
 ]
 Chapter 8.
-[67]
-Overfull \hbox (1.60408pt too wide) in paragraph at lines 53--70
+
+Overfull \hbox (5.04245pt too wide) in paragraph at lines 36--38
+[]\OT1/ppl/m/n/10.95 While smartde seemed promis-ing due to its sim-ple type la
+t-tice that we wanted
+ []
+
+
+Underfull \vbox (badness 4621) has occurred while \output is active []
+
+ [69]
+Overfull \hbox (1.60408pt too wide) in paragraph at lines 51--68
 \OT1/ppl/m/n/10.95 tografy with hard-ware sup-port, CCFI [[]], \OT1/ppl/m/it/10
 .95 (f) \OT1/ppl/m/n/10.95 ROP stack piv-ot-ing, PBlocker [[]],
  []
 
 
-Overfull \hbox (1.2331pt too wide) in paragraph at lines 79--86
+Overfull \hbox (1.2331pt too wide) in paragraph at lines 77--84
 \OT1/ppl/m/n/10.95 COOP [[]], Subversive-C [[]] and Recursive-COOP [[]] are ad-
 vanced CRAs since
  []
 
-[68]
-Overfull \hbox (6.91513pt too wide) in paragraph at lines 97--109
+[70]
+Overfull \hbox (6.91513pt too wide) in paragraph at lines 95--107
 []\OT1/ppl/m/n/10.95 There are sev-eral source code based tools which can suc-c
 es-fully pro-tect against
  []
 
 
-Overfull \hbox (4.13365pt too wide) in paragraph at lines 110--116
+Overfull \hbox (4.13365pt too wide) in paragraph at lines 108--114
 \OT1/ppl/m/n/10.95 tech-niques can re-cu-per-ate pro-gram based se-man-tic in-f
 or-ma-tion from ex-e-cutable
  []
 
-
-Overfull \hbox (5.02115pt too wide) in paragraph at lines 128--133
-[]\OT1/ppl/m/it/10.95 TypeShild \OT1/ppl/m/n/10.95 is most sim-i-lar to Ty-peAr
--mor [[]] since we also en-force strong binary-
- []
-
-[69]) (./chapters/Future_Work.tex [70]
+[71]) (./chapters/Future_Work.tex [72]
 Chapter 9.
 
 Underfull \hbox (badness 10000) in paragraph at lines 3--4
@@ -2039,30 +1847,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 11--12
 
  []
 
-) (./chapters/Conclusion.tex [71
+) (./chapters/Conclusion.tex [73
 
-] [72
+] [74
 
 ]
 Chapter 10.
-) [73] [74
+) [75] [76
 
-] (./chapters/Acronyms.tex) [75] [76
+] (./chapters/Acronyms.tex) [77] [78
 
-] (./main.toc)
-\tf@toc=\write9
-\openout9 = `main.toc'.
-
- [77] [78
-
-]
-(./main.lof)
+] (./main.lof)
 \tf@lof=\write10
 \openout10 = `main.lof'.
 
  [79] [80
 
-] (./main.lot
+]
+(./main.lot
 Overfull \hbox (13.13454pt too wide) in paragraph at lines 16--16
  [][] [][][]\OT1/ppl/m/n/10.95 The re-sults for call-tar-get anal-y-sis us-ing 
 the de-struc-tive/intersection 
@@ -2075,21 +1877,39 @@ Overfull \hbox (1.70284pt too wide) in paragraph at lines 18--18
  []
 
 
+Overfull \hbox (3.9261pt too wide) in paragraph at lines 18--18
+ \OT1/ppl/m/n/10.95 com-bi-na-tion op-er-a-tor for the \OT1/ppl/m/it/10.95 coun
+t \OT1/ppl/m/n/10.95 with-out inter-procedural anal- 
+ []
+
+
+Overfull \hbox (20.29608pt too wide) in paragraph at lines 19--19
+ \OT1/ppl/m/n/10.95 er-a-tor for the \OT1/ppl/m/it/10.95 count \OT1/ppl/m/n/10.
+95 with-out inter-procedural anal-y-sis pol-icy through- 
+ []
+
+
 Overfull \hbox (1.70284pt too wide) in paragraph at lines 21--21
  [][] [][][]\OT1/ppl/m/n/10.95 The re-sults for call-site anal-y-sis us-ing the
  de-struc-tive/intersection 
  []
 
 
-Overfull \hbox (16.25513pt too wide) in paragraph at lines 22--22
- \OT1/ppl/m/n/10.95 er-a-tor for the COUNT with in-ter-pro-ce-du-ral anal-y-sis
- pol-icy through- 
+Overfull \hbox (4.14514pt too wide) in paragraph at lines 22--22
+ \OT1/ppl/m/n/10.95 er-a-tor for the \OT1/ppl/m/it/10.95 count \OT1/ppl/m/n/10.
+95 with inter-procedural anal-y-sis pol-icy through- 
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [81]
+Overfull \hbox (15.3579pt too wide) in paragraph at lines 25--25
+ [][] [][][]\OT1/ppl/m/n/10.95 The re-sults for call-tar-get anal-y-sis for exp
+3 of the \OT1/ppl/m/it/10.95 type \OT1/ppl/m/n/10.95 pol-icy through- 
+ []
+
+
 Overfull \hbox (14.61337pt too wide) in paragraph at lines 31--31
  \OT1/ppl/m/n/10.95 stric-tion poli-cies re-stricted us-ing an ad-dress taken a
 nal-y-sis through- 
@@ -2100,135 +1920,121 @@ nal-y-sis through-
 \openout11 = `main.lot'.
 
  [82]
-Underfull \hbox (badness 10000) in paragraph at lines 225--227
+Underfull \hbox (badness 10000) in paragraph at lines 231--233
 \OT1/pcr/m/n/10.95 06 / 09 / intel -[] release -[] new -[] technology -[] speci
 fications -[]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 229--232
+Underfull \hbox (badness 10000) in paragraph at lines 235--238
 []\OT1/ppl/m/n/10.95 Microsoft, ``Win-dows Con-trol Flow Guard'', [][]$\OT1/pcr
 /m/n/10.95 https : / / msdn .
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 229--232
+Underfull \hbox (badness 10000) in paragraph at lines 235--238
 \OT1/pcr/m/n/10.95 microsoft . com / en -[] us / library / windows / desktop /
- []
-
-
-Underfull \hbox (badness 2600) in paragraph at lines 240--243
-[]\OT1/ppl/m/n/10.95 I. Haller, E. Gok-tas, E. Athana-sopou-los, G. Por-toka-li
-dis, H. Bos,
  []
 
 [83
 
 
-] [84]
-Underfull \hbox (badness 3199) in paragraph at lines 302--305
+]
+Underfull \hbox (badness 2600) in paragraph at lines 246--249
+[]\OT1/ppl/m/n/10.95 I. Haller, E. Gok-tas, E. Athana-sopou-los, G. Por-toka-li
+dis, H. Bos,
+ []
+
+[84]
+Underfull \hbox (badness 3199) in paragraph at lines 308--311
 []\OT1/ppl/m/n/10.95 Alan My-croft, ``Lec-ture Notes, In [][]$\OT1/pcr/m/n/10.9
 5 https : / / www . cl . cam . ac . uk /
  []
 
 
-Underfull \hbox (badness 4621) in paragraph at lines 317--320
+Underfull \hbox (badness 4621) in paragraph at lines 323--326
 []\OT1/ppl/m/n/10.95 I. JTC1/SC22WG21, ``ISO/IEC 14882:2013 Pro-gram-ming Lan-g
 uage
  []
 
 
-Underfull \hbox (badness 4660) in paragraph at lines 317--320
+Underfull \hbox (badness 4660) in paragraph at lines 323--326
 \OT1/ppl/m/n/10.95 C++ (N3690)'', In [][]$\OT1/pcr/m/n/10.95 https : / / isocpp
  . org / files / papers / N3690 .
  []
 
 [85]
-Underfull \hbox (badness 1406) in paragraph at lines 398--400
+Underfull \hbox (badness 1406) in paragraph at lines 404--406
 []\OT1/ppl/m/n/10.95 Microsoft, Changes to Func-tion-al-ity in Mi-crosoft Win-d
 ows XP Ser-
  []
 
 
-Underfull \hbox (badness 2707) in paragraph at lines 402--404
+Underfull \hbox (badness 2707) in paragraph at lines 408--410
 []\OT1/ppl/m/n/10.95 PaX Team. Ad-dress Space Lay-out Ran-dom-iza-tion, [][]$\O
 T1/pcr/m/n/10.95 https : / / pax .
  []
 
 [86]
-Underfull \hbox (badness 1210) in paragraph at lines 421--424
+Underfull \hbox (badness 1210) in paragraph at lines 427--430
 []\OT1/ppl/m/n/10.95 L. Davi, A. Dmitrienko, A.-R. Sadeghi, and M. Winandy, ``R
 eturn-
  []
 
 
-Underfull \hbox (badness 2393) in paragraph at lines 431--434
+Underfull \hbox (badness 2393) in paragraph at lines 437--440
 []\OT1/ppl/m/n/10.95 T. Ko-r-nau, ``Return-Oriented Pro-gram-ming for the ARM A
 r-chi-tec-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 431--434
+Underfull \hbox (badness 10000) in paragraph at lines 437--440
 \OT1/ppl/m/n/10.95 ture'', [][]$\OT1/pcr/m/n/10.95 http : / / www . zynamics . 
 com / downloads / kornau -[] tim -[]
  []
 
 [87]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 476.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 476.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 482.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 482.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 476.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 476.
-
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: 506CD22F21C3E7C6B3AB9664E7F23034;4838
-(rerunfilecheck)             After:  67038390099EDE7B74265767C5259B3A;4891.
-
-LaTeX Warning: There were undefined references.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 482.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 482.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: E13452AC9A32BABC39A63D1AD24FF506;4301.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 476.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 482.
  ) 
 Here is how much of TeX's memory you used:
- 24686 strings out of 493105
- 448721 string characters out of 6137072
- 639584 words of memory out of 5000000
- 27122 multiletter control sequences out of 15000+600000
- 26657 words of font info for 72 fonts, out of 8000000 for 9000
+ 25033 strings out of 493105
+ 453729 string characters out of 6137072
+ 646700 words of memory out of 5000000
+ 27447 multiletter control sequences out of 15000+600000
+ 29875 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 71i,17n,80p,1718b,733s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{chapter*.31} has been referenced but does not exi
-st, replaced by a fixed one
-
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf
--dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/pal
-atino/uplbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8
-a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/yhmath/yhcmex.pfb>
-Output written on main.pdf (101 pages, 545410 bytes).
+ 71i,17n,67p,1235b,737s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
+8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
+rw/palatino/uplbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino
+/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/yhmath/yhcmex.pfb>
+Output written on main.pdf (99 pages, 530963 bytes).
 PDF statistics:
- 1410 PDF objects out of 1440 (max. 8388607)
- 1255 compressed objects within 13 object streams
- 366 named destinations out of 1000 (max. 500000)
- 564 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1405 PDF objects out of 1440 (max. 8388607)
+ 1254 compressed objects within 13 object streams
+ 371 named destinations out of 1000 (max. 500000)
+ 516 words of extra memory for PDF output out of 10000 (max. 10000000)
 

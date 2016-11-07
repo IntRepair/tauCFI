@@ -30,7 +30,7 @@ The problem with relying solely on the parameter count is that a callsite being 
 
 Basically the principle stays the same, but instead of just requiring that the callsite parameter count is not lower than the calltarget parameter count we now require the same also for the wideness of each parameter.
 
-While there are still occurrences where callsites may target all calltargets, we split the buckets up into smaller ones, as shown in figure \ref{fig:lattice3264}. For example in the paramcount oriented schema a callsite classified as (32,32) would be able to call functions classified as (64,0), however in the parameter wideness oriented schema that is not possible.
+While there are still occurrences where callsites may target all calltargets, we split the buckets up into smaller ones, as shown in Figure \ref{fig:lattice3264}. For example in the paramcount oriented schema a callsite classified as (32,32) would be able to call functions classified as (64,0), however in the parameter wideness oriented schema that is not possible.
 
 \begin{figure}[!h]
 \centering

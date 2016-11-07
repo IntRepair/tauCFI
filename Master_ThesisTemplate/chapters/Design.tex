@@ -23,13 +23,19 @@
 \chapter{Design}
 \label{chapter:Design}
 
-In the design of \textit{TypeShield}, we cover various aspects, first of all we introduce the details of the \emph{count} policy - as introduced by \cite{veen:typearmor} and the new \emph{type} policy. Then we need to implement the analysis for calltargets callsites for the the respective policy. For further restriction capabilities we introduce a version of address taken analysis based on \cite{mingwei:sekar}. 
+In the design of~\textit{TypeShield}, we cover various aspects, first of all we introduce the details of the 
+\emph{count} policy - as introduced by~\cite{veen:typearmor} and the new \emph{type} policy. 
+Then we need to implement the analysis for calltargets callsites for the the respective policy. 
+For further restriction capabilities we introduce a version of address taken analysis based on~\cite{mingwei:sekar}. 
 %At last we introduce a patching schema for callsites and calltargets to enforce the invariants we inferred.
 
 \section{\emph{Count} Policy}
 \label{section:countpolicy}
 
-What we call the \emph{count} policy is essentially the policy introduced by TypeArmor \cite{veen:typearmor}. The basic idea revolves aroung classifying calltargets by the number of parameters they provide and callsites by the number of paramters they require. The schema to match those is that we have calltargets requiring parameters and the callsites providing parameters as depicted in figure \ref{fig:COUNTschema}.
+What we call the \emph{count} policy is essentially the policy introduced by TypeArmor \cite{veen:typearmor}. 
+The basic idea revolves aroung classifying calltargets by the number of parameters they provide and callsites 
+by the number of paramters they require. The schema to match those is that we have calltargets requiring 
+parameters and the callsites providing parameters as depicted in Figure \ref{fig:COUNTschema}.
 
 \begin{figure}[!h]
 \centering
@@ -90,7 +96,8 @@ One possible remedy would be the ability to introduce an upper bound for the cla
 \section{\emph{Type} Policy}
 \label{section:typepolicy}
 
-What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the type of a parameter. However due to complexity reasons, we are restricting ourselves to the general purpose registers, which the SystemV ABI designates as parameter registers. Furthermore we are not inferring the actual type of the data but the wideness of the data stored in the register. The schema again is that we have calltargets requiring wideness and the callsite providing wideness as depicted in figure \ref{fig:TYPEschema}.
+What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the type of a parameter. However due to complexity reasons, we are restricting ourselves to the general purpose registers, which the SystemV ABI designates as parameter registers. Furthermore we are not inferring the actual type of the data but the wideness of the data stored in the register. The schema again is that we have calltargets requiring wideness and the callsite providing 
+wideness as depicted in Figure \ref{fig:TYPEschema}.
 \begin{figure}[!h]
 \center
 \resizebox{0.75\textwidth}{!}{
@@ -161,7 +168,8 @@ We are currently interested in x86-64 binaries, the registers we are looking at 
 \item the lower 8bits of the register, meaning a wideness of 8
 \end{itemize}
 
-Four of those registers can also directly access the higher 8bits of the lower 16bits of the register. For our purpose we register this access as a 16bit access. Based on this information, we can assign a register one of 5 possible types $\mathcal{T} = \{64, 32, 16, 8, 0\}$. We also included the type 0 to model the absence of data within a register. Similar to the \emph{count} policy, we allow overestimation of types in callsites and underestimation of types in calltargets. However, the matching idea is different, because as can we depict in Figure \ref{fig:TYPEschema}, the type of a calltarget and a callsite no longer depends solely on its parameter count, each callsite and calltarget has its type from the set of $\mathcal{T}^6$, with the following comparison operator:
+Four of those registers can also directly access the higher 8bits of the lower 16bits of the register. For our purpose we register this access as a 16bit access. Based on this information, we can assign a register one of 5 possible types $\mathcal{T} = \{64, 32, 16, 8, 0\}$. We also included the type 0 to model the absence of data within a register. Similar to the \emph{count} policy, we allow overestimation of types in callsites and underestimation of types in calltargets. However, the matching idea is different, 
+because as can we depict in Figure \ref{fig:TYPEschema}, the type of a calltarget and a callsite no longer depends solely on its parameter count, each callsite and calltarget has its type from the set of $\mathcal{T}^6$, with the following comparison operator:
 \[
 	u \leq_{type} v :\Longleftrightarrow  \forall_{i = 0}^{5} {u_i \leq v_i} , \text {with } u, v \in \mathcal{T}^6
 \]
@@ -319,7 +327,7 @@ merge\_h(\{s\}) &= s\\
 merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
 \end{align}
 
-We have three viable possibilities for our combination operator $\circ$, depicted in table \ref{fig:COUNTlivenessmapping}, which all give priority to $W$:
+We have three viable possibilities for our combination operator $\circ$, depicted in Table \ref{fig:COUNTlivenessmapping}, which all give priority to $W$:
 \begin{itemize}
 \item [$\bigsqcap^{\mathcal{L}}$] is what we call the destructive combination operator, as it returns W on any mismatch
 \item [$\bigcap^{\mathcal{L}}$] is what we call the intersection operator, as it returns C, when combining C and R, similar to an intersection
@@ -416,7 +424,8 @@ RW & RW & $\text{R}^{\cup}$W & W & RW\\
 \label{subsection:variadicfunctions}
 Variadic functions are special functions in C/C++ that have a basic set of parameters, which they always require and a variadic set of parameters, which as the name suggests may vary. A prominent example of this would be the $printf$ function, which is used to output text to $stdout$.
 
-The problem with these functions is that to allow for easier processing of parameters usually all potential variadic parameters are moved into a contiguous block of memory, as can be seen in the assembly in figure \ref{fig:asmvariadic}. Our analysis interprets that as a read access on all parameters and we arrive at a problematic overestimation. 
+The problem with these functions is that to allow for easier processing of parameters usually all potential variadic parameters are moved into a contiguous block of memory, as can be seen in the assembly in 
+Figure \ref{fig:asmvariadic}. Our analysis interprets that as a read access on all parameters and we arrive at a problematic overestimation. 
 
 \begin{figure}
 \centering\begin{BVerbatim}

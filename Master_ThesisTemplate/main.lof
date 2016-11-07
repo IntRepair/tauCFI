@@ -7,10 +7,13 @@
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Code example used to illustrate how a COOP loop gadget works}}{6}{figure.2.1}
 \contentsline {figure}{\numberline {2.2}{\ignorespaces Class inheritance hierarchy of the classes involved in the COOP attack against the Firefox browser. Red letters indicate forbidden vTble entries and green letters indicate allowed vTable entries for the given indirect call site contained in the main loop gadget.}}{10}{figure.2.2}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Example for the wideness based schema when only using a parameter wideness of 64, 32 and 0 bits}}{12}{figure.3.1}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces \emph {count} policy classification schema}}{15}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces \emph {type} policy schema for callsites and calltargets}}{17}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces ASM code of the \texttt {make\_cmd} function with optimize level O2, which has a variadic parameter list}}{24}{figure.4.3}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces \emph {count} policy classification schema}}{13}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces \emph {type} policy schema for callsites and calltargets}}{15}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Algorithm to analyse the liveness of a Basic Block}}{17}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces ASM code of the \texttt {make\_cmd} function with optimize level O2, which has a variadic parameter list}}{22}{figure.4.4}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Algorithm to analyse the reaching definitions of a Basic Block}}{24}{figure.4.5}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
