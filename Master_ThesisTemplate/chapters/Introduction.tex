@@ -1,5 +1,7 @@
 \chapter{Introduction}
 \label{chapter:Introduction}
+
+\section{Motivation}
 Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} is one of the most used techniques to secure program execution flows against advanced Code-Reuse Attacks (CRAs).
 Advanced CRAs such as the recently published COOP~\cite{schuster:coop} and its extensions \cite{crane:readactor++} or the attacks described by the Control Flow Bending paper \cite{carlini:bending} are able to bypass most traditional CFI solutions, as they focus on indirect callsites, which are not as easy to decide at compile time.
 
@@ -18,16 +20,15 @@ The main shortcoming of TypeArmor is that even with high precision in the classi
 
 We implemented \textit{TypeShield} to show a possible remedy of this problem by introducing parameter types into the classification of callsites and calltargets. 
 
-\paragraph{Contribution}
-The goal of our thesis is, to achieve further restriction of the number of calltargets an indirect callsite might use and show solutions to possible shortcomings of previous binary based approaches to mitigate advanced code reuse attacks.
-
+\section{Contribution}
+The goals of our thesis are twofold. First we attempt to verify the results as provided by the TypeArmor paper. Second, implement our own classification schema to fix some of the shortcomings of previous binary based approaches to further mitigate advanced code reuse attacks.
 
 Our main contribution is thus the design and implementation of callsite and calltarget classification schema that is based on the wideness of parameters alone. We implemented configurable reaching and liveness analysis algorithms that operate on the full set of general purpose integer registers of a x86-64 CPU and evaluated various path merge operators. Although the basic idea of our aproach to rely only on the wideness of a type is rather simple, we still achieved a reduction of up to 20\% less callsites per calltarget when compared to our implementation of a parameter count based matching schema.
 
 
 Furthermore, we implemented an approximation of the matching schema employed by TypeArmor proposed by \cite{veen:typearmor}, because we had no access to their sourcecode and could achieve similar results regarding parameter matching, partially verifying their results.
 
-\paragraph{Outline}
+\section{Outline}
 The remainder of this thesis is organized as follows.
 Chapter~\ref{chapter:TypeShild Overview} contains a high level overview of \textit{TypeShield}.
 Chapter~\ref{chapter:Design} describes the theory used and decisions made during the design of \textit{TypeShield}.

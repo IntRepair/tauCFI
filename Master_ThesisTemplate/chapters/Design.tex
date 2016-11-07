@@ -15,7 +15,7 @@
 In the design of \textit{TypeShield}, we cover various aspects, first of all we introduce the details of the \emph{count} policy - as introduced by \cite{veen:typearmor} and the new \emph{type} policy. Then we need to implement the analysis for calltargets callsites for the the respective policy. For further restriction capabilities we introduce a version of address taken analysis based on \cite{mingwei:sekar}. 
 %At last we introduce a patching schema for callsites and calltargets to enforce the invariants we inferred.
 
-\section{\emph{count} Policy}
+\section{\emph{Count} Policy}
 \label{section:countpolicy}
 
 What we call the \emph{count} policy is essentially the policy introduced by TypeArmor \cite{veen:typearmor}. The basic idea revolves aroung classifying calltargets by the number of parameters they provide and callsites by the number of paramters they require. The schema to match those is that we have calltargets requiring parameters and the callsites providing parameters as depicted in figure \ref{fig:COUNTschema}.
@@ -37,22 +37,31 @@ What we call the \emph{count} policy is essentially the policy introduced by Typ
 %\draw[dashed] (4,4) -- (7,7);
 
 
-\fill[black!10!white] (0,10) rectangle (12,8);
-\fill[black!20!white] (0,8) rectangle (12,6);
-\fill[black!30!white] (0,6) rectangle (12,4);
-\fill[black!40!white] (0,4) rectangle (12,2);
+\fill[black!00!white] (0,7) rectangle (12,6);
+\fill[black!10!white] (0,6) rectangle (12,5);
+\fill[black!20!white] (0,5) rectangle (12,4);
+\fill[black!30!white] (0,4) rectangle (12,3);
+\fill[black!40!white] (0,3) rectangle (12,2);
+\fill[black!50!white] (0,2) rectangle (12,1);
+\fill[black!60!white] (0,1) rectangle (12,0);
 
 
-\draw[thick,->] (-0.5,2) -- node[sloped, anchor=center, above] {growing required bits per parameter} (-0.5,10);
-\draw[thick,->] (12.5,10) -- node[sloped, anchor=center, above] {growing provided bits per parameter} (12.5,2);
+\draw[thick,->] (-0.5,0) -- node[sloped, anchor=center, above] {growing required bits per parameter} (-0.5,7);
+\draw[thick,->] (12.5,7) -- node[sloped, anchor=center, above] {growing provided bits per parameter} (12.5,0);
 
-\draw (0,10) rectangle node[anchor=center] {0 parameters} (12,8);
+\draw (0,7) rectangle node[anchor=center] {0 parameters} (12,6);
 
-\draw (0,8) rectangle node[anchor=center] {1 parameter} (12,6);
+\draw (0,6) rectangle node[anchor=center] {1 parameter} (12,5);
 
-\draw (0,6) rectangle node[anchor=center] {2 ... 5 parameters} (12,4);
+\draw (0,5) rectangle node[anchor=center] {3 parameters} (12,4);
 
-\draw (0,4) rectangle node[anchor=center] {6 parameters} (12,2);
+\draw (0,4) rectangle node[anchor=center] {2 parameters} (12,3);
+
+\draw (0,3) rectangle node[anchor=center] {4 parameters} (12,2);
+
+\draw (0,2) rectangle node[anchor=center] {5 parameters} (12,1);
+
+\draw (0,1) rectangle node[anchor=center] {6 parameters} (12,0);
 
 
 \end{tikzpicture}
@@ -71,62 +80,61 @@ One possible remedy would be the ability to introduce an upper bound for the cla
 \label{section:typepolicy}
 
 What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the type of a parameter. However due to complexity reasons, we are restricting ourselves to the general purpose registers, which the SystemV ABI designates as parameter registers. Furthermore we are not inferring the actual type of the data but the wideness of the data stored in the register. The schema again is that we have calltargets requiring wideness and the callsite providing wideness as depicted in figure \ref{fig:TYPEschema}.
-
 \begin{figure}[!h]
 \center
 \resizebox{0.75\textwidth}{!}{
 \begin{tikzpicture}
 
-\fill[black!10!white] (0,10) rectangle (12,8);
-\fill[black!20!white] (0,8) rectangle (12,6);
-\fill[black!30!white] (0,6) rectangle (12,4);
-\fill[black!40!white] (0,4) rectangle (12,2);
-\fill[black!50!white] (0,2) rectangle (12,0);
+\fill[black!10!white] (0,7.5) rectangle (12,6);
+\fill[black!20!white] (0,6) rectangle (12,4.5);
+\fill[black!30!white] (0,4.5) rectangle (12,3);
+\fill[black!40!white] (0,3) rectangle (12,1.5);
+\fill[black!50!white] (0,1.5) rectangle (12,0);
 
-\draw[thick,->] (-0.5,0) -- node[sloped, anchor=center, above] {growing required bits per parameter} (-0.5,10);
-\draw[thick,->] (12.5,10) -- node[sloped, anchor=center, above] {growing provided bits per parameter} (12.5,0);
+\draw[thick,->] (-0.5,0) -- node[sloped, anchor=center, above] {growing required bits per parameter} (-0.5,7.5);
+\draw[thick,->] (12.5,7.5) -- node[sloped, anchor=center, above] {growing provided bits per parameter} (12.5,0);
 
-\draw (0,10) --node[anchor=south] {param 6} (2,10);
-\draw (2,10) --node[anchor=south] {param 5} (4,10);
-\draw (4,10) --node[anchor=south] {param 4} (6,10);
-\draw (6,10) --node[anchor=south] {param 3} (8,10);
-\draw (8,10) --node[anchor=south] {param 2} (10,10);
-\draw (10,10) --node[anchor=south] {param 1} (12,10);
+\draw (0,7.5) --node[anchor=south] {param 6} (2,7.5);
+\draw (2,7.5) --node[anchor=south] {param 5} (4,7.5);
+\draw (4,7.5) --node[anchor=south] {param 4} (6,7.5);
+\draw (6,7.5) --node[anchor=south] {param 3} (8,7.5);
+\draw (8,7.5) --node[anchor=south] {param 2} (10,7.5);
+\draw (10,7.5) --node[anchor=south] {param 1} (12,7.5);
 
-\draw (0,10) rectangle node[anchor=center] {0 bits} (2,8);
-\draw (2,10) rectangle node[anchor=center] {0 bits} (4,8);
-\draw (4,10) rectangle node[anchor=center] {0 bits} (6,8);
-\draw (6,10) rectangle node[anchor=center] {0 bits} (8,8);
-\draw (8,10) rectangle node[anchor=center] {0 bits} (10,8);
-\draw (10,10) rectangle node[anchor=center] {0 bits} (12,8);
+\draw (0,7.5) rectangle node[anchor=center] {0 bits} (2,6);
+\draw (2,7.5) rectangle node[anchor=center] {0 bits} (4,6);
+\draw (4,7.5) rectangle node[anchor=center] {0 bits} (6,6);
+\draw (6,7.5) rectangle node[anchor=center] {0 bits} (8,6);
+\draw (8,7.5) rectangle node[anchor=center] {0 bits} (10,6);
+\draw (10,7.5) rectangle node[anchor=center] {0 bits} (12,6);
 
-\draw (0,8) rectangle node[anchor=center] {8 bits} (2,6);
-\draw (2,8) rectangle node[anchor=center] {8 bits} (4,6);
-\draw (4,8) rectangle node[anchor=center] {8 bits} (6,6);
-\draw (6,8) rectangle node[anchor=center] {8 bits} (8,6);
-\draw (8,8) rectangle node[anchor=center] {8 bits} (10,6);
-\draw (10,8) rectangle node[anchor=center] {8 bits} (12,6);
+\draw (0,6) rectangle node[anchor=center] {8 bits} (2,4.5);
+\draw (2,6) rectangle node[anchor=center] {8 bits} (4,4.5);
+\draw (4,6) rectangle node[anchor=center] {8 bits} (6,4.5);
+\draw (6,6) rectangle node[anchor=center] {8 bits} (8,4.5);
+\draw (8,6) rectangle node[anchor=center] {8 bits} (10,4.5);
+\draw (10,6) rectangle node[anchor=center] {8 bits} (12,4.5);
 
-\draw (0,6) rectangle node[anchor=center] {16 bits} (2,4);
-\draw (2,6) rectangle node[anchor=center] {16 bits} (4,4);
-\draw (4,6) rectangle node[anchor=center] {16 bits} (6,4);
-\draw (6,6) rectangle node[anchor=center] {16 bits} (8,4);
-\draw (8,6) rectangle node[anchor=center] {16 bits} (10,4);
-\draw (10,6) rectangle node[anchor=center] {16 bits} (12,4);
+\draw (0,4.5) rectangle node[anchor=center] {16 bits} (2,3);
+\draw (2,4.5) rectangle node[anchor=center] {16 bits} (4,3);
+\draw (4,4.5) rectangle node[anchor=center] {16 bits} (6,3);
+\draw (6,4.5) rectangle node[anchor=center] {16 bits} (8,3);
+\draw (8,4.5) rectangle node[anchor=center] {16 bits} (10,3);
+\draw (10,4.5) rectangle node[anchor=center] {16 bits} (12,3);
 
-\draw (0,4) rectangle node[anchor=center] {32 bits} (2,2);
-\draw (2,4) rectangle node[anchor=center] {32 bits} (4,2);
-\draw (4,4) rectangle node[anchor=center] {32 bits} (6,2);
-\draw (6,4) rectangle node[anchor=center] {32 bits} (8,2);
-\draw (8,4) rectangle node[anchor=center] {32 bits} (10,2);
-\draw (10,4) rectangle node[anchor=center] {32 bits} (12,2);
+\draw (0,3) rectangle node[anchor=center] {32 bits} (2,1.5);
+\draw (2,3) rectangle node[anchor=center] {32 bits} (4,1.5);
+\draw (4,3) rectangle node[anchor=center] {32 bits} (6,1.5);
+\draw (6,3) rectangle node[anchor=center] {32 bits} (8,1.5);
+\draw (8,3) rectangle node[anchor=center] {32 bits} (10,1.5);
+\draw (10,3) rectangle node[anchor=center] {32 bits} (12,1.5);
 
-\draw (0,2) rectangle node[anchor=center] {64 bits} (2,0);
-\draw (2,2) rectangle node[anchor=center] {64 bits} (4,0);
-\draw (4,2) rectangle node[anchor=center] {64 bits} (6,0);
-\draw (6,2) rectangle node[anchor=center] {64 bits} (8,0);
-\draw (8,2) rectangle node[anchor=center] {64 bits} (10,0);
-\draw (10,2) rectangle node[anchor=center] {64 bits} (12,0);
+\draw (0,1.5) rectangle node[anchor=center] {64 bits} (2,0);
+\draw (2,1.5) rectangle node[anchor=center] {64 bits} (4,0);
+\draw (4,1.5) rectangle node[anchor=center] {64 bits} (6,0);
+\draw (6,1.5) rectangle node[anchor=center] {64 bits} (8,0);
+\draw (8,1.5) rectangle node[anchor=center] {64 bits} (10,0);
+\draw (10,1.5) rectangle node[anchor=center] {64 bits} (12,0);
 \end{tikzpicture}
 }
 
@@ -143,11 +151,9 @@ We are currently interested in x86-64 binaries, the registers we are looking at 
 \end{itemize}
 
 Four of those registers can also directly access the higher 8bits of the lower 16bits of the register. For our purpose we register this access as a 16bit access. Based on this information, we can assign a register one of 5 possible types $\mathcal{T} = \{64, 32, 16, 8, 0\}$. We also included the type 0 to model the absence of data within a register. Similar to the \emph{count} policy, we allow overestimation of types in callsites and underestimation of types in calltargets. However, the matching idea is different, because as can we depict in Figure \ref{fig:TYPEschema}, the type of a calltarget and a callsite no longer depends solely on its parameter count, each callsite and calltarget has its type from the set of $\mathcal{T}^6$, with the following comparison operator:
-
 \[
 	u \leq_{type} v :\Longleftrightarrow  \forall_{i = 0}^{5} {u_i \leq v_i} , \text {with } u, v \in \mathcal{T}^6
 \]
-
 Again we allow any callsite $cs$ call any calltarget $ct$, when it fulfills the requirement $ct \leq cs$. The way we represent this is by letting the type for a calltarget parameter progress from 64bit to 0bit - If a calltarget requires a 32bit value in its 1st parameter, it also should accept a 64bit value from its callsite - and similarly we let the type for a callsite progress from 0bit to 64bit - If a callsite provides a 32bit value in its 1st parameter it also provides a 16bit, 8bit and 0bit to a calltarget. Now the advantage of the \emph{type} policy in comparison to the \emph{count} policy is that while our type comparison implies the count comparison, the other direction does not hold. Meaning, just having an equal or lesser number of parameters than a callsite, does no longer allow a calltarget being called there, thus restricting the number of calltargets per callsite even further. A function that requires 64bit in its first parameter, and 0bit in all other parameters, would have been callable by a callsite providing 8bit in its first and second parameter when using the \emph{count} policy, however in the \emph{type} policy this is no longer possible.
 
 
@@ -198,8 +204,6 @@ Out_n &:= \left\{
 \end{subequations}
 $Bl$ is the default state at the end of a path of execution and in our case reaching that state would mean that a variable has never been used (neither written nor read). The set $Kill_n$ describes all variables that are no longer live after the block $n$, meaning that a variable occurring within this set has been written to. The set $Gen_n$ describes all variables that are alive due to the block $n$, meaning that a variable occurring within this set has been read before it was written to.
 
-However, we cannot use variable liveness analysis as is, because the analysis is based on potentially unbound variable sets, while we are restricted to a finite number of registers and states. We also require an underestimation of live variables an not an overestimation as provided by standard liveness analysis. Furthermore we have to define how to interpret the changes occurring within one block based on the the change caused by its instructions. Considering this, we arrive at algorithm\ref{alg:liveness} to compute the liveness state at the start of a basic block.
-
 {\centering\begin{algorithm}[!h]
 	\SetAlgoLined
 	\SetKwProg{Fn}{Function}{ is}{end}
@@ -214,7 +218,7 @@ However, we cannot use variable liveness analysis as is, because the analysis is
 		state = merge\_v(state, state')
 	}
 
-	states = {}
+	states = \{\}
 	
 	blocks = succ(block)
 	
@@ -234,6 +238,8 @@ However, we cannot use variable liveness analysis as is, because the analysis is
 \label{alg:liveness}
 \end{algorithm}
 }
+
+However, we cannot use variable liveness analysis as is, because the analysis is based on potentially unbound variable sets, while we are restricted to a finite number of registers and states. We also require an underestimation of live variables an not an overestimation as provided by standard liveness analysis. Furthermore we have to define how to interpret the changes occurring within one block based on the the change caused by its instructions. Considering this, we arrive at algorithm\ref{alg:liveness} to compute the liveness state at the start of a basic block.
 
 This algorithm relies on various functions that can be used to configure its behaviour. We need to define the function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function $analyze\_instr$. The function $succ$, which retrieves all possible successors of a block won't be implemented by us, because we rely on the DynInst instrumentation framework to achieve this.
 
@@ -466,12 +472,7 @@ Out_n &:= (In_n - Kill_n) \cup Gen_n \label{eq:reachingbasedefOut}
 \end{subequations}
 $Bl$ is the default state at the start of a path of execution and in our case reaching that state would mean that we do not know whether a value has been provided for the variable and therefore we assume that one has been provided, reaching an overestimation. The set $Kill_n$ describes all definitions that are removed within this block, meaning that the value of a variable has been overwritten. The set $Gen_n$ describes the new defintions that have been provided by the block $n$, meaning that the value of a variable has been assigned. Considering this, we can assume that $Gen_n \subseteq Kill_n$, as we can always create new definitions, but not simply remove definitions without assigning a new value to the variable.
 
-
-However, we cannot use reaching definition analysis as is, because the analysis is again based on potentially unbound variable sets, while we are restricted to a finite number of registers and states. This time however the analysis provides us with an overestimation, we hower want to get a result as close as possible so we again want to customize merge functions. Furthermore we have to define how to interpret the changes occuring withing one block based on the the change caused by its instructions. Considering this, we arrive at the following algorithm to compute the liveness state at the start of a basic block:
-
-{
-\centering
-\begin{algorithm}[H]
+{\centering \begin{algorithm}[H]
 	\SetAlgoLined
 	\SetKwProg{Fn}{Function}{ is}{end}
 	\Fn{analyze(block : BasicBlock) : $\mathcal{S}^\mathcal{R}$}
@@ -485,7 +486,7 @@ However, we cannot use reaching definition analysis as is, because the analysis 
 		state = merge\_v(state, state')
 	}
 
-	states = {}
+	states = \{\}
 	
 	blocks = pred(block)
 	
@@ -505,6 +506,9 @@ However, we cannot use reaching definition analysis as is, because the analysis 
 \label{alg:reaching}
 \end{algorithm}
 }
+
+
+However, we cannot use reaching definition analysis as is, because the analysis is again based on potentially unbound variable sets, while we are restricted to a finite number of registers and states. This time however the analysis provides us with an overestimation, we hower want to get a result as close as possible so we again want to customize merge functions. Furthermore we have to define how to interpret the changes occuring withing one block based on the the change caused by its instructions. Considering this, w, we arrive at algorithm\ref{alg:reaching} to compute the liveness state at the start of a basic block.
 
 This algorithm relies on various functions that can be used to configure its behaviour. We need to define the function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function $analyze\_instr$. The function $pred$, which retrieves all possible predecessors of a block won't be implemented by us, because we rely on the DynInst instrumentation framework to achieve this.
 \begin{subequations}
@@ -655,7 +659,7 @@ furthermore we calculate the union of states when both states are set (the highe
 
 \begin{table}
 
-\resizebox{\textwidth}{!}{
+\centering
 
 \begin{tabular}{c?c|c|c}
 $\bigcap^{\mathcal{R}}$  & U & S & T\\
@@ -666,7 +670,6 @@ S & U & $\text{S}^{\cap{}{}}$ & T\\
 \hline
 T & T & T & T
 \end{tabular}
-
 \begin{tabular}{c?c|c|c}
 $\bigsqcap^{\mathcal{R}}$  & U & S & T\\
 \Xhline{1pt}
@@ -676,7 +679,6 @@ S & U & $\text{S}^{\cup{}{}}$ & T\\
 \hline
 T & T & T & T
 \end{tabular}
-
 \begin{tabular}{c?c|c|c}
 $\bigcup^{\mathcal{R}}$  & U & S & T\\
 \Xhline{1pt}
@@ -686,7 +688,7 @@ S & S & $\text{S}^{\cup{}{}}$ & T\\
 \hline
 T & T & T & T
 \end{tabular}
-}
+
 \caption{Different mappings for combining two reaching state values in horizontal matching for the \emph{type} policy}
 \label{fig:TYPEreachingmapping}
 \end{table}
