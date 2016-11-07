@@ -23,7 +23,7 @@
 \chapter{Design}
 \label{chapter:Design}
 
-In the design of \textit{TypeShield}, we cover various aspects, first of all we introduce the details of the \emph{count} policy - as introduced by \cite{veen:typearmor} and the new \emph{type} policy. Then we need to implement the analysis for calltargets callsites for the the respective policy. For further restriction capabilities we introduce a version of address taken analysis based on \cite{mingwei:sekar}. 
+In the design of \textit{TypeShield}, we cover various aspects, first of all we present the details of the \emph{count} policy in Section \ref{section:countpolicy} - as introduced by \cite{veen:typearmor} - and the new \emph{type} policy in Section \ref{section:typepolicy}. Then we describe general theory needed to transform set-based analyses to register based ones in Section \ref{section:instructionanalysis}. We follow this up by presenting the theory needed  implement the analysis for calltargets  in Section \ref{section:calltargetanalysis} and  callsites in Section \ref{section:callsiteanalysis} for each policy. Finally, in Section \ref{section:addresstakenanalysis} we introduce a version of address taken analysis based on \cite{mingwei:sekar} to restrict the number of available calltargets even more. 
 %At last we introduce a patching schema for callsites and calltargets to enforce the invariants we inferred.
 
 \section{\emph{Count} Policy}
