@@ -20,7 +20,7 @@
 \contentsline {chapter}{\numberline {4}Design}{13}{chapter.4}
 \contentsline {section}{\numberline {4.1}\emph {Count} Policy}{13}{section.4.1}
 \contentsline {section}{\numberline {4.2}\emph {Type} Policy}{14}{section.4.2}
-\contentsline {section}{\numberline {4.3}Instruction Analysis}{15}{section.4.3}
+\contentsline {section}{\numberline {4.3}Instruction Analysis}{16}{section.4.3}
 \contentsline {section}{\numberline {4.4}Calltarget Analysis}{16}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}Variable Liveness Analysis Theory}{17}{subsection.4.4.1}
 \contentsline {subsection}{\numberline {4.4.2}Required Parameter Count}{19}{subsection.4.4.2}
@@ -29,7 +29,7 @@
 \contentsline {section}{\numberline {4.5}Callsite Analysis}{23}{section.4.5}
 \contentsline {subsection}{\numberline {4.5.1}Reaching Definitions Theory}{23}{subsection.4.5.1}
 \contentsline {subsection}{\numberline {4.5.2}Provided Parameter Count}{25}{subsection.4.5.2}
-\contentsline {subsection}{\numberline {4.5.3}Provided Parameter Wideness}{27}{subsection.4.5.3}
+\contentsline {subsection}{\numberline {4.5.3}Provided Parameter Wideness}{26}{subsection.4.5.3}
 \contentsline {paragraph}{\nonumberline Parameter lists with ``holes''}{28}{section*.4}
 \contentsline {paragraph}{\nonumberline Address wideness unterestimation}{28}{section*.5}
 \contentsline {section}{\numberline {4.6}Address Taken Analysis}{29}{section.4.6}

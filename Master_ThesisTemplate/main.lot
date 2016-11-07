@@ -6,31 +6,31 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Different mappings for combining two liveness state values in horizontal matching for the \emph {count} policy}}{20}{table.4.1}
-\contentsline {table}{\numberline {4.2}{\ignorespaces The union mapping operator for liveness in the \emph {type} policy}}{21}{table.4.2}
-\contentsline {table}{\numberline {4.3}{\ignorespaces Different mappings for combining two reaching state values in horizontal matching for the \emph {count} policy}}{26}{table.4.3}
-\contentsline {table}{\numberline {4.4}{\ignorespaces Different mappings for combining two reaching state values in horizontal matching for the \emph {type} policy}}{28}{table.4.4}
+\contentsline {table}{\numberline {4.1}{\ignorespaces Different mappings for combining two liveness state values in horizontal matching for the \emph {count} policy.}}{20}{table.4.1}
+\contentsline {table}{\numberline {4.2}{\ignorespaces The union mapping operator for liveness in the \emph {type} policy.}}{21}{table.4.2}
+\contentsline {table}{\numberline {4.3}{\ignorespaces Different mappings for combining two reaching state values in horizontal matching for the \emph {count} policy.}}{27}{table.4.3}
+\contentsline {table}{\numberline {4.4}{\ignorespaces Different mappings for combining two reaching state values in horizontal matching for the \emph {type} policy.}}{28}{table.4.4}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {6.1}{\ignorespaces Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with optimization levels O0 through O3. The label Clang miss denotes elements not found in the dataset of the Clang/LLVM pass. The label tool miss denotes elements not found in the dataset of \textit {TypeShield}}}{36}{table.6.1}
-\contentsline {table}{\numberline {6.2}{\ignorespaces The results for calltarget analysis using the destructive/intersection combination operator for the \textit {count} policy throughout different optimizations}}{38}{table.6.2}
-\contentsline {table}{\numberline {6.3}{\ignorespaces The results for calltarget analysis using the union combination operator for the \textit {count} policy throughout different optimizations}}{39}{table.6.3}
-\contentsline {table}{\numberline {6.4}{\ignorespaces The results for callsite analysis using the destructive/intersection combination operator for the \textit {count} without inter-procedural analysis policy throughout different optimizations}}{41}{table.6.4}
-\contentsline {table}{\numberline {6.5}{\ignorespaces The results for callsite analysis using the union combination operator for the \textit {count} without inter-procedural analysis policy throughout different optimizations}}{42}{table.6.5}
-\contentsline {table}{\numberline {6.6}{\ignorespaces The results for callsite analysis using the true union combination operator for the \textit {count} without inter-procedural analysis policy throughout different optimizations}}{43}{table.6.6}
-\contentsline {table}{\numberline {6.7}{\ignorespaces The results for callsite analysis using the destructive/intersection combination operator for the \textit {count} with inter-procedural analysis policy throughout different optimizations}}{45}{table.6.7}
-\contentsline {table}{\numberline {6.8}{\ignorespaces The results for callsite analysis using the union combination operator for the \textit {count} with inter-procedural analysis policy throughout different optimizations}}{46}{table.6.8}
-\contentsline {table}{\numberline {6.9}{\ignorespaces The results for callsite analysis using the true union combination operator for the \textit {count} with inter-procedural analysis policy throughout different optimizations}}{47}{table.6.9}
-\contentsline {table}{\numberline {6.10}{\ignorespaces The results for calltarget analysis for exp1 and exp2 of the \textit {type} policy throughout different optimizations}}{49}{table.6.10}
-\contentsline {table}{\numberline {6.11}{\ignorespaces The results for calltarget analysis for exp3 of the \textit {type} policy throughout different optimizations}}{50}{table.6.11}
-\contentsline {table}{\numberline {6.12}{\ignorespaces The results for callsite analysis for exp1 and exp2 of the \textit {type} policy throughout different optimizations}}{52}{table.6.12}
-\contentsline {table}{\numberline {6.13}{\ignorespaces The results for enhanced callsite analysis for exp3 of the \textit {type} policy throughout different optimizations}}{53}{table.6.13}
-\contentsline {table}{\numberline {6.14}{\ignorespaces The results of comparing theoretical limits for the different restriction policies throughout different optimizations}}{55}{table.6.14}
-\contentsline {table}{\numberline {6.15}{\ignorespaces The results of comparing \textit {count} safe and precision implementation throughout different optimizations}}{57}{table.6.15}
-\contentsline {table}{\numberline {6.16}{\ignorespaces The results of comparing \textit {type} safe and precision implementation throughout different optimizations}}{59}{table.6.16}
-\contentsline {table}{\numberline {6.17}{\ignorespaces The results of comparing theoretical limits for the different restriction policies restricted using an address taken analysis throughout different optimizations}}{62}{table.6.17}
-\contentsline {table}{\numberline {6.18}{\ignorespaces The results of comparing \textit {count} safe and precision implementation restricted using an address taken analysis throughout different optimizations}}{63}{table.6.18}
-\contentsline {table}{\numberline {6.19}{\ignorespaces The results of comparing \textit {type} safe and precision implementation restricted using an address taken analysis throughout different optimizations}}{64}{table.6.19}
+\contentsline {table}{\numberline {6.1}{\ignorespaces Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with optimization levels O0 through O3. The label Clang miss denotes elements not found in the dataset of the Clang/LLVM pass. The label tool miss denotes elements not found in the dataset of \textit {TypeShield}.}}{36}{table.6.1}
+\contentsline {table}{\numberline {6.2}{\ignorespaces The results for calltarget analysis using the destructive/intersection combination operator for the \textit {count} policy throughout different optimizations.}}{38}{table.6.2}
+\contentsline {table}{\numberline {6.3}{\ignorespaces The results for calltarget analysis using the union combination operator for the \textit {count} policy throughout different optimizations.}}{39}{table.6.3}
+\contentsline {table}{\numberline {6.4}{\ignorespaces The results for callsite analysis using the destructive/intersection combination operator for the \textit {count} without inter-procedural analysis policy throughout different optimizations.}}{41}{table.6.4}
+\contentsline {table}{\numberline {6.5}{\ignorespaces The results for callsite analysis using the union combination operator for the \textit {count} without inter-procedural analysis policy throughout different optimizations.}}{42}{table.6.5}
+\contentsline {table}{\numberline {6.6}{\ignorespaces The results for callsite analysis using the true union combination operator for the \textit {count} without inter-procedural analysis policy throughout different optimizations.}}{43}{table.6.6}
+\contentsline {table}{\numberline {6.7}{\ignorespaces The results for callsite analysis using the destructive/intersection combination operator for the \textit {count} with inter-procedural analysis policy throughout different optimizations.}}{45}{table.6.7}
+\contentsline {table}{\numberline {6.8}{\ignorespaces The results for callsite analysis using the union combination operator for the \textit {count} with inter-procedural analysis policy throughout different optimizations.}}{46}{table.6.8}
+\contentsline {table}{\numberline {6.9}{\ignorespaces The results for callsite analysis using the true union combination operator for the \textit {count} with inter-procedural analysis policy throughout different optimizations.}}{47}{table.6.9}
+\contentsline {table}{\numberline {6.10}{\ignorespaces The results for calltarget analysis for exp1 and exp2 of the \textit {type} policy throughout different optimizations.}}{49}{table.6.10}
+\contentsline {table}{\numberline {6.11}{\ignorespaces The results for calltarget analysis for exp3 of the \textit {type} policy throughout different optimizations.}}{50}{table.6.11}
+\contentsline {table}{\numberline {6.12}{\ignorespaces The results for callsite analysis for exp1 and exp2 of the \textit {type} policy throughout different optimizations.}}{52}{table.6.12}
+\contentsline {table}{\numberline {6.13}{\ignorespaces The results for enhanced callsite analysis for exp3 of the \textit {type} policy throughout different optimizations.}}{53}{table.6.13}
+\contentsline {table}{\numberline {6.14}{\ignorespaces The results of comparing theoretical limits for the different restriction policies throughout different optimizations.}}{55}{table.6.14}
+\contentsline {table}{\numberline {6.15}{\ignorespaces The results of comparing \textit {count} safe and precision implementation throughout different optimizations.}}{57}{table.6.15}
+\contentsline {table}{\numberline {6.16}{\ignorespaces The results of comparing \textit {type} safe and precision implementation throughout different optimizations.}}{59}{table.6.16}
+\contentsline {table}{\numberline {6.17}{\ignorespaces The results of comparing theoretical limits for the different restriction policies restricted using an address taken analysis throughout different optimizations.}}{62}{table.6.17}
+\contentsline {table}{\numberline {6.18}{\ignorespaces The results of comparing \textit {count} safe and precision implementation restricted using an address taken analysis throughout different optimizations.}}{63}{table.6.18}
+\contentsline {table}{\numberline {6.19}{\ignorespaces The results of comparing \textit {type} safe and precision implementation restricted using an address taken analysis throughout different optimizations.}}{64}{table.6.19}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -23,10 +23,14 @@
 \chapter{Design}
 \label{chapter:Design}
 
-In the design of~\textit{TypeShield}, we cover various aspects, first of all we introduce the details of the 
-\emph{count} policy - as introduced by~\cite{veen:typearmor} and the new \emph{type} policy. 
-Then we need to implement the analysis for calltargets callsites for the the respective policy. 
-For further restriction capabilities we introduce a version of address taken analysis based on~\cite{mingwei:sekar}. 
+In the design of \textit{TypeShield}, we cover various aspects, first of all we present the details of the 
+\emph{count} policy in Section \ref{section:countpolicy} - as introduced by \cite{veen:typearmor} - 
+and the new \emph{type} policy in Section \ref{section:typepolicy}. Then we describe general 
+theory needed to transform set-based analyses to register based ones in Section \ref{section:instructionanalysis}. 
+We follow this up by presenting the theory needed  implement the analysis for calltargets  in 
+Section \ref{section:calltargetanalysis} and  callsites in Section \ref{section:callsiteanalysis} 
+for each policy. Finally, in Section \ref{section:addresstakenanalysis} we introduce a version of 
+address taken analysis based on \cite{mingwei:sekar} to restrict the number of available calltargets even more. 
 %At last we introduce a patching schema for callsites and calltargets to enforce the invariants we inferred.
 
 \section{\emph{Count} Policy}
@@ -83,7 +87,7 @@ parameters and the callsites providing parameters as depicted in Figure \ref{fig
 
 \end{tikzpicture}
 }
-\caption{\emph{count} policy classification schema}
+\caption{\emph{Count} policy classification schema for callsites and calltargets.}
 \label{fig:COUNTschema}
 \end{figure}
 
@@ -156,16 +160,16 @@ wideness as depicted in Figure \ref{fig:TYPEschema}.
 \end{tikzpicture}
 }
 
-\caption{\emph{type} policy schema for callsites and calltargets}
+\caption{\emph{Type} policy schema for callsites and calltargets.}
 \label{fig:TYPEschema}
 \end{figure}
 
 We are currently interested in x86-64 binaries, the registers we are looking at are 64bit registers that can be accessed in 4 different ways:
 \begin{itemize}
-\item the whole 64bits of the register, meaning a wideness of 64
-\item the lower 32bits of the register, meaning a wideness of 32
-\item the lower 16bits of the register, meaning a wideness of 16
-\item the lower 8bits of the register, meaning a wideness of 8
+\item the whole 64bits of the register, meaning a wideness of 64.
+\item the lower 32bits of the register, meaning a wideness of 32.
+\item the lower 16bits of the register, meaning a wideness of 16.
+\item the lower 8bits of the register, meaning a wideness of 8.
 \end{itemize}
 
 Four of those registers can also directly access the higher 8bits of the lower 16bits of the register. For our purpose we register this access as a 16bit access. Based on this information, we can assign a register one of 5 possible types $\mathcal{T} = \{64, 32, 16, 8, 0\}$. We also included the type 0 to model the absence of data within a register. Similar to the \emph{count} policy, we allow overestimation of types in callsites and underestimation of types in calltargets. However, the matching idea is different, 
@@ -185,8 +189,8 @@ The set $\mathcal{I}$ describes all possible instructions that can occur within 
 An instruction $i \in \mathcal{I}$ can non-exclusively perform two kinds of operations on any number of existing registers:
 
 \begin{enumerate}
-\item Read $n$ bits from the register with $n \in \{ 64, 32, 16, 8 \}$
-\item Write $n$ bits to the register with $n \in \{ 64, 32, 16, 8 \}$
+\item Read $n$ bits from the register with $n \in \{ 64, 32, 16, 8 \}$.
+\item Write $n$ bits to the register with $n \in \{ 64, 32, 16, 8 \}$.
 \end{enumerate}
 
 Thus we describe the possible change that occurs in one register with the set $S = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. Note that 0 signals the absence of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ with $m \in \{64,32,16,8\}$ and $m < n$ (e.g. $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.
@@ -209,6 +213,8 @@ For either \emph{count} or \emph{type} policy to work, we need to arrive at an u
 A variable is alive before the execution of an instrucction, if at least one of the originating paths contains a read access before the variable is written to again. We employ liveness analysis, because we are looking for the  parameters a function requires. This essentially requires read before write access, however global variables usually would also fall into this category, however these would not reside within parameter registers at the start of a function.
 
 The book ``Data Flow Analysis - Theory and Practice'' \cite{khedker2009data} defines live variable analysis on blocks in the following manner:
+
+\begin{center}
 \begin{subequations}
 \label{eq:livenessbasedef}
 \begin{align}
@@ -253,9 +259,10 @@ $Bl$ is the default state at the end of a path of execution and in our case reac
 	\Return merge\_v(state, state')
 
 	}
-\caption{Algorithm to analyse the liveness of a Basic Block}
+\caption{Algorithm to analyse the liveness of a Basic Block.}
 \label{alg:liveness}
 \end{algorithm}
+\end{center}
 
 However, we cannot use variable liveness analysis as is, because the analysis is based on potentially unbound variable sets, while we are restricted to a finite number of registers and states. We also require an underestimation of live variables an not an overestimation as provided by standard liveness analysis. Furthermore we have to define how to interpret the changes occurring within one block based on the the change caused by its instructions. Considering this, we arrive at algorithm \ref{alg:liveness} to compute the liveness state at the start of a basic block.
 
@@ -290,9 +297,9 @@ succ &: \mathcal{I} \mapsto \mathcal{P}(\mathcal{I})
 
 As the $analyze\_instr$ function calculates the effect of an instruction and is the heart of the analyze function. It will also handle non jump and non fallthrough successors, as these are not handled by DynInst in our case. We essentially have four cases that we handle:
 \begin{enumerate}
-\item if the instruction is an indirect call or a direct call but we chose not follow calls, then return a state where all registers are considered written
-\item if the instruction is a diect call and we chose to follow calls, then we spawn a new analysis and return its result 
-\item if the instruction is a constant write (e.g. xor of two registers) then we remove the read portion before we return the decoded state
+\item if the instruction is an indirect call or a direct call but we chose not follow calls, then return a state where all registers are considered written.
+\item if the instruction is a diect call and we chose to follow calls, then we spawn a new analysis and return its result.
+\item if the instruction is a constant write (e.g. xor of two registers) then we remove the read portion before we return the decoded state.
 \item in all other cases we simply return the decoded state
 \end{enumerate}
 
@@ -329,9 +336,9 @@ merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
 
 We have three viable possibilities for our combination operator $\circ$, depicted in Table \ref{fig:COUNTlivenessmapping}, which all give priority to $W$:
 \begin{itemize}
-\item [$\bigsqcap^{\mathcal{L}}$] is what we call the destructive combination operator, as it returns W on any mismatch
-\item [$\bigcap^{\mathcal{L}}$] is what we call the intersection operator, as it returns C, when combining C and R, similar to an intersection
-\item [$\bigcup^{\mathcal{L}}$] is what we call the union operator, as it returns R, when combining C and R similar to a union
+\item [$\bigsqcap^{\mathcal{L}}$] is what we call the destructive combination operator, as it returns W on any mismatch.
+\item [$\bigcap^{\mathcal{L}}$] is what we call the intersection operator, as it returns C, when combining C and R, similar to an intersection.
+\item [$\bigcup^{\mathcal{L}}$] is what we call the union operator, as it returns R, when combining C and R similar to a union.
 \end{itemize}
 
 
@@ -369,7 +376,7 @@ W & W & W & W
 \end{tabular}
 
 
-\caption{Different mappings for combining two liveness state values in horizontal matching for the \emph{count} policy}
+\caption{Different mappings for combining two liveness state values in horizontal matching for the \emph{count} policy.}
 
 \label{fig:COUNTlivenessmapping}
 \end{table}
@@ -416,7 +423,7 @@ W & W & W & W & W\\
 \hline
 RW & RW & $\text{R}^{\cup}$W & W & RW\\
 \end{tabular}
-\caption{The union mapping operator for liveness in the \emph{type} policy}
+\caption{The union mapping operator for liveness in the \emph{type} policy.}
 \label{tbl:TYPECTunion}
 \end{table}
 
@@ -454,16 +461,15 @@ Figure \ref{fig:asmvariadic}. Our analysis interprets that as a read access on a
   422356:       mov    %r14,%rdi
   422359:       callq  409430 <pcalloc>
 \end{BVerbatim}
-\caption{ASM code of the \texttt{make\_cmd} function with optimize level O2, which has a variadic parameter list}
+\caption{ASM code of the \texttt{make\_cmd} function with optimize level O2, which has a variadic parameter list.}
 \label{fig:asmvariadic}
 \end{figure}
 
 Our solution to this problem is to find these spurious reads and ignore them. A compiler will implement this type of operation very similar foll all cases, thus we can achieve this using the following steps:
 \begin{enumerate}
-\item Look for what we call the xmm-passthrough block, which entierly consist of moving the values of registers \texttt{xmm0} to \texttt{xmm7} into contiguous memory (in our case basic block [\texttt{0x422306}, \texttt{0x42233d} [ )
-
+\item Look for what we call the xmm-passthrough block, which entierly consist of moving the values of registers \texttt{xmm0} to \texttt{xmm7} into contiguous memory (in our case basic block [\texttt{0x422306}, \texttt{0x42233d} [ ).
 \item Look at the predecessor of the xmm-passthrough block, which we call the entry block (in our case basic block [\texttt{0x4222f0}, \texttt{0x4222f2} [ ). Check if the successors of the entry block consist of the xmm-passthrough block and the successor of the xmm-passthrough block, which we call the param-passthrough block (in our case basic block [\texttt{0x42233d}, \texttt{0x42235e} [ ).
-\item Look at the param-passthrough block and set all instructions that move the value of a parameter register into memory to be ignored (in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \texttt{0x422347} and \texttt{0x42234c})
+\item Look at the param-passthrough block and set all instructions that move the value of a parameter register into memory to be ignored (in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \texttt{0x422347} and \texttt{0x42234c}).
 \end{enumerate}
 
 
@@ -521,7 +527,7 @@ $Bl$ is the default state at the start of a path of execution and in our case re
 	\Return merge\_v(state, state')
 
 	}
-\caption{Algorithm to analyse the reaching definitions of a Basic Block}
+\caption{Algorithm to analyse the reaching definitions of a Basic Block.}
 \label{alg:reaching}
 \end{algorithm}
 
@@ -540,10 +546,10 @@ pred &: \mathcal{I} \mapsto \mathcal{P}(\mathcal{I})
 
 As the $analyze\_instr$ function calculates the effect of an instruction and is the heart of the analyze function. It will also handle non jump and non fallthrough successors, as these are not handled by DynInst in our case. We essentially have three cases that we handle:
 \begin{enumerate}
-\item if the instruction is an indirect call or a direct call but we chose not follow calls, then return a state where all trashed are considered written
-\item if the instruction is a diect call and we chose to follow calls, then we spawn a new analysis and return its result 
+\item if the instruction is an indirect call or a direct call but we chose not follow calls, then return a state where all trashed are considered written.
+\item if the instruction is a diect call and we chose to follow calls, then we spawn a new analysis and return its result.
 %\item if the instruction is a constant write (e.g. xor of two registers) then we remove the read portion before we return the decoded state
-\item in all other cases we simply return the decoded state
+\item in all other cases we simply return the decoded state.
 \end{enumerate}
 
 This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
@@ -584,10 +590,11 @@ merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
 
 We have four viable possibilities for our combination operator $\circ$, depicted in table \ref{fig:COUNTreachingmapping}, which all (except one) give priority to $T$:
 \begin{itemize}
-\item [$\bigsqcap^{\mathcal{R}}$] is what we call the destructive combination operator, as it returns T on any mismatch
-\item [$\bigcap^{\mathcal{R}}$] is what we call the intersection operator, as it returns U, when combining U and S, similar to an intersection
-\item [$\bigcup^{\mathcal{R}}$] is what we call the union operator, as it returns S, when combining U and S similar to a union
-\item [$\bigsqcup^{\mathcal{R}}$] is what we call the true union operator, as it gives S precendce over everything and returns T or U only when both sides are T or U being more inclusive than a union
+\item [$\bigsqcap^{\mathcal{R}}$] is what we call the destructive combination operator, as it returns T on any mismatch.
+\item [$\bigcap^{\mathcal{R}}$] is what we call the intersection operator, as it returns U, when combining U and S, similar to an intersection.
+\item [$\bigcup^{\mathcal{R}}$] is what we call the union operator, as it returns S, when combining U and S similar to a union.
+\item [$\bigsqcup^{\mathcal{R}}$] is what we call the true union operator, as it gives S precendce over everything and returns T or U only when both sides are T or
+U being more inclusive than a union.
 \end{itemize}
 
 \newcolumntype{?}{!{\vrule width 1pt}}
@@ -634,7 +641,7 @@ T & T & S & T
 \end{tabular}
 }
 
-\caption{Different mappings for combining two reaching state values in horizontal matching for the \emph{count} policy}
+\caption{Different mappings for combining two reaching state values in horizontal matching for the \emph{count} policy.}
 
 \label{fig:COUNTreachingmapping}
 \end{table}
@@ -662,16 +669,18 @@ merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
 
 However, we have different possibilities regarding the merge operator. Experiments with our implementations for callsite classification in the \emph{count} policy have given us the following results:
 \begin{itemize}
-\item The best candidate to minimize the problematic matches is the union operator without following direct calls
-\item The best candidate to maximize precision is the intersection operator with following direct calls
+\item The best candidate to minimize the problematic matches is the union operator without following direct calls.
+\item The best candidate to maximize precision is the intersection operator with following direct calls.
 \end{itemize}
 
 We therefore arrive at three viable possibilities for our combination operator $\circ$, depicted in table \ref{fig:TYPEreachingmapping}, which all (except one) give priority to $T$:
 \begin{itemize}
-\item [$\bigcap^{\mathcal{R}}$] is what we call the intersection operator, as it returns U, when combining U and S, similar to an intersection furthermore we also calculate the intersection of states when both states are set (the lower of the two is returned)
-\item [$\bigsqcap^{\mathcal{R}}$] is what we call the half intersection operator, as it returns U, when combining U and S, similar to an intersection but we calculate the union of states when both states are set (the higher of the two is returned)
+\item [$\bigcap^{\mathcal{R}}$] is what we call the intersection operator, as it returns U, when combining U and S, similar to an intersection furthermore we also calculate the intersection of states when both states are set 
+(the lower of the two is returned).
+\item [$\bigsqcap^{\mathcal{R}}$] is what we call the half intersection operator, as it returns U, when combining U and S, 
+similar to an intersection but we calculate the union of states when both states are set (the higher of the two is returned).
 \item [$\bigcup^{\mathcal{R}}$] is what we call the union operator, as it returns S, when combining U and S similar to a union
-furthermore we calculate the union of states when both states are set (the higher of the two is returned)
+furthermore we calculate the union of states when both states are set (the higher of the two is returned).
 \end{itemize}
 
 \begin{table}
@@ -706,7 +715,7 @@ S & S & $\text{S}^{\cup{}{}}$ & T\\
 T & T & T & T
 \end{tabular}
 
-\caption{Different mappings for combining two reaching state values in horizontal matching for the \emph{type} policy}
+\caption{Different mappings for combining two reaching state values in horizontal matching for the \emph{type} policy.}
 \label{fig:TYPEreachingmapping}
 \end{table}
 
