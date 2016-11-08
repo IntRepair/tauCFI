@@ -1,17 +1,19 @@
 \section{Design}
 \label{chapter:Design}
 
-In the design of \textit{TypeShield}, we cover various aspects, first of all we present the details of the 
-\emph{count} policy in Section \ref{section:countpolicy} - as introduced by \cite{veen:typearmor} - 
-and the new \emph{type} policy in Section \ref{section:typepolicy}. Then we describe general 
-theory needed to transform set-based analyses to register based ones in Section \ref{section:instructionanalysis}. 
+In this section, we cover the design of \textit{TypeShield}. We first present the details of the 
+\emph{count} policy in \cref{section:countpolicy}---as introduced by \cite{veen:typearmor}---and the
+new \emph{type} policy in \cref{section:typepolicy}. 
+Then we describe general 
+theory needed to transform set-based analyses to register based ones in \cref{section:instructionanalysis}. 
 We follow this up by presenting the theory needed  implement the analysis for calltargets  in 
-Section \ref{section:calltargetanalysis} and  callsites in Section \ref{section:callsiteanalysis} 
-for each policy. Finally, in Section \ref{section:addresstakenanalysis} we introduce a version of 
+\cref{section:calltargetanalysis} and  callsites in \cref{section:callsiteanalysis} 
+for each policy. 
+Finally, in \cref{section:addresstakenanalysis} we introduce a version of 
 address taken analysis based on \cite{mingwei:sekar} to restrict the number of available calltargets even more. 
 %At last we introduce a patching schema for callsites and calltargets to enforce the invariants we inferred.
 
-\textbf{\emph{Count} Policy.}
+\subsection{\emph{Count} Policy}
 \label{section:countpolicy}
 What we call the \emph{count} policy is essentially the policy introduced by TypeArmor \cite{veen:typearmor}. 
 The basic idea revolves aroung classifying calltargets by the number of parameters they provide and callsites 
@@ -19,8 +21,8 @@ by the number of paramters they require. The schema to match those is that we ha
 parameters and the callsites providing parameters as depicted in Figure \ref{fig:COUNTschema}.
 
 \begin{figure}[!h]
-% \centering
-\resizebox{0.80\textwidth}{!}{
+\centering
+\resizebox{0.4\textwidth}{!}{
 \begin{tikzpicture}
 
 %\fill[black!40!white] (0,0) rectangle (9,9);
@@ -35,31 +37,31 @@ parameters and the callsites providing parameters as depicted in Figure \ref{fig
 %\draw[dashed] (4,4) -- (7,7);
 
 
-\fill[black!00!white] (0,7) rectangle (12,6);
-\fill[black!10!white] (0,6) rectangle (12,5);
-\fill[black!20!white] (0,5) rectangle (12,4);
-\fill[black!30!white] (0,4) rectangle (12,3);
-\fill[black!40!white] (0,3) rectangle (12,2);
-\fill[black!50!white] (0,2) rectangle (12,1);
-\fill[black!60!white] (0,1) rectangle (12,0);
+\fill[black!00!white] (0,7) rectangle (6,6);
+\fill[black!10!white] (0,6) rectangle (6,5);
+\fill[black!20!white] (0,5) rectangle (6,4);
+\fill[black!30!white] (0,4) rectangle (6,3);
+\fill[black!40!white] (0,3) rectangle (6,2);
+\fill[black!50!white] (0,2) rectangle (6,1);
+\fill[black!60!white] (0,1) rectangle (6,0);
 
 
-\draw[thick,->] (-0.5,0) -- node[sloped, anchor=center, above] {growing required bits per parameter} (-0.5,7);
-\draw[thick,->] (12.5,7) -- node[sloped, anchor=center, above] {growing provided bits per parameter} (12.5,0);
+\draw[-triangle 45, thick, arrowhead=1cm] (-0.5,0) -- node[sloped, anchor=center, above] {{growing required bits per parameter}} (-0.5,7);
+\draw[-triangle 45, thick, arrowhead=1cm] (6.5,7) -- node[sloped, anchor=center, above] {{growing provided bits per parameter}} (6.5,0);
 
-\draw (0,7) rectangle node[anchor=center] {0 parameters} (12,6);
+\draw (0,7) rectangle node[anchor=center] {0 parameters} (6,6);
 
-\draw (0,6) rectangle node[anchor=center] {1 parameter} (12,5);
+\draw (0,6) rectangle node[anchor=center] {1 parameter} (6,5);
 
-\draw (0,5) rectangle node[anchor=center] {3 parameters} (12,4);
+\draw (0,5) rectangle node[anchor=center] {2 parameters} (6,4);
 
-\draw (0,4) rectangle node[anchor=center] {2 parameters} (12,3);
+\draw (0,4) rectangle node[anchor=center] {3 parameters} (6,3);
 
-\draw (0,3) rectangle node[anchor=center] {4 parameters} (12,2);
+\draw (0,3) rectangle node[anchor=center] {4 parameters} (6,2);
 
-\draw (0,2) rectangle node[anchor=center] {5 parameters} (12,1);
+\draw (0,2) rectangle node[anchor=center] {5 parameters} (6,1);
 
-\draw (0,1) rectangle node[anchor=center] {6 parameters} (12,0);
+\draw (0,1) rectangle node[anchor=center] {6 parameters} (6,0);
 
 
 \end{tikzpicture}
@@ -83,14 +85,14 @@ One possible remedy would be the ability to introduce an upper bound for the cla
 however as of now, this does not seem feasible with current technology. Another possibility would be the overall reduction
 of callsites, which can access the same set of calltargets, a route we will explore within this work.
 
-\textbf{\emph{Type} Policy.}
+\subsection{\emph{Type} Policy}
 \label{section:typepolicy}
 
 What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the type of a parameter. However due to complexity reasons, we are restricting ourselves to the general purpose registers, which the SystemV ABI designates as parameter registers. Furthermore we are not inferring the actual type of the data but the wideness of the data stored in the register. The schema again is that we have calltargets requiring wideness and the callsite providing 
 wideness as depicted in Figure \ref{fig:TYPEschema}.
 \begin{figure}[!h]
-% \center
-\resizebox{0.75\textwidth}{!}{
+\center
+\resizebox{0.5\textwidth}{!}{
 \begin{tikzpicture}
 
 \fill[black!10!white] (0,7.5) rectangle (12,6);
@@ -99,50 +101,50 @@ wideness as depicted in Figure \ref{fig:TYPEschema}.
 \fill[black!40!white] (0,3) rectangle (12,1.5);
 \fill[black!50!white] (0,1.5) rectangle (12,0);
 
-\draw[thick,->] (-0.5,0) -- node[sloped, anchor=center, above] {growing required bits per parameter} (-0.5,7.5);
-\draw[thick,->] (12.5,7.5) -- node[sloped, anchor=center, above] {growing provided bits per parameter} (12.5,0);
+\draw[-triangle 45, thick, arrowhead=1cm,] (-0.5,0) -- node[sloped, anchor=center, above] {\Large{growing required bits per parameter}} (-0.5,7.5);
+\draw[-triangle 45, thick, arrowhead=1cm,] (12.5,7.5) -- node[sloped, anchor=center, above] {\Large{growing provided bits per parameter}} (12.5,0);
 
-\draw (0,7.5) --node[anchor=south] {param 6} (2,7.5);
-\draw (2,7.5) --node[anchor=south] {param 5} (4,7.5);
-\draw (4,7.5) --node[anchor=south] {param 4} (6,7.5);
-\draw (6,7.5) --node[anchor=south] {param 3} (8,7.5);
-\draw (8,7.5) --node[anchor=south] {param 2} (10,7.5);
-\draw (10,7.5) --node[anchor=south] {param 1} (12,7.5);
+\draw (0,7.5)  --node[anchor=south] {\Large{param 6}} (2,7.5);
+\draw (2,7.5)  --node[anchor=south] {\Large{param 5}} (4,7.5);
+\draw (4,7.5)  --node[anchor=south] {\Large{param 4}} (6,7.5);
+\draw (6,7.5)  --node[anchor=south] {\Large{param 3}} (8,7.5);
+\draw (8,7.5)  --node[anchor=south] {\Large{param 2}} (10,7.5);
+\draw (10,7.5) --node[anchor=south] {\Large{param 1}} (12,7.5);
 
-\draw (0,7.5) rectangle node[anchor=center] {0 bits} (2,6);
-\draw (2,7.5) rectangle node[anchor=center] {0 bits} (4,6);
-\draw (4,7.5) rectangle node[anchor=center] {0 bits} (6,6);
-\draw (6,7.5) rectangle node[anchor=center] {0 bits} (8,6);
-\draw (8,7.5) rectangle node[anchor=center] {0 bits} (10,6);
-\draw (10,7.5) rectangle node[anchor=center] {0 bits} (12,6);
+\draw (0,7.5)  rectangle node[anchor=center] {\Large{0 bits}} (2,6);
+\draw (2,7.5)  rectangle node[anchor=center] {\Large{0 bits}} (4,6);
+\draw (4,7.5)  rectangle node[anchor=center] {\Large{0 bits}} (6,6);
+\draw (6,7.5)  rectangle node[anchor=center] {\Large{0 bits}} (8,6);
+\draw (8,7.5)  rectangle node[anchor=center] {\Large{0 bits}} (10,6);
+\draw (10,7.5) rectangle node[anchor=center] {\Large{0 bits}} (12,6);
 
-\draw (0,6) rectangle node[anchor=center] {8 bits} (2,4.5);
-\draw (2,6) rectangle node[anchor=center] {8 bits} (4,4.5);
-\draw (4,6) rectangle node[anchor=center] {8 bits} (6,4.5);
-\draw (6,6) rectangle node[anchor=center] {8 bits} (8,4.5);
-\draw (8,6) rectangle node[anchor=center] {8 bits} (10,4.5);
-\draw (10,6) rectangle node[anchor=center] {8 bits} (12,4.5);
+\draw (0,6)  rectangle node[anchor=center] {\Large{8 bits}} (2,4.5);
+\draw (2,6)  rectangle node[anchor=center] {\Large{8 bits}} (4,4.5);
+\draw (4,6)  rectangle node[anchor=center] {\Large{8 bits}} (6,4.5);
+\draw (6,6)  rectangle node[anchor=center] {\Large{8 bits}} (8,4.5);
+\draw (8,6)  rectangle node[anchor=center] {\Large{8 bits}} (10,4.5);
+\draw (10,6) rectangle node[anchor=center] {\Large{8 bits}} (12,4.5);
 
-\draw (0,4.5) rectangle node[anchor=center] {16 bits} (2,3);
-\draw (2,4.5) rectangle node[anchor=center] {16 bits} (4,3);
-\draw (4,4.5) rectangle node[anchor=center] {16 bits} (6,3);
-\draw (6,4.5) rectangle node[anchor=center] {16 bits} (8,3);
-\draw (8,4.5) rectangle node[anchor=center] {16 bits} (10,3);
-\draw (10,4.5) rectangle node[anchor=center] {16 bits} (12,3);
+\draw (0,4.5)  rectangle node[anchor=center] {\Large{16 bits}} (2,3);
+\draw (2,4.5)  rectangle node[anchor=center] {\Large{16 bits}} (4,3);
+\draw (4,4.5)  rectangle node[anchor=center] {\Large{16 bits}} (6,3);
+\draw (6,4.5)  rectangle node[anchor=center] {\Large{16 bits}} (8,3);
+\draw (8,4.5)  rectangle node[anchor=center] {\Large{16 bits}} (10,3);
+\draw (10,4.5) rectangle node[anchor=center] {\Large{16 bits}} (12,3);
 
-\draw (0,3) rectangle node[anchor=center] {32 bits} (2,1.5);
-\draw (2,3) rectangle node[anchor=center] {32 bits} (4,1.5);
-\draw (4,3) rectangle node[anchor=center] {32 bits} (6,1.5);
-\draw (6,3) rectangle node[anchor=center] {32 bits} (8,1.5);
-\draw (8,3) rectangle node[anchor=center] {32 bits} (10,1.5);
-\draw (10,3) rectangle node[anchor=center] {32 bits} (12,1.5);
+\draw (0,3)  rectangle node[anchor=center] {\Large{32 bits}} (2,1.5);
+\draw (2,3)  rectangle node[anchor=center] {\Large{32 bits}} (4,1.5);
+\draw (4,3)  rectangle node[anchor=center] {\Large{32 bits}} (6,1.5);
+\draw (6,3)  rectangle node[anchor=center] {\Large{32 bits}} (8,1.5);
+\draw (8,3)  rectangle node[anchor=center] {\Large{32 bits}} (10,1.5);
+\draw (10,3) rectangle node[anchor=center] {\Large{32 bits}} (12,1.5);
 
-\draw (0,1.5) rectangle node[anchor=center] {64 bits} (2,0);
-\draw (2,1.5) rectangle node[anchor=center] {64 bits} (4,0);
-\draw (4,1.5) rectangle node[anchor=center] {64 bits} (6,0);
-\draw (6,1.5) rectangle node[anchor=center] {64 bits} (8,0);
-\draw (8,1.5) rectangle node[anchor=center] {64 bits} (10,0);
-\draw (10,1.5) rectangle node[anchor=center] {64 bits} (12,0);
+\draw (0,1.5)  rectangle node[anchor=center] {\Large{64 bits}} (2,0);
+\draw (2,1.5)  rectangle node[anchor=center] {\Large{64 bits}} (4,0);
+\draw (4,1.5)  rectangle node[anchor=center] {\Large{64 bits}} (6,0);
+\draw (6,1.5)  rectangle node[anchor=center] {\Large{64 bits}} (8,0);
+\draw (8,1.5)  rectangle node[anchor=center] {\Large{64 bits}} (10,0);
+\draw (10,1.5) rectangle node[anchor=center] {\Large{64 bits}} (12,0);
 \end{tikzpicture}
 }
 
@@ -164,10 +166,10 @@ $
 	u \leq_{type} v :\Longleftrightarrow  
 	\forall_{i = 0}^{5} {u_i \leq v_i} , \text {with } u, v \in \mathcal{T}^6
 $
-Again we allow any callsite $cs$ call any calltarget $ct$, when it fulfills the requirement $ct \leq cs$. The way we represent this is by letting the type for a calltarget parameter progress from 64bit to 0bit - If a calltarget requires a 32bit value in its 1st parameter, it also should accept a 64bit value from its callsite - and similarly we let the type for a callsite progress from 0bit to 64bit - If a callsite provides a 32bit value in its 1st parameter it also provides a 16bit, 8bit and 0bit to a calltarget. Now the advantage of the \emph{type} policy in comparison to the \emph{count} policy is that while our type comparison implies the count comparison, the other direction does not hold. Meaning, just having an equal or lesser number of parameters than a callsite, does no longer allow a calltarget being called there, thus restricting the number of calltargets per callsite even further. A function that requires 64bit in its first parameter, and 0bit in all other parameters, would have been callable by a callsite providing 8bit in its first and second parameter when using the \emph{count} policy, however in the \emph{type} policy this is no longer possible.
+Again we allow any callsite $cs$ call any calltarget $ct$, when it fulfills the requirement $ct \leq cs$. The way we represent this is by letting the type for a calltarget parameter progress from 64bit to 0bit---if a calltarget requires a 32bit value in its 1st parameter, it also should accept a 64bit value from its callsite---and similarly we let the type for a callsite progress from 0bit to 64bit - If a callsite provides a 32bit value in its 1st parameter it also provides a 16bit, 8bit and 0bit to a calltarget. Now the advantage of the \emph{type} policy in comparison to the \emph{count} policy is that while our type comparison implies the count comparison, the other direction does not hold. Meaning, just having an equal or lesser number of parameters than a callsite, does no longer allow a calltarget being called there, thus restricting the number of calltargets per callsite even further. A function that requires 64bit in its first parameter, and 0bit in all other parameters, would have been callable by a callsite providing 8bit in its first and second parameter when using the \emph{count} policy, however in the \emph{type} policy this is no longer possible.
 
 
-\textbf{Instruction Analysis.}
+\subsection{Instruction Analysis}
 \label{section:instructionanalysis}
 Usually data-flow analysis algorithms are based on set of variable or sets of definitions, which both are basically unbounded. However, we are analysing the state of registers, which are baked into hardware and therefore their number is given, thus requiring us to adapt the data-flow theory to work on tuples.
 
@@ -191,7 +193,7 @@ $
 
 However, we do not go into detail how this function actually calculates this sate, because we rely on external libraries to perform this task. Implementing this function ourself is out of scope due to the lengthy work required, as the x86-64 instruction set is quite large.
 
-\textbf{Calltarget Analysis.}
+\subsection{Calltarget Analysis}
 \label{section:calltargetanalysis}
 For either \emph{count} or \emph{type} policy to work, we need to arrive at an underestimation of the required parameters by any function existing within the targeted binary. We will employ a modified version of liveness analysis that tracks registers instead of variables to generate the needed underestimation. As our algorithm will be customizable, we look at the required merge functions to implement \emph{count} and \emph{type} policy. Furthermore we need to eliminate the passing of variadic parameter lists from variadic functions, as this might cause our analysis to overestimate the required parameters.
 
@@ -339,6 +341,7 @@ We have three viable possibilities for our combination operator $\circ$, depicte
 \begin{table}
 
 % \centering
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{c?c|c|c}
 $\bigsqcap^{\mathcal{L}}$ & C & R & W\\
 \Xhline{1pt}
@@ -365,9 +368,7 @@ C & C & R & W\\
 R & R & R & W\\
 \hline
 W & W & W & W
-\end{tabular}
-
-
+\end{tabular}}
 \caption{Different mappings for combining two liveness state values in horizontal matching for the \emph{count} policy.}
 
 \label{fig:COUNTlivenessmapping}
@@ -403,7 +404,8 @@ merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
 The results of our experiments with the implementation of calltarget classification gave presented us with essentially one possible candidate that we can base our horizontal merge function on, namely the union operator with an analysis function that follows into direct calls. The basic schema of the merging is depicted in \ref{tbl:TYPECTunion} and it essentially behaves as if it was the union operator (when both states are set, the higher one is chosen). However, we have to account for W being used as an end marker, which is why we added mapping for RW, which is essentially that. 
 
 \begin{table}[h]
-% \centering
+\centering
+% \resizebox{\columnwidth}{!}{%
 \begin{tabular}{c?c|c|c|c}
 $\bigcup^{\mathcal{L}}$  & C & R & W & RW\\
 \Xhline{1pt}
@@ -415,16 +417,23 @@ W & W & W & W & W\\
 \hline
 RW & RW & $\text{R}^{\cup}$W & W & RW\\
 \end{tabular}
+% }
 \caption{The union mapping operator for liveness in the \emph{type} policy.}
 \label{tbl:TYPECTunion}
 \end{table}
 
 \textbf{Variadic Functions.}
 \label{subsection:variadicfunctions}
-Variadic functions are special functions in C/C++ that have a basic set of parameters, which they always require and a variadic set of parameters, which as the name suggests may vary. A prominent example of this would be the $printf$ function, which is used to output text to $stdout$.
+Variadic functions are special functions in C/C++ that have a basic set of parameters, 
+which they always require and a variadic set of parameters, which as the name suggests 
+may vary. A prominent example of this would be the $printf$ function, which is used 
+to output text to $stdout$.
 
-The problem with these functions is that to allow for easier processing of parameters usually all potential variadic parameters are moved into a contiguous block of memory, as can be seen in the assembly in 
-Figure \ref{fig:asmvariadic}. Our analysis interprets that as a read access on all parameters and we arrive at a problematic overestimation. 
+The problem with these functions is that to allow for easier processing of parameters
+usually all potential variadic parameters are moved into a contiguous block of memory,
+as can be seen in the assembly in 
+Figure \ref{fig:asmvariadic}. Our analysis interprets that as a read access on all 
+parameters and we arrive at a problematic overestimation. 
 
 \begin{figure}
 % \centering
@@ -459,14 +468,14 @@ Figure \ref{fig:asmvariadic}. Our analysis interprets that as a read access on a
 \end{figure}
 
 Our solution to this problem is to find these spurious reads and ignore them. A compiler will implement this type of operation very similar foll all cases, thus we can achieve this using the following steps:
-\begin{enumerate}
+\begin{itemize}
 \item Look for what we call the xmm-passthrough block, which entierly consist of moving the values of registers \texttt{xmm0} to \texttt{xmm7} into contiguous memory (in our case basic block [\texttt{0x422306}, \texttt{0x42233d} [ ).
 \item Look at the predecessor of the xmm-passthrough block, which we call the entry block (in our case basic block [\texttt{0x4222f0}, \texttt{0x4222f2} [ ). Check if the successors of the entry block consist of the xmm-passthrough block and the successor of the xmm-passthrough block, which we call the param-passthrough block (in our case basic block [\texttt{0x42233d}, \texttt{0x42235e} [ ).
 \item Look at the param-passthrough block and set all instructions that move the value of a parameter register into memory to be ignored (in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \texttt{0x422347} and \texttt{0x42234c}).
-\end{enumerate}
+\end{itemize}
 
 
-\textbf{Callsite Analysis.}
+\subsection{Callsite Analysis}
 \label{section:callsiteanalysis}
 For either \emph{count} or \emph{type} policy to work, we need to arrive at an overestimation of the provided parameters by any indirect callsite existing within the targeted binary. We will employ a modified version of reaching analysis that tracks registers instead of variables to generate the needed overestimation. As our algorithm will be customizable, we look at the required merge functions to implement \emph{count} and \emph{type} policy. 
 
@@ -474,7 +483,7 @@ For either \emph{count} or \emph{type} policy to work, we need to arrive at an o
 \label{subsection:reachindefinitionstheory}
 An assignment of a value to a variable is a reaching definition at the end of a block $n$, if that definition is present within at least one path from start to the end of the block $n$ without being overwritten by another value assignment to the same variable. We employ reaching definitions analysis, because we are looking for the parameters a callsite provides. This essentially requires the last known set of definitions that reach the actual callinstruction within the parameter registers.
 
-The book ``Data Flow Analysis - Theory and Practice'' \cite{khedker2009data} defines reaching definition analysis on blocks in the following manner:
+The book~\cite{khedker2009data} defines reaching definition analysis on blocks in the following manner:
 \begin{subequations}
 \label{eq:reachingbasedef}
 \begin{align}
@@ -537,12 +546,12 @@ pred &: \mathcal{I} \mapsto \mathcal{P}(\mathcal{I})
 \end{subequations}
 
 As the $analyze\_instr$ function calculates the effect of an instruction and is the heart of the analyze function. It will also handle non jump and non fallthrough successors, as these are not handled by DynInst in our case. We essentially have three cases that we handle:
-\begin{enumerate}
+\begin{itemize}
 \item if the instruction is an indirect call or a direct call but we chose not follow calls, then return a state where all trashed are considered written.
 \item if the instruction is a diect call and we chose to follow calls, then we spawn a new analysis and return its result.
 %\item if the instruction is a constant write (e.g. xor of two registers) then we remove the read portion before we return the decoded state
 \item in all other cases we simply return the decoded state.
-\end{enumerate}
+\end{itemize}
 
 This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
 
@@ -554,13 +563,13 @@ This leaves us with the two merge functions remaining undefined and we will leav
 
 \textbf{Provided Parameter Count.}
 \label{subsection:providedparamcount}
-
 To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we are interested in the following three different exclusive informations:
-\begin{enumerate}
+
+\begin{itemize}
 \item Was the register value trashed ? \\ We represent this with the state T.
 \item Was the register written to ? \\ We represent this with the state S.
 \item Was the register neither trashed nor written to ? \\ We represent this with the state U.
-\end{enumerate}
+\end{itemize}
 This gives us the following register state $S^\mathcal{L} = \{ T, S, U \}$ which translates to the register superstate $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
 We are only interested in the first occurrence of a S or T within one path, as following reads or writes do not give us more information.
 Therefore, we can define our vertical merge function in the following way:
@@ -594,7 +603,7 @@ U being more inclusive than a union.
 \begin{table}
 % \centering
 {
-
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{c?c|c|c}
 $\bigsqcap^{\mathcal{R}}$ & U & S & T\\
 \Xhline{1pt}
@@ -630,7 +639,7 @@ U & U & S & T\\
 S & S & S & S\\
 \hline
 T & T & S & T
-\end{tabular}
+\end{tabular}}
 }
 
 \caption{Different mappings for combining two reaching state values in horizontal matching for the \emph{count} policy.}
@@ -641,13 +650,13 @@ T & T & S & T
 
 \textbf{Provided Parameter Wideness.}
 \label{subsection:providedparamwideness}
-
 To implement the \emph{type} policy, we need a finer representation of the state of one register, thus we are interested in the following three informations:
-\begin{enumerate}
+
+\begin{itemize}
 \item Was the register value trashed ? \\ We represent this with the state T.
 \item Was the register written to and how much ? \\ We represent this with the states $\{ s64, s32, s16, s8 \}$ using S as a placeholder for arbitrary writes.
 \item Was the register neither trashed nor written to ? \\ We represent this with the state U.
-\end{enumerate}
+\end{itemize}
 This gives us the following register state $S^\mathcal{L} = \{ T, s64, s32, s16, s8, U \}$ which translates to the register superstate $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
 Again, we are only interested in the first occurrence of a state that is not $U$ in a path, as following reads or writes do not give us more information.
 
@@ -678,7 +687,7 @@ furthermore we calculate the union of states when both states are set (the highe
 \begin{table}
 
 % \centering
-
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{c?c|c|c}
 $\bigcap^{\mathcal{R}}$  & U & S & T\\
 \Xhline{1pt}
@@ -705,50 +714,59 @@ U & U & S & T\\
 S & S & $\text{S}^{\cup{}{}}$ & T\\
 \hline
 T & T & T & T
-\end{tabular}
+\end{tabular}}
 
 \caption{Different mappings for combining two reaching state values in horizontal matching for the \emph{type} policy.}
 \label{fig:TYPEreachingmapping}
 \end{table}
 
-
 Initial experiments with this implementation showed two problems regarding provided wideness detection.  Parameter lists with ``holes'' and address wideness underestimation.
 
-\paragraph{Parameter lists with ``holes''} refers to parameter lists that show one or more \texttt{void} parameters between start to the last actual parameter. These are not existant in actual code but our analysis has the possibility of generating them through the merge operations. An example would be the following: A parameter list of $(64, 0, 64, 0, 0, 0)$ is concluded, although the actual parameter list might be $(64, 32, 64, 0, 0, 0)$. While the trailing 0es are what we expect, the 0 at the second parameter position will cause trouble, because it is an underestimation at the single parameter level, which we need to avoid.
+\paragraph{Parameter lists with \textit{holes}.} This refers to parameter lists that show one or more \texttt{void} parameters between start to the last actual parameter. These are not existant in actual code but our analysis has the possibility of generating them through the merge operations. An example would be the following: A parameter list of $(64, 0, 64, 0, 0, 0)$ is concluded, although the actual parameter list might be $(64, 32, 64, 0, 0, 0)$. While the trailing 0es are what we expect, the 0 at the second parameter position will cause trouble, because it is an underestimation at the single parameter level, which we need to avoid.
 Our solution is to simply scan our reaching analysis result for these holes and replace them with the wideness $64$, causing a (possible) overestimation.
 
 \paragraph{Address wideness unterestimation} refers to the problem that while in the callsite a constant value of 32bit is written to a register, however the calltarget uses the whole 64bit register. This can occur when pointers are passed from the callsite to the calltarget. Specifically this happens when pointers to memory inside the ``.bss'', ``.data'' or ``.rodata'' section of the binary are passed.
 Our solution is to enhance our instruction analysis to watch out for constant writes. In case a 32bit constant value write is detected, we check if the value is an addess within the ``.bss'', ``.data'' or ``.rodata'' section of the binary. If this is the case, we simply return a write access of 64bits instead of 32bits. (This is not problematic, because we are looking for an overestimation of parameter wideness)
 It should be noted that the same problem can arise when a constant write causes the value 0 to be written to a 32bit register. We use the same solution and set the wideness to 64bits instead of 32bits.
 
-\textbf{Address Taken Analysis.}
+\subsection{Address Taken Analysis}
 \label{section:addresstakenanalysis}
-
-As of now, we use the maximum available set of calltargets - the set of all function entry basic blocks - as input for our algorithm. To restrict the number of calltargets per callsite even further, we explored the possibility of incorporating an address taken analysis into our application. We base our theory on the paper by Zhang and Sekar\cite{mingwei:sekar}, which introduced various types of taken addresses. An address is considered to be taken, when it is loaded into memory or a register.
+As of now, we use the maximum available set of calltargets---the set of all function entry basic blocks---as input for our algorithm. 
+To restrict the number of calltargets per callsite even further, we explored the possibility of incorporating an address taken analysis
+into our application. We base our theory on the paper by Zhang and Sekar\cite{mingwei:sekar}, which introduced various types of taken
+addresses. An address is considered to be taken, when it is loaded into memory or a register.
 
 \textbf{Address Taken Targets.}
-Based on the notions of \cite{mingwei:sekar}, which classified taken addresses into several types of indirect control flow targets, we only chose { Code Pointer Constants (CK)} and discarded the others:
+Based on the notions of \cite{mingwei:sekar}, which classified taken addresses into several types of indirect control flow targets,
+we only chose { Code Pointer Constants (CK)} and discarded the others:
 \begin{itemize}
 
-\item { Code Pointer Constants (CK)} are addresses that are calculated during the compilation of the binary and point within the possible range of addresses in the current module or to instruction boundaries. We are however only interested in addresses that directly point to an entry basic block of a function, as these are the only valid targets for any callsite.
+\item { Code Pointer Constants (CK)} are addresses that are calculated during the compilation of the binary and point within
+the possible range of addresses in the current module or to instruction boundaries. We are however only interested in addresses
+that directly point to an entry basic block of a function, as these are the only valid targets for any callsite.
 
-\item { Computed code pointers (CC)} are the result of simple pointer arithmetic, however these are only used for intra procedural jumps. We rely on DynInst to resolve those and only focus on indirect callsites, therefore these are of no interest to us.
+\item { Computed code pointers (CC)} are the result of simple pointer arithmetic, however these are only used for intra procedural jumps. 
+We rely on DynInst to resolve those and only focus on indirect callsites, therefore these are of no interest to us.
 
-\item{ Exception handling addresses (EH)} are used to handle exceptions within C++ functions and are modelled as jumps within the function. These are therefore within the normal controlflow that we rely on DynInst to resolve for us.
+\item{ Exception handling addresses (EH)} are used to handle exceptions within C++ functions and are modelled as jumps within the function. 
+These are therefore within the normal controlflow that we rely on DynInst to resolve for us.
 
-\item{ Exported function addresses (ES)} are essentially functions that point outside of our current module (usually to dynamically linked libraries) and are implemented as jumps, which are of no concern to us, because our analysis is only concerned about the current object.
+\item{ Exported function addresses (ES)} are essentially functions that point outside of our current module (usually to dynamically 
+linked libraries) and are implemented as jumps, which are of no concern to us, because our analysis is only concerned about the current object.
 
-\item { Return addresses (RA)}, which are the addresses next to a call instruction, are also of no interest to us, because we only implement forward { control flow integrity}.
+\item { Return addresses (RA)}, which are the addresses next to a call instruction, are also of no interest to us, because we only 
+implement forward { control flow integrity}.
 \end{itemize}
 
 \textbf{Binary Analysis.}
 Our approach of identifying taken addresses consists of two steps: First, we iterate over the raw binary content of data sections. Second, we iterate over all functions within the disassembled binary. We rely on DynInst to provide us with the boundaries of the sections inside the binary and in case of shared libraries with the needed translation to current memory addresses:
 
-\begin{enumerate}
+\begin{itemize}
 \item We look at three different data sections of the binary, which could possibly contain taken addresses: the .data, .rodata and .dynsym sections. As \cite{mingwei:sekar} proposed, we slide a four byte window over the data within those sections and look for addresses that point to function entry blocks. However, we are looking at x64 binaries therefore we additionally use an eight byte window. In case of shared libraries, we need to let DynInst translate the raw address, we extracted, so we can perform the function check.
 
 \item We specifically look for instructions that load a constant value into a register or memory, and again check whether the address points to the entry block of a function.
-\end{enumerate}
+\end{itemize}
+
 %\section{Runtime Enforcement}
 %\label{section:runtimeenforcement}
 %

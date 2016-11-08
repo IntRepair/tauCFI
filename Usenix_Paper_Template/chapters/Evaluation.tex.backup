@@ -1,414 +1,2207 @@
-\chapter{Evaluation}
+\section{Evaluation}
 \label{chapter:Evaluation}
-We evaluated our tool X with Y popular servers, by instrumenting them with our tool.
-We performed runtime performance test with the following applications.
-
-Our Evaluation aims to answer the following research questions:
+We evaluated our \textit{TypeShield} by instrumenting various open source applications and analyzing the result. 
+We used the two ftp server applications vsftpd (version 1.1.0) and proftpd (version 1.3.3), the two http server 
+applications postgresql (version 9.0.10) and  mysql (5.1.65), the memory cache application memcached (version 1.4.20) 
+and the node.js server application node (version 0.12.5). We chose these applications, which are a subset of the 
+applications also used by the TypeAmor~\cite{veen:typearmor} to allow for later comparison.
+In our evaluation of the two modes of 
+\textit{TypeShield}, we are trying to answer the following questions:
 \begin{itemize}
- \item \textbf{R1:} How effective is \textit{TypeShild} in securing binary programs against the COOP attack?
+
+ \item \textbf{RQ1:} How precise is \textit{TypeShield} in recovering parameter count and type information for callsites and calltargets from a given binary?
+
+ \item \textbf{RQ2:} How effective is \textit{TypeShield} in restricting the possible number of calltargets per callsite?
+
+ \item \textbf{RQ3:} What is the performance overhead introduced by \textit{TypeShield}?
+ \todo[inline]{address this}
  
- \item \textbf{R2:} How precise is  \textit{TypeShild} in detecting the types of the caller/caller pairs?
+ \item \textbf{RQ4:} What is the instrumentation overhead introduced by \textit{TypeShield}?
+ \todo[inline]{address this}
  
- \item \textbf{R3:} What is the instrumentation overhead of \textit{TypeShild}?
-  
- \item \textbf{R4:} What is the performance overhead of  \textit{TypeShild}?
- 
- \item \textbf{R5:} What are the instrumentation overheads imposed by  \textit{TypeShild}?
- 
- \item \textbf{R6:} How many caller/called pairs are secured by \textit{TypeShild} and how many remain unsecured?
- 
- \item \textbf{R7:} Against which kind of attacks can \textit{TypeShild} secure executables?
+ \item \textbf{RQ5:} What level of security does \textit{TypeShield} offer?
+ \todo[inline]{address this}
  
 \end{itemize}
 
-\textbf{Comparison methods.} Example: We used UBSAN (compare with TypeArmor), the state-of-art
-tool for detecting bad-casting bugs, as our comparison tar-
-get of C A V ER . Also, We used C A V ER - NAIVE , which dis-
-abled the two optimization techniques described in §4.4,
-to show their effectiveness on runtime performance opti-
-mization.
+\textbf{Comparison Method.} As we do not have access to the source code of TypeAmor, we implemented two modes in \textit{TypeShield}. 
+The first mode of our tool is an approximate implementation of what we understand is the \textit{count} 
+policy implemented by TypeAmor. The second mode is our implementation of the \textit{type} policy on
+top of our implementation of the \textit{count} policy. 
 
-\textbf{Experimental setup.} Example: All experiments were run on
-Ubuntu 13.10 (Linux Kernel 3.11) with a quad-core 3.40
-GHz CPU (Intel Xeon E3-1245), 16 GB RAM, and 1 TB
-SSD-based storage.
+\textbf{Experimental Setup.} We setup our environment within a VirtualBox (version 5.0.26r) instance, which runs Kubuntu 16.04 LTS (Linux Kernel
+version 4.4.0) and has access to 3GB of RAM and 4 of 8 provided hardware threads (Intel i7-4170HQ @ 2.50 GHz).
 
+\subsection{Precision of \textit{TypeShield}}
+\label{section:typeshieldprecision}
 
-\section{R1: Effectiveness of our Tool}
-\label{R1: Effectiveness of our Tool}
+To measure the precision of \textit{TypeShield}, we need to compare the classification of callsites and calltargets as is given by our tool to some sort of ground truth for our testtargets. We generate this ground truth by compiling our testtargets using a custom compiled Clang/LLVM compiler (version 4.0.0 trunk 283889) with a MachineFunction pass inside the x86 code generation implementation of LLVM. We essentially collect three data points for each callsite/calltarget from our LLVM-pass:
+\begin{itemize}
+\item The point of origination, which is either the name of the calltarget or the name of the function the callsite resides in.
+\item The return type that is either expected by the callsite or provided by the calltarget.
+\item The parameter list that is provided by the callsite or expected by the calltarget, which discards the variadic argument list.
+\end{itemize}
+However, before we can proceed to measure the quality and precision of \textit{TypeShield}'s classification of calltargets and callsites using our ground truth, we need to evaluate the quality and applicability of the ground truth, we collected.
 
-\subsection{Mitigation of Advanced Code-Reuse Attacks}
-\label{Mitigation of Advanced Code-Reuse Attacks}
+\subsubsection{Quality and Applicability of Ground Truth}
+\label{subsection:typeshieldprecision}
+To assess the applicability of our collected ground truth, we essentially need to assess the structural compatability of our two datasets. First we take a look at the comparability of calltargets, which is quite high throughout optimization levels. Then we take a look at the compatability of callsites, which is qualitatively low in the higher optimization levels, while five of our testtargets start with 0\% mismatch in O0, mysql stays throughout all levels at a constant mismatch rate of around 18\%, and the others between 2\% and 17\%.
 
-In this section, we discuss how effective \textit{TypeShild} is 
-stopping advance code-reuse attacks (CRAs).
+\textbf{Calltargets.} The obvious choice for structural comparison regarding calltargets is their name, as these are simply functions. First, we have to however remove internal functions from our datasets like the \texttt{\_init} or \texttt{\_fini} functions, which are of no consequence for us. Furthermore, while C functions can simply be matched by their name as they are unique through the binary, the same cannot be said about the language C++. One of the key differences between C and C++ is function overloading, which allows to define several functions with the same name, as long as they differ in namespace or parameter type. As LLVM does not know about either concept, the Clang compiler needs to generate unique names. The method used for unique name generation is called mangling and composes the actual name of the function, its the return type, its namespace and the types of its parameter list. We therefore need to reverse this process, which is called demangling and then compare the fully typed names.
+The table \ref{tbl:matchingquality} shows three data points regarding calltargets for optimization levels O0, O1, O2 and O3:
+\begin{itemize}
+\item The number of comparable calltargets that are found in both datasets
+\item The number of calltargets that are found by \textit{TypeShield} but not by our Clang/LLVM pass, named Clang miss
+\item The number of calltargets that are found by our Clang/LLVM pass but not by \textit{TypeShield}, named tool miss
+\end{itemize}
+The problematic column is the Clang miss column, as these might indicate problems with \textit{TypeShield}. These numbers are relatively low (below 1\%) throughout optimization levels, with only node showing a significant higher value than the rest of around 1.6\%. The column labeled tool miss lists higher numbers, however these are of no real concern to us, as our ground truth pass possibly collects more data: All source files used during the compilation of our testtargets are incorporated into our ground dtruth. The compilation might generate more than one binary and therefore not necessary all sourcefiles are used for our testtarget.
 
-\begin{table}[H]
-\centering
-\caption{Classification CS}
-\label{Integer overflow bug detection in CWE-190}
-\resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|} \hline
-\textbf{Exploit}  &\textbf{Stopped?} & \textbf{Notes}   \\ \hline 
-x                 &x                 &x                 \\ \hline
+Considering this, we can safely state that our structural matching between ground truth and \textit{TypeShield} regarding calltargets is nearly perfect (above 98\%)
 
-\end{tabular}}
-%  \vspace{-2.5em}
-\end{table}
+\begin{table}[h!]
+\resizebox{.5\textwidth}{!}{
+	\begin{tabular}{l|c|c|c|c|c|c}%
+	\toprule
+	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{3}{c|}{ {\bfseries calltargets}} & \multicolumn{3}{c}{{\bfseries callsites} }\\
+	\bfseries Target & match & Clang miss &  tool miss &  match & Clang miss & tool miss% specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/matching.O0.csv}{
+		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
+	}
+	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
+%    	\end{tabular}
+%}
+%		\caption {Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with O0}
+%	\label{tbl:matchingquality0}
+%\end{table}
+%
+%
+%\begin{table}
+%\resizebox{\textwidth}{!}{
+%	\begin{tabular}{l|c|c|c|c|c|c}%
+%	\toprule
+	\multicolumn{1}{c}{\bfseries O1 }%& \multicolumn{3}{c|}{ {\bfseries calltargets}} & \multicolumn{3}{c}{{\bfseries callsites} }\\
+%	\bfseries Target & match & Clang miss &  padyn miss &  match & Clang miss & padyn miss% specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/matching.O1.csv}{
+		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
+	}
+	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
+%    	\end{tabular}
+%}
+%		\caption {Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with O1}
+%	\label{tbl:matchingquality1}
+%\end{table}
+%
+%
+%\begin{table}
+%\resizebox{\textwidth}{!}{
+%	\begin{tabular}{l|c|c|c|c|c|c}%
+%	\toprule
+	\multicolumn{1}{c}{\bfseries O2}% & \multicolumn{3}{c|}{ {\bfseries calltargets}} & \multicolumn{3}{c}{{\bfseries callsites} }\\
+%	\bfseries Target & match & Clang miss &  padyn miss &  match & Clang miss & padyn miss% specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/matching.O2.csv}{
+		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
+	}
+	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
+%    	\end{tabular}
+%}
+%		\caption {Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with O2}
+%	\label{tbl:matchingquality2}
+%\end{table}
+%
+%
+%\begin{table}
+%\resizebox{\textwidth}{!}{
+%	\begin{tabular}{l|c|c|c|c|c|c}%
+%	\toprule
 
-\subsection{Effectiveness against COOP}
-\label{Effectiveness against COOP}
-
-\subsection{Stopping COOP Exploits in Practice}
-\label{Stopping COOP Exploits in Practice}
-
-\subsection{Control Jujutsu}
-\label{Control Jujutsu}
-yes no?
-
-
-\subsection{COOP Extensions}
-\label{COOP Extensions}
-
-\subsection{Pure Data-only Attacks}
-\label{Pure Data-only Attacks}
-
-
-\begin{table}[H]
-\centering
-\caption{Classification CS}
-\label{Integer overflow bug detection in CWE-190}
-\resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|} \hline
-\textbf{target}  &\textbf{opt} & \textbf{\#CS}     & \textbf{problems}    &\textbf{0} & \textbf{-1}  & \textbf{-2} &\textbf{-3} &\textbf{-4} &\textbf{-5} &\textbf{-6}  &\textbf{non-void-ok}  &\textbf{non-void-probl.}   \\ \hline 
-x                &x            &x                  &x                     &x          &x             &x            &x           &x           &x           &x            &x                     &x                          \\ \hline
-
-\end{tabular}}
-%  \vspace{-2.5em}
-\end{table}
-
-
-\begin{table}[H]
-\centering
-\caption{Compound}
-\label{Integer overflow bug detection in CWE-190}
-\resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|} \hline
-\textbf{opt}  & \textbf{\#CS}     & \textbf{cs args (perfect \%)}    &\textbf{cs args (problem \%)} & \textbf{cs non-void (correct \%)}  & \textbf{cs non-void (probl. \%)} &\textbf{\#ct} &\textbf{ct args (perfect \%)} &\textbf{ct args (probl. \%)} &\textbf{ct void (correct \%)}  &\textbf{ct void (correct \%)}   \\ \hline 
-x             &x                  &x                                 &x                             &x                                   &x                                 &x             &x                             &x                            &x                              &x                               \\ \hline
-
-\end{tabular}}
-%  \vspace{-2.5em}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{Classification CT}
-\label{Integer overflow bug detection in CWE-190}
-% \resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|} \hline
-\textbf{target}  &\textbf{opt} & \textbf{\#CS}     & \textbf{problems}    &\textbf{0} & \textbf{-1}  & \textbf{-2} &\textbf{-3} &\textbf{-4} &\textbf{-5} &\textbf{-6}  &\textbf{non-void-ok}  &\textbf{non-void-probl.}   \\ \hline 
-x                &x            &x                  &x                     &x          &x             &x            &x           &x           &x           &x            &x                     &x                          \\ \hline
-
-\end{tabular}
-% }
-%  \vspace{-2.5em}
-\end{table}
-
-
-\begin{table}[H]
-\centering
-\caption{Callsite Classification for paramcount}
-\label{Integer overflow bug detection in CWE-190}
-% \resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|} \hline
-\textbf{target}  & \textbf{opt}     & \textbf{problematic}    &\textbf{+0} & \textbf{+1}  & \textbf{+2} &\textbf{+3} &\textbf{+4} &\textbf{+5} &\textbf{+6}  \\ \hline 
-x                &x                 &x                        &x           &x             &x            &x           &x           &x           &x            \\ \hline
-
-\end{tabular}
-% }
-%  \vspace{-2.5em}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{Calltarget Classification}
-\label{Integer overflow bug detection in CWE-190}
-% \resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|} \hline
-\textbf{target}  & \textbf{opt}     & \textbf{problematic}    &\textbf{-0} & \textbf{-1}  & \textbf{-2} &\textbf{-3} &\textbf{-4} &\textbf{-5} &\textbf{-6}  \\ \hline 
-x                &x                 &x                        &x           &x             &x            &x           &x           &x           &x            \\ \hline
-
-\end{tabular}
-% }
-%  \vspace{-2.5em}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{Coumpound table}
-\label{Integer overflow bug detection in CWE-190}
-% \resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|l|l|l|} \hline
-\textbf{target}  & \textbf{opt}     & \textbf{\#}    &\textbf{Callsites: param perf. \%, probl \%} & \textbf{\#}  & \textbf{Callsites: param perf. \%, probl \%}  \\ \hline 
-x                &x                 &x               &x                                      &x             &x                                        \\ \hline
-
-\end{tabular}
-% }
-%  \vspace{-2.5em}
+	\multicolumn{1}{c}{\bfseries O3 }%& \multicolumn{3}{c|}{ {\bfseries calltargets}} & \multicolumn{3}{c}{{\bfseries callsites} }\\
+%	\bfseries Target & match & Clang miss &  padyn miss &  match & Clang miss & padyn miss% specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/matching.O3.csv}{
+		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
+	}
+	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
+    	\end{tabular}}
+%     	}
+	\caption {Table shows the quality of structural matching provided by our automated verify and test environment, 
+	regarding callsites and calltargets when compiling with optimization levels O0 through O3. The label Clang miss 
+	denotes elements not found in the dataset of the Clang/LLVM pass. The label tool miss denotes elements not found in the dataset of \textit{TypeShield}.}
+	\label{tbl:matchingquality}
 \end{table}
 
 
-\begin{table}[H]
-\centering
-\caption{MAtching table}
-\label{Integer overflow bug detection in CWE-190}
-% \resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|} \hline
-\textbf{target}  & \textbf{opt}     & \textbf{ct}    &\textbf{Ct probl.} & \textbf{at}  & \textbf{at prob.} &\textbf{cs} & \textbf{clang cs probl.}  & \textbf{padyn cs probl.}  \\ \hline 
-x                &x                 &x               &x                  &x             &x                  &x           &x                          &x   \\ \hline
 
-\end{tabular}
-% }
-%  \vspace{-2.5em}
-\end{table}
+\textbf{Callsites.} While our structural matching of calltargets is rather simple, we have not so much luck regarding Callsites. While our tool can provide accurate addressing of callsites within the binary, Clang/LLVM does not have such capabilities in its intermediate representation. Therefore we assume that the ordering of callsites stays roughly the same within one function and that we exclude all functions, which report a different amount of callsites in both datasets.
+The table \ref{tbl:matchingquality} shows three data points regarding callsites for optimization levels O0, O1, O2 and O3:
+\begin{itemize}
+\item The number of comparable callsites that are found in both datasets.
+\item The number of callsites that are discarded due to mismatch from the dataset of \textit{TypeShield}, named Clang miss.
+\item The number of callsites that are discarded due to mismatch from the dataset of our Clang/LLVM pass, named tool miss.
+\end{itemize}
 
 
-\begin{table}[H]
-\centering
-\caption{policy evaluation}
-\label{Integer overflow bug detection in CWE-190}
-% \resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|} \hline
-\textbf{target}  & \textbf{opt}     & \textbf{policy}    &\textbf{0} & \textbf{1}  & \textbf{2} &\textbf{3} & \textbf{4}  & \textbf{5} & \textbf{6}  & \textbf{sumarry}  \\ \hline 
-x                &x                 &x                   &x          &x            &x           &x          &x            &x           &x            &x \\ \hline
+Second, we look at callsites and this is more problematic, as Clang/LLVM does not have a notion of instruction address in its IR, therefore we assume the ordering in a function is the same in both datasets and when the callsite count is not the same for dyninst and Clang/padyn, we discard it. The are several reasons for mismatch: One is the tailcall optimization, which means that a call instructions at the end of a function are converted into jump instructions. Another one is callsite merging, which happens when a call to a function exists several times within a function and the compiler can merge the paths to this function.
+Furthermore we already eliminated multiple compilations of the same sourcefile during one testtarget compilation (this would have skewed the results in the case of memcached).
 
-\end{tabular}
-% }
-%  \vspace{-2.5em}
-\end{table}
+Normally up to 20\% mismatch would not be that much of a problem, however this percentage is only based on the number of callsites per function and we cannot really give any guarantees that the callsites in both datasets are the same. (Although for O0 there is quite a high possibility due to the absence of nearly all optimizations, however mysqld and node remain problematic).
 
-\begin{table}[H]
-\centering
-\caption{param wideness}
-\label{Integer overflow bug detection in CWE-190}
-% \resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|l|l|l|l|} \hline
-\textbf{5}  & \textbf{4}     & \textbf{3}    &\textbf{2} & \textbf{1}  & \textbf{0} &\textbf{param/wideness}  \\ \hline 
-x           &x               &x              &x          &x            &x           &0                         \\ \hline
-x           &x               &x              &x          &x            &x           &8                         \\ \hline
-x           &x               &x              &x          &x            &x           &16                         \\ \hline
-x           &x               &x              &x          &x            &x           &32                         \\ \hline
-x           &x               &x              &x          &x            &x           &64                         \\ \hline
+\subsubsection{Precision Calltarget Classification (\textit{count})}
+\label{subsection:typeshieldprecision}
+We are going to present the experiments and values to find the best possible combination operator for the calltarget analysis in the \textit{count} policy.
 
-\end{tabular}
-% }
-%  \vspace{-2.5em}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{tabelle 7}
-\label{Integer overflow bug detection in CWE-190}
-% \resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|l|l|l|l|} \hline
-\textbf{5}  & \textbf{4}     & \textbf{3}    &\textbf{2} & \textbf{1}  & \textbf{0} &\textbf{param/wideness}  \\ \hline 
-x           &x               &x              &x          &x            &x           &0                         \\ \hline
-x           &x               &x              &x          &x            &x           &8                         \\ \hline
-x           &x               &x              &x          &x            &x           &16                         \\ \hline
-x           &x               &x              &x          &x            &x           &32                         \\ \hline
-x           &x               &x              &x          &x            &x           &64                         \\ \hline
-
-\end{tabular}
-% }
-%  \vspace{-2.5em}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{tabelle 7}
-\label{Integer overflow bug detection in CWE-190}
-% \resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|l|l|l|l|} \hline
-\textbf{5}  & \textbf{4}     & \textbf{3}    &\textbf{2} & \textbf{1}  & \textbf{0} &\textbf{param/wideness}  \\ \hline 
-x           &x               &x              &x          &x            &x           &0                         \\ \hline
-x           &x               &x              &x          &x            &x           &8                         \\ \hline
-x           &x               &x              &x          &x            &x           &16                         \\ \hline
-x           &x               &x              &x          &x            &x           &32                         \\ \hline
-x           &x               &x              &x          &x            &x           &64                         \\ \hline
-
-\end{tabular}
-% }
-%  \vspace{-2.5em}
-\end{table}
-
-% http://www.texample.net/tikz/examples/
-% 
-% \begin{tikzpicture}[node distance=1cm, auto,]
-%  %nodes
-%  \node[punkt] (market) {Market (b)};
-%  \node[punkt, inner sep=5pt,below=0.5cm of market]
-%  (formidler) {Intermediaries (c)};
-%  % We make a dummy figure to make everything look nice.
-%  \node[above=of market] (dummy) {};
-%  \node[right=of dummy] (t) {Ultimate borrower}
-%    edge[pil,bend left=45] (market.east) % edges are used to connect two nodes
-%    edge[pil, bend left=45] (formidler.east); % .east since we want
-%                                              % consistent style
-%  \node[left=of dummy] (g) {Ultimate lender}
-%    edge[pil, bend right=45] (market.west)
-%    edge[pil, bend right=45] (formidler.west)
-%    edge[pil,<->, bend left=45] node[auto] {Direct (a)} (t);
-% \end{tikzpicture}
-% \vspace{1em}
-% \emph{Impact of CFi and CFC example.}
-
-alternative for abobe:
-\begin{figure}[!ht]
-  \caption{impact of CFI and CFC}
-  \centering
-    \includegraphics[width=0.5\textwidth]{figures/impact_of_cfi_and_cfc.pdf}
-\end{figure}
-
-\begin{figure}[!ht]
-  \caption{liveness iteration, dummy}
-  \centering
-    \includegraphics[width=0.9\textwidth]{figures/liveness_iteration.pdf}
-\end{figure}
-
-\begin{figure}[!ht]
-  \caption{reaching iteration, dummy}
-  \centering
-    \includegraphics[width=0.9\textwidth]{figures/reaching_iteration.pdf}
-\end{figure}
+\textbf{Experiment Setup.}
+To choose the best possible combination operator for the calltarget analysis in implementing the \textit{count} policy, we generated data for all six possible versions of liveness analysis.
+\begin{itemize}
+\item Destructive combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CTdestinterCOUNT} for results.
+\item Destructive combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CTdestinterCOUNT} for results.
+\item Intersection combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CTdestinterCOUNT} for results.
+\item Intersection combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CTdestinterCOUNT} for results.
+\item Union combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CTunionCOUNT} for results.
+\item Union combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CTunionCOUNT} for results.
+\end{itemize}
+For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to overestimations.
+\textbf{Results.} The results of destructive combination and intersection combination are the same. Regardless of operator choice the problem rate is extrmely low (under 0.1\%). Overall there is a slight improvement when following calls in all result sets. The union operator (geometric mean for O2: 82.24\%) is slightly more precise than the destructive/intersection operator (geometric mean for O2: 79.93\%). Which presents us the union combination operator as the best possible option here.
 
 
+\begin{table}[h!]
+\resizebox{.5\textwidth}{!}{
+	\begin{tabular}{l|c|c|c}%
 
-
-
-\begin{table}[H]
-\centering
-\caption{matching}
-\label{matching}
-\resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|} \hline
-\textbf{target}  & \textbf{opt}     & \textbf{fn\_count}    &\textbf{fn\_problem} & \textbf{at\_count}  & \textbf{at\_problem} &\textbf{cs\_count} & \textbf{cs\_clang} &\textbf{cs\_padyn} \\ \hline 
-x                &x                 &x                      &x                    &x                    &x                     &0                  &0                   &0                  \\ \hline
-
-
-\end{tabular}
+	\toprule
+	 \multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries not following calls}\\
+	
+	\bfseries Target & \#  &  perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_no_follow.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
-%  \vspace{-2.5em}
+	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_no_follow.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_no_follow.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.inter_no_follow.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+
+
+    	\end{tabular}
+
+	\begin{tabular}{|c|c}%
+
+	\toprule
+    \multicolumn{2}{c}{\bfseries following calls}\\
+	
+	     perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_follow.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+\multicolumn{1}{c}{}
+
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_follow.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+	
+	\multicolumn{1}{c}{}
+
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_follow.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+	
+\multicolumn{1}{c}{}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.inter_follow.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+
+
+    	\end{tabular}
+}
+		\caption {The results for calltarget analysis using the destructive/intersection combination operator for the \textit{count} policy throughout different optimizations.}
+		\label{tbl:CTdestinterCOUNT}
 \end{table}
 
-\begin{table}[H]
+
+\begin{table}[h!]
+\resizebox{.5\textwidth}{!}{
+	\begin{tabular}{l|c|c|c}%
+
+	\toprule
+	\multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries not following calls}\\
+	
+	\bfseries Target & \#  &  perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_no_follow.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_no_follow.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_no_follow.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.union_no_follow.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+
+    	\end{tabular}
+
+	\begin{tabular}{|c|c}%
+
+	\toprule
+	\multicolumn{2}{c}{\bfseries following calls}\\
+	
+	perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_follow.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_follow.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_follow.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.union_follow.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+
+
+    	\end{tabular}
+}
+		\caption {The results for calltarget analysis using the union combination operator for the \textit{count} policy throughout different optimizations.}
+		\label{tbl:CTunionCOUNT}
+\end{table}
+
+\newpage
+
+\subsubsection{Precision Callsite Classification (\textit{count})}
+\label{subsection:typeshieldprecision}
+We are going to present two series of experiments and values to find the best possible combination operator for the callsite analysis in the \textit{count} policy.
+\subsubsection{Without inter-procedural Analysis}
+
+\textbf{Experiment Setup.}
+To choose the best possible combination operator for the callsite analysis in implementing the \textit{count} policy without a backward inter-procedural analysis, we generated data for all eight possible versions of reaching definition analysis.
+\begin{itemize}
+\item Destructive/intersection combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CSdestinterCOUNTnointer} for results.
+\item Destructive/intersection combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CSdestinterCOUNTnointer} for results.
+\item Union combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CSunionCOUNTnointer} for results.
+\item Union combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CSunionCOUNTnointer} for results.
+\item Union combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CStrueunionCOUNTnointer} for results.
+\item Union combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CStrueunionCOUNTnointer} for results.
+\end{itemize}
+For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to underestimations.
+
+\textbf{Results.} The results of destructive combination and intersection combination are the same. The true union operator is overall inferior to the union operator. The union operator exhibts the lowest error rate when not following calls and is therefore  designated a candiate for the safe version of the callsite combination operator. The destructive/intersection operator exhibts the highest precision (geometric mean for O2: 80.11\%) and is therefore designate a candidate for the precision version of the callsite combination operator (we chose the version that follows functions).
+
+\begin{table}[h!]
+\resizebox{.5\textwidth}{!}{
+	\begin{tabular}{l|c|c|c}%
+
+	\toprule
+	 \multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries not following calls}\\
+	
+	\bfseries Target & \#  &  perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_no_follow.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_no_follow.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_no_follow.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.inter_no_follow.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+    	\end{tabular}
+
+	\begin{tabular}{|c|c}%
+
+	\toprule
+    \multicolumn{2}{c}{\bfseries following calls}\\
+	
+	     perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_follow.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+\multicolumn{1}{c}{}
+
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_follow.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+	\multicolumn{1}{c}{}
+
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_follow.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+\multicolumn{1}{c}{}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.inter_follow.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+    	\end{tabular}
+}
+		\caption {The results for callsite analysis using the destructive/intersection combination operator for the \textit{count} without inter-procedural analysis policy throughout different optimizations.}
+		\label{tbl:CSdestinterCOUNTnointer}
+\end{table}
+
+
+\begin{table}[h!]
+\resizebox{.5\textwidth}{!}{
+	\begin{tabular}{l|c|c|c}%
+
+	\toprule
+	\multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries not following calls}\\
+	
+	\bfseries Target & \#  &  perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_no_follow.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_no_follow.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_no_follow.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.union_no_follow.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+    	\end{tabular}
+
+	\begin{tabular}{|c|c}%
+
+	\toprule
+	\multicolumn{2}{c}{\bfseries  following calls}\\
+	
+	perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_follow.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_follow.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_follow.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.union_follow.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+    	\end{tabular}
+}
+		\caption {The results for callsite analysis using the union combination operator for the \textit{count} without inter-procedural analysis policy throughout different optimizations.}
+		\label{tbl:CSunionCOUNTnointer}
+\end{table}
+
+
+
+
+\begin{table}[h!]
+\resizebox{.5\textwidth}{!}{
+	\begin{tabular}{l|c|c|c}%
+
+	\toprule
+	\multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries not following calls}\\
+	
+	\bfseries Target & \#  &  perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_union_no_follow.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_inter_no_follow.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_inter_no_follow.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.true_sources_inter_no_follow.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+    	\end{tabular}
+
+	\begin{tabular}{|c|c}%
+
+	\toprule
+    \multicolumn{2}{c}{\bfseries following calls}\\
+	
+	     perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_inter_follow.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+\multicolumn{1}{c}{}
+
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_inter_follow.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+	\multicolumn{1}{c}{}
+
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_inter_follow.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+\multicolumn{1}{c}{}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.true_sources_inter_follow.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+    	\end{tabular}
+}
+		\caption {The results for callsite analysis using the true union combination operator for the \textit{count} without inter-procedural analysis policy throughout different optimizations.}
+		\label{tbl:CStrueunionCOUNTnointer}
+\end{table}
+
+\newpage
+
+\subsubsection{With inter-procedural Analysis}
+
+\textbf{Experiment Setup.}
+To choose the best possible combination operator for the callsite analysis in implementing the \textit{count} policy with a backward inter-procedural analysis, we generated data for all eight possible versions of reaching definition analysis.
+\begin{itemize}
+\item Destructive/Intersection combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CSdestinterCOUNTinter} for results.
+\item Destructive/Intersection combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CSdestinterCOUNTinter} for results.
+\item Union combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CSunionCOUNTinter} for results.
+\item Union combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CSunionCOUNTinter} for results.
+\item Union combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CStrueunionCOUNTinter} for results.
+\item Union combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CStrueunionCOUNTinter} for results.
+\end{itemize}
+For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to underestimations.
+
+\textbf{Results.} The results are essentially the same as in the experiment series without inter-procedural analysis, but with slightly higher precision. The results of destructive combination and intersection combination are the same. The true union operator is overall inferior to the union operator. The union operator exhibts the lowest error rate when not following calls and is therefore designated the safe version of the callsite combination operator, as it is superior in precision (geometric mean for O2: 35.79\%) to the non inter-procedural version (geometric mean for O2: 26.55\%). The destructive/intersection operator exhibts the highest precision (geometric mean for O2: 87.85\%) and is therefore designated the best operator for the precision version of the callsite combination operator (we chose the version that follows functions).
+
+\begin{table}[h!]
+\resizebox{.5\textwidth}{!}{
+	\begin{tabular}{l|c|c|c}%
+
+	\toprule
+	 \multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries not following calls}\\
+	
+	\bfseries Target & \#  &  perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_inter_no_follow.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_inter_no_follow.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_inter_no_follow.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.sources_inter_no_follow.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+    	\end{tabular}
+
+	\begin{tabular}{|c|c}%
+
+	\toprule
+    \multicolumn{2}{c}{\bfseries following calls}\\
+	
+	     perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_inter_follow.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+\multicolumn{1}{c}{}
+
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_inter_follow.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+	\multicolumn{1}{c}{}
+
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_inter_follow.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+\multicolumn{1}{c}{}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.sources_inter_follow.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+    	\end{tabular}
+}
+		\caption {The results for callsite analysis using the destructive/intersection combination operator for the \textit{count} with inter-procedural analysis policy throughout different optimizations.}
+		\label{tbl:CSdestinterCOUNTinter}
+\end{table}
+
+
+\begin{table}[h!]
+\resizebox{.5\textwidth}{!}{
+	\begin{tabular}{l|c|c|c}%
+
+	\toprule
+	\multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries not following calls}\\
+	
+	\bfseries Target & \#  &  perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_union_no_follow.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_union_no_follow.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_union_no_follow.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.sources_union_no_follow.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+    	\end{tabular}
+
+	\begin{tabular}{|c|c}%
+
+	\toprule
+	\multicolumn{2}{c}{\bfseries  following calls}\\
+	
+	perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_union_follow.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_union_follow.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_union_follow.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.sources_union_follow.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+    	\end{tabular}
+}
+		\caption {The results for callsite analysis using the union combination operator for the \textit{count} with inter-procedural analysis policy throughout different optimizations.}
+		\label{tbl:CSunionCOUNTinter}
+\end{table}
+
+\begin{table}[h!]
+\resizebox{.5\textwidth}{!}{
+	\begin{tabular}{l|c|c|c}%
+
+	\toprule
+	\multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries not following calls}\\
+	
+	\bfseries Target & \#  &  perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_union_no_follow.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_union_no_follow.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_union_no_follow.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.true_sources_union_no_follow.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+    	\end{tabular}
+
+	\begin{tabular}{|c|c}%
+
+	\toprule
+	\multicolumn{2}{c}{\bfseries following calls}\\
+	
+	perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_union_follow.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_union_follow.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_union_follow.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.true_sources_union_follow.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+    	\end{tabular}
+}
+
+
+		\caption {The results for callsite analysis using the true union combination operator for the \textit{count} with inter-procedural analysis policy throughout different optimizations.}
+		\label{tbl:CStrueunionCOUNTinter}
+\end{table}
+%\begin{table}
+%\resizebox{\textwidth}{!}{
+%	\begin{tabular}{l|c|c|c|c|c|c|c|c|c|c|c}%
+%	\toprule
+%	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{} & \multicolumn{8}{|c|}{ {\bfseries parameters}} & \multicolumn{2}{c}{{\bfseries return type} }\\
+%	\bfseries Target & \bfseries \#CT & \bfseries +x & \bfseries -0 & \bfseries -1 & \bfseries -2 & \bfseries -3 & \bfseries -4 & \bfseries -5 & \bfseries -6 & \bfseries perfect & \bfseries problem% specify table head
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_ct.O0.csv}{
+%		%1=target,2=opt,3=ct,4=problems,5=-0,6=-1,7=-2,8=-3,9=-4,10=-5,11=-6,12=non-void-ok,13=non-void-problem
+%	}
+%	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi & \csvcolxii & \csvcolxiii}% specify your coloumns here
+%
+%	\multicolumn{1}{c}{\bfseries O1}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_ct.O1.csv}{
+%		%1=target,2=opt,3=ct,4=problems,5=-0,6=-1,7=-2,8=-3,9=-4,10=-5,11=-6,12=non-void-ok,13=non-void-problem
+%	}
+%	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi & \csvcolxii & \csvcolxiii}% specify your coloumns here
+%	
+%	\multicolumn{1}{c}{\bfseries O2}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_ct.O2.csv}{
+%		%1=target,2=opt,3=ct,4=problems,5=-0,6=-1,7=-2,8=-3,9=-4,10=-5,11=-6,12=non-void-ok,13=non-void-problem
+%	}
+%	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi & \csvcolxii & \csvcolxiii}% specify your coloumns here
+%	
+%
+%	\multicolumn{1}{c}{\bfseries O3}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_ct.O3.csv}{
+%		%1=target,2=opt,3=ct,4=problems,5=-0,6=-1,7=-2,8=-3,9=-4,10=-5,11=-6,12=non-void-ok,13=non-void-problem
+%	}
+%	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi & \csvcolxii & \csvcolxiii}% specify your coloumns here
+%    	\end{tabular}
+%	}
+%
+%		\caption {Table shows the underestimation of the parameter count in matched calltargets that is happening in our implementation of the basline implementation of the \textit{count} policy, with -x denoting problematic calltargets, when compiling with optimization levels O0 through O3}
+%	\label{tbl:baselinect}
+%\end{table}
+
+
+
+
+
+
+
+%
+%\begin{table}
+%\resizebox{\textwidth}{!}{
+%	\begin{tabular}{l|c|c|c|c|c|c}%
+%
+%	\toprule
+%	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{3}{c|}{ {\bfseries callsites} (param. class.)} & \multicolumn{3}{c}{{\bfseries calltargets} (param. class.)}\\
+%	
+%	\bfseries Target &  \# &  perfect &  problem &  \# &  perfect &  problem % specify table head
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.O0.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii & \csvcoliii & \csvcoliv (\csvcolv\%) & \csvcolvi (\csvcolvii\%) & \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+%
+%
+%
+%\multicolumn{1}{c}{\bfseries O1} 
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.O1.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii & \csvcoliii & \csvcoliv (\csvcolv\%) & \csvcolvi (\csvcolvii\%) & \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+%	
+%	
+%\multicolumn{1}{c}{\bfseries O2}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.O2.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii & \csvcoliii & \csvcoliv (\csvcolv\%) & \csvcolvi (\csvcolvii\%) & \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+%	
+%
+%\multicolumn{1}{c}{\bfseries O3}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.O3.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii & \csvcoliii & \csvcoliv (\csvcolv\%) & \csvcolvi (\csvcolvii\%) & \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+%
+%
+%    	\end{tabular}
+%}
+%		\caption {Table shows the ability of inferring the parameter count for callsites and calltargets exhibited by our implementation of the \textit{count} policy. }
+%	\label{tbl:paramcountprec}
+%\end{table}
+%
+%
+%
+%
+%\begin{table}
+%\resizebox{\textwidth}{!}{
+%	\begin{tabular}{l|c|c|c|c|c|c}%
+%
+%	\toprule
+%	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{3}{c|}{ {\bfseries callsites} (type. class.)} & \multicolumn{3}{c}{{\bfseries calltargets} (type. class.)}\\
+%	
+%	\bfseries Target &  \# &  perfect &  problem &  \# &  perfect &  problem % specify table head
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp_type.O0.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii & \csvcoliii & \csvcoliv (\csvcolv\%) & \csvcolvi (\csvcolvii\%) & \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+%
+%
+%
+%\multicolumn{1}{c}{\bfseries O1} 
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp_type.O1.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii & \csvcoliii & \csvcoliv (\csvcolv\%) & \csvcolvi (\csvcolvii\%) & \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+%	
+%	
+%\multicolumn{1}{c}{\bfseries O2}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp_type.O2.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii & \csvcoliii & \csvcoliv (\csvcolv\%) & \csvcolvi (\csvcolvii\%) & \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+%	
+%
+%\multicolumn{1}{c}{\bfseries O3}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp_type.O3.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii & \csvcoliii & \csvcoliv (\csvcolv\%) & \csvcolvi (\csvcolvii\%) & \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+%
+%
+%    	\end{tabular}
+%}
+%		\caption {Table shows the ability of inferring the parameter count for callsites and calltargets exhibited by our implementation of the \textit{count} policy. }
+%	\label{tbl:paramtypeprec}
+%\end{table}
+
+
+%\subsection{Precision of \textit{TypeShield}'s Callsite Classification}
+%\label{subsection:typeshieldprecision}
+%
+%
+%
+%\begin{table}
+%\resizebox{\textwidth}{!}{
+%	\begin{tabular}{l|c|c|c|c|c|c|c|c|c|c|c}%
+%	\toprule
+%	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{} & \multicolumn{8}{|c|}{ {\bfseries parameters}} & \multicolumn{2}{c}{{\bfseries return type} }\\
+%	\bfseries Target & \bfseries \#CS & \bfseries -x & \bfseries +0 & \bfseries +1 & \bfseries +2 & \bfseries +3 & \bfseries +4 & \bfseries +5 & \bfseries +6 & \bfseries perfect & \bfseries problem% specify table head
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_cs.O0.csv}{
+%		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
+%	}
+%	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi & \csvcolxii & \csvcolxiii}% specify your coloumns here
+%
+%	\multicolumn{1}{c}{\bfseries O1}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_cs.O0.csv}{
+%		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
+%	}
+%	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi & \csvcolxii & \csvcolxiii}% specify your coloumns here
+%
+%	\multicolumn{1}{c}{\bfseries O2}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_cs.O0.csv}{
+%		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
+%	}
+%	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi & \csvcolxii & \csvcolxiii}% specify your coloumns here
+%
+%	\multicolumn{1}{c}{\bfseries O3}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_cs.O0.csv}{
+%		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
+%	}
+%	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi & \csvcolxii & \csvcolxiii}% specify your coloumns here
+%
+%
+%    	\end{tabular}
+%	}
+%		\caption {Table shows the overestimation of the parameter count in matched callsites that is happening in our implementation of the basline implementation of the \textit{count} policy, with -x denoting problematic callsites, when compiling with optimization levels O0 through O3}
+%	\label{tbl:baselinecs}
+%\end{table}
+
+
+\newpage
+\subsubsection{Precision Calltarget Classification (\textit{type})}
+\label{subsection:typeshieldprecision}
+We are going to present a series of experiments and values to find the best possible combination operator for the calltarget analysis in the \textit{type} policy.
+
+\textbf{Experiment Setup.}
+To choose the best possible combination operator for the calltarget analysis in implementing the \textit{type} policy, we conducted three experiments based on the data of the Precision Calltarget Classification(\textit{count}) experiment and the proposed implementations for the \textit{type} policy:
+\begin{itemize}
+\item[exp1] union combination operator with an $analyze$ function that does follow into occurring direct calls and a vertical merge that only accepts the first change see Table \ref{tbl:CTdestinterexp12TYPE} for results.
+\item[exp2] union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that unions all reads until the first write see Table \ref{tbl:CTdestinterexp12TYPE} for results.
+\item[exp3] union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that intersects all reads until the first write see Table \ref{tbl:CTdestinterexp34TYPE} for results.
+%\item[exp4] full union combination operator with an $analyze$ function that does not follow into occurring direct calls and a vertical merge that unions all reads until the first write  see Table \ref{tbl:CTdestinterexp34TYPE} for results.
+\end{itemize}
+For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to overestimations.
+\textbf{Result.} The series exp2 shows the lowest problem rate of the three series. Regarding precision the values are as follows relatively equal:
+\begin{itemize}
+\item The series exp1 exhibits a geometric mean of 72.42\% for precision in O2.
+\item The series exp2 exhibits a geometric mean of 72.25\% for precision in O2.
+\item The series exp3 exhibits a geometric mean of 72.52\% for precision in O2. 
+\end{itemize}
+Due to exp2 exhibiting the lowest error value, we designate this setup as the best setup for analysing the calltargets in the \textit{type} policy.
+
+\begin{table}[h!]
+\resizebox{.5\textwidth}{!}{
+	\begin{tabular}{l|c|c|c}%
+
+	\toprule
+	 \multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries exp1}\\
+	
+	\bfseries Target & \#  &  perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp1.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp1.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp1.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp2.type_exp1.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+
+
+    	\end{tabular}
+
+	\begin{tabular}{|c|c}%
+
+	\toprule
+    \multicolumn{2}{c}{\bfseries exp2}\\
+	
+	     perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp2.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+\multicolumn{1}{c}{}
+
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp2.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+	
+	\multicolumn{1}{c}{}
+
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp2.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+	
+\multicolumn{1}{c}{}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp2.type_exp2.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+
+
+    	\end{tabular}
+}
+		\caption {The results for calltarget analysis for exp1 and exp2 of the \textit{type} policy throughout different optimizations.}
+		\label{tbl:CTdestinterexp12TYPE}
+\end{table}
+
+
+\begin{table}[h!]
 \centering
-\caption{pairings compares}
-\label{matching}
-% \resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|} \hline
-\textbf{target}  & \textbf{opt}     & \textbf{policy} & \textbf{0}    &\textbf{1} & \textbf{2}  & \textbf{3} &\textbf{4} & \textbf{5} &\textbf{6}  &\textbf{summary} \\ \hline 
-proftpd          &x                 &x                &x              &x          &x            &0           &0          &0           &0           &0     \\ \hline
-proftpd          &x                 &x                &x              &x          &x            &0           &0          &0           &0           &0      \\ \hline
-vsftpd           &x                 &x                &x              &x          &x            &0           &0          &0           &0           &0      \\ \hline
-vsftpd           &x                 &x                &x              &x          &x            &0           &0          &0           &0           &0      \\ \hline
+\resizebox{0.5\textwidth}{!}{
+	\begin{tabular}{l|c|c|c}%
 
-\end{tabular}
-% }
-%  \vspace{-2.5em}
+	\toprule
+	\multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries exp3}\\
+	
+	\bfseries Target & \#  &  perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp3.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp3.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp3.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp2.type_exp3.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+
+    	\end{tabular}
+%
+%	\begin{tabular}{|c|c}%
+%
+%	\toprule
+%	\multicolumn{2}{c}{\bfseries exp4}\\
+%	
+%	perfect &  problem % specify table head
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp4.O0.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+%
+%
+%
+%\multicolumn{1}{c}{} 
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp4.O1.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+%	
+%	
+%\multicolumn{1}{c}{}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp4.O2.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+%	
+%
+%\multicolumn{1}{c}{}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp2.type_exp4.O3.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
+%
+%
+%    	\end{tabular}
+}
+		\caption {The results for calltarget analysis for exp3 of the \textit{type} policy throughout different optimizations.}
+		\label{tbl:CTdestinterexp34TYPE}
 \end{table}
 
-\begin{table}[H]
+
+
+%\subsection{Precision Callsite Classification (\textit{type})}
+%\label{subsection:typeshieldprecision}
+%
+%\paragraph{Experiment Setup}
+%To choose the best possible combination operator for the callsite analysis in implementing the \textit{type} policy, we conducted four experiments based on the data of the two Precision Callsite Classification(\textit{count}) experiments:
+%\begin{enumerate}
+%\item[exp1] intersection combination operator that intersects when both paths are set with an $analyze$ function that does follow into occurring direct calls with backward inter-procedural analysis see Table \ref{tbl:CSexp12TYPE} for results.
+%
+%\item[exp2] intersection combination operator that unions when both paths are set with an $analyze$ function that does follow into occurring direct calls  with backward inter-procedural analysis  see Table \ref{tbl:CSexp12TYPE} for results.
+%
+%\item[exp3] union combination operator with an $analyze$ function that does not follow into occurring direct calls  with backward inter-procedural analysis  see Table \ref{tbl:CSexp34TYPE} for results.
+%
+%\item[exp4] general intersection operator with an $analyze$ function that does not follow into occurring direct calls  with backward inter-procedural analysis  see Table \ref{tbl:CSexp34TYPE} for results.
+%\end{enumerate}
+%For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to overestimations.
+%
+%We are going to group our results into two classes based on the optimization level, completely unoptimized (O0) and optimized (O1, O2 and O3) as those two groups are highly different in the values they produce.
+%
+%\paragraph{Results for unoptimized targets}
+%
+%\paragraph{Results for optimized targets}
+%
+%
+%\newpage
+%\begin{table}[!htbp]
+%\resizebox{\textwidth}{!}{
+%	\begin{tabular}{l|c|c|c}%
+%
+%	\toprule
+%	 \multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries exp1}\\
+%	
+%	\bfseries Target & \#  &  perfect &  problem % specify table head
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.type_exp1.O0.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%
+%
+%
+%\multicolumn{1}{c}{\bfseries O1} 
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.type_exp1.O1.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%	
+%	
+%\multicolumn{1}{c}{\bfseries O2}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.type_exp1.O2.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%	
+%
+%\multicolumn{1}{c}{\bfseries O3}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.type_exp1.O3.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%
+%
+%    	\end{tabular}
+%
+%	\begin{tabular}{|c|c}%
+%
+%	\toprule
+%    \multicolumn{2}{c}{\bfseries exp2}\\
+%	
+%	     perfect &  problem % specify table head
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.type_exp2.O0.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%\multicolumn{1}{c}{}
+%
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.type_exp2.O1.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%	
+%	\multicolumn{1}{c}{}
+%
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.type_exp2.O2.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%	
+%\multicolumn{1}{c}{}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.type_exp2.O3.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%
+%
+%    	\end{tabular}
+%}
+%		\caption {The results for callsite analysis for exp1 and exp2 for the \textit{type} policy throughout different optimizations}
+%		\label{tbl:CSexp12TYPE}
+%\end{table}
+%
+%
+%\begin{table}[!htbp]
+%\resizebox{\textwidth}{!}{
+%	\begin{tabular}{l|c|c|c}%
+%
+%	\toprule
+%	\multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries exp3}\\
+%	
+%	\bfseries Target & \#  &  perfect &  problem % specify table head
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.type_exp3.O0.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%
+%
+%
+%\multicolumn{1}{c}{\bfseries O1} 
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.type_exp3.O1.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%	
+%	
+%\multicolumn{1}{c}{\bfseries O2}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.type_exp3.O2.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%	
+%
+%\multicolumn{1}{c}{\bfseries O3}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.type_exp3.O3.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%
+%    	\end{tabular}
+%
+%	\begin{tabular}{|c|c}%
+%
+%	\toprule
+%	\multicolumn{2}{c}{\bfseries  exp4}\\
+%	
+%	perfect &  problem % specify table head
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.type_exp4.O0.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%
+%
+%
+%\multicolumn{1}{c}{} 
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.type_exp4.O1.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%	
+%	
+%\multicolumn{1}{c}{}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.type_exp4.O2.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%	
+%
+%\multicolumn{1}{c}{}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.type_exp4.O3.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%
+%
+%    	\end{tabular}
+%}
+%		\caption {The results for callsite analysis for exp3 and exp4 for the \textit{type} policy throughout different optimizations}
+%		\label{tbl:CSexp34TYPE}
+%\end{table}
+\newpage
+\subsubsection{Precision Callsite Classification (\textit{type})}
+\label{subsection:typeshieldprecision}
+We are going to present a series of experiments and values to find the best possible combination operator for the callsite analysis in the \textit{type} policy.
+
+\textbf{Experiment Setup.}
+To choose the best possible combination operator for the callsite analysis in implementing the \textit{type} policy, we conducted three  experiments based on the data of the two Precision Callsite Classification(\textit{count}) experiments and the proposed implementations for the \textit{type} policy:
+\begin{itemize}
+\item[exp1] intersection combination operator that intersects when both paths are set with an $analyze$ function that does follow into occurring direct calls with backward inter-procedural analysis see Table \ref{tbl:CSexp12TYPE} for results.
+
+\item[exp2] intersection combination operator that unions when both paths are set with an $analyze$ function that does follow into occurring direct calls  with backward inter-procedural analysis  see Table \ref{tbl:CSexp12TYPE} for results.
+
+\item[exp3] union combination operator with an $analyze$ function that does not follow into occurring direct calls  with backward inter-procedural analysis  see Table \ref{tbl:CSexp34TYPE} for results.
+
+%\item[exp4] general intersection operator with an $analyze$ function that does not follow into occurring direct calls  with backward inter-procedural analysis  see Table \ref{tbl:CSexp34TYPE} for results.
+\end{itemize}
+For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to underestimations.
+\textbf{Result.} The series exp3 easily holds the lowest rate of problematic classification and therefore we designate it the setup for a safe implementation of callsite analysis for the \textit{type} policy. The results for the series exp1 and the series exp2 are the same exhibiting a geometric mean of 57.30\% for precision in O2. Therefore it does not matter which of the two setups we choose for the precision implementation of callsite analysis for the \textit{type} policy.
+
+\begin{table}[h!]
 \centering
-\caption{policy baseline}
-\label{matching}
-% \resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|} \hline
-\textbf{target}  & \textbf{opt}     & \textbf{policy} & \textbf{0}    &\textbf{1} & \textbf{2}  & \textbf{3} &\textbf{4} & \textbf{5} &\textbf{6}  &\textbf{summary} \\ \hline 
-proftpd          &x                 &x                &x              &x          &x            &0           &0          &0           &0           &0     \\ \hline
-proftpd          &x                 &x                &x              &x          &x            &0           &0          &0           &0           &0      \\ \hline
-vsftpd           &x                 &x                &x              &x          &x            &0           &0          &0           &0           &0      \\ \hline
-vsftpd           &x                 &x                &x              &x          &x            &0           &0          &0           &0           &0      \\ \hline
+\resizebox{.5\textwidth}{!}{
+	\begin{tabular}{l|c|c|c}%
 
-\end{tabular}
-% }
-%  \vspace{-2.5em}
+	\toprule
+	 \multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries exp1}\\
+	
+	\bfseries Target & \#  &  perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp1.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp1.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp1.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp2.type_exp1.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+    	\end{tabular}
+
+	\begin{tabular}{|c|c}%
+
+	\toprule
+    \multicolumn{2}{c}{\bfseries exp2}\\
+	
+	     perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp2.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+\multicolumn{1}{c}{}
+
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp2.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+	\multicolumn{1}{c}{}
+
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp2.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+\multicolumn{1}{c}{}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp2.type_exp2.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+
+    	\end{tabular}
+}
+		\caption {The results for callsite analysis for exp1 and exp2 of the \textit{type} policy throughout different optimizations.}
+		\label{tbl:CSexp12TYPE}
 \end{table}
 
 
-\section{R2: Precision of our Tool}
-\label{R2: Precision of our Tool}
-here we have to show how precise is our tool and compare it to TypeArmor.
-Precision means. Correct identified Callsites and Callees with respect to number of params and types of the params.
+\begin{table}[h!]
+\centering
+\resizebox{0.5\textwidth}{!}{
+	\begin{tabular}{l|c|c|c}%
 
-Classification
-Callsites
-
-this has to do with precision of our tool! So put in the right R from above.
-
-overestimation param count. table.
-number of parameters.
-
-Calltargets
-underestimation param table.
-
-AT
-ParamCount
-table, cdf, baseline vs. server. approximations.
-
-ParamType
-has to do with precision and effectiveness so move it up in the right R from above!
-
-table, cdf, baseline vs. server. approximations.
+	\toprule
+	\multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries exp3}\\
+	
+	\bfseries Target & \#  &  perfect &  problem % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp3.O0.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
 
 
-this has to do with precision of our tool! So put in the right R from above.
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp3.O1.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp3.O2.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp2.type_exp3.O3.csv}{
+		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+
+    	\end{tabular}
+
+%	\begin{tabular}{|c|c}%
+%
+%	\toprule
+%	\multicolumn{2}{c}{\bfseries  exp4}\\
+%	
+%	perfect &  problem % specify table head
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp4.O0.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%
+%
+%
+%\multicolumn{1}{c}{} 
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp4.O1.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%	
+%	
+%\multicolumn{1}{c}{}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp4.O2.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%	
+%
+%\multicolumn{1}{c}{}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp2.type_exp4.O3.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+%
+%
+%    	\end{tabular}
+}
+		\caption {The results for enhanced callsite analysis for exp3 of the \textit{type} policy throughout different optimizations.}
+		\label{tbl:CSexp34TYPE}
+\end{table}
+\newpage
+
+%
+%
+%Efficiency
+%
+%
+\subsection{Effectiveness of \textit{TypeShield}}
+\label{section:typeshieldeffectiveness}
+We are now going to evaluate the effectiveness of \textit{TypeShield} leveraging the result of several experiment runs: First we are going to establish a baseline using the data collected from our Clang/LLVM pass, which are the theoretical limits our implementation can reach. Second we are going to evaluate the effectiveness of our \textit{count} policy and third we are going to evaluate the effectiveness of our \textit{type} policy. At last we are going to look at the effect our address taken analysis had on the results.
+
+\subsection{Theoretical Limits.}
+\label{subsection:theoreticallimit}
+We explore the theoretical limits regarding the effectiveness of the \textit{count} and \textit{type} policies by relying on the collected ground truth data, which is essentially assume perfect classification.
+
+\textbf{Experiment Setup} Based on the type information collected by our Clang/LLVM pass, we conducted two experiment series:
+\begin{itemize}
+\item We derived the \textit{count} schema using the ground truth and calculated the available number of calltargets for each callsite, see table \ref{tbl:policycomp} for results.
+\item We derived the \textit{type} schema using the ground truth and calculated the available number of calltargets for each callsite, see table \ref{tbl:policycomp} for results.
+\end{itemize}
+For each series we collected three data points per test target, the average number of calltargets per callsite, the standard deviation $\sigma$ and the median.
+
+\textbf{Results.}
+\begin{itemize}
+\item The theoretical limit of the \textit{count} schema has an overall geometric mean of 959 possible calltargets, which is 53.75\% of the geometric mean of total available calltargets.
+\item The theoretical limit of the \textit{count} schema has an overall geometric mean of 823 possible calltargets, which is 46.10\% of the geometric mean of total available calltargets.
+\end{itemize}
+
+When compared, the theoretical limit of the \textit{type} policy allows about 15\% less available calltargets in the geomean in O2 than the limit of the \textit{count} policy.
+
+%
+%\begin{table}[!htbp]
+%\resizebox{\textwidth}{!}{
+%	\begin{tabular}{l|c|rcl|rcl|rcl|rcl}%
+%
+%	\toprule
+%	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{6}{c}{\bfseries \textit{count}} & \multicolumn{6}{c}{\bfseries \textit{type}}\\
+%	
+%	\bfseries Target & &  \multicolumn{3}{c}{\bfseries measured} & \multicolumn{3}{c}{\bfseries limit} & \multicolumn{3}{c}{\bfseries measured} & \multicolumn{3}{c}{\bfseries limit} % specify table head
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O0.csv}{
+%		%1=opt,2=target,3=at,4=count,5=count sig,6=count*,7=count*sig,8=type,9=type sig,10=type*,11=type*sig
+% }
+%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & $\pm$ & \csvcolvii & \csvcolviii & $\pm$ & \csvcolix & \csvcolx & $\pm$ & \csvcolxi}% specify your coloumns here
+%
+%
+%
+%\multicolumn{1}{c}{\bfseries O1} 
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O1.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & $\pm$ & \csvcolvii & \csvcolviii & $\pm$ & \csvcolix & \csvcolx & $\pm$ & \csvcolxi}% specify your coloumns here
+%	
+%	
+%\multicolumn{1}{c}{\bfseries O2}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O2.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & $\pm$ & \csvcolvii & \csvcolviii & $\pm$ & \csvcolix & \csvcolx & $\pm$ & \csvcolxi}% specify your coloumns here
+%	
+%
+%\multicolumn{1}{c}{\bfseries O3}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/policy_compare.O3.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & $\pm$ & \csvcolvii & \csvcolviii & $\pm$ & \csvcolix & \csvcolx & $\pm$ & \csvcolxi}% specify your coloumns here
+%
+%    	\end{tabular}
+%}
+%		\caption {The results for comparing the different restriction policies throughout different optimizations}
+%		\label{tbl:policycomp}
+%\end{table}
+%
+%
+%\begin{table}[!htbp]
+%\resizebox{\textwidth}{!}{
+%	\begin{tabular}{l|c|rcl|rcl|rcl|rcl}%
+%
+%	\toprule
+%	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{6}{c}{\bfseries \textit{count}} & \multicolumn{6}{c}{\bfseries \textit{type}}\\
+%	
+%	\bfseries Target & &  \multicolumn{3}{c}{\bfseries measured} & \multicolumn{3}{c}{\bfseries limit} & \multicolumn{3}{c}{\bfseries measured} & \multicolumn{3}{c}{\bfseries limit} % specify table head
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O0.csv}{
+%		%1=opt,2=target,3=at,4=count,5=count sig,6=count*,7=count*sig,8=type,9=type sig,10=type*,11=type*sig
+% }
+%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & $\pm$ & \csvcolvii & \csvcolviii & $\pm$ & \csvcolix & \csvcolx & $\pm$ & \csvcolxi}% specify your coloumns here
+%
+%
+%
+%\multicolumn{1}{c}{\bfseries O1} 
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O1.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & $\pm$ & \csvcolvii & \csvcolviii & $\pm$ & \csvcolix & \csvcolx & $\pm$ & \csvcolxi}% specify your coloumns here
+%	
+%	
+%\multicolumn{1}{c}{\bfseries O2}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O2.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & $\pm$ & \csvcolvii & \csvcolviii & $\pm$ & \csvcolix & \csvcolx & $\pm$ & \csvcolxi}% specify your coloumns here
+%	
+%
+%\multicolumn{1}{c}{\bfseries O3}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/policy_compare_at.O3.csv}{
+%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
+%}
+%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & $\pm$ & \csvcolvii & \csvcolviii & $\pm$ & \csvcolix & \csvcolx & $\pm$ & \csvcolxi}% specify your coloumns here
+%
+%    	\end{tabular}
+%}
+%		\caption {The results for comparing the different restriction policies restricted using an address taken analysis throughout different optimizations}
+%		\label{tbl:policycompat}
+%\end{table}
+
+\begin{table}[h!]
+\resizebox{.5\textwidth}{!}{
+	\begin{tabular}{l|c|rcl|c|rcl|c}%
+
+	\toprule
+	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count}*} & \multicolumn{4}{c}{\bfseries \textit{type}*}\\
+	
+	\bfseries Target & & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O0.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+ }
+	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
 
 
-\section{R3: Instrumentation overhead of our Tool}
-\label{R4: Instrumentation overhead of our Tool}
-Here we measure how much the binaries increased in size after the instrumentation was added to the binaries.
 
-\section{R4: Performance overhead of our Tool}
-\label{R3: Performance overhead of our Tool}
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O1.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O2.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/policy_compare.O3.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
+
+    	\end{tabular}
+}
+		\caption {The results of comparing theoretical limits for the different restriction policies throughout different optimizations.}
+		\label{tbl:policycomp}
+\end{table}
+
+\newpage
+\subsubsection{\textit{TypeShield} implementation of the \textit{count} policy}
+\label{subsection:typeshieldvslimitcount}
+We explore the effectiveness of our safe and precise versions for the \textit{count} policy implementation.
+
+\textbf{Experiment Setup.} We setup our two experiment series based on our previous evaluations regarding the classification precision for the \textit{count} policy.
+\begin{itemize}
+\item For the safe version, we chose the union combination operator, with $analyse$ that follows into occurring direct calls to 
+calculate the calltarget invariant. For the callsite invariant, we chose the union operator that does not follow into occurring direct calls with backwards inter-procedural analysis.  See table \ref{tbl:policycompcount} for results. 
+\item For the precise version, we chose the union combination operator, with $analyse$ that follows into occurring direct calls to calculate the calltarget invariant. For the callsite invariant, we chose the intersection operator that follows into occurring direct calls with backwards inter-procedural analysis. See table \ref{tbl:policycompcount} for results. 
+\end{itemize}
+For each series we collected three data points per test target, the average number of calltargets per callsite, the standard deviation $\sigma$ and the median.
+
+\textbf{Results.}
+\begin{itemize}
+\item The average number of available targets provided by the safe implementation of the \textit{count} schema has an overall geometric mean of  1283 possible calltargets, which is 71.87\% of the geometric mean of total available calltargets. This is 33.78\% more than the theoretical limit of available calltargets per callsite.
+\item The average number of available targets provided by the precise implementation of the \textit{count} schema has an overall geometric mean of  1030 possible calltargets, which is 57.70\% of the geometric mean of total available calltargets. This is 7.40\% more than the theoretical limit of available calltargets per callsite.
+\end{itemize}
+
+When compared, the precise implementation of of the \textit{count} policy allows about 20\% less available calltargets in the geomean in O2 than the safe implementation of the \textit{count} policy.
+
+
+\begin{table}[h!]
+\resizebox{.5\textwidth}{!}{
+	\begin{tabular}{l|c|rcl|c|rcl|c}%
+
+	\toprule
+	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count} safe} & \multicolumn{4}{c}{\bfseries \textit{count} prec}\\
+	
+	\bfseries Target & & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O0.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+ }
+	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O1.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O2.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/policy_compare.O3.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
+
+    	\end{tabular}
+}
+		\caption {The results of comparing \textit{count} safe and precision implementation throughout different optimizations.}
+		\label{tbl:policycompcount}
+\end{table}
+
+\newpage
+
+\subsubsection{\textit{TypeShield} implementation of the \textit{type} policy}
+\label{subsection:typeshieldvslimitcount}
+We explore the effectiveness of our safe and precise versions for the \textit{type} policy implementation.
+
+\textbf{Experiment Setup.} We setup our two experiment series based on our previous evaluations regarding the classification precision for the \textit{type} policy.
+\begin{itemize}
+\item For the safe version, we chose the union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that unions all reads until the first write to calculate the calltarget invariant. For the callsite invariant, we chose the union combination operator with an $analyze$ function that does not follow into occurring direct calls  with backward inter-procedural analysis.  See table \ref{tbl:policycomptype} for results. 
+\item For the precise version, we chose union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that unions all reads until the first write to calculate the calltarget invariant. For the callsite invariant, we chose the intersection combination operator that intersects when both paths are set with an $analyze$ function that does follow into occurring direct calls with backward inter-procedural analysis. See table \ref{tbl:policycomptype} for results. 
+\end{itemize}
+For each series we collected three data points per test target, the average number of calltargets per callsite, the standard deviation $\sigma$ and the median.
+
+\textbf{Results.}
+\begin{itemize}
+\item The average number of available targets provided by the safe implementation of the \textit{type} schema has an overall geometric mean of  1144 possible calltargets, which is 64.08\% of the geometric mean of total available calltargets. This is 39.00\% more than the theoretical limit of available calltargets per callsite.
+\item The average number of available targets provided by the precise implementation of the \textit{type} schema has an overall geometric mean of  907 possible calltargets, which is 50.81\% of the geometric mean of total available calltargets. This is 10.20\% more than the theoretical limit of available calltargets per callsite
+\end{itemize}
+
+When compared, the precise implementation of of the \textit{count} policy allows about 21\% less available calltargets in the geomean in O2 than the safe implementation of the \textit{count} policy.
+
+
+\begin{table}[h!]
+\resizebox{.5\textwidth}{!}{
+	\begin{tabular}{l|c|rcl|c|rcl|c}%
+
+	\toprule
+	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{type} safe} & \multicolumn{4}{c}{\bfseries \textit{type} prec}\\
+	
+	\bfseries Target & & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O0.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+ }
+	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O1.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O2.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/policy_compare.O3.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
+
+    	\end{tabular}
+}
+		\caption {The results of comparing \textit{type} safe and precision implementation throughout different optimizations.}
+		\label{tbl:policycomptype}
+\end{table}
+
+\newpage
+
+
+\subsubsection{Effect of our AddressTaken Analysis}
+\label{subsection:effectivenessaddresstaken}
+We are providing experiment results and an evaluation regarding the impact of our address taken analysis on the theoretical limits and our various policy implementations, namely the safe and precise versions of the \textit{count} and \textit{type} policies.
+
+\textbf{Experiment Setup.} We conducted the same three experiments as before but with the initial set of calltargets filtered by our implementation of address taken analysis:
+\begin{itemize}
+\item We setup the same experiment regarding theoretical limits as described in subsection \ref{subsection:theoreticallimit} but with restricting the possible calltargets to only address taken functions. The results are presented in table \ref{tbl:policycompat}.
+\item We setup the same experiment regarding the \textit{count} policy as described in subsection \ref{subsection:theoreticallimit} but with restricting the possible calltargets to only address taken functions. The results are presented in table \ref{tbl:policycompatcount}.
+\item We setup the same experiment regarding the \textit{type} policy as described as in subsection \ref{subsection:theoreticallimit} but with restricting the possible calltargets to only address taken functions. The results are presented in table \ref{tbl:policycompattype}.
+\end{itemize}
+For each series we collected three data points per test target, the average number of calltargets per callsite, the standard deviation $\sigma$ and the median.
+
+\textbf{Results.} First of all we observed an overall reduction of the geometric mean of overall available calltargets to 64\% before our policies were applied. Notable outliers are memcached, which had a 90\% reduction of available calltargets and vsftpd, which even achieved a 97\% reduction in available calltargets.
+\begin{itemize}
+\item The theoretical available targets were overall reduced to 25.96\% in the \textit{count} policy case  (geometric mean of 249 in O2) and to 27.27\% in the \textit{type} policy case  (geometric mean of 224 in O2). The difference between their geometric means shrank from about 15\% to about 10\%.
+\item The average targets provided by the safe and the precise implementation of the \textit{count} policy were reduced to 25.33\% (geometric mean of 325 in O2) and 25.92\% (geometric mean of 267) respectively. The difference between their geometric means shrank from about 20\% to about 18\%.
+\item The average targets provided by the safe and the precise implementation of the \textit{count} policy were reduced to 26.13\% (geometric mean of 299 in O2) and 26.79\% (geometric mean of 243) respectively. The difference between their geometric means shrank from about 20\% to about 18\%.
+\end{itemize}
+
+When comparing the precision focused implementations of our \textit{type} policy and our \textit{count}, we observe that the difference between them shrank to about 9\% when comparing their geometric means.
+
+Overall we were able to reduce the number of available calltargets per callsite from 1785 to 243 using our precision focussed implementation of the \textit{type} policy, which is an overall reduction to 13.61\%.
+
+\begin{table}[h!]
+\resizebox{.4\textwidth}{!}{
+	\begin{tabular}{l|c|rcl|c|rcl|c}%
+
+	\toprule
+	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count}*} & \multicolumn{4}{c}{\bfseries \textit{type}*}\\
+	
+	\bfseries Target && \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O0.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+ }
+	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O1.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O2.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/policy_compare_at.O3.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
+
+    	\end{tabular}
+}
+		\caption {The results of comparing theoretical limits for the different restriction policies restricted using an address taken analysis throughout different optimizations.}
+		\label{tbl:policycompat}
+\end{table}
+
+
+\begin{table}[h!]
+\resizebox{.4\textwidth}{!}{
+	\begin{tabular}{l|c|rcl|c|rcl|c}%
+
+	\toprule
+	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count} safe} & \multicolumn{4}{c}{\bfseries \textit{count} prec}\\
+	
+	\bfseries Target && \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O0.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+ }
+	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
+
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O1.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O2.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/policy_compare_at.O3.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
+
+    	\end{tabular}
+}
+		\caption {The results of comparing \textit{count} safe and precision implementation restricted using an address taken analysis throughout different optimizations.}
+		\label{tbl:policycompatcount}
+\end{table}
+
+\begin{table}[h!]
+\resizebox{.4\textwidth}{!}{
+	\begin{tabular}{l|c|rcl|c|rcl|c}%
+
+	\toprule
+	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{type} safe} & \multicolumn{4}{c}{\bfseries \textit{type} prec}\\
+	
+	\bfseries Target && \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O0.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+ }
+	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
+
+
+
+\multicolumn{1}{c}{\bfseries O1} 
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O1.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
+	
+	
+\multicolumn{1}{c}{\bfseries O2}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O2.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
+	
+
+\multicolumn{1}{c}{\bfseries O3}
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/policy_compare_at.O3.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+}
+	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
+
+    	\end{tabular}
+}
+		\caption {The results of comparing \textit{type} safe and precision implementation restricted using an address taken analysis throughout different optimizations.}
+		\label{tbl:policycompattype}
+\end{table}
+
+%
+%\newpage
+%\section{Security Analysis of \textit{TypeShield}}
+%\label{section:typeshieldsecurityanalysis}
+%
+%In this section, we discuss how effective \textit{TypeShield} is 
+%stopping advance code-reuse attacks (CRAs).
+%Patching Policies
+%Two types of diagrams. Table 5 from TypeArmor and a CDF to compare param count and param type. (baseline)
+%here we put the CDF graphs from. There is no accurate security metrics to asses the security level of the enforced policy.
+%
+%
+%
+%\begin{table}
+%\centering
+%\resizebox{0.8\textwidth}{!}{
+%	\begin{tabular}{l|c|c|c|c|c|c|c|c|c}%
+%	\toprule
+%	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{} & \multicolumn{8}{|c}{ {\bfseries parameters}} \\
+%	\bfseries Target & \bfseries \#CS & \bfseries -x & \bfseries +0 & \bfseries +1 & \bfseries +2 & \bfseries +3 & \bfseries +4 & \bfseries +5 & \bfseries +6 % specify table head
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_cs.O0.csv}{
+%		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
+%	}
+%	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
+%
+%	\multicolumn{1}{c}{\bfseries O1}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_cs.O1.csv}{
+%		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
+%	}
+%	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi}% specify your coloumns here
+%
+%	\multicolumn{1}{c}{\bfseries O2}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_cs.O2.csv}{
+%		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
+%	}
+%	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi}% specify your coloumns here
+%
+%	\multicolumn{1}{c}{\bfseries O3}
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_cs.O3.csv}{
+%		%1=target,2=opt,3=cs,4=problems,5=+0,6=+1,7=+2,8=+3,9=+4,10=+5,11=+6,12=non-void-ok,13=non-void-problem
+%	}
+%	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii & \csvcolviii & \csvcolix & \csvcolx & \csvcolxi}% specify your coloumns here
+%
+%
+%    	\end{tabular}
+%	}
+%		\caption {Table shows the overestimation of the parameter count in matched callsites occurring in our precision focussed implementation of the \textit{count} policy, with -x denoting problematic callsites, when compiling with optimization levels O0 through O3}
+%	\label{tbl:baselinecs}
+%\end{table}
+%
+%\begin{figure}
+%\includegraphics[width=0.5\textwidth]{../MA_Pictures/vsftpd.pdf}
+%\includegraphics[width=0.5\textwidth]{../MA_Pictures/lighttpd.pdf}\\
+%\includegraphics[width=0.5\textwidth]{../MA_Pictures/memcached.pdf}
+%\includegraphics[width=0.5\textwidth]{../MA_Pictures/mysql.pdf}\\
+%\includegraphics[width=0.5\textwidth]{../MA_Pictures/nginx.pdf}
+%\includegraphics[width=0.5\textwidth]{../MA_Pictures/node.pdf}\\
+%\includegraphics[width=0.5\textwidth]{../MA_Pictures/postgresql.pdf}
+%\includegraphics[width=0.5\textwidth]{../MA_Pictures/proftpd.pdf}
+%\end{figure}
+%
+%
+%
+%%
+
+
+\subsection{Runtime Performance Overhead}
+\label{section:typeshieldoverheadperformance}
 Here we measure how much performance overhead the instrumeentation incurs.
 Here we measure with the same SPEC2006 programs that was used in the TypeArmor paper.
 spec 2006.
-
-\begin{table}[H]
-\centering
-\caption{Performance Tabble, more better is a bar chart here!}
-\label{Integer overflow bug detection in CWE-190}
-% \resizebox{.99\columnwidth}{!}{%
-\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|} \hline
-\textbf{target}  & \textbf{opt}     & \textbf{problematic}    &\textbf{+0} & \textbf{+1}  & \textbf{+2} &\textbf{+3} &\textbf{+4} &\textbf{+5} &\textbf{+6}  \\ \hline 
-x                &x                 &x                        &x           &x             &x            &x           &x           &x           &x            \\ \hline
-
-\end{tabular}
-% }
-%  \vspace{-2.5em}
-\end{table}
+DELAYED!
 
 
-\section{R6: Which kind of attacks can our tool defend off}
-\label{R6: Which kind of attacks can our tool defend off}
-Basically it protects against COOP and other vptr corruption attacks.
-Also does it protect against Control Jujutsu?
+\subsection{Instrumentation Overhead}
+\label{section:typeshieldoverheadinstrumentation}
+Here we measure how much the binaries increased in size after the instrumentation was added to the binaries.
+DELAYED!
 
 
+\subsection{Mitigation of Advanced Code-Reuse Attacks}
+\label{section:mitiagtion}
+We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
 
-\section{R5: Protection Coverage}
-\label{R5: Protection Coverage}
-here 
+\subsection{COOP}
+\label{Effectiveness against COOP}
 
-\section{Security Analysis}
-\label{Security Evaluation}
+\subsubsection{COOP Extensions}
+\label{COOP Extensions}
 
-Patching Policies
-Two types of diagrams. Table 5 from TypeArmor and a CDF to compare param count and param type. (baseline)
-
-
-
-
-
-
+\subsubsection{Pure Data-only Attacks}
+\label{Pure Data-only Attacks}

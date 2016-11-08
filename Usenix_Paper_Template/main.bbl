@@ -1,7 +1,7 @@
 \begin{thebibliography}{10}
 
 \bibitem{dynamorio:drmemory}
-{DynamoRIO: Dynamic Instrumentation Tool Platform}.
+{DynamoRIO}.
 \newblock \url{http://dynamorio.org/home.html}.
 
 \bibitem{windows:cfguard}

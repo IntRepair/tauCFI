@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  7 NOV 2016 18:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  8 NOV 2016 19:30
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -530,16 +530,482 @@ Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \@lastruleclass=\count128
 \@thisrulewidth=\dimen184
 )
+(/usr/share/texlive/texmf-dist/tex/latex/todonotes/todonotes.sty
+Package: todonotes 2012/07/25 .dtx Todonotes source and documentation.
+Package: todonotes 2012/07/25
+
+(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2014/05/25 v2.7 package option processing (HA)
+
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks36
+\XKV@tempa@toks=\toks37
+)
+\XKV@depth=\count129
+File: xkeyval.tex 2014/05/25 v2.7 key=value parser (HA)
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarypositioning.code.tex
+File: tikzlibrarypositioning.code.tex 2008/10/06 v3.0.0 (rcs-revision 1.7)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count130
+\calc@Bcount=\count131
+\calc@Adimen=\dimen185
+\calc@Bdimen=\dimen186
+\calc@Askip=\skip64
+\calc@Bskip=\skip65
+LaTeX Info: Redefining \setlength on input line 75.
+LaTeX Info: Redefining \addtolength on input line 76.
+\calc@Ccount=\count132
+\calc@Cskip=\skip66
+)
+\c@@todonotes@numberoftodonotes=\count133
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2014/04/30 v1.2b Input encoding file
+\inpenc@prehook=\toks38
+\inpenc@posthook=\toks39
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
+File: utf8.def 2014/09/29 v1.1m UTF-8 support for inputenc
+Now handling font encoding OML ...
+... no UTF-8 mapping file for font encoding OML
+Now handling font encoding T1 ...
+... processing UTF-8 mapping file for font encoding T1
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.dfu
+File: t1enc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
+   defining Unicode char U+00A1 (decimal 161)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00AB (decimal 171)
+   defining Unicode char U+00BB (decimal 187)
+   defining Unicode char U+00BF (decimal 191)
+   defining Unicode char U+00C0 (decimal 192)
+   defining Unicode char U+00C1 (decimal 193)
+   defining Unicode char U+00C2 (decimal 194)
+   defining Unicode char U+00C3 (decimal 195)
+   defining Unicode char U+00C4 (decimal 196)
+   defining Unicode char U+00C5 (decimal 197)
+   defining Unicode char U+00C6 (decimal 198)
+   defining Unicode char U+00C7 (decimal 199)
+   defining Unicode char U+00C8 (decimal 200)
+   defining Unicode char U+00C9 (decimal 201)
+   defining Unicode char U+00CA (decimal 202)
+   defining Unicode char U+00CB (decimal 203)
+   defining Unicode char U+00CC (decimal 204)
+   defining Unicode char U+00CD (decimal 205)
+   defining Unicode char U+00CE (decimal 206)
+   defining Unicode char U+00CF (decimal 207)
+   defining Unicode char U+00D0 (decimal 208)
+   defining Unicode char U+00D1 (decimal 209)
+   defining Unicode char U+00D2 (decimal 210)
+   defining Unicode char U+00D3 (decimal 211)
+   defining Unicode char U+00D4 (decimal 212)
+   defining Unicode char U+00D5 (decimal 213)
+   defining Unicode char U+00D6 (decimal 214)
+   defining Unicode char U+00D8 (decimal 216)
+   defining Unicode char U+00D9 (decimal 217)
+   defining Unicode char U+00DA (decimal 218)
+   defining Unicode char U+00DB (decimal 219)
+   defining Unicode char U+00DC (decimal 220)
+   defining Unicode char U+00DD (decimal 221)
+   defining Unicode char U+00DE (decimal 222)
+   defining Unicode char U+00DF (decimal 223)
+   defining Unicode char U+00E0 (decimal 224)
+   defining Unicode char U+00E1 (decimal 225)
+   defining Unicode char U+00E2 (decimal 226)
+   defining Unicode char U+00E3 (decimal 227)
+   defining Unicode char U+00E4 (decimal 228)
+   defining Unicode char U+00E5 (decimal 229)
+   defining Unicode char U+00E6 (decimal 230)
+   defining Unicode char U+00E7 (decimal 231)
+   defining Unicode char U+00E8 (decimal 232)
+   defining Unicode char U+00E9 (decimal 233)
+   defining Unicode char U+00EA (decimal 234)
+   defining Unicode char U+00EB (decimal 235)
+   defining Unicode char U+00EC (decimal 236)
+   defining Unicode char U+00ED (decimal 237)
+   defining Unicode char U+00EE (decimal 238)
+   defining Unicode char U+00EF (decimal 239)
+   defining Unicode char U+00F0 (decimal 240)
+   defining Unicode char U+00F1 (decimal 241)
+   defining Unicode char U+00F2 (decimal 242)
+   defining Unicode char U+00F3 (decimal 243)
+   defining Unicode char U+00F4 (decimal 244)
+   defining Unicode char U+00F5 (decimal 245)
+   defining Unicode char U+00F6 (decimal 246)
+   defining Unicode char U+00F8 (decimal 248)
+   defining Unicode char U+00F9 (decimal 249)
+   defining Unicode char U+00FA (decimal 250)
+   defining Unicode char U+00FB (decimal 251)
+   defining Unicode char U+00FC (decimal 252)
+   defining Unicode char U+00FD (decimal 253)
+   defining Unicode char U+00FE (decimal 254)
+   defining Unicode char U+00FF (decimal 255)
+   defining Unicode char U+0102 (decimal 258)
+   defining Unicode char U+0103 (decimal 259)
+   defining Unicode char U+0104 (decimal 260)
+   defining Unicode char U+0105 (decimal 261)
+   defining Unicode char U+0106 (decimal 262)
+   defining Unicode char U+0107 (decimal 263)
+   defining Unicode char U+010C (decimal 268)
+   defining Unicode char U+010D (decimal 269)
+   defining Unicode char U+010E (decimal 270)
+   defining Unicode char U+010F (decimal 271)
+   defining Unicode char U+0110 (decimal 272)
+   defining Unicode char U+0111 (decimal 273)
+   defining Unicode char U+0118 (decimal 280)
+   defining Unicode char U+0119 (decimal 281)
+   defining Unicode char U+011A (decimal 282)
+   defining Unicode char U+011B (decimal 283)
+   defining Unicode char U+011E (decimal 286)
+   defining Unicode char U+011F (decimal 287)
+   defining Unicode char U+0130 (decimal 304)
+   defining Unicode char U+0131 (decimal 305)
+   defining Unicode char U+0132 (decimal 306)
+   defining Unicode char U+0133 (decimal 307)
+   defining Unicode char U+0139 (decimal 313)
+   defining Unicode char U+013A (decimal 314)
+   defining Unicode char U+013D (decimal 317)
+   defining Unicode char U+013E (decimal 318)
+   defining Unicode char U+0141 (decimal 321)
+   defining Unicode char U+0142 (decimal 322)
+   defining Unicode char U+0143 (decimal 323)
+   defining Unicode char U+0144 (decimal 324)
+   defining Unicode char U+0147 (decimal 327)
+   defining Unicode char U+0148 (decimal 328)
+   defining Unicode char U+014A (decimal 330)
+   defining Unicode char U+014B (decimal 331)
+   defining Unicode char U+0150 (decimal 336)
+   defining Unicode char U+0151 (decimal 337)
+   defining Unicode char U+0152 (decimal 338)
+   defining Unicode char U+0153 (decimal 339)
+   defining Unicode char U+0154 (decimal 340)
+   defining Unicode char U+0155 (decimal 341)
+   defining Unicode char U+0158 (decimal 344)
+   defining Unicode char U+0159 (decimal 345)
+   defining Unicode char U+015A (decimal 346)
+   defining Unicode char U+015B (decimal 347)
+   defining Unicode char U+015E (decimal 350)
+   defining Unicode char U+015F (decimal 351)
+   defining Unicode char U+0160 (decimal 352)
+   defining Unicode char U+0161 (decimal 353)
+   defining Unicode char U+0162 (decimal 354)
+   defining Unicode char U+0163 (decimal 355)
+   defining Unicode char U+0164 (decimal 356)
+   defining Unicode char U+0165 (decimal 357)
+   defining Unicode char U+016E (decimal 366)
+   defining Unicode char U+016F (decimal 367)
+   defining Unicode char U+0170 (decimal 368)
+   defining Unicode char U+0171 (decimal 369)
+   defining Unicode char U+0178 (decimal 376)
+   defining Unicode char U+0179 (decimal 377)
+   defining Unicode char U+017A (decimal 378)
+   defining Unicode char U+017B (decimal 379)
+   defining Unicode char U+017C (decimal 380)
+   defining Unicode char U+017D (decimal 381)
+   defining Unicode char U+017E (decimal 382)
+   defining Unicode char U+200C (decimal 8204)
+   defining Unicode char U+2013 (decimal 8211)
+   defining Unicode char U+2014 (decimal 8212)
+   defining Unicode char U+2018 (decimal 8216)
+   defining Unicode char U+2019 (decimal 8217)
+   defining Unicode char U+201A (decimal 8218)
+   defining Unicode char U+201C (decimal 8220)
+   defining Unicode char U+201D (decimal 8221)
+   defining Unicode char U+201E (decimal 8222)
+   defining Unicode char U+2030 (decimal 8240)
+   defining Unicode char U+2031 (decimal 8241)
+   defining Unicode char U+2039 (decimal 8249)
+   defining Unicode char U+203A (decimal 8250)
+   defining Unicode char U+2423 (decimal 9251)
+)
+Now handling font encoding OT1 ...
+... processing UTF-8 mapping file for font encoding OT1
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu
+File: ot1enc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
+   defining Unicode char U+00A1 (decimal 161)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00B8 (decimal 184)
+   defining Unicode char U+00BF (decimal 191)
+   defining Unicode char U+00C5 (decimal 197)
+   defining Unicode char U+00C6 (decimal 198)
+   defining Unicode char U+00D8 (decimal 216)
+   defining Unicode char U+00DF (decimal 223)
+   defining Unicode char U+00E6 (decimal 230)
+   defining Unicode char U+00EC (decimal 236)
+   defining Unicode char U+00ED (decimal 237)
+   defining Unicode char U+00EE (decimal 238)
+   defining Unicode char U+00EF (decimal 239)
+   defining Unicode char U+00F8 (decimal 248)
+   defining Unicode char U+0131 (decimal 305)
+   defining Unicode char U+0141 (decimal 321)
+   defining Unicode char U+0142 (decimal 322)
+   defining Unicode char U+0152 (decimal 338)
+   defining Unicode char U+0153 (decimal 339)
+   defining Unicode char U+2013 (decimal 8211)
+   defining Unicode char U+2014 (decimal 8212)
+   defining Unicode char U+2018 (decimal 8216)
+   defining Unicode char U+2019 (decimal 8217)
+   defining Unicode char U+201C (decimal 8220)
+   defining Unicode char U+201D (decimal 8221)
+)
+Now handling font encoding OMS ...
+... processing UTF-8 mapping file for font encoding OMS
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu
+File: omsenc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
+   defining Unicode char U+00A7 (decimal 167)
+   defining Unicode char U+00B6 (decimal 182)
+   defining Unicode char U+00B7 (decimal 183)
+   defining Unicode char U+2020 (decimal 8224)
+   defining Unicode char U+2021 (decimal 8225)
+   defining Unicode char U+2022 (decimal 8226)
+)
+Now handling font encoding OMX ...
+... no UTF-8 mapping file for font encoding OMX
+Now handling font encoding U ...
+... no UTF-8 mapping file for font encoding U
+   defining Unicode char U+00A9 (decimal 169)
+   defining Unicode char U+00AA (decimal 170)
+   defining Unicode char U+00AE (decimal 174)
+   defining Unicode char U+00BA (decimal 186)
+   defining Unicode char U+02C6 (decimal 710)
+   defining Unicode char U+02DC (decimal 732)
+   defining Unicode char U+200C (decimal 8204)
+   defining Unicode char U+2026 (decimal 8230)
+   defining Unicode char U+2122 (decimal 8482)
+   defining Unicode char U+2423 (decimal 9251)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/base/latin1.def
+File: latin1.def 2014/04/30 v1.2b Input encoding file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/utf8.def
+File: utf8.def 2014/09/29 v1.1m UTF-8 support for inputenc
+Now handling font encoding OML ...
+... no UTF-8 mapping file for font encoding OML
+Now handling font encoding T1 ...
+... processing UTF-8 mapping file for font encoding T1
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.dfu
+File: t1enc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
+   defining Unicode char U+00A1 (decimal 161)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00AB (decimal 171)
+   defining Unicode char U+00BB (decimal 187)
+   defining Unicode char U+00BF (decimal 191)
+   defining Unicode char U+00C0 (decimal 192)
+   defining Unicode char U+00C1 (decimal 193)
+   defining Unicode char U+00C2 (decimal 194)
+   defining Unicode char U+00C3 (decimal 195)
+   defining Unicode char U+00C4 (decimal 196)
+   defining Unicode char U+00C5 (decimal 197)
+   defining Unicode char U+00C6 (decimal 198)
+   defining Unicode char U+00C7 (decimal 199)
+   defining Unicode char U+00C8 (decimal 200)
+   defining Unicode char U+00C9 (decimal 201)
+   defining Unicode char U+00CA (decimal 202)
+   defining Unicode char U+00CB (decimal 203)
+   defining Unicode char U+00CC (decimal 204)
+   defining Unicode char U+00CD (decimal 205)
+   defining Unicode char U+00CE (decimal 206)
+   defining Unicode char U+00CF (decimal 207)
+   defining Unicode char U+00D0 (decimal 208)
+   defining Unicode char U+00D1 (decimal 209)
+   defining Unicode char U+00D2 (decimal 210)
+   defining Unicode char U+00D3 (decimal 211)
+   defining Unicode char U+00D4 (decimal 212)
+   defining Unicode char U+00D5 (decimal 213)
+   defining Unicode char U+00D6 (decimal 214)
+   defining Unicode char U+00D8 (decimal 216)
+   defining Unicode char U+00D9 (decimal 217)
+   defining Unicode char U+00DA (decimal 218)
+   defining Unicode char U+00DB (decimal 219)
+   defining Unicode char U+00DC (decimal 220)
+   defining Unicode char U+00DD (decimal 221)
+   defining Unicode char U+00DE (decimal 222)
+   defining Unicode char U+00DF (decimal 223)
+   defining Unicode char U+00E0 (decimal 224)
+   defining Unicode char U+00E1 (decimal 225)
+   defining Unicode char U+00E2 (decimal 226)
+   defining Unicode char U+00E3 (decimal 227)
+   defining Unicode char U+00E4 (decimal 228)
+   defining Unicode char U+00E5 (decimal 229)
+   defining Unicode char U+00E6 (decimal 230)
+   defining Unicode char U+00E7 (decimal 231)
+   defining Unicode char U+00E8 (decimal 232)
+   defining Unicode char U+00E9 (decimal 233)
+   defining Unicode char U+00EA (decimal 234)
+   defining Unicode char U+00EB (decimal 235)
+   defining Unicode char U+00EC (decimal 236)
+   defining Unicode char U+00ED (decimal 237)
+   defining Unicode char U+00EE (decimal 238)
+   defining Unicode char U+00EF (decimal 239)
+   defining Unicode char U+00F0 (decimal 240)
+   defining Unicode char U+00F1 (decimal 241)
+   defining Unicode char U+00F2 (decimal 242)
+   defining Unicode char U+00F3 (decimal 243)
+   defining Unicode char U+00F4 (decimal 244)
+   defining Unicode char U+00F5 (decimal 245)
+   defining Unicode char U+00F6 (decimal 246)
+   defining Unicode char U+00F8 (decimal 248)
+   defining Unicode char U+00F9 (decimal 249)
+   defining Unicode char U+00FA (decimal 250)
+   defining Unicode char U+00FB (decimal 251)
+   defining Unicode char U+00FC (decimal 252)
+   defining Unicode char U+00FD (decimal 253)
+   defining Unicode char U+00FE (decimal 254)
+   defining Unicode char U+00FF (decimal 255)
+   defining Unicode char U+0102 (decimal 258)
+   defining Unicode char U+0103 (decimal 259)
+   defining Unicode char U+0104 (decimal 260)
+   defining Unicode char U+0105 (decimal 261)
+   defining Unicode char U+0106 (decimal 262)
+   defining Unicode char U+0107 (decimal 263)
+   defining Unicode char U+010C (decimal 268)
+   defining Unicode char U+010D (decimal 269)
+   defining Unicode char U+010E (decimal 270)
+   defining Unicode char U+010F (decimal 271)
+   defining Unicode char U+0110 (decimal 272)
+   defining Unicode char U+0111 (decimal 273)
+   defining Unicode char U+0118 (decimal 280)
+   defining Unicode char U+0119 (decimal 281)
+   defining Unicode char U+011A (decimal 282)
+   defining Unicode char U+011B (decimal 283)
+   defining Unicode char U+011E (decimal 286)
+   defining Unicode char U+011F (decimal 287)
+   defining Unicode char U+0130 (decimal 304)
+   defining Unicode char U+0131 (decimal 305)
+   defining Unicode char U+0132 (decimal 306)
+   defining Unicode char U+0133 (decimal 307)
+   defining Unicode char U+0139 (decimal 313)
+   defining Unicode char U+013A (decimal 314)
+   defining Unicode char U+013D (decimal 317)
+   defining Unicode char U+013E (decimal 318)
+   defining Unicode char U+0141 (decimal 321)
+   defining Unicode char U+0142 (decimal 322)
+   defining Unicode char U+0143 (decimal 323)
+   defining Unicode char U+0144 (decimal 324)
+   defining Unicode char U+0147 (decimal 327)
+   defining Unicode char U+0148 (decimal 328)
+   defining Unicode char U+014A (decimal 330)
+   defining Unicode char U+014B (decimal 331)
+   defining Unicode char U+0150 (decimal 336)
+   defining Unicode char U+0151 (decimal 337)
+   defining Unicode char U+0152 (decimal 338)
+   defining Unicode char U+0153 (decimal 339)
+   defining Unicode char U+0154 (decimal 340)
+   defining Unicode char U+0155 (decimal 341)
+   defining Unicode char U+0158 (decimal 344)
+   defining Unicode char U+0159 (decimal 345)
+   defining Unicode char U+015A (decimal 346)
+   defining Unicode char U+015B (decimal 347)
+   defining Unicode char U+015E (decimal 350)
+   defining Unicode char U+015F (decimal 351)
+   defining Unicode char U+0160 (decimal 352)
+   defining Unicode char U+0161 (decimal 353)
+   defining Unicode char U+0162 (decimal 354)
+   defining Unicode char U+0163 (decimal 355)
+   defining Unicode char U+0164 (decimal 356)
+   defining Unicode char U+0165 (decimal 357)
+   defining Unicode char U+016E (decimal 366)
+   defining Unicode char U+016F (decimal 367)
+   defining Unicode char U+0170 (decimal 368)
+   defining Unicode char U+0171 (decimal 369)
+   defining Unicode char U+0178 (decimal 376)
+   defining Unicode char U+0179 (decimal 377)
+   defining Unicode char U+017A (decimal 378)
+   defining Unicode char U+017B (decimal 379)
+   defining Unicode char U+017C (decimal 380)
+   defining Unicode char U+017D (decimal 381)
+   defining Unicode char U+017E (decimal 382)
+   defining Unicode char U+200C (decimal 8204)
+   defining Unicode char U+2013 (decimal 8211)
+   defining Unicode char U+2014 (decimal 8212)
+   defining Unicode char U+2018 (decimal 8216)
+   defining Unicode char U+2019 (decimal 8217)
+   defining Unicode char U+201A (decimal 8218)
+   defining Unicode char U+201C (decimal 8220)
+   defining Unicode char U+201D (decimal 8221)
+   defining Unicode char U+201E (decimal 8222)
+   defining Unicode char U+2030 (decimal 8240)
+   defining Unicode char U+2031 (decimal 8241)
+   defining Unicode char U+2039 (decimal 8249)
+   defining Unicode char U+203A (decimal 8250)
+   defining Unicode char U+2423 (decimal 9251)
+)
+Now handling font encoding OT1 ...
+... processing UTF-8 mapping file for font encoding OT1
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ot1enc.dfu
+File: ot1enc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
+   defining Unicode char U+00A1 (decimal 161)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00B8 (decimal 184)
+   defining Unicode char U+00BF (decimal 191)
+   defining Unicode char U+00C5 (decimal 197)
+   defining Unicode char U+00C6 (decimal 198)
+   defining Unicode char U+00D8 (decimal 216)
+   defining Unicode char U+00DF (decimal 223)
+   defining Unicode char U+00E6 (decimal 230)
+   defining Unicode char U+00EC (decimal 236)
+   defining Unicode char U+00ED (decimal 237)
+   defining Unicode char U+00EE (decimal 238)
+   defining Unicode char U+00EF (decimal 239)
+   defining Unicode char U+00F8 (decimal 248)
+   defining Unicode char U+0131 (decimal 305)
+   defining Unicode char U+0141 (decimal 321)
+   defining Unicode char U+0142 (decimal 322)
+   defining Unicode char U+0152 (decimal 338)
+   defining Unicode char U+0153 (decimal 339)
+   defining Unicode char U+2013 (decimal 8211)
+   defining Unicode char U+2014 (decimal 8212)
+   defining Unicode char U+2018 (decimal 8216)
+   defining Unicode char U+2019 (decimal 8217)
+   defining Unicode char U+201C (decimal 8220)
+   defining Unicode char U+201D (decimal 8221)
+)
+Now handling font encoding OMS ...
+... processing UTF-8 mapping file for font encoding OMS
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/omsenc.dfu
+File: omsenc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
+   defining Unicode char U+00A7 (decimal 167)
+   defining Unicode char U+00B6 (decimal 182)
+   defining Unicode char U+00B7 (decimal 183)
+   defining Unicode char U+2020 (decimal 8224)
+   defining Unicode char U+2021 (decimal 8225)
+   defining Unicode char U+2022 (decimal 8226)
+)
+Now handling font encoding OMX ...
+... no UTF-8 mapping file for font encoding OMX
+Now handling font encoding U ...
+... no UTF-8 mapping file for font encoding U
+   defining Unicode char U+00A9 (decimal 169)
+   defining Unicode char U+00AA (decimal 170)
+   defining Unicode char U+00AE (decimal 174)
+   defining Unicode char U+00BA (decimal 186)
+   defining Unicode char U+02C6 (decimal 710)
+   defining Unicode char U+02DC (decimal 732)
+   defining Unicode char U+200C (decimal 8204)
+   defining Unicode char U+2026 (decimal 8230)
+   defining Unicode char U+2122 (decimal 8482)
+   defining Unicode char U+2423 (decimal 9251)
+)
 (/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
-\fancy@headwidth=\skip64
-\f@ncyO@elh=\skip65
-\f@ncyO@erh=\skip66
-\f@ncyO@olh=\skip67
-\f@ncyO@orh=\skip68
-\f@ncyO@elf=\skip69
-\f@ncyO@erf=\skip70
-\f@ncyO@olf=\skip71
-\f@ncyO@orf=\skip72
+\fancy@headwidth=\skip67
+\f@ncyO@elh=\skip68
+\f@ncyO@erh=\skip69
+\f@ncyO@olh=\skip70
+\f@ncyO@orh=\skip71
+\f@ncyO@elf=\skip72
+\f@ncyO@erf=\skip73
+\f@ncyO@olf=\skip74
+\f@ncyO@orf=\skip75
 )
 (/usr/share/texlive/texmf-dist/tex/latex/import/import.sty
 Package: import 2009/03/23  v 5.1
@@ -601,14 +1067,16 @@ Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 )
-\@linkdim=\dimen185
-\Hy@linkcounter=\count129
-\Hy@pagecounter=\count130
+\@linkdim=\dimen187
+\Hy@linkcounter=\count134
+\Hy@pagecounter=\count135
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count131
+\Hy@SavedSpaceFactor=\count136
 
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -620,17 +1088,17 @@ Package hyperref Info: Plain pages OFF on input line 4458.
 Package hyperref Info: Backreferencing OFF on input line 4463.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4688.
-\c@Hy@tempcnt=\count132
+\c@Hy@tempcnt=\count137
 
 (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip11
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5041.
-\XeTeXLinkMargin=\dimen186
-\Fld@menulength=\count133
-\Field@Width=\dimen187
-\Fld@charsize=\dimen188
+\XeTeXLinkMargin=\dimen188
+\Fld@menulength=\count138
+\Field@Width=\dimen189
+\Fld@charsize=\dimen190
 Package hyperref Info: Hyper figures OFF on input line 6295.
 Package hyperref Info: Link nesting OFF on input line 6300.
 Package hyperref Info: Hyper index ON on input line 6303.
@@ -640,71 +1108,86 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6320.
 Package hyperref Info: PDF/A mode OFF on input line 6325.
 LaTeX Info: Redefining \ref on input line 6365.
 LaTeX Info: Redefining \pageref on input line 6369.
-\Hy@abspage=\count134
-\c@Item=\count135
-\c@Hfootnote=\count136
+\Hy@abspage=\count139
+\c@Item=\count140
+\c@Hfootnote=\count141
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
-\Fld@listcount=\count137
-\c@bookmark@seq@number=\count138
+\Fld@listcount=\count142
+\c@bookmark@seq@number=\count143
 
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 )
-\Hy@SectionHShift=\skip73
+\Hy@SectionHShift=\skip76
+)
+(/usr/share/texlive/texmf-dist/tex/latex/cleveref/cleveref.sty
+Package: cleveref 2013/12/28 v0.19 Intelligent cross-referencing
+Package cleveref Info: `hyperref' support loaded on input line 2230.
+LaTeX Info: Redefining \cref on input line 2230.
+LaTeX Info: Redefining \Cref on input line 2230.
+LaTeX Info: Redefining \crefrange on input line 2230.
+LaTeX Info: Redefining \Crefrange on input line 2230.
+LaTeX Info: Redefining \cpageref on input line 2230.
+LaTeX Info: Redefining \Cpageref on input line 2230.
+LaTeX Info: Redefining \cpagerefrange on input line 2230.
+LaTeX Info: Redefining \Cpagerefrange on input line 2230.
+LaTeX Info: Redefining \labelcref on input line 2230.
+LaTeX Info: Redefining \labelcpageref on input line 2230.
+Package cleveref Info: `algorithm2e' support loaded on input line 2966.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)
-\LTleft=\skip74
-\LTright=\skip75
-\LTpre=\skip76
-\LTpost=\skip77
-\LTchunksize=\count139
-\LTcapwidth=\dimen189
+\LTleft=\skip77
+\LTright=\skip78
+\LTpre=\skip79
+\LTpost=\skip80
+\LTchunksize=\count144
+\LTcapwidth=\dimen191
 \LT@head=\box47
 \LT@firsthead=\box48
 \LT@foot=\box49
 \LT@lastfoot=\box50
-\LT@cols=\count140
-\LT@rows=\count141
-\c@LT@tables=\count142
-\c@LT@chunks=\count143
-\LT@p@ftn=\toks36
+\LT@cols=\count145
+\LT@rows=\count146
+\c@LT@tables=\count147
+\c@LT@chunks=\count148
+\LT@p@ftn=\toks40
 )
 (/usr/share/texlive/texmf-dist/tex/latex/csvsimple/csvsimple.sty
 Package: csvsimple 2014/07/14 version 1.12 LaTeX CSV file processing
 \csv@file=\read3
-\c@csvinputline=\count144
-\c@csvrow=\count145
-\c@csvcol=\count146
+\c@csvinputline=\count149
+\c@csvrow=\count150
+\c@csvcol=\count151
 \csv@out=\write5
 )
 (/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2010/09/12 v5.6 Page Geometry
-\Gm@cnth=\count147
-\Gm@cntv=\count148
-\c@Gm@tempcnt=\count149
-\Gm@bindingoffset=\dimen190
-\Gm@wd@mp=\dimen191
-\Gm@odd@mp=\dimen192
-\Gm@even@mp=\dimen193
-\Gm@layoutwidth=\dimen194
-\Gm@layoutheight=\dimen195
-\Gm@layouthoffset=\dimen196
-\Gm@layoutvoffset=\dimen197
-\Gm@dimlist=\toks37
+\Gm@cnth=\count152
+\Gm@cntv=\count153
+\c@Gm@tempcnt=\count154
+\Gm@bindingoffset=\dimen192
+\Gm@wd@mp=\dimen193
+\Gm@odd@mp=\dimen194
+\Gm@even@mp=\dimen195
+\Gm@layoutwidth=\dimen196
+\Gm@layoutheight=\dimen197
+\Gm@layouthoffset=\dimen198
+\Gm@layoutvoffset=\dimen199
+\Gm@dimlist=\toks41
 )
 (/usr/share/texlive/texmf-dist/tex/latex/appendix/appendix.sty
 Package: appendix 2009/09/02 v1.2b extra appendix facilities
-\c@@pps=\count150
-\c@@ppsavesec=\count151
-\c@@ppsaveapp=\count152
+\c@@pps=\count155
+\c@@ppsavesec=\count156
+\c@@ppsaveapp=\count157
 )
 (/usr/share/texlive/texmf-dist/tex/latex/minted/minted.sty
 Package: minted 2011/09/17 v1.7 Yet another Pygments shim for LaTeX
@@ -714,32 +1197,19 @@ Package: fancyvrb 2008/02/07
 
 Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
 <2008/02/07> (tvz)
-\FV@CodeLineNo=\count153
+\FV@CodeLineNo=\count158
 \FV@InFile=\read4
 \FV@TabBox=\box51
-\c@FancyVerbLine=\count154
-\FV@StepNumber=\count155
+\c@FancyVerbLine=\count159
+\FV@StepNumber=\count160
 \FV@OutFile=\write6
 ) (/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count156
-\float@exts=\toks38
+\c@float@type=\count161
+\float@exts=\toks42
 \float@box=\box52
-\@float@everytoks=\toks39
+\@float@everytoks=\toks43
 \@floatcapt=\box53
-)
-(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
-Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count157
-\calc@Bcount=\count158
-\calc@Adimen=\dimen198
-\calc@Bdimen=\dimen199
-\calc@Askip=\skip78
-\calc@Bskip=\skip79
-LaTeX Info: Redefining \setlength on input line 75.
-LaTeX Info: Redefining \addtolength on input line 76.
-\calc@Ccount=\count159
-\calc@Cskip=\skip80
 )
 (/usr/share/texlive/texmf-dist/tex/latex/ifplatform/ifplatform.sty
 Package: ifplatform 2010/10/22 v0.4 Testing for the operating system
@@ -755,8 +1225,8 @@ runsystem(rm -- "main.w18")...executed.
 )
 \minted@bgbox=\box54
 \minted@code=\write7
-\@float@every@listing=\toks40
-\c@listing=\count160
+\@float@every@listing=\toks44
+\c@listing=\count162
 )
 runsystem(which pygmentize && touch main.aex)...executed.
 
@@ -771,63 +1241,79 @@ File: tikzlibraryarrows.code.tex 2008/01/09 v3.0.0 (rcs-revision 1.1)
 tex
 File: pgflibraryarrows.code.tex 2013/09/23 v3.0.0 (rcs-revision 1.16)
 \arrowsize=\dimen200
-))
-(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
-zlibrarypositioning.code.tex
-File: tikzlibrarypositioning.code.tex 2008/10/06 v3.0.0 (rcs-revision 1.7)
-) (./main.aux
+)) (./main.aux
 
 LaTeX Warning: Label `eq:livenesscustom' multiply defined.
 
 
-LaTeX Warning: Label `subsection:typeshieldprecision' multiply defined.
+LaTeX Warning: Label `eq:livenesscustom@cref' multiply defined.
 
 
 LaTeX Warning: Label `subsection:typeshieldprecision' multiply defined.
 
 
-LaTeX Warning: Label `subsection:typeshieldprecision' multiply defined.
+LaTeX Warning: Label `subsection:typeshieldprecision@cref' multiply defined.
 
 
 LaTeX Warning: Label `subsection:typeshieldprecision' multiply defined.
+
+
+LaTeX Warning: Label `subsection:typeshieldprecision@cref' multiply defined.
+
+
+LaTeX Warning: Label `subsection:typeshieldprecision' multiply defined.
+
+
+LaTeX Warning: Label `subsection:typeshieldprecision@cref' multiply defined.
+
+
+LaTeX Warning: Label `subsection:typeshieldprecision' multiply defined.
+
+
+LaTeX Warning: Label `subsection:typeshieldprecision@cref' multiply defined.
 
 
 LaTeX Warning: Label `subsection:typeshieldvslimitcount' multiply defined.
 
+
+LaTeX Warning: Label `subsection:typeshieldvslimitcount@cref' multiply defined.
+
+
 )
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 92.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 103.
+LaTeX Font Info:    ... okay on input line 103.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 103.
+LaTeX Font Info:    ... okay on input line 103.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 103.
+LaTeX Font Info:    ... okay on input line 103.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 103.
+LaTeX Font Info:    ... okay on input line 103.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 103.
+LaTeX Font Info:    ... okay on input line 103.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 103.
+LaTeX Font Info:    ... okay on input line 103.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 103.
+LaTeX Font Info:    ... okay on input line 103.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 103.
+
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count161
+\scratchcounter=\count163
 \scratchdimen=\dimen201
 \scratchbox=\box55
-\nofMPsegments=\count162
-\nofMParguments=\count163
-\everyMPshowfont=\toks41
-\MPscratchCnt=\count164
+\nofMPsegments=\count164
+\nofMParguments=\count165
+\everyMPshowfont=\toks45
+\MPscratchCnt=\count166
 \MPscratchDim=\dimen202
-\MPnumerator=\count165
-\makeMPintoPDFobject=\count166
-\everyMPtoPDFconversion=\toks42
+\MPnumerator=\count167
+\makeMPintoPDFobject=\count168
+\everyMPtoPDFconversion=\toks46
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -845,7 +1331,7 @@ e
 ))
 ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box56
-Package hyperref Info: Link coloring OFF on input line 92.
+Package hyperref Info: Link coloring OFF on input line 103.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -853,11 +1339,11 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count167
+\c@section@level=\count169
 )
-LaTeX Info: Redefining \ref on input line 92.
-LaTeX Info: Redefining \pageref on input line 92.
-LaTeX Info: Redefining \nameref on input line 92.
+LaTeX Info: Redefining \ref on input line 103.
+LaTeX Info: Redefining \pageref on input line 103.
+LaTeX Info: Redefining \nameref on input line 103.
 
 (./main.out) (./main.out)
 \@outlinefile=\write8
@@ -902,57 +1388,59 @@ runsystem(pygmentize -S default -f latex > main.pyg)...executed.
 
 (./main.pyg)
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 113.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 124.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 113.
-LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 11
-3.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 124.
+LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 12
+4.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
 File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 11
-3.
+LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 12
+4.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlztmcm.fd
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 11
-3.
+LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 12
+4.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsztmcm.fd
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 11
-3.
+LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 12
+4.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 113.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 124.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 113.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 124.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 113.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 124.
 
 (./components/abstract.tex) (./chapters/Introduction.tex
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 4.
+
 Underfull \vbox (badness 3128) has occurred while \output is active []
 
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 7.
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 33.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 180.
+
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 33.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 180.
 )
-(./chapters/Forward_Indirect_Callsites.tex
+(./chapters/Forward_Indirect_Callsites.tex [2]
 \firstlisting=\box57
 \openout6 = `main.pyg'.
 
@@ -969,61 +1457,58 @@ runsystem(rm main.out.pyg)...executed.
 runsystem(rm main.pyg)...executed.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 104.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 94.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 104.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 94.
 
-<figures/loop.pdf, id=149, 390.45876pt x 556.0775pt>
+<figures/loop.pdf, id=184, 391.4625pt x 556.0775pt>
 File: figures/loop.pdf Graphic file (type pdf)
  <use figures/loop.pdf>
-Package pdftex.def Info: figures/loop.pdf used on input line 116.
-(pdftex.def)             Requested size: 230.68303pt x 328.5326pt.
+Package pdftex.def Info: figures/loop.pdf used on input line 107.
+(pdftex.def)             Requested size: 146.34637pt x 207.88368pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 108--118
-[]$[]$
+Overfull \hbox (24.39075pt too wide) in paragraph at lines 107--108
+[][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 108--118
-[]$
+Overfull \hbox (21.0019pt too wide) in paragraph at lines 99--109
+[]$[]$   $[]$
  []
 
-[2] [3pdfTeX warning (ext4): destination with the same identifier (name{figure.
-1}) has been already used, duplicate ignored
+
+Underfull \vbox (badness 2556) has occurred while \output is active []
+
+ [3pdfTeX warning (ext4): destination with the same identifier (name{figure.1})
+ has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.176 
+l.154 
        <./figures/loop.pdf>]
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
-
-<figures/class_hierarchy.pdf, id=209, 585.18625pt x 483.8075pt>
+<figures/class_hierarchy.pdf, id=237, 585.18625pt x 483.8075pt>
 File: figures/class_hierarchy.pdf Graphic file (type pdf)
 
 <use figures/class_hierarchy.pdf>
-Package pdftex.def Info: figures/class_hierarchy.pdf used on input line 235.
+Package pdftex.def Info: figures/class_hierarchy.pdf used on input line 226.
 (pdftex.def)             Requested size: 237.7689pt x 196.57584pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 242--260
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 233--251
 []\OT1/ptm/m/n/10 The C++ class \OT1/cmtt/m/n/10 nsMultiplexInputStream \OT1/pt
 m/m/n/10 con-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 242--260
+Underfull \hbox (badness 10000) in paragraph at lines 233--251
 \OT1/ptm/m/n/10 tains a main loop gad-get in-side the func-tion
  []
 
-[4pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) 
-has been already used, duplicate ignored
-
-\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
-                                                  
-l.260 
-       <./figures/class_hierarchy.pdf>]
-Underfull \hbox (badness 7504) in paragraph at lines 261--272
+[4]
+Underfull \hbox (badness 7504) in paragraph at lines 252--263
 \OT1/cmtt/m/n/10 nsSeekableStream\OT1/ptm/m/n/10 , \OT1/cmtt/m/n/10 nsIPCSerial
 izableInputStream
  []
@@ -1032,58 +1517,180 @@ izableInputStream
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 22.
-
-Overfull \hbox (9.03255pt too wide) in paragraph at lines 37--63
- [][] 
- []
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 32.
 
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
+passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
 
-) (./chapters/Design.tex
-Overfull \hbox (160.8154pt too wide) in paragraph at lines 23--67
-[][]
- []
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74 }
+      
+This error message was generated by an \errmessage
+command, so I can't give any explicit help.
+Pretend that you're Hercule Poirot: Examine all clues,
+and deduce the truth by order and method.
 
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
+passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
 
-[5]
-Underfull \vbox (badness 2088) has occurred while \output is active []
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74 }
+      
+(That was another \errmessage.)
 
 
-Overfull \hbox (135.52155pt too wide) in paragraph at lines 93--148
-[][] 
- []
+! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
+passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
 
-[6pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) 
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74 }
+      
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
+passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74 }
+      
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
+passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74 }
+      
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
+passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74 }
+      
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
+passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74 }
+      
+(That was another \errmessage.)
+
+[5pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) 
 has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.158 \item t
-             he lower 8bits of the register, meaning a wideness of 8.pdfTeX war
-ning (ext4): destination with the same identifier (name{figure.4}) has been alr
-eady used, duplicate ignored
+l.83 
+     pdfTeX warning (ext4): destination with the same identifier (name{figure.3
+}) has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.158 \item t
-             he lower 8bits of the register, meaning a wideness of 8.pdfTeX war
-ning (ext4): destination with the same identifier (name{figure.5}) has been alr
-eady used, duplicate ignored
+l.83 
+      <./figures/class_hierarchy.pdf>]) (./chapters/Design.tex
+
+! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
+passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.68 }
+      
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
+passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.68 }
+      
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
+passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.149 }
+       
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
+passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.149 }
+       
+(That was another \errmessage.)
+
+
+Overfull \hbox (9.03491pt too wide) in paragraph at lines 95--150
+ [] 
+ []
+
+[6pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) 
+has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.158 \item t
-             he lower 8bits of the register, meaning a wideness of 8.]
-Underfull \hbox (badness 1102) in paragraph at lines 183--184
+l.170 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+5}) has been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.170 
+      ]
+Underfull \hbox (badness 1102) in paragraph at lines 185--186
 []\OT1/ptm/m/n/10 Thus we de-scribe the pos-si-ble change that oc-curs in
  []
 
 
-Underfull \hbox (badness 2221) in paragraph at lines 183--184
+Underfull \hbox (badness 2221) in paragraph at lines 185--186
 \OT1/ptm/m/n/10 one reg-is-ter with the set $\OML/ztmcm/m/it/10 S \OT1/ztmcm/m/
 n/10 = \OMS/ztmcm/m/n/10 f\OML/ztmcm/m/it/10 w\OT1/ztmcm/m/n/10 64\OML/ztmcm/m/
 it/10 ; w\OT1/ztmcm/m/n/10 32\OML/ztmcm/m/it/10 ; w\OT1/ztmcm/m/n/10 16\OML/ztm
@@ -1095,13 +1702,8 @@ tmcm/m/n/10 g ^^B
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [7]
-Overfull \hbox (24.53001pt too wide) in paragraph at lines 320--320
+Overfull \hbox (24.53001pt too wide) in paragraph at lines 322--322
 [] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 342--369
-[][] []
  []
 
 [8pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) 
@@ -1109,16 +1711,21 @@ has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.384 \item H
-             ow much was read from the register before its value was overwri...
-]
-Underfull \hbox (badness 10000) in paragraph at lines 387--389
+l.383 \begin{enumerate}
+                       pdfTeX warning (ext4): destination with the same identif
+ier (name{table.1}) has been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.383 \begin{enumerate}
+                       ]
+Underfull \hbox (badness 10000) in paragraph at lines 388--390
 \OT1/ptm/m/n/10 This gives us the fol-low-ing reg-is-ter state $\OML/ztmcm/m/it
 /10 S[] \OT1/ztmcm/m/n/10 =
  []
 
 
-Underfull \hbox (badness 2884) in paragraph at lines 387--389
+Underfull \hbox (badness 2884) in paragraph at lines 388--390
 \OMS/ztmcm/m/n/10 f\OML/ztmcm/m/it/10 C; r\OT1/ztmcm/m/n/10 8\OML/ztmcm/m/it/10
  ; r\OT1/ztmcm/m/n/10 16\OML/ztmcm/m/it/10 ; r\OT1/ztmcm/m/n/10 32\OML/ztmcm/m/
 it/10 ; r\OT1/ztmcm/m/n/10 64\OML/ztmcm/m/it/10 ; W\OMS/ztmcm/m/n/10 g$ \OT1/pt
@@ -1126,32 +1733,28 @@ m/m/n/10 which trans-lates to the reg-is-ter
  []
 
 
-Underfull \hbox (badness 1655) in paragraph at lines 392--393
+Underfull \hbox (badness 1655) in paragraph at lines 393--394
 \OT1/ptm/m/n/10 pol-icy, which only gives us the first non $\OML/ztmcm/m/it/10 
 C$ \OT1/ptm/m/n/10 state
  []
 
-[9pdfTeX warning (ext4): destination with the same identifier (name{table.1}) h
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[9pdfTeX warning (ext4): destination with the same identifier (name{table.2}) h
 as been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.463 \item L
-             ook for what we call the xmm-passthrough block, which entierly ...
+l.474 \item L
+             ook at the param-passthrough block and set all instructions tha...
 pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) ha
 s been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.463 \item L
-             ook for what we call the xmm-passthrough block, which entierly ...
-pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has
- been already used, duplicate ignored
-
-\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
-                                                  
-l.463 \item L
-             ook for what we call the xmm-passthrough block, which entierly ...
+l.474 \item L
+             ook at the param-passthrough block and set all instructions tha...
 ]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -1161,37 +1764,33 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.555 \textbf{Provided Parameter Count.}
-                                        ]
-Overfull \hbox (24.53001pt too wide) in paragraph at lines 575--575
+l.570 \item W
+             as the register written to ? \\ We represent this with the stat...
+]
+Overfull \hbox (24.53001pt too wide) in paragraph at lines 584--584
 [] 
  []
 
 
-Package array Warning: Column ? is already defined on input line 592.
+Package array Warning: Column ? is already defined on input line 601.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 598--635
-[][] []
+Underfull \hbox (badness 10000) in paragraph at lines 606--644
+
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 651--653
+Underfull \hbox (badness 10000) in paragraph at lines 660--662
 \OT1/ptm/m/n/10 This gives us the fol-low-ing reg-is-ter state $\OML/ztmcm/m/it
 /10 S[] \OT1/ztmcm/m/n/10 =
  []
 
 
-Underfull \hbox (badness 4001) in paragraph at lines 651--653
+Underfull \hbox (badness 4001) in paragraph at lines 660--662
 \OMS/ztmcm/m/n/10 f\OML/ztmcm/m/it/10 T; s\OT1/ztmcm/m/n/10 64\OML/ztmcm/m/it/1
 0 ; s\OT1/ztmcm/m/n/10 32\OML/ztmcm/m/it/10 ; s\OT1/ztmcm/m/n/10 16\OML/ztmcm/m
 /it/10 ; s\OT1/ztmcm/m/n/10 8\OML/ztmcm/m/it/10 ; U\OMS/ztmcm/m/n/10 g$ \OT1/pt
 m/m/n/10 which trans-lates to the reg-is-ter
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 682--709
-[][] []
  []
 
 [11pdfTeX warning (ext4): destination with the same identifier (name{table.3}) 
@@ -1199,362 +1798,350 @@ has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.717 \paragraph
-                {Parameter lists with ``holes''} refers to parameter lists t...
-]) (./chapters/Implementation.tex [12pdfTeX warning (ext4): destination with th
-e same identifier (name{table.4}) has been already used, duplicate ignored
+l.727 
+      ]) (./chapters/Implementation.tex [12pdfTeX warning (ext4): destination w
+ith the same identifier (name{table.4}) has been already used, duplicate ignore
+d
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.5 
-    ]) (./chapters/Evaluation.tex [13]
-Underfull \hbox (badness 2409) in paragraph at lines 41--42
+l.15 
+     ]) (./chapters/Evaluation.tex
+Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
+ine 17.
+ [13]
+Underfull \hbox (badness 2409) in paragraph at lines 55--56
 []\OT1/ptm/m/n/10 The num-ber of call-tar-gets that are found by our
  []
 
 
-Overfull \hbox (169.64735pt too wide) in paragraph at lines 49--115
+Overfull \hbox (9.04039pt too wide) in paragraph at lines 62--131
 [][]
  []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [14pdfTeX warning (ext4): destination with the same identifier (name{table.5}) 
 has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.126 \item T
-             he number of callsites that are discarded due to mismatch from ...
-]
-Overfull \hbox (261.97495pt too wide) in paragraph at lines 154--232
+l.150 
+      ]
+Overfull \hbox (9.02905pt too wide) in paragraph at lines 170--248
 [][]
  []
 
 
-LaTeX Warning: Float too large for page by 36.61621pt on input line 234.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Overfull \hbox (261.97824pt too wide) in paragraph at lines 238--318
+Overfull \hbox (9.0306pt too wide) in paragraph at lines 254--334
 [][]
  []
 
 
-LaTeX Warning: Float too large for page by 9.95975pt on input line 320.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[15] [16pdfTeX warning (ext4): destination with the same identifier (name{table
-.6}) has been already used, duplicate ignored
-
-\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
-                                                  
-l.322 \newpage
-              pdfTeX warning (ext4): destination with the same identifier (name
-{table.7}) has been already used, duplicate ignored
-
-\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
-                                                  
-l.322 \newpage
-              ]
-Overfull \hbox (261.97887pt too wide) in paragraph at lines 344--422
-[][]
- []
-
-
-LaTeX Warning: Float too large for page by 37.44377pt on input line 424.
-
-
-Overfull \hbox (261.97487pt too wide) in paragraph at lines 428--508
-[][]
- []
-
-
-LaTeX Warning: Float too large for page by 45.99782pt on input line 510.
-
-
-Overfull \hbox (261.97487pt too wide) in paragraph at lines 516--593
-[][]
- []
-
-
-LaTeX Warning: Float too large for page by 45.99782pt on input line 595.
-
-[17pdfTeX warning (ext4): destination with the same identifier (name{table.8}) 
+[15pdfTeX warning (ext4): destination with the same identifier (name{table.6}) 
 has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.597 \newpage
-              ] [18pdfTeX warning (ext4): destination with the same identifier 
-(name{table.9}) has been already used, duplicate ignored
-
-\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
-                                                  
-l.597 \newpage
-              pdfTeX warning (ext4): destination with the same identifier (name
-{table.10}) has been already used, duplicate ignored
-
-\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
-                                                  
-l.597 \newpage
-              ]
-Overfull \hbox (261.97887pt too wide) in paragraph at lines 616--694
+l.352 \item U
+             nion combination operator with an $analyze$ function that does ...
+]
+Overfull \hbox (9.03099pt too wide) in paragraph at lines 360--438
 [][]
  []
 
 
-LaTeX Warning: Float too large for page by 37.44377pt on input line 696.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Overfull \hbox (261.97487pt too wide) in paragraph at lines 700--780
+Overfull \hbox (9.0318pt too wide) in paragraph at lines 444--524
 [][]
  []
 
 
-LaTeX Warning: Float too large for page by 45.99782pt on input line 782.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Overfull \hbox (261.97487pt too wide) in paragraph at lines 785--865
+Overfull \hbox (9.0318pt too wide) in paragraph at lines 532--609
+[][]
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[16pdfTeX warning (ext4): destination with the same identifier (name{table.7}) 
+has been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.625 \item U
+             nion combination operator with an $analyze$ function that follo...
+pdfTeX warning (ext4): destination with the same identifier (name{table.8}) has
+ been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.625 \item U
+             nion combination operator with an $analyze$ function that follo...
+]
+Overfull \hbox (9.03099pt too wide) in paragraph at lines 632--710
+[][]
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Overfull \hbox (9.0318pt too wide) in paragraph at lines 716--796
+[][]
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Overfull \hbox (9.0318pt too wide) in paragraph at lines 801--881
 [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 40.8177pt on input line 869.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[19pdfTeX warning (ext4): destination with the same identifier (name{table.11})
- has been already used, duplicate ignored
-
-\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
-                                                  
-l.1059 \newpage
-               ] [20pdfTeX warning (ext4): destination with the same identifier
- (name{table.12}) has been already used, duplicate ignored
+[17pdfTeX warning (ext4): destination with the same identifier (name{table.9}) 
+has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.1059 \newpage
+l.1075 \newpage
                pdfTeX warning (ext4): destination with the same identifier (nam
-e{table.13}) has been already used, duplicate ignored
+e{table.10}) has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.1059 \newpage
+l.1075 \newpage
                ]
-Overfull \hbox (261.97578pt too wide) in paragraph at lines 1081--1159
+Overfull \hbox (9.03226pt too wide) in paragraph at lines 1099--1177
 [][]
  []
 
 
-Overfull \hbox (74.8007pt too wide) in paragraph at lines 1166--1246
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Overfull \hbox (9.03415pt too wide) in paragraph at lines 1184--1264
  [][] 
  []
 
-[21pdfTeX warning (ext4): destination with the same identifier (name{table.14})
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[18pdfTeX warning (ext4): destination with the same identifier (name{table.11})
  has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.1444 \newpage
+l.1462 \newpage
+               pdfTeX warning (ext4): destination with the same identifier (nam
+e{table.12}) has been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.1462 \newpage
                ]
-Overfull \hbox (261.97824pt too wide) in paragraph at lines 1465--1543
+Overfull \hbox (9.0306pt too wide) in paragraph at lines 1484--1562
  [][] 
  []
 
 
-Overfull \hbox (74.80344pt too wide) in paragraph at lines 1550--1630
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Overfull \hbox (9.0326pt too wide) in paragraph at lines 1569--1649
  [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 17.41898pt on input line 1632.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[22pdfTeX warning (ext4): destination with the same identifier (name{table.15})
+[19pdfTeX warning (ext4): destination with the same identifier (name{table.13})
  has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.1633 \newpage
-               ] [23pdfTeX warning (ext4): destination with the same identifier
+l.1652 \newpage
+               pdfTeX warning (ext4): destination with the same identifier (nam
+e{table.14}) has been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.1652 \newpage
+               ] [20pdfTeX warning (ext4): destination with the same identifier
+ (name{table.15}) has been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.1678 \end{itemize}
+                    pdfTeX warning (ext4): destination with the same identifier
  (name{table.16}) has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.1633 \newpage
-               pdfTeX warning (ext4): destination with the same identifier (nam
-e{table.17}) has been already used, duplicate ignored
-
-\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
-                                                  
-l.1633 \newpage
-               ]
-Overfull \hbox (261.99866pt too wide) in paragraph at lines 1756--1796
+l.1678 \end{itemize}
+                    ]
+Overfull \hbox (9.03407pt too wide) in paragraph at lines 1775--1815
 [][]
  []
 
-[24pdfTeX warning (ext4): destination with the same identifier (name{table.18})
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[21pdfTeX warning (ext4): destination with the same identifier (name{table.17})
  has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.1800 \newpage
-               ]
-Overfull \hbox (261.99866pt too wide) in paragraph at lines 1823--1863
+l.1835 \item T
+              he average number of available targets provided by the precise...
+pdfTeX warning (ext4): destination with the same identifier (name{table.18}) ha
+s been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.1835 \item T
+              he average number of available targets provided by the precise...
+]
+Overfull \hbox (9.03407pt too wide) in paragraph at lines 1842--1882
 [][]
  []
 
-[25pdfTeX warning (ext4): destination with the same identifier (name{table.19})
+
+Overfull \hbox (9.03407pt too wide) in paragraph at lines 1909--1949
+[][]
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[22pdfTeX warning (ext4): destination with the same identifier (name{table.19})
  has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.1867 \newpage
+l.1953 \newpage
                ]
-Overfull \hbox (261.99866pt too wide) in paragraph at lines 1890--1930
-[][]
- []
 
-[26pdfTeX warning (ext4): destination with the same identifier (name{table.20})
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[23pdfTeX warning (ext4): destination with the same identifier (name{table.20})
  has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.1934 \newpage
-               ]
-Overfull \hbox (262.00578pt too wide) in paragraph at lines 1960--2000
-[][]
- []
-
-
-Overfull \hbox (262.00229pt too wide) in paragraph at lines 2006--2045
-[][]
- []
-
-
-Overfull \hbox (262.00578pt too wide) in paragraph at lines 2050--2090
-[][]
- []
-
-) (./chapters/Discussion.tex [27] [28pdfTeX warning (ext4): destination with th
-e same identifier (name{table.21}) has been already used, duplicate ignored
+l.2190 
+       pdfTeX warning (ext4): destination with the same identifier (name{table.
+21}) has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.45 
-     pdfTeX warning (ext4): destination with the same identifier (name{table.22
-}) has been already used, duplicate ignored
+l.2190 
+       ]) (./chapters/Related_Work.tex [24pdfTeX warning (ext4): destination wi
+th the same identifier (name{table.22}) has been already used, duplicate ignore
+d
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.45 
-     ] [29pdfTeX warning (ext4): destination with the same identifier (name{tab
-le.23}) has been already used, duplicate ignored
+l.1 \newpage
+            pdfTeX warning (ext4): destination with the same identifier (name{t
+able.23}) has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.85 
-     ]) (./chapters/Related_Work.tex
-Underfull \hbox (badness 10000) in paragraph at lines 74--83
+l.1 \newpage
+            ]
+Underfull \hbox (badness 10000) in paragraph at lines 66--75
 []\OT1/ptm/b/n/10 Mitigation of Ad-vanced Code-Reuse At-tacks.
  []
 
 
-Underfull \hbox (badness 1521) in paragraph at lines 74--83
-\OT1/ptm/m/n/10 are ad-vanced CRAs since these at-tacks which can not
+Underfull \hbox (badness 2393) in paragraph at lines 66--75
+\OT1/ptm/m/n/10 caller/calle con-ven-tion), \OT1/ptm/m/it/10 ii) \OT1/ptm/m/n/1
+0 coarse-grained Control-Flow
  []
 
-[30]
-Underfull \hbox (badness 1314) in paragraph at lines 118--124
+
+Underfull \hbox (badness 1314) in paragraph at lines 78--84
 \OT1/ptm/m/n/10 bi-nary in-stru-men-ta-tion in tools such as: vf-Guard [[]],
  []
 
-) (./chapters/Future_Work.tex
-Underfull \hbox (badness 1163) in paragraph at lines 3--7
-\OT1/ptm/m/n/10 of re-search, which range from im-prov-ing the struc-tural
+[25]) (./chapters/Discussion.tex [26]) (./chapters/Future_Work.tex)
+(./chapters/Conclusion.tex
+Underfull \hbox (badness 10000) in paragraph at lines 38--1
+[]\OT1/ptm/b/n/10 Using pointer/memory anal-y-sis. \OT1/ptm/m/n/10 In-tro-duc-i
+ng
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3--7
-
+Underfull \hbox (badness 2903) in paragraph at lines 38--1
+\OT1/ptm/m/n/10 pointer/memory anal-y-sis to dis-tin-guish sim-ple 32/64bit
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 8--15
-
+Underfull \hbox (badness 1337) in paragraph at lines 38--1
+\OT1/ptm/m/n/10 val-ues and ac-tual ad-dresses to even fur-ther re-strict the
  []
 
-
-Underfull \hbox (badness 5388) in paragraph at lines 16--21
-\OT1/ptm/m/n/10 rel-a-tively high---up to16%---number of un-der-es-ti-mated
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 16--21
-
- []
-
-[31]
-Underfull \hbox (badness 10000) in paragraph at lines 22--28
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 29--36
-
- []
-
-) (./chapters/Conclusion.tex) (./main.bbl
+[27]) (./main.bbl
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 5.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 5.
-
-Underfull \vbox (badness 1297) has occurred while \output is active []
-
 
 Underfull \hbox (badness 10000) in paragraph at lines 13--16
 \OT1/cmtt/m/n/8 09 / i n t e l -[] r e l e a s e -[] n e w -[] t e c h n o l o 
 g y -[] s p e c i f i c a t i o n s -[] p r o t
  []
 
-Missing character: There is no Ã in font ptmrc7t!
-Missing character: There is no ¶ in font ptmrc7t!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
 
 Underfull \hbox (badness 1132) in paragraph at lines 99--105
 []\OT1/ptm/m/sc/8 Crane, S., Vol-ck-aert, S., Schus-ter, F., Liebchen, C.,
  []
 
-[32]
-Missing character: There is no Ã in font ptmrc7t!
-Missing character: There is no ¨ in font ptmrc7t!
-
+[28]
 Underfull \hbox (badness 1859) in paragraph at lines 214--219
 []\OT1/ptm/m/sc/8 Petsios, T., Ke-merlis, V. P., Poly-chron-akis, M., and
  []
 
-Missing character: There is no Ã in font ptmrc7t!
-Missing character: There is no ¶ in font ptmrc7t!
-) [33]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 142.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 142.
+) [29]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 153.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 153.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 142.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 142.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 153.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 153.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 5963925EF02A7E37663E77F69296A47F;1711.
+(rerunfilecheck)             Checksum: EFBB82563CE98006005AE3147724357B;2378.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 142.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 153.
  ) 
 Here is how much of TeX's memory you used:
- 20683 strings out of 493105
- 382285 string characters out of 6137072
- 544451 words of memory out of 5000000
- 23381 multiletter control sequences out of 15000+600000
- 55392 words of font info for 109 fonts, out of 8000000 for 9000
+ 22815 strings out of 493105
+ 428315 string characters out of 6137072
+ 599465 words of memory out of 5000000
+ 25538 multiletter control sequences out of 15000+600000
+ 58055 words of font info for 112 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,16n,54p,1230b,696s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,16n,80p,1230b,802s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb></usr/share/texlive/texmf-dis
@@ -1568,10 +2155,10 @@ onts/cm/cmtt8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/rsfs/rsfs10
 dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/ut
 mri8a.pfb>
-Output written on main.pdf (33 pages, 406512 bytes).
+Output written on main.pdf (29 pages, 406609 bytes).
 PDF statistics:
- 807 PDF objects out of 1000 (max. 8388607)
- 733 compressed objects within 8 object streams
- 265 named destinations out of 1000 (max. 500000)
- 207 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 715 PDF objects out of 1000 (max. 8388607)
+ 646 compressed objects within 7 object streams
+ 194 named destinations out of 1000 (max. 500000)
+ 279 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,15 +1,36 @@
 \section{Implementation}
 \label{chapter:Implementation}
 
-We implemented \textit{TypeShield} as a module pass for the di-opt environment from patharmor\cite{veen:cfi}, which relies on the DynInst \cite{bernat:dyninst} instrumentation framewewor (we are using version 9.2.0). However, converting to a standalone executable is also possible, as we do not rely on any patharmor feature except for the pass abstraction.
+We implemented \textit{TypeShield} as a module pass for the \textit{di-opt} environment based on PathArmor~\cite{veen:cfi}, 
+which relies on the DynInst~\cite{bernat:dyninst} instrumentation framewewor (we are using version 9.2.0). 
+However, converting to a standalone executable is also possible, as we do not rely on any patharmor feature
+except for the pass abstraction.
 
-Our module pass relies on Dyninst, to resolve the structure of the binaries that we analyse. The core part of our pass is an instruction analyser, which relies on the DynamoRIO \cite{dynamorio:drmemory} library (version 6.6.1) to decode single instructions and provide access to its information. This analyser is then used to implement basic analyses, especially our version of the reaching and liveness analyses, which can be customised with relative ease, as we allow for arbitrary path merging functions, however we provide the three basic versions (destructive, intersection and union).
+Our module pass relies on DynInst, to resolve the structure of the binaries that we analyse. The core part 
+of our pass is an instruction analyser, which relies on the DynamoRIO~\cite{dynamorio:drmemory} library 
+(version 6.6.1) to decode single instructions and provide access to its information. This analyser is then
+used to implement basic analyses, especially our version of the reaching and liveness analyses, which can
+be customised with relative ease, as we allow for arbitrary path merging functions, however we provide 
+the three basic versions (destructive, intersection and union).
 
-Furthermore, we had to patch the DynInst library to allow for local annotation of calltargets with arbitrary information, leveraging its relocation schema, which relies on the BasicBlock abstraction.
+Furthermore, we had to patch the DynInst library to allow for local annotation of calltargets with arbitrary
+information, leveraging its relocation schema, which relies on the BasicBlock abstraction.
 
-Additionally, to measure the quality and performance of our tool, we wrote a pass for the Clang/LLVM framework version 4.0.0 (trunk 283889) in the x86 target code generation portion, to generate ground truth data. This data is then used to verify the output of our tool for several testtargets, which is done in our python evaluation and test environment.
+Additionally, to measure the quality and performance of our tool, we wrote a pass for the Clang/LLVM framework
+version 4.0.0 (trunk 283889) in the x86 target code generation portion, to generate ground truth data. This
+data is then used to verify the output of our tool for several testtargets, which is done in our python 
+evaluation and test environment.
 
-In total we implemented \textit{TypeShield} in 5123 lines of C++ code, our Clang/LLVM-pass in 200 lines of C++ code and our test environment in 2674 lines of python code (all lines of code data is given excluding empty lines and comments).
+In total we implemented \textit{TypeShield} in 5123 lines of C++ code, our Clang/LLVM pass in 200 lines 
+of C++ code and our test environment in 2674 lines of Python code (all lines of code data is given 
+excluding empty lines and comments).
 
-At this stage of development we are restricted to analysis and instrumentation of x86-64 bit elf binaries using the SystemV call convention, because the DynInst library does not yet support the Windows platform. However, there is currently work being done to allow DynInst to also work with Windows binaries. We restricted ourselves to the SystemV call convention as most C/C++ compilers on linux implement this ABI, however we encapsulated most ABI dependent behaviour, so it should be possible to implement other ABIs with relative ease. Therefore, we deem it possible to implement \textit{TypeShield} for the Windows platform in the near future, as we do not use any other platform-dependent API's. 
+At this stage of development we are restricted to analysis and instrumentation of x86-64 bit elf 
+binaries using the SystemV call convention, because the DynInst library does not yet support the
+Windows platform. However, there is currently work being done to allow DynInst to also work with
+Windows binaries. We restricted ourselves to the SystemV call convention as most C/C++ compilers
+on linux implement this ABI, however we encapsulated most ABI dependent behaviour, so it should 
+be possible to implement other ABIs with relative ease. Therefore, we deem it possible to implement
+\textit{TypeShield} for the Windows platform in the near future, as we do not use any other 
+platform-dependent API's. 
 

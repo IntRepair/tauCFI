@@ -40,7 +40,7 @@ Warning--empty title in ASLR
 Warning--empty booktitle in ASLR
 You've used 50 entries,
             2253 wiz_defined-function locations,
-            720 strings with 12707 characters,
+            720 strings with 12668 characters,
 and the built_in function-call counts, 16061 in all, are:
 = -- 1253
 > -- 1027

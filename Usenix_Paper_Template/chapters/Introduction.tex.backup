@@ -49,132 +49,13 @@ able to call all address taken functions.
 We implemented \textit{TypeShield} to show a possible remedy of this problem by introducing
 parameter types into the classification of callsites and calltargets. 
 
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-
-\textbf{Goal of This Paper.} The goals of our paper is twofold. First we attempt to verify 
+\textbf{Goal of This Paper.} The goals of our thesis are twofold. First we attempt to verify 
 the results as provided by the TypeArmor paper. 
 Second, implement our own classification schema to fix some of the shortcomings of previous 
 binary based approaches 
 to further mitigate advanced code reuse attacks.
 
-In summary, we make the following contributions:
+\textbf{In summary, we make the following contributions:}
 \label{Contribution}
 \begin{itemize}
  \item We designed and implementated a callsite and calltarget classification schema
@@ -194,14 +75,15 @@ In summary, we make the following contributions:
 
 \label{Outline}
 The paper is organized as follows.
-\cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications.
-\cref{chapter:TypeShild Overview} contains a high level overview of \textit{TypeShield}.
-\cref{chapter:Design} describes the theory used and decisions made during the design of \textit{TypeShield}.
-\cref{chapter:Implementation} briefly presents the implementation details of \textit{TypeShield}.
-\cref{chapter:Evaluation} evaluates several proprties of \textit{TypeShield} and
-\cref{chapter:Related_Work} surveys related work, respectively.
-\cref{chapter:Future_Work} highlights future research venues while 
-\cref{chapter:Discussion} contains the discussion, respectively.
-Finally, \cref{chapter:Conclusion} concludes this paper.
+\cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls and their security implications.
+Chapter~\ref{chapter:TypeShild Overview} contains a high level overview of \textit{TypeShield}.
+Chapter~\ref{chapter:Design} describes the theory used and decisions made during the design of
+\textit{TypeShield}.
+Chapter~\ref{chapter:Implementation} briefly presents the implementation details of our tool.
+Our \textit{TypeShield} implementation is evaluated and discussed in
+Chapter~\ref{chapter:Evaluation} and Chapter~\ref{chapter:Discussion}, respectively.
+Chapter~\ref{chapter:Related_Work} surveys related work.
+Finally, Chapter~\ref{chapter:Future_Work} highlights several future venues of research while
+Chapter~\ref{chapter:Conclusion} concludes this thesis.
 
 

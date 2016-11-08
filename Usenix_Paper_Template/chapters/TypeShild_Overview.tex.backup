@@ -50,25 +50,25 @@ parameter.
 \resizebox{0.25\textwidth}{!}{
 \begin{tikzpicture}
 
-\draw[thick] (0,0) rectangle node[anchor=center]  (320)  {\LARGE{(32, 0)}}  (2,-1);
+\draw[thick] (0,0) rectangle node[anchor=center]  (320) {\LARGE{(32, 0)}} (2,-1);
 
-\draw[thick] (3,2) rectangle node[anchor=center]  (640)  {\LARGE{(64, 0)}}  (5,1);
+\draw[thick] (3,2) rectangle node[anchor=center](640) {\LARGE{(64, 0)}} (5,1);
 
-\draw[thick] (0,3) rectangle node[anchor=center]  (3232) {\LARGE{(32, 32)}} (2,4);
+\draw[thick] (0,3) rectangle node[anchor=center] (3232) {\LARGE{(32, 32)}} (2,4);
 
 \draw[thick] (3,5) rectangle node[anchor=center]  (6432) {\LARGE{(64, 32)}} (5,6);
-\draw[thick] (-1,5) rectangle node[anchor=center] (3264) {\LARGE{(32, 64)}} (-3,6);
+\draw[thick] (-1,5) rectangle node[anchor=center]  (3264)  {\LARGE{(32, 64)}}(-3,6);
 
-\draw[thick] (0,7) rectangle node[anchor=center]  (6464) {\LARGE{(64, 64)}} (2,8);
+\draw[thick] (0,7) rectangle node[anchor=center](6464)   {\LARGE{(64, 64)}} (2,8);
 
-  \draw[draw, -triangle 45, thick, arrowhead=1cm] (3264.north) -- (6464.south);
-  \draw[draw, -triangle 45, thick, arrowhead=1cm] (6432.north) -- (6464.south);
-  \draw[draw, -triangle 45, thick, arrowhead=1cm] (3232.north) -- (3264.south);
-  \draw[draw, -triangle 45, thick, arrowhead=1cm] (3232.north) -- (6432.south);
+  \draw[draw, -latex, thick] (3264.north) -- (6464.south);
+  \draw[draw, -latex, thick] (6432.north) -- (6464.south);
+  \draw[draw, -latex, thick] (3232.north) -- (3264.south);
+  \draw[draw, -latex, thick] (3232.north) -- (6432.south);
   
-  \draw[draw, -triangle 45, thick, arrowhead=1cm] (640.north) -- (6432.south);
-  \draw[draw, -triangle 45, thick, arrowhead=1cm] (320.north) -- (3232.south);
-  \draw[draw, -triangle 45, thick, arrowhead=1cm] (320.north) -- (640.south);
+  \draw[draw, -latex, thick] (640.north) -- (6432.south);
+  \draw[draw, -latex, thick] (320.north) -- (3232.south);
+  \draw[draw, -latex, thick] (320.north) -- (640.south);
   
 \end{tikzpicture}
 }

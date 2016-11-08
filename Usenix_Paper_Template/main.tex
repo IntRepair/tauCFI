@@ -27,11 +27,22 @@
 \usepackage[]{algorithm2e}
 \usepackage{array}
 \usepackage[]{xcolor}
-% \usepackage{colortbl}
 \usepackage{ifthen}
 \usepackage{makecell}
 \usepackage{booktabs}
+\usepackage{todonotes}
+\usepackage{tikz}
+% \usetikzlibrary{arrows}
+% \input{arrowsnew}
+\usepackage[utf8]{inputenc}
+
+\inputencoding{latin1}
+\inputencoding{utf8}
+
 \usepackage{graphicx,fancyhdr,import,hyperref}
+\usepackage{cleveref}
+\crefname{section}{§}{§§}
+\Crefname{section}{§}{§§}
 \usepackage{longtable,csvsimple}
 \usepackage[margin=.75in]{geometry}
 \usepackage[toc,page]{appendix}
@@ -94,7 +105,7 @@
 \date{}
 
 %make title bold and 14 pt font (Latex default is non-bold, 16 pt)
-\title{\Large \bf \textit{TypeShild}: Protecting Forward Indirect Calls in Binaries}
+\title{\Large \bf \textit{TypeShield}: Protecting Forward Indirect Calls in Binaries}
 
 %for single author (just remove % characters)
 \author{
@@ -126,8 +137,8 @@ Second Institution
 \input{chapters/Design}
 \input{chapters/Implementation}
 \input{chapters/Evaluation}
-\input{chapters/Discussion}
 \input{chapters/Related_Work}
+\input{chapters/Discussion}
 \input{chapters/Future_Work}
 \input{chapters/Conclusion}
 

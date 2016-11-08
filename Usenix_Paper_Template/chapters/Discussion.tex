@@ -1,13 +1,6 @@
 \section{Discussion}
 \label{chapter:Discussion}
 
-We are going to discuss several aspects of interest that came up when comparing against TypeArmor, 
-which are our first two topics. Namely the comparison of results between TypeArmor and \textit{TypeShield}
-in Section \ref{section:comptype} and whether we found any discrepancies between the data we got from 
-their paper and the data we collected in Section \ref{section:discrep}. The second part of our discussion
-is concerned with the limitations of \textit{TypeShield} in Section \ref{section:limit} and finally, 
-possible venues of improvement in Section \ref{section:venuesimp}.
-
 \textbf{Comparison with TypeArmor.}
 \label{section:comptype}
 We are looking at two sets of results. First of all, we compare the overall precision of our implementation
@@ -44,9 +37,9 @@ type based classification can reduce the number of calltargets, by up to 20\% mo
 based classification with an overall reduction of about 9\%.
 
 
-\textbf{Discrepancies and Problems.}
+\textbf{TypeArmor Discrepancies.}
 \label{section:discrep}
-Our main problem is that we had no access to source code, which is why we implemented an approximation
+As we have no access to source code of TypeArmor, we habe implemented an approximation
 of TypeArmor. Using this approximation we found some discrepancies between the data that we collected
 and data that was presented.
 A minor discrepancy between our results and the results of TypeArmor is that, while they basically implemented
@@ -77,9 +70,9 @@ based on source level information, we could not detect a difference between our 
 However when leveraging our tool, we were able to detect differences, which reinforces the fact, that we do 
 not rely on declaration of parameters but usage of those.
 
-\textbf{Improvement Venues.}
+\textbf{Improving \textit{TypeShield}.}
 \label{section:venuesimp}
-To improve our typeanalysis, we see atleast two possibilities. Incorporating refined dataflow analysis and 
+To improve our type analysis, we see atleast two possibilities. Incorporating refined dataflow analysis and 
 expanding the scope to also include memory. The main point of improvement is not the precision but for now 
 more importantly the reduction of underestimations in the callsite analysis.
 

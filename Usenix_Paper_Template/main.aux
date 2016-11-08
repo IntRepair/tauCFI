@@ -27,27 +27,35 @@
 \citation{bounov:interleaving}
 \citation{crane:readactor++}
 \citation{carlini:bending}
+\citation{veen:typearmor}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}}
 \newlabel{chapter:Introduction}{{1}{1}{Introduction}{section.1}{}}
+\newlabel{chapter:Introduction@cref}{{[section][1][]1}{1}}
 \newlabel{Motivation}{{1}{1}{Introduction}{section.1}{}}
-\citation{veen:typearmor}
+\newlabel{Motivation@cref}{{[section][1][]1}{1}}
 \citation{veen:typearmor}
 \citation{iso:iecN3690}
 \citation{haller:shrinkwrap}
 \newlabel{Contribution}{{1}{2}{Introduction}{section.1}{}}
+\newlabel{Contribution@cref}{{[section][1][]1}{2}}
 \newlabel{Outline}{{1}{2}{Introduction}{section.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2}C++ Forbidden Forward Calls Exposed}{2}{section.2}}
-\newlabel{C++ Bad Forward Indirect Calls}{{2}{2}{C++ Forbidden Forward Calls Exposed}{section.2}{}}
-\newlabel{Polymorphism in C++}{{2}{2}{C++ Forbidden Forward Calls Exposed}{section.2}{}}
+\newlabel{Outline@cref}{{[section][1][]1}{2}}
 \citation{crane:readactor++}
 \citation{vtv:tice}
 \citation{haller:shrinkwrap}
+\@writefile{toc}{\contentsline {section}{\numberline {2}C++ Forbidden Forward Calls Exposed}{3}{section.2}}
+\newlabel{C++ Bad Forward Indirect Calls}{{2}{3}{C++ Forbidden Forward Calls Exposed}{section.2}{}}
+\newlabel{C++ Bad Forward Indirect Calls@cref}{{[section][2][]2}{3}}
+\newlabel{Polymorphism in C++}{{2}{3}{C++ Forbidden Forward Calls Exposed}{section.2}{}}
+\newlabel{Polymorphism in C++@cref}{{[section][2][]2}{3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Code example used to illustrate how a COOP loop gadget works.}}{3}{figure.1}}
+\newlabel{Code example used to illustrate how a COOP loop gadget works}{{1}{3}{Code example used to illustrate how a COOP loop gadget works}{figure.1}{}}
+\newlabel{Code example used to illustrate how a COOP loop gadget works@cref}{{[figure][1][]1}{3}}
+\newlabel{C++ Indirect Calls in Practice}{{2}{3}{C++ Forbidden Forward Calls Exposed}{figure.1}{}}
+\newlabel{C++ Indirect Calls in Practice@cref}{{[section][2][]2}{3}}
 \citation{bounov:interleaving}
 \citation{zhang:vtrust}
 \citation{veen:typearmor}
-\newlabel{C++ Indirect Calls in Practice}{{2}{3}{C++ Forbidden Forward Calls Exposed}{figure.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Code example used to illustrate how a COOP loop gadget works.}}{3}{figure.1}}
-\newlabel{Code example used to illustrate how a COOP loop gadget works}{{1}{3}{Code example used to illustrate how a COOP loop gadget works}{figure.1}{}}
 \citation{iso:iecN3690}
 \citation{byoungyoung:typecasting}
 \citation{schuster:coop}
@@ -55,164 +63,230 @@
 \citation{schuster:coop}
 \citation{crane:readactor++}
 \newlabel{Security Implications of Forbidden Forward Indirect Calls}{{2}{4}{C++ Forbidden Forward Calls Exposed}{figure.1}{}}
+\newlabel{Security Implications of Forbidden Forward Indirect Calls@cref}{{[section][2][]2}{4}}
 \newlabel{Running Example: CVE X}{{2}{4}{C++ Forbidden Forward Calls Exposed}{figure.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Class inheritance hierarchy of the classes involved in the COOP attack against the Firefox browser. Red letters indicate forbidden vTble entries and green letters indicate allowed vTable entries for the given indirect call site contained in the main loop gadget.}}{4}{figure.2}}
-\newlabel{Class exploit}{{2}{4}{Class inheritance hierarchy of the classes involved in the COOP attack against the Firefox browser. Red letters indicate forbidden vTble entries and green letters indicate allowed vTable entries for the given indirect call site contained in the main loop gadget}{figure.2}{}}
+\newlabel{Running Example: CVE X@cref}{{[section][2][]2}{4}}
 \citation{veen:typearmor}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Class inheritance hierarchy of the classes involved in the COOP attack against the Firefox browser. Red letters indicate forbidden vTble entries and green letters indicate allowed vTable entries for the given indirect call site contained in the main loop gadget.}}{5}{figure.2}}
+\newlabel{Class exploit}{{2}{5}{Class inheritance hierarchy of the classes involved in the COOP attack against the Firefox browser. Red letters indicate forbidden vTble entries and green letters indicate allowed vTable entries for the given indirect call site contained in the main loop gadget}{figure.2}{}}
+\newlabel{Class exploit@cref}{{[figure][2][]2}{5}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}\textit  {TypeShield} Overview}{5}{section.3}}
+\newlabel{chapter:TypeShild Overview}{{3}{5}{\textit {TypeShield} Overview}{section.3}{}}
+\newlabel{chapter:TypeShild Overview@cref}{{[section][3][]3}{5}}
+\newlabel{Adversary Model}{{3}{5}{\textit {TypeShield} Overview}{section.3}{}}
+\newlabel{Adversary Model@cref}{{[section][3][]3}{5}}
+\newlabel{Invariants for Targets and Callsites}{{3}{5}{\textit {TypeShield} Overview}{section.3}{}}
+\newlabel{Invariants for Targets and Callsites@cref}{{[section][3][]3}{5}}
+\newlabel{TypeShild Impact on COOP}{{3}{5}{\textit {TypeShield} Overview}{Item.2}{}}
+\newlabel{TypeShild Impact on COOP@cref}{{[section][3][]3}{5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Example for the wideness based schema when only using a parameter wideness of 64, 32 and 0 bits.}}{5}{figure.3}}
+\newlabel{fig:lattice3264}{{3}{5}{Example for the wideness based schema when only using a parameter wideness of 64, 32 and 0 bits}{figure.3}{}}
+\newlabel{fig:lattice3264@cref}{{[figure][3][]3}{5}}
 \citation{veen:typearmor}
 \citation{mingwei:sekar}
 \citation{veen:typearmor}
-\@writefile{toc}{\contentsline {section}{\numberline {3}\textit  {TypeShield} Overview}{5}{section.3}}
-\newlabel{chapter:TypeShild Overview}{{3}{5}{\textit {TypeShield} Overview}{section.3}{}}
-\newlabel{Adversary Model}{{3}{5}{\textit {TypeShield} Overview}{section.3}{}}
-\newlabel{Invariants for Targets and Callsites}{{3}{5}{\textit {TypeShield} Overview}{section.3}{}}
-\newlabel{TypeShild Impact on COOP}{{3}{5}{\textit {TypeShield} Overview}{Item.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Design}{5}{section.4}}
-\newlabel{chapter:Design}{{4}{5}{Design}{section.4}{}}
-\newlabel{section:countpolicy}{{4}{5}{Design}{section.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Example for the wideness based schema when only using a parameter wideness of 64, 32 and 0 bits.}}{6}{figure.3}}
-\newlabel{fig:lattice3264}{{3}{6}{Example for the wideness based schema when only using a parameter wideness of 64, 32 and 0 bits}{figure.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Design}{6}{section.4}}
+\newlabel{chapter:Design}{{4}{6}{Design}{section.4}{}}
+\newlabel{chapter:Design@cref}{{[section][4][]4}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}\emph  {Count} Policy}{6}{subsection.4.1}}
+\newlabel{section:countpolicy}{{4.1}{6}{\emph {Count} Policy}{subsection.4.1}{}}
+\newlabel{section:countpolicy@cref}{{[subsection][1][4]4.1}{6}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \emph  {Count} policy classification schema for callsites and calltargets.}}{6}{figure.4}}
 \newlabel{fig:COUNTschema}{{4}{6}{\emph {Count} policy classification schema for callsites and calltargets}{figure.4}{}}
-\newlabel{section:typepolicy}{{4}{6}{Design}{figure.4}{}}
+\newlabel{fig:COUNTschema@cref}{{[figure][4][]4}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}\emph  {Type} Policy}{6}{subsection.4.2}}
+\newlabel{section:typepolicy}{{4.2}{6}{\emph {Type} Policy}{subsection.4.2}{}}
+\newlabel{section:typepolicy@cref}{{[subsection][2][4]4.2}{6}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \emph  {Type} policy schema for callsites and calltargets.}}{6}{figure.5}}
 \newlabel{fig:TYPEschema}{{5}{6}{\emph {Type} policy schema for callsites and calltargets}{figure.5}{}}
+\newlabel{fig:TYPEschema@cref}{{[figure][5][]5}{6}}
 \citation{khedker2009data}
-\newlabel{section:instructionanalysis}{{4}{7}{Design}{figure.5}{}}
-\newlabel{section:calltargetanalysis}{{4}{7}{Design}{Item.6}{}}
-\newlabel{subsection:livenessanalysis}{{4}{7}{Design}{Item.6}{}}
-\newlabel{eq:livenessbasedef}{{1}{7}{Design}{equation.4.1}{}}
-\newlabel{eq:livenessbasedefIn}{{1a}{7}{Design}{equation.4.1a}{}}
-\newlabel{eq:livenessbasedefOut}{{1b}{7}{Design}{equation.4.1b}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Instruction Analysis}{7}{subsection.4.3}}
+\newlabel{section:instructionanalysis}{{4.3}{7}{Instruction Analysis}{subsection.4.3}{}}
+\newlabel{section:instructionanalysis@cref}{{[subsection][3][4]4.3}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Calltarget Analysis}{7}{subsection.4.4}}
+\newlabel{section:calltargetanalysis}{{4.4}{7}{Calltarget Analysis}{subsection.4.4}{}}
+\newlabel{section:calltargetanalysis@cref}{{[subsection][4][4]4.4}{7}}
+\newlabel{subsection:livenessanalysis}{{4.4}{7}{Calltarget Analysis}{subsection.4.4}{}}
+\newlabel{subsection:livenessanalysis@cref}{{[subsection][4][4]4.4}{7}}
+\newlabel{eq:livenessbasedef}{{1}{7}{Calltarget Analysis}{equation.0.1}{}}
+\newlabel{eq:livenessbasedef@cref}{{[subequation][1][]1}{7}}
+\newlabel{eq:livenessbasedefIn}{{1a}{7}{Calltarget Analysis}{equation.0.1a}{}}
+\newlabel{eq:livenessbasedefIn@cref}{{[subequation][1][1]1a}{7}}
+\newlabel{eq:livenessbasedefOut}{{1b}{7}{Calltarget Analysis}{equation.0.1b}{}}
+\newlabel{eq:livenessbasedefOut@cref}{{[subequation][2][1]1b}{7}}
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Algorithm to analyse the liveness of a Basic Block.}}{8}{figure.6}}
 \newlabel{alg:liveness}{{6}{8}{Algorithm to analyse the liveness of a Basic Block}{figure.6}{}}
-\newlabel{eq:livenesscustom}{{2}{8}{Design}{equation.4.2}{}}
-\newlabel{subsection:requiredparamcount}{{4}{8}{Design}{Item.10}{}}
-\newlabel{subsection:requiredparamwideness}{{4}{8}{Design}{table.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Different mappings for combining two liveness state values in horizontal matching for the \emph  {count} policy.}}{9}{table.1}}
-\newlabel{fig:COUNTlivenessmapping}{{1}{9}{Different mappings for combining two liveness state values in horizontal matching for the \emph {count} policy}{table.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces ASM code of the \texttt  {make\_cmd} function with optimize level O2, which has a variadic parameter list.}}{9}{figure.7}}
-\newlabel{fig:asmvariadic}{{7}{9}{ASM code of the \texttt {make\_cmd} function with optimize level O2, which has a variadic parameter list}{figure.7}{}}
+\newlabel{alg:liveness@cref}{{[figure][6][]6}{8}}
+\newlabel{eq:livenesscustom}{{2}{8}{Calltarget Analysis}{equation.0.2}{}}
+\newlabel{eq:livenesscustom@cref}{{[subequation][2][]2}{8}}
+\newlabel{subsection:requiredparamcount}{{4.4}{8}{Calltarget Analysis}{Item.10}{}}
+\newlabel{subsection:requiredparamcount@cref}{{[subsection][4][4]4.4}{8}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Different mappings for combining two liveness state values in horizontal matching for the \emph  {count} policy.}}{8}{table.1}}
+\newlabel{fig:COUNTlivenessmapping}{{1}{8}{Different mappings for combining two liveness state values in horizontal matching for the \emph {count} policy}{table.1}{}}
+\newlabel{fig:COUNTlivenessmapping@cref}{{[table][1][]1}{8}}
+\newlabel{subsection:requiredparamwideness}{{4.4}{9}{Calltarget Analysis}{table.1}{}}
+\newlabel{subsection:requiredparamwideness@cref}{{[subsection][4][4]4.4}{9}}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces The union mapping operator for liveness in the \emph  {type} policy.}}{9}{table.2}}
 \newlabel{tbl:TYPECTunion}{{2}{9}{The union mapping operator for liveness in the \emph {type} policy}{table.2}{}}
-\newlabel{subsection:variadicfunctions}{{4}{9}{Design}{table.2}{}}
+\newlabel{tbl:TYPECTunion@cref}{{[table][2][]2}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces ASM code of the \texttt  {make\_cmd} function with optimize level O2, which has a variadic parameter list.}}{9}{figure.7}}
+\newlabel{fig:asmvariadic}{{7}{9}{ASM code of the \texttt {make\_cmd} function with optimize level O2, which has a variadic parameter list}{figure.7}{}}
+\newlabel{fig:asmvariadic@cref}{{[figure][7][]7}{9}}
+\newlabel{subsection:variadicfunctions}{{4.4}{9}{Calltarget Analysis}{table.2}{}}
+\newlabel{subsection:variadicfunctions@cref}{{[subsection][4][4]4.4}{9}}
 \citation{khedker2009data}
-\newlabel{section:callsiteanalysis}{{4}{10}{Design}{Item.19}{}}
-\newlabel{subsection:reachindefinitionstheory}{{4}{10}{Design}{Item.19}{}}
-\newlabel{eq:reachingbasedef}{{9}{10}{Design}{equation.4.9}{}}
-\newlabel{eq:reachingbasedefInt}{{9a}{10}{Design}{equation.4.9a}{}}
-\newlabel{eq:reachingbasedefOut}{{9b}{10}{Design}{equation.4.9b}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Callsite Analysis}{10}{subsection.4.5}}
+\newlabel{section:callsiteanalysis}{{4.5}{10}{Callsite Analysis}{subsection.4.5}{}}
+\newlabel{section:callsiteanalysis@cref}{{[subsection][5][4]4.5}{10}}
+\newlabel{subsection:reachindefinitionstheory}{{4.5}{10}{Callsite Analysis}{subsection.4.5}{}}
+\newlabel{subsection:reachindefinitionstheory@cref}{{[subsection][5][4]4.5}{10}}
+\newlabel{eq:reachingbasedef}{{9}{10}{Callsite Analysis}{equation.0.9}{}}
+\newlabel{eq:reachingbasedef@cref}{{[subequation][9][]9}{10}}
+\newlabel{eq:reachingbasedefInt}{{9a}{10}{Callsite Analysis}{equation.0.9a}{}}
+\newlabel{eq:reachingbasedefInt@cref}{{[subequation][1][9]9a}{10}}
+\newlabel{eq:reachingbasedefOut}{{9b}{10}{Callsite Analysis}{equation.0.9b}{}}
+\newlabel{eq:reachingbasedefOut@cref}{{[subequation][2][9]9b}{10}}
 \@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Algorithm to analyse the reaching definitions of a Basic Block.}}{10}{figure.8}}
 \newlabel{alg:reaching}{{8}{10}{Algorithm to analyse the reaching definitions of a Basic Block}{figure.8}{}}
-\newlabel{eq:livenesscustom}{{10}{10}{Design}{equation.4.10}{}}
-\newlabel{subsection:providedparamcount}{{4}{11}{Design}{Item.22}{}}
-\newlabel{subsection:providedparamwideness}{{4}{11}{Design}{table.3}{}}
+\newlabel{alg:reaching@cref}{{[figure][8][]8}{10}}
+\newlabel{eq:livenesscustom}{{10}{10}{Callsite Analysis}{equation.0.10}{}}
+\newlabel{eq:livenesscustom@cref}{{[subequation][10][]10}{10}}
+\newlabel{subsection:providedparamcount}{{4.5}{10}{Callsite Analysis}{equation.0.10d}{}}
+\newlabel{subsection:providedparamcount@cref}{{[subsection][5][4]4.5}{10}}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Different mappings for combining two reaching state values in horizontal matching for the \emph  {count} policy.}}{11}{table.3}}
 \newlabel{fig:COUNTreachingmapping}{{3}{11}{Different mappings for combining two reaching state values in horizontal matching for the \emph {count} policy}{table.3}{}}
+\newlabel{fig:COUNTreachingmapping@cref}{{[table][3][]3}{11}}
+\newlabel{subsection:providedparamwideness}{{4.5}{11}{Callsite Analysis}{table.3}{}}
+\newlabel{subsection:providedparamwideness@cref}{{[subsection][5][4]4.5}{11}}
+\@writefile{toc}{\contentsline {paragraph}{Parameter lists with \textit  {holes}.}{11}{section*.2}}
 \citation{mingwei:sekar}
 \citation{mingwei:sekar}
 \citation{mingwei:sekar}
 \citation{veen:cfi}
 \citation{bernat:dyninst}
+\citation{dynamorio:drmemory}
 \@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Different mappings for combining two reaching state values in horizontal matching for the \emph  {type} policy.}}{12}{table.4}}
 \newlabel{fig:TYPEreachingmapping}{{4}{12}{Different mappings for combining two reaching state values in horizontal matching for the \emph {type} policy}{table.4}{}}
-\@writefile{toc}{\contentsline {paragraph}{Parameter lists with ``holes''}{12}{section*.2}}
+\newlabel{fig:TYPEreachingmapping@cref}{{[table][4][]4}{12}}
 \@writefile{toc}{\contentsline {paragraph}{Address wideness unterestimation}{12}{section*.3}}
-\newlabel{section:addresstakenanalysis}{{4}{12}{Address wideness unterestimation}{section*.3}{}}
-\citation{dynamorio:drmemory}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Address Taken Analysis}{12}{subsection.4.6}}
+\newlabel{section:addresstakenanalysis}{{4.6}{12}{Address Taken Analysis}{subsection.4.6}{}}
+\newlabel{section:addresstakenanalysis@cref}{{[subsection][6][4]4.6}{12}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Implementation}{12}{section.5}}
+\newlabel{chapter:Implementation}{{5}{12}{Implementation}{section.5}{}}
+\newlabel{chapter:Implementation@cref}{{[section][5][]5}{12}}
 \citation{veen:typearmor}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Implementation}{13}{section.5}}
-\newlabel{chapter:Implementation}{{5}{13}{Implementation}{section.5}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {6}Evaluation}{13}{section.6}}
 \newlabel{chapter:Evaluation}{{6}{13}{Evaluation}{section.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Precision of \textit  {TypeShield}}{13}{subsection.6.1}}
-\newlabel{section:typeshieldprecision}{{6.1}{13}{Precision of \textit {TypeShield}}{subsection.6.1}{}}
+\newlabel{chapter:Evaluation@cref}{{[section][6][]6}{13}}
+\@writefile{tdo}{\contentsline {todo}{address this}{13}{section*.4}}
+\pgfsyspdfmark {pgfid9}{29352714}{48067386}
+\@writefile{tdo}{\contentsline {todo}{address this}{13}{section*.5}}
+\pgfsyspdfmark {pgfid10}{29352714}{44545031}
+\@writefile{tdo}{\contentsline {todo}{address this}{13}{section*.6}}
+\pgfsyspdfmark {pgfid11}{29352714}{41809108}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}RQ1: Precision of \textit  {TypeShield}}{13}{subsection.6.1}}
+\newlabel{section:typeshieldprecision}{{6.1}{13}{RQ1: Precision of \textit {TypeShield}}{subsection.6.1}{}}
+\newlabel{section:typeshieldprecision@cref}{{[subsection][1][6]6.1}{13}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.1}Quality and Applicability of Ground Truth}{13}{subsubsection.6.1.1}}
 \newlabel{subsection:typeshieldprecision}{{6.1.1}{13}{Quality and Applicability of Ground Truth}{subsubsection.6.1.1}{}}
-\@writefile{toc}{\contentsline {paragraph}{Calltargets}{14}{section*.4}}
-\@writefile{toc}{\contentsline {paragraph}{Callsites}{14}{section*.5}}
+\newlabel{subsection:typeshieldprecision@cref}{{[subsubsection][1][6,1]6.1.1}{13}}
 \@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with optimization levels O0 through O3. The label Clang miss denotes elements not found in the dataset of the Clang/LLVM pass. The label tool miss denotes elements not found in the dataset of \textit  {TypeShield}.}}{14}{table.5}}
 \newlabel{tbl:matchingquality}{{5}{14}{Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with optimization levels O0 through O3. The label Clang miss denotes elements not found in the dataset of the Clang/LLVM pass. The label tool miss denotes elements not found in the dataset of \textit {TypeShield}}{table.5}{}}
+\newlabel{tbl:matchingquality@cref}{{[table][5][]5}{14}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.2}Precision Calltarget Classification (\textit  {count})}{15}{subsubsection.6.1.2}}
 \newlabel{subsection:typeshieldprecision}{{6.1.2}{15}{Precision Calltarget Classification (\textit {count})}{subsubsection.6.1.2}{}}
-\@writefile{toc}{\contentsline {paragraph}{Experiment Setup}{15}{section*.6}}
-\@writefile{toc}{\contentsline {paragraph}{Results}{15}{section*.7}}
-\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces The results for calltarget analysis using the destructive/intersection combination operator for the \textit  {count} policy throughout different optimizations.}}{16}{table.6}}
-\newlabel{tbl:CTdestinterCOUNT}{{6}{16}{The results for calltarget analysis using the destructive/intersection combination operator for the \textit {count} policy throughout different optimizations}{table.6}{}}
+\newlabel{subsection:typeshieldprecision@cref}{{[subsubsection][2][6,1]6.1.2}{15}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces The results for calltarget analysis using the destructive/intersection combination operator for the \textit  {count} policy throughout different optimizations.}}{15}{table.6}}
+\newlabel{tbl:CTdestinterCOUNT}{{6}{15}{The results for calltarget analysis using the destructive/intersection combination operator for the \textit {count} policy throughout different optimizations}{table.6}{}}
+\newlabel{tbl:CTdestinterCOUNT@cref}{{[table][6][]6}{15}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.3}Precision Callsite Classification (\textit  {count})}{15}{subsubsection.6.1.3}}
+\newlabel{subsection:typeshieldprecision}{{6.1.3}{15}{Precision Callsite Classification (\textit {count})}{subsubsection.6.1.3}{}}
+\newlabel{subsection:typeshieldprecision@cref}{{[subsubsection][3][6,1]6.1.3}{15}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.4}Without inter-procedural Analysis}{15}{subsubsection.6.1.4}}
 \@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces The results for calltarget analysis using the union combination operator for the \textit  {count} policy throughout different optimizations.}}{16}{table.7}}
 \newlabel{tbl:CTunionCOUNT}{{7}{16}{The results for calltarget analysis using the union combination operator for the \textit {count} policy throughout different optimizations}{table.7}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.3}Precision Callsite Classification (\textit  {count})}{17}{subsubsection.6.1.3}}
-\newlabel{subsection:typeshieldprecision}{{6.1.3}{17}{Precision Callsite Classification (\textit {count})}{subsubsection.6.1.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.4}Without inter-procedural Analysis}{17}{subsubsection.6.1.4}}
-\@writefile{toc}{\contentsline {paragraph}{Experiment Setup}{17}{section*.8}}
-\@writefile{toc}{\contentsline {paragraph}{Results}{17}{section*.9}}
-\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces The results for callsite analysis using the destructive/intersection combination operator for the \textit  {count} without inter-procedural analysis policy throughout different optimizations.}}{17}{table.8}}
-\newlabel{tbl:CSdestinterCOUNTnointer}{{8}{17}{The results for callsite analysis using the destructive/intersection combination operator for the \textit {count} without inter-procedural analysis policy throughout different optimizations}{table.8}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces The results for callsite analysis using the union combination operator for the \textit  {count} without inter-procedural analysis policy throughout different optimizations.}}{18}{table.9}}
-\newlabel{tbl:CSunionCOUNTnointer}{{9}{18}{The results for callsite analysis using the union combination operator for the \textit {count} without inter-procedural analysis policy throughout different optimizations}{table.9}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces The results for callsite analysis using the true union combination operator for the \textit  {count} without inter-procedural analysis policy throughout different optimizations.}}{18}{table.10}}
-\newlabel{tbl:CStrueunionCOUNTnointer}{{10}{18}{The results for callsite analysis using the true union combination operator for the \textit {count} without inter-procedural analysis policy throughout different optimizations}{table.10}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.5}With inter-procedural Analysis}{19}{subsubsection.6.1.5}}
-\@writefile{toc}{\contentsline {paragraph}{Experiment Setup}{19}{section*.10}}
-\@writefile{toc}{\contentsline {paragraph}{Results}{19}{section*.11}}
-\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces The results for callsite analysis using the destructive/intersection combination operator for the \textit  {count} with inter-procedural analysis policy throughout different optimizations.}}{19}{table.11}}
-\newlabel{tbl:CSdestinterCOUNTinter}{{11}{19}{The results for callsite analysis using the destructive/intersection combination operator for the \textit {count} with inter-procedural analysis policy throughout different optimizations}{table.11}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces The results for callsite analysis using the union combination operator for the \textit  {count} with inter-procedural analysis policy throughout different optimizations.}}{20}{table.12}}
-\newlabel{tbl:CSunionCOUNTinter}{{12}{20}{The results for callsite analysis using the union combination operator for the \textit {count} with inter-procedural analysis policy throughout different optimizations}{table.12}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces The results for callsite analysis using the true union combination operator for the \textit  {count} with inter-procedural analysis policy throughout different optimizations.}}{20}{table.13}}
-\newlabel{tbl:CStrueunionCOUNTinter}{{13}{20}{The results for callsite analysis using the true union combination operator for the \textit {count} with inter-procedural analysis policy throughout different optimizations}{table.13}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.6}Precision Calltarget Classification (\textit  {type})}{21}{subsubsection.6.1.6}}
-\newlabel{subsection:typeshieldprecision}{{6.1.6}{21}{Precision Calltarget Classification (\textit {type})}{subsubsection.6.1.6}{}}
-\@writefile{toc}{\contentsline {paragraph}{Experiment Setup}{21}{section*.12}}
-\@writefile{toc}{\contentsline {paragraph}{Result}{21}{section*.13}}
-\@writefile{lot}{\contentsline {table}{\numberline {14}{\ignorespaces The results for calltarget analysis for exp1 and exp2 of the \textit  {type} policy throughout different optimizations.}}{21}{table.14}}
-\newlabel{tbl:CTdestinterexp12TYPE}{{14}{21}{The results for calltarget analysis for exp1 and exp2 of the \textit {type} policy throughout different optimizations}{table.14}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {15}{\ignorespaces The results for calltarget analysis for exp3 of the \textit  {type} policy throughout different optimizations.}}{22}{table.15}}
-\newlabel{tbl:CTdestinterexp34TYPE}{{15}{22}{The results for calltarget analysis for exp3 of the \textit {type} policy throughout different optimizations}{table.15}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.7}Precision Callsite Classification (\textit  {type})}{22}{subsubsection.6.1.7}}
-\newlabel{subsection:typeshieldprecision}{{6.1.7}{22}{Precision Callsite Classification (\textit {type})}{subsubsection.6.1.7}{}}
-\@writefile{toc}{\contentsline {paragraph}{Experiment Setup}{22}{section*.14}}
-\@writefile{toc}{\contentsline {paragraph}{Result}{22}{section*.15}}
-\@writefile{lot}{\contentsline {table}{\numberline {16}{\ignorespaces The results for callsite analysis for exp1 and exp2 of the \textit  {type} policy throughout different optimizations.}}{23}{table.16}}
-\newlabel{tbl:CSexp12TYPE}{{16}{23}{The results for callsite analysis for exp1 and exp2 of the \textit {type} policy throughout different optimizations}{table.16}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {17}{\ignorespaces The results for enhanced callsite analysis for exp3 of the \textit  {type} policy throughout different optimizations.}}{23}{table.17}}
-\newlabel{tbl:CSexp34TYPE}{{17}{23}{The results for enhanced callsite analysis for exp3 of the \textit {type} policy throughout different optimizations}{table.17}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Effectiveness of \textit  {TypeShield}}{24}{subsection.6.2}}
-\newlabel{section:typeshieldeffectiveness}{{6.2}{24}{Effectiveness of \textit {TypeShield}}{subsection.6.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Theoretical Limits}{24}{subsection.6.3}}
-\newlabel{subsection:theoreticallimit}{{6.3}{24}{Theoretical Limits}{subsection.6.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{Experiment Setup}{24}{section*.16}}
-\@writefile{toc}{\contentsline {paragraph}{Results}{24}{section*.17}}
-\@writefile{lot}{\contentsline {table}{\numberline {18}{\ignorespaces The results of comparing theoretical limits for the different restriction policies throughout different optimizations.}}{24}{table.18}}
-\newlabel{tbl:policycomp}{{18}{24}{The results of comparing theoretical limits for the different restriction policies throughout different optimizations}{table.18}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.1}\textit  {TypeShield} implementation of the \textit  {count} policy}{25}{subsubsection.6.3.1}}
-\newlabel{subsection:typeshieldvslimitcount}{{6.3.1}{25}{\textit {TypeShield} implementation of the \textit {count} policy}{subsubsection.6.3.1}{}}
-\@writefile{toc}{\contentsline {paragraph}{Experiment Setup}{25}{section*.18}}
-\@writefile{toc}{\contentsline {paragraph}{Results}{25}{section*.19}}
-\@writefile{lot}{\contentsline {table}{\numberline {19}{\ignorespaces The results of comparing \textit  {count} safe and precision implementation throughout different optimizations.}}{25}{table.19}}
-\newlabel{tbl:policycompcount}{{19}{25}{The results of comparing \textit {count} safe and precision implementation throughout different optimizations}{table.19}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.2}\textit  {TypeShield} implementation of the \textit  {type} policy}{26}{subsubsection.6.3.2}}
-\newlabel{subsection:typeshieldvslimitcount}{{6.3.2}{26}{\textit {TypeShield} implementation of the \textit {type} policy}{subsubsection.6.3.2}{}}
-\@writefile{toc}{\contentsline {paragraph}{Experiment Setup}{26}{section*.20}}
-\@writefile{toc}{\contentsline {paragraph}{Results}{26}{section*.21}}
-\@writefile{lot}{\contentsline {table}{\numberline {20}{\ignorespaces The results of comparing \textit  {type} safe and precision implementation throughout different optimizations.}}{26}{table.20}}
-\newlabel{tbl:policycomptype}{{20}{26}{The results of comparing \textit {type} safe and precision implementation throughout different optimizations}{table.20}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.3}Effect of our AddressTaken Analysis}{27}{subsubsection.6.3.3}}
-\newlabel{subsection:effectivenessaddresstaken}{{6.3.3}{27}{Effect of our AddressTaken Analysis}{subsubsection.6.3.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{Experiment Setup}{27}{section*.22}}
-\@writefile{toc}{\contentsline {paragraph}{Results}{27}{section*.23}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{27}{section.7}}
-\newlabel{chapter:Discussion}{{7}{27}{Discussion}{section.7}{}}
-\newlabel{section:comptype}{{7}{27}{Discussion}{section.7}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {21}{\ignorespaces The results of comparing theoretical limits for the different restriction policies restricted using an address taken analysis throughout different optimizations.}}{28}{table.21}}
-\newlabel{tbl:policycompat}{{21}{28}{The results of comparing theoretical limits for the different restriction policies restricted using an address taken analysis throughout different optimizations}{table.21}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {22}{\ignorespaces The results of comparing \textit  {count} safe and precision implementation restricted using an address taken analysis throughout different optimizations.}}{28}{table.22}}
-\newlabel{tbl:policycompatcount}{{22}{28}{The results of comparing \textit {count} safe and precision implementation restricted using an address taken analysis throughout different optimizations}{table.22}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {23}{\ignorespaces The results of comparing \textit  {type} safe and precision implementation restricted using an address taken analysis throughout different optimizations.}}{29}{table.23}}
-\newlabel{tbl:policycompattype}{{23}{29}{The results of comparing \textit {type} safe and precision implementation restricted using an address taken analysis throughout different optimizations}{table.23}{}}
-\newlabel{section:discrep}{{7}{29}{Discussion}{section.7}{}}
-\newlabel{section:limit}{{7}{29}{Discussion}{section.7}{}}
-\newlabel{section:venuesimp}{{7}{29}{Discussion}{section.7}{}}
+\newlabel{tbl:CTunionCOUNT@cref}{{[table][7][]7}{16}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces The results for callsite analysis using the destructive/intersection combination operator for the \textit  {count} without inter-procedural analysis policy throughout different optimizations.}}{16}{table.8}}
+\newlabel{tbl:CSdestinterCOUNTnointer}{{8}{16}{The results for callsite analysis using the destructive/intersection combination operator for the \textit {count} without inter-procedural analysis policy throughout different optimizations}{table.8}{}}
+\newlabel{tbl:CSdestinterCOUNTnointer@cref}{{[table][8][]8}{16}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.5}With inter-procedural Analysis}{16}{subsubsection.6.1.5}}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces The results for callsite analysis using the union combination operator for the \textit  {count} without inter-procedural analysis policy throughout different optimizations.}}{17}{table.9}}
+\newlabel{tbl:CSunionCOUNTnointer}{{9}{17}{The results for callsite analysis using the union combination operator for the \textit {count} without inter-procedural analysis policy throughout different optimizations}{table.9}{}}
+\newlabel{tbl:CSunionCOUNTnointer@cref}{{[table][9][]9}{17}}
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces The results for callsite analysis using the true union combination operator for the \textit  {count} without inter-procedural analysis policy throughout different optimizations.}}{17}{table.10}}
+\newlabel{tbl:CStrueunionCOUNTnointer}{{10}{17}{The results for callsite analysis using the true union combination operator for the \textit {count} without inter-procedural analysis policy throughout different optimizations}{table.10}{}}
+\newlabel{tbl:CStrueunionCOUNTnointer@cref}{{[table][10][]10}{17}}
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces The results for callsite analysis using the destructive/intersection combination operator for the \textit  {count} with inter-procedural analysis policy throughout different optimizations.}}{18}{table.11}}
+\newlabel{tbl:CSdestinterCOUNTinter}{{11}{18}{The results for callsite analysis using the destructive/intersection combination operator for the \textit {count} with inter-procedural analysis policy throughout different optimizations}{table.11}{}}
+\newlabel{tbl:CSdestinterCOUNTinter@cref}{{[table][11][]11}{18}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.6}Precision Calltarget Classification (\textit  {type})}{18}{subsubsection.6.1.6}}
+\newlabel{subsection:typeshieldprecision}{{6.1.6}{18}{Precision Calltarget Classification (\textit {type})}{subsubsection.6.1.6}{}}
+\newlabel{subsection:typeshieldprecision@cref}{{[subsubsection][6][6,1]6.1.6}{18}}
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces The results for callsite analysis using the union combination operator for the \textit  {count} with inter-procedural analysis policy throughout different optimizations.}}{18}{table.12}}
+\newlabel{tbl:CSunionCOUNTinter}{{12}{18}{The results for callsite analysis using the union combination operator for the \textit {count} with inter-procedural analysis policy throughout different optimizations}{table.12}{}}
+\newlabel{tbl:CSunionCOUNTinter@cref}{{[table][12][]12}{18}}
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces The results for callsite analysis using the true union combination operator for the \textit  {count} with inter-procedural analysis policy throughout different optimizations.}}{19}{table.13}}
+\newlabel{tbl:CStrueunionCOUNTinter}{{13}{19}{The results for callsite analysis using the true union combination operator for the \textit {count} with inter-procedural analysis policy throughout different optimizations}{table.13}{}}
+\newlabel{tbl:CStrueunionCOUNTinter@cref}{{[table][13][]13}{19}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.7}Precision Callsite Classification (\textit  {type})}{19}{subsubsection.6.1.7}}
+\newlabel{subsection:typeshieldprecision}{{6.1.7}{19}{Precision Callsite Classification (\textit {type})}{subsubsection.6.1.7}{}}
+\newlabel{subsection:typeshieldprecision@cref}{{[subsubsection][7][6,1]6.1.7}{19}}
+\@writefile{lot}{\contentsline {table}{\numberline {14}{\ignorespaces The results for calltarget analysis for exp1 and exp2 of the \textit  {type} policy throughout different optimizations.}}{19}{table.14}}
+\newlabel{tbl:CTdestinterexp12TYPE}{{14}{19}{The results for calltarget analysis for exp1 and exp2 of the \textit {type} policy throughout different optimizations}{table.14}{}}
+\newlabel{tbl:CTdestinterexp12TYPE@cref}{{[table][14][]14}{19}}
+\@writefile{lot}{\contentsline {table}{\numberline {15}{\ignorespaces The results for calltarget analysis for exp3 of the \textit  {type} policy throughout different optimizations.}}{20}{table.15}}
+\newlabel{tbl:CTdestinterexp34TYPE}{{15}{20}{The results for calltarget analysis for exp3 of the \textit {type} policy throughout different optimizations}{table.15}{}}
+\newlabel{tbl:CTdestinterexp34TYPE@cref}{{[table][15][]15}{20}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}RQ2: Effectiveness of \textit  {TypeShield}}{20}{subsection.6.2}}
+\newlabel{section:typeshieldeffectiveness}{{6.2}{20}{RQ2: Effectiveness of \textit {TypeShield}}{subsection.6.2}{}}
+\newlabel{section:typeshieldeffectiveness@cref}{{[subsection][2][6]6.2}{20}}
+\@writefile{lot}{\contentsline {table}{\numberline {16}{\ignorespaces The results for callsite analysis for exp1 and exp2 of the \textit  {type} policy throughout different optimizations.}}{20}{table.16}}
+\newlabel{tbl:CSexp12TYPE}{{16}{20}{The results for callsite analysis for exp1 and exp2 of the \textit {type} policy throughout different optimizations}{table.16}{}}
+\newlabel{tbl:CSexp12TYPE@cref}{{[table][16][]16}{20}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.1}Theoretical Limits.}{20}{subsubsection.6.2.1}}
+\newlabel{subsection:theoreticallimit}{{6.2.1}{20}{Theoretical Limits}{subsubsection.6.2.1}{}}
+\newlabel{subsection:theoreticallimit@cref}{{[subsubsection][1][6,2]6.2.1}{20}}
+\@writefile{lot}{\contentsline {table}{\numberline {17}{\ignorespaces The results for enhanced callsite analysis for exp3 of the \textit  {type} policy throughout different optimizations.}}{21}{table.17}}
+\newlabel{tbl:CSexp34TYPE}{{17}{21}{The results for enhanced callsite analysis for exp3 of the \textit {type} policy throughout different optimizations}{table.17}{}}
+\newlabel{tbl:CSexp34TYPE@cref}{{[table][17][]17}{21}}
+\@writefile{lot}{\contentsline {table}{\numberline {18}{\ignorespaces The results of comparing theoretical limits for the different restriction policies throughout different optimizations.}}{21}{table.18}}
+\newlabel{tbl:policycomp}{{18}{21}{The results of comparing theoretical limits for the different restriction policies throughout different optimizations}{table.18}{}}
+\newlabel{tbl:policycomp@cref}{{[table][18][]18}{21}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.2}\textit  {TypeShield} implementation of the \textit  {count} policy}{21}{subsubsection.6.2.2}}
+\newlabel{subsection:typeshieldvslimitcount}{{6.2.2}{21}{\textit {TypeShield} implementation of the \textit {count} policy}{subsubsection.6.2.2}{}}
+\newlabel{subsection:typeshieldvslimitcount@cref}{{[subsubsection][2][6,2]6.2.2}{21}}
+\@writefile{lot}{\contentsline {table}{\numberline {19}{\ignorespaces The results of comparing \textit  {count} safe and precision implementation throughout different optimizations.}}{22}{table.19}}
+\newlabel{tbl:policycompcount}{{19}{22}{The results of comparing \textit {count} safe and precision implementation throughout different optimizations}{table.19}{}}
+\newlabel{tbl:policycompcount@cref}{{[table][19][]19}{22}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.3}\textit  {TypeShield} implementation of the \textit  {type} policy}{22}{subsubsection.6.2.3}}
+\newlabel{subsection:typeshieldvslimitcount}{{6.2.3}{22}{\textit {TypeShield} implementation of the \textit {type} policy}{subsubsection.6.2.3}{}}
+\newlabel{subsection:typeshieldvslimitcount@cref}{{[subsubsection][3][6,2]6.2.3}{22}}
+\@writefile{lot}{\contentsline {table}{\numberline {20}{\ignorespaces The results of comparing \textit  {type} safe and precision implementation throughout different optimizations.}}{23}{table.20}}
+\newlabel{tbl:policycomptype}{{20}{23}{The results of comparing \textit {type} safe and precision implementation throughout different optimizations}{table.20}{}}
+\newlabel{tbl:policycomptype@cref}{{[table][20][]20}{23}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.4}Effect of our AddressTaken Analysis}{23}{subsubsection.6.2.4}}
+\newlabel{subsection:effectivenessaddresstaken}{{6.2.4}{23}{Effect of our AddressTaken Analysis}{subsubsection.6.2.4}{}}
+\newlabel{subsection:effectivenessaddresstaken@cref}{{[subsubsection][4][6,2]6.2.4}{23}}
+\@writefile{lot}{\contentsline {table}{\numberline {21}{\ignorespaces The results of comparing theoretical limits for the different restriction policies restricted using an address taken analysis throughout different optimizations.}}{23}{table.21}}
+\newlabel{tbl:policycompat}{{21}{23}{The results of comparing theoretical limits for the different restriction policies restricted using an address taken analysis throughout different optimizations}{table.21}{}}
+\newlabel{tbl:policycompat@cref}{{[table][21][]21}{23}}
+\@writefile{lot}{\contentsline {table}{\numberline {22}{\ignorespaces The results of comparing \textit  {count} safe and precision implementation restricted using an address taken analysis throughout different optimizations.}}{24}{table.22}}
+\newlabel{tbl:policycompatcount}{{22}{24}{The results of comparing \textit {count} safe and precision implementation restricted using an address taken analysis throughout different optimizations}{table.22}{}}
+\newlabel{tbl:policycompatcount@cref}{{[table][22][]22}{24}}
+\@writefile{lot}{\contentsline {table}{\numberline {23}{\ignorespaces The results of comparing \textit  {type} safe and precision implementation restricted using an address taken analysis throughout different optimizations.}}{24}{table.23}}
+\newlabel{tbl:policycompattype}{{23}{24}{The results of comparing \textit {type} safe and precision implementation restricted using an address taken analysis throughout different optimizations}{table.23}{}}
+\newlabel{tbl:policycompattype@cref}{{[table][23][]23}{24}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}RQ4: Runtime Performance Overhead}{24}{subsection.6.3}}
+\newlabel{section:typeshieldoverheadperformance}{{6.3}{24}{RQ4: Runtime Performance Overhead}{subsection.6.3}{}}
+\newlabel{section:typeshieldoverheadperformance@cref}{{[subsection][3][6]6.3}{24}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}RQ5: Instrumentation Overhead}{24}{subsection.6.4}}
+\newlabel{section:typeshieldoverheadinstrumentation}{{6.4}{24}{RQ5: Instrumentation Overhead}{subsection.6.4}{}}
+\newlabel{section:typeshieldoverheadinstrumentation@cref}{{[subsection][4][6]6.4}{24}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}RQ6: Security Level of \textit  {TypeShield}}{24}{subsection.6.5}}
+\newlabel{section:mitiagtion}{{6.5}{24}{RQ6: Security Level of \textit {TypeShield}}{subsection.6.5}{}}
+\newlabel{section:mitiagtion@cref}{{[subsection][5][6]6.5}{24}}
 \citation{andriesse:indepth}
 \citation{alan:mycroft}
 \citation{lin:rewards}
@@ -247,16 +321,15 @@
 \citation{abadi:cfi}
 \citation{intel:cet}
 \citation{windows:cfguard}
+\citation{vfuard:aravind}
+\citation{vtint:zhang}
+\citation{veen:typearmor}
+\citation{veen:typearmor}
 \citation{safedispatch:jang}
 \citation{vtv:tice}
 \citation{crane:readactor++}
 \citation{zhang:vtrust}
 \citation{volodymyr:cpi}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Related Work}{30}{section.8}}
-\newlabel{chapter:Related_Work}{{8}{30}{Related Work}{section.8}{}}
-\newlabel{Type-Inference on Executables}{{8}{30}{Related Work}{section.8}{}}
-\newlabel{Mitigation of Code-Reuse Attacks}{{8}{30}{Related Work}{section.8}{}}
-\newlabel{Mitigation of Advanced Code-Reuse Attacks}{{8}{30}{Related Work}{section.8}{}}
 \citation{haller:shrinkwrap}
 \citation{vtv:tice}
 \citation{safedispatch:jang}
@@ -264,15 +337,35 @@
 \citation{crane:readactor++}
 \citation{volodymyr:cpi}
 \citation{bounov:interleaving}
-\citation{vfuard:aravind}
-\citation{vtint:zhang}
-\citation{veen:typearmor}
-\citation{veen:typearmor}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Related Work}{25}{section.7}}
+\newlabel{chapter:Related_Work}{{7}{25}{Related Work}{section.7}{}}
+\newlabel{chapter:Related_Work@cref}{{[section][7][]7}{25}}
+\newlabel{Type-Inference on Executables}{{7}{25}{Related Work}{section.7}{}}
+\newlabel{Type-Inference on Executables@cref}{{[section][7][]7}{25}}
+\newlabel{Mitigation of Code-Reuse Attacks}{{7}{25}{Related Work}{section.7}{}}
+\newlabel{Mitigation of Code-Reuse Attacks@cref}{{[section][7][]7}{25}}
+\newlabel{Mitigation of Advanced Code-Reuse Attacks}{{7}{25}{Related Work}{section.7}{}}
+\newlabel{Mitigation of Advanced Code-Reuse Attacks@cref}{{[section][7][]7}{25}}
 \citation{intel:cet}
 \citation{windows:cfguard}
 \citation{veen:cfi}
-\@writefile{toc}{\contentsline {section}{\numberline {9}Future Work}{31}{section.9}}
-\newlabel{chapter:Future_Work}{{9}{31}{Future Work}{section.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion}{26}{section.8}}
+\newlabel{chapter:Discussion}{{8}{26}{Discussion}{section.8}{}}
+\newlabel{chapter:Discussion@cref}{{[section][8][]8}{26}}
+\newlabel{section:comptype}{{8}{26}{Discussion}{section.8}{}}
+\newlabel{section:comptype@cref}{{[section][8][]8}{26}}
+\newlabel{section:discrep}{{8}{27}{Discussion}{section.8}{}}
+\newlabel{section:discrep@cref}{{[section][8][]8}{27}}
+\newlabel{section:limit}{{8}{27}{Discussion}{section.8}{}}
+\newlabel{section:limit@cref}{{[section][8][]8}{27}}
+\newlabel{section:venuesimp}{{8}{27}{Discussion}{section.8}{}}
+\newlabel{section:venuesimp@cref}{{[section][8][]8}{27}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Future Work}{27}{section.9}}
+\newlabel{chapter:Future_Work}{{9}{27}{Future Work}{section.9}{}}
+\newlabel{chapter:Future_Work@cref}{{[section][9][]9}{27}}
+\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{27}{section.10}}
+\newlabel{chapter:Conclusion}{{10}{27}{Conclusion}{section.10}{}}
+\newlabel{chapter:Conclusion@cref}{{[section][10][]10}{27}}
 \bibstyle{acm}
 \bibdata{literatur.bib}
 \bibcite{dynamorio:drmemory}{1}
@@ -296,8 +389,6 @@
 \bibcite{fokin:smartdec}{19}
 \bibcite{haller:shrinkwrap}{20}
 \bibcite{safedispatch:jang}{21}
-\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{32}{section.10}}
-\newlabel{chapter:Conclusion}{{10}{32}{Conclusion}{section.10}{}}
 \bibcite{iso:iecN3690}{22}
 \bibcite{khedker2009data}{23}
 \bibcite{kornau:rop}{24}

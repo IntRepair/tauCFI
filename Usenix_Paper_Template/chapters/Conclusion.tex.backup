@@ -1,7 +1,5 @@
 \section{Conclusion}
 \label{chapter:Conclusion}
-In this paper, we introduced \textit{TypeShield} a tool for binary harding of forward indirect calls based
-on function parameter type and count.
 Advanced code reuse attacks like COOP and its extensions or Control Jujutsu manifest due to a combination of facts and problems, 
 like memory corruption or predictable binary layout and the fact that the larger our binaries get, the 
 higher the chance they contain useful gadgets for an attacker. However, due to their nature, traditional 
