@@ -52,6 +52,23 @@ of TypeArmor, however we are not entirely sure what has caused this discrepancy.
 test environments, or a bug within our implementation that we are not aware of, or simply reaching defintions
 analysis alone is not the best possible algorithm for this particular problem.
 
+\textbf{Improving \textit{TypeShield}.}
+\label{section:venuesimp}
+To improve our type analysis, we see atleast two possibilities. Incorporating refined dataflow analysis and 
+expanding the scope to also include memory. The main point of improvement is not the precision but for now 
+more importantly the reduction of underestimations in the callsite analysis.
+
+To refine the dataflow analysis, we propse the actual tracking of data values and simple operations, as these
+can be used to better differentiate the actual wideness stored within the current register. The highest gain, 
+we see here would be the establishment of upper and lower bounds regarding values within the register, which 
+would allow for more sophisticated callsite and calltarget invariants. Essentially we would have to resort 
+to symbolic execution or some other sort of precise abstract interpretation.
+
+Expanding the scope to also include memory, is another possible way of improving the type analysis, as it 
+would allow us to distinguish normal 32 or 64 bit values and pointer addresses. Although we already have a 
+limited approach of that in our reaching implementation, we still see room for improvement, as we only check
+whether a value is within one of three binary sections or 0.
+
 \textbf{Limitations of \textit{TypeShield}.}
 \label{section:limit}
 First of all, we are limited by the capabilities of the DynInst Instrumentation Environment, the main problem,
@@ -69,20 +86,3 @@ implementation. Thankfully this occurrence is quite rare, as we experienced with
 based on source level information, we could not detect a difference between our TYPE and a COUNT policies. 
 However when leveraging our tool, we were able to detect differences, which reinforces the fact, that we do 
 not rely on declaration of parameters but usage of those.
-
-\textbf{Improving \textit{TypeShield}.}
-\label{section:venuesimp}
-To improve our type analysis, we see atleast two possibilities. Incorporating refined dataflow analysis and 
-expanding the scope to also include memory. The main point of improvement is not the precision but for now 
-more importantly the reduction of underestimations in the callsite analysis.
-
-To refine the dataflow analysis, we propse the actual tracking of data values and simple operations, as these
-can be used to better differentiate the actual wideness stored within the current register. The highest gain, 
-we see here would be the establishment of upper and lower bounds regarding values within the register, which 
-would allow for more sophisticated callsite and calltarget invariants. Essentially we would have to resort 
-to symbolic execution or some other sort of precise abstract interpretation.
-
-Expanding the scope to also include memory, is another possible way of improving the type analysis, as it 
-would allow us to distinguish normal 32 or 64 bit values and pointer addresses. Although we already have a 
-limited approach of that in our reaching implementation, we still see room for improvement, as we only check
-whether a value is within one of three binary sections or 0.

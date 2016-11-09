@@ -7,47 +7,47 @@ Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} is one of the most use
 flows against advanced Code-Reuse Attacks (CRAs).
 Advanced CRAs such as the recently published COOP~\cite{schuster:coop} and its extensions \cite{crane:readactor++} 
 or the attacks described by the Control Flow Bending paper \cite{carlini:bending} are able to bypass most traditional
-CFI solutions, as they focus on indirect callsites, which are not as easy to decide at compile time.
+CFI solutions, as they focus on indirect call-sites, which are not as easy to decide at compile time.
 
 This is a problem for applications written in C++, as one of its principle is inheritance and virtual functions. 
-The concept of virtual functions allows the programmer to overwrite a virtual function of the baseclass with his
+The concept of virtual functions allows the programmer to overwrite a virtual function of the base-class with his
 own implementation. While this allows for much more flexible code, this flexibility is the reason COOP actually 
 works. The problem is that in order to implement virtual functions, the compiler needs to generate a table of all
-virtual functions for each class containing them and provide each instanciation of such a class with a pointer
+virtual functions for each class containing them and provide each instantiation of such a class with a pointer
 to said table. COOP now leverages a memory corruption to inject their own object with a fake virtual pointer, 
 which basically gives him control over the whole program, while the control flow still looks genuine, as no 
 code was replaced. 
 
-There exist several source code based solutions that either insert runtime checks during the compilation of 
-the program like SafeDispatch \cite{safedispatch:jang}, ShrinkWrap \cite{haller:shrinkwrap} or IFCC/VTV~\cite{vtv:tice}, 
+There exist several source code based solutions that either insert run-time checks during the compilation of 
+the program like SafeDispatch~\cite{safedispatch:jang}, ShrinkWrap \cite{haller:shrinkwrap} or IFCC/VTV~\cite{vtv:tice}, 
 which is the solution it is based on. Others modify and reorder the contents of the virtual table as their main 
-aspect like the paper by Bounov et al \cite{bounov:interleaving}. While the recently published Redactor++~\cite{crane:readactor++}
+aspect like the paper by Bounov et al.~\cite{bounov:interleaving}. While the recently published Redactor++~\cite{crane:readactor++}
 implements a combination of those ideas.
 
 While this might seem that only C++ is vulnerable, while C is safe, this notion is wrong, as the 
 Control Flow Bending paper \cite{carlini:bending} proposes attacks on nginx leveraging global 
-function pointers, which are used to provide configurable behaviour.
+function pointers, which are used to provide configurable behavior.
 
 As previously mentioned, there exist many solutions when one tries to tackle this problem while access
 to the application in question is provided. However, when we are faced with proprietary third party 
-binaries, which are provided as is and without the actual sourcecode, the number of tools that can
+binaries, which are provided as is and without the actual source code, the number of tools that can
 protect against COOP or similar attacks is rather low.
 
 TypeArmor~\cite{veen:typearmor} is such a tool that implements a fine grained forward edge CFI 
-solution for binaries. It calculates invariants for calltargets and indirect callsites based on
+solution for binaries. It calculates invariants for call-targets and indirect call-sites based on
 the number of parameters they use by leveraging static analysis of the binary, which then is
-patched to enforce those invariants during runtime. However, as of today we are not able to 
+patched to enforce those invariants during run-time. However, as of today we are not able to 
 access the source code of TypeArmor, which is why we implement our own approximation of the 
 tool.
 
 The main shortcoming of TypeArmor is that even with high precision in the classification of 
-calltargets and callsites, one cannot exclude calltargets with lower parameter number from 
-callsites, for one due compatability and also due to variadic functions, which are a special
-case in themselves. This basically means that when a callsite prepares 6 parameters, it is 
+call-targets and call-sites, one cannot exclude calltargets with lower parameter number from 
+call-sites, for one due compatibility and also due to variadic functions, which are a special
+case in themselves. This basically means that when a call-site prepares 6 parameters, it is 
 able to call all address taken functions.
 
 We implemented \textit{TypeShield} to show a possible remedy of this problem by introducing
-parameter types into the classification of callsites and calltargets. 
+parameter types into the classification of call-sites and call-targets. 
 
 place holder
 
@@ -161,7 +161,7 @@ place holder
 
 place holder
 
-place holder
+place holdervptrs
 
 place holder
 
@@ -177,15 +177,15 @@ to further mitigate advanced code reuse attacks.
 In summary, we make the following contributions:
 \label{Contribution}
 \begin{itemize}
- \item We designed and implementated a callsite and calltarget classification schema
+ \item We designed and implemented a call-site and call-target classification schema
  that is based on the wideness of parameters alone. We implemented configurable reaching and liveness analysis algorithms
  that operate on the full set of general purpose integer registers of a x86-64 CPU and evaluated various path merge operators.
  Although the basic idea of our aproach to rely only on the wideness of a type is rather simple, we still achieved a reduction
- of up to 20\% less callsites per calltarget with an overall of about 9\% when compared to our implementation of a parameter
+ of up to 20\% less call-sites per call-target with an overall of about 9\% when compared to our implementation of a parameter
  count based matching schema.
 
  \item We implemented an approximation of the matching schema employed by TypeArmor proposed by \cite{veen:typearmor}, 
- because we had no access to their sourcecode and could achieve similar results regarding parameter matching, partially verifying
+ because we had no access to their sour-cecode and could achieve similar results regarding parameter matching, partially verifying
  their results.
  
  \item give one more here.
@@ -198,7 +198,7 @@ The paper is organized as follows.
 \cref{chapter:TypeShild Overview} contains a high level overview of \textit{TypeShield}.
 \cref{chapter:Design} describes the theory used and decisions made during the design of \textit{TypeShield}.
 \cref{chapter:Implementation} briefly presents the implementation details of \textit{TypeShield}.
-\cref{chapter:Evaluation} evaluates several proprties of \textit{TypeShield} and
+\cref{chapter:Evaluation} evaluates several properties of \textit{TypeShield} and
 \cref{chapter:Related_Work} surveys related work, respectively.
 \cref{chapter:Future_Work} highlights future research venues while 
 \cref{chapter:Discussion} contains the discussion, respectively.

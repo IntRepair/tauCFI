@@ -10,7 +10,7 @@
   \url{http://msdn.microsoft.com/en-us/library/windows/desktop/mt637065(v=vs.85).aspx}.
 
 \bibitem{intel:cet}
-{Intel Control-flow Enforcement Technology (CET)}.
+{Intel Intel Control-flow Enforcement Technology (CET)}.
 \newblock
   \url{http://blogs.intel.com/evangelists/2016/06/09/intel-release-new-technology-specifications-protect-rop-attacks/}.
 

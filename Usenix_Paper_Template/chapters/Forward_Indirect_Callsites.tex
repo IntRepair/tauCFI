@@ -63,12 +63,18 @@ linenos,
 frame=none,
 firstnumber=1,
 framesep = 1.0cm,
+linenos,
+numbersep=5pt,
+%gobble=2,
+%frame=lines,
+framesep=2mm,
+%fontsize=\tiny        
 % baselinestretch=1.2,
 % bgcolor=LightGray,
 fontsize=\footnotesize,
 ]{C++}
 class nsMultiplexInputStream final 
- :public nsIMultiplexInputStream 
+ :public nsIMultiplexInputStream //A0
  ,public nsISeekableStream //A1
  ,public nsIIPCSerializableInputStream //A2
  ,public nsICloneableInputStream{ //A3
@@ -94,21 +100,31 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 \end{minipage}
 \end{lrbox}
 
-\hspace{2.0cm}
-\begin{figure}
- \begin{minipage}{.45\linewidth}
-\usebox{\firstlisting}
-\end{minipage}%%
-\hfill
-%&
-%
-\hspace{1.1cm}
-\begin{minipage}{.5\linewidth}
-    \includegraphics[width=1.2\textwidth]{figures/loop.pdf}
-\end{minipage}
+% \begin{figure}
+%  \begin{minipage}[!t]{.40\linewidth}
+%   \usebox{\firstlisting}
+%  \end{minipage}%%
+% \hfill
+% \hspace{1.2cm}
+% \begin{minipage}[!b]{.5\linewidth}
+%    \includegraphics[width=1.3\textwidth]{figures/loop.pdf}
+% \end{minipage}
+% \caption{Code example used to illustrate how a COOP loop gadget works.}
+% \label{Code example used to illustrate how a COOP loop gadget works}
+% \end{figure}
+
+%%%%%%%%%%%%%%%%%
+\begin{figure}[!t]
+   \centering
+   \setlength{\unitlength}{0.1\textwidth}
+   \begin{picture}(10,4)
+     \put(2.85,0){\includegraphics[width=.3\textwidth]{figures/loop.pdf}}
+     \put(0,2){\usebox{\firstlisting}}
+   \end{picture}
 \caption{Code example used to illustrate how a COOP loop gadget works.}
 \label{Code example used to illustrate how a COOP loop gadget works}
 \end{figure}
+
 
 Figure~\ref{Code example used to illustrate how a COOP loop gadget works}
 depicts a C++ code example where it is illustrated how a COOP loop gadget 
@@ -158,7 +174,7 @@ Bounov et al~\cite{bounov:interleaving} presented a tool ($\approx$ 1\% runtime 
 for indirect forward-edge call site checking based on vTable layout interleaving. The tool has better performance
 than VTV and better precision w.r.t. allowed vTables per indirect call site. Its precision (selecting legitimate vTables for each call site)
 compared to ShrinkWrap is lower since it does not consider vTable inheritance paths.
-vTrust~\cite{zhang:vtrust} (average runtime overhead 2.2\%) enforces two layers of defense (virtual function type enforcement and vTable pointer sanitization)
+vTrust~\cite{zhang:vtrust} (average run-time overhead 2.2\%) enforces two layers of defense (virtual function type enforcement and vTable pointer sanitization)
 against vTable corruption, injection and reuse.
 TypeArmor~\cite{veen:typearmor} ($\le$ than 3 \% runtime overhead) enforces an CFI policy based on runtime checking of caller/caller pairs based
 on function parameter count matching (coarse grained, parameter types and more than six parameters can be used as well).

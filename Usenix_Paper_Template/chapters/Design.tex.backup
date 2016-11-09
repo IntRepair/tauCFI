@@ -17,7 +17,7 @@ address taken analysis based on \cite{mingwei:sekar} to restrict the number of a
 \label{section:countpolicy}
 What we call the \emph{count} policy is essentially the policy introduced by TypeArmor \cite{veen:typearmor}. 
 The basic idea revolves around classifying call-targets by the number of parameters they provide and call-sites 
-by the number of parameters they require. The schema to match those is that we have call-targets requiring 
+by the number of parameters they require. The schema to match those is that we have calltargets requiring 
 parameters and the call-sites providing parameters as depicted in Figure \ref{fig:COUNTschema}.
 
 \begin{figure}[!h]
@@ -66,7 +66,7 @@ parameters and the call-sites providing parameters as depicted in Figure \ref{fi
 
 \end{tikzpicture}
 }
-\caption{\emph{Count} policy classification schema for call-sites and call-targets.}
+\caption{\emph{Count} policy classification schema for callsites and calltargets.}
 \label{fig:COUNTschema}
 \end{figure}
 
@@ -88,10 +88,8 @@ of call-sites, which can access the same set of call-targets, a route we will ex
 \subsection{\emph{Type} Policy}
 \label{section:typepolicy}
 
-What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the type of a parameter. However due to complexity reasons,
-we are restricting ourselves to the general purpose registers, which the SystemV ABI designates as parameter registers. Furthermore we are not inferring 
-the actual type of the data but the wideness of the data stored in the register. The schema again is that we have call-targets requiring wideness and the
-call-site providing wideness as depicted in Figure \ref{fig:TYPEschema}.
+What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the type of a parameter. However due to complexity reasons, we are restricting ourselves to the general purpose registers, which the SystemV ABI designates as parameter registers. Furthermore we are not inferring the actual type of the data but the wideness of the data stored in the register. The schema again is that we have calltargets requiring wideness and the callsite providing 
+wideness as depicted in Figure \ref{fig:TYPEschema}.
 
 \begin{figure}[!h]
 \center
@@ -152,7 +150,7 @@ call-site providing wideness as depicted in Figure \ref{fig:TYPEschema}.
 \end{tikzpicture}
 }
 
-\caption{\emph{Type} policy schema for call-sites and call-targets.}
+\caption{\emph{Type} policy schema for callsites and calltargets.}
 \label{fig:TYPEschema}
 \end{figure}
 
@@ -164,23 +162,13 @@ We are currently interested in x86-64 binaries, the registers we are looking at 
 \item the lower 8bits of the register, meaning a wideness of 8.
 \end{itemize}
 
-Four of those registers can also directly access the higher 8 bits of the lower 16 bits of the register. For our purpose we register this access as a 16-bit access. 
-Based on this information,
-we can assign a register one of 5 possible types $\mathcal{T} = \{64, 32, 16, 8, 0\}$. We also included the type 0 to model the absence of data within a register. 
-Similar to the \emph{count} policy, we allow overestimation of types in call-sites and underestimation of types in call-targets. However, the matching idea is different, 
-because as can we depict in Figure \ref{fig:TYPEschema}, the type of a call-target and a call-site no longer depends solely on its parameter count, 
-each call-site and call-target has its type from the set of $\mathcal{T}^6$, with the following comparison operator:
+Four of those registers can also directly access the higher 8 bits of the lower 16 bits of the register. For our purpose we register this access as a 16bit access. Based on this information, we can assign a register one of 5 possible types $\mathcal{T} = \{64, 32, 16, 8, 0\}$. We also included the type 0 to model the absence of data within a register. Similar to the \emph{count} policy, we allow overestimation of types in callsites and underestimation of types in calltargets. However, the matching idea is different, 
+because as can we depict in Figure \ref{fig:TYPEschema}, the type of a call-target and a call-site no longer depends solely on its parameter count, each callsite and calltarget has its type from the set of $\mathcal{T}^6$, with the following comparison operator:
 $
 	u \leq_{type} v :\Longleftrightarrow  
 	\forall_{i = 0}^{5} {u_i \leq v_i} , \text {with } u, v \in \mathcal{T}^6
 $
-Again we allow any call-site $cs$ call any call-target $ct$, when it fulfills the requirement $ct \leq cs$. The way we represent this is by letting the type for a call-target parameter
-progress from 64-bit to 0-bit---if a call-target requires a 32-bit value in its 1st parameter, it also should accept a 64-bit value from its call-site---and similarly we let the type for
-a call-site progress from 0-bit to 64-bit - If a call-site provides a 32-bit value in its 1st parameter it also provides a 16-bit, 8-bit and 0-bit to a call-target. Now the advantage
-of the \emph{type} policy in comparison to the \emph{count} policy is that while our type comparison implies the count comparison, the other direction does not hold. Meaning, 
-just having an equal or lesser number of parameters than a call-site, does no longer allow a call-target being called there, thus restricting the number of call-targets per 
-call-site even further. A function that requires 64-bit in its first parameter, and 0-bit in all other parameters, would have been callable by a call-site providing 8-bit 
-in its first and second parameter when using the \emph{count} policy, however in the \emph{type} policy this is no longer possible.
+Again we allow any call-site $cs$ call any call-target $ct$, when it fulfills the requirement $ct \leq cs$. The way we represent this is by letting the type for a calltarget parameter progress from 64bit to 0bit---if a calltarget requires a 32bit value in its 1st parameter, it also should accept a 64bit value from its callsite---and similarly we let the type for a callsite progress from 0bit to 64bit - If a callsite provides a 32bit value in its 1st parameter it also provides a 16bit, 8bit and 0bit to a calltarget. Now the advantage of the \emph{type} policy in comparison to the \emph{count} policy is that while our type comparison implies the count comparison, the other direction does not hold. Meaning, just having an equal or lesser number of parameters than a callsite, does no longer allow a calltarget being called there, thus restricting the number of calltargets per callsite even further. A function that requires 64bit in its first parameter, and 0bit in all other parameters, would have been callable by a callsite providing 8bit in its first and second parameter when using the \emph{count} policy, however in the \emph{type} policy this is no longer possible.
 
 
 \subsection{Instruction Analysis}
@@ -205,20 +193,15 @@ $
 decode : \mathcal{I} \mapsto \mathcal{S}
 $
 
-However, we do not go into detail how this function actually calculates this sate, because we rely on external libraries to perform this task. Implementing this function our self is out of scope due to the lengthy work required, as the x86-64 instruction set is quite large.
+However, we do not go into detail how this function actually calculates this sate, because we rely on external libraries to perform this task. Implementing this function ourself is out of scope due to the lengthy work required, as the x86-64 instruction set is quite large.
 
-\subsection{Call-target Analysis}
+\subsection{Calltarget Analysis}
 \label{section:calltargetanalysis}
-For either \emph{count} or \emph{type} policy to work, we need to arrive at an underestimation of the required parameters by any function existing within the targeted 
-binary. We will employ a modified version of liveness analysis that tracks registers instead of variables to generate the needed underestimation. As our algorithm will 
-be customizable, we look at the required merge functions to implement \emph{count} and \emph{type} policy. Furthermore we need to eliminate the passing of variadic 
-parameter lists from variadic functions, as this might cause our analysis to overestimate the required parameters.
+For either \emph{count} or \emph{type} policy to work, we need to arrive at an underestimation of the required parameters by any function existing within the targeted binary. We will employ a modified version of liveness analysis that tracks registers instead of variables to generate the needed underestimation. As our algorithm will be customizable, we look at the required merge functions to implement \emph{count} and \emph{type} policy. Furthermore we need to eliminate the passing of variadic parameter lists from variadic functions, as this might cause our analysis to overestimate the required parameters.
 
 \textbf{Variable Liveness Analysis Theory.}
 \label{subsection:livenessanalysis}
-A variable is alive before the execution of an instruction, if at least one of the originating paths contains a read access before the variable is written to again. We employ 
-liveness analysis, because we are looking for the  parameters a function requires. This essentially requires read before write access, however global variables usually
-would also fall into this category, however these would not reside within parameter registers at the start of a function.
+A variable is alive before the execution of an instruction, if at least one of the originating paths contains a read access before the variable is written to again. We employ liveness analysis, because we are looking for the  parameters a function requires. This essentially requires read before write access, however global variables usually would also fall into this category, however these would not reside within parameter registers at the start of a function.
 
 Khedker et al.~ \cite{khedker2009data} defines live variable analysis on blocks in the following manner:
 
@@ -272,22 +255,14 @@ meaning that a variable occurring within this set has been read before it was wr
 	\Return merge\_v(state, state')
 
 	}
-\caption{Algorithm to analyze the liveness of a Basic Block.}
+\caption{Algorithm to analyse the liveness of a Basic Block.}
 \label{alg:liveness}
 \end{algorithm}
 \end{center}
 
-However, we cannot use variable liveness analysis as is, because the analysis is based on potentially unbound variable sets, 
-while we are restricted to a finite number of registers and states. We also require an underestimation of live variables an
-not an overestimation as provided by standard liveness analysis. Furthermore we have to define how to interpret the changes
-occurring within one block based on the the change caused by its instructions. Considering this, we arrive at 
-algorithm \ref{alg:liveness} to compute the liveness state at the start of a basic block.
+However, we cannot use variable liveness analysis as is, because the analysis is based on potentially unbound variable sets, while we are restricted to a finite number of registers and states. We also require an underestimation of live variables an not an overestimation as provided by standard liveness analysis. Furthermore we have to define how to interpret the changes occurring within one block based on the the change caused by its instructions. Considering this, we arrive at algorithm \ref{alg:liveness} to compute the liveness state at the start of a basic block.
 
-This algorithm relies on various functions that can be used to configure its behavior. We need to define the function
-$merge\_v$, which describes how to compound the state change of the current instruction and the current state, 
-the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function
-$analyze\_instr$. The function $succ$, which retrieves all possible successors of a block won't be implemented by us, 
-because we rely on the DynInst instrumentation framework to achieve this.
+This algorithm relies on various functions that can be used to configure its behaviour. We need to define the function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function $analyze\_instr$. The function $succ$, which retrieves all possible successors of a block won't be implemented by us, because we rely on the DynInst instrumentation framework to achieve this.
 
 \begin{subequations}
 \label{eq:livenesscustom}
@@ -316,32 +291,27 @@ succ &: \mathcal{I} \mapsto \mathcal{P}(\mathcal{I})
 %\end{subequations}
 %We have yet to define the functions $merge\_v$, which describes how to compound a function and the outgoing state, the function $merge\_h$, which describes how to merge the states of several paths and the function $succc$, which essentially gives us the successors of the current instruction. To prevent cycles we keep track of the instructions visited within the current path and omit any instruction on the current path from the result of $succ$. These functions, the liveness state $\mathcal{S}^\mathcal{L}$ and its interpretation into parameters will be defined in the following subsections.
 
-As the $analyze\_instr$ function calculates the effect of an instruction and is the heart of the analyze function. It will also handle non jump 
-and non fall-through successors, as these are not handled by DynInst in our case. We essentially have four cases that we handle:
+As the $analyze\_instr$ function calculates the effect of an instruction and is the heart of the analyze function. It will also handle non jump and non fallthrough successors, as these are not handled by DynInst in our case. We essentially have four cases that we handle:
 \begin{enumerate}
 \item if the instruction is an indirect call or a direct call but we chose not follow calls, then return a state where all registers are considered written.
-\item if the instruction is a direct call and we chose to follow calls, then we spawn a new analysis and return its result.
+\item if the instruction is a diect call and we chose to follow calls, then we spawn a new analysis and return its result.
 \item if the instruction is a constant write (e.g. xor of two registers) then we remove the read portion before we return the decoded state.
 \item in all other cases we simply return the decoded state
 \end{enumerate}
 
-This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the 
-liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
+This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
 
 \textbf{Required Parameter Count.}
 \label{subsection:requiredparamcount}
 
-To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we are interested in the 
-following three different exclusive informations:
+To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we are interested in the following three different exclusive informations:
 \begin{enumerate}
 \item Was the register written to before its value could be read ? \\ We represent this with the state W.
 \item Was the register read from before its value was overwritten ? \\ We represent this with the state R.
 \item Did neither read nor write access occur for the register ? \\ We represent this with the state C.
 \end{enumerate}
 This gives us the following register state $S^\mathcal{L} = \{ C, R, W \}$ which translates to the register superstate $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
-Now, we assume that unless the instructions we are looking at does discard the value it is reading (\texttt{xor rax rax} would be such an 
-instruction that we call const\_write) that reading does precede the writing withing one instruction. Furthermore we are only interested 
-in the first occurrence of a R or W within one path, as following reads or writes do not give us more information.
+Now, we assume that unless the instructions we are looking at does discard the value it is reading (\texttt{xor rax rax} would be such an instruction that we call const\_write) that reading does preced the writing withing one instruction. Furthermore we are only interested in the first occurrence of a R or W within one path, as following reads or writes do not give us more information.
 Therefore, we can define our vertical merge function in the following way:
 \begin{align}
 merge\_v^{r} (cur, delta) &= \left\{
@@ -406,28 +376,21 @@ W & W & W & W
 \label{fig:COUNTlivenessmapping}
 \end{table}
 
-We apply the liveness analysis for each function with the entry block of the function as start and the return blocks as end and after an 
-analysis run for a function, the index of highest parameter register based on the used call convention that has the state R is considered
-to be the number of parameters a function at least requires to be prepared by a call-site.
+We apply the liveness analysis for each function with the entry block of the function as start and the return blocks as end and after an analysis run for a function, the index of highest parameter register based on the used callconvention that has the state R is considered to be the number of parameters a function at least requires to be prepared by a callsite.
 
 
 \textbf{Required Parameter Wideness.}
 \label{subsection:requiredparamwideness}
-To implement the \emph{type} policy, we need a finer representation of the state of one register, thus we are interested in the following
-three different not neccessarily exlusive informations:
+To implement the \emph{type} policy, we need a finer representation of the state of one register, thus we are interested in the following three different not neccessarily exlusive informations:
 \begin{enumerate}
 \item Was the register written to before its value could be read ? \\ We represent this with the state $W$.
-\item How much was read from the register before its value was overwritten? \\ We represent this with the states $\{ r8, r16, r32, r64 \}$ 
-using $R$ as a placeholder for arbitrary reads.
+\item How much was read from the register before its value was overwritten? \\ We represent this with the states $\{ r8, r16, r32, r64 \}$ using $R$ as a placeholder for arbitrary reads.
 \item Did neither read nor write access occur for the register ? \\ We represent this with the state $C$.
 \end{enumerate}
-This gives us the following register state $S^\mathcal{L} = \{ C, r8, r16, r32, r64, W \}$ which translates to the register superstate 
-$\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
-Now, we assume that unless the instructions we are looking at does discard the value it is reading (\texttt{xor rax rax} would be such 
-an instruction that we call const\_write) that reading does precede the writing withing one instruction.
+This gives us the following register state $S^\mathcal{L} = \{ C, r8, r16, r32, r64, W \}$ which translates to the register superstate $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
+Now, we assume that unless the instructions we are looking at does discard the value it is reading (\texttt{xor rax rax} would be such an instruction that we call const\_write) that reading does preced the writing withing one instruction.
 
-As there could happen more than one read of a register before it is written, we might be interested in more than just the first occurrence
-of a write or read on a path. We arrive therefore at three possible vertical merge functions:
+As there could happen more than one read of a register before it is written, we might be interested in more than just the first occurrence of a write or read on a path. We arrive therefore at three possible vertical merge functions:
 \begin{itemize}
 	\item The same vertical merge operator as used in the \emph{count} policy, which only gives us the first non $C$ state ($merge\_v^{r}$).
 	\item A vertical merge operator that conceptually intersects all read accesses along a path until the first write occurs ($merge\_v^{i}$).
@@ -440,11 +403,7 @@ merge\_h(\{s\}) &= s\\
 merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
 \end{align}
 
-The results of our experiments with the implementation of call-target classification gave presented us with essentially one possible candidate
-that we can base our horizontal merge function on, namely the union operator with an analysis function that follows into direct calls. The 
-basic schema of the merging is depicted in \ref{tbl:TYPECTunion} and it essentially behaves as if it was the union operator (when both states
-are set, the higher one is chosen). However, we have to account for W being used as an end marker, which is why we added mapping for RW, 
-which is essentially that. 
+The results of our experiments with the implementation of calltarget classification gave presented us with essentially one possible candidate that we can base our horizontal merge function on, namely the union operator with an analysis function that follows into direct calls. The basic schema of the merging is depicted in \ref{tbl:TYPECTunion} and it essentially behaves as if it was the union operator (when both states are set, the higher one is chosen). However, we have to account for W being used as an end marker, which is why we added mapping for RW, which is essentially that. 
 
 \begin{table}[h]
 \centering
@@ -510,32 +469,21 @@ parameters and we arrive at a problematic overestimation.
 \label{fig:asmvariadic}
 \end{figure}
 
-Our solution to this problem is to find these spurious reads and ignore them. A compiler will implement this type of operation very 
-similar foll all cases, thus we can achieve this using the following steps:
+Our solution to this problem is to find these spurious reads and ignore them. A compiler will implement this type of operation very similar foll all cases, thus we can achieve this using the following steps:
 \begin{itemize}
-\item Look for what we call the xmm-passthrough block, which entierly consist of moving the values of registers \texttt{xmm0} to 
-\texttt{xmm7} into contiguous memory (in our case basic block [\texttt{0x422306}, \texttt{0x42233d} [ ).
-\item Look at the predecessor of the xmm-passthrough block, which we call the entry block (in our case basic block [\texttt{0x4222f0},
-\texttt{0x4222f2} [ ). Check if the successors of the entry block consist of the xmm-passthrough block and the successor of the 
-xmm-passthrough block, which we call the param-passthrough block (in our case basic block [\texttt{0x42233d}, \texttt{0x42235e} [ ).
-\item Look at the param-passthrough block and set all instructions that move the value of a parameter register into memory to be
-ignored (in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \texttt{0x422347} and \texttt{0x42234c}).
+\item Look for what we call the xmm-passthrough block, which entierly consist of moving the values of registers \texttt{xmm0} to \texttt{xmm7} into contiguous memory (in our case basic block [\texttt{0x422306}, \texttt{0x42233d} [ ).
+\item Look at the predecessor of the xmm-passthrough block, which we call the entry block (in our case basic block [\texttt{0x4222f0}, \texttt{0x4222f2} [ ). Check if the successors of the entry block consist of the xmm-passthrough block and the successor of the xmm-passthrough block, which we call the param-passthrough block (in our case basic block [\texttt{0x42233d}, \texttt{0x42235e} [ ).
+\item Look at the param-passthrough block and set all instructions that move the value of a parameter register into memory to be ignored (in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \texttt{0x422347} and \texttt{0x42234c}).
 \end{itemize}
 
 
-\subsection{Call-site Analysis}
+\subsection{Callsite Analysis}
 \label{section:callsiteanalysis}
-For either \emph{count} or \emph{type} policy to work, we need to arrive at an overestimation of the provided parameters by any indirect 
-call-site existing within the targeted binary. We will employ a modified version of reaching analysis that tracks registers instead of 
-variables to generate the needed overestimation. As our algorithm will be customizable, we look at the required merge functions to 
-implement \emph{count} and \emph{type} policy. 
+For either \emph{count} or \emph{type} policy to work, we need to arrive at an overestimation of the provided parameters by any indirect callsite existing within the targeted binary. We will employ a modified version of reaching analysis that tracks registers instead of variables to generate the needed overestimation. As our algorithm will be customizable, we look at the required merge functions to implement \emph{count} and \emph{type} policy. 
 
 \textbf{Reaching Definitions Theory.}
 \label{subsection:reachindefinitionstheory}
-An assignment of a value to a variable is a reaching definition at the end of a block $n$, if that definition is present within at 
-least one path from start to the end of the block $n$ without being overwritten by another value assignment to the same variable. 
-We employ reaching definitions analysis, because we are looking for the parameters a call-site provides. This essentially 
-requires the last known set of definitions that reach the actual call instruction within the parameter registers.
+An assignment of a value to a variable is a reaching definition at the end of a block $n$, if that definition is present within at least one path from start to the end of the block $n$ without being overwritten by another value assignment to the same variable. We employ reaching definitions analysis, because we are looking for the parameters a callsite provides. This essentially requires the last known set of definitions that reach the actual callinstruction within the parameter registers.
 
 The book~\cite{khedker2009data} defines reaching definition analysis on blocks in the following manner:
 \begin{subequations}
@@ -550,12 +498,7 @@ In_n &:= \left\{
 Out_n &:= (In_n - Kill_n) \cup Gen_n \label{eq:reachingbasedefOut}
 \end{align}
 \end{subequations}
-$Bl$ is the default state at the start of a path of execution and in our case reaching that state would mean that we do not 
-know whether a value has been provided for the variable and therefore we assume that one has been provided, reaching an 
-overestimation. The set $Kill_n$ describes all definitions that are removed within this block, meaning that the value of 
-a variable has been overwritten. The set $Gen_n$ describes the new definitions that have been provided by the block $n$, 
-meaning that the value of a variable has been assigned. Considering this, we can assume that $Gen_n \subseteq Kill_n$, 
-as we can always create new definitions, but not simply remove definitions without assigning a new value to the variable.
+$Bl$ is the default state at the start of a path of execution and in our case reaching that state would mean that we do not know whether a value has been provided for the variable and therefore we assume that one has been provided, reaching an overestimation. The set $Kill_n$ describes all definitions that are removed within this block, meaning that the value of a variable has been overwritten. The set $Gen_n$ describes the new defintions that have been provided by the block $n$, meaning that the value of a variable has been assigned. Considering this, we can assume that $Gen_n \subseteq Kill_n$, as we can always create new definitions, but not simply remove definitions without assigning a new value to the variable.
 
 \begin{algorithm}[!h]
 	\SetAlgoLined
@@ -591,17 +534,9 @@ as we can always create new definitions, but not simply remove definitions witho
 \label{alg:reaching}
 \end{algorithm}
 
-However, we cannot use reaching definition analysis as is, because the analysis is again based on potentially unbound 
-variable sets, while we are restricted to a finite number of registers and states. This time however the analysis provides us with an overestimation, 
-we however want to get a result as close as possible so we again want to customize merge functions. Furthermore we have to define how 
-to interpret the changes occuring withing one block based on the the change caused by its instructions. Considering this, w, we 
-arrive at algorithm \ref{alg:reaching} to compute the liveness state at the start of a basic block.
+However, we cannot use reaching definition analysis as is, because the analysis is again based on potentially unbound variable sets, while we are restricted to a finite number of registers and states. This time however the analysis provides us with an overestimation, we hower want to get a result as close as possible so we again want to customize merge functions. Furthermore we have to define how to interpret the changes occuring withing one block based on the the change caused by its instructions. Considering this, w, we arrive at algorithm \ref{alg:reaching} to compute the liveness state at the start of a basic block.
 
-This algorithm relies on various functions that can be used to configure its behavior. We need to define the 
-function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, 
-the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function
-$analyze\_instr$. The function $pred$, which retrieves all possible predecessors of a block won't be implemented by us, 
-because we rely on the DynInst instrumentation framework to achieve this.
+This algorithm relies on various functions that can be used to configure its behaviour. We need to define the function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function $analyze\_instr$. The function $pred$, which retrieves all possible predecessors of a block won't be implemented by us, because we rely on the DynInst instrumentation framework to achieve this.
 \begin{subequations}
 \label{eq:livenesscustom}
 \begin{align}
@@ -612,18 +547,15 @@ pred &: \mathcal{I} \mapsto \mathcal{P}(\mathcal{I})
 \end{align}
 \end{subequations}
 
-As the $analyze\_instr$ function calculates the effect of an instruction and is the heart of the analyze function. It will also 
-handle non jump and non fall-through successors, as these are not handled by DynInst in our case. We essentially have three cases that we handle:
+As the $analyze\_instr$ function calculates the effect of an instruction and is the heart of the analyze function. It will also handle non jump and non fallthrough successors, as these are not handled by DynInst in our case. We essentially have three cases that we handle:
 \begin{itemize}
-\item if the instruction is an indirect call or a direct call but we chose not follow calls, then return a state where all trashed 
-are considered written.
-\item if the instruction is a direct call and we chose to follow calls, then we spawn a new analysis and return its result.
+\item if the instruction is an indirect call or a direct call but we chose not follow calls, then return a state where all trashed are considered written.
+\item if the instruction is a diect call and we chose to follow calls, then we spawn a new analysis and return its result.
 %\item if the instruction is a constant write (e.g. xor of two registers) then we remove the read portion before we return the decoded state
 \item in all other cases we simply return the decoded state.
 \end{itemize}
 
-This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of 
-the liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
+This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
 
 %We have yet to define the functions $merge\_v$, which describes how to compound a function and the outgoing state, the function $merge\_h$, which describes how to merge the states of several paths and the function $pred$, which essentially gives us the predecessors of the current instruction. To prevent cycles we keep track of the instructions visited within the current path and omit any instruction on the current path from the result of $pred$. These functions, the reaching state $\mathcal{S}^\mathcal{R}$  and its interpretation into parameters will be defined in the following subsections.
 %
@@ -633,8 +565,7 @@ the liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following
 
 \textbf{Provided Parameter Count.}
 \label{subsection:providedparamcount}
-To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we are interested 
-in the following three different exclusive informations:
+To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we are interested in the following three different exclusive informations:
 
 \begin{itemize}
 \item Was the register value trashed ? \\ We represent this with the state T.
@@ -665,8 +596,8 @@ We have four viable possibilities for our combination operator $\circ$, depicted
 \item [$\bigsqcap^{\mathcal{R}}$] is what we call the destructive combination operator, as it returns T on any mismatch.
 \item [$\bigcap^{\mathcal{R}}$] is what we call the intersection operator, as it returns U, when combining U and S, similar to an intersection.
 \item [$\bigcup^{\mathcal{R}}$] is what we call the union operator, as it returns S, when combining U and S similar to a union.
-\item [$\bigsqcup^{\mathcal{R}}$] is what we call the true union operator, as it gives S precedence over everything and returns T or 
-U only when both sides are T or U being more inclusive than a union.
+\item [$\bigsqcup^{\mathcal{R}}$] is what we call the true union operator, as it gives S precendce over everything and returns T or U only when both sides are T or
+U being more inclusive than a union.
 \end{itemize}
 
 \newcolumntype{?}{!{\vrule width 1pt}}
@@ -731,7 +662,7 @@ To implement the \emph{type} policy, we need a finer representation of the state
 This gives us the following register state $S^\mathcal{L} = \{ T, s64, s32, s16, s8, U \}$ which translates to the register superstate $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
 Again, we are only interested in the first occurrence of a state that is not $U$ in a path, as following reads or writes do not give us more information.
 
-Therefore we can use the same vertical merge function as for the \emph{count} policy, which is essentially a pass-through until the first non $U$ state.
+Therefore we can use the same vertical merge function as for the \emph{count} policy, which is essentially a passthrough until the first non $U$ state.
 
 Our horizontal merge function is again a simple pairwise combination of the given set of states:
 \begin{align}
@@ -739,18 +670,15 @@ merge\_h(\{s\}) &= s\\
 merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
 \end{align}
 
-However, we have different possibilities regarding the merge operator. Experiments with our implementations for call-site 
-classification in the \emph{count} policy have given us the following results:
+However, we have different possibilities regarding the merge operator. Experiments with our implementations for callsite classification in the \emph{count} policy have given us the following results:
 \begin{itemize}
 \item The best candidate to minimize the problematic matches is the union operator without following direct calls.
 \item The best candidate to maximize precision is the intersection operator with following direct calls.
 \end{itemize}
 
-We therefore arrive at three viable possibilities for our combination operator $\circ$, depicted in table \ref{fig:TYPEreachingmapping}, 
-which all (except one) give priority to $T$:
+We therefore arrive at three viable possibilities for our combination operator $\circ$, depicted in table \ref{fig:TYPEreachingmapping}, which all (except one) give priority to $T$:
 \begin{itemize}
-\item [$\bigcap^{\mathcal{R}}$] is what we call the intersection operator, as it returns U, when combining U and S, similar to an 
-intersection furthermore we also calculate the intersection of states when both states are set 
+\item [$\bigcap^{\mathcal{R}}$] is what we call the intersection operator, as it returns U, when combining U and S, similar to an intersection furthermore we also calculate the intersection of states when both states are set 
 (the lower of the two is returned).
 \item [$\bigsqcap^{\mathcal{R}}$] is what we call the half intersection operator, as it returns U, when combining U and S, 
 similar to an intersection but we calculate the union of states when both states are set (the higher of the two is returned).
@@ -796,26 +724,18 @@ T & T & T & T
 
 Initial experiments with this implementation showed two problems regarding provided wideness detection.  Parameter lists with ``holes'' and address wideness underestimation.
 
-\paragraph{Parameter lists with \textit{holes}.} This refers to parameter lists that show one or more \texttt{void} parameters between start to the last actual parameter. 
-These are not existant in actual code but our analysis has the possibility of generating them through the merge operations. An example would be the following: 
-A parameter list of $(64, 0, 64, 0, 0, 0)$ is concluded, although the actual parameter list might be $(64, 32, 64, 0, 0, 0)$. While the trailing 0es are 
-what we expect, the 0 at the second parameter position will cause trouble, because it is an underestimation at the single parameter level, which we need to avoid.
+\paragraph{Parameter lists with \textit{holes}.} This refers to parameter lists that show one or more \texttt{void} parameters between start to the last actual parameter. These are not existant in actual code but our analysis has the possibility of generating them through the merge operations. An example would be the following: A parameter list of $(64, 0, 64, 0, 0, 0)$ is concluded, although the actual parameter list might be $(64, 32, 64, 0, 0, 0)$. While the trailing 0es are what we expect, the 0 at the second parameter position will cause trouble, because it is an underestimation at the single parameter level, which we need to avoid.
 Our solution is to simply scan our reaching analysis result for these holes and replace them with the wideness $64$, causing a (possible) overestimation.
 
-\paragraph{Address wideness unterestimation} refers to the problem that while in the call-site a constant value of 32-bit is written to a register, however 
-the call-target uses the whole 64-bit register. This can occur when pointers are passed from the call-site to the call-target. Specifically this happens 
-when pointers to memory inside the ``.bss'', ``.data'' or ``.rodata'' section of the binary are passed.
-Our solution is to enhance our instruction analysis to watch out for constant writes. In case a 32-bit constant value write is detected, we check if the
-value is an address within the ``.bss'', ``.data'' or ``.rodata'' section of the binary. If this is the case, we simply return a write access of 64-bits 
-instead of 32-bits. (This is not problematic, because we are looking for an overestimation of parameter wideness)
-It should be noted that the same problem can arise when a constant write causes the value 0 to be written to a 32-bit register. We use the same solution
-and set the wideness to 64-bits instead of 32-bits.
+\paragraph{Address wideness unterestimation} refers to the problem that while in the callsite a constant value of 32bit is written to a register, however the calltarget uses the whole 64bit register. This can occur when pointers are passed from the callsite to the calltarget. Specifically this happens when pointers to memory inside the ``.bss'', ``.data'' or ``.rodata'' section of the binary are passed.
+Our solution is to enhance our instruction analysis to watch out for constant writes. In case a 32bit constant value write is detected, we check if the value is an addess within the ``.bss'', ``.data'' or ``.rodata'' section of the binary. If this is the case, we simply return a write access of 64bits instead of 32bits. (This is not problematic, because we are looking for an overestimation of parameter wideness)
+It should be noted that the same problem can arise when a constant write causes the value 0 to be written to a 32bit register. We use the same solution and set the wideness to 64bits instead of 32bits.
 
 \subsection{Address Taken Analysis}
 \label{section:addresstakenanalysis}
-As of now, we use the maximum available set of call-targets---the set of all function entry basic blocks---as input for our algorithm. 
-To restrict the number of call-targets per call-site even further, we explored the possibility of incorporating an address taken analysis
-into our application. We base our theory on the paper by Zhang et al.~\cite{mingwei:sekar}, which introduced various types of taken
+As of now, we use the maximum available set of calltargets---the set of all function entry basic blocks---as input for our algorithm. 
+To restrict the number of calltargets per callsite even further, we explored the possibility of incorporating an address taken analysis
+into our application. We base our theory on the paper by Zhang and Sekar\cite{mingwei:sekar}, which introduced various types of taken
 addresses. An address is considered to be taken, when it is loaded into memory or a register.
 
 \textbf{Address Taken Targets.}
@@ -825,13 +745,13 @@ we only chose { Code Pointer Constants (CK)} and discarded the others:
 
 \item { Code Pointer Constants (CK)} are addresses that are calculated during the compilation of the binary and point within
 the possible range of addresses in the current module or to instruction boundaries. We are however only interested in addresses
-that directly point to an entry basic block of a function, as these are the only valid targets for any call-site.
+that directly point to an entry basic block of a function, as these are the only valid targets for any callsite.
 
-\item { Computed code pointers (CC)} are the result of simple pointer arithmetic, however these are only used for intra-procedural jumps. 
-We rely on DynInst to resolve those and only focus on indirect call-sites, therefore these are of no interest to us.
+\item { Computed code pointers (CC)} are the result of simple pointer arithmetic, however these are only used for intra procedural jumps. 
+We rely on DynInst to resolve those and only focus on indirect callsites, therefore these are of no interest to us.
 
-\item{ Exception handling addresses (EH)} are used to handle exceptions within C++ functions and are modeled as jumps within the function. 
-These are therefore within the normal control flow that we rely on DynInst to resolve for us.
+\item{ Exception handling addresses (EH)} are used to handle exceptions within C++ functions and are modelled as jumps within the function. 
+These are therefore within the normal controlflow that we rely on DynInst to resolve for us.
 
 \item{ Exported function addresses (ES)} are essentially functions that point outside of our current module (usually to dynamically 
 linked libraries) and are implemented as jumps, which are of no concern to us, because our analysis is only concerned about the current object.
@@ -841,18 +761,12 @@ implement forward { control flow integrity}.
 \end{itemize}
 
 \textbf{Binary Analysis.}
-Our approach of identifying taken addresses consists of two steps: First, we iterate over the raw binary content of data sections. Second,
-we iterate over all functions within the disassembled binary. We rely on DynInst to provide us with the boundaries of the sections inside
-the binary and in case of shared libraries with the needed translation to current memory addresses:
+Our approach of identifying taken addresses consists of two steps: First, we iterate over the raw binary content of data sections. Second, we iterate over all functions within the disassembled binary. We rely on DynInst to provide us with the boundaries of the sections inside the binary and in case of shared libraries with the needed translation to current memory addresses:
 
 \begin{itemize}
-\item We look at three different data sections of the binary, which could possibly contain taken addresses: the .data, .rodata and .dynsym
-sections. As \cite{mingwei:sekar} proposed, we slide a four byte window over the data within those sections and look for addresses that
-point to function entry blocks. However, we are looking at x64 binaries therefore we additionally use an eight byte window. In case of 
-shared libraries, we need to let DynInst translate the raw address, we extracted, so we can perform the function check.
+\item We look at three different data sections of the binary, which could possibly contain taken addresses: the .data, .rodata and .dynsym sections. As \cite{mingwei:sekar} proposed, we slide a four byte window over the data within those sections and look for addresses that point to function entry blocks. However, we are looking at x64 binaries therefore we additionally use an eight byte window. In case of shared libraries, we need to let DynInst translate the raw address, we extracted, so we can perform the function check.
 
-\item We specifically look for instructions that load a constant value into a register or memory, and again check whether the address 
-points to the entry block of a function.
+\item We specifically look for instructions that load a constant value into a register or memory, and again check whether the address points to the entry block of a function.
 \end{itemize}
 
 %\section{Runtime Enforcement}

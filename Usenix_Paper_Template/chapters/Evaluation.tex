@@ -9,18 +9,24 @@ In our evaluation of the two modes of
 \textit{TypeShield}, we are trying to answer the following questions:
 \begin{itemize}
 
- \item \textbf{RQ1:} How precise is \textit{TypeShield} in recovering parameter count and type information for callsites and calltargets from a given binary?
+ \item \textbf{RQ1:} How precise is \textit{TypeShield} in recovering parameter count and type information for call-sites and call-targets from a given binary?
 
- \item \textbf{RQ2:} How effective is \textit{TypeShield} in restricting the possible number of calltargets per callsite?
+ \item \textbf{RQ2:} How effective is \textit{TypeShield} in restricting the possible number of call-targets per call-site?
 
  \item \textbf{RQ3:} What is the performance overhead introduced by \textit{TypeShield}?
- \todo[inline]{address this}
+ \todo[inline]{add a binary patch that does not crash none of the programs from SPEC2006.}
+\todo[inline]{need a table with all the results for each of the SPEC2006 programs and a bar diagram}
  
  \item \textbf{RQ4:} What is the instrumentation overhead introduced by \textit{TypeShield}?
- \todo[inline]{address this}
+ Here we measure how much the binaries increased in size after the instrumentation was added to the binaries.
+\todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
  
  \item \textbf{RQ5:} What level of security does \textit{TypeShield} offer?
- \todo[inline]{address this}
+ We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
+\todo[inline]{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}
+ 
+ \item \textbf{RQ6:} Need to be defined see down?
+ \todo[inline]{RQ6: need to define first this question.}
  
 \end{itemize}
 
@@ -34,35 +40,55 @@ version 4.4.0) and has access to 3GB of RAM and 4 of 8 provided hardware threads
 
 \subsection{RQ1: Precision of \textit{TypeShield}}
 \label{section:typeshieldprecision}
+\todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
 
-To measure the precision of \textit{TypeShield}, we need to compare the classification of callsites and calltargets as is given by our tool to some sort of ground truth for our testtargets. We generate this ground truth by compiling our testtargets using a custom compiled Clang/LLVM compiler (version 4.0.0 trunk 283889) with a MachineFunction pass inside the x86 code generation implementation of LLVM. We essentially collect three data points for each callsite/calltarget from our LLVM-pass:
+To measure the precision of \textit{TypeShield}, we need to compare the classification of call-sites and call-targets as is given by our tool to
+some sort of ground truth for our test targets. We generate this ground truth by compiling our test targets using a custom compiled Clang/LLVM
+compiler (version 4.0.0 trunk 283889) with a MachineFunction pass inside the x86 code generation implementation of LLVM. We essentially 
+collect three data points for each call-site/call-target from our LLVM-pass:
 \begin{itemize}
-\item The point of origination, which is either the name of the calltarget or the name of the function the callsite resides in.
-\item The return type that is either expected by the callsite or provided by the calltarget.
-\item The parameter list that is provided by the callsite or expected by the calltarget, which discards the variadic argument list.
+\item The point of origination, which is either the name of the call-target or the name of the function the call-site resides in.
+\item The return type that is either expected by the call-site or provided by the call-target.
+\item The parameter list that is provided by the call-site or expected by the call-target, which discards the variadic argument list.
 \end{itemize}
-However, before we can proceed to measure the quality and precision of \textit{TypeShield}'s classification of calltargets and callsites using our ground truth, we need to evaluate the quality and applicability of the ground truth, we collected.
+However, before we can proceed to measure the quality and precision of \textit{TypeShield}'s classification of call-targets and call-sites
+using our ground truth, we need to evaluate the quality and applicability of the ground truth, we collected.
 
 \subsubsection{Quality and Applicability of Ground Truth}
 \label{subsection:typeshieldprecision}
-To assess the applicability of our collected ground truth, we essentially need to assess the structural compatability of our two datasets. First we take a look at the comparability of calltargets, which is quite high throughout optimization levels. Then we take a look at the compatability of callsites, which is qualitatively low in the higher optimization levels, while five of our testtargets start with 0\% mismatch in O0, mysql stays throughout all levels at a constant mismatch rate of around 18\%, and the others between 2\% and 17\%.
+To assess the applicability of our collected ground truth, we essentially need to assess the structural compatibility of our two datasets.
+First, we take a look at the comparability of call-targets, which is quite high throughout optimization levels. 
+Second, we take a look at the compatibility of call-sites, which is qualitatively low in the higher optimization levels, while 
+five of our test targets start with 0\% mismatch in O0, mysql stays throughout all levels at a constant mismatch 
+rate of around 18\%, and the others between 2\% and 17\%.
 
-\textbf{Calltargets.} The obvious choice for structural comparison regarding calltargets is their name, as these are simply functions. First, we have to however remove internal functions from our datasets like the \texttt{\_init} or \texttt{\_fini} functions, which are of no consequence for us. Furthermore, while C functions can simply be matched by their name as they are unique through the binary, the same cannot be said about the language C++. One of the key differences between C and C++ is function overloading, which allows to define several functions with the same name, as long as they differ in namespace or parameter type. As LLVM does not know about either concept, the Clang compiler needs to generate unique names. The method used for unique name generation is called mangling and composes the actual name of the function, its the return type, its namespace and the types of its parameter list. We therefore need to reverse this process, which is called demangling and then compare the fully typed names.
-The table \ref{tbl:matchingquality} shows three data points regarding calltargets for optimization levels O0, O1, O2 and O3:
+\textbf{Call-targets.} The obvious choice for structural comparison regarding call-targets is their name, as these are simply functions. 
+First, we have to however remove internal functions from our data-sets like the \texttt{\_init} or \texttt{\_fini} functions, which are of no consequence for us. 
+Furthermore, while C functions can simply be matched by their name as they are unique through the binary, the same cannot be said about the 
+language C++. One of the key differences between C and C++ is function overloading, which allows to define several functions with the same name, as 
+long as they differ in namespace or parameter type. As LLVM does not know about either concept, the Clang compiler needs to generate unique names. 
+The method used for unique name generation is called mangling and composes the actual name of the function, its the return type, its name-space and the 
+types of its parameter list. We therefore need to reverse this process, which is called demangling and then compare the fully typed names.
+The table \ref{tbl:matchingquality} shows three data points regarding call-targets for optimization levels O0, O1, O2 and O3:
 \begin{itemize}
-\item The number of comparable calltargets that are found in both datasets
-\item The number of calltargets that are found by \textit{TypeShield} but not by our Clang/LLVM pass, named Clang miss
-\item The number of calltargets that are found by our Clang/LLVM pass but not by \textit{TypeShield}, named tool miss
+\item The number of comparable call-targets that are found in both datasets
+\item The number of call-targets that are found by \textit{TypeShield} but not by our Clang/LLVM pass, named Clang miss
+\item The number of call-targets that are found by our Clang/LLVM pass but not by \textit{TypeShield}, named tool miss
 \end{itemize}
-The problematic column is the Clang miss column, as these might indicate problems with \textit{TypeShield}. These numbers are relatively low (below 1\%) throughout optimization levels, with only node showing a significant higher value than the rest of around 1.6\%. The column labeled tool miss lists higher numbers, however these are of no real concern to us, as our ground truth pass possibly collects more data: All source files used during the compilation of our testtargets are incorporated into our ground dtruth. The compilation might generate more than one binary and therefore not necessary all sourcefiles are used for our testtarget.
+The problematic column is the Clang miss column, as these might indicate problems with \textit{TypeShield}. These numbers are relatively low (below 1\%) 
+throughout optimization levels, with only node showing a significant higher value than the rest of around 1.6\%. The column labeled tool miss lists 
+higher numbers, however these are of no real concern to us, as our ground truth pass possibly collects more data: All source files used during the 
+compilation of our test-targets are incorporated into our ground truth. The compilation might generate more than one binary and therefore not 
+necessary all source files are used for our test-target.
 
-Considering this, we can safely state that our structural matching between ground truth and \textit{TypeShield} regarding calltargets is nearly perfect (above 98\%)
+Considering this, we can safely state that our structural matching between ground truth and \textit{TypeShield} regarding call-targets is nearly
+perfect (above 98\%)
 
 \begin{table}[h!]
 \resizebox{.5\textwidth}{!}{
 	\begin{tabular}{l|c|c|c|c|c|c}%
 	\toprule
-	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{3}{c|}{ {\bfseries calltargets}} & \multicolumn{3}{c}{{\bfseries callsites} }\\
+	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{3}{c|}{ {\bfseries call-targets}} & \multicolumn{3}{c}{{\bfseries call-sites} }\\
 	\bfseries Target & match & Clang miss &  tool miss &  match & Clang miss & tool miss% specify table head
 	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/matching.O0.csv}{
@@ -127,33 +153,38 @@ Considering this, we can safely state that our structural matching between groun
     	\end{tabular}}
 %     	}
 	\caption {Table shows the quality of structural matching provided by our automated verify and test environment, 
-	regarding callsites and calltargets when compiling with optimization levels O0 through O3. The label Clang miss 
-	denotes elements not found in the dataset of the Clang/LLVM pass. The label tool miss denotes elements not found in the dataset of \textit{TypeShield}.}
+	regarding call-sites and call-targets when compiling with optimization levels O0 through O3. The label Clang miss 
+	denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textit{TypeShield}.}
 	\label{tbl:matchingquality}
 \end{table}
 
 
 
-\textbf{Callsites.} While our structural matching of calltargets is rather simple, we have not so much luck regarding Callsites. While our tool can provide accurate addressing of callsites within the binary, Clang/LLVM does not have such capabilities in its intermediate representation. Therefore we assume that the ordering of callsites stays roughly the same within one function and that we exclude all functions, which report a different amount of callsites in both datasets.
-The table \ref{tbl:matchingquality} shows three data points regarding callsites for optimization levels O0, O1, O2 and O3:
+\textbf{Call-sites.} While our structural matching of call-targets is rather simple, we have not so much luck regarding call-sites. While our tool can provide 
+accurate addressing of call-sites within the binary, Clang/LLVM does not have such capabilities in its intermediate representation. Therefore we assume that 
+the ordering of call-sites stays roughly the same within one function and that we exclude all functions, which report a different amount of call-sites in both datasets.
+The table \ref{tbl:matchingquality} shows three data points regarding call-sites for optimization levels O0, O1, O2 and O3:
 \begin{itemize}
-\item The number of comparable callsites that are found in both datasets.
-\item The number of callsites that are discarded due to mismatch from the dataset of \textit{TypeShield}, named Clang miss.
-\item The number of callsites that are discarded due to mismatch from the dataset of our Clang/LLVM pass, named tool miss.
+\item The number of comparable call-sites that are found in both datasets.
+\item The number of call-sites that are discarded due to mismatch from the dataset of \textit{TypeShield}, named Clang miss.
+\item The number of call-sites that are discarded due to mismatch from the dataset of our Clang/LLVM pass, named tool miss.
 \end{itemize}
 
 
-Second, we look at callsites and this is more problematic, as Clang/LLVM does not have a notion of instruction address in its IR, therefore we assume the ordering in a function is the same in both datasets and when the callsite count is not the same for dyninst and Clang/padyn, we discard it. The are several reasons for mismatch: One is the tailcall optimization, which means that a call instructions at the end of a function are converted into jump instructions. Another one is callsite merging, which happens when a call to a function exists several times within a function and the compiler can merge the paths to this function.
-Furthermore we already eliminated multiple compilations of the same sourcefile during one testtarget compilation (this would have skewed the results in the case of memcached).
+Second, we look at call-sites and this is more problematic, as Clang/LLVM does not have a notion of instruction address in its IR, therefore we assume the ordering in a function is the same in both data-sets and when the call-site count is not the same for dyninst and Clang/padyn, we discard it. The are several reasons for mismatch: One is the tailcall optimization, which means that a call instructions at the end of a function are converted into jump instructions. Another one is call-site merging, which happens when a call to a function exists several times within a function and the compiler can merge the paths to this function.
+Furthermore we already eliminated multiple compilations of the same source file during one test-target compilation (this would have skewed the results in the case of memcached).
 
-Normally up to 20\% mismatch would not be that much of a problem, however this percentage is only based on the number of callsites per function and we cannot really give any guarantees that the callsites in both datasets are the same. (Although for O0 there is quite a high possibility due to the absence of nearly all optimizations, however mysqld and node remain problematic).
+Normally up to 20\% mismatch would not be that much of a problem, however this percentage is only based on the number of call-sites per function and we cannot really
+give any guarantees that the call-sites in both data-sets are the same. (Although for O0 there is quite a high possibility due to the absence of nearly all optimizations,
+however mysqld and node remain problematic).
 
-\subsubsection{Precision Calltarget Classification (\textit{count})}
+\subsubsection{Precision Call-target Classification (\textit{count})}
 \label{subsection:typeshieldprecision}
-We are going to present the experiments and values to find the best possible combination operator for the calltarget analysis in the \textit{count} policy.
+We are going to present the experiments and values to find the best possible combination operator for the call-target analysis in the \textit{count} policy.
 
 \textbf{Experiment Setup.}
-To choose the best possible combination operator for the calltarget analysis in implementing the \textit{count} policy, we generated data for all six possible versions of liveness analysis.
+To choose the best possible combination operator for the call-target analysis in implementing the \textit{count} policy, we generated data for all six possible versions 
+of liveness analysis.
 \begin{itemize}
 \item Destructive combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CTdestinterCOUNT} for results.
 \item Destructive combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CTdestinterCOUNT} for results.
@@ -162,8 +193,12 @@ To choose the best possible combination operator for the calltarget analysis in 
 \item Union combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CTunionCOUNT} for results.
 \item Union combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CTunionCOUNT} for results.
 \end{itemize}
-For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to overestimations.
-\textbf{Results.} The results of destructive combination and intersection combination are the same. Regardless of operator choice the problem rate is extrmely low (under 0.1\%). Overall there is a slight improvement when following calls in all result sets. The union operator (geometric mean for O2: 82.24\%) is slightly more precise than the destructive/intersection operator (geometric mean for O2: 79.93\%). Which presents us the union combination operator as the best possible option here.
+For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic 
+classifications, which in this case refers to overestimations.
+\textbf{Results.} The results of destructive combination and intersection combination are the same. Regardless of operator choice the problem rate is extremely
+low (under 0.1\%). 
+Overall there is a slight improvement when following calls in all result sets. The union operator (geometric mean for O2: 82.24\%) is slightly more precise than 
+the destructive/intersection operator (geometric mean for O2: 79.93\%). Which presents us the union combination operator as the best possible option here.
 
 
 \begin{table}[h!]
@@ -245,7 +280,7 @@ For each possible version we measured two data points per testtarget, the number
 
     	\end{tabular}
 }
-		\caption {The results for calltarget analysis using the destructive/intersection combination operator for the \textit{count} policy throughout different optimizations.}
+		\caption {The results for call-target analysis using the destructive/intersection combination operator for the \textit{count} policy throughout different optimizations.}
 		\label{tbl:CTdestinterCOUNT}
 \end{table}
 
@@ -331,19 +366,20 @@ For each possible version we measured two data points per testtarget, the number
 
     	\end{tabular}
 }
-		\caption {The results for calltarget analysis using the union combination operator for the \textit{count} policy throughout different optimizations.}
+		\caption {The results for call-target analysis using the union combination operator for the \textit{count} policy throughout different optimizations.}
 		\label{tbl:CTunionCOUNT}
 \end{table}
 
 \newpage
 
-\subsubsection{Precision Callsite Classification (\textit{count})}
+\subsubsection{Precision Call-site Classification (\textit{count})}
 \label{subsection:typeshieldprecision}
-We are going to present two series of experiments and values to find the best possible combination operator for the callsite analysis in the \textit{count} policy.
+We are going to present two series of experiments and values to find the best possible combination operator for the call-site analysis in the \textit{count} policy.
 \subsubsection{Without inter-procedural Analysis}
 
 \textbf{Experiment Setup.}
-To choose the best possible combination operator for the callsite analysis in implementing the \textit{count} policy without a backward inter-procedural analysis, we generated data for all eight possible versions of reaching definition analysis.
+To choose the best possible combination operator for the call-site analysis in implementing the \textit{count} policy without a backward inter-procedural analysis,
+we generated data for all eight possible versions of reaching definition analysis.
 \begin{itemize}
 \item Destructive/intersection combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CSdestinterCOUNTnointer} for results.
 \item Destructive/intersection combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CSdestinterCOUNTnointer} for results.
@@ -352,9 +388,13 @@ To choose the best possible combination operator for the callsite analysis in im
 \item Union combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CStrueunionCOUNTnointer} for results.
 \item Union combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CStrueunionCOUNTnointer} for results.
 \end{itemize}
-For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to underestimations.
+For each possible version we measured two data points per test-target, the number and ratio of perfect classifications and the number and ratio of problematic
+classifications, which in this case refers to underestimations.
 
-\textbf{Results.} The results of destructive combination and intersection combination are the same. The true union operator is overall inferior to the union operator. The union operator exhibts the lowest error rate when not following calls and is therefore  designated a candiate for the safe version of the callsite combination operator. The destructive/intersection operator exhibts the highest precision (geometric mean for O2: 80.11\%) and is therefore designate a candidate for the precision version of the callsite combination operator (we chose the version that follows functions).
+\textbf{Results.} The results of destructive combination and intersection combination are the same. The true union operator is overall inferior to the union
+operator. The union operator exhibits the lowest error rate when not following calls and is therefore  designated a candidate for the safe version of the 
+call-site combination operator. The destructive/intersection operator exhibits the highest precision (geometric mean for O2: 80.11\%) and is therefore 
+designate a candidate for the precision version of the call-site combination operator (we chose the version that follows functions).
 
 \begin{table}[h!]
 \resizebox{.5\textwidth}{!}{
@@ -435,7 +475,7 @@ For each possible version we measured two data points per testtarget, the number
 
     	\end{tabular}
 }
-		\caption {The results for callsite analysis using the destructive/intersection combination operator for the \textit{count} without inter-procedural analysis policy throughout different optimizations.}
+		\caption {The results for call-site analysis using the destructive/intersection combination operator for the \textit{count} without inter-procedural analysis policy throughout different optimizations.}
 		\label{tbl:CSdestinterCOUNTnointer}
 \end{table}
 
@@ -521,7 +561,8 @@ For each possible version we measured two data points per testtarget, the number
 
     	\end{tabular}
 }
-		\caption {The results for callsite analysis using the union combination operator for the \textit{count} without inter-procedural analysis policy throughout different optimizations.}
+		\caption {The results for call-site analysis using the union combination operator for the \textit{count} without inter-procedural 
+		analysis policy throughout different optimizations.}
 		\label{tbl:CSunionCOUNTnointer}
 \end{table}
 
@@ -606,7 +647,7 @@ For each possible version we measured two data points per testtarget, the number
 
     	\end{tabular}
 }
-		\caption {The results for callsite analysis using the true union combination operator for the \textit{count} without inter-procedural analysis policy throughout different optimizations.}
+		\caption {The results for call-site analysis using the true union combination operator for the \textit{count} without inter-procedural analysis policy throughout different optimizations.}
 		\label{tbl:CStrueunionCOUNTnointer}
 \end{table}
 
@@ -615,7 +656,8 @@ For each possible version we measured two data points per testtarget, the number
 \subsubsection{With inter-procedural Analysis}
 
 \textbf{Experiment Setup.}
-To choose the best possible combination operator for the callsite analysis in implementing the \textit{count} policy with a backward inter-procedural analysis, we generated data for all eight possible versions of reaching definition analysis.
+To choose the best possible combination operator for the call-site analysis in implementing the \textit{count} policy with a backward inter-procedural analysis, 
+we generated data for all eight possible versions of reaching definition analysis.
 \begin{itemize}
 \item Destructive/Intersection combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CSdestinterCOUNTinter} for results.
 \item Destructive/Intersection combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CSdestinterCOUNTinter} for results.
@@ -624,9 +666,15 @@ To choose the best possible combination operator for the callsite analysis in im
 \item Union combination operator with an $analyze$ function that does not follow into occurring direct calls see Table \ref{tbl:CStrueunionCOUNTinter} for results.
 \item Union combination operator with an $analyze$ function that follows into occurring direct calls see Table \ref{tbl:CStrueunionCOUNTinter} for results.
 \end{itemize}
-For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to underestimations.
+For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic 
+classifications, which in this case refers to underestimations.
 
-\textbf{Results.} The results are essentially the same as in the experiment series without inter-procedural analysis, but with slightly higher precision. The results of destructive combination and intersection combination are the same. The true union operator is overall inferior to the union operator. The union operator exhibts the lowest error rate when not following calls and is therefore designated the safe version of the callsite combination operator, as it is superior in precision (geometric mean for O2: 35.79\%) to the non inter-procedural version (geometric mean for O2: 26.55\%). The destructive/intersection operator exhibts the highest precision (geometric mean for O2: 87.85\%) and is therefore designated the best operator for the precision version of the callsite combination operator (we chose the version that follows functions).
+\textbf{Results.} The results are essentially the same as in the experiment series without inter-procedural analysis, but with slightly higher precision. 
+The results of destructive combination and intersection combination are the same. The true union operator is overall inferior to the union operator. The 
+union operator exhibts the lowest error rate when not following calls and is therefore designated the safe version of the call-site combination operator, 
+as it is superior in precision (geometric mean for O2: 35.79\%) to the non inter-procedural version (geometric mean for O2: 26.55\%). The 
+destructive/intersection operator exhibts the highest precision (geometric mean for O2: 87.85\%) and is therefore designated the best operator for 
+the precision version of the call-site combination operator (we chose the version that follows functions).
 
 \begin{table}[h!]
 \resizebox{.5\textwidth}{!}{
@@ -707,7 +755,8 @@ For each possible version we measured two data points per testtarget, the number
 
     	\end{tabular}
 }
-		\caption {The results for callsite analysis using the destructive/intersection combination operator for the \textit{count} with inter-procedural analysis policy throughout different optimizations.}
+		\caption {The results for call-site analysis using the destructive/intersection combination operator for the \textit{count} with
+		inter-procedural analysis policy throughout different optimizations.}
 		\label{tbl:CSdestinterCOUNTinter}
 \end{table}
 
@@ -793,7 +842,7 @@ For each possible version we measured two data points per testtarget, the number
 
     	\end{tabular}
 }
-		\caption {The results for callsite analysis using the union combination operator for the \textit{count} with inter-procedural analysis policy throughout different optimizations.}
+		\caption {The results for call-site analysis using the union combination operator for the \textit{count} with inter-procedural analysis policy throughout different optimizations.}
 		\label{tbl:CSunionCOUNTinter}
 \end{table}
 
@@ -880,7 +929,7 @@ For each possible version we measured two data points per testtarget, the number
 }
 
 
-		\caption {The results for callsite analysis using the true union combination operator for the \textit{count} with inter-procedural analysis policy throughout different optimizations.}
+		\caption {The results for call-site analysis using the true union combination operator for the \textit{count} with inter-procedural analysis policy throughout different optimizations.}
 		\label{tbl:CStrueunionCOUNTinter}
 \end{table}
 %\begin{table}
@@ -1073,19 +1122,19 @@ For each possible version we measured two data points per testtarget, the number
 
 
 \newpage
-\subsubsection{Precision Calltarget Classification (\textit{type})}
+\subsubsection{Precision Call-target Classification (\textit{type})}
 \label{subsection:typeshieldprecision}
-We are going to present a series of experiments and values to find the best possible combination operator for the calltarget analysis in the \textit{type} policy.
+We are going to present a series of experiments and values to find the best possible combination operator for the call-target analysis in the \textit{type} policy.
 
 \textbf{Experiment Setup.}
-To choose the best possible combination operator for the calltarget analysis in implementing the \textit{type} policy, we conducted three experiments based on the data of the Precision Calltarget Classification(\textit{count}) experiment and the proposed implementations for the \textit{type} policy:
+To choose the best possible combination operator for the call-target analysis in implementing the \textit{type} policy, we conducted three experiments based on the data of the Precision call-target Classification(\textit{count}) experiment and the proposed implementations for the \textit{type} policy:
 \begin{itemize}
 \item[exp1] union combination operator with an $analyze$ function that does follow into occurring direct calls and a vertical merge that only accepts the first change see Table \ref{tbl:CTdestinterexp12TYPE} for results.
 \item[exp2] union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that unions all reads until the first write see Table \ref{tbl:CTdestinterexp12TYPE} for results.
 \item[exp3] union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that intersects all reads until the first write see Table \ref{tbl:CTdestinterexp34TYPE} for results.
 %\item[exp4] full union combination operator with an $analyze$ function that does not follow into occurring direct calls and a vertical merge that unions all reads until the first write  see Table \ref{tbl:CTdestinterexp34TYPE} for results.
 \end{itemize}
-For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to overestimations.
+For each possible version we measured two data points per test-target, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to overestimations.
 
 \textbf{Result.} The series exp2 shows the lowest problem rate of the three series. Regarding precision the values are as follows relatively equal:
 \begin{itemize}
@@ -1093,7 +1142,7 @@ For each possible version we measured two data points per testtarget, the number
 \item The series exp2 exhibits a geometric mean of 72.25\% for precision in O2.
 \item The series exp3 exhibits a geometric mean of 72.52\% for precision in O2. 
 \end{itemize}
-Due to exp2 exhibiting the lowest error value, we designate this setup as the best setup for analysing the calltargets in the \textit{type} policy.
+Due to exp2 exhibiting the lowest error value, we designate this setup as the best setup for analyzing the call-targets in the \textit{type} policy.
 
 \begin{table}[h!]
 \resizebox{.5\textwidth}{!}{
@@ -1174,7 +1223,7 @@ Due to exp2 exhibiting the lowest error value, we designate this setup as the be
 
     	\end{tabular}
 }
-		\caption {The results for calltarget analysis for exp1 and exp2 of the \textit{type} policy throughout different optimizations.}
+		\caption {The results for call-target analysis for exp1 and exp2 of the \textit{type} policy throughout different optimizations.}
 		\label{tbl:CTdestinterexp12TYPE}
 \end{table}
 
@@ -1261,7 +1310,7 @@ Due to exp2 exhibiting the lowest error value, we designate this setup as the be
 %
 %    	\end{tabular}
 }
-		\caption {The results for calltarget analysis for exp3 of the \textit{type} policy throughout different optimizations.}
+		\caption {The results for call-target analysis for exp3 of the \textit{type} policy throughout different optimizations.}
 		\label{tbl:CTdestinterexp34TYPE}
 \end{table}
 
@@ -1460,12 +1509,12 @@ Due to exp2 exhibiting the lowest error value, we designate this setup as the be
 %		\label{tbl:CSexp34TYPE}
 %\end{table}
 \newpage
-\subsubsection{Precision Callsite Classification (\textit{type})}
+\subsubsection{Precision Call-site Classification (\textit{type})}
 \label{subsection:typeshieldprecision}
-We are going to present a series of experiments and values to find the best possible combination operator for the callsite analysis in the \textit{type} policy.
+We are going to present a series of experiments and values to find the best possible combination operator for the call-site analysis in the \textit{type} policy.
 
 \textbf{Experiment Setup.}
-To choose the best possible combination operator for the callsite analysis in implementing the \textit{type} policy, we conducted three  experiments based on the data of the two Precision Callsite Classification(\textit{count}) experiments and the proposed implementations for the \textit{type} policy:
+To choose the best possible combination operator for the call-site analysis in implementing the \textit{type} policy, we conducted three  experiments based on the data of the two Precision call-site Classification(\textit{count}) experiments and the proposed implementations for the \textit{type} policy:
 \begin{itemize}
 \item[exp1] intersection combination operator that intersects when both paths are set with an $analyze$ function that does follow into occurring direct calls with backward inter-procedural analysis see Table \ref{tbl:CSexp12TYPE} for results.
 
@@ -1477,7 +1526,7 @@ To choose the best possible combination operator for the callsite analysis in im
 \end{itemize}
 For each possible version we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in this case refers to underestimations.
 
-\textbf{Result.} The series exp3 easily holds the lowest rate of problematic classification and therefore we designate it the setup for a safe implementation of callsite analysis for the \textit{type} policy. The results for the series exp1 and the series exp2 are the same exhibiting a geometric mean of 57.30\% for precision in O2. Therefore it does not matter which of the two setups we choose for the precision implementation of callsite analysis for the \textit{type} policy.
+\textbf{Result.} The series exp3 easily holds the lowest rate of problematic classification and therefore we designate it the setup for a safe implementation of call-site analysis for the \textit{type} policy. The results for the series exp1 and the series exp2 are the same exhibiting a geometric mean of 57.30\% for precision in O2. Therefore it does not matter which of the two setups we choose for the precision implementation of call-site analysis for the \textit{type} policy.
 
 \begin{table}[h!]
 \centering
@@ -1559,7 +1608,7 @@ For each possible version we measured two data points per testtarget, the number
 
     	\end{tabular}
 }
-		\caption {The results for callsite analysis for exp1 and exp2 of the \textit{type} policy throughout different optimizations.}
+		\caption {The results for call-site analysis for exp1 and exp2 of the \textit{type} policy throughout different optimizations.}
 		\label{tbl:CSexp12TYPE}
 \end{table}
 
@@ -1646,7 +1695,7 @@ For each possible version we measured two data points per testtarget, the number
 %
 %    	\end{tabular}
 }
-		\caption {The results for enhanced callsite analysis for exp3 of the \textit{type} policy throughout different optimizations.}
+		\caption {The results for enhanced call-site analysis for exp3 of the \textit{type} policy throughout different optimizations.}
 		\label{tbl:CSexp34TYPE}
 \end{table}
 \newpage
@@ -1658,7 +1707,12 @@ For each possible version we measured two data points per testtarget, the number
 %
 \subsection{RQ2: Effectiveness of \textit{TypeShield}}
 \label{section:typeshieldeffectiveness}
-We are now going to evaluate the effectiveness of \textit{TypeShield} leveraging the result of several experiment runs: First we are going to establish a baseline using the data collected from our Clang/LLVM pass, which are the theoretical limits our implementation can reach. Second we are going to evaluate the effectiveness of our \textit{count} policy and third we are going to evaluate the effectiveness of our \textit{type} policy. At last we are going to look at the effect our address taken analysis had on the results.
+\todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, 
+first we need to define the fields which make most sense.}
+
+We are now going to evaluate the effectiveness of \textit{TypeShield} leveraging the result of several experiment runs: First we are going to establish a baseline using the data 
+collected from our Clang/LLVM pass, which are the theoretical limits our implementation can reach. Second we are going to evaluate the effectiveness of our \textit{count} 
+policy and third we are going to evaluate the effectiveness of our \textit{type} policy. At last we are going to look at the effect our address taken analysis had on the results.
 
 \subsubsection{Theoretical Limits.}
 \label{subsection:theoreticallimit}
@@ -1666,18 +1720,20 @@ We explore the theoretical limits regarding the effectiveness of the \textit{cou
 
 \textbf{Experiment Setup} Based on the type information collected by our Clang/LLVM pass, we conducted two experiment series:
 \begin{itemize}
-\item We derived the \textit{count} schema using the ground truth and calculated the available number of calltargets for each callsite, see table \ref{tbl:policycomp} for results.
-\item We derived the \textit{type} schema using the ground truth and calculated the available number of calltargets for each callsite, see table \ref{tbl:policycomp} for results.
+\item We derived the \textit{count} schema using the ground truth and calculated the available number of call-targets for each call-site, see table \ref{tbl:policycomp} for results.
+\item We derived the \textit{type} schema using the ground truth and calculated the available number of call-targets for each call-site, see table \ref{tbl:policycomp} for results.
 \end{itemize}
-For each series we collected three data points per test target, the average number of calltargets per callsite, the standard deviation $\sigma$ and the median.
+For each series we collected three data points per test target, the average number of call-targets per call-site, the standard deviation $\sigma$ and the median.
 
 \textbf{Results.}
 \begin{itemize}
-\item The theoretical limit of the \textit{count} schema has an overall geometric mean of 959 possible calltargets, which is 53.75\% of the geometric mean of total available calltargets.
-\item The theoretical limit of the \textit{count} schema has an overall geometric mean of 823 possible calltargets, which is 46.10\% of the geometric mean of total available calltargets.
+\item The theoretical limit of the \textit{count} schema has an overall geometric mean of 959 possible call-targets, which is 53.75\% of the geometric mean of total available 
+call-targets.
+\item The theoretical limit of the \textit{count} schema has an overall geometric mean of 823 possible call-targets, which is 46.10\% of the geometric mean of total available
+call-targets.
 \end{itemize}
 
-When compared, the theoretical limit of the \textit{type} policy allows about 15\% less available calltargets in the geomean in O2 than the limit of the \textit{count} policy.
+When compared, the theoretical limit of the \textit{type} policy allows about 15\% less available call-targets in the geomean in O2 than the limit of the \textit{count} policy.
 
 %
 %\begin{table}[!htbp]
@@ -1824,18 +1880,23 @@ We explore the effectiveness of our safe and precise versions for the \textit{co
 \textbf{Experiment Setup.} We setup our two experiment series based on our previous evaluations regarding the classification precision for the \textit{count} policy.
 \begin{itemize}
 \item For the safe version, we chose the union combination operator, with $analyse$ that follows into occurring direct calls to 
-calculate the calltarget invariant. For the callsite invariant, we chose the union operator that does not follow into occurring direct calls with backwards inter-procedural analysis.  See table \ref{tbl:policycompcount} for results. 
-\item For the precise version, we chose the union combination operator, with $analyse$ that follows into occurring direct calls to calculate the calltarget invariant. For the callsite invariant, we chose the intersection operator that follows into occurring direct calls with backwards inter-procedural analysis. See table \ref{tbl:policycompcount} for results. 
+calculate the call-target invariant. For the call-site invariant, we chose the union operator that does not follow into occurring direct calls with backwards inter-procedural analysis.  See table \ref{tbl:policycompcount} for results. 
+\item For the precise version, we chose the union combination operator, with $analyse$ that follows into occurring direct calls to calculate the call-target invariant. For the 
+call-site invariant, we chose the intersection operator that follows into occurring direct calls with backwards inter-procedural analysis. See table \ref{tbl:policycompcount} 
+for results. 
 \end{itemize}
-For each series we collected three data points per test target, the average number of calltargets per callsite, the standard deviation $\sigma$ and the median.
+For each series we collected three data points per test target, the average number of call-targets per call-site, the standard deviation $\sigma$ and the median.
 
 \textbf{Results.}
 \begin{itemize}
-\item The average number of available targets provided by the safe implementation of the \textit{count} schema has an overall geometric mean of  1283 possible calltargets, which is 71.87\% of the geometric mean of total available calltargets. This is 33.78\% more than the theoretical limit of available calltargets per callsite.
-\item The average number of available targets provided by the precise implementation of the \textit{count} schema has an overall geometric mean of  1030 possible calltargets, which is 57.70\% of the geometric mean of total available calltargets. This is 7.40\% more than the theoretical limit of available calltargets per callsite.
+\item The average number of available targets provided by the safe implementation of the \textit{count} schema has an overall geometric mean of  1283 possible call-targets, 
+which is 71.87\% of the geometric mean of total available call-targets. This is 33.78\% more than the theoretical limit of available call-targets per call-site.
+\item The average number of available targets provided by the precise implementation of the \textit{count} schema has an overall geometric mean of  1030 possible call-targets, 
+which is 57.70\% of the geometric mean of total available call-targets. This is 7.40\% more than the theoretical limit of available call-targets per call-site.
 \end{itemize}
 
-When compared, the precise implementation of of the \textit{count} policy allows about 20\% less available calltargets in the geomean in O2 than the safe implementation of the \textit{count} policy.
+When compared, the precise implementation of of the \textit{count} policy allows about 20\% less available call-targets in the geomean in O2 than the safe implementation of 
+the \textit{count} policy.
 
 
 \begin{table}[h!]
@@ -1891,18 +1952,18 @@ We explore the effectiveness of our safe and precise versions for the \textit{ty
 
 \textbf{Experiment Setup.} We setup our two experiment series based on our previous evaluations regarding the classification precision for the \textit{type} policy.
 \begin{itemize}
-\item For the safe version, we chose the union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that unions all reads until the first write to calculate the calltarget invariant. For the callsite invariant, we chose the union combination operator with an $analyze$ function that does not follow into occurring direct calls  with backward inter-procedural analysis.  See table \ref{tbl:policycomptype} for results. 
-\item For the precise version, we chose union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that unions all reads until the first write to calculate the calltarget invariant. For the callsite invariant, we chose the intersection combination operator that intersects when both paths are set with an $analyze$ function that does follow into occurring direct calls with backward inter-procedural analysis. See table \ref{tbl:policycomptype} for results. 
+\item For the safe version, we chose the union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that unions all reads until the first write to calculate the call-target invariant. For the call-site invariant, we chose the union combination operator with an $analyze$ function that does not follow into occurring direct calls  with backward inter-procedural analysis.  See table \ref{tbl:policycomptype} for results. 
+\item For the precise version, we chose union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that unions all reads until the first write to calculate the call-target invariant. For the call-site invariant, we chose the intersection combination operator that intersects when both paths are set with an $analyze$ function that does follow into occurring direct calls with backward inter-procedural analysis. See table \ref{tbl:policycomptype} for results. 
 \end{itemize}
-For each series we collected three data points per test target, the average number of calltargets per callsite, the standard deviation $\sigma$ and the median.
+For each series we collected three data points per test target, the average number of call-targets per call-site, the standard deviation $\sigma$ and the median.
 
 \textbf{Results.}
 \begin{itemize}
-\item The average number of available targets provided by the safe implementation of the \textit{type} schema has an overall geometric mean of  1144 possible calltargets, which is 64.08\% of the geometric mean of total available calltargets. This is 39.00\% more than the theoretical limit of available calltargets per callsite.
-\item The average number of available targets provided by the precise implementation of the \textit{type} schema has an overall geometric mean of  907 possible calltargets, which is 50.81\% of the geometric mean of total available calltargets. This is 10.20\% more than the theoretical limit of available calltargets per callsite
+\item The average number of available targets provided by the safe implementation of the \textit{type} schema has an overall geometric mean of  1144 possible call-targets, which is 64.08\% of the geometric mean of total available call-targets. This is 39.00\% more than the theoretical limit of available call-targets per call-site.
+\item The average number of available targets provided by the precise implementation of the \textit{type} schema has an overall geometric mean of  907 possible call-targets, which is 50.81\% of the geometric mean of total available call-targets. This is 10.20\% more than the theoretical limit of available call-targets per call-site
 \end{itemize}
 
-When compared, the precise implementation of of the \textit{count} policy allows about 21\% less available calltargets in the geomean in O2 than the safe implementation of the \textit{count} policy.
+When compared, the precise implementation of of the \textit{count} policy allows about 21\% less available call-targets in the geomean in O2 than the safe implementation of the \textit{count} policy.
 
 
 \begin{table}[h!]
@@ -1955,26 +2016,36 @@ When compared, the precise implementation of of the \textit{count} policy allows
 
 \subsubsection{Effect of our AddressTaken Analysis}
 \label{subsection:effectivenessaddresstaken}
-We are providing experiment results and an evaluation regarding the impact of our address taken analysis on the theoretical limits and our various policy implementations, namely the safe and precise versions of the \textit{count} and \textit{type} policies.
+We are providing experiment results and an evaluation regarding the impact of our address taken analysis on the theoretical limits and our various policy implementations, 
+namely the safe and precise versions of the \textit{count} and \textit{type} policies.
 
-\textbf{Experiment Setup.} We conducted the same three experiments as before but with the initial set of calltargets filtered by our implementation of address taken analysis:
+\textbf{Experiment Setup.} We conducted the same three experiments as before but with the initial set of call-targets filtered by our implementation of address taken analysis:
 \begin{itemize}
-\item We setup the same experiment regarding theoretical limits as described in subsection \ref{subsection:theoreticallimit} but with restricting the possible calltargets to only address taken functions. The results are presented in table \ref{tbl:policycompat}.
-\item We setup the same experiment regarding the \textit{count} policy as described in subsection \ref{subsection:theoreticallimit} but with restricting the possible calltargets to only address taken functions. The results are presented in table \ref{tbl:policycompatcount}.
-\item We setup the same experiment regarding the \textit{type} policy as described as in subsection \ref{subsection:theoreticallimit} but with restricting the possible calltargets to only address taken functions. The results are presented in table \ref{tbl:policycompattype}.
+\item We setup the same experiment regarding theoretical limits as described in subsection \ref{subsection:theoreticallimit} but with restricting the possible call-targets 
+to only address taken functions. The results are presented in table \ref{tbl:policycompat}.
+\item We setup the same experiment regarding the \textit{count} policy as described in subsection \ref{subsection:theoreticallimit} but with restricting the possible call-targets
+to only address taken functions. The results are presented in table \ref{tbl:policycompatcount}.
+\item We setup the same experiment regarding the \textit{type} policy as described as in subsection \ref{subsection:theoreticallimit} but with restricting the possible call-targets
+to only address taken functions. The results are presented in table \ref{tbl:policycompattype}.
 \end{itemize}
-For each series we collected three data points per test target, the average number of calltargets per callsite, the standard deviation $\sigma$ and the median.
+For each series we collected three data points per test target, the average number of call-targets per call-site, the standard deviation $\sigma$ and the median.
 
-\textbf{Results.} First of all we observed an overall reduction of the geometric mean of overall available calltargets to 64\% before our policies were applied. Notable outliers are memcached, which had a 90\% reduction of available calltargets and vsftpd, which even achieved a 97\% reduction in available calltargets.
+\textbf{Results.} First of all we observed an overall reduction of the geometric mean of overall available call-targets to 64\% before our policies were applied. Notable outliers
+are memcached, which had a 90\% reduction of available call-targets and vsftpd, which even achieved a 97\% reduction in available call-targets.
 \begin{itemize}
-\item The theoretical available targets were overall reduced to 25.96\% in the \textit{count} policy case  (geometric mean of 249 in O2) and to 27.27\% in the \textit{type} policy case  (geometric mean of 224 in O2). The difference between their geometric means shrank from about 15\% to about 10\%.
-\item The average targets provided by the safe and the precise implementation of the \textit{count} policy were reduced to 25.33\% (geometric mean of 325 in O2) and 25.92\% (geometric mean of 267) respectively. The difference between their geometric means shrank from about 20\% to about 18\%.
-\item The average targets provided by the safe and the precise implementation of the \textit{count} policy were reduced to 26.13\% (geometric mean of 299 in O2) and 26.79\% (geometric mean of 243) respectively. The difference between their geometric means shrank from about 20\% to about 18\%.
+\item The theoretical available targets were overall reduced to 25.96\% in the \textit{count} policy case  (geometric mean of 249 in O2) and to 27.27\% in the \textit{type} 
+policy case  (geometric mean of 224 in O2). The difference between their geometric means shrank from about 15\% to about 10\%.
+\item The average targets provided by the safe and the precise implementation of the \textit{count} policy were reduced to 25.33\% (geometric mean of 325 in O2) and 25.92\% 
+(geometric mean of 267) respectively. The difference between their geometric means shrank from about 20\% to about 18\%.
+\item The average targets provided by the safe and the precise implementation of the \textit{count} policy were reduced to 26.13\% (geometric mean of 299 in O2) and 26.79\% 
+(geometric mean of 243) respectively. The difference between their geometric means shrank from about 20\% to about 18\%.
 \end{itemize}
 
-When comparing the precision focused implementations of our \textit{type} policy and our \textit{count}, we observe that the difference between them shrank to about 9\% when comparing their geometric means.
+When comparing the precision focused implementations of our \textit{type} policy and our \textit{count}, we observe that the difference between them shrank to about 9\% when 
+comparing their geometric means.
 
-Overall we were able to reduce the number of available calltargets per callsite from 1785 to 243 using our precision focussed implementation of the \textit{type} policy, which is an overall reduction to 13.61\%.
+Overall we were able to reduce the number of available call-targets per call-site from 1785 to 243 using our precision focused implementation of the \textit{type} policy,
+which is an overall reduction to 13.61\%.
 
 \begin{table}[h!]
 \resizebox{.4\textwidth}{!}{
@@ -2176,28 +2247,34 @@ Overall we were able to reduce the number of available calltargets per callsite 
 %\includegraphics[width=0.5\textwidth]{../MA_Pictures/proftpd.pdf}
 %\end{figure}
 %
-%
-%
-%%
 
 
-\subsection{RQ4: Runtime Performance Overhead}
+\subsection{RQ3: Runtime Performance Overhead}
 \label{section:typeshieldoverheadperformance}
-Here we measure how much performance overhead the instrumeentation incurs.
+\todo[inline]{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
+Here we measure how much performance overhead the instrumentation incurs.
 Here we measure with the same SPEC2006 programs that was used in the TypeArmor paper.
 spec 2006.
-DELAYED!
+\todo[inline]{add a binary patch that does not crash none of the programs from SPEC2006.}
+\todo[inline]{need a table with all the results for each of the SPEC2006 programs and a bar diagram}
 
-
-\subsection{RQ5: Instrumentation Overhead}
+\subsection{RQ4: Instrumentation Overhead}
 \label{section:typeshieldoverheadinstrumentation}
+\todo[inline]{here we need a bar chart, see TypeArmor paper.}
 Here we measure how much the binaries increased in size after the instrumentation was added to the binaries.
-DELAYED!
+\todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
 
 
-\subsection{RQ6: Security Level of \textit{TypeShield}}
+\subsection{RQ5: Security Level of \textit{TypeShield}}
 \label{section:mitiagtion}
+\todo[inline]{here we need a a CDF figure, see the TypeAmor paper w.r.t. security analysis in the evaluation. The buckets have to be defined first, reason about if they make sense!}
 We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
+\todo[inline]{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}
+
+\subsection{RQ6: Add another evaluation dimention we did not think off, maybe ``RQ6: TypeShield Deployments" (if it is easy or hard to deploy our tool in
+comparison with TypeArmor.)}
+\label{section:mitiagtion}
+\todo[inline]{need to define first the question.}
 
 % \subsection{COOP}
 % \label{Effectiveness against COOP}
