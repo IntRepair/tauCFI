@@ -1,7 +1,7 @@
 \section{Implementation}
 \label{chapter:Implementation}
 
-We implemented \textit{TypeShield} as a module pass for the \textit{di-opt} environment based on PathArmor~\cite{veen:cfi}, 
+We implemented \textsc{TypeShield} as a module pass for the \textit{di-opt} environment based on PathArmor~\cite{veen:cfi}, 
 which relies on the DynInst~\cite{bernat:dyninst} instrumentation framework (we are using version 9.2.0). 
 However, converting to a standalone executable is also possible, as we do not rely on any PathArmor feature
 except for the pass abstraction.
@@ -21,7 +21,7 @@ version 4.0.0 (trunk 283889) in the x86 target code generation portion, to gener
 data is then used to verify the output of our tool for several test targets, which is done in our python 
 evaluation and test environment.
 
-In total we implemented \textit{TypeShield} in 5123 lines of C++ code, our Clang/LLVM pass in 200 lines 
+In total we implemented \textsc{TypeShield} in 5123 lines of C++ code, our Clang/LLVM pass in 200 lines 
 of C++ code and our test environment in 2674 lines of Python code (all lines of code data is given 
 excluding empty lines and comments).
 
@@ -31,7 +31,7 @@ Windows platform. However, there is currently work being done to allow DynInst t
 Windows binaries. We restricted ourselves to the SystemV call convention as most C/C++ compilers
 on Linux implement this ABI, however we encapsulated most ABI dependent behavior, so it should 
 be possible to implement other ABIs with relative ease. Therefore, we deem it possible to implement
-\textit{TypeShield} for the Windows platform in the near future, as we do not use any other 
+\textsc{TypeShield} for the Windows platform in the near future, as we do not use any other 
 platform-dependent API's. 
 
 \todo[inline]{add a better analysis in order to obtain better results}

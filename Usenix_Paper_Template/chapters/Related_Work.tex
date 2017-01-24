@@ -8,7 +8,7 @@
 Recovering variable types from executable programs
 is very hard in general for several reasons. 
 First, the quality of the disasembly can very much from used
-framework to another. \textit{TypeShield} is based on DynInst 
+framework to another. \textsc{TypeShield} is based on DynInst 
 and the quality of the execuatble disasembly fits our needs. 
 For a more comprehensive review on the capabilities of DynInst and other tools we
 advice the reader to have a look at~\cite{andriesse:indepth}.
@@ -65,17 +65,16 @@ can mitigate against COOP attacks.
 
 \textbf{Mitigation of Advanced Code-Reuse Attacks.}
 \label{Mitigation of Advanced Code-Reuse Attacks}
-COOP~\cite{schuster:coop}, Subversive-C~\cite{subversive-c:lettner} and Recursive-COOP~\cite{crane:readactor++}
+Recur-sive-COOP~\cite{crane:readactor++}, COOP~\cite{schuster:coop} and Subversive-C~\cite{subversive-c:lettner}.
 are advanced CRAs since these attacks can not be addressed:
 \textit{i)}  with shadow stacks techniques (i.e., do not violate the caller/calle convention), 
 \textit{ii)} coarse-grained Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} techniques are useless against these attacks, 
 \textit{iii)} hardware based approaches such as Intel CET~\cite{intel:cet} can not mitigate this attack for the same reason as in \textit{i)}, and 
 \textit{iv)} with OS-based approaches such as Windows Control Flow Guard~\cite{windows:cfguard} 
 since the precomputed CFG does not contain edges for indirect call sites which are explicitly exploited during the COOP attack.
-
 However, the following tools can protect against COOP attacks:
 
-\textit{\textbf{Source code based.}} indirect callsite targets are checked based on vTable integrity.
+\textit{Source code based.} indirect callsite targets are checked based on vTable integrity.
 Different types of CFI policies are used such as in the following tools:
 SafeDispatch~\cite{safedispatch:jang}, IFCC/VTV~\cite{vtv:tice} LLVM and GCC compiler.
 Additionally, the Redactor++~\cite{crane:readactor++} uses randomization 
@@ -100,33 +99,34 @@ We are aware that there is still a long research path to go until binary based t
 recuperate program based semantic information from executable with the same precision as compiler based tools.
 These path could be even endless since compilers are optimized for speed and are designed to remove as much as possbile semantic information
 from an executable in order to make the program run as fast as possible. In light of this fact,
-\textit{TypeShield} is another attempt to recuperate just the needed semantic information (types and number of function parameters from
+\textsc{TypeShield} is another attempt to recuperate just the needed semantic information (types and number of function parameters from
 indirect call sites) in order to be able to enforce a precise and with low overhead primitive against COOP attacks.
 
-Rather than claiming that the invariants offered by \textit{TypeShield} are suffiecient
-to mitigate all versions of the COOP attack we take a more conservative path by claiming that \textit{TypeShield} 
+Rather than claiming that the invariants offered by \textsc{TypeShield} are suffiecient
+to mitigate all versions of the COOP attack we take a more conservative path by claiming that \textsc{TypeShield} 
 further raises the bar w.r.t. what is possible when defending against COOP attacks on the binary level.
 
-\textit{\textbf{Binary based.}} vTable protection is addressed through binary instrumentation in tools
+\textit{Binary based.} vTable protection is addressed through binary instrumentation in tools
 such as: vfGuard~\cite{vfuard:aravind}, vTint~\cite{vtint:zhang}. However, none of these tools can
 help to mitigate against COOP. The only binary based tool which we are aware of that
 can mitigate protect against COOP is TypeArmor~\cite{veen:typearmor}.  
 TypeArmor uses a fine-grained CFI policy based on caller (only indirect call sites)/callee matching 
 which consists in checking during runtime if the number of provided and needed parameters match.
 
-\textit{TypeShield} is most similar to TypeArmor~\cite{veen:typearmor} since
+\textsc{TypeShield} is most similar to TypeArmor~\cite{veen:typearmor} since
 we also enforce strong binary-level invariants on the number of function
-paramters. \textit{TypeShield} similarly to TypeArmor targets 
+paramters. \textsc{TypeShield} similarly to TypeArmor targets 
 exclusive protection against advanced exploitation techniques 
 which can bypass fine-grained CFI schemes and VTable protections at the binary level.
 
-However, \textit{TypeShield} offers a better restriction of calltargets to callsites, since 
+However, \textsc{TypeShield} offers a better restriction of calltargets to callsites, since 
 we not only restrict based on the number of parameters but also on the wideness of their types. 
 This results in much smaller buckets that in turn can only target a smaller subset of all address
 taken functions. However, we rely for that on the variety of parameter types and when there is 
 none, we will degrade into a parameter count policy.
 
-\textit{\textbf{Runtime based.}}
+
+\textit{Runtime based.}
 ``There is something available out there but I can not use it'' \textit{Anonymous}.
 Long story short conclusion: There are several promissing runtime-based line of defenses against
 advanced CRAs but none of them can succesfully protect against the COOP attack.

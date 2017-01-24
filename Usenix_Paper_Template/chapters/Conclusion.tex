@@ -1,6 +1,6 @@
 \section{Conclusion}
 \label{chapter:Conclusion}
-In this paper, we introduced \textit{TypeShield} a tool for binary harding of forward indirect calls based
+In this paper, we introduced \textsc{TypeShield} a tool for binary harding of forward indirect calls based
 on function parameter type and count.
 Advanced code reuse attacks like COOP and its extensions or Control Jujutsu manifest due to a combination of facts and problems, 
 like memory corruption or predictable binary layout and the fact that the larger our binaries get, the 
@@ -13,7 +13,7 @@ under attack will seem the same. Address taken analysis alread helped cutting do
 calltargets one could inject by a considerable amount. And typearmor improved on that by implementing 
 invariants for both callsites and calltargets based on the number of parameters. We had no access to
 their sourcecode and therefore had to rely on their paper to implement an approximation for which 
-we generated comparable results regarding precision. We improved on that solution by implementing \textit{TypeShield}, 
+we generated comparable results regarding precision. We improved on that solution by implementing \textsc{TypeShield}, 
 which allows for a more fine-grained classification of calltargets and indirect callsites by implementing a rather 
 simplistic register wideness based type analysis. However, as simplistic as that analysis might be, we showed that 
 except for special cases (nginx), we were able to improve upon a parameter count based implementation by reducing 

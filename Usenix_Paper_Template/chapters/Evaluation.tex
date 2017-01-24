@@ -1,27 +1,27 @@
 \section{Evaluation}
 \label{chapter:Evaluation}
-We evaluated our \textit{TypeShield} by instrumenting various open source applications and analyzing the result. 
+We evaluated our \textsc{TypeShield} by instrumenting various open source applications and analyzing the result. 
 We used the two ftp server applications vsftpd (version 1.1.0) and proftpd (version 1.3.3), the two http server 
 applications postgresql (version 9.0.10) and  mysql (5.1.65), the memory cache application memcached (version 1.4.20) 
 and the node.js server application node (version 0.12.5). We chose these applications, which are a subset of the 
 applications also used by the TypeAmor~\cite{veen:typearmor} to allow for later comparison.
 In our evaluation of the two modes of 
-\textit{TypeShield}, we are trying to answer the following questions:
+\textsc{TypeShield}, we are trying to answer the following questions:
 \begin{itemize}
 
- \item \textbf{RQ1:} How precise is \textit{TypeShield} in recovering parameter count and type information for call-sites and call-targets from a given binary?
+ \item \textbf{RQ1:} How precise is \textsc{TypeShield} in recovering parameter count and type information for call-sites and call-targets from a given binary?
 
- \item \textbf{RQ2:} How effective is \textit{TypeShield} in restricting the possible number of call-targets per call-site?
+ \item \textbf{RQ2:} How effective is \textsc{TypeShield} in restricting the possible number of call-targets per call-site?
 
- \item \textbf{RQ3:} What is the performance overhead introduced by \textit{TypeShield}?
+ \item \textbf{RQ3:} What is the performance overhead introduced by \textsc{TypeShield}?
  \todo[inline]{add a binary patch that does not crash none of the programs from SPEC2006.}
 \todo[inline]{need a table with all the results for each of the SPEC2006 programs and a bar diagram}
  
- \item \textbf{RQ4:} What is the instrumentation overhead introduced by \textit{TypeShield}?
+ \item \textbf{RQ4:} What is the instrumentation overhead introduced by \textsc{TypeShield}?
  Here we measure how much the binaries increased in size after the instrumentation was added to the binaries.
 \todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
  
- \item \textbf{RQ5:} What level of security does \textit{TypeShield} offer?
+ \item \textbf{RQ5:} What level of security does \textsc{TypeShield} offer?
  We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
 \todo[inline]{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}
  
@@ -30,7 +30,7 @@ In our evaluation of the two modes of
  
 \end{itemize}
 
-\textbf{Comparison Method.} As we do not have access to the source code of TypeAmor, we implemented two modes in \textit{TypeShield}. 
+\textbf{Comparison Method.} As we do not have access to the source code of TypeAmor, we implemented two modes in \textsc{TypeShield}. 
 The first mode of our tool is an approximate implementation of what we understand is the \textit{count} 
 policy implemented by TypeAmor. The second mode is our implementation of the \textit{type} policy on
 top of our implementation of the \textit{count} policy. 
@@ -38,11 +38,11 @@ top of our implementation of the \textit{count} policy.
 \textbf{Experimental Setup.} We setup our environment within a VirtualBox (version 5.0.26r) instance, which runs Kubuntu 16.04 LTS (Linux Kernel
 version 4.4.0) and has access to 3GB of RAM and 4 of 8 provided hardware threads (Intel i7-4170HQ @ 2.50 GHz).
 
-\subsection{RQ1: Precision of \textit{TypeShield}}
+\subsection{RQ1: Precision of \textsc{TypeShield}}
 \label{section:typeshieldprecision}
 \todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
 
-To measure the precision of \textit{TypeShield}, we need to compare the classification of call-sites and call-targets as is given by our tool to
+To measure the precision of \textsc{TypeShield}, we need to compare the classification of call-sites and call-targets as is given by our tool to
 some sort of ground truth for our test targets. We generate this ground truth by compiling our test targets using a custom compiled Clang/LLVM
 compiler (version 4.0.0 trunk 283889) with a MachineFunction pass inside the x86 code generation implementation of LLVM. We essentially 
 collect three data points for each call-site/call-target from our LLVM-pass:
@@ -51,7 +51,7 @@ collect three data points for each call-site/call-target from our LLVM-pass:
 \item The return type that is either expected by the call-site or provided by the call-target.
 \item The parameter list that is provided by the call-site or expected by the call-target, which discards the variadic argument list.
 \end{itemize}
-However, before we can proceed to measure the quality and precision of \textit{TypeShield}'s classification of call-targets and call-sites
+However, before we can proceed to measure the quality and precision of \textsc{TypeShield}'s classification of call-targets and call-sites
 using our ground truth, we need to evaluate the quality and applicability of the ground truth, we collected.
 
 \subsubsection{Quality and Applicability of Ground Truth}
@@ -72,16 +72,16 @@ types of its parameter list. We therefore need to reverse this process, which is
 The table \ref{tbl:matchingquality} shows three data points regarding call-targets for optimization levels O0, O1, O2 and O3:
 \begin{itemize}
 \item The number of comparable call-targets that are found in both datasets
-\item The number of call-targets that are found by \textit{TypeShield} but not by our Clang/LLVM pass, named Clang miss
-\item The number of call-targets that are found by our Clang/LLVM pass but not by \textit{TypeShield}, named tool miss
+\item The number of call-targets that are found by \textsc{TypeShield} but not by our Clang/LLVM pass, named Clang miss
+\item The number of call-targets that are found by our Clang/LLVM pass but not by \textsc{TypeShield}, named tool miss
 \end{itemize}
-The problematic column is the Clang miss column, as these might indicate problems with \textit{TypeShield}. These numbers are relatively low (below 1\%) 
+The problematic column is the Clang miss column, as these might indicate problems with \textsc{TypeShield}. These numbers are relatively low (below 1\%) 
 throughout optimization levels, with only node showing a significant higher value than the rest of around 1.6\%. The column labeled tool miss lists 
 higher numbers, however these are of no real concern to us, as our ground truth pass possibly collects more data: All source files used during the 
 compilation of our test-targets are incorporated into our ground truth. The compilation might generate more than one binary and therefore not 
 necessary all source files are used for our test-target.
 
-Considering this, we can safely state that our structural matching between ground truth and \textit{TypeShield} regarding call-targets is nearly
+Considering this, we can safely state that our structural matching between ground truth and \textsc{TypeShield} regarding call-targets is nearly
 perfect (above 98\%)
 
 \begin{table}[h!]
@@ -154,7 +154,7 @@ perfect (above 98\%)
 %     	}
 	\caption {Table shows the quality of structural matching provided by our automated verify and test environment, 
 	regarding call-sites and call-targets when compiling with optimization levels O0 through O3. The label Clang miss 
-	denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textit{TypeShield}.}
+	denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc{TypeShield}.}
 	\label{tbl:matchingquality}
 \end{table}
 
@@ -166,7 +166,7 @@ the ordering of call-sites stays roughly the same within one function and that w
 The table \ref{tbl:matchingquality} shows three data points regarding call-sites for optimization levels O0, O1, O2 and O3:
 \begin{itemize}
 \item The number of comparable call-sites that are found in both datasets.
-\item The number of call-sites that are discarded due to mismatch from the dataset of \textit{TypeShield}, named Clang miss.
+\item The number of call-sites that are discarded due to mismatch from the dataset of \textsc{TypeShield}, named Clang miss.
 \item The number of call-sites that are discarded due to mismatch from the dataset of our Clang/LLVM pass, named tool miss.
 \end{itemize}
 
@@ -1075,7 +1075,7 @@ the precision version of the call-site combination operator (we chose the versio
 %\end{table}
 
 
-%\subsection{Precision of \textit{TypeShield}'s Callsite Classification}
+%\subsection{Precision of \textsc{TypeShield}'s Callsite Classification}
 %\label{subsection:typeshieldprecision}
 %
 %
@@ -1705,12 +1705,12 @@ For each possible version we measured two data points per testtarget, the number
 %Efficiency
 %
 %
-\subsection{RQ2: Effectiveness of \textit{TypeShield}}
+\subsection{RQ2: Effectiveness of \textsc{TypeShield}}
 \label{section:typeshieldeffectiveness}
 \todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, 
 first we need to define the fields which make most sense.}
 
-We are now going to evaluate the effectiveness of \textit{TypeShield} leveraging the result of several experiment runs: First we are going to establish a baseline using the data 
+We are now going to evaluate the effectiveness of \textsc{TypeShield} leveraging the result of several experiment runs: First we are going to establish a baseline using the data 
 collected from our Clang/LLVM pass, which are the theoretical limits our implementation can reach. Second we are going to evaluate the effectiveness of our \textit{count} 
 policy and third we are going to evaluate the effectiveness of our \textit{type} policy. At last we are going to look at the effect our address taken analysis had on the results.
 
@@ -1873,7 +1873,7 @@ When compared, the theoretical limit of the \textit{type} policy allows about 15
 \end{table}
 
 \newpage
-\subsubsection{\textit{TypeShield} implementation of the \textit{count} policy}
+\subsubsection{\textsc{TypeShield} implementation of the \textit{count} policy}
 \label{subsection:typeshieldvslimitcount}
 We explore the effectiveness of our safe and precise versions for the \textit{count} policy implementation.
 
@@ -1946,7 +1946,7 @@ the \textit{count} policy.
 
 \newpage
 
-\subsubsection{\textit{TypeShield} implementation of the \textit{type} policy}
+\subsubsection{\textsc{TypeShield} implementation of the \textit{type} policy}
 \label{subsection:typeshieldvslimitcount}
 We explore the effectiveness of our safe and precise versions for the \textit{type} policy implementation.
 
@@ -2184,10 +2184,10 @@ which is an overall reduction to 13.61\%.
 
 %
 %\newpage
-%\section{Security Analysis of \textit{TypeShield}}
+%\section{Security Analysis of \textsc{TypeShield}}
 %\label{section:typeshieldsecurityanalysis}
 %
-%In this section, we discuss how effective \textit{TypeShield} is 
+%In this section, we discuss how effective \textsc{TypeShield} is 
 %stopping advance code-reuse attacks (CRAs).
 %Patching Policies
 %Two types of diagrams. Table 5 from TypeArmor and a CDF to compare param count and param type. (baseline)
@@ -2265,7 +2265,7 @@ Here we measure how much the binaries increased in size after the instrumentatio
 \todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
 
 
-\subsection{RQ5: Security Level of \textit{TypeShield}}
+\subsection{RQ5: Security Level of \textsc{TypeShield}}
 \label{section:mitiagtion}
 \todo[inline]{here we need a a CDF figure, see the TypeAmor paper w.r.t. security analysis in the evaluation. The buckets have to be defined first, reason about if they make sense!}
 We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
