@@ -11,6 +11,7 @@
 #include "llvm/IR/LegacyPassManager.h"
 #include "llvm/Support/raw_os_ostream.h"
 #include "llvm/Support/raw_ostream.h"
+#include "llvm/Demangle/Demangle.h"
 
 namespace llvm {
 #define DEBUG_TYPE "ground_truth"
@@ -29,6 +30,24 @@ namespace llvm {
 */
 
 namespace {
+static std::string demangle(std::string const& name)
+{
+  size_t size = 0;
+  int status = 0;
+  auto demangled_buffer = itaniumDemangle(name.c_str(), nullptr, &size, &status);
+  if (status == 0)
+  {
+    std::string result(demangled_buffer, size);
+    free(demangled_buffer);
+    return result;
+  }
+  else
+  {
+    errs() << "Demangle Error" << status << " with symbol " << name << "\n";
+    return name;
+  }
+}
+
 static bool callsiteOpcodeCheck(MachineInstr const& MI)
 {
   switch(MI.getOpcode())
@@ -93,8 +112,10 @@ struct GroundTruth_X86MachineFunction : public MachineFunctionPass {
 
   bool runOnMachineFunction(MachineFunction &MF) override {
     auto F = MF.getFunction();
-    errs().write_escaped(F->getName()) << "; ";
+    auto const F_name = demangle(F->getName());
+    errs().write_escaped(F_name) << "; ";
     errs() << ((F->hasAddressTaken()) ? "<M86AT>" : "<M86FN>") << "; ";
+    errs() << F->begin()->begin()->getModule()->getSourceFileName() << "; ";
     // Count (and print) the arguments a callee (function) expects
     auto arguments = 0;
     for (auto itr = F->arg_begin(); itr != F->arg_end(); ++itr, ++arguments)
@@ -107,6 +128,37 @@ struct GroundTruth_X86MachineFunction : public MachineFunctionPass {
 
     // Count (and print) the arguments a callsite provides
     for (auto const &mbb : MF) {
+      for (auto const &MI : mbb) {
+        if (MI.isCall())
+        {
+          auto cs = MI.getCallSite();
+          if (cs.isCall())
+          {
+            if (isIndirCS(cs, extended_log) && !cs.isMustTailCall()) {
+                errs().write_escaped(F_name) << "; ";
+                errs() << ("<AM86CS>") << "; ";
+                errs() << "module <unknown>; ";
+
+                auto site_arguments = 0;
+
+                for (auto const &arg : cs.args()) {
+                  errs() << (*arg->getType()) << "; ";
+                  site_arguments++;
+                }
+
+                errs() << "parameter_count " << site_arguments << ";";
+                errs() << "return_type " << (*cs.getType()) << ";" << '\n';
+            }
+          }
+          else
+          {
+            errs() << "Problem regarding callsite augmentation arose in func ";
+            errs().write_escaped(F_name) << "; ";
+            errs() << "\n";
+          }
+        }
+      }
+
       if (extended_log) {
         errs() <<  mbb << "\n";
 
@@ -138,9 +190,9 @@ struct GroundTruth_X86MachineFunction : public MachineFunctionPass {
 
             if (!cs.isMustTailCall()) {
               if (is_call) {
-                errs().write_escaped(F->getName()) << "; ";
+                errs().write_escaped(F_name) << "; ";
                 errs() << ("<M86CS>") << "; ";
-                errs() << "module " << instr.getModule()->getModuleIdentifier() << "; ";
+                errs() << "module " << instr.getModule()->getSourceFileName() << "; ";
 
                 auto site_arguments = 0;
 
@@ -154,9 +206,9 @@ struct GroundTruth_X86MachineFunction : public MachineFunctionPass {
               }
 
               {
-                errs().write_escaped(F->getName()) << "; ";
+                errs().write_escaped(F_name) << "; ";
                 errs() << ("<TM86CS>") << "; ";
-                errs() << "module " << instr.getModule()->getModuleIdentifier() << "; ";
+                errs() << "module " << instr.getModule()->getSourceFileName() << "; ";
 
                 auto site_arguments = 0;
 
@@ -171,9 +223,9 @@ struct GroundTruth_X86MachineFunction : public MachineFunctionPass {
             }
 
             if (is_call) {
-              errs().write_escaped(F->getName()) << "; ";
+                errs().write_escaped(F_name) << "; ";
               errs() << ("<CM86CS>") << "; ";
-              errs() << "module " << instr.getModule()->getModuleIdentifier() << "; ";
+              errs() << "module " << instr.getModule()->getSourceFileName() << "; ";
 
               auto site_arguments = 0;
 
@@ -186,9 +238,9 @@ struct GroundTruth_X86MachineFunction : public MachineFunctionPass {
               errs() << "return_type " << (*cs.getType()) << ";" << '\n';
             }
 
-            errs().write_escaped(F->getName()) << "; ";
+            errs().write_escaped(F_name) << "; ";
             errs() << ("<UM86CS>") << "; ";
-            errs() << "module " << instr.getModule()->getModuleIdentifier() << "; ";
+            errs() << "module " << instr.getModule()->getSourceFileName() << "; ";
 
             auto site_arguments = 0;
 
@@ -204,7 +256,7 @@ struct GroundTruth_X86MachineFunction : public MachineFunctionPass {
       } else {
         for (auto const &minstr : mbb) {
           if (minstr.isCall()) {
-            errs().write_escaped(F->getName()) << "; ";
+            errs().write_escaped(F_name) << "; ";
             errs() << ("<M86CS*>") << "; ";
             errs() << minstr;
             errs() << "\n";

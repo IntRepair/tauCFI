@@ -172,3 +172,26 @@ void block_instance::markModified() {
       funcs[i]->markModified();
    }
 }
+
+void block_instance::annotate(std::vector<char> data, func_instance* func) {
+  auto annotator = [&](func_instance* f) { annotation[f] = data; f->markModified(); };
+
+  if (!func)
+  {
+    //TODO: print an error here
+    /*
+    std::vector<PatchAPI::PatchFunction *> funcs;
+    getFuncs(std::back_inserter(funcs));
+    for (auto& f : funcs) {
+      annotator(f);
+    }*/
+  }
+  else {
+    annotator(func);
+  }
+}
+
+std::vector<char> block_instance::getAnnotationFor(func_instance* func) {
+  return annotation[func];
+}
+

@@ -1,8 +1,7 @@
 import os
+
 import baseline_count
 import baseline_type
-import classification_count
-import classification_type
 import output_parsing as parsing
 
 import verify_classification as c_verify
@@ -27,36 +26,44 @@ class Target:
     def name(self):
         return self._name
 
+    def __get_optimizations(self):
+        optimizations = []
+        #optimizations += ["O0"]
+        #optimizations += ["O1"]
+        optimizations += ["O2"]
+        #optimizations += ["O3"]
+        #optimizations += ["Os"]
+        return optimizations
+
     def __do_function_for_all_optimizations(self, function):
         result = {}
 
-        #result["O0"] = function("O0")
-        #result["O1"] = function("O1")
-        result["O2"] = function("O2")
-        #result["O3"] = function("O3")
-        #result["Os"] = function("Os")
+        for optimization in self.__get_optimizations():
+            result[optimization] = function(optimization)
 
         return result
 
     def __do_function_for_all_optimizations2(self, function):
         result = {}
 
-        #result["O0"] = function(os.path.join(self._prefix, "O1"))
-        #result["O1"] = function(os.path.join(self._prefix, "O2"))
-        result["O2"] = function(os.path.join(self._prefix, "O2"))
-        #result["O3"] = function(os.path.join(self._prefix, "O3"))
-        #result["Os"] = function(os.path.join(self._prefix, "Os"))
+        for optimization in self.__get_optimizations():
+            result[optimization] = function(os.path.join(self._prefix, optimization))
 
         return result
 
     def __do_function_for_all_optimizations3(self, function):
         result = {}
 
-        #result["O0"] = function(os.path.join(self._prefix, "O0"), self._binary_name)
-        #result["O1"] = function(os.path.join(self._prefix, "O1"), self._binary_name)
-        result["O2"] = function(os.path.join(self._prefix, "O2"), self._binary_name)
-        #result["O3"] = function(os.path.join(self._prefix, "O3"), self._binary_name)
-        #result["Os"] = function(os.path.join(self._prefix, "Os"), self._binary_name)
+        for optimization in self.__get_optimizations():
+            result[optimization] = function(os.path.join(self._prefix, optimization), self._binary_name)
+
+        return result
+
+    def __do_function_for_all_optimizations3tag(self, function, tag):
+        result = {}
+
+        for optimization in self.__get_optimizations():
+            result[optimization] = function(os.path.join(self._prefix, optimization), self._binary_name, tag)
 
         return result
 
@@ -80,7 +87,7 @@ class Target:
         # analysis of the copy binary (usually the install script has a call to a strip function)
         command_string = "cd " + prefix + " ; sudo bash " + self._analysis_script + " " + os.path.join(prefix, self._binary_name)
 
-        #print command_string
+        print command_string
         os.system(command_string)
 
     def analyze_all(self):
@@ -102,8 +109,37 @@ class Target:
     def generate_baseline_all(self):
         return self.__do_function_for_all_optimizations2(self._generate_baseline)
 
-    def generate_policy_baselines_all(self):
-        return self.__do_function_for_all_optimizations3(baseline_policies.generate)
+    def _generate_cdf_compare(self, prefix):
+        print "_generate_cdf_compare for", prefix
+
+        padyn = parsing.parse_verify(prefix, self._binary_name)
+        padyn_type = parsing.parse_type_verify(prefix, self._binary_name)
+        clang = parsing.parse_x86machine_ground_truth(prefix, self._binary_name)
+
+        count_baseline = baseline_count.generate_cdf_data(clang, padyn)
+        count_real_baseline = baseline_count.generate_cdf_data_real(clang, padyn)
+        type_baseline = baseline_type.generate_cdf_data(clang, padyn)
+        type_real_baseline = baseline_type.generate_cdf_data_real(clang, padyn_type)
+
+        return ((count_baseline, count_real_baseline, type_baseline, type_real_baseline), "")
+
+    def generate_cdf_compare_all(self):
+        return self.__do_function_for_all_optimizations2(self._generate_cdf_compare)
+
+    def generate_policy_baselines_safe_all(self):
+        return self.__do_function_for_all_optimizations3(baseline_policies.generate_safe)
+
+    def generate_policy_baselines_conserv_all(self):
+        return self.__do_function_for_all_optimizations3(baseline_policies.generate_conserv)
+
+    def generate_policy_baselines_ours_all(self):
+        return self.__do_function_for_all_optimizations3(baseline_policies.generate_ours)
+
+    def generate_policy_compare_our_at_all(self):
+        return self.__do_function_for_all_optimizations3(baseline_policies.compare_our_at_all)
+
+    def generate_policy_compare_all(self):
+        return self.__do_function_for_all_optimizations3(baseline_policies.compare_all)
 
     def compare_pairing_all(self):
         return self.__do_function_for_all_optimizations3(baseline_policies.compare_count)
@@ -114,9 +150,17 @@ class Target:
     def verify_classification_all(self):
         return self.__do_function_for_all_optimizations3(c_verify.verify)
 
-    def verify_classification_ext_all(self):
-        return self.__do_function_for_all_optimizations3(c_verify.verify_ext)
+    def verify_classification_ext_all(self, tag):
+        return self.__do_function_for_all_optimizations3tag(c_verify.verify_ext, tag)
 
+    def verify_classification_type_ext_all(self, tag):
+        return self.__do_function_for_all_optimizations3tag(c_verify.verify_type_ext, tag)
+
+    def verify_classification_type_all(self):
+        return self.__do_function_for_all_optimizations3(c_verify.verify_type)
+
+    def verify_classification_type_count_all(self):
+        return self.__do_function_for_all_optimizations3(c_verify.verify_type_count)
 
     def verify_matching_all(self):
         return self.__do_function_for_all_optimizations3(m_verify.verify)
@@ -124,11 +168,10 @@ class Target:
 
 class ConfigMakeTarget(Target):
     def _install(self, prefix):
-        command_string = "cd " + self._sourcedir + ";"
-        command_string += "cp " + os.path.join(self._sourcedir_binary, self._binary_name) + " " + os.path.join(prefix, self._binary_name) + ";"
+        command_string = "cp " + os.path.join(self._sourcedir, self._sourcedir_binary, self._binary_name) + " " + os.path.join(prefix, self._binary_name) + ";"
         command_string += "sudo make install"
 
-        #print command_string
+        print command_string
         os.system(command_string)
 
     def _configure(self, prefix, cc_options, ld_options):
@@ -144,10 +187,12 @@ class ConfigMakeTarget(Target):
         os.system(command_string)
 
     def _compile(self, prefix):
+        #command_string = "cd " + os.path.join(self._sourcedir, self._sourcedir_binary) + "; "
+        #command_string += "make " + self._binary_name +  " 2> " + os.path.join(prefix, "ground_truth." + self._binary_name) + "; "
         command_string = "cd " + self._sourcedir + "; "
         command_string += "make 2> " + os.path.join(prefix, "ground_truth." + self._binary_name) + "; "
 
-        #print command_string
+        print command_string
         os.system(command_string)
 
     def _configure_and_compile(self, prefix, cc_options, ld_options):
@@ -157,6 +202,31 @@ class ConfigMakeTarget(Target):
         self._configure(prefix, cc_options, ld_options)
         self._compile(prefix)
         self._install(prefix)
+
+class MySQLMakeTarget(ConfigMakeTarget):
+    def _compile(self, prefix):
+        command_string = "cd " + os.path.join(self._sourcedir, "include") + "; make; "
+        command_string += "cd " + os.path.join(self._sourcedir, "vio") + "; make; "
+        command_string += "cd " + os.path.join(self._sourcedir, "mysys") + "; make; "
+        command_string += "cd " + os.path.join(self._sourcedir, "strings") + "; make; "
+        command_string += "cd " + os.path.join(self._sourcedir, "dbug") + "; make; "
+        command_string += "cd " + os.path.join(self._sourcedir, "regex") + "; make; "
+        command_string += "cd " + os.path.join(self._sourcedir, "storage") + "; make; "
+        command_string += "cd " + os.path.join(self._sourcedir, self._sourcedir_binary) + "; "
+        command_string += "make gen_lex_hash; "
+        command_string += "make " + self._binary_name +  " 2> " + os.path.join(prefix, "ground_truth." + self._binary_name) + "; "
+
+        print command_string
+        os.system(command_string)
+
+class LighttpdMakeTarget(ConfigMakeTarget):
+    def _compile(self, prefix):
+        command_string = "cd " + os.path.join(self._sourcedir, self._sourcedir_binary) + "; "
+        command_string += "make versionstamp; "
+        command_string += "make " + self._binary_name +  " 2> " + os.path.join(prefix, "ground_truth." + self._binary_name) + "; "
+
+        print command_string
+        os.system(command_string)
 
 class PostgreSQLMakeTarget(ConfigMakeTarget):
     def _configure(self, prefix, cc_options, ld_options):
@@ -241,8 +311,9 @@ class EximMakeTarget(Target):
         self._configure(prefix, cc_options, ld_options)
         self._compile(prefix)
 
-class VsftpdMakeTarget(Target):
-    def _configure(self, prefix, cc_options, ld_options):
+class VsftpdMakeTarget(ConfigMakeTarget):
+
+    def __sub_configure(self, prefix, cc_options, ld_options):
         makefile_path = os.path.join(self._sourcedir, "Makefile")
         patched_makefile_path = makefile_path + ".patched"
         patched_makefile = file(patched_makefile_path, 'w')
@@ -253,13 +324,13 @@ class VsftpdMakeTarget(Target):
                     line = tokens[0] + "=" + self._ccompiler + "\n"
                 elif line.startswith("LINK"):
                     tokens = line.split("=")
-                    line = tokens[0] + "=" + ld_options + "\n";
+                    line = tokens[0] + "=" + ld_options + "\n"
 
                 elif line.startswith("LIBS"):
                     tokens = line.split("=")
                     sub_tokens = tokens[1].split(" ")
-                    
-                    line = tokens[0] + "=" 
+
+                    line = tokens[0] + "="
 
                     if "-ldl" not in sub_tokens:
                         line += " -ldl"
@@ -289,27 +360,43 @@ class VsftpdMakeTarget(Target):
 
         os.rename(patched_makefile_path, makefile_path)
 
-        #print command_string
-        #os.system(command_string)
+    def _configure(self, prefix, cc_options, ld_options):
+        self.__sub_configure(prefix, cc_options, ld_options)
 
-    def _compile(self, prefix):
-        command_string = "cd " + self._sourcedir + "; "
-        command_string += "sudo make clean; "
-        command_string += "make 2> " + os.path.join(prefix, "ground_truth." + self._binary_name) + "; "
-        command_string += "mkdir " + os.path.join(prefix, "sbin -p; ")
-        command_string += "cp vsftpd " + os.path.join(prefix, "sbin", "vsftpd; ")
-        command_string += "cp vsftpd " + os.path.join(prefix, "vsftpd")
-
+        command_string = "cd " + os.path.join(self._sourcedir, self._sourcedir_binary) + "; "
+        command_string += "pwd; make clean ; pwd"
 
         #print command_string
         os.system(command_string)
 
-    def _configure_and_compile(self, prefix, cc_options, ld_options):
-        if not os.path.exists(prefix):
-            os.makedirs(prefix)
+#    def _compile(self, prefix):
+#        command_string = "cd " + self._sourcedir + "; "
+#        command_string += "sudo make clean; "
+#        command_string += "make 2> " + os.path.join(prefix, "ground_truth." + self._binary_name) + "; "
+#        command_string += "mkdir " + os.path.join(prefix, "sbin -p; ")
+#        command_string += "cp vsftpd " + os.path.join(prefix, "sbin", "vsftpd; ")
+#        command_string += "cp vsftpd " + os.path.join(prefix, "vsftpd")
+#
+#        print command_string
+#        os.system(command_string)
 
-        self._configure(prefix, cc_options, ld_options)
-        self._compile(prefix)
+    def _install(self, prefix):
+        command_string = "cd " + self._sourcedir + "; "
+        command_string += "mkdir " + os.path.join(prefix, "sbin -p; ")
+        command_string += "cp vsftpd " + os.path.join(prefix, "sbin", "vsftpd; ")
+        command_string += "cp vsftpd " + os.path.join(prefix, "vsftpd")
+
+        #print command_string
+        os.system(command_string)
+
+#    def _configure_and_compile(self, prefix, cc_options, ld_options):
+#        if not os.path.exists(prefix):
+#            os.makedirs(prefix)
+#
+#        self._configure(prefix, cc_options, ld_options)
+#        self._compile(prefix)
+
+
 
 class TargetGenerator:
     def __init__(self, analysis_script, prefix, ccompiler, cxxcompiler, cc_options, ld_options):
@@ -332,12 +419,16 @@ class TargetGenerator:
             return EximMakeTarget(name, analysis_script, sourcedir, os.path.join(prefix, name), ccompiler, cxxcompiler, cc_options, ld_options, binary_path, sourcedir_binary)
         elif name == "nginx":
             return NginxMakeTarget(name, analysis_script, sourcedir, os.path.join(prefix, name), ccompiler, cxxcompiler, cc_options, ld_options, binary_path, sourcedir_binary)
+        #elif name == "lighttpd":
+        #    return LighttpdMakeTarget(name, analysis_script, sourcedir, os.path.join(prefix, name), ccompiler, cxxcompiler, cc_options, ld_options, binary_path, sourcedir_binary)
         elif name == "postgresql":
             return PostgreSQLMakeTarget(name, analysis_script, sourcedir, os.path.join(prefix, name), ccompiler, cxxcompiler, cc_options, ld_options, binary_path, sourcedir_binary)
+        #elif name == "mysql":
+        #    return MySQLMakeTarget(name, analysis_script, sourcedir, os.path.join(prefix, name), ccompiler, cxxcompiler, cc_options, ld_options, binary_path, sourcedir_binary)
         elif name == "vsftpd":
             return VsftpdMakeTarget(name, analysis_script, sourcedir, os.path.join(prefix, name), ccompiler, cxxcompiler, cc_options, ld_options, binary_path, sourcedir_binary)
         if method == "config+make":
             return ConfigMakeTarget(name, analysis_script, sourcedir, os.path.join(prefix, name), ccompiler, cxxcompiler, cc_options, ld_options, binary_path, sourcedir_binary)
         else:
-            return Target(name, analysis_script, sourcedir, os.path.join(prefix, name), ccompiler, cxxcompiler, cc_options, ld_options, binary_path, sourcdir_binary)
+            return Target(name, analysis_script, sourcedir, os.path.join(prefix, name), ccompiler, cxxcompiler, cc_options, ld_options, binary_path, sourcedir_binary)
 

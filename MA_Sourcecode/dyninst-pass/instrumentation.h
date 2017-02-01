@@ -11,6 +11,7 @@
 #include <PatchCFG.h>
 
 #include "ca_defines.h"
+#include "function_borders.h"
 #include "logging.h"
 
 template <typename instr_op_t, typename... arg_ts>
@@ -64,6 +65,7 @@ void instrument_function_basicBlocks_unordered(BPatch_function *function,
     std::set<BPatch_basicBlock *> blocks;
     BPatch_flowGraph *cfg = function->getCFG();
     cfg->getAllBasicBlocks(blocks);
+    function_borders::apply(function, blocks);
 
     for (auto block : blocks)
     {

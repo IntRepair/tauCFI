@@ -10,8 +10,17 @@ def gen_pct_string(value):
 def main(argv):
     test_dir = test_config.get_test_dir(argv)
 
+    policy_fieldnames = ["target", "opt", "policy"]
+    policy_fieldnames += ["0 cs", "0 cts"]
+    policy_fieldnames += ["1 cs", "1 cts"]
+    policy_fieldnames += ["2 cs", "2 cts"]
+    policy_fieldnames += ["3 cs", "3 cts"]
+    policy_fieldnames += ["4 cs", "4 cts"]
+    policy_fieldnames += ["5 cs", "5 cts"]
+    policy_fieldnames += ["6 cs", "6 cts"]
+    policy_fieldnames += ["summary cs", "summary cts"]
+
     with open(os.path.join(test_dir, "pairing_compares.csv"), "w") as policy_csv_file:
-        policy_fieldnames = ["target", "opt", "policy", "0", "1", "2", "3", "4", "5", "6", "summary"]
         policy_writer = csv.DictWriter(policy_csv_file, fieldnames=policy_fieldnames)
         policy_writer.writeheader()
 

@@ -664,6 +664,7 @@ bool MIParser::parse(MachineInstr *&MI) {
   }
 
   // TODO: Check for extraneous machine operands.
+  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() MIParser\n";
   MI = MF.CreateMachineInstr(MCID, DebugLocation, /*NoImplicit=*/true);
   MI->setFlags(Flags);
   for (const auto &Operand : Operands)

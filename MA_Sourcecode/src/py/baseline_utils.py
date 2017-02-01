@@ -1,33 +1,38 @@
 import utilities as utils
 import verify_matching
 
-def is_void_type(type):
-    if isinstance(type, dict):
-        return type["is_void"]
+def __identity_function(padyn, clang, fn_acceptable):
+    return fn_acceptable
 
-    return type == "void"
-
-def __generate_buckets(clang, padyn, get_bucket_id):
+def __generate_buckets(clang, padyn, get_bucket_id, at_filter = __identity_function):
     (fn_acceptable, _, _) = verify_matching.call_target_matching(padyn, clang)
+    at_acceptable = at_filter(padyn, clang, fn_acceptable)
 #    (at_acceptable, _, _) = verify_matching.address_taken_matching(padyn, clang, fn_acceptable)
     (cs_acceptable, _) = verify_matching.call_site_matching(padyn, clang, fn_acceptable)
+
+    print "fn",len(fn_acceptable)
+    print "at",len(at_acceptable)
 
     css = [pair[0] for pair in cs_acceptable] 
 
     cs_buckets = {}
     for callsite in clang["call_site"]:
         if (callsite["origin"]) in css:
+            #print callsite
+            #print get_bucket_id(callsite)
             utils.add_values_to_key(cs_buckets, get_bucket_id(callsite), callsite)
 
     ct_buckets = {}
     for calltarget in clang["call_target"]:
-        if calltarget["origin"] in fn_acceptable:
+        if calltarget["origin"] in at_acceptable:
+            #print calltarget
+            #print get_bucket_id(calltarget)
             utils.add_values_to_key(ct_buckets, get_bucket_id(calltarget), calltarget)
 
     return (cs_buckets, ct_buckets)
 
-def analyse_pairing_baseline(clang, padyn, get_bucket_id, is_exact_id_match, is_schema_id_match):
-    (cs_buckets, ct_buckets) = __generate_buckets(clang, padyn, get_bucket_id)
+def analyse_pairing_baseline(clang, padyn, get_bucket_id, is_schema_id_match, at_filter):
+    (cs_buckets, ct_buckets) = __generate_buckets(clang, padyn, get_bucket_id, at_filter)
 
 #    exact_targets = {}
     schema_targets = {}
@@ -62,7 +67,7 @@ def analyse_pairing_baseline(clang, padyn, get_bucket_id, is_exact_id_match, is_
 #        result += "(" + cs_bucket_id + "," + str(target_count) + ")\n"
 
 #    result += "bucket_element_average:" + str(__expected_value(schema_bucket_counts))
- #   result += "bucket_element_variance:" + str(__value_variance(schema_bucket_counts))
+#    result += "bucket_element_variance:" + str(__value_variance(schema_bucket_counts))
 
     return schema_bucket_counts
 
@@ -103,8 +108,10 @@ def generate_padyn_cs_index_to_clang_bucket_id(clang, padyn, get_bucket_id):
     return (padyn_to_clang_index, clang_index_to_clang_bucket_id)
 
 
-def analyse_pairing_padyn(clang, padyn, get_bucket_id, is_exact_id_match, is_schema_id_match):
-    (cs_buckets, ct_buckets) = __generate_buckets(padyn, clang, get_bucket_id)
+def analyse_pairing_padyn(clang, padyn, get_bucket_id, is_schema_id_match, at_filter):
+    _at_filter = (lambda padyn_, clang_, fn_acceptable_ : at_filter(clang_, padyn_, fn_acceptable_))
+
+    (cs_buckets, ct_buckets) = __generate_buckets(padyn, clang, get_bucket_id, _at_filter)
 
     schema_targets = {}
     for cs_bucket_id in cs_buckets.keys():
@@ -135,8 +142,14 @@ def analyse_pairing_padyn(clang, padyn, get_bucket_id, is_exact_id_match, is_sch
     return schema_bucket_counts
 
 
-def generate_cdf_data(clang, padyn, get_bucket_id, is_exact_id_match, is_schema_id_match):
+def generate_cdf_data(clang, padyn, get_bucket_id, is_schema_id_match):
+    print "generate_cdf_data"
     (cs_buckets, ct_buckets) = __generate_buckets(clang, padyn, get_bucket_id)
+
+    #print ct_buckets.keys()
+
+    #for ct_bucket_id in ct_buckets.keys():
+    #    print len(ct_buckets[ct_bucket_id])
 
     cdf_bins = []
     for cs_bucket_id in cs_buckets.keys():
@@ -153,6 +166,42 @@ def generate_cdf_data(clang, padyn, get_bucket_id, is_exact_id_match, is_schema_
         cdf_bins.sort(key=lambda x: len(x[1]), reverse=True)
         (cs_bucket_id, targets) = cdf_bins.pop()
         print (cs_bucket_id, len(targets))
+        site_count = len(cs_buckets[cs_bucket_id])
+        cdf_values += [(cs_bucket_id, site_count, len(targets))]
+        cdf_bins = map(lambda (bucket_id_, targets_): (bucket_id_, targets_.union(targets)), cdf_bins)
+
+    return cdf_values
+
+
+def generate_cdf_data_real(clang, padyn, get_bucket_id, is_schema_id_match):
+    print "generate_cdf_data_real"
+    (cs_buckets, ct_buckets) = __generate_buckets(padyn, clang, get_bucket_id)
+
+    #print ct_buckets.keys()
+
+    #for ct_bucket_id in ct_buckets.keys():
+    #    print "real CT ", ct_bucket_id, len(ct_buckets[ct_bucket_id])
+#
+    #for cs_bucket_id in cs_buckets.keys():
+    #    print "real CS ", cs_bucket_id, len(cs_buckets[cs_bucket_id])
+
+    cdf_bins = []
+    for cs_bucket_id in cs_buckets.keys():
+        targets = []
+        for ct_bucket_id in ct_buckets.keys():
+            if is_schema_id_match(cs_bucket_id, ct_bucket_id):
+                targets += [(ct_bucket_id, i) for i in range(len(ct_buckets[ct_bucket_id]))]
+
+        #if len(targets) < 10:
+        #    print targets
+        cdf_bins += [(cs_bucket_id, set(targets))]
+
+    cdf_values = []
+
+    for _ in range(len(cdf_bins)):
+        cdf_bins.sort(key=lambda x: len(x[1]), reverse=True)
+        (cs_bucket_id, targets) = cdf_bins.pop()
+        print "real", (cs_bucket_id, len(targets))
         site_count = len(cs_buckets[cs_bucket_id])
         cdf_values += [(cs_bucket_id, site_count, len(targets))]
         cdf_bins = map(lambda (bucket_id_, targets_): (bucket_id_, targets_.union(targets)), cdf_bins)

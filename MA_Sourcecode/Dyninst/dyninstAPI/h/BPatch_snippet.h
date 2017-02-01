@@ -654,6 +654,15 @@ class BPATCH_DLL_EXPORT BPatch_scrambleRegistersExpr : public BPatch_snippet
   BPatch_scrambleRegistersExpr();
 };
 
+class BPATCH_DLL_EXPORT BPatch_exitProcessExpr : public BPatch_snippet
+{
+
+  // BPatch_exitProcessExpr
+  // exit the currently running process
+
+  BPatch_exitProcessExpr();
+};
+
 #endif /* _BPatch_snippet_h_ */
 
 

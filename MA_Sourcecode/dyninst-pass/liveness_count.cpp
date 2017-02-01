@@ -244,8 +244,10 @@ static void initialize_variadic_passthrough(AnalysisConfig &config, BPatch_objec
 
 namespace calltarget
 {
-AnalysisConfig init(CADecoder *decoder, BPatch_image *image, BPatch_object *object)
+std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image, BPatch_object *object)
 {
+    std::vector<AnalysisConfig> configs;
+
     AnalysisConfig config;
 
     config.decoder = decoder;
@@ -257,18 +259,21 @@ AnalysisConfig init(CADecoder *decoder, BPatch_image *image, BPatch_object *obje
     config.follow_calls = true;
     config.ignore_nops = true;
 
-    // this will take care of ooptimized versions
+    // this will take care of optimized versions
     initialize_variadic_passthrough(config, object);
 
-    return config;
+    configs.push_back(config);
+    configs.push_back(config);
+    return configs;
 }
 }; /* namespace calltarget */
 
 namespace callsite
 {
 
-AnalysisConfig init(CADecoder *decoder, BPatch_image *image, BPatch_object *object)
+std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image, BPatch_object *object)
 {
+    std::vector<AnalysisConfig> configs;
     AnalysisConfig config;
 
     config.decoder = decoder;
@@ -280,7 +285,9 @@ AnalysisConfig init(CADecoder *decoder, BPatch_image *image, BPatch_object *obje
     config.follow_calls = true;
     config.ignore_nops = false;
 
-    return config;
+    configs.push_back(config);
+    configs.push_back(config);
+    return configs;
 }
 }; /* namespace callsite */
 

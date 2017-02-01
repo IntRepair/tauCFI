@@ -71,6 +71,7 @@ class insnCodeGen {
   static void generateBranch64(codeGen &gen, Address to);
   static void generateBranch32(codeGen &gen, Address to);
   static void generateCall(codeGen &gen, Address from, Address to);
+  static void appendAnnotation(codeGen &gen, std::vector<char> annotation);
 
   // Function relocation...
   static void generateInterFunctionBranch(codeGen &gen, Address from, Address to) { generateBranch(gen, from, to); }

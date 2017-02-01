@@ -32,14 +32,9 @@ struct CallTarget
 
 using CallTargets = std::vector<CallTarget>;
 
-#if (not defined(__PADYN_COUNT_EXT_POLICY)) && (not (defined (__PADYN_TYPE_POLICY)))
-CallTargets calltarget_analysis(BPatch_object *object, BPatch_image *image,
-                                CADecoder *decoder, TakenAddresses &taken_addresses);
-#else
 std::vector<CallTargets> calltarget_analysis(BPatch_object *object, BPatch_image *image,
                                              CADecoder *decoder,
                                              TakenAddresses &taken_addresses);
-#endif
 
 #include "to_string.h"
 

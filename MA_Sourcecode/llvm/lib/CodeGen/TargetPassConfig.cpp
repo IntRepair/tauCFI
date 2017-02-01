@@ -588,8 +588,15 @@ void TargetPassConfig::addMachinePasses() {
   // Print the instruction selected machine code...
   printAndVerify("After Instruction Selection");
 
+  addPass(createMachineCallsiteAugment_FunctionPass());
+  addPass(createMachineCallsiteDumpIRFunctionPass("Stage 0"));
+  addPass(createMachineCallsiteDumpMRFunctionPass("Stage 0"));
+
   // Expand pseudo-instructions emitted by ISel.
   addPass(&ExpandISelPseudosID);
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage I"));
+  //addPass(createMachineCallsiteDumpIRFunctionPass("Stage I"));
+  //addPass(createMachineCallsiteDumpMRFunctionPass("Stage I"));
 
   // Add passes that optimize machine instructions in SSA form.
   if (getOptLevel() != CodeGenOpt::None) {
@@ -599,41 +606,57 @@ void TargetPassConfig::addMachinePasses() {
     // to one another and simplify frame index references where possible.
     addPass(&LocalStackSlotAllocationID, false);
   }
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage II"));
 
   // Run pre-ra passes.
   addPreRegAlloc();
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage III"));
 
   // Run register allocation and passes that are tightly coupled with it,
   // including phi elimination and scheduling.
   if (getOptimizeRegAlloc())
+  {
     addOptimizedRegAlloc(createRegAllocPass(true));
+    addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IVa"));
+  }
   else
+  {
     addFastRegAlloc(createRegAllocPass(false));
+    addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IVb"));
+  }
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IV"));
 
   // Run post-ra passes.
   addPostRegAlloc();
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage V"));
 
   // Insert prolog/epilog code.  Eliminate abstract frame index references...
   if (getOptLevel() != CodeGenOpt::None)
     addPass(&ShrinkWrapID);
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage VI"));
 
   // Prolog/Epilog inserter needs a TargetMachine to instantiate. But only
   // do so if it hasn't been disabled, substituted, or overridden.
   if (!isPassSubstitutedOrOverridden(&PrologEpilogCodeInserterID))
       addPass(createPrologEpilogInserterPass(TM));
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage VII"));
 
   /// Add passes that optimize machine instructions after register allocation.
   if (getOptLevel() != CodeGenOpt::None)
     addMachineLateOptimization();
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage VIII"));
 
   // Expand pseudo instructions before second scheduling pass.
   addPass(&ExpandPostRAPseudosID);
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IX"));
 
   // Run pre-sched2 passes.
   addPreSched2();
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage X"));
 
   if (EnableImplicitNullChecks)
     addPass(&ImplicitNullChecksID);
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage XI"));;
 
   // Second pass scheduler.
   // Let Target optionally insert this pass by itself at some other
@@ -645,18 +668,22 @@ void TargetPassConfig::addMachinePasses() {
     else
       addPass(&PostRASchedulerID);
   }
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage XII"));
 
   // GC
   if (addGCPasses()) {
     if (PrintGCInfo)
       addPass(createGCInfoPrinter(dbgs()), false, false);
   }
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage XIII"));
 
   // Basic block placement.
   if (getOptLevel() != CodeGenOpt::None)
     addBlockPlacement();
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage XIV"));
 
   addPreEmitPass();
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage XV"));
 
   if (TM->Options.EnableIPRA)
     // Collect register usage information and produce a register mask of
@@ -671,6 +698,9 @@ void TargetPassConfig::addMachinePasses() {
   addPass(&XRayInstrumentationID, false);
   addPass(&PatchableFunctionID, false);
 
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage XVI"));
+  addPass(createMachineCallsiteDumpIRFunctionPass("Stage XVI"));
+  addPass(createMachineCallsiteDumpMRFunctionPass("Stage XVI"));
   addPass(createMachineGroundTruth_FunctionPass());
 
   AddingMachinePasses = false;
@@ -843,27 +873,33 @@ void TargetPassConfig::addOptimizedRegAlloc(FunctionPass *RegAllocPass) {
 
   // PreRA instruction scheduling.
   addPass(&MachineSchedulerID);
+  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IVaX"));
 
   if (RegAllocPass) {
     // Add the selected register allocation pass.
     addPass(RegAllocPass);
+    //addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IVaXI"));
 
     // Allow targets to change the register assignments before rewriting.
     addPreRewrite();
+    //addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IVaXII"));
 
     // Finally rewrite virtual registers.
     addPass(&VirtRegRewriterID);
+    addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IVaXIII"));
 
     // Perform stack slot coloring and post-ra machine LICM.
     //
     // FIXME: Re-enable coloring with register when it's capable of adding
     // kill markers.
     addPass(&StackSlotColoringID);
+    addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IVaXIV"));
 
     // Run post-ra machine LICM to hoist reloads / remats.
     //
     // FIXME: can this move into MachineLateOptimization?
     addPass(&PostRAMachineLICMID);
+    addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IVaXV"));
   }
 }
 

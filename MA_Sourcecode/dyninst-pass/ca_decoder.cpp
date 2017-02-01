@@ -87,7 +87,29 @@ uint64_t CADecoder::get_src(int index)
     return 0;
 }
 
-bool CADecoder::is_indirect_call() { return instr_is_call_indirect(&instr); }
+bool CADecoder::is_indirect_call() { //return instr_is_call_indirect(&instr); 
+	if (instr_is_mbr(&instr))
+	{
+		if (instr_is_call(&instr))
+			return true;
+
+		if (instr_is_return(&instr))
+			return false;
+
+        auto const nr_src = instr_num_srcs(&instr);
+        if (0 < nr_src)
+        {
+            auto opnd = instr_get_src(&instr, 0);
+            if (opnd_is_base_disp(opnd))
+                if (opnd_get_base(opnd) == DR_REG_NULL)
+                    return false;
+        }
+
+		return true;
+	}
+	return false;
+
+}
 
 bool CADecoder::is_call() { return instr_is_call_direct(&instr); }
 
@@ -97,6 +119,16 @@ bool CADecoder::is_constant_write()
 {
     ptr_int_t value;
     return instr_is_mov_constant(&instr, &value);
+}
+
+ptr_int_t CADecoder::get_constant_write()
+{
+    ptr_int_t value;
+
+    if (instr_is_mov_constant(&instr, &value))
+        return value;
+
+    return 0;
 }
 
 bool CADecoder::is_nop() { return instr_is_nop(&instr); }
@@ -119,6 +151,27 @@ boost::optional<int> CADecoder::get_reg_source(int index)
     if (opnd_is_reg(opnd))
     {
         result = opnd_get_reg(opnd);
+    }
+
+    return result;
+}
+
+static reg_id_t get_parent_register(reg_id_t reg)
+{
+    return reg_resize_to_opsz(reg, OPSZ_8);
+}
+
+boost::optional<int> CADecoder::get_reg_target(int index)
+{
+    boost::optional<int> result;
+
+    if (index < instr_num_dsts(&instr))
+    {
+        auto opnd = instr_get_dst(&instr, index);
+        if (opnd_is_reg(opnd))
+        {
+            result = get_parent_register(opnd_get_reg(opnd));
+        }
     }
 
     return result;
@@ -189,11 +242,6 @@ uint64_t CADecoder::get_address_store_address()
             return reinterpret_cast<uint64_t>(ptr);
     }
     return 0;
-}
-
-static reg_id_t get_parent_register(reg_id_t reg)
-{
-    return reg_resize_to_opsz(reg, OPSZ_8);
 }
 
 static RegisterStateEx calculate_read_change(reg_id_t reg)

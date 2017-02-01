@@ -11,18 +11,10 @@
 #include "systemv_abi.h"
 #include "utils.h"
 
-#if (not defined(__PADYN_COUNT_EXT_POLICY)) && (not (defined (__PADYN_TYPE_POLICY)))
-CallTargets calltarget_analysis(BPatch_object *object, BPatch_image *image,
-                                CADecoder *decoder, TakenAddresses &taken_addresses)
-#else
 std::vector<CallTargets> calltarget_analysis(BPatch_object *object, BPatch_image *image,
                                              CADecoder *decoder,
                                              TakenAddresses &taken_addresses)
-#endif
 {
-#if (not defined(__PADYN_COUNT_EXT_POLICY)) && (not (defined (__PADYN_TYPE_POLICY)))
-    CallTargets call_targets;
-#endif
 
     auto symtab = Dyninst::SymtabAPI::convert(object);
 
@@ -44,18 +36,14 @@ std::vector<CallTargets> calltarget_analysis(BPatch_object *object, BPatch_image
     auto liveness_configs = liveness::type::calltarget::init(decoder, image, object);
     auto reaching_configs = reaching::type::calltarget::init(decoder, image, object);
 
-    std::vector<CallTargets> call_targets_vector;
-
-    for (auto index = 0; index < liveness_configs.size(); ++index)
-    {
-        auto& liveness_config = liveness_configs[index];
-        auto& reaching_config = reaching_configs[index];
-
-        CallTargets call_targets;
 #elif defined(__PADYN_COUNT_EXT_POLICY)
     auto liveness_configs = liveness::count_ext::calltarget::init(decoder, image, object);
     auto reaching_configs = reaching::count_ext::calltarget::init(decoder, image, object);
 
+#else
+    auto liveness_configs = liveness::count::calltarget::init(decoder, image, object);
+    auto reaching_configs = reaching::count::calltarget::init(decoder, image, object);
+#endif
     std::vector<CallTargets> call_targets_vector;
 
     for (auto index = 0; index < liveness_configs.size(); ++index)
@@ -64,10 +52,6 @@ std::vector<CallTargets> calltarget_analysis(BPatch_object *object, BPatch_image
         auto& reaching_config = reaching_configs[index];
 
         CallTargets call_targets;
-#else
-    auto liveness_config = liveness::count::calltarget::init(decoder, image, object);
-    auto reaching_config = reaching::count::calltarget::init(decoder, image, object);
-#endif
 
     instrument_object_functions(object, [&](BPatch_function *function) {
         // Instrument function
@@ -114,7 +98,6 @@ std::vector<CallTargets> calltarget_analysis(BPatch_object *object, BPatch_image
         }
     });
 
-#if defined(__PADYN_COUNT_EXT_POLICY) || defined(__PADYN_TYPE_POLICY)
         liveness_config.block_states.clear();
         reaching_config.block_states.clear();
 
@@ -122,7 +105,4 @@ std::vector<CallTargets> calltarget_analysis(BPatch_object *object, BPatch_image
     }
 
     return call_targets_vector;
-#else
-    return call_targets;
-#endif
 }

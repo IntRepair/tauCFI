@@ -4,9 +4,9 @@ di-opt/di-opt
 nginx-*/inst
 nginx-*/objs
 *.o
-*.pyc
 build_llvm/*
 type_experiment/*
 tests/*
 tmp/*
 *.log
+*.pyc

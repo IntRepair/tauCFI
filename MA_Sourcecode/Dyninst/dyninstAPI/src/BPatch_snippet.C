@@ -474,6 +474,12 @@ BPatch_arithExpr::BPatch_arithExpr(BPatch_binOp op,
                                 ast_wrapper->setTypeChecking(BPatch::bpatch->isTypeChecked());
                                 return;
                         }
+                case BPatch_bit_and:
+                        astOp = andOp;
+                        break;
+                case BPatch_bit_or:
+                        astOp = orOp;
+                        break;
                 default:
                         /* XXX handle error */
                         assert(0);
@@ -1792,6 +1798,28 @@ BPatch_scrambleRegistersExpr::BPatch_scrambleRegistersExpr(){
     ast_wrapper->setType(BPatch::bpatch->type_Untyped);
     ast_wrapper->setTypeChecking(BPatch::bpatch->isTypeChecked());
    
+}
+
+//class exit_snippet : public PatchAPI::Snippet
+//{
+//    bool generate(Point *, Buffer &)
+//    {
+//        uint8_t pre[MAX_RAW_INSN_SIZE];
+//    }
+//};
+
+BPatch_exitProcessExpr::BPatch_exitProcessExpr(){
+/*
+    codeGen
+
+mov     eax, 0 // interrupt code
+mov     ebx, 0 // argument, in this case: return value
+int     0x80
+
+    ast_wrapper = AstNodePtr(AstNode::snippetNode());
+    ast_wrapper->setType(BPatch::bpatch->type_Untyped);
+    ast_wrapper->setTypeChecking(BPatch::bpatch->isTypeChecked());
+   */
 }
 
 // Conversions

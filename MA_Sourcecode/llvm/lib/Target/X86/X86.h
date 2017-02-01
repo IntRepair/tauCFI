@@ -87,6 +87,7 @@ FunctionPass *createX86ExpandPseudoPass();
 FunctionPass *createX86FixupBWInsts();
 
 FunctionPass *createX86MachineGroundTruth_FunctionPass();
+FunctionPass *createX86MachineCallsiteAugment_FunctionPass();
 
 void initializeFixupBWInstPassPass(PassRegistry &);
 } // End llvm namespace

@@ -14,8 +14,7 @@ enum LogLevel
 #define LOG_LEVEL_CONFIG                                                                 \
     (LOG_LEVEL_FATAL | LOG_LEVEL_ERROR | LOG_LEVEL_WARNING | LOG_LEVEL_INFO)
 #define LOG_LEVEL_FILE_CONFIG                                                            \
-    (LOG_LEVEL_FATAL | LOG_LEVEL_ERROR | LOG_LEVEL_WARNING | LOG_LEVEL_INFO |            \
-     LOG_LEVEL_DEBUG)
+    (LOG_LEVEL_FATAL | LOG_LEVEL_ERROR | LOG_LEVEL_WARNING | LOG_LEVEL_INFO)
 
 enum LogType
 {
@@ -34,7 +33,6 @@ enum LogType
     (LOG_FILTER_GENERAL | LOG_FILTER_TAKEN_ADDRESS | LOG_FILTER_CALL_TARGET |            \
      LOG_FILTER_CALL_SITE | LOG_FILTER_BINARY_PATCHING)
 #define LOG_FILTER_FILE_CONFIG                                                           \
-    (LOG_FILTER_GENERAL | LOG_FILTER_TAKEN_ADDRESS | LOG_FILTER_CALL_TARGET |            \
-     LOG_FILTER_CALL_SITE | LOG_FILTER_TYPE_ANALYSIS)
+    (LOG_FILTER_GENERAL | LOG_FILTER_INSTRUMENTATION | LOG_FILTER_CALL_SITE | LOG_FILTER_TYPE_ANALYSIS)
 
 #endif /* __LOG_CONFIG_H */

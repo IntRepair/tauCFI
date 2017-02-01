@@ -160,6 +160,7 @@ public:
     bool removeInstrumentation(bool useInsertionSet);
     bool parseNewEdge(Dyninst::Address source, Dyninst::Address target);
     void relocateFunction();
+    void annotateFunction(std::vector<char> annotation, bool force=false);
     bool getSharedFuncs(std::set<BPatch_function*> &funcs);
 
     void addParam(Dyninst::SymtabAPI::localVar *lvar);

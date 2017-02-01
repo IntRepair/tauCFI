@@ -1,6 +1,7 @@
 import getopt
 import test_target
 import os
+import csv
 
 def get_test_dir(argv):
     option_strings = ["binutils-dir=", "llvm-build-dir=", "source-dir=", "test-dir=", "analysis-script="]
@@ -68,3 +69,57 @@ def configure_targets(argv):
 
     #TESTDIR += "/nginx"
     return test_targets #[test_target.Target("nginx", ANALYSISSCRIPT, SOURCEDIR, TESTDIR, CCompiler, CC_Options, LD_Options)]
+
+
+def __run_in_test_environment(argv, name, csv_defs, fn, error_files, csv_writers):
+    csv_def = csv_defs[0]
+    csv_defs = csv_defs[1:]
+    csv_name = csv_def[0]
+    csv_fields = csv_def[1]
+    test_dir = get_test_dir(argv)
+
+    with open(os.path.join(test_dir, csv_name + ".O0.csv"), "w") as csv_file0:
+        with open(os.path.join(test_dir, csv_name + ".O1.csv"), "w") as csv_file1:
+            with open(os.path.join(test_dir, csv_name + ".O2.csv"), "w") as csv_file2:
+                with open(os.path.join(test_dir, csv_name + ".O3.csv"), "w") as csv_file3:
+                    with open(os.path.join(test_dir, csv_name + ".Os.csv"), "w") as csv_files:
+                                            
+                        __csv_writers = {}
+                        writer = csv.DictWriter(csv_file0, fieldnames=csv_fields)
+                        writer.writeheader()
+                        __csv_writers["O0"] = writer
+                        writer = csv.DictWriter(csv_file1, fieldnames=csv_fields)
+                        writer.writeheader()
+                        __csv_writers["O1"] = writer
+                        writer = csv.DictWriter(csv_file2, fieldnames=csv_fields)
+                        writer.writeheader()
+                        __csv_writers["O2"] = writer
+                        writer = csv.DictWriter(csv_file3, fieldnames=csv_fields)
+                        writer.writeheader()
+                        __csv_writers["O3"] = writer
+                        writer = csv.DictWriter(csv_files, fieldnames=csv_fields)
+                        writer.writeheader()
+                        __csv_writers["Os"] = writer
+                        csv_writers[csv_name] = __csv_writers
+
+                        if len(csv_defs) > 0:
+                            __run_in_test_environment(argv, name, csv_defs, fn, error_files, csv_writers)
+                        else:
+                            fn(argv, error_files, csv_writers)
+
+
+def run_in_test_environment(argv, name, csv_defs, fn):
+    test_dir = get_test_dir(argv)
+
+    with open(os.path.join(test_dir, "error_file" + name + ".O0"), "w") as e0:
+        with open(os.path.join(test_dir, "error_file" + name + ".O1"), "w") as e1:
+            with open(os.path.join(test_dir, "error_file" + name + ".O2"), "w") as e2:
+                with open(os.path.join(test_dir, "error_file" + name + ".O3"), "w") as e3:
+                    with open(os.path.join(test_dir, "error_file" + name + ".Os"), "w") as es:
+                        error_files = {}
+                        error_files["O0"] = e0
+                        error_files["O1"] = e1
+                        error_files["O2"] = e2
+                        error_files["O3"] = e3
+                        error_files["Os"] = es
+                        __run_in_test_environment(argv, name, csv_defs, fn, error_files, {})

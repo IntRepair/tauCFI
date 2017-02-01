@@ -45,6 +45,21 @@ static RegisterStates merge_horizontal_intersection(std::vector<RegisterStates> 
         });
 }
 
+static RegisterStates merge_horizontal_union(std::vector<RegisterStates> states)
+{
+    return impl::merge_horizontal(
+        states, [](RegisterStates current, RegisterStates delta) {
+            return transform(current, delta, [](state_t current, state_t delta) {
+                if (is_trashed(delta) || is_trashed(current))
+                    return REGISTER_TRASHED;
+                else if (is_set(delta) || is_set(current))
+                    return REGISTER_SET_FULL;
+                else
+                    return REGISTER_UNKNOWN;
+            });
+        });
+}
+
 static RegisterStates merge_vertical(RegisterStates current, RegisterStates delta)
 {
     return transform(current, delta, [](state_t current, state_t delta) {
@@ -55,10 +70,11 @@ static RegisterStates merge_vertical(RegisterStates current, RegisterStates delt
 
 namespace calltarget
 {
-AnalysisConfig init(CADecoder *decoder, BPatch_image *image, BPatch_object *object)
+std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image, BPatch_object *object)
 {
+    std::vector<AnalysisConfig> configs;
     AnalysisConfig config;
-
+    config.object = object;
     config.decoder = decoder;
     config.image = image;
     config.merge_vertical = &merge_vertical;
@@ -72,7 +88,11 @@ AnalysisConfig init(CADecoder *decoder, BPatch_image *image, BPatch_object *obje
     config.use_min_liveness = false;
     config.ignore_nops = false;
 
-    return config;
+    configs.push_back(config);
+    configs.push_back(config);
+
+
+    return configs;
 }
 }; /* namespace calltarget */
 
@@ -149,26 +169,47 @@ static std::shared_ptr<FunctionCallReverseLookup> calculate_block_callers(Analys
 }
 };
 
-AnalysisConfig init(CADecoder *decoder, BPatch_image *image, BPatch_object *object,
-                    CallTargets &targets)
+std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image, BPatch_object *object,
+                    std::vector<CallTargets> &targets)
 {
-    AnalysisConfig config;
+    std::vector<AnalysisConfig> configs;
+    AnalysisConfig init_config;
 
-    config.decoder = decoder;
-    config.image = image;
-    config.merge_vertical = &merge_vertical;
+    init_config.object = object;
+    init_config.decoder = decoder;
+    init_config.image = image;
+    init_config.merge_vertical = &merge_vertical;
+    init_config.can_change = impl::has_undefined_param_regs;
+    init_config.follow_return_edges = false;
+    init_config.follow_into_callers = true;
+    init_config.use_min_liveness = false;
+    init_config.ignore_nops = true;
+    init_config.block_callers = calculate_block_callers(init_config, object);
+
+{
+    AnalysisConfig config(init_config);
+
     config.merge_horizontal_intra = &merge_horizontal_intersection;
     config.merge_horizontal_inter = &merge_horizontal_intersection;
     config.merge_horizontal_entry = &merge_horizontal_intersection;
     config.merge_horizontal_mlive = &merge_horizontal_intersection;
     config.merge_horizontal_rip = &merge_horizontal_intersection;
-    config.can_change = impl::has_undefined_param_regs;
-    config.follow_return_edges = true;
-    config.follow_into_callers = true;
-    config.use_min_liveness = false;
-    config.ignore_nops = true;
-    config.block_callers = calculate_block_callers(config, object);
-    return config;
+
+    configs.push_back(config);
+}
+{
+    AnalysisConfig config(init_config);
+
+    config.merge_horizontal_intra = &merge_horizontal_union;
+    config.merge_horizontal_inter = &merge_horizontal_union;
+    config.merge_horizontal_entry = &merge_horizontal_union;
+    config.merge_horizontal_mlive = &merge_horizontal_union;
+    config.merge_horizontal_rip = &merge_horizontal_union;
+
+    configs.push_back(config);
+}
+
+    return configs;
 }
 }; /* namespace callsite */
 }; /* namespace count */

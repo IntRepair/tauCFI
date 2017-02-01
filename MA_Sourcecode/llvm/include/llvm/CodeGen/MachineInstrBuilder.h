@@ -266,6 +266,7 @@ public:
 /// Builder interface. Specify how to create the initial instruction itself.
 inline MachineInstrBuilder BuildMI(MachineFunction &MF, const DebugLoc &DL,
                                    const MCInstrDesc &MCID) {
+  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() MIBuilder I\n";
   return MachineInstrBuilder(MF, MF.CreateMachineInstr(MCID, DL));
 }
 
@@ -273,6 +274,7 @@ inline MachineInstrBuilder BuildMI(MachineFunction &MF, const DebugLoc &DL,
 /// destination virtual register.
 inline MachineInstrBuilder BuildMI(MachineFunction &MF, const DebugLoc &DL,
                                    const MCInstrDesc &MCID, unsigned DestReg) {
+  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() MIBuilder II\n";
   return MachineInstrBuilder(MF, MF.CreateMachineInstr(MCID, DL))
            .addReg(DestReg, RegState::Define);
 }
@@ -285,6 +287,7 @@ inline MachineInstrBuilder BuildMI(MachineBasicBlock &BB,
                                    const DebugLoc &DL, const MCInstrDesc &MCID,
                                    unsigned DestReg) {
   MachineFunction &MF = *BB.getParent();
+  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() MIBuilder III\n";
   MachineInstr *MI = MF.CreateMachineInstr(MCID, DL);
   BB.insert(I, MI);
   return MachineInstrBuilder(MF, MI).addReg(DestReg, RegState::Define);
@@ -301,6 +304,7 @@ inline MachineInstrBuilder BuildMI(MachineBasicBlock &BB,
                                    const DebugLoc &DL, const MCInstrDesc &MCID,
                                    unsigned DestReg) {
   MachineFunction &MF = *BB.getParent();
+  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() MIBuilder IV\n";
   MachineInstr *MI = MF.CreateMachineInstr(MCID, DL);
   BB.insert(I, MI);
   return MachineInstrBuilder(MF, MI).addReg(DestReg, RegState::Define);
@@ -330,6 +334,7 @@ inline MachineInstrBuilder BuildMI(MachineBasicBlock &BB,
                                    const DebugLoc &DL,
                                    const MCInstrDesc &MCID) {
   MachineFunction &MF = *BB.getParent();
+  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() MIBuilder V\n";
   MachineInstr *MI = MF.CreateMachineInstr(MCID, DL);
   BB.insert(I, MI);
   return MachineInstrBuilder(MF, MI);
@@ -340,6 +345,7 @@ inline MachineInstrBuilder BuildMI(MachineBasicBlock &BB,
                                    const DebugLoc &DL,
                                    const MCInstrDesc &MCID) {
   MachineFunction &MF = *BB.getParent();
+  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() MIBuilder VI\n";
   MachineInstr *MI = MF.CreateMachineInstr(MCID, DL);
   BB.insert(I, MI);
   return MachineInstrBuilder(MF, MI);

@@ -464,6 +464,7 @@ static MachineInstr *foldPatchpoint(MachineFunction &MF, MachineInstr &MI,
       return nullptr;
   }
 
+  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() TargetInstrInfo\n";
   MachineInstr *NewMI =
       MF.CreateMachineInstr(TII.get(MI.getOpcode()), MI.getDebugLoc(), true);
   MachineInstrBuilder MIB(MF, NewMI);

@@ -14,6 +14,7 @@
 #include "logging.h"
 #include "patching.h"
 #include "verification.h"
+#include "function_borders.h"
 
 void handler(int sig)
 {
@@ -73,10 +74,11 @@ class PadynPass : public ModulePass
         };
 
         auto const is_excluded_library = [](BPatch_object *object) {
-            const std::array<std::string, 12> excluded_libraries{
+            const std::array<std::string, 13> excluded_libraries{
                 "libdyninstAPI_RT.so", "libpthread.so", "libz.so",    "libdl.so",
                 "libcrypt.so",         "libnsl.so",     "libm.so",    "libstdc++.so",
                 "libgcc_s.so",         "libc.so",       "libpcre.so", "libcrypto.so",
+                "libcap.so"
             };
 
             auto const library_name = object->name();
@@ -93,6 +95,8 @@ class PadynPass : public ModulePass
 
             if (is_system(object) || is_shared(object) || is_excluded_library(object))
                 return;
+
+            function_borders::initialize(object);
 
             LOG_INFO(LOG_FILTER_GENERAL, "Processing object %s", object->name().c_str());
 

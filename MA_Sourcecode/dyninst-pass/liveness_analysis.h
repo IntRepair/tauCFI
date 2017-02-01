@@ -119,11 +119,11 @@ namespace count
 {
 namespace calltarget
 {
-AnalysisConfig init(CADecoder *decoder, BPatch_image *image, BPatch_object *object);
+std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image, BPatch_object *object);
 };
 namespace callsite
 {
-AnalysisConfig init(CADecoder *decoder, BPatch_image *image, BPatch_object *object);
+std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image, BPatch_object *object);
 };
 };
 

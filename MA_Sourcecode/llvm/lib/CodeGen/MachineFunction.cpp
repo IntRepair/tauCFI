@@ -260,6 +260,8 @@ void MachineFunction::RenumberBlocks(MachineBasicBlock *MBB) {
 MachineInstr *MachineFunction::CreateMachineInstr(const MCInstrDesc &MCID,
                                                   const DebugLoc &DL,
                                                   bool NoImp) {
+  if (getName() == "pg_qsort")
+    errs() << getName() << " MachineFunction::CreateMachineInstr()\n";
   return new (InstructionRecycler.Allocate<MachineInstr>(Allocator))
     MachineInstr(*this, MCID, DL, NoImp);
 }

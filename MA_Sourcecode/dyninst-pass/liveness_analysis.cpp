@@ -2,6 +2,7 @@
 
 #include "instrumentation.h"
 #include "systemv_abi.h"
+#include "function_borders.h"
 
 #include <BPatch_flowGraph.h>
 #include <PatchCFG.h>
@@ -312,8 +313,9 @@ RegisterStates analysis(AnalysisConfig &config, BPatch_basicBlock *block,
 
         if (change_possible)
         {
-            BPatch_Vector<BPatch_basicBlock *> targets;
+            std::vector<BPatch_basicBlock *> targets;
             block->getTargets(targets);
+            function_borders::apply(block, targets);
 
             LOG_TRACE(LOG_FILTER_LIVENESS_ANALYSIS, "Final merging for BasicBlock %lx",
                       bb_start_address);

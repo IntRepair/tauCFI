@@ -113,37 +113,26 @@ template <> inline std::string to_string(MemoryCallSite const &call_site)
            ";" + int_to_hex(call_site.address);
 }
 
-#if (not defined(__PADYN_COUNT_EXT_POLICY)) && (not (defined (__PADYN_TYPE_POLICY)))
-CallSites callsite_analysis(BPatch_object *object, BPatch_image *image,
-                            CADecoder *decoder, CallTargets &targets)
-#else
 std::vector<CallSites> callsite_analysis(BPatch_object *object, BPatch_image *image,
                                          CADecoder *decoder,
                                          std::vector<CallTargets> &targets)
-#endif
 {
-#if (not defined(__PADYN_COUNT_EXT_POLICY)) && (not (defined (__PADYN_TYPE_POLICY)))
-    CallSites call_sites;
-#endif
-
 #ifdef __PADYN_TYPE_POLICY
     auto liveness_configs = liveness::type::callsite::init(decoder, image, object);
     auto reaching_configs =
         reaching::type::callsite::init(decoder, image, object, targets);
 
-    std::vector<CallSites> call_sites_vector;
-
-    for (auto index = 0; index < liveness_configs.size(); ++index)
-    {
-        auto liveness_config = liveness_configs[index];
-        auto reaching_config = reaching_configs[index];
-
-        CallSites call_sites;
 #elif defined(__PADYN_COUNT_EXT_POLICY)
     auto liveness_configs = liveness::count_ext::callsite::init(decoder, image, object);
     auto reaching_configs =
         reaching::count_ext::callsite::init(decoder, image, object, targets);
 
+#else
+    auto liveness_configs = liveness::count::callsite::init(decoder, image, object);
+    auto reaching_configs =
+        reaching::count::callsite::init(decoder, image, object, targets);
+#endif
+
     std::vector<CallSites> call_sites_vector;
 
     for (auto index = 0; index < liveness_configs.size(); ++index)
@@ -152,12 +141,6 @@ std::vector<CallSites> callsite_analysis(BPatch_object *object, BPatch_image *im
         auto reaching_config = reaching_configs[index];
 
         CallSites call_sites;
-
-#else
-    auto liveness_config = liveness::count::callsite::init(decoder, image, object);
-    auto reaching_config =
-        reaching::count::callsite::init(decoder, image, object, targets);
-#endif
 
     std::unordered_map<uint64_t, std::vector<MemoryCallSite>> memory_callsites;
 
@@ -176,6 +159,7 @@ std::vector<CallSites> callsite_analysis(BPatch_object *object, BPatch_image *im
                              "<CS> basic block [%lx:%lx] instruction %lx",
                              block->getStartAddress(), block->getEndAddress(), address);
 
+                    reaching::reset_state(reaching_config);
                     auto reaching_state =
                         reaching::analysis(reaching_config, block, address);
                     LOG_INFO(LOG_FILTER_CALL_SITE, "\tREGISTER_STATE %s",
@@ -259,7 +243,6 @@ std::vector<CallSites> callsite_analysis(BPatch_object *object, BPatch_image *im
 //    }
 //}
 
-#if defined(__PADYN_COUNT_EXT_POLICY) || defined (__PADYN_TYPE_POLICY)
         liveness_config.block_states.clear();
         reaching_config.block_states.clear();
 
@@ -267,7 +250,4 @@ std::vector<CallSites> callsite_analysis(BPatch_object *object, BPatch_image *im
     }
 
     return call_sites_vector;
-#else
-    return call_sites;
-#endif
 }

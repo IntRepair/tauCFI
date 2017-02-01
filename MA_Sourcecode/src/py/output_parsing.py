@@ -10,19 +10,21 @@ def is_typename(symbol):
 
 def __sanitize_symbol(symbol):
 
+    if symbol.endswith("\\000"):
+        symbol = symbol[:-4]
     # here we remove the parameters
-    tokens = symbol.split("(")
-    if len(tokens) > 1:
-        to_be_deleted = tokens[-1]
-        tokens = tokens[:-1]
-        right_par_count = to_be_deleted.count(")") - 1
-
-        while right_par_count > 0:
-            to_be_deleted = tokens[-1]
-            tokens = tokens[:-1]
-            right_par_count += to_be_deleted.count(")") - 1
-
-        symbol = "(".join(tokens)
+#    tokens = symbol.split("(")
+#    if len(tokens) > 1:
+#        to_be_deleted = tokens[-1]
+#        tokens = tokens[:-1]
+#        right_par_count = to_be_deleted.count(")") - 1
+#
+#        while right_par_count > 0:
+#            to_be_deleted = tokens[-1]
+#            tokens = tokens[:-1]
+#            right_par_count += to_be_deleted.count(")") - 1
+#
+#        symbol = "(".join(tokens)
 
     #here we remove the
     prefix = []
@@ -31,35 +33,35 @@ def __sanitize_symbol(symbol):
         prefix = tokens[1:3]
         tokens = tokens[3:]
 
-    if is_typename(tokens[0]):
-        tokens = tokens[1:]
-    elif tokens[0].count("<") > 0 and len(tokens) > 1:
-        token = tokens[0]
-        remainder_token = tokens[1:]
-        par_token = [token]
-        left_param_count = token.count("(")
-        right_param_count = token.count(")")
-        left_temp_count = token.count("<")
-        right_temp_count = token.count(">")
-        while left_temp_count > right_temp_count or left_param_count > right_param_count:
-            token = remainder_token[0]
-            remainder_token = remainder_token[1:]
-            par_token += [token]
-            left_param_count += token.count("(")
-            right_param_count += token.count(")")
-            left_temp_count += token.count("<")
-            right_temp_count += token.count(">")
-
-        if len(remainder_token) > 0:
-            tokens = remainder_token
-            #print " ".join(par_token), " <--> ", " ".join(remainder_token)
-    elif len(tokens) > 1:
-        tokens = tokens[1:]
-
-    if "v8::internal::compiler::" == " ".join(prefix + tokens):
-        print
-        print symbol
-        print
+#    if is_typename(tokens[0]):
+#        tokens = tokens[1:]
+#    elif tokens[0].count("<") > 0 and len(tokens) > 1:
+#        token = tokens[0]
+#        remainder_token = tokens[1:]
+#        par_token = [token]
+#        left_param_count = token.count("(")
+#        right_param_count = token.count(")")
+#        left_temp_count = token.count("<")
+#        right_temp_count = token.count(">")
+#        while left_temp_count > right_temp_count or left_param_count > right_param_count:
+#            token = remainder_token[0]
+#            remainder_token = remainder_token[1:]
+#            par_token += [token]
+#            left_param_count += token.count("(")
+#            right_param_count += token.count(")")
+#            left_temp_count += token.count("<")
+#            right_temp_count += token.count(">")
+#
+#        if len(remainder_token) > 0:
+#            tokens = remainder_token
+#            #print " ".join(par_token), " <--> ", " ".join(remainder_token)
+#    elif len(tokens) > 1:
+#        tokens = tokens[1:]
+#
+#    if "v8::internal::compiler::" == " ".join(prefix + tokens):
+#        print
+#        print symbol
+#        print
 
     return " ".join(prefix + tokens)
 
@@ -155,7 +157,8 @@ def __map_line_to_values(line, index):
 #        elif index == 1:
 #            values["tag"] = token
         elif index == 2:
-            values["module"] = token.split(" ")[1]
+            module_tokens = token.split(" ")
+            values["module"] = module_tokens[len(module_tokens) - 1]
         elif index > 2 and (index - 3) < int(values["param_count"]):
             param_type = __decode_type(token)
             if param_type["usable"]:
@@ -171,7 +174,7 @@ def __map_line_to_values_at_verify(line, index):
     values = {}
 
     values["index"] = index
-    for index, token in enumerate(line.split(" ")):
+    for index, token in enumerate(line.split(";")):
         token = token.strip()
 #        elif index == 0:
 #            values["tag"] = token
@@ -204,19 +207,23 @@ def __map_line_to_values_verify(line, index):
         elif index == 4:
             param_count = 0
             params = []
+            #print token
             for (index, sub_token) in enumerate(token.split(" ")[:-1]):
                 
                 param_type = __decode_padyn_type(sub_token)
+                #print param_type
                 if param_type["usable"]:
-                    params += [sub_token]
+                    params += [param_type]
                 elif not param_type["raw"] in ["float", "double"]:
                     print "unusable_type padyn ", param_type
+                    print line
+                    print
 
                 if not param_type["is_void"]:
                     param_count = index + 1
             values["param_count"] = param_count
             values["params"] = params
-            values["return_type"] = token.split(" ")[-1]
+            values["return_type"] = __decode_padyn_type(token.split(" ")[-1])
 
         elif index == 6:
             values["block_start"] = token
@@ -226,37 +233,113 @@ def __map_line_to_values_verify(line, index):
     return values
 
 def __analyze_file_line_ground_truth(result, line, index, tag_pre_fn="", tag_pre_cs=""):
+    if "fn_index" not in result.keys():
+        result["fn_index"] = []
+        result["at_index"] = []
+        result["ct_index"] = []
+        result["cs_final"] = []
+        result["cs_prev"] = ""
+
     if line.count("<" + tag_pre_fn + "AT>") > 0:
-        result = utils.add_values_to_key(result, "address_taken", __map_line_to_values(line, index))
-        result = utils.add_values_to_key(result, "call_target", __map_line_to_values(line, index))
+        entry = __map_line_to_values(line, index)
+
+        #if "module" not in result.keys():
+        #    result["module"] = entry["module"]
+        #    result["modules"] = []
+        #elif entry["module"] != result["module"]:
+        #    if entry["module"] not in result["modules"]:
+        #        result["modules"] += [entry["module"]]
+        #        result["module"] = entry["module"]
+        #    elif entry["origin"] in (_entry["origin"] for _entry in result["call_target"]):
+        #        return
+
+        if entry["origin"] not in result["at_index"]:
+            utils.add_values_to_key(result, "address_taken", entry)
+            utils.add_values_to_key(result, "at_index", entry["origin"])
+
+        if entry["origin"] not in result["ct_index"]:
+            utils.add_values_to_key(result, "call_target", entry)
+            utils.add_values_to_key(result, "ct_index", entry["origin"])
+
+
     elif line.count("<" + tag_pre_fn + "FN>") > 0:
-        result = utils.add_values_to_key(result, "normal_function", __map_line_to_values(line, index))
-        result = utils.add_values_to_key(result, "call_target", __map_line_to_values(line, index))
+        entry = __map_line_to_values(line, index)
+
+        #if "module" not in result.keys():
+        #    result["module"] = entry["module"]
+        #    result["modules"] = []
+        #elif entry["module"] != result["module"]:
+        #    if entry["module"] not in result["modules"]:
+        #        result["modules"] += [entry["module"]]
+        #        result["module"] = entry["module"]
+        #    elif entry["origin"] in (_entry["origin"] for _entry in result["call_target"]):
+        #        return
+
+        if entry["origin"] not in result["fn_index"]:
+            utils.add_values_to_key(result, "normal_function", entry)
+            utils.add_values_to_key(result, "fn_index", entry["origin"])
+
+        if entry["origin"] not in result["ct_index"]:
+            utils.add_values_to_key(result, "call_target", entry)
+            utils.add_values_to_key(result, "ct_index", entry["origin"])
+
     elif line.count("<" + tag_pre_cs + "CS>") > 0:
-        result = utils.add_values_to_key(result, "call_site", __map_line_to_values(line, index))
+        entry = __map_line_to_values(line, index)
+
+        #if "module" not in result.keys():
+        #    result["module"] = entry["module"]
+        #    result["modules"] = []
+        #elif entry["module"] != result["module"]:
+        #    if entry["module"] not in result["modules"]:
+        #        result["modules"] += [entry["module"]]
+        #        result["module"] = entry["module"]
+        #    elif entry["origin"] in (_entry["origin"] for _entry in result["call_site"]):
+        #        return
+
+        if result["cs_prev"] != entry["origin"] and result["cs_prev"] != "":
+            utils.add_values_to_key(result, "cs_final", result["cs_prev"])
+            result["cs_prev"] = ""
+
+        if result["cs_prev"] == entry["origin"]:
+            utils.add_values_to_key(result, "call_site", entry)
+        elif result["cs_prev"] == "" and entry["origin"] not in result["cs_final"]:
+            result["cs_prev"] = entry["origin"]
+            utils.add_values_to_key(result, "call_site", entry)
 
     return result
 
 def __analyze_file_line_verify(result, line, index):
-    if line.count("<AT>") > 0:
-        result = utils.add_values_to_key(result, "address_taken", __map_line_to_values_at_verify(line, index))
-    elif line.count("<CT>") > 0:
-        value = __map_line_to_values_verify(line, index)
+    if "at_index" not in result.keys():
+        result["at_index"] = []
+        result["ct_index"] = []
 
-        if not utils.is_internal_function(value["origin"]):
-            result = utils.add_values_to_key(result, "call_target", value)
+    if line.count("<AT>") > 0:
+        entry = __map_line_to_values_at_verify(line, index)
+
+        if entry["origin"] not in result["at_index"]:
+            utils.add_values_to_key(result, "address_taken", entry)
+            utils.add_values_to_key(result, "at_index", entry["origin"])
+
+    elif line.count("<CT>") > 0:
+        entry = __map_line_to_values_verify(line, index)
+
+        if not utils.is_internal_function(entry["origin"]):
+            if entry["origin"] not in result["ct_index"]:
+                utils.add_values_to_key(result, "call_target", entry)
+                utils.add_values_to_key(result, "ct_index", entry["origin"])
+
     elif line.count("<CS>") > 0:
         value =  __map_line_to_values_verify(line, index)
 
         if not utils.is_internal_function(value["origin"]):
-            result = utils.add_values_to_key(result, "call_site", value)
+            utils.add_values_to_key(result, "call_site", value)
 
     return result
 
 def __analyze_file_lines(in_file, analyzer, result):
     index = 0
     for line in in_file:
-        result = analyzer(result, line, index)
+        analyzer(result, line, index)
         index += 1
     return result
 
@@ -277,6 +360,13 @@ def __analyze_file_line_machine_ground_truth(result, line, index) :
 def parse_machine_ground_truth(path, name):
     with file(os.path.join(path, "ground_truth." + name)) as f:
         return __analyze_file_lines(f, __analyze_file_line_machine_ground_truth, {})
+
+def __analyze_file_line_augment_machine_ground_truth(result, line, index) :
+    return __analyze_file_line_ground_truth(result, line, index, "M", "AM")
+
+def parse_augment_machine_ground_truth(path, name):
+    with file(os.path.join(path, "ground_truth." + name)) as f:
+        return __analyze_file_lines(f, __analyze_file_line_augment_machine_ground_truth, {})
 
 def __analyze_file_line_tailcall_machine_ground_truth(result, line, index) :
     return __analyze_file_line_ground_truth(result, line, index, "M", "TM")
@@ -330,12 +420,106 @@ def parse_unfiltered_x86machine_ground_truth(path, name):
 def parse_verify(path, name):
     result = {}
     with file(os.path.join(path, "verify." + name + ".at")) as f:
-        result = __analyze_file_lines(f, __analyze_file_line_verify, result)
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
 
     with file(os.path.join(path, "verify." + name + ".cs")) as f:
-        result = __analyze_file_lines(f, __analyze_file_line_verify, result)
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
 
     with file(os.path.join(path, "verify." + name + ".ct")) as f:
-        result = __analyze_file_lines(f, __analyze_file_line_verify, result)
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    return result
+
+def parse_verify_prec(path, name):
+    result = {}
+    with file(os.path.join(path, "verify.count_prec" + name + ".at")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    with file(os.path.join(path, "verify.count_prec" + name + ".cs")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    with file(os.path.join(path, "verify.count_prec" + name + ".ct")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    return result
+
+def parse_type_verify(path, name):
+    result = {}
+    with file(os.path.join(path, "verify.type_exp1" + name + ".at")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    with file(os.path.join(path, "verify.type_exp1" + name + ".cs")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    with file(os.path.join(path, "verify.type_exp1" + name + ".ct")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    return result
+
+def parse_type2_verify(path, name):
+    result = {}
+    with file(os.path.join(path, "verify.type_exp2" + name + ".at")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    with file(os.path.join(path, "verify.type_exp3" + name + ".cs")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    with file(os.path.join(path, "verify.type_exp2" + name + ".ct")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    return result
+
+
+
+def parse_count_safe_verify(path, name):
+    result = {}
+    with file(os.path.join(path, "verify.count_safe" + name + ".at")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    with file(os.path.join(path, "verify.count_safe" + name + ".cs")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    with file(os.path.join(path, "verify.count_safe" + name + ".ct")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    return result
+
+
+def parse_count_prec_verify(path, name):
+    result = {}
+    with file(os.path.join(path, "verify.count_prec" + name + ".at")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    with file(os.path.join(path, "verify.count_prec" + name + ".cs")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    with file(os.path.join(path, "verify.count_prec" + name + ".ct")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    return result
+
+def parse_type_safe_verify(path, name):
+    result = {}
+    with file(os.path.join(path, "verify.type_exp2" + name + ".at")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    with file(os.path.join(path, "verify.type_exp3" + name + ".cs")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    with file(os.path.join(path, "verify.type_exp2" + name + ".ct")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    return result
+
+def parse_type_prec_verify(path, name):
+    result = {}
+    with file(os.path.join(path, "verify.type_exp2" + name + ".at")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    with file(os.path.join(path, "verify.type_exp1" + name + ".cs")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
+
+    with file(os.path.join(path, "verify.type_exp2" + name + ".ct")) as f:
+        __analyze_file_lines(f, __analyze_file_line_verify, result)
 
     return result

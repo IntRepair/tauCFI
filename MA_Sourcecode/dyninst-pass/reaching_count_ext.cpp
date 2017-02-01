@@ -161,6 +161,7 @@ std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image,
     std::vector<AnalysisConfig> configs;
 
     AnalysisConfig init_config;
+    init_config.object = object;
     init_config.decoder = decoder;
     init_config.image = image;
     init_config.merge_vertical = &merge_vertical;
@@ -312,6 +313,7 @@ std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image,
     std::vector<AnalysisConfig> configs;
 
     AnalysisConfig init_config;
+    init_config.object = object;
     init_config.decoder = decoder;
     init_config.image = image;
     init_config.merge_vertical = &merge_vertical;

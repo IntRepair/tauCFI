@@ -3,6 +3,7 @@
 #include "instrumentation.h"
 #include "systemv_abi.h"
 #include "utils.h"
+#include "region_data.h"
 
 #include <BPatch_flowGraph.h>
 #include <PatchCFG.h>
@@ -10,6 +11,7 @@
 #include <boost/range/adaptor/reversed.hpp>
 #include <boost/optional.hpp>
 
+using Dyninst::SymtabAPI::Region;
 using Dyninst::PatchAPI::PatchBlock;
 
 template <> reaching::state_t convert_state(RegisterState reg_state)
@@ -49,6 +51,11 @@ template <> reaching::state_t convert_state(RegisterStateEx reg_state)
 namespace reaching
 {
 
+void reset_state(AnalysisConfig& config)
+{
+    config.block_states = RegisterStateMap();
+}
+
 namespace
 {
 static boost::optional<RegisterStates> block_analysis(
@@ -63,6 +70,7 @@ static boost::optional<RegisterStates> blocks_analysis(
     AnalysisConfig &config, std::vector<BPatch_basicBlock *> blocks,
     std::vector<BPatch_basicBlock *> path = std::vector<BPatch_basicBlock *>())
 {
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "CALL blocks_analysis(AnalysisConfig &config, std::vector<BPatch_basicBlock *> blocks,...)");
     std::vector<RegisterStates> states;
 
     for (auto block : blocks)
@@ -76,6 +84,7 @@ static boost::optional<RegisterStates> blocks_analysis(
     if (states.size() > 0)
         register_state = (*config.merge_horizontal_intra)(states);
 
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "RETURN blocks_analysis(AnalysisConfig &config, std::vector<BPatch_basicBlock *> blocks,...)");
     return register_state;
 }
 
@@ -83,6 +92,7 @@ boost::optional<RegisterStates> interfn_analysis(
     AnalysisConfig &config, std::vector<FnCallReverse> blocks,
     std::vector<BPatch_basicBlock *> path = std::vector<BPatch_basicBlock *>())
 {
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "CALL interfn_analysis(AnalysisConfig &config, std::vector<FnCallReverse> blocks,...)");
     std::vector<RegisterStates> states;
 
     for (auto block : blocks)
@@ -96,6 +106,7 @@ boost::optional<RegisterStates> interfn_analysis(
     if (states.size() > 0)
         register_state = (*config.merge_horizontal_inter)(states);
 
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "RETURN interfn_analysis(AnalysisConfig &config, std::vector<FnCallReverse> blocks,...)");
     return register_state;
 }
 
@@ -103,6 +114,8 @@ static RegisterStates source_analysis(
     AnalysisConfig &config, BPatch_basicBlock *block,
     std::vector<BPatch_basicBlock *> path = std::vector<BPatch_basicBlock *>())
 {
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "CALL source_analysis(AnalysisConfig &config, BPatch_basicBlock *block,...)");
+
     BPatch_Vector<BPatch_basicBlock *> sources;
     block->getSources(sources);
 
@@ -110,15 +123,28 @@ static RegisterStates source_analysis(
 
     // in case we find no sources, we have to assume that the block prepares the maximum
     // amount
-    if (block->isEntryBlock())
+
+
+// previously
+//    auto source_state = blocks_analysis(config, sources, path);
+//    if (block->isEntryBlock() || !source_state)
+//    {
+//        state = system_v::get_maximum_reaching_state();
+//    }
+//
+//    if (source_state)
+//    {
+//        state = (*config.merge_horizontal_entry)(util::make_vector(*source_state, state));
+//    }
+
+    auto source_state = blocks_analysis(config, sources, path);
+    if (!source_state)
     {
         state = system_v::get_maximum_reaching_state();
     }
-
-    auto source_state = blocks_analysis(config, sources, path);
-    if (source_state)
+    else
     {
-        state = (*config.merge_horizontal_entry)(util::make_vector(*source_state, state));
+        state = *source_state;
     }
 
     if (block->isEntryBlock())
@@ -142,6 +168,7 @@ static RegisterStates source_analysis(
         }
     }
 
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "RETURN source_analysis(AnalysisConfig &config, BPatch_basicBlock *block,...)");
     return state;
 }
 
@@ -149,6 +176,8 @@ static RegisterStates function_analysis(
     AnalysisConfig &config, BPatch_function *function,
     std::vector<BPatch_basicBlock *> path = std::vector<BPatch_basicBlock *>())
 {
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "CALL function_analysis(AnalysisConfig &config, BPatch_function *function,...)");
+
     char funcname[BUFFER_STRING_LEN];
     function->getName(funcname, BUFFER_STRING_LEN);
 
@@ -187,6 +216,8 @@ static RegisterStates function_analysis(
 
     LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
               "\tFUN------------------------------------------ %s", funcname);
+
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "RETURN function_analysis(AnalysisConfig &config, BPatch_function *function,...)");
     return state;
 }
 
@@ -195,11 +226,30 @@ static void process_instruction(
     uint64_t end_address, RegisterStates &block_state, bool &change_possible,
     std::vector<BPatch_basicBlock *> path = std::vector<BPatch_basicBlock *>())
 {
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "CALL process_instruction(AnalysisConfig &config, PatchBlock::Insns::value_type const &instruction,...)");
+
     auto address = reinterpret_cast<uint64_t>(instruction.first);
     auto decoder = config.decoder;
     auto image = config.image;
     Instruction::Ptr instruction_ptr = instruction.second;
     LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\tLooking at instruction %lx", address);
+
+    if (end_address && address == end_address)
+    {
+        if (decoder->is_indirect_call())
+        {
+            LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\tInstruction is an indirect call at the end of history");
+
+            auto range = decoder->get_register_range();
+            for (int reg_index = range.first; reg_index <= range.second; ++reg_index)
+            {
+                if (decoder->get_reg_source(0) == reg_index)
+                    block_state[reg_index] = REGISTER_TRASHED;
+            }
+
+            change_possible = (*config.can_change)(block_state);
+        }
+    }
 
     if (change_possible && ((address < end_address) || !end_address))
     {
@@ -207,6 +257,8 @@ static void process_instruction(
         {
             LOG_ERROR(LOG_FILTER_REACHING_ANALYSIS, "Could not decode instruction @%lx",
                       address);
+
+            LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "RETURN process_instruction(AnalysisConfig &config, PatchBlock::Insns::value_type const &instruction,...)");
             return;
         }
         LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\tProcessing instruction %lx", address);
@@ -306,6 +358,83 @@ static void process_instruction(
             auto state_delta = convert_states<state_t>(register_states);
             LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t DELTA STATE %s",
                       to_string(state_delta).c_str());
+
+            auto reg_index = decoder->get_reg_target(0);
+            if (reg_index && decoder->is_constant_write())
+            {
+                auto symtab = Dyninst::SymtabAPI::convert(config.object);
+
+                auto value = decoder->get_constant_write();
+                if (value == 0)
+                {
+                    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
+                              "\t Instruction @%lx writes the value %lx, which is a "
+                              "rodata value -> assuming 64bit write",
+                              address, value);
+
+                    state_delta[*reg_index] |= REGISTER_SET_FULL;
+
+                    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t DELTA STATE %s",
+                              to_string(state_delta).c_str());
+                }
+
+                Region *region = nullptr;
+                if (symtab->findRegion(region, ".rodata"))
+                {
+                auto const rodata = region_data::create(region);
+
+                auto value = decoder->get_constant_write();
+                if (rodata.contains_address(value))
+                {
+                    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
+                              "\t Instruction @%lx writes the value %lx, which is a "
+                              "rodata value -> assuming 64bit write",
+                              address, value);
+
+                    state_delta[*reg_index] |= REGISTER_SET_FULL;
+
+                    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t DELTA STATE %s",
+                              to_string(state_delta).c_str());
+                }
+                }
+                if (symtab->findRegion(region, ".data"))
+                {
+                auto const data = region_data::create(region);
+
+                auto value = decoder->get_constant_write();
+                if (data.contains_address(value))
+                {
+                    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
+                              "\t Instruction @%lx writes the value %lx, which is a "
+                              "data value -> assuming 64bit write",
+                              address, value);
+
+                    state_delta[*reg_index] |= REGISTER_SET_FULL;
+
+                    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t DELTA STATE %s",
+                              to_string(state_delta).c_str());
+                }
+                }
+                if (symtab->findRegion(region, ".bss"))
+                {
+                auto const bss = region_data::create(region);
+
+                auto value = decoder->get_constant_write();
+                if (bss.contains_address(value))
+                {
+                    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
+                              "\t Instruction @%lx writes the value %lx, which is a "
+                              "bss value -> assuming 64bit write",
+                              address, value);
+
+                    state_delta[*reg_index] |= REGISTER_SET_FULL;
+
+                    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t DELTA STATE %s",
+                              to_string(state_delta).c_str());
+                }
+                }
+            }
+
             block_state = (*config.merge_vertical)(block_state, state_delta);
             LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "\t RESULT STATE %s",
                       to_string(block_state).c_str());
@@ -313,16 +442,23 @@ static void process_instruction(
             change_possible = (*config.can_change)(block_state);
         }
     }
+
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "RETURN process_instruction(AnalysisConfig &config, PatchBlock::Insns::value_type const &instruction,...)");
 }
 
 static boost::optional<RegisterStates>
 block_analysis(AnalysisConfig &config, BPatch_basicBlock *block,
                std::vector<BPatch_basicBlock *> path)
 {
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "CALL block_analysis(AnalysisConfig &config, BPatch_basicBlock *block,...)");
+
     boost::optional<RegisterStates> block_state_opt;
 
     if (util::contains(path, block))
+    {
+        LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "RETURN block_analysis(AnalysisConfig &config, BPatch_basicBlock *block,...)");
         return block_state_opt;
+    }
 
     path.push_back(block);
 
@@ -372,6 +508,8 @@ block_analysis(AnalysisConfig &config, BPatch_basicBlock *block,
         LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS,
                   "\tBB------------------------------------------ %lx", bb_start_address);
     }
+
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "RETURN block_analysis(AnalysisConfig &config, BPatch_basicBlock *block,...)");
     return block_state_opt;
 }
 
@@ -379,10 +517,14 @@ static boost::optional<RegisterStates>
 block_analysis(AnalysisConfig &config, BPatch_basicBlock *block,
                Dyninst::Address end_address, std::vector<BPatch_basicBlock *> path)
 {
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "CALL block_analysis(AnalysisConfig &config, BPatch_basicBlock *block, Dyninst::Address end_address,...)");
     boost::optional<RegisterStates> block_state_opt;
 
     if (util::contains(path, block))
+    {
+        LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "RETURN block_analysis(AnalysisConfig &config, BPatch_basicBlock *block, Dyninst::Address end_address,...)");
         return block_state_opt;
+    }
 
     path.push_back(block);
 
@@ -429,6 +571,8 @@ block_analysis(AnalysisConfig &config, BPatch_basicBlock *block,
               bb_start_address, end_address);
 
     block_state_opt = block_state;
+
+    LOG_TRACE(LOG_FILTER_REACHING_ANALYSIS, "RETURN block_analysis(AnalysisConfig &config, BPatch_basicBlock *block, Dyninst::Address end_address,...)");
     return block_state_opt;
 }
 };

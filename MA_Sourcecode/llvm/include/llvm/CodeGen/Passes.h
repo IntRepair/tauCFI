@@ -395,7 +395,11 @@ namespace llvm {
   FunctionPass *createFreeMachineFunctionPass();
 
   FunctionPass *createMachineGroundTruth_FunctionPass();
-
+  FunctionPass *createMachineCallsiteAugment_FunctionPass();
+  FunctionPass *createMachineCallsiteTestAugment_FunctionPass(std::string stage);
+  FunctionPass *createMachineCallsiteDumpMRFunctionPass(std::string stage);
+  FunctionPass *createMachineCallsiteDumpIRFunctionPass(std::string stage);
+  
 } // End llvm namespace
 
 /// Target machine pass initializer for passes with dependencies. Use with

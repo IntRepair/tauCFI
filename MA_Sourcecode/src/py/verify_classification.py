@@ -298,7 +298,7 @@ def get_callsite_infos(padyn, clang, fn_acceptable):
 
     return (acceptable, padyn_csI, clang_csI)
 
-def __verify(fldr_path, prg_name, padyn, clang):
+def __verify_count(fldr_path, prg_name, padyn, clang):
     csv_data = {}
     csv_data["target"] = prg_name
 
@@ -331,18 +331,18 @@ def __verify(fldr_path, prg_name, padyn, clang):
             else:
                 ct_result[6] += [fn]
 
-            padyn_void = (padyn_ct["return_type"] == "0")
+            padyn_void = bool(padyn_ct["return_type"]["is_void"])
             clang_void = bool(clang_ct["return_type"]["is_void"])
 
-            if padyn_void and clang_void:
+            if padyn_void == clang_void:
                 ct_void_ok += 1
-            elif padyn_void and not clang_void:
+            elif padyn_void and (not clang_void):
                 ct_void_problem += 1
                 problem_string +=  prg_name + "CT void problem: " + fn + " clang: non-void padyn: void\n"
 
     ct_dict = {}
     ct_dict["target"] = prg_name
-    ct_dict["#ct"] = ct_count
+    ct_dict["ct"] = ct_count
     ct_dict["problems"] = ct_problems
     ct_dict["void-ok"] = ct_void_ok
     ct_dict["void-problem"] = ct_void_problem
@@ -367,27 +367,35 @@ def __verify(fldr_path, prg_name, padyn, clang):
 
         index = 0
         for (padyn_cs, clang_cs) in zip(padyn_css, clang_css):
-            dist = int(padyn_cs["param_count"]) - int(clang_cs["param_count"])
+            clang_param_count = int(clang_cs["param_count"])
+            if clang_param_count > 6:
+                clang_param_count = 6
+            dist = int(padyn_cs["param_count"]) - clang_param_count
             cs_count += 1
             if (dist < 0):
                 cs_problems += 1
-                problem_string +=  prg_name + "CS mismatch: " + fn + " [" + str(index) + "] clang: "+ str(clang_cs["param_count"]) + " padyn: " + str(padyn_cs["param_count"]) + "\n"
-            else:
+                problem_string +=  prg_name + "CS mismatch: " + cs_fn + " [" + str(index) + "] clang: " + str(clang_param_count) + "[real: "+ str(clang_cs["param_count"]) + "] padyn: " + str(padyn_cs["param_count"]) + "\n"
+            elif dist < 6:
+                if dist != 0:
+                    problem_string +=  prg_name + "CS accept: " + cs_fn + " [" + str(index) + "] clang: "+ str(clang_cs["param_count"]) + " padyn: " + str(padyn_cs["param_count"]) + "\n"
                 cs_result[dist] += [cs_fn]
+            else:
+                problem_string +=  prg_name + "CS accept: " + cs_fn + " [" + str(index) + "] clang: "+ str(clang_cs["param_count"]) + " padyn: " + str(padyn_cs["param_count"]) + "\n"
+                cs_result[6] += [cs_fn]
             index += 1
 
-            padyn_non_void = not (padyn_cs["return_type"] == "0")
+            padyn_non_void = not bool(padyn_cs["return_type"]["is_void"])
             clang_non_void = not bool(clang_cs["return_type"]["is_void"])
 
-            if padyn_non_void and clang_non_void:
+            if padyn_non_void == clang_non_void:
                 cs_non_void_ok += 1
-            elif padyn_non_void and not clang_non_void:
+            elif padyn_non_void and (not clang_non_void):
                 cs_non_void_problem += 1
-                problem_string +=  prg_name + "CS void problem: " + fn + " [" + str(index) + "] clang: void padyn: non-void\n"
+                problem_string +=  prg_name + "CS void problem: " + cs_fn + " [" + str(index) + "] clang: void padyn: non-void\n"
 
     cs_dict = {}
     cs_dict["target"] = prg_name
-    cs_dict["#cs"] = cs_count
+    cs_dict["cs"] = cs_count
     cs_dict["problems"] = cs_problems
     cs_dict["non-void-ok"] = cs_non_void_ok
     cs_dict["non-void-problem"] = cs_non_void_problem
@@ -397,13 +405,214 @@ def __verify(fldr_path, prg_name, padyn, clang):
 
     return (cs_dict, ct_dict, problem_string)
 
+def bucket_wideness(wideness):
+    val = int(wideness)
+
+    if val == 0:
+        return 0
+    elif val <= 8:
+        return 8
+    elif val <= 16:
+        return 16
+    elif val <= 32:
+        return 32
+    else:
+        return 64
+
+def __param_to_string(data):
+    count = int(data["param_count"])
+
+    bucket_id = str(count) + " "
+
+    for param in data["params"]:
+        bucket_id += str(param["wideness"]).strip() + " "
+
+    bucket_id += "0" #str(data["return_type"]["wideness"])
+
+    return bucket_id
+
+def __verify_type(fldr_path, prg_name, padyn, clang):
+    csv_data = {}
+    csv_data["target"] = prg_name
+
+    problem_string = ""
+    problem_info = ""
+
+    ct_problems = 0
+    ct_count = 0
+    ct_perfect = 0
+
+    ct_void_ok = 0
+    ct_void_problem = 0
+
+    acceptable_fns = get_acceptable_functions(padyn, clang)
+
+    padyn_ctI = get_calltarget_index(padyn, acceptable_fns)
+    clang_ctI = get_calltarget_index(clang, acceptable_fns)
+
+    acceptable_buckets = {}
+    problematic_buckets = {}
+
+    for fn in acceptable_fns:
+        padyn_cts = padyn_ctI[fn]
+        clang_cts = clang_ctI[fn]
+
+        for (padyn_ct, clang_ct) in zip(padyn_cts, clang_cts):
+
+            dist = int(clang_ct["param_count"]) - int(padyn_ct["param_count"])
+            ct_count += 1
+            if (dist < 0):
+                ct_problems += 1
+                problem_string +=  prg_name + "CT mismatch: " + fn + " clang: "+ str(clang_ct["param_count"]) + " padyn: " + str(padyn_ct["param_count"]) + "\n"
+                utils.add_values_to_key(problematic_buckets, __param_to_string(clang_ct), __param_to_string(padyn_ct))
+            else:
+                perfect = bool(dist == 0)
+                problem = False
+                problem_info = ""
+                param_count = 0
+                for (param_clang, param_padyn) in zip (clang_ct["params"], padyn_ct["params"]):
+                    if bucket_wideness(param_clang["wideness"]) < bucket_wideness(param_padyn["wideness"]):
+                        problem = True
+                        perfect = False
+                        problem_info += "param no " + str(param_count) + " " + str(bucket_wideness(param_clang["wideness"])) + " " + str(bucket_wideness(param_padyn["wideness"])) 
+                    elif bucket_wideness(param_clang["wideness"]) > bucket_wideness(param_padyn["wideness"]):
+                        perfect = False
+                    param_count += 1
+
+                if problem:
+                    ct_problems += 1
+                    problem_string +=  prg_name + " CT mismatch [" + str(clang_ct["param_count"]) + "-" + str(padyn_ct["param_count"]) + "] { " + problem_info + "}: " + fn + " clang: "+ str(clang_ct["params"]) + " padyn: " + str(padyn_ct["params"]) + "\n"
+                    utils.add_values_to_key(problematic_buckets, __param_to_string(clang_ct), __param_to_string(padyn_ct))
+                elif perfect:
+                    ct_perfect += 1
+                    utils.add_values_to_key(acceptable_buckets, __param_to_string(clang_ct), __param_to_string(padyn_ct))
+                else:
+                    utils.add_values_to_key(acceptable_buckets, __param_to_string(clang_ct), __param_to_string(padyn_ct))
+
+            padyn_void = bool(padyn_ct["return_type"]["is_void"])
+            clang_void = bool(clang_ct["return_type"]["is_void"])
+
+            if padyn_void == clang_void:
+                ct_void_ok += 1
+            elif padyn_void and (not clang_void):
+                ct_void_problem += 1
+                problem_string +=  prg_name + "CT void problem: " + fn + " clang: non-void padyn: void\n"
+
+    problem_string += "\n"
+
+    for key in acceptable_buckets.keys():
+        problem_string += "acceptable_matching: " + key + " -> " + str(len(acceptable_buckets[key])) + "\n"
+
+    problem_string += "\n"
+
+    for key in problematic_buckets.keys():
+        for value in problematic_buckets[key]:
+            problem_string += "problematic_matching: " + key + " -> " + value + "\n"
+
+    problem_string += "\n"
+    problem_string += "\n"
+
+    ct_dict = {}
+    ct_dict["target"] = prg_name
+    ct_dict["ct"] = ct_count
+    ct_dict["perfect"] = ct_perfect
+    ct_dict["problems"] = ct_problems
+    ct_dict["void-ok"] = ct_void_ok
+    ct_dict["void-problem"] = ct_void_problem
+
+    problem_string += "\n"
+
+    cs_problems = 0
+    cs_count = 0
+    cs_perfect = 0
+
+    cs_non_void_ok = 0
+    cs_non_void_problem = 0
+
+    (acceptable_callsites, padyn_csI, clang_csI) = get_callsite_infos(padyn, clang, acceptable_fns)
+
+    for cs_fn in acceptable_callsites:
+        padyn_css = padyn_csI[cs_fn]
+        clang_css = clang_csI[cs_fn]
+
+        index = 0
+        for (padyn_cs, clang_cs) in zip(padyn_css, clang_css):
+            clang_param_count = int(clang_cs["param_count"])
+            if clang_param_count > 6:
+                clang_param_count = 6
+            dist = int(padyn_cs["param_count"]) - clang_param_count
+            cs_count += 1
+            if (dist < 0):
+                cs_problems += 1
+                problem_string +=  prg_name + "CS mismatch: " + cs_fn + " [" + str(index) + "] clang: "+ str(clang_param_count) + "[real:" + str(clang_cs["param_count"]) + "] padyn: " + str(padyn_cs["param_count"]) + "\n"
+            else:
+                perfect = bool(dist == 0)
+                problem_info = ""
+                problem = False
+                param_count = 0
+                for (param_clang, param_padyn) in zip (clang_cs["params"], padyn_cs["params"]):
+                    if bucket_wideness(param_clang["wideness"]) > bucket_wideness(param_padyn["wideness"]):
+                        problem_info += "param no " + str(param_count) + " " + str(bucket_wideness(param_clang["wideness"])) + " " + str(bucket_wideness(param_padyn["wideness"])) 
+                        problem = True
+                        perfect = False
+                    elif bucket_wideness(param_clang["wideness"]) < bucket_wideness(param_padyn["wideness"]):
+                        perfect = False
+                    param_count += 1
+                if problem:
+                    cs_problems += 1
+                    problem_string +=  prg_name + "CS mismatch: " + cs_fn + " [" + str(index) + "] {" + problem_info + "} clang: "+ str(clang_cs["params"]) + " padyn: " + str(padyn_cs["params"]) + "\n"
+                elif perfect:
+                    cs_perfect += 1
+
+            index += 1
+
+            padyn_non_void = not bool(padyn_cs["return_type"]["is_void"])
+            clang_non_void = not bool(clang_cs["return_type"]["is_void"])
+
+            if padyn_non_void == clang_non_void:
+                cs_non_void_ok += 1
+            elif padyn_non_void and (not clang_non_void):
+                cs_non_void_problem += 1
+                problem_string +=  prg_name + "CS void problem: " + cs_fn + " [" + str(index) + "] clang: void padyn: non-void\n"
+
+    cs_dict = {}
+    cs_dict["target"] = prg_name
+    cs_dict["cs"] = cs_count
+    cs_dict["perfect"] = cs_perfect
+    cs_dict["problems"] = cs_problems
+    cs_dict["non-void-ok"] = cs_non_void_ok
+    cs_dict["non-void-problem"] = cs_non_void_problem
+
+    return (cs_dict, ct_dict, problem_string)
+
 def verify(fldr_path, prg_name):
-    padyn = parsing.parse_verify(fldr_path, prg_name)
-    clang = parsing.parse_x86machine_ground_truth(fldr_path, prg_name)
-    return __verify(fldr_path, prg_name, padyn, clang)
+    padyn = parsing.parse_verify_prec(fldr_path, prg_name)
+    clang = parsing.parse_augment_machine_ground_truth(fldr_path, prg_name)
 
-def verify_ext(fldr_path, prg_name):
-    padyn = parsing.parse_verify(fldr_path, "count_ext." + prg_name)
-    clang = parsing.parse_x86machine_ground_truth(fldr_path, "count_ext." + prg_name)
+#    padyn = parsing.parse_verify_prec(fldr_path, prg_name)
+#    clang = parsing.parse_x86machine_ground_truth(fldr_path, prg_name)
+    return __verify_count(fldr_path, prg_name, padyn, clang)
 
-    return __verify(fldr_path, prg_name, padyn, clang)
+def verify_ext(fldr_path, prg_name, tag):
+    padyn = parsing.parse_verify(fldr_path, tag + "." + prg_name)
+    clang = parsing.parse_augment_machine_ground_truth(fldr_path, prg_name)
+
+    return __verify_count(fldr_path, prg_name, padyn, clang)
+
+def verify_type_ext(fldr_path, prg_name, tag):
+    padyn = parsing.parse_verify(fldr_path, tag + "" + prg_name)
+    clang = parsing.parse_augment_machine_ground_truth(fldr_path, prg_name)
+
+    return __verify_type(fldr_path, prg_name, padyn, clang)
+
+def verify_type(fldr_path, prg_name):
+    padyn = parsing.parse_verify(fldr_path, "type." + prg_name)
+    clang = parsing.parse_augment_machine_ground_truth(fldr_path, prg_name)
+
+    return __verify_type(fldr_path, prg_name, padyn, clang)
+
+def verify_type_count(fldr_path, prg_name):
+    padyn = parsing.parse_verify(fldr_path, "type." + prg_name)
+    clang = parsing.parse_augment_machine_ground_truth(fldr_path, prg_name)
+
+    return __verify_count(fldr_path, prg_name, padyn, clang)

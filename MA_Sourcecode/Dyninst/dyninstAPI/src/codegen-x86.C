@@ -337,6 +337,14 @@ void insnCodeGen::generateBranch32(codeGen &gen, Address to)
    SET_PTR(insn, gen);
 }
 
+void insnCodeGen::appendAnnotation(codeGen &gen, std::vector<char> annotation)
+{
+   GET_PTR(insn, gen);
+   for (auto val : annotation)
+      *insn++ = val;
+   SET_PTR(insn, gen);
+}
+
 void insnCodeGen::generateCall(codeGen &gen,
                                Address from,
                                Address target)

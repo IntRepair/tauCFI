@@ -1095,6 +1095,13 @@ void BPatch_function::relocateFunction()
      }
 }
 
+void BPatch_function::annotateFunction(std::vector<char> annotation, bool force)
+{
+    lowlevel_func()->entryBlock()->annotate(annotation, lowlevel_func());
+    if (force)
+        relocateFunction();
+}
+
 bool BPatch_function::getSharedFuncs(set<BPatch_function*> &sharedFuncs)
 {
    std::set<func_instance *> ishared;

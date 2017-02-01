@@ -258,6 +258,12 @@ SpringboardBuilder::generateSpringboard(std::list<codeGen> &springboards,
    bool usedTrap = false;
    // Arbitrarily select the first function containing this springboard, since only one can win. 
    generateBranch(r.from, r.destinations.begin()->second, gen);
+   if (auto block = r.block) {
+      auto annotation = block->getAnnotationFor(r.func);
+      if (annotation.size() > 0) {
+         appendAnnotation(annotation, gen);
+      }
+   }
    unsigned size = gen.used();
    
    if (r.useTrap || conflict(r.from, r.from + gen.used(), r.fromRelocatedCode, r.func, r.priority)) {
@@ -519,6 +525,12 @@ void SpringboardBuilder::generateBranch(Address from, Address to, codeGen &gen) 
   insnCodeGen::generateBranch(gen, from, to);
 
   springboard_cerr << "Generated springboard branch " << hex << from << "->" << to << dec << endl;
+}
+
+void SpringboardBuilder::appendAnnotation(std::vector<char> annotation, codeGen &gen) {
+  insnCodeGen::appendAnnotation(gen, annotation);
+
+  springboard_cerr << "Generated springboard annotation " << endl;
 }
 
 void SpringboardBuilder::generateTrap(Address from, Address to, codeGen &gen) {

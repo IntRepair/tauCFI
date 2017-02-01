@@ -73,6 +73,8 @@ struct SpringboardReq {
    bool includeRelocatedCopies;
    bool fromRelocatedCode;
    bool useTrap;
+   //std::vector<char> annotation;
+
    SpringboardReq(const Address from_, 
                   const Address to_, 
                   const Priority priority_, 
@@ -89,7 +91,7 @@ struct SpringboardReq {
       checkConflicts(checkConflicts_), 
       includeRelocatedCopies(includeRelocCopies_),
       fromRelocatedCode(fromRelocCode_),
-      useTrap(useTrap_) 
+      useTrap(useTrap_)//, annotation(block_->getAnnotationFor(func_))
    {
       destinations[func_] = to_;
    }
@@ -126,6 +128,7 @@ SpringboardReq()
             includeRelocatedCopies = includeRelocCopies_;
             fromRelocatedCode = fromRelocCode_;
             useTrap = useTrap_;
+            //annotation = block_->getAnnotationFor(func_);
         }
         else {
             assert(from == from_);
@@ -298,6 +301,7 @@ class SpringboardBuilder {
 
   void generateBranch(Address from, Address to, codeGen &input);
   void generateTrap(Address from, Address to, codeGen &input);
+  void appendAnnotation(std::vector<char> annotation, codeGen &gen);
 
   bool conflict(Address start, Address end, bool inRelocatedCode, func_instance* func, Priority p) { return installed_springboards_->conflict(start, end, inRelocatedCode, func, p); }
 

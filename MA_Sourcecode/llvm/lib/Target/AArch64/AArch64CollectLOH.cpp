@@ -1054,6 +1054,7 @@ bool AArch64CollectLOH::runOnMachineFunction(MachineFunction &MF) {
     const TargetInstrInfo *TII = MF.getSubtarget().getInstrInfo();
     // For local analysis, create a dummy operation to record uses that are not
     // local.
+    errs() << MF.getName() << " MachineFunction::CreateMachineInstr() AArch64\n";
     DummyOp = MF.CreateMachineInstr(TII->get(AArch64::COPY), DebugLoc());
   }
 

@@ -7,6 +7,7 @@ OBJS	+= address_taken.o
 OBJS	+= callsites.o
 OBJS	+= calltargets.o
 OBJS	+= ca_decoder.o
+OBJS	+= function_borders.o
 OBJS	+= liveness_analysis.o
 OBJS	+= liveness_count.o
 OBJS	+= liveness_count_ext.o
@@ -53,7 +54,7 @@ CFLAGS += -O3
 CFLAGS += -Wall
 
 # comment out for type base policy
- CFLAGS += -D__PADYN_TYPE_POLICY
+CFLAGS += -D__PADYN_TYPE_POLICY
 # comment out for extended count policy
 # CFLAGS += -D__PADYN_COUNT_EXT_POLICY
 

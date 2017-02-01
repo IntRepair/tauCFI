@@ -47,7 +47,7 @@ inline bool is_return_register(std::size_t reg_index)
     switch (reg_index)
     {
     case DR_REG_RAX:
-    case DR_REG_RDX:
+    //case DR_REG_RDX:
         return true;
     default:
         return false;
@@ -210,6 +210,13 @@ generate_paramlist(BPatch_function *function, uint64_t address,
         if (param_ty != '0')
             args_count = index + 1;
         parameters[index] = param_ty;
+    }
+
+    // sanity
+    for (int index = args_count - 2; index >= 0; --index)
+    {
+        if (parameters[index] == '0')
+            parameters[index] = '4';
     }
 
     parameters[6] = void_ty;

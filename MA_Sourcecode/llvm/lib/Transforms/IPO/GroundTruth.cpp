@@ -7,16 +7,42 @@
 #include "llvm/Transforms/IPO/PassManagerBuilder.h"
 #include "llvm/Support/raw_os_ostream.h"
 #include "llvm/Support/raw_ostream.h"
+#include "llvm/Demangle/Demangle.h"
 
 namespace llvm {
 #define DEBUG_TYPE "ground_truth"
 
 namespace {
+static std::string demangle(std::string const& name)
+{
+  size_t size = 0;
+  int status = 0;
+  auto demangled_buffer = itaniumDemangle(name.c_str(), nullptr, &size, &status);
+  if (status == 0)
+  {
+    std::string result(demangled_buffer, size);
+    free(demangled_buffer);
+  return result;
+  }
+  else
+  {
+    errs() << "Demangle Error" << status << " with symbol " << name << "\n";
+    return name;
+  }
+}
 
 static bool isIndirCS(ImmutableCallSite &CS) {
   if (!CS.isCall())
     return false;
 
+  if (!CS.getInstruction())
+    return false;
+
+  if (CS.getCalledFunction())
+    return false;  
+
+    return !isa<ConstantExpr>(CS.getCalledValue());
+/*
   if (CS.getCalledFunction() || !CS.getCalledValue())
     return false;
 
@@ -29,6 +55,7 @@ static bool isIndirCS(ImmutableCallSite &CS) {
     return false;
 
   return true;
+*/
 }
 
 struct GroundTruth_Function : public FunctionPass {
@@ -36,8 +63,10 @@ struct GroundTruth_Function : public FunctionPass {
   GroundTruth_Function() : FunctionPass(ID) {}
 
   bool runOnFunction(Function &F) override {
-    errs().write_escaped(F.getName()) << "; ";
+    auto const F_name = demangle(F.getName()); 
+    errs().write_escaped(F_name) << "; ";
     errs() << ((F.hasAddressTaken()) ? "<AT>" : "<FN>") << "; ";
+    errs() << "module <unknown>" << "; "; //<< instr.getModule()->getModuleIdentifier() << "; ";
     // Count (and print) the arguments a callee (function) expects
     auto arguments = 0;
     for (auto itr = F.arg_begin(); itr != F.arg_end(); ++itr, ++arguments)
@@ -55,7 +84,7 @@ struct GroundTruth_Function : public FunctionPass {
 
         if (isIndirCS(cs)) {
           {
-            errs().write_escaped(F.getName()) << "; ";
+            errs().write_escaped(F_name) << "; ";
             errs() << ("<UCS>") << "; ";
             errs() << "module " << instr.getModule()->getModuleIdentifier() << "; ";
 
@@ -71,7 +100,7 @@ struct GroundTruth_Function : public FunctionPass {
           }
 
           if (!cs.isMustTailCall()) {
-            errs().write_escaped(F.getName()) << "; ";
+            errs().write_escaped(F_name) << "; ";
             errs() << ("<CS>") << "; ";
             errs() << "module " << instr.getModule()->getModuleIdentifier() << "; ";
 
@@ -89,7 +118,7 @@ struct GroundTruth_Function : public FunctionPass {
       }
     }
     return false;
-  }
+  } 
 };
 
 };

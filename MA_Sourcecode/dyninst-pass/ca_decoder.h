@@ -78,10 +78,12 @@ class CADecoder
     bool is_call();
     bool is_return();
     bool is_constant_write();
+    ptr_int_t get_constant_write();
     bool is_nop();
 
     bool is_reg_source(int index, int reg);
     boost::optional<int> get_reg_source(int index);
+    boost::optional<int> get_reg_target(int index);
     bool is_target_stackpointer_disp(int index);
     bool is_target_register_disp(int index);
     boost::optional<int> get_reg_disp_target_register(int index);

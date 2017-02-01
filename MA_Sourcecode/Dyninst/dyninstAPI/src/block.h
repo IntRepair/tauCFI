@@ -124,13 +124,15 @@ class block_instance : public Dyninst::PatchAPI::PatchBlock {
     // static void destroy(block_instance *b); // doesn't need to do anything
 
     virtual void markModified();
-
+    virtual void annotate(std::vector<char> data, func_instance* func = NULL);
+    std::vector<char> getAnnotationFor(func_instance* func);
  private:
     void updateCallTarget(func_instance *func);
     func_instance *findFunction(ParseAPI::Function *);
 
     // edges srcs_;
     // edges trgs_;
+    std::map<func_instance*, std::vector<char> > annotation;
 
 };
 

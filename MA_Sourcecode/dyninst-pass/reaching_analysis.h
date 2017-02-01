@@ -85,6 +85,7 @@ struct AnalysisConfig
 
     CADecoder *decoder;
     BPatch_image *image;
+    BPatch_object *object;
 
     bool follow_return_edges;
     bool follow_into_callers;
@@ -101,16 +102,18 @@ struct AnalysisConfig
     bool (*can_change)(RegisterStates &reg_state);
 };
 
+void reset_state(AnalysisConfig& config);
+
 namespace count
 {
 namespace calltarget
 {
-AnalysisConfig init(CADecoder *decoder, BPatch_image *image, BPatch_object *object);
+std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image, BPatch_object *object);
 };
 namespace callsite
 {
-AnalysisConfig init(CADecoder *decoder, BPatch_image *image, BPatch_object *object,
-                    CallTargets &call_targets);
+std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image, BPatch_object *object,
+                    std::vector<CallTargets> &call_targets);
 };
 };
 

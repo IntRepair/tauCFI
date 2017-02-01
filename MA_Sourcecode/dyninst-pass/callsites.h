@@ -31,14 +31,9 @@ struct CallSite
 
 using CallSites = std::vector<CallSite>;
 
-#if (not defined(__PADYN_COUNT_EXT_POLICY)) && (not (defined (__PADYN_TYPE_POLICY)))
-CallSites callsite_analysis(BPatch_object *objectr, BPatch_image *image,
-                            CADecoder *decoder, CallTargets &targets);
-#else
 std::vector<CallSites> callsite_analysis(BPatch_object *objectr, BPatch_image *image,
                                          CADecoder *decoder,
                                          std::vector<CallTargets> &targets);
-#endif
 
 #include "to_string.h"
 

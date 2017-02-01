@@ -58,9 +58,15 @@ static RegisterStates merge_vertical_inter(RegisterStates current, RegisterState
 {
     return transform(current, delta,
                      [](liveness::state_t current, liveness::state_t delta) {
+                         if (current == REGISTER_CLEAR)
+                             return delta;
                          if (is_write_before_read(current))
                              return current;
-                         return current & delta;
+                         if (is_write_before_read(delta))
+                             current |= REGISTER_WRITE_BEFORE_READ_FULL;
+                         if (is_read_before_write(delta))
+                             return current & delta;
+                         return current;
                      });
 }
 
@@ -68,6 +74,8 @@ static RegisterStates merge_vertical_union(RegisterStates current, RegisterState
 {
     return transform(current, delta,
                      [](liveness::state_t current, liveness::state_t delta) {
+                         if (current == REGISTER_CLEAR)
+                             return delta;
                          if (is_write_before_read(current))
                              return current;
                          return current | delta;
@@ -93,23 +101,21 @@ static RegisterStates merge_horizontal_union(std::vector<RegisterStates> states)
     return impl::merge_horizontal(
         states, [](RegisterStates current, RegisterStates delta) {
             return transform(current, delta, [](state_t current, state_t delta) {
-                if ((is_write_before_read(current) && ! is_read_before_write(current)) ||
-                    (is_write_before_read(delta) && ! is_read_before_write(delta)))
+                if ((is_write_before_read(current) && !is_read_before_write(current)) ||
+                    (is_write_before_read(delta) && !is_read_before_write(delta)))
                     return REGISTER_WRITE_BEFORE_READ_FULL;
                 return current | delta;
             });
         });
 }
 
-
 static RegisterStates merge_horizontal(std::vector<RegisterStates> states)
 {
-    return impl::merge_horizontal(
-        states, [](RegisterStates current, RegisterStates delta) {
-            return transform(current, delta, [](state_t current, state_t delta) {
-                return current | delta;
-            });
-        });
+    return impl::merge_horizontal(states, [](RegisterStates current,
+                                             RegisterStates delta) {
+        return transform(current, delta,
+                         [](state_t current, state_t delta) { return current | delta; });
+    });
 }
 
 static bool is_xmm_passthrough_block(CADecoder *decoder, BPatch_basicBlock *block)
@@ -307,15 +313,14 @@ static void initialize_variadic_passthrough(AnalysisConfig &config, BPatch_objec
 
 namespace calltarget
 {
-std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image, BPatch_object *object)
+std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image,
+                                 BPatch_object *object)
 {
     std::vector<AnalysisConfig> configs;
     AnalysisConfig init_config;
 
     init_config.decoder = decoder;
     init_config.image = image;
-    init_config.can_change = &impl::has_clear_param_regs;
-
     init_config.follow_calls = true;
     init_config.ignore_nops = true;
 
@@ -325,6 +330,7 @@ std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image, BPatch
         AnalysisConfig config(init_config);
         config.merge_vertical = &merge_vertical_first;
         config.merge_horizontal = &merge_horizontal_union_first;
+        config.can_change = &impl::has_clear_param_regs;
 
         configs.push_back(config);
     }
@@ -333,6 +339,7 @@ std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image, BPatch
         AnalysisConfig config(init_config);
         config.merge_vertical = &merge_vertical_inter;
         config.merge_horizontal = &merge_horizontal_union;
+        config.can_change = &impl::has_non_write_param_regs;
 
         configs.push_back(config);
     }
@@ -341,6 +348,7 @@ std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image, BPatch
         AnalysisConfig config(init_config);
         config.merge_vertical = &merge_vertical_union;
         config.merge_horizontal = &merge_horizontal_union;
+        config.can_change = &impl::has_non_write_param_regs;
 
         configs.push_back(config);
     }
@@ -349,6 +357,7 @@ std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image, BPatch
         AnalysisConfig config(init_config);
         config.merge_vertical = &merge_vertical;
         config.merge_horizontal = &merge_horizontal;
+        config.can_change = &impl::has_non_write_param_regs;
         config.follow_calls = false;
 
         configs.push_back(config);
@@ -361,7 +370,8 @@ std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image, BPatch
 namespace callsite
 {
 
-std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image, BPatch_object *object)
+std::vector<AnalysisConfig> init(CADecoder *decoder, BPatch_image *image,
+                                 BPatch_object *object)
 {
     std::vector<AnalysisConfig> configs;
     AnalysisConfig config;

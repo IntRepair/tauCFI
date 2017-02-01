@@ -5,27 +5,16 @@
 namespace verification
 {
 
-#if (not defined(__PADYN_COUNT_EXT_POLICY)) && (not (defined (__PADYN_TYPE_POLICY)))
-void pairing(BPatch_object *object, BPatch_image *image, TakenAddresses const &ats,
-             CallTargets const &cts, CallSites const &css)
-#else
 void pairing(BPatch_object *object, BPatch_image *image, TakenAddresses const &ats,
              std::vector<CallTargets> const &ctss, std::vector<CallSites> const &csss)
-#endif
 {
 #ifdef __PADYN_TYPE_POLICY
     static const std::array<std::string, 6> base_strings {
-        "verify.type_exp1",
-        "verify.type_exp2",
-        "verify.type_exp3",
-        "verify.type_exp4",
+        "verify.type_exp5",
+        "verify.type_exp6",
+        "verify.type_exp7",
+        "verify.type_exp8",
     };
-
-    for (auto index = 0; index <  ctss.size(); ++index)
-    {
-        auto base_string = base_strings[index];
-        auto cts = ctss[index];
-        auto css = csss[index % csss.size()];
 
 #elif defined(__PADYN_COUNT_EXT_POLICY)
 
@@ -38,16 +27,19 @@ void pairing(BPatch_object *object, BPatch_image *image, TakenAddresses const &a
         "verify.sources_union_follow.",
     };
 
+#else
+    static const std::array<std::string, 2> base_strings {
+        "verify.count_prec",
+        "verify.count_safe",
+    };
+
+#endif
+
     for (auto index = 0; index <  ctss.size(); ++index)
     {
         auto base_string = base_strings[index];
         auto cts = ctss[index];
         auto css = csss[index];
-
-#else
-    std::string base_string("verify.");
-#endif
-
     std::ofstream at_file(base_string + object->name() + std::string(".at"));
     std::ofstream at_file_debug(base_string + object->name() + std::string(".at.debug"));
     for (auto const &at : ats)
@@ -82,9 +74,6 @@ void pairing(BPatch_object *object, BPatch_image *image, TakenAddresses const &a
     std::ofstream ct_file(base_string + object->name() + std::string(".ct"));
     ct_file << to_string(cts);
 
-#if defined(__PADYN_COUNT_EXT_POLICY) || defined(__PADYN_TYPE_POLICY)
     }
-#endif
-
 }
 };

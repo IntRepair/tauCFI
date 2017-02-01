@@ -28,6 +28,7 @@
 #include "llvm/MC/MCInstrDesc.h"
 #include "llvm/Support/ArrayRecycler.h"
 #include "llvm/Target/TargetOpcodes.h"
+#include "llvm/IR/CallSite.h"
 
 namespace llvm {
 
@@ -103,6 +104,7 @@ private:
   mmo_iterator MemRefs;
 
   DebugLoc debugLoc;                    // Source line information.
+  ImmutableCallSite callSite;
 
   MachineInstr(const MachineInstr&) = delete;
   void operator=(const MachineInstr&) = delete;
@@ -248,6 +250,8 @@ public:
 
   /// Returns the debug location id of this MachineInstr.
   const DebugLoc &getDebugLoc() const { return debugLoc; }
+
+  const ImmutableCallSite &getCallSite() const { return callSite; }
 
   /// Return the debug variable referenced by
   /// this DBG_VALUE instruction.
@@ -1185,6 +1189,11 @@ public:
   void setDebugLoc(DebugLoc dl) {
     debugLoc = std::move(dl);
     assert(debugLoc.hasTrivialDestructor() && "Expected trivial destructor");
+  }
+
+  void setCallSite(ImmutableCallSite cs)
+  {
+    callSite = std::move(cs);
   }
 
   /// Erase an operand from an instruction, leaving it with one

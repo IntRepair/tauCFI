@@ -23,6 +23,18 @@ inline bool has_clear_param_regs(RegisterStates &reg_state)
     return undefined_regs;
 }
 
+inline bool has_non_write_param_regs(RegisterStates &reg_state)
+{
+    bool undefined_regs = false;
+    for (auto i = static_cast<size_t>(RegisterStates::min_index);
+         i <= static_cast<size_t>(RegisterStates::max_index); ++i)
+    {
+        if (system_v::is_parameter_register(i))
+            undefined_regs |= !is_write_before_read(reg_state[i]);
+    }
+    return undefined_regs;
+}
+
 inline bool has_clear_return_regs(RegisterStates &reg_state)
 {
     bool undefined_regs = false;

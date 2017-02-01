@@ -6159,8 +6159,11 @@ static MachineInstr *FuseTwoAddrInst(MachineFunction &MF, unsigned Opcode,
                                      const TargetInstrInfo &TII) {
   // Create the base instruction with the memory operand as the first part.
   // Omit the implicit operands, something BuildMI can't do.
+  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() X86 - I\n";
   MachineInstr *NewMI =
       MF.CreateMachineInstr(TII.get(Opcode), MI.getDebugLoc(), true);
+  NewMI->setCallSite(MI.getCallSite());
+
   MachineInstrBuilder MIB(MF, NewMI);
   addOperands(MIB, MOs);
 
@@ -6187,8 +6190,11 @@ static MachineInstr *FuseInst(MachineFunction &MF, unsigned Opcode,
                               MachineInstr &MI, const TargetInstrInfo &TII,
                               int PtrOffset = 0) {
   // Omit the implicit operands, something BuildMI can't do.
+  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() X86 - II\n";
   MachineInstr *NewMI =
       MF.CreateMachineInstr(TII.get(Opcode), MI.getDebugLoc(), true);
+  NewMI->setCallSite(MI.getCallSite());
+
   MachineInstrBuilder MIB(MF, NewMI);
 
   for (unsigned i = 0, e = MI.getNumOperands(); i != e; ++i) {
@@ -7053,6 +7059,7 @@ bool X86InstrInfo::unfoldMemoryOperand(
   }
 
   // Emit the data processing instruction.
+  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() X86 - III\n";
   MachineInstr *DataMI = MF.CreateMachineInstr(MCID, MI.getDebugLoc(), true);
   MachineInstrBuilder MIB(MF, DataMI);
 
