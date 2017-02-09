@@ -1236,7 +1236,7 @@ When compared, the theoretical limit of the \textit{type} policy allows about 15
 	\toprule
 	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count}*} & \multicolumn{4}{c}{\bfseries \textit{type}*}\\
 	
-	\bfseries Target & & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
+	\bfseries Target & & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median  % specify table head
 	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O0.csv}{
 	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
@@ -1284,7 +1284,7 @@ the \textit{count} policy.
 	\toprule
 	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count} safe} & \multicolumn{4}{c}{\bfseries \textit{count} prec}\\
 	
-	\bfseries Target & & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
+	\bfseries Target & & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median  % specify table head
 	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O2.csv}{
 	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
@@ -1326,7 +1326,7 @@ When compared, the precise implementation of of the \textit{count} policy allows
 	\toprule
 	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{type} safe} & \multicolumn{4}{c}{\bfseries \textit{type} prec}\\
 	
-	\bfseries Target & & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
+	\bfseries Target & & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median  % specify table head
 	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O2.csv}{
 	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
@@ -1376,66 +1376,67 @@ comparing their geometric means.
 Overall we were able to reduce the number of available call-targets per call-site from 1785 to 243 using our precision focused implementation of the \textit{type} policy,
 which is an overall reduction to 13.61\%.
 
-\begin{table}[h!]
-\resizebox{.4\textwidth}{!}{
-	\begin{tabular}{l|c|rcl|c|rcl|c}%
+\begin{table*}[h!]
+\resizebox{\textwidth}{!}{
+	\begin{tabular}{l|c|rcl|c|rcl|c|rcl|c|rcl|c}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count}*} & \multicolumn{4}{c}{\bfseries \textit{type}*}\\
+	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count}*} & \multicolumn{4}{c}{\bfseries \textit{count}} & \multicolumn{4}{c}{\bfseries \textit{type}*} & \multicolumn{4}{c}{\bfseries \textit{type}}\\
 	
-	\bfseries Target && \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
+	\bfseries Target && \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median  % specify table head
 	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O2.csv}{
 	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
  }
-	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
+	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix& \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii }% specify your coloumns here
 
     	\end{tabular}
+
 }
-		\caption {The results of comparing theoretical limits for the different restriction policies restricted using an address taken analysis throughout different optimizations.}
+		\caption {The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an an address taken analysis for optimization level O2.}
 		\label{tbl:policycompat}
-\end{table}
+\end{table*}
 
 
-\begin{table}[h!]
-\resizebox{.4\textwidth}{!}{
-	\begin{tabular}{l|c|rcl|c|rcl|c}%
-
-	\toprule
-	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count} safe} & \multicolumn{4}{c}{\bfseries \textit{count} prec}\\
-	
-	\bfseries Target && \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O2.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
- }
-	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
-
-    	\end{tabular}
-}
-		\caption {The results of comparing \textit{count} safe and precision implementation restricted using an address taken analysis throughout different optimizations.}
-		\label{tbl:policycompatcount}
-\end{table}
-
-\begin{table}[h!]
-\resizebox{.4\textwidth}{!}{
-	\begin{tabular}{l|c|rcl|c|rcl|c}%
-
-	\toprule
-	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{type} safe} & \multicolumn{4}{c}{\bfseries \textit{type} prec}\\
-	
-	\bfseries Target && \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O2.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
- }
-	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
-
-    	\end{tabular}
-}
-		\caption {The results of comparing \textit{type} safe and precision implementation restricted using an address taken analysis throughout different optimizations.}
-		\label{tbl:policycompattype}
-\end{table}
+%\begin{table}[h!]
+%\resizebox{.4\textwidth}{!}{
+%	\begin{tabular}{l|c|rcl|c|rcl|c}%
+%
+%	\toprule
+%	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count} safe} & \multicolumn{4}{c}{\bfseries \textit{count} prec}\\
+%	
+%	\bfseries Target && \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median  % specify table head
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O2.csv}{
+%	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+% }
+%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
+%
+%    	\end{tabular}
+%}
+%		\caption {The results of comparing \textit{count} safe and precision implementation restricted using an address taken analysis throughout different optimizations.}
+%		\label{tbl:policycompatcount}
+%\end{table}
+%
+%\begin{table}[h!]
+%\resizebox{.4\textwidth}{!}{
+%	\begin{tabular}{l|c|rcl|c|rcl|c}%
+%
+%	\toprule
+%	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{type} safe} & \multicolumn{4}{c}{\bfseries \textit{type} prec}\\
+%	
+%	\bfseries Target && \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median  % specify table head
+%	\\\midrule
+%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O2.csv}{
+%	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+% }
+%	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
+%
+%    	\end{tabular}
+%}
+%		\caption {The results of comparing \textit{type} safe and precision implementation restricted using an address taken analysis throughout different optimizations.}
+%		\label{tbl:policycompattype}
+%\end{table}
 
 %
 %\newpage
