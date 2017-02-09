@@ -88,72 +88,17 @@ perfect (above 98\%)
 \resizebox{.5\textwidth}{!}{
 	\begin{tabular}{l|c|c|c|c|c|c}%
 	\toprule
-	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{3}{c|}{ {\bfseries call-targets}} & \multicolumn{3}{c}{{\bfseries call-sites} }\\
+	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c|}{ {\bfseries call-targets}} & \multicolumn{3}{c}{{\bfseries call-sites} }\\
 	\bfseries Target & match & Clang miss &  tool miss &  match & Clang miss & tool miss% specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/matching.O0.csv}{
-		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
-	}
-	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
-%    	\end{tabular}
-%}
-%		\caption {Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with O0}
-%	\label{tbl:matchingquality0}
-%\end{table}
-%
-%
-%\begin{table}
-%\resizebox{\textwidth}{!}{
-%	\begin{tabular}{l|c|c|c|c|c|c}%
-%	\toprule
-	\multicolumn{1}{c}{\bfseries O1 }%& \multicolumn{3}{c|}{ {\bfseries calltargets}} & \multicolumn{3}{c}{{\bfseries callsites} }\\
-%	\bfseries Target & match & Clang miss &  padyn miss &  match & Clang miss & padyn miss% specify table head
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/matching.O1.csv}{
-		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
-	}
-	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
-%    	\end{tabular}
-%}
-%		\caption {Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with O1}
-%	\label{tbl:matchingquality1}
-%\end{table}
-%
-%
-%\begin{table}
-%\resizebox{\textwidth}{!}{
-%	\begin{tabular}{l|c|c|c|c|c|c}%
-%	\toprule
-	\multicolumn{1}{c}{\bfseries O2}% & \multicolumn{3}{c|}{ {\bfseries calltargets}} & \multicolumn{3}{c}{{\bfseries callsites} }\\
-%	\bfseries Target & match & Clang miss &  padyn miss &  match & Clang miss & padyn miss% specify table head
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/matching.O2.csv}{
-		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
-	}
-	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
-%    	\end{tabular}
-%}
-%		\caption {Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with O2}
-%	\label{tbl:matchingquality2}
-%\end{table}
-%
-%
-%\begin{table}
-%\resizebox{\textwidth}{!}{
-%	\begin{tabular}{l|c|c|c|c|c|c}%
-%	\toprule
-
-	\multicolumn{1}{c}{\bfseries O3 }%& \multicolumn{3}{c|}{ {\bfseries calltargets}} & \multicolumn{3}{c}{{\bfseries callsites} }\\
-%	\bfseries Target & match & Clang miss &  padyn miss &  match & Clang miss & padyn miss% specify table head
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/matching.O3.csv}{
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{csvs/matching.O2.csv}{
 		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
 	}
 	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
     	\end{tabular}}
 %     	}
 	\caption {Table shows the quality of structural matching provided by our automated verify and test environment, 
-	regarding call-sites and call-targets when compiling with optimization levels O0 through O3. The label Clang miss 
+	regarding call-sites and call-targets when compiling with optimization level O2. The label Clang miss 
 	denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc{TypeShield}.}
 	\label{tbl:matchingquality}
 \end{table}
@@ -206,40 +151,14 @@ the destructive/intersection operator (geometric mean for O2: 79.93\%). Which pr
 	\begin{tabular}{l|c|c|c}%
 
 	\toprule
-	 \multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries not following calls}\\
+	 \multicolumn{1}{c}{\bfseries O2} & & \multicolumn{2}{c}{\bfseries not following calls}\\
 	
 	\bfseries Target & \#  &  perfect &  problem % specify table head
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_no_follow.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_no_follow.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
 	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_no_follow.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.inter_no_follow.O3.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-
 
     	\end{tabular}
 
@@ -250,33 +169,10 @@ the destructive/intersection operator (geometric mean for O2: 79.93\%). Which pr
 	
 	     perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_follow.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-\multicolumn{1}{c}{}
-
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_follow.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-	
-	\multicolumn{1}{c}{}
-
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_follow.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-	
-\multicolumn{1}{c}{}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.inter_follow.O3.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-
 
     	\end{tabular}
 }
@@ -290,36 +186,11 @@ the destructive/intersection operator (geometric mean for O2: 79.93\%). Which pr
 	\begin{tabular}{l|c|c|c}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries not following calls}\\
+	\multicolumn{1}{c}{\bfseries O2} & & \multicolumn{2}{c}{\bfseries not following calls}\\
 	
 	\bfseries Target & \#  &  perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_no_follow.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_no_follow.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_no_follow.O2.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.union_no_follow.O3.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
@@ -333,36 +204,10 @@ the destructive/intersection operator (geometric mean for O2: 79.93\%). Which pr
 	
 	perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_follow.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_follow.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{}
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_follow.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.union_follow.O3.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-
 
     	\end{tabular}
 }
@@ -401,36 +246,11 @@ designate a candidate for the precision version of the call-site combination ope
 	\begin{tabular}{l|c|c|c}%
 
 	\toprule
-	 \multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries not following calls}\\
+	 \multicolumn{1}{c}{\bfseries O2} & & \multicolumn{2}{c}{\bfseries not following calls}\\
 	
 	\bfseries Target & \#  &  perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_no_follow.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_no_follow.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_no_follow.O2.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.inter_no_follow.O3.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
@@ -445,29 +265,7 @@ designate a candidate for the precision version of the call-site combination ope
 	
 	     perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_follow.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-\multicolumn{1}{c}{}
-
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_follow.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-	\multicolumn{1}{c}{}
-
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.inter_follow.O2.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-\multicolumn{1}{c}{}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.inter_follow.O3.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
@@ -485,36 +283,11 @@ designate a candidate for the precision version of the call-site combination ope
 	\begin{tabular}{l|c|c|c}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries not following calls}\\
+	\multicolumn{1}{c}{\bfseries O2} & & \multicolumn{2}{c}{\bfseries not following calls}\\
 	
 	\bfseries Target & \#  &  perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_no_follow.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_no_follow.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_no_follow.O2.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.union_no_follow.O3.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
@@ -528,36 +301,10 @@ designate a candidate for the precision version of the call-site combination ope
 	
 	perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_follow.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_follow.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{}
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.union_follow.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.union_follow.O3.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
 
     	\end{tabular}
 }
@@ -567,46 +314,19 @@ designate a candidate for the precision version of the call-site combination ope
 \end{table}
 
 
-
-
 \begin{table}[h!]
 \resizebox{.5\textwidth}{!}{
 	\begin{tabular}{l|c|c|c}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries not following calls}\\
+	\multicolumn{1}{c}{\bfseries O2} & & \multicolumn{2}{c}{\bfseries not following calls}\\
 	
 	\bfseries Target & \#  &  perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_union_no_follow.O0.csv}{
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_union_no_follow.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_inter_no_follow.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_inter_no_follow.O2.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.true_sources_inter_no_follow.O3.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
 
     	\end{tabular}
 
@@ -617,33 +337,10 @@ designate a candidate for the precision version of the call-site combination ope
 	
 	     perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_inter_follow.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-\multicolumn{1}{c}{}
-
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_inter_follow.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-	\multicolumn{1}{c}{}
-
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_inter_follow.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-\multicolumn{1}{c}{}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.true_sources_inter_follow.O3.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
 
     	\end{tabular}
 }
@@ -681,40 +378,14 @@ the precision version of the call-site combination operator (we chose the versio
 	\begin{tabular}{l|c|c|c}%
 
 	\toprule
-	 \multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries not following calls}\\
+	 \multicolumn{1}{c}{\bfseries O2} & & \multicolumn{2}{c}{\bfseries not following calls}\\
 	
 	\bfseries Target & \#  &  perfect &  problem % specify table head
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_inter_no_follow.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_inter_no_follow.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
 	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_inter_no_follow.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.sources_inter_no_follow.O3.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
 
     	\end{tabular}
 
@@ -725,29 +396,7 @@ the precision version of the call-site combination operator (we chose the versio
 	
 	     perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_inter_follow.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-\multicolumn{1}{c}{}
-
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_inter_follow.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-	\multicolumn{1}{c}{}
-
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_inter_follow.O2.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-\multicolumn{1}{c}{}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.sources_inter_follow.O3.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
@@ -766,39 +415,15 @@ the precision version of the call-site combination operator (we chose the versio
 	\begin{tabular}{l|c|c|c}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries not following calls}\\
+	\multicolumn{1}{c}{\bfseries O2} & & \multicolumn{2}{c}{\bfseries not following calls}\\
 	
 	\bfseries Target & \#  &  perfect &  problem % specify table head
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_union_no_follow.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_union_no_follow.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
 	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_union_no_follow.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
 
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.sources_union_no_follow.O3.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
 
     	\end{tabular}
 
@@ -809,36 +434,10 @@ the precision version of the call-site combination operator (we chose the versio
 	
 	perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_union_follow.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_union_follow.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{}
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.sources_union_follow.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.sources_union_follow.O3.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
 
     	\end{tabular}
 }
@@ -851,36 +450,11 @@ the precision version of the call-site combination operator (we chose the versio
 	\begin{tabular}{l|c|c|c}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries not following calls}\\
+	\multicolumn{1}{c}{\bfseries O2} & & \multicolumn{2}{c}{\bfseries not following calls}\\
 	
 	\bfseries Target & \#  &  perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_union_no_follow.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_union_no_follow.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_union_no_follow.O2.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.true_sources_union_no_follow.O3.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
@@ -894,36 +468,10 @@ the precision version of the call-site combination operator (we chose the versio
 	
 	perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_union_follow.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_union_follow.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{}
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp.true_sources_union_follow.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp.true_sources_union_follow.O3.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
 
     	\end{tabular}
 }
@@ -1149,40 +697,14 @@ Due to exp2 exhibiting the lowest error value, we designate this setup as the be
 	\begin{tabular}{l|c|c|c}%
 
 	\toprule
-	 \multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries exp1}\\
+	 \multicolumn{1}{c}{\bfseries O2} & & \multicolumn{2}{c}{\bfseries exp1}\\
 	
 	\bfseries Target & \#  &  perfect &  problem % specify table head
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp1.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp1.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
 	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp1.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp2.type_exp1.O3.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-
 
     	\end{tabular}
 
@@ -1193,33 +715,10 @@ Due to exp2 exhibiting the lowest error value, we designate this setup as the be
 	
 	     perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp2.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-\multicolumn{1}{c}{}
-
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp2.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-	
-	\multicolumn{1}{c}{}
-
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp2.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-	
-\multicolumn{1}{c}{}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp2.type_exp2.O3.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-
 
     	\end{tabular}
 }
@@ -1234,36 +733,11 @@ Due to exp2 exhibiting the lowest error value, we designate this setup as the be
 	\begin{tabular}{l|c|c|c}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries exp3}\\
+	\multicolumn{1}{c}{\bfseries O2} & & \multicolumn{2}{c}{\bfseries exp3}\\
 	
 	\bfseries Target & \#  &  perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp3.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp3.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp3.O2.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp2.type_exp3.O3.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%)}% specify your coloumns here
@@ -1538,32 +1012,7 @@ For each possible version we measured two data points per testtarget, the number
 	
 	\bfseries Target & \#  &  perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp1.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp1.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp1.O2.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp2.type_exp1.O3.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
@@ -1578,33 +1027,10 @@ For each possible version we measured two data points per testtarget, the number
 	
 	     perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp2.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-\multicolumn{1}{c}{}
-
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp2.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-	\multicolumn{1}{c}{}
-
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp2.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-\multicolumn{1}{c}{}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp2.type_exp2.O3.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
 
     	\end{tabular}
 }
@@ -1619,39 +1045,15 @@ For each possible version we measured two data points per testtarget, the number
 	\begin{tabular}{l|c|c|c}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O0} & & \multicolumn{2}{c}{\bfseries exp3}\\
+	\multicolumn{1}{c}{\bfseries O2} & & \multicolumn{2}{c}{\bfseries exp3}\\
 	
 	\bfseries Target & \#  &  perfect &  problem % specify table head
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp3.O0.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp3.O1.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
 	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/classification_comp2.type_exp3.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
-	
 
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/classification_comp2.type_exp3.O3.csv}{
-		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
 
     	\end{tabular}
 
@@ -1842,30 +1244,6 @@ When compared, the theoretical limit of the \textit{type} policy allows about 15
 	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
 
 
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O1.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
-	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O2.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
-	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/policy_compare.O3.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
-	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
-
     	\end{tabular}
 }
 		\caption {The results of comparing theoretical limits for the different restriction policies throughout different optimizations.}
@@ -1904,38 +1282,13 @@ the \textit{count} policy.
 	\begin{tabular}{l|c|rcl|c|rcl|c}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count} safe} & \multicolumn{4}{c}{\bfseries \textit{count} prec}\\
+	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count} safe} & \multicolumn{4}{c}{\bfseries \textit{count} prec}\\
 	
 	\bfseries Target & & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O0.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
- }
-	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O1.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O2.csv}{
 	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/policy_compare.O3.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
+ }
 	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
 
     	\end{tabular}
@@ -1971,39 +1324,15 @@ When compared, the precise implementation of of the \textit{count} policy allows
 	\begin{tabular}{l|c|rcl|c|rcl|c}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{type} safe} & \multicolumn{4}{c}{\bfseries \textit{type} prec}\\
+	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{type} safe} & \multicolumn{4}{c}{\bfseries \textit{type} prec}\\
 	
 	\bfseries Target & & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O0.csv}{
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O2.csv}{
 	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
  }
 	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
 
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O1.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
-	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O2.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
-	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/policy_compare.O3.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
-	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
 
     	\end{tabular}
 }
@@ -2052,38 +1381,13 @@ which is an overall reduction to 13.61\%.
 	\begin{tabular}{l|c|rcl|c|rcl|c}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count}*} & \multicolumn{4}{c}{\bfseries \textit{type}*}\\
+	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count}*} & \multicolumn{4}{c}{\bfseries \textit{type}*}\\
 	
 	\bfseries Target && \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O0.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
- }
-	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O1.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
-	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O2.csv}{
 	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
-	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/policy_compare_at.O3.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
+ }
 	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
 
     	\end{tabular}
@@ -2098,37 +1402,13 @@ which is an overall reduction to 13.61\%.
 	\begin{tabular}{l|c|rcl|c|rcl|c}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count} safe} & \multicolumn{4}{c}{\bfseries \textit{count} prec}\\
+	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count} safe} & \multicolumn{4}{c}{\bfseries \textit{count} prec}\\
 	
 	\bfseries Target && \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O0.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
- }
-	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O1.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O2.csv}{
 	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
-	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/policy_compare_at.O3.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
+ }
 	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
 
     	\end{tabular}
@@ -2142,38 +1422,13 @@ which is an overall reduction to 13.61\%.
 	\begin{tabular}{l|c|rcl|c|rcl|c}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{type} safe} & \multicolumn{4}{c}{\bfseries \textit{type} prec}\\
+	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{type} safe} & \multicolumn{4}{c}{\bfseries \textit{type} prec}\\
 	
 	\bfseries Target && \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (avg $\pm$ $\sigma$)} & median  % specify table head
 	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O0.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
- }
-	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
-
-
-
-\multicolumn{1}{c}{\bfseries O1} 
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O1.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
-	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
-	
-	
-\multicolumn{1}{c}{\bfseries O2}
-	\\\midrule
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O2.csv}{
 	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
-	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
-	
-
-\multicolumn{1}{c}{\bfseries O3}
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/policy_compare_at.O3.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
-}
+ }
 	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
 
     	\end{tabular}
