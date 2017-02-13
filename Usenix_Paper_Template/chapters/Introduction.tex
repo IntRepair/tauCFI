@@ -64,23 +64,22 @@ Second, we compared our tool with TypeArmor~\cite{veen:typearmor}.
 \textbf{Contributions.} In summary, we make the following contributions:
 \label{Contribution}
 \begin{itemize}
- \item \textbf{Security analysis of illegitimate forward indirect calls.} bla
+ \item \textbf{Security analysis of illegitimate forward indirect calls.} 
+ We analyzed the usage of illegitimate indirect forward calls in detail,
+ thus providing security researchers and
+practitioners a better understanding of this emerging
+attack vector.
 
- \item \textbf{Illegitimate forward indirect calls detection tool.}
- We designed and implemented a call-site and call-target classification schema
- that is based on the wideness of parameters alone. We implemented configurable reaching and liveness analysis algorithms
- that operate on the full set of general purpose integer registers of a x86-64 CPU and evaluated various path merge operators.
- Although the basic idea of our aproach to rely only on the wideness of a type is rather simple, we still achieved a reduction
- of up to 20\% less call-sites per call-target with an overall of about 9\% when compared to our implementation of a parameter
- count based matching schema.
+ \item \textbf{Illegitimate indirect calls detection tool.}
+ We designed and implemented \textsc{TypeSchield}, a general, automated, and easy to deploy tool
+ that can be applied to C/C++ binaries in order to detect and mitigate illegitimate forward indirect calls 
+ during runtime. We have shared \textsc{TypeSchield} with other researches and will make our source code 
+ publicly available.
  
- We implemented an approximation of the matching schema employed by TypeArmor proposed by \cite{veen:typearmor}, 
- because we had no access to their sour-cecode and could achieve similar results regarding parameter matching, partially verifying
- their results.
-
- \item 
- 
- \item give one more here.
+ \item \textbf{Experiments.} We demonstrate trough extensive experiments that our precise
+ binary-level CFI strategy can mitigate advanced code reuse attacks in absence of C++ semantics.
+ For example \textsc{TypeSchield} can protect against COOP and its variations currently published 
+ variations.
   
 \end{itemize}
 
