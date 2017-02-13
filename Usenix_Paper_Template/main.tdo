@@ -1,16 +1,15 @@
-\contentsline {todo}{add a better analysis in order to obtain better results}{13}{section*.4}
-\contentsline {todo}{add a binary patch that does not crash none of the programs from SPEC2006.}{13}{section*.5}
-\contentsline {todo}{need a table with all the results for each of the SPEC2006 programs and a bar diagram}{13}{section*.6}
-\contentsline {todo}{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}{13}{section*.7}
-\contentsline {todo}{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}{13}{section*.8}
-\contentsline {todo}{RQ6: need to define first this question.}{13}{section*.9}
-\contentsline {todo}{In this section we need just one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}{13}{section*.10}
-\contentsline {todo}{In this section we need just one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}{20}{section*.11}
-\contentsline {todo}{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}{25}{section*.12}
-\contentsline {todo}{add a binary patch that does not crash none of the programs from SPEC2006.}{25}{section*.13}
-\contentsline {todo}{need a table with all the results for each of the SPEC2006 programs and a bar diagram}{25}{section*.14}
-\contentsline {todo}{here we need a bar chart, see TypeArmor paper.}{25}{section*.15}
-\contentsline {todo}{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}{25}{section*.16}
-\contentsline {todo}{here we need a a CDF figure, see the TypeAmor paper w.r.t. security analysis in the evaluation. The buckets have to be defined first, reason about if they make sense!}{25}{section*.17}
-\contentsline {todo}{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}{25}{section*.18}
-\contentsline {todo}{need to define first the question.}{25}{section*.19}
+\contentsline {todo}{add a binary patch that does not crash none of the programs from SPEC2006.}{12}{section*.4}
+\contentsline {todo}{need a table with all the results for each of the SPEC2006 programs and a bar diagram}{12}{section*.5}
+\contentsline {todo}{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}{13}{section*.6}
+\contentsline {todo}{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}{13}{section*.7}
+\contentsline {todo}{RQ6: need to define first this question.}{13}{section*.8}
+\contentsline {todo}{In this section we need just one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}{13}{section*.9}
+\contentsline {todo}{In this section we need just one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}{18}{section*.10}
+\contentsline {todo}{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}{20}{section*.11}
+\contentsline {todo}{add a binary patch that does not crash none of the programs from SPEC2006.}{20}{section*.12}
+\contentsline {todo}{need a table with all the results for each of the SPEC2006 programs and a bar diagram}{20}{section*.13}
+\contentsline {todo}{here we need a bar chart, see TypeArmor paper.}{20}{section*.14}
+\contentsline {todo}{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}{20}{section*.15}
+\contentsline {todo}{here we need a a CDF figure, see the TypeAmor paper w.r.t. security analysis in the evaluation. The buckets have to be defined first, reason about if they make sense!}{20}{section*.16}
+\contentsline {todo}{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}{20}{section*.17}
+\contentsline {todo}{need to define first the question.}{21}{section*.18}

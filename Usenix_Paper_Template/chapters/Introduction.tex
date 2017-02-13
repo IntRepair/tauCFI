@@ -4,12 +4,11 @@
 \textbf{Motivation.}
 \label{Motivation}
 Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} is one of the most used techniques to secure program execution 
-flows against advanced Code-Reuse Attacks (CRAs).
-Advanced CRAs such as the recently published COOP~\cite{schuster:coop} and its extensions \cite{crane:readactor++} 
-or the attacks described by the Control Flow Bending paper \cite{carlini:bending} are able to bypass most traditional
-CFI solutions, as they focus on indirect call-sites, which are not as easy to decide at compile time.
+flows against advanced Code-Reuse Attacks (CRAs). Advanced CRAs such as the recently published COOP~\cite{schuster:coop} 
+and its extensions \cite{crane:readactor++} or the attacks described by the Control Flow Bending paper~\cite{carlini:bending}
+are able to bypass most traditional CFI solutions, as they focus on indirect call-sites, which are not as easy to decide at compile time.
 
-This is a problem for applications written in C++, as one of its principle is inheritance and virtual functions. 
+\textbf{Problem.} This is a problem for applications written in C++, as one of its principle is inheritance and virtual functions. 
 The concept of virtual functions allows the programmer to overwrite a virtual function of the base-class with his
 own implementation. While this allows for much more flexible code, this flexibility is the reason COOP actually 
 works. The problem is that in order to implement virtual functions, the compiler needs to generate a table of all
@@ -18,7 +17,7 @@ to said table. COOP now leverages a memory corruption to inject their own object
 which basically gives him control over the whole program, while the control flow still looks genuine, as no 
 code was replaced. 
 
-There exist several source code based solutions that either insert run-time checks during the compilation of 
+\textbf{Current solutions.} There exist several source code based solutions that either insert run-time checks during the compilation of 
 the program like SafeDispatch~\cite{safedispatch:jang}, ShrinkWrap \cite{haller:shrinkwrap} or IFCC/VTV~\cite{vtv:tice}, 
 which is the solution it is based on. Others modify and reorder the contents of the virtual table as their main 
 aspect like the paper by Bounov et al.~\cite{bounov:interleaving}. While the recently published Redactor++~\cite{crane:readactor++}
@@ -33,7 +32,7 @@ to the application in question is provided. However, when we are faced with prop
 binaries, which are provided as is and without the actual source code, the number of tools that can
 protect against COOP or similar attacks is rather low.
 
-TypeArmor~\cite{veen:typearmor} is such a tool that implements a fine grained forward edge CFI 
+\textbf{Lack.} TypeArmor~\cite{veen:typearmor} is such a tool that implements a fine grained forward edge CFI 
 solution for binaries. It calculates invariants for call-targets and indirect call-sites based on
 the number of parameters they use by leveraging static analysis of the binary, which then is
 patched to enforce those invariants during run-time. However, as of today we are not able to 
@@ -49,151 +48,44 @@ able to call all address taken functions.
 We implemented \textsc{TypeShield} to show a possible remedy of this problem by introducing
 parameter types into the classification of call-sites and call-targets. 
 
-place holder
+\textbf{Our Idea.} In this paper, we present \textsc{TypeShield}, a runtime illegitimate forward 
+calls detection tool that can be seamlessly integrated with large scale applications such as web servers.
+It takes the binary of an program as input and it can automatically instrument the binary in order
+to detect illegitimate indirect calls at runtime.
 
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holder
-
-place holdervptrs
-
-place holder
-
-place holder
+------
 
 
-\textbf{Goal of This Paper.} The goals of our paper is twofold. First we attempt to verify 
-the results as provided by the TypeArmor paper. 
-Second, implement our own classification schema to fix some of the shortcomings of previous 
-binary based approaches 
-to further mitigate advanced code reuse attacks.
+\textbf{Goal of This Paper.} The aim of this paper is twofold. First, implement our own indirect forward edge 
+classification schema in order to fix some of the shortcomings of previous state-of-the-art binary based approaches
+used to mitigate indirect forward edge based advanced code reuse attacks such as COOP~\cite{schuster:coop}.
+Second, we compared our tool with TypeArmor~\cite{veen:typearmor}.
 
-In summary, we make the following contributions:
+\textbf{Contributions.} In summary, we make the following contributions:
 \label{Contribution}
 \begin{itemize}
- \item We designed and implemented a call-site and call-target classification schema
+ \item \textbf{Security analysis of illegitimate forward indirect calls.} bla
+
+ \item \textbf{Illegitimate forward indirect calls detection tool.}
+ We designed and implemented a call-site and call-target classification schema
  that is based on the wideness of parameters alone. We implemented configurable reaching and liveness analysis algorithms
  that operate on the full set of general purpose integer registers of a x86-64 CPU and evaluated various path merge operators.
  Although the basic idea of our aproach to rely only on the wideness of a type is rather simple, we still achieved a reduction
  of up to 20\% less call-sites per call-target with an overall of about 9\% when compared to our implementation of a parameter
  count based matching schema.
-
- \item We implemented an approximation of the matching schema employed by TypeArmor proposed by \cite{veen:typearmor}, 
+ 
+ We implemented an approximation of the matching schema employed by TypeArmor proposed by \cite{veen:typearmor}, 
  because we had no access to their sour-cecode and could achieve similar results regarding parameter matching, partially verifying
  their results.
+
+ \item 
  
  \item give one more here.
   
 \end{itemize}
 
 \label{Outline}
-The rest of this paper is organized as follows.
+\textbf{Outline.} The rest of this paper is organized as follows.
 \cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications.
 \cref{chapter:TypeShild Overview} contains a high level overview of \textsc{TypeShield}.
 \cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}.
