@@ -11,7 +11,9 @@ In our evaluation of the two modes of
 
  \item \textbf{RQ1:} How precise is \textsc{TypeShield} in recovering parameter count and type information for call-sites and call-targets from a given binary?
 
- \item \textbf{RQ2:} How effective is \textsc{TypeShield} in restricting the possible number of call-targets per call-site?
+ \item \textbf{RQ2:} What level of security does \textsc{TypeShield} offer?
+ We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
+\todo[inline]{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}
 
  \item \textbf{RQ3:} What is the performance overhead introduced by \textsc{TypeShield}?
  \todo[inline]{add a binary patch that does not crash none of the programs from SPEC2006.}
@@ -20,14 +22,6 @@ In our evaluation of the two modes of
  \item \textbf{RQ4:} What is the instrumentation overhead introduced by \textsc{TypeShield}?
  Here we measure how much the binaries increased in size after the instrumentation was added to the binaries.
 \todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
- 
- \item \textbf{RQ5:} What level of security does \textsc{TypeShield} offer?
- We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
-\todo[inline]{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}
- 
- \item \textbf{RQ6:} Need to be defined see down?
- \todo[inline]{RQ6: need to define first this question.}
- 
 \end{itemize}
 
 \textbf{Comparison Method.} As we do not have access to the source code of TypeAmor, we implemented two modes in \textsc{TypeShield}. 
@@ -218,7 +212,7 @@ For half of the set, the problem rate is under 1\% and for the other half it is 
 { Union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
 }\\~\\
 \textbf{Results (Call-sites)} {
-For half of the set, the problem rate is under 2\%, for two it is below 10\% and for the last two below 20\%, resulting in a geomean of 2.97\%. The rate of perfect classification is in general over 40\% with nginx (39.84\%) and memcached(4.16\%) as an exception resulting in a geometric mean of 44.73\%.}
+For two thirds of the set, the problem rate is under 2\% and for last third it is not above 10\%, resulting in a geomean of 1.38\%.  The rate of perfect classification is in general over 50\% with node (44.76\%) as an exception resulting in a geometric mean of 68.35\%.}
 
 
 %
@@ -226,14 +220,35 @@ For half of the set, the problem rate is under 2\%, for two it is below 10\% and
 %Efficiency
 %
 %
-\subsection{RQ2: Effectiveness of \textsc{TypeShield}}
+\subsection{RQ2: Security Level of \textsc{TypeShield}}
 \label{section:typeshieldeffectiveness}
 \todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, 
 first we need to define the fields which make most sense.}
 
+\begin{table*}[htbp!]
+\resizebox{\textwidth}{!}{
+	\begin{tabular}{l|c|rcl|c|rcl|c|rcl|c|rcl|c}%
+
+	\toprule
+	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count}*} & \multicolumn{4}{c}{\bfseries \textit{count}} & \multicolumn{4}{c}{\bfseries \textit{type}*} & \multicolumn{4}{c}{\bfseries \textit{type}}\\
+	
+	\bfseries Target && \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median  % specify table head
+	\\\midrule
+	\csvreader[ late after line=\\, late after last line=\\\midrule]{csvs/policy_compare_at.O2.csv}{
+	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
+ }
+	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix& \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii }% specify your coloumns here
+
+    	\end{tabular}
+
+}
+		\caption {The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an an address taken analysis for optimization level O2.}
+		\label{tbl:policycompat}
+\end{table*}
+
 We are now going to evaluate the effectiveness of \textsc{TypeShield} leveraging the result of several experiment runs: First we are going to establish a baseline using the data 
 collected from our Clang/LLVM pass, which are the theoretical limits our implementation can reach. Second we are going to evaluate the effectiveness of our \textit{count} 
-policy and third we are going to evaluate the effectiveness of our \textit{type} policy. At last we are going to look at the effect our address taken analysis had on the results.
+policy and third we are going to evaluate the effectiveness of our \textit{type} policy. The results are depicted in table \ref{tbl:policycompat}.
 
 \subsubsection{Theoretical Limits.}
 \label{subsection:theoreticallimit}
@@ -256,120 +271,6 @@ call-targets.
 
 When compared, the theoretical limit of the \textit{type} policy allows about 15\% less available call-targets in the geomean in O2 than the limit of the \textit{count} policy.
 
-%
-%\begin{table}[!htbp]
-%\resizebox{\textwidth}{!}{
-%	\begin{tabular}{l|c|rcl|rcl|rcl|rcl}%
-%
-%	\toprule
-%	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{6}{c}{\bfseries \textit{count}} & \multicolumn{6}{c}{\bfseries \textit{type}}\\
-%	
-%	\bfseries Target & &  \multicolumn{3}{c}{\bfseries measured} & \multicolumn{3}{c}{\bfseries limit} & \multicolumn{3}{c}{\bfseries measured} & \multicolumn{3}{c}{\bfseries limit} % specify table head
-%	\\\midrule
-%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O0.csv}{
-%		%1=opt,2=target,3=at,4=count,5=count sig,6=count*,7=count*sig,8=type,9=type sig,10=type*,11=type*sig
-% }
-%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & $\pm$ & \csvcolvii & \csvcolviii & $\pm$ & \csvcolix & \csvcolx & $\pm$ & \csvcolxi}% specify your coloumns here
-%
-%
-%
-%\multicolumn{1}{c}{\bfseries O1} 
-%	\\\midrule
-%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O1.csv}{
-%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-%}
-%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & $\pm$ & \csvcolvii & \csvcolviii & $\pm$ & \csvcolix & \csvcolx & $\pm$ & \csvcolxi}% specify your coloumns here
-%	
-%	
-%\multicolumn{1}{c}{\bfseries O2}
-%	\\\midrule
-%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O2.csv}{
-%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-%}
-%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & $\pm$ & \csvcolvii & \csvcolviii & $\pm$ & \csvcolix & \csvcolx & $\pm$ & \csvcolxi}% specify your coloumns here
-%	
-%
-%\multicolumn{1}{c}{\bfseries O3}
-%	\\\midrule
-%	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/policy_compare.O3.csv}{
-%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-%}
-%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & $\pm$ & \csvcolvii & \csvcolviii & $\pm$ & \csvcolix & \csvcolx & $\pm$ & \csvcolxi}% specify your coloumns here
-%
-%    	\end{tabular}
-%}
-%		\caption {The results for comparing the different restriction policies throughout different optimizations}
-%		\label{tbl:policycomp}
-%\end{table}
-%
-%
-%\begin{table}[!htbp]
-%\resizebox{\textwidth}{!}{
-%	\begin{tabular}{l|c|rcl|rcl|rcl|rcl}%
-%
-%	\toprule
-%	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{6}{c}{\bfseries \textit{count}} & \multicolumn{6}{c}{\bfseries \textit{type}}\\
-%	
-%	\bfseries Target & &  \multicolumn{3}{c}{\bfseries measured} & \multicolumn{3}{c}{\bfseries limit} & \multicolumn{3}{c}{\bfseries measured} & \multicolumn{3}{c}{\bfseries limit} % specify table head
-%	\\\midrule
-%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O0.csv}{
-%		%1=opt,2=target,3=at,4=count,5=count sig,6=count*,7=count*sig,8=type,9=type sig,10=type*,11=type*sig
-% }
-%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & $\pm$ & \csvcolvii & \csvcolviii & $\pm$ & \csvcolix & \csvcolx & $\pm$ & \csvcolxi}% specify your coloumns here
-%
-%
-%
-%\multicolumn{1}{c}{\bfseries O1} 
-%	\\\midrule
-%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O1.csv}{
-%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-%}
-%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & $\pm$ & \csvcolvii & \csvcolviii & $\pm$ & \csvcolix & \csvcolx & $\pm$ & \csvcolxi}% specify your coloumns here
-%	
-%	
-%\multicolumn{1}{c}{\bfseries O2}
-%	\\\midrule
-%	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O2.csv}{
-%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-%}
-%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & $\pm$ & \csvcolvii & \csvcolviii & $\pm$ & \csvcolix & \csvcolx & $\pm$ & \csvcolxi}% specify your coloumns here
-%	
-%
-%\multicolumn{1}{c}{\bfseries O3}
-%	\\\midrule
-%	\csvreader[ late after line=\\, late after last line=\\\bottomrule]{../MA_Pictures/policy_compare_at.O3.csv}{
-%		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
-%}
-%	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & $\pm$ & \csvcolvii & \csvcolviii & $\pm$ & \csvcolix & \csvcolx & $\pm$ & \csvcolxi}% specify your coloumns here
-%
-%    	\end{tabular}
-%}
-%		\caption {The results for comparing the different restriction policies restricted using an address taken analysis throughout different optimizations}
-%		\label{tbl:policycompat}
-%\end{table}
-
-\begin{table}[h!]
-\resizebox{.5\textwidth}{!}{
-	\begin{tabular}{l|c|rcl|c|rcl|c}%
-
-	\toprule
-	\multicolumn{1}{c}{\bfseries O0} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count}*} & \multicolumn{4}{c}{\bfseries \textit{type}*}\\
-	
-	\bfseries Target & & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median  % specify table head
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O0.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
- }
-	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi}% specify your coloumns here
-
-
-    	\end{tabular}
-}
-		\caption {The results of comparing theoretical limits for the different restriction policies throughout different optimizations.}
-		\label{tbl:policycomp}
-\end{table}
-
-\newpage
 \subsubsection{\textsc{TypeShield} implementation of the \textit{count} policy}
 \label{subsection:typeshieldvslimitcount}
 We explore the effectiveness of our safe and precise versions for the \textit{count} policy implementation.
@@ -395,29 +296,6 @@ which is 57.70\% of the geometric mean of total available call-targets. This is 
 When compared, the precise implementation of of the \textit{count} policy allows about 20\% less available call-targets in the geomean in O2 than the safe implementation of 
 the \textit{count} policy.
 
-
-\begin{table}[h!]
-\resizebox{.5\textwidth}{!}{
-	\begin{tabular}{l|c|rcl|c|rcl|c}%
-
-	\toprule
-	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count} safe} & \multicolumn{4}{c}{\bfseries \textit{count} prec}\\
-	
-	\bfseries Target & & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median  % specify table head
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O2.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
- }
-	{\csvcolii  &  \csvcoliii & \csvcoliv & $\pm$ & \csvcolv & \csvcolvi & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix}% specify your coloumns here
-
-    	\end{tabular}
-}
-		\caption {The results of comparing \textit{count} safe and precision implementation throughout different optimizations.}
-		\label{tbl:policycompcount}
-\end{table}
-
-\newpage
-
 \subsubsection{\textsc{TypeShield} implementation of the \textit{type} policy}
 \label{subsection:typeshieldvslimitcount}
 We explore the effectiveness of our safe and precise versions for the \textit{type} policy implementation.
@@ -436,85 +314,6 @@ For each series we collected three data points per test target, the average numb
 \end{itemize}
 
 When compared, the precise implementation of of the \textit{count} policy allows about 21\% less available call-targets in the geomean in O2 than the safe implementation of the \textit{count} policy.
-
-
-\begin{table}[h!]
-\resizebox{.5\textwidth}{!}{
-	\begin{tabular}{l|c|rcl|c|rcl|c}%
-
-	\toprule
-	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{type} safe} & \multicolumn{4}{c}{\bfseries \textit{type} prec}\\
-	
-	\bfseries Target & & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median  % specify table head
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare.O2.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
- }
-	{\csvcolii  &  \csvcoliii & \csvcolxiii & $\pm$ & \csvcolxiv & \csvcolxv & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii}% specify your coloumns here
-
-
-    	\end{tabular}
-}
-		\caption {The results of comparing \textit{type} safe and precision implementation throughout different optimizations.}
-		\label{tbl:policycomptype}
-\end{table}
-
-\newpage
-
-
-\subsubsection{Effect of our AddressTaken Analysis}
-\label{subsection:effectivenessaddresstaken}
-We are providing experiment results and an evaluation regarding the impact of our address taken analysis on the theoretical limits and our various policy implementations, 
-namely the safe and precise versions of the \textit{count} and \textit{type} policies.
-
-\textbf{Experiment Setup.} We conducted the same three experiments as before but with the initial set of call-targets filtered by our implementation of address taken analysis:
-\begin{itemize}
-\item We setup the same experiment regarding theoretical limits as described in subsection \ref{subsection:theoreticallimit} but with restricting the possible call-targets 
-to only address taken functions. The results are presented in table \ref{tbl:policycompat}.
-\item We setup the same experiment regarding the \textit{count} policy as described in subsection \ref{subsection:theoreticallimit} but with restricting the possible call-targets
-to only address taken functions. The results are presented in table \ref{tbl:policycompatcount}.
-\item We setup the same experiment regarding the \textit{type} policy as described as in subsection \ref{subsection:theoreticallimit} but with restricting the possible call-targets
-to only address taken functions. The results are presented in table \ref{tbl:policycompattype}.
-\end{itemize}
-For each series we collected three data points per test target, the average number of call-targets per call-site, the standard deviation $\sigma$ and the median.
-
-\textbf{Results.} First of all we observed an overall reduction of the geometric mean of overall available call-targets to 64\% before our policies were applied. Notable outliers
-are memcached, which had a 90\% reduction of available call-targets and vsftpd, which even achieved a 97\% reduction in available call-targets.
-\begin{itemize}
-\item The theoretical available targets were overall reduced to 25.96\% in the \textit{count} policy case  (geometric mean of 249 in O2) and to 27.27\% in the \textit{type} 
-policy case  (geometric mean of 224 in O2). The difference between their geometric means shrank from about 15\% to about 10\%.
-\item The average targets provided by the safe and the precise implementation of the \textit{count} policy were reduced to 25.33\% (geometric mean of 325 in O2) and 25.92\% 
-(geometric mean of 267) respectively. The difference between their geometric means shrank from about 20\% to about 18\%.
-\item The average targets provided by the safe and the precise implementation of the \textit{count} policy were reduced to 26.13\% (geometric mean of 299 in O2) and 26.79\% 
-(geometric mean of 243) respectively. The difference between their geometric means shrank from about 20\% to about 18\%.
-\end{itemize}
-
-When comparing the precision focused implementations of our \textit{type} policy and our \textit{count}, we observe that the difference between them shrank to about 9\% when 
-comparing their geometric means.
-
-Overall we were able to reduce the number of available call-targets per call-site from 1785 to 243 using our precision focused implementation of the \textit{type} policy,
-which is an overall reduction to 13.61\%.
-
-\begin{table*}[htbp!]
-\resizebox{\textwidth}{!}{
-	\begin{tabular}{l|c|rcl|c|rcl|c|rcl|c|rcl|c}%
-
-	\toprule
-	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count}*} & \multicolumn{4}{c}{\bfseries \textit{count}} & \multicolumn{4}{c}{\bfseries \textit{type}*} & \multicolumn{4}{c}{\bfseries \textit{type}}\\
-	
-	\bfseries Target && \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median  % specify table head
-	\\\midrule
-	\csvreader[ late after line=\\, late after last line=\\\midrule]{../MA_Pictures/policy_compare_at.O2.csv}{
-	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
- }
-	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix& \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii }% specify your coloumns here
-
-    	\end{tabular}
-
-}
-		\caption {The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an an address taken analysis for optimization level O2.}
-		\label{tbl:policycompat}
-\end{table*}
 
 
 %\begin{table}[h!]
