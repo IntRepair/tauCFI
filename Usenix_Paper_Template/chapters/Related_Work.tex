@@ -28,6 +28,7 @@ Intresting to notice is that the code from only a few of this tools is available
 While smartde seemed promising due to its simple type lattice that we wanted to leverage for our classification schema. Its integration into our DynInst based environment was not successful mostly for time constraints, as it was deemed to time consuming to extract the whole machinery and implemnt an interface to the DynInst disassembler.
 Therefore we finally implemented our own version of type analysis and only focused on the wideness of the types, resulting in a simpler lattice than we initially wanted.
 
+%maybe not relevant
 \textbf{Mitigation of Code-Reuse Attacks.}
 \label{Mitigation of Code-Reuse Attacks}
 In the last couple of years researchers have provided many versions of new Code Reuse Attacks (CRAs).
@@ -63,7 +64,8 @@ or by using newly available hardware features or software exploits. However, non
 can mitigate against COOP attacks.
 
 
-\textbf{Mitigation of Advanced Code-Reuse Attacks.}
+% \textbf{Mitigation of Advanced Code-Reuse Attacks.}
+\textbf{Mitigation of Forward-Edge based Attacks.}
 \label{Mitigation of Advanced Code-Reuse Attacks}
 Recur-sive-COOP~\cite{crane:readactor++}, COOP~\cite{schuster:coop} and Subversive-C~\cite{subversive-c:lettner}.
 are advanced CRAs since these attacks can not be addressed:
@@ -74,7 +76,7 @@ are advanced CRAs since these attacks can not be addressed:
 since the precomputed CFG does not contain edges for indirect call sites which are explicitly exploited during the COOP attack.
 However, the following tools can protect against COOP attacks:
 
-\textit{Source code based.} indirect callsite targets are checked based on vTable integrity.
+\textit{Source code based.} Indirect call site targets are checked based on vTable integrity.
 Different types of CFI policies are used such as in the following tools:
 SafeDispatch~\cite{safedispatch:jang}, IFCC/VTV~\cite{vtv:tice} LLVM and GCC compiler.
 Additionally, the Redactor++~\cite{crane:readactor++} uses randomization 
@@ -83,7 +85,7 @@ CPI~\cite{volodymyr:cpi} uses a memory safety technique
 in order to protect against the COOP attack.
 
 There are several source code based tools 
-which can succesfully protect against the COOP attack.
+which can successfully protect against the COOP attack.
 Such tools are: ShrinkWrap~\cite{haller:shrinkwrap}, IFCC/VTV~\cite{vtv:tice}, 
 SafeDispatch~\cite{safedispatch:jang}, vTrust~\cite{zhang:vtrust}, Readactor++~\cite{crane:readactor++}, CPI~\cite{volodymyr:cpi} and the
 tool presented by Bounov et al.~\cite{bounov:interleaving}. These tools profit from high precision
@@ -119,33 +121,32 @@ paramters. \textsc{TypeShield} similarly to TypeArmor targets
 exclusive protection against advanced exploitation techniques 
 which can bypass fine-grained CFI schemes and VTable protections at the binary level.
 
-However, \textsc{TypeShield} offers a better restriction of calltargets to callsites, since 
+However, \textsc{TypeShield} offers a better restriction of call targets to call sites, since 
 we not only restrict based on the number of parameters but also on the wideness of their types. 
 This results in much smaller buckets that in turn can only target a smaller subset of all address
 taken functions. However, we rely for that on the variety of parameter types and when there is 
 none, we will degrade into a parameter count policy.
 
-
 \textit{Runtime based.}
 ``There is something available out there but I can not use it'' \textit{Anonymous}.
-Long story short conclusion: There are several promissing runtime-based line of defenses against
-advanced CRAs but none of them can succesfully protect against the COOP attack.
+Long story short conclusion: There are several promising runtime-based line of defenses against
+advanced CRAs but none of them can successfully protect against the COOP attack.
 
 IntelCET~\cite{intel:cet} is based on, \texttt{ENDBRANCH}, a new CPU instruction which can be used to enforce
-an efficient shadow stack mechanism. The shadow stack can be used to check during program execution if caller/return pais match.
+an efficient shadow stack mechanism. The shadow stack can be used to check during program execution if caller/return pairs match.
 Since the COOP attack reuses whole functions as gadgets and does not violate the caller/return convention than the 
-new feature provided by interl is useless in the face of this attack. Nevertheless other highly notorious CRAs may not be possible
+new feature provided by intel is useless in the face of this attack. Nevertheless other highly notorious CRAs may not be possible
 after this feature will be implemented main stream in OSs and compilers.
 
 Windows Control Flow Guard~\cite{windows:cfguard} is based on a user-space and kernel-space components which
-by working closelly together can enforce an efficient fine-grained CFI policy based on a precomputed CFG.
+by working closely together can enforce an efficient fine-grained CFI policy based on a precomputed CFG.
 These new feature available in Windows 10 can considerably rise the bar for future attacks but in our opinion advanced CRAs
 such as COOP are still possible due the typical characteristics of COOP.
 
 PathArmor~\cite{veen:cfi} is yet another tool which is based on a precomputed CFG and on the LBR register which can give a string of 16 up to
 32 pairs of from/to addressed of different types of indirect instructions such as \texttt{call}, \texttt{ret}, and \texttt{jump}. 
 Because of the sporadic query of the LBR register (only during invocation of certain function calls) and because of the sheer amount of 
-data which passes thorugh the LBR register this apporach has in our opinion a fair potential to catch different types of CRAs but
+data which passes through the LBR register this approach has in our opinion a fair potential to catch different types of CRAs but
 we think that against COOP this tool can not be used. First, because of the fact that the precomputed CFG does not contain edges for all
 possible indirect call sites which are accessed during runtime and second, the LBR buffer can be easily triked by adding
 legitimate indirect call sites  during the COOP attack.
