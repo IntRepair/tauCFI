@@ -29,7 +29,7 @@ YEAR="2009",
 @inproceedings{vtv:tice,
  author = {Tice, Caroline and Roeder, Tom and Collingbourne, Peter and Checkoway, Stephen and Erlingsson, {\'U}lfar and Lozano, Luis and Pike, Geoff},
  title = {{Enforcing Forward-Edge Control-Flow Integrity in GCC and LLVM}},
- booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC),},
+ booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC)},
  year = "2014",
 } 
 
@@ -47,6 +47,14 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
  note={\url{http://blogs.intel.com/evangelists/2016/06/09/intel-release-new-technology-specifications-protect-rop-attacks/}}
 }
 
+@inproceedings{loop:oriented,
+ author = "Lan, Bingchen and Li, Yan and Sun, Hao and Su, Chao and Liu, Yao and Zeng, Qingkai",
+ title = "{Loop-Oriented Programming: A New Code Reuse Attack to Bypass Modern Defenses}",
+ booktitle = {IEEE Trustcom/BigDataSE/ISPA},
+ year = "2015",
+} 
+
+
 @inproceedings{windows:cfguard,
  title = "{Windows Control Flow Guard}",
  note={\url{http://msdn.microsoft.com/en-us/library/windows/desktop/mt637065(v=vs.85).aspx}}
@@ -57,7 +65,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
  author = "Veen, Victor van der and Goktas, Enes and Contag, Moritz and Pawlowski, Andre and Chen, Xi and Rawat, Sanjay and
  Bos, Herbert and Holz, Thorsten and Athanasopoulos, Elias and Giuffrida, Cristiano",
  title = "{A Tough call: Mitigating Advanced Code-Reuse Attacks At The Binary Level}",
- booktitle = {Proceedings oaravindf the IEEE Symposium on Security and Privacy (S\&P),},
+ booktitle = {Proceedings oaravindf the IEEE Symposium on Security and Privacy (S\&P)},
  year = "2016",
 } 
 
@@ -71,7 +79,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
 @inproceedings{volodymyr:cpi,
  author = "Kuznetsov, Volodymyr and Szekeres, László and Payer, Mathias and Candea, George and Sekar, R. and Song, Dawn",
  title = "{Code-Pointer Integrity}",
- booktitle = {Proceedings of the USENIX Symposium on Operating Systems Design and Implementation (OSDI),},
+ booktitle = {Proceedings of the USENIX Symposium on Operating Systems Design and Implementation (OSDI)},
  year = "2014",
 } 
 

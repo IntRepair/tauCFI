@@ -254,6 +254,12 @@
 \newblock In {\em Proceedings of the USENIX conference on Security (USENIX
   SEC),\/} (2014).
 
+\bibitem{loop:oriented}
+{\sc Lan, B., Li, Y., Sun, H., Su, C., Liu, Y., and Zheng, Q.}
+\newblock {Enforcing Forward-Edge Control-Flow Integrity in GCC and LLVM}.
+\newblock In {\em Proceedings of the USENIX conference on Security (USENIX
+  SEC),\/} (2015).
+
 \bibitem{veen:cfi}
 {\sc Veen, V. v.~d., Andriesse, D., Göktas, E., Gras, B., Sambuc, L.,
   Slowinska, A., Bos, H., and Giuffrida, C.}

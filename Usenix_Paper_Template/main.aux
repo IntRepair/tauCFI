@@ -35,6 +35,10 @@
 \newlabel{Motivation@cref}{{[section][1][]1}{1}}
 \citation{schuster:coop}
 \citation{veen:typearmor}
+\citation{schuster:coop}
+\citation{loop:oriented}
+\citation{crane:readactor++}
+\citation{subversive-c:lettner}
 \citation{iso:iecN3690}
 \citation{haller:shrinkwrap}
 \newlabel{Contribution}{{1}{2}{Introduction}{section.1}{}}
@@ -181,126 +185,77 @@
 \@writefile{toc}{\contentsline {section}{\numberline {6}Evaluation}{12}{section.6}}
 \newlabel{chapter:Evaluation}{{6}{12}{Evaluation}{section.6}{}}
 \newlabel{chapter:Evaluation@cref}{{[section][6][]6}{12}}
-\@writefile{tdo}{\contentsline {todo}{add a binary patch that does not crash none of the programs from SPEC2006.}{12}{section*.4}}
+\@writefile{tdo}{\contentsline {todo}{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}{12}{section*.4}}
 \pgfsyspdfmark {pgfid9}{29352714}{4490848}
-\@writefile{tdo}{\contentsline {todo}{need a table with all the results for each of the SPEC2006 programs and a bar diagram}{12}{section*.5}}
-\pgfsyspdfmark {pgfid10}{12183675}{47608305}
-\@writefile{tdo}{\contentsline {todo}{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}{13}{section*.6}}
-\pgfsyspdfmark {pgfid11}{12183675}{41495456}
-\@writefile{tdo}{\contentsline {todo}{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}{13}{section*.7}}
-\pgfsyspdfmark {pgfid12}{12183675}{35382606}
-\@writefile{tdo}{\contentsline {todo}{RQ6: need to define first this question.}{13}{section*.8}}
-\pgfsyspdfmark {pgfid13}{12183675}{31914789}
+\@writefile{tdo}{\contentsline {todo}{add a binary patch that does not crash none of the programs from SPEC2006.}{13}{section*.5}}
+\pgfsyspdfmark {pgfid10}{12183675}{45849079}
+\@writefile{tdo}{\contentsline {todo}{need a table with all the results for each of the SPEC2006 programs and a bar diagram}{13}{section*.6}}
+\pgfsyspdfmark {pgfid11}{12183675}{43660926}
+\@writefile{tdo}{\contentsline {todo}{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}{13}{section*.7}}
+\pgfsyspdfmark {pgfid12}{12183675}{37829797}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.1}RQ1: Precision of \textsc  {TypeShield}}{13}{subsection.6.1}}
 \newlabel{section:typeshieldprecision}{{6.1}{13}{RQ1: Precision of \textsc {TypeShield}}{subsection.6.1}{}}
 \newlabel{section:typeshieldprecision@cref}{{[subsection][1][6]6.1}{13}}
-\@writefile{tdo}{\contentsline {todo}{In this section we need just one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}{13}{section*.9}}
-\pgfsyspdfmark {pgfid14}{11528314}{17183474}
+\@writefile{tdo}{\contentsline {todo}{In this section we need just one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}{13}{section*.8}}
+\pgfsyspdfmark {pgfid13}{11528314}{23227099}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.1}Quality and Applicability of Ground Truth}{13}{subsubsection.6.1.1}}
 \newlabel{subsection:typeshieldprecision}{{6.1.1}{13}{Quality and Applicability of Ground Truth}{subsubsection.6.1.1}{}}
 \newlabel{subsection:typeshieldprecision@cref}{{[subsubsection][1][6,1]6.1.1}{13}}
 \@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Table shows the quality of structural matching provided by our automated verify and test environment, regarding call-sites and call-targets when compiling with optimization level O2. The label Clang miss denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc  {TypeShield}.}}{14}{table.5}}
 \newlabel{tbl:matchingquality}{{5}{14}{Table shows the quality of structural matching provided by our automated verify and test environment, regarding call-sites and call-targets when compiling with optimization level O2. The label Clang miss denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc {TypeShield}}{table.5}{}}
 \newlabel{tbl:matchingquality@cref}{{[table][5][]5}{14}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.2}Precision Call-target Classification (\textit  {count})}{14}{subsubsection.6.1.2}}
-\newlabel{subsection:typeshieldprecision}{{6.1.2}{14}{Precision Call-target Classification (\textit {count})}{subsubsection.6.1.2}{}}
-\newlabel{subsection:typeshieldprecision@cref}{{[subsubsection][2][6,1]6.1.2}{14}}
-\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces The results for call-target analysis using the destructive/intersection combination operator for the \textit  {count} policy throughout different optimizations.}}{15}{table.6}}
-\newlabel{tbl:CTdestinterCOUNT}{{6}{15}{The results for call-target analysis using the destructive/intersection combination operator for the \textit {count} policy throughout different optimizations}{table.6}{}}
-\newlabel{tbl:CTdestinterCOUNT@cref}{{[table][6][]6}{15}}
-\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces The results for call-target analysis using the union combination operator for the \textit  {count} policy throughout different optimizations.}}{15}{table.7}}
-\newlabel{tbl:CTunionCOUNT}{{7}{15}{The results for call-target analysis using the union combination operator for the \textit {count} policy throughout different optimizations}{table.7}{}}
-\newlabel{tbl:CTunionCOUNT@cref}{{[table][7][]7}{15}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.3}Precision Call-site Classification (\textit  {count})}{15}{subsubsection.6.1.3}}
-\newlabel{subsection:typeshieldprecision}{{6.1.3}{15}{Precision Call-site Classification (\textit {count})}{subsubsection.6.1.3}{}}
-\newlabel{subsection:typeshieldprecision@cref}{{[subsubsection][3][6,1]6.1.3}{15}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.4}Without inter-procedural Analysis}{15}{subsubsection.6.1.4}}
-\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces The results for call-site analysis using the destructive/intersection combination operator for the \textit  {count} without inter-procedural analysis policy throughout different optimizations.}}{15}{table.8}}
-\newlabel{tbl:CSdestinterCOUNTnointer}{{8}{15}{The results for call-site analysis using the destructive/intersection combination operator for the \textit {count} without inter-procedural analysis policy throughout different optimizations}{table.8}{}}
-\newlabel{tbl:CSdestinterCOUNTnointer@cref}{{[table][8][]8}{15}}
-\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces The results for call-site analysis using the union combination operator for the \textit  {count} without inter-procedural analysis policy throughout different optimizations.}}{15}{table.9}}
-\newlabel{tbl:CSunionCOUNTnointer}{{9}{15}{The results for call-site analysis using the union combination operator for the \textit {count} without inter-procedural analysis policy throughout different optimizations}{table.9}{}}
-\newlabel{tbl:CSunionCOUNTnointer@cref}{{[table][9][]9}{15}}
-\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces The results for call-site analysis using the true union combination operator for the \textit  {count} without inter-procedural analysis policy throughout different optimizations.}}{16}{table.10}}
-\newlabel{tbl:CStrueunionCOUNTnointer}{{10}{16}{The results for call-site analysis using the true union combination operator for the \textit {count} without inter-procedural analysis policy throughout different optimizations}{table.10}{}}
-\newlabel{tbl:CStrueunionCOUNTnointer@cref}{{[table][10][]10}{16}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.5}With inter-procedural Analysis}{16}{subsubsection.6.1.5}}
-\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces The results for call-site analysis using the destructive/intersection combination operator for the \textit  {count} with inter-procedural analysis policy throughout different optimizations.}}{16}{table.11}}
-\newlabel{tbl:CSdestinterCOUNTinter}{{11}{16}{The results for call-site analysis using the destructive/intersection combination operator for the \textit {count} with inter-procedural analysis policy throughout different optimizations}{table.11}{}}
-\newlabel{tbl:CSdestinterCOUNTinter@cref}{{[table][11][]11}{16}}
-\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces The results for call-site analysis using the union combination operator for the \textit  {count} with inter-procedural analysis policy throughout different optimizations.}}{16}{table.12}}
-\newlabel{tbl:CSunionCOUNTinter}{{12}{16}{The results for call-site analysis using the union combination operator for the \textit {count} with inter-procedural analysis policy throughout different optimizations}{table.12}{}}
-\newlabel{tbl:CSunionCOUNTinter@cref}{{[table][12][]12}{16}}
-\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces The results for call-site analysis using the true union combination operator for the \textit  {count} with inter-procedural analysis policy throughout different optimizations.}}{16}{table.13}}
-\newlabel{tbl:CStrueunionCOUNTinter}{{13}{16}{The results for call-site analysis using the true union combination operator for the \textit {count} with inter-procedural analysis policy throughout different optimizations}{table.13}{}}
-\newlabel{tbl:CStrueunionCOUNTinter@cref}{{[table][13][]13}{16}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.6}Precision Call-target Classification (\textit  {type})}{17}{subsubsection.6.1.6}}
-\newlabel{subsection:typeshieldprecision}{{6.1.6}{17}{Precision Call-target Classification (\textit {type})}{subsubsection.6.1.6}{}}
-\newlabel{subsection:typeshieldprecision@cref}{{[subsubsection][6][6,1]6.1.6}{17}}
-\@writefile{lot}{\contentsline {table}{\numberline {14}{\ignorespaces The results for call-target analysis for exp1 and exp2 of the \textit  {type} policy throughout different optimizations.}}{17}{table.14}}
-\newlabel{tbl:CTdestinterexp12TYPE}{{14}{17}{The results for call-target analysis for exp1 and exp2 of the \textit {type} policy throughout different optimizations}{table.14}{}}
-\newlabel{tbl:CTdestinterexp12TYPE@cref}{{[table][14][]14}{17}}
-\@writefile{lot}{\contentsline {table}{\numberline {15}{\ignorespaces The results for call-target analysis for exp3 of the \textit  {type} policy throughout different optimizations.}}{17}{table.15}}
-\newlabel{tbl:CTdestinterexp34TYPE}{{15}{17}{The results for call-target analysis for exp3 of the \textit {type} policy throughout different optimizations}{table.15}{}}
-\newlabel{tbl:CTdestinterexp34TYPE@cref}{{[table][15][]15}{17}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.7}Precision Call-site Classification (\textit  {type})}{17}{subsubsection.6.1.7}}
-\newlabel{subsection:typeshieldprecision}{{6.1.7}{17}{Precision Call-site Classification (\textit {type})}{subsubsection.6.1.7}{}}
-\newlabel{subsection:typeshieldprecision@cref}{{[subsubsection][7][6,1]6.1.7}{17}}
-\@writefile{lot}{\contentsline {table}{\numberline {16}{\ignorespaces The results for call-site analysis for exp1 and exp2 of the \textit  {type} policy throughout different optimizations.}}{18}{table.16}}
-\newlabel{tbl:CSexp12TYPE}{{16}{18}{The results for call-site analysis for exp1 and exp2 of the \textit {type} policy throughout different optimizations}{table.16}{}}
-\newlabel{tbl:CSexp12TYPE@cref}{{[table][16][]16}{18}}
-\@writefile{lot}{\contentsline {table}{\numberline {17}{\ignorespaces The results for enhanced call-site analysis for exp3 of the \textit  {type} policy throughout different optimizations.}}{18}{table.17}}
-\newlabel{tbl:CSexp34TYPE}{{17}{18}{The results for enhanced call-site analysis for exp3 of the \textit {type} policy throughout different optimizations}{table.17}{}}
-\newlabel{tbl:CSexp34TYPE@cref}{{[table][17][]17}{18}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}RQ2: Effectiveness of \textsc  {TypeShield}}{18}{subsection.6.2}}
-\newlabel{section:typeshieldeffectiveness}{{6.2}{18}{RQ2: Effectiveness of \textsc {TypeShield}}{subsection.6.2}{}}
-\newlabel{section:typeshieldeffectiveness@cref}{{[subsection][2][6]6.2}{18}}
-\@writefile{tdo}{\contentsline {todo}{In this section we need just one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}{18}{section*.10}}
-\pgfsyspdfmark {pgfid15}{11528314}{23249977}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.1}Theoretical Limits.}{18}{subsubsection.6.2.1}}
-\newlabel{subsection:theoreticallimit}{{6.2.1}{18}{Theoretical Limits}{subsubsection.6.2.1}{}}
-\newlabel{subsection:theoreticallimit@cref}{{[subsubsection][1][6,2]6.2.1}{18}}
-\@writefile{lot}{\contentsline {table}{\numberline {18}{\ignorespaces The results of comparing theoretical limits for the different restriction policies throughout different optimizations.}}{18}{table.18}}
-\newlabel{tbl:policycomp}{{18}{18}{The results of comparing theoretical limits for the different restriction policies throughout different optimizations}{table.18}{}}
-\newlabel{tbl:policycomp@cref}{{[table][18][]18}{18}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.2}\textsc  {TypeShield} implementation of the \textit  {count} policy}{19}{subsubsection.6.2.2}}
-\newlabel{subsection:typeshieldvslimitcount}{{6.2.2}{19}{\textsc {TypeShield} implementation of the \textit {count} policy}{subsubsection.6.2.2}{}}
-\newlabel{subsection:typeshieldvslimitcount@cref}{{[subsubsection][2][6,2]6.2.2}{19}}
-\@writefile{lot}{\contentsline {table}{\numberline {19}{\ignorespaces The results of comparing \textit  {count} safe and precision implementation throughout different optimizations.}}{19}{table.19}}
-\newlabel{tbl:policycompcount}{{19}{19}{The results of comparing \textit {count} safe and precision implementation throughout different optimizations}{table.19}{}}
-\newlabel{tbl:policycompcount@cref}{{[table][19][]19}{19}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.3}\textsc  {TypeShield} implementation of the \textit  {type} policy}{19}{subsubsection.6.2.3}}
-\newlabel{subsection:typeshieldvslimitcount}{{6.2.3}{19}{\textsc {TypeShield} implementation of the \textit {type} policy}{subsubsection.6.2.3}{}}
-\newlabel{subsection:typeshieldvslimitcount@cref}{{[subsubsection][3][6,2]6.2.3}{19}}
-\@writefile{lot}{\contentsline {table}{\numberline {20}{\ignorespaces The results of comparing \textit  {type} safe and precision implementation throughout different optimizations.}}{20}{table.20}}
-\newlabel{tbl:policycomptype}{{20}{20}{The results of comparing \textit {type} safe and precision implementation throughout different optimizations}{table.20}{}}
-\newlabel{tbl:policycomptype@cref}{{[table][20][]20}{20}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.4}Effect of our AddressTaken Analysis}{20}{subsubsection.6.2.4}}
-\newlabel{subsection:effectivenessaddresstaken}{{6.2.4}{20}{Effect of our AddressTaken Analysis}{subsubsection.6.2.4}{}}
-\newlabel{subsection:effectivenessaddresstaken@cref}{{[subsubsection][4][6,2]6.2.4}{20}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}RQ3: Runtime Performance Overhead}{20}{subsection.6.3}}
-\newlabel{section:typeshieldoverheadperformance}{{6.3}{20}{RQ3: Runtime Performance Overhead}{subsection.6.3}{}}
-\newlabel{section:typeshieldoverheadperformance@cref}{{[subsection][3][6]6.3}{20}}
-\@writefile{tdo}{\contentsline {todo}{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}{20}{section*.11}}
-\pgfsyspdfmark {pgfid16}{28697353}{31738212}
-\@writefile{tdo}{\contentsline {todo}{add a binary patch that does not crash none of the programs from SPEC2006.}{20}{section*.12}}
-\pgfsyspdfmark {pgfid17}{28697353}{25897939}
-\@writefile{tdo}{\contentsline {todo}{need a table with all the results for each of the SPEC2006 programs and a bar diagram}{20}{section*.13}}
-\pgfsyspdfmark {pgfid18}{28697353}{23812981}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}RQ4: Instrumentation Overhead}{20}{subsection.6.4}}
-\newlabel{section:typeshieldoverheadinstrumentation}{{6.4}{20}{RQ4: Instrumentation Overhead}{subsection.6.4}{}}
-\newlabel{section:typeshieldoverheadinstrumentation@cref}{{[subsection][4][6]6.4}{20}}
-\@writefile{tdo}{\contentsline {todo}{here we need a bar chart, see TypeArmor paper.}{20}{section*.14}}
-\pgfsyspdfmark {pgfid19}{28697353}{18756279}
-\@writefile{tdo}{\contentsline {todo}{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}{20}{section*.15}}
-\pgfsyspdfmark {pgfid20}{28697353}{15342967}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}RQ5: Security Level of \textsc  {TypeShield}}{20}{subsection.6.5}}
-\newlabel{section:mitiagtion}{{6.5}{20}{RQ5: Security Level of \textsc {TypeShield}}{subsection.6.5}{}}
-\newlabel{section:mitiagtion@cref}{{[subsection][5][6]6.5}{20}}
-\@writefile{tdo}{\contentsline {todo}{here we need a a CDF figure, see the TypeAmor paper w.r.t. security analysis in the evaluation. The buckets have to be defined first, reason about if they make sense!}{20}{section*.16}}
-\pgfsyspdfmark {pgfid21}{28697353}{9477023}
-\@writefile{tdo}{\contentsline {todo}{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}{20}{section*.17}}
-\pgfsyspdfmark {pgfid22}{28697353}{4490848}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.2}Precision Call-target / Call-site Classification (\textit  {count})}{14}{subsubsection.6.1.2}}
+\newlabel{subsection:typeshieldcountprecision}{{6.1.2}{14}{Precision Call-target / Call-site Classification (\textit {count})}{subsubsection.6.1.2}{}}
+\newlabel{subsection:typeshieldcountprecision@cref}{{[subsubsection][2][6,1]6.1.2}{14}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces The results for analysis using the union combination operator for the \textit  {count} policy on the O2 optimization level.}}{14}{table.6}}
+\newlabel{tbl:precisionCOUNT}{{6}{14}{The results for analysis using the union combination operator for the \textit {count} policy on the O2 optimization level}{table.6}{}}
+\newlabel{tbl:precisionCOUNT@cref}{{[table][6][]6}{14}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.3}Precision Call-target / Call-site Classification (\textit  {type})}{14}{subsubsection.6.1.3}}
+\newlabel{subsection:typeshieldcountprecision}{{6.1.3}{14}{Precision Call-target / Call-site Classification (\textit {type})}{subsubsection.6.1.3}{}}
+\newlabel{subsection:typeshieldcountprecision@cref}{{[subsubsection][3][6,1]6.1.3}{14}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces The results for analysis of the \textit  {type} policy on the O2 optimization level.}}{14}{table.7}}
+\newlabel{tbl:precisionTYPE}{{7}{14}{The results for analysis of the \textit {type} policy on the O2 optimization level}{table.7}{}}
+\newlabel{tbl:precisionTYPE@cref}{{[table][7][]7}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}RQ2: Security Level of \textsc  {TypeShield}}{15}{subsection.6.2}}
+\newlabel{section:typeshieldeffectiveness}{{6.2}{15}{RQ2: Security Level of \textsc {TypeShield}}{subsection.6.2}{}}
+\newlabel{section:typeshieldeffectiveness@cref}{{[subsection][2][6]6.2}{15}}
+\@writefile{tdo}{\contentsline {todo}{In this section we need just one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}{15}{section*.9}}
+\pgfsyspdfmark {pgfid14}{11528314}{29951257}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.1}Theoretical Limits.}{15}{subsubsection.6.2.1}}
+\newlabel{subsection:theoreticallimit}{{6.2.1}{15}{Theoretical Limits}{subsubsection.6.2.1}{}}
+\newlabel{subsection:theoreticallimit@cref}{{[subsubsection][1][6,2]6.2.1}{15}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.2}\textsc  {TypeShield} implementation of the \textit  {count} policy}{15}{subsubsection.6.2.2}}
+\newlabel{subsection:typeshieldvslimitcount}{{6.2.2}{15}{\textsc {TypeShield} implementation of the \textit {count} policy}{subsubsection.6.2.2}{}}
+\newlabel{subsection:typeshieldvslimitcount@cref}{{[subsubsection][2][6,2]6.2.2}{15}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an an address taken analysis for optimization level O2.}}{16}{table.8}}
+\newlabel{tbl:policycompat}{{8}{16}{The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an an address taken analysis for optimization level O2}{table.8}{}}
+\newlabel{tbl:policycompat@cref}{{[table][8][]8}{16}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.3}\textsc  {TypeShield} implementation of the \textit  {type} policy}{16}{subsubsection.6.2.3}}
+\newlabel{subsection:typeshieldvslimitcount}{{6.2.3}{16}{\textsc {TypeShield} implementation of the \textit {type} policy}{subsubsection.6.2.3}{}}
+\newlabel{subsection:typeshieldvslimitcount@cref}{{[subsubsection][3][6,2]6.2.3}{16}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}RQ3: Runtime Performance Overhead}{16}{subsection.6.3}}
+\newlabel{section:typeshieldoverheadperformance}{{6.3}{16}{RQ3: Runtime Performance Overhead}{subsection.6.3}{}}
+\newlabel{section:typeshieldoverheadperformance@cref}{{[subsection][3][6]6.3}{16}}
+\@writefile{tdo}{\contentsline {todo}{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}{16}{section*.10}}
+\pgfsyspdfmark {pgfid15}{28697353}{30469112}
+\@writefile{tdo}{\contentsline {todo}{add a binary patch that does not crash none of the programs from SPEC2006.}{16}{section*.11}}
+\pgfsyspdfmark {pgfid16}{28697353}{24745270}
+\@writefile{tdo}{\contentsline {todo}{need a table with all the results for each of the SPEC2006 programs and a bar diagram}{16}{section*.12}}
+\pgfsyspdfmark {pgfid17}{28697353}{22718528}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}RQ4: Instrumentation Overhead}{16}{subsection.6.4}}
+\newlabel{section:typeshieldoverheadinstrumentation}{{6.4}{16}{RQ4: Instrumentation Overhead}{subsection.6.4}{}}
+\newlabel{section:typeshieldoverheadinstrumentation@cref}{{[subsection][4][6]6.4}{16}}
+\@writefile{tdo}{\contentsline {todo}{here we need a bar chart, see TypeArmor paper.}{16}{section*.13}}
+\pgfsyspdfmark {pgfid18}{28697353}{18092620}
+\@writefile{tdo}{\contentsline {todo}{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}{16}{section*.14}}
+\pgfsyspdfmark {pgfid19}{28697353}{14795741}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}RQ5: Security Level of \textsc  {TypeShield}}{16}{subsection.6.5}}
+\newlabel{section:mitiagtion}{{6.5}{16}{RQ5: Security Level of \textsc {TypeShield}}{subsection.6.5}{}}
+\newlabel{section:mitiagtion@cref}{{[subsection][5][6]6.5}{16}}
+\@writefile{tdo}{\contentsline {todo}{here we need a a CDF figure, see the TypeAmor paper w.r.t. security analysis in the evaluation. The buckets have to be defined first, reason about if they make sense!}{16}{section*.15}}
+\pgfsyspdfmark {pgfid20}{28697353}{9360591}
+\@writefile{tdo}{\contentsline {todo}{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}{16}{section*.16}}
+\pgfsyspdfmark {pgfid21}{28697353}{4490848}
 \citation{andriesse:indepth}
 \citation{alan:mycroft}
 \citation{lin:rewards}
@@ -317,21 +272,6 @@
 \citation{JOP2}
 \citation{JOP3}
 \citation{rop:carlini}
-\@writefile{lot}{\contentsline {table}{\numberline {21}{\ignorespaces The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an an address taken analysis for optimization level O2.}}{21}{table.21}}
-\newlabel{tbl:policycompat}{{21}{21}{The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an an address taken analysis for optimization level O2}{table.21}{}}
-\newlabel{tbl:policycompat@cref}{{[table][21][]21}{21}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.6}RQ6: Add another evaluation dimention we did not think off, maybe ``RQ6: TypeShield Deployments" (if it is easy or hard to deploy our tool in comparison with TypeArmor.)}{21}{subsection.6.6}}
-\newlabel{section:mitiagtion}{{6.6}{21}{RQ6: Add another evaluation dimention we did not think off, maybe ``RQ6: TypeShield Deployments" (if it is easy or hard to deploy our tool in comparison with TypeArmor.)}{subsection.6.6}{}}
-\newlabel{section:mitiagtion@cref}{{[subsection][6][6]6.6}{21}}
-\@writefile{tdo}{\contentsline {todo}{need to define first the question.}{21}{section*.18}}
-\pgfsyspdfmark {pgfid23}{11528314}{32943467}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Related Work}{21}{section.7}}
-\newlabel{chapter:Related_Work}{{7}{21}{Related Work}{section.7}{}}
-\newlabel{chapter:Related_Work@cref}{{[section][7][]7}{21}}
-\newlabel{Type-Inference on Executables}{{7}{21}{Related Work}{section.7}{}}
-\newlabel{Type-Inference on Executables@cref}{{[section][7][]7}{21}}
-\newlabel{Mitigation of Code-Reuse Attacks}{{7}{21}{Related Work}{section.7}{}}
-\newlabel{Mitigation of Code-Reuse Attacks@cref}{{[section][7][]7}{21}}
 \citation{veen:cfi}
 \citation{ccfir:zhang}
 \citation{cfci:zhang}
@@ -343,6 +283,18 @@
 \citation{mcfi:niu}
 \citation{rockjit:niu}
 \citation{perinput:niu}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.6}RQ6: Add another evaluation dimention we did not think off, maybe ``RQ6: TypeShield Deployments" (if it is easy or hard to deploy our tool in comparison with TypeArmor.)}{17}{subsection.6.6}}
+\newlabel{section:mitiagtion}{{6.6}{17}{RQ6: Add another evaluation dimention we did not think off, maybe ``RQ6: TypeShield Deployments" (if it is easy or hard to deploy our tool in comparison with TypeArmor.)}{subsection.6.6}{}}
+\newlabel{section:mitiagtion@cref}{{[subsection][6][6]6.6}{17}}
+\@writefile{tdo}{\contentsline {todo}{need to define first the question.}{17}{section*.17}}
+\pgfsyspdfmark {pgfid22}{11528314}{43008600}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Related Work}{17}{section.7}}
+\newlabel{chapter:Related_Work}{{7}{17}{Related Work}{section.7}{}}
+\newlabel{chapter:Related_Work@cref}{{[section][7][]7}{17}}
+\newlabel{Type-Inference on Executables}{{7}{17}{Related Work}{section.7}{}}
+\newlabel{Type-Inference on Executables@cref}{{[section][7][]7}{17}}
+\newlabel{Mitigation of Code-Reuse Attacks}{{7}{17}{Related Work}{section.7}{}}
+\newlabel{Mitigation of Code-Reuse Attacks@cref}{{[section][7][]7}{17}}
 \citation{crane:readactor++}
 \citation{schuster:coop}
 \citation{subversive-c:lettner}
@@ -368,30 +320,30 @@
 \citation{veen:typearmor}
 \citation{intel:cet}
 \citation{windows:cfguard}
-\newlabel{Mitigation of Advanced Code-Reuse Attacks}{{7}{22}{Related Work}{section.7}{}}
-\newlabel{Mitigation of Advanced Code-Reuse Attacks@cref}{{[section][7][]7}{22}}
 \citation{veen:cfi}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion}{23}{section.8}}
-\newlabel{chapter:Discussion}{{8}{23}{Discussion}{section.8}{}}
-\newlabel{chapter:Discussion@cref}{{[section][8][]8}{23}}
-\newlabel{section:comptype}{{8}{23}{Discussion}{section.8}{}}
-\newlabel{section:comptype@cref}{{[section][8][]8}{23}}
-\newlabel{section:discrep}{{8}{23}{Discussion}{section.8}{}}
-\newlabel{section:discrep@cref}{{[section][8][]8}{23}}
-\newlabel{section:venuesimp}{{8}{23}{Discussion}{section.8}{}}
-\newlabel{section:venuesimp@cref}{{[section][8][]8}{23}}
-\newlabel{section:limit}{{8}{23}{Discussion}{section.8}{}}
-\newlabel{section:limit@cref}{{[section][8][]8}{23}}
-\@writefile{toc}{\contentsline {section}{\numberline {9}Future Work}{24}{section.9}}
-\newlabel{chapter:Future_Work}{{9}{24}{Future Work}{section.9}{}}
-\newlabel{chapter:Future_Work@cref}{{[section][9][]9}{24}}
-\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{24}{section.10}}
-\newlabel{chapter:Conclusion}{{10}{24}{Conclusion}{section.10}{}}
-\newlabel{chapter:Conclusion@cref}{{[section][10][]10}{24}}
+\newlabel{Mitigation of Advanced Code-Reuse Attacks}{{7}{18}{Related Work}{section.7}{}}
+\newlabel{Mitigation of Advanced Code-Reuse Attacks@cref}{{[section][7][]7}{18}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion}{19}{section.8}}
+\newlabel{chapter:Discussion}{{8}{19}{Discussion}{section.8}{}}
+\newlabel{chapter:Discussion@cref}{{[section][8][]8}{19}}
+\newlabel{section:comptype}{{8}{19}{Discussion}{section.8}{}}
+\newlabel{section:comptype@cref}{{[section][8][]8}{19}}
+\newlabel{section:discrep}{{8}{19}{Discussion}{section.8}{}}
+\newlabel{section:discrep@cref}{{[section][8][]8}{19}}
+\newlabel{section:venuesimp}{{8}{19}{Discussion}{section.8}{}}
+\newlabel{section:venuesimp@cref}{{[section][8][]8}{19}}
+\newlabel{section:limit}{{8}{19}{Discussion}{section.8}{}}
+\newlabel{section:limit@cref}{{[section][8][]8}{19}}
 \bibstyle{acm}
 \bibdata{literatur.bib}
 \bibcite{dynamorio:drmemory}{1}
 \bibcite{windows:cfguard}{2}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Future Work}{20}{section.9}}
+\newlabel{chapter:Future_Work}{{9}{20}{Future Work}{section.9}{}}
+\newlabel{chapter:Future_Work@cref}{{[section][9][]9}{20}}
+\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{20}{section.10}}
+\newlabel{chapter:Conclusion}{{10}{20}{Conclusion}{section.10}{}}
+\newlabel{chapter:Conclusion@cref}{{[section][10][]10}{20}}
 \bibcite{intel:cet}{3}
 \bibcite{abadi:cfi2}{4}
 \bibcite{abadi:cfi}{5}
@@ -432,11 +384,12 @@
 \bibcite{schuster:coop}{40}
 \bibcite{rop:shacham}{41}
 \bibcite{vtv:tice}{42}
-\bibcite{veen:cfi}{43}
-\bibcite{veen:typearmor}{44}
-\bibcite{cfiguard:yuan}{45}
-\bibcite{zhang:vtrust}{46}
-\bibcite{vtint:zhang}{47}
-\bibcite{ccfir:zhang}{48}
-\bibcite{mingwei:sekar}{49}
-\bibcite{cfci:zhang}{50}
+\bibcite{loop:oriented}{43}
+\bibcite{veen:cfi}{44}
+\bibcite{veen:typearmor}{45}
+\bibcite{cfiguard:yuan}{46}
+\bibcite{zhang:vtrust}{47}
+\bibcite{vtint:zhang}{48}
+\bibcite{ccfir:zhang}{49}
+\bibcite{mingwei:sekar}{50}
+\bibcite{cfci:zhang}{51}

@@ -1,5 +1,5 @@
 # LaTeX Makefile
-FILE=main
+FILE=main.tex
 
 all: $(FILE).pdf
 
