@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  16 FEB 2017 23:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  16 FEB 2017 23:20
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1352,12 +1352,6 @@ LaTeX Warning: Label `subsection:typeshieldcountprecision' multiply defined.
 LaTeX Warning: Label `subsection:typeshieldcountprecision@cref' multiply define
 d.
 
-
-LaTeX Warning: Label `tbl:matchingquality' multiply defined.
-
-
-LaTeX Warning: Label `tbl:matchingquality@cref' multiply defined.
-
 )
 \openout1 = `main.aux'.
 
@@ -1666,7 +1660,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 91--93
 
  []
 
-[11] <./postgresqlO2.pdf, id=332, 578.16pt x 433.62pt>
+[11] <./postgresqlO2.pdf, id=331, 578.16pt x 433.62pt>
 File: ./postgresqlO2.pdf Graphic file (type pdf)
 
 <use ./postgresqlO2.pdf>
@@ -1677,7 +1671,7 @@ File: ./postgresqlO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./postgresqlO2.pdf used on input line 353.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./postgresqlO2.pdf_tex
-<postgresqlO2.pdf, id=333, page=1, 578.16pt x 433.62pt>
+<postgresqlO2.pdf, id=332, page=1, 578.16pt x 433.62pt>
 File: postgresqlO2.pdf Graphic file (type pdf)
 
 <use postgresqlO2.pdf, page 1>
@@ -1688,7 +1682,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 353--354
  [][] 
  []
 
-<./nodeO2.pdf, id=334, 578.16pt x 433.62pt>
+<./nodeO2.pdf, id=333, 578.16pt x 433.62pt>
 File: ./nodeO2.pdf Graphic file (type pdf)
  <use ./nodeO2.pdf>
 Package pdftex.def Info: ./nodeO2.pdf used on input line 359.
@@ -1699,7 +1693,7 @@ File: ./nodeO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./nodeO2.pdf used on input line 359.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./nodeO2.pdf_tex
-<nodeO2.pdf, id=335, page=1, 578.16pt x 433.62pt>
+<nodeO2.pdf, id=334, page=1, 578.16pt x 433.62pt>
 File: nodeO2.pdf Graphic file (type pdf)
  <use nodeO2.pdf, page 1>
 Package pdftex.def Info: nodeO2.pdf, page1 used on input line 52.
@@ -1709,7 +1703,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 359--360
  [][] 
  []
 
-<./proftpdO2.pdf, id=336, 578.16pt x 433.62pt>
+<./proftpdO2.pdf, id=335, 578.16pt x 433.62pt>
 File: ./proftpdO2.pdf Graphic file (type pdf)
  <use ./proftpdO2.pdf>
 Package pdftex.def Info: ./proftpdO2.pdf used on input line 365.
@@ -1720,7 +1714,7 @@ File: ./proftpdO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./proftpdO2.pdf used on input line 365.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./proftpdO2.pdf_tex
-<proftpdO2.pdf, id=337, page=1, 578.16pt x 433.62pt>
+<proftpdO2.pdf, id=336, page=1, 578.16pt x 433.62pt>
 File: proftpdO2.pdf Graphic file (type pdf)
 
 <use proftpdO2.pdf, page 1>
@@ -1731,7 +1725,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 365--366
  [][] 
  []
 
-<./mysqlO2.pdf, id=338, 578.16pt x 433.62pt>
+<./mysqlO2.pdf, id=337, 578.16pt x 433.62pt>
 File: ./mysqlO2.pdf Graphic file (type pdf)
  <use ./mysqlO2.pdf>
 Package pdftex.def Info: ./mysqlO2.pdf used on input line 371.
@@ -1742,7 +1736,7 @@ File: ./mysqlO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./mysqlO2.pdf used on input line 371.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./mysqlO2.pdf_tex
-<mysqlO2.pdf, id=339, page=1, 578.16pt x 433.62pt>
+<mysqlO2.pdf, id=338, page=1, 578.16pt x 433.62pt>
 File: mysqlO2.pdf Graphic file (type pdf)
  <use mysqlO2.pdf, page 1>
 Package pdftex.def Info: mysqlO2.pdf, page1 used on input line 52.
@@ -1764,7 +1758,7 @@ le pdfs with page group included in a single page
 
 pdfTeX warning: /usr/bin/pdflatex (file ./mysqlO2.pdf): PDF inclusion: multiple
  pdfs with page group included in a single page
->] <figures/speccpu2006.pdf, id=522, 442.65375pt x 244.915pt>
+>] <figures/speccpu2006.pdf, id=545, 442.65375pt x 244.915pt>
 File: figures/speccpu2006.pdf Graphic file (type pdf)
 
 <use figures/speccpu2006.pdf>
@@ -1832,32 +1826,29 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 170.
  ) 
 Here is how much of TeX's memory you used:
- 25695 strings out of 493105
- 472250 string characters out of 6137072
+ 25707 strings out of 493105
+ 472597 string characters out of 6137072
  593578 words of memory out of 5000000
- 28476 multiletter control sequences out of 15000+600000
+ 28488 multiletter control sequences out of 15000+600000
  101645 words of font info for 121 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  68i,12n,98p,862b,852s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{table.caption.18} has been referenced but does no
-t exist, replaced by a fixed one
-
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/fo
-nts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/rsfs/rsfs
-10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfit0800.pfb></usr/share/t
-exmf/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texmf/fonts/type1/pub
-lic/cm-super/sftt1000.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol
-/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (18 pages, 544431 bytes).
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/
+fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/rsfs/rs
+fs10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfit0800.pfb></usr/share
+/texmf/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texmf/fonts/type1/p
+ublic/cm-super/sftt1000.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symb
+ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (18 pages, 549527 bytes).
 PDF statistics:
- 735 PDF objects out of 1000 (max. 8388607)
- 609 compressed objects within 7 object streams
- 125 named destinations out of 1000 (max. 500000)
+ 759 PDF objects out of 1000 (max. 8388607)
+ 625 compressed objects within 7 object streams
+ 124 named destinations out of 1000 (max. 500000)
  276 words of extra memory for PDF output out of 10000 (max. 10000000)
 
