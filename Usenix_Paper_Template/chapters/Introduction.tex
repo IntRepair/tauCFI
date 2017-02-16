@@ -5,8 +5,8 @@
 \label{Motivation}
 Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} is one of the most used techniques to secure program execution 
 flows against advanced Code-Reuse Attacks (CRAs). Advanced CRAs such as the recently published COOP~\cite{schuster:coop} 
-and its extensions \cite{crane:readactor++} or the attacks described by the Control Flow Bending paper~\cite{carlini:bending}
-are able to bypass most traditional CFI solutions, as they focus on indirect call-sites, which are not as easy to decide at compile time.
+and its extension~\cite{crane:readactor++} or the attacks described by the Control Flow Bending paper~\cite{carlini:bending}
+are able to bypass most traditional CFI solutions, as they focus on indirect call-sites, which are not as easy to determine at compile time.
 
 \textbf{Problem.} This is a problem for applications written in C++, as one of its principle is inheritance and virtual functions. 
 The concept of virtual functions allows the programmer to overwrite a virtual function of the base-class with his
@@ -32,134 +32,46 @@ to the application in question is provided. However, when we are faced with prop
 binaries, which are provided as is and without the actual source code, the number of tools that can
 protect against COOP or similar attacks is rather low.
 
-\textbf{Limitations.} TypeArmor~\cite{veen:typearmor} is a tool that implements a fine grained forward edge CFI 
-policy for binaries. It calculates invariants for call-targets and indirect call-sites based on
+\textbf{Limitations.} TypeArmor~\cite{veen:typearmor} implements a fine grained forward edge CFI 
+policy based on parameter count for binaries. It calculates invariants for call targets and indirect call sites based on
 the number of parameters they use by leveraging static analysis of the binary, which then is
-patched to enforce those invariants during run-time. However, as of today we are not able to 
-access the source code of TypeArmor, which is why we implement our own approximation of the 
-tool. The main shortcoming of TypeArmor is that even with high precision in the classification of 
-call-targets and call-sites, one cannot exclude call targets with lower parameter number from 
-call-sites, for one due compatibility and also due to variadic functions, which are a special
+patched to enforce those invariants during run-time. The main shortcoming of TypeArmor is that
+even with high precision in the classification of 
+call targets and call sites, one cannot exclude call targets with lower parameter number from 
+call sites, for one due compatibility and also due to variadic functions, which are a special
 case in themselves. This basically means that when a call site prepares 6 parameters, it is 
-able to call all address taken functions.
+able to call all address taken functions. This generates a considerable attack surface due to the many
+situations in which this policy can be naturally circumvented.
 
-\textbf{Our Idea.} In this paper, we present \textsc{TypeShield}, a runtime illegitimate forward 
+\textbf{Our Insight.} In this paper, we present \textsc{TypeShield}, a runtime illegitimate forward 
 calls detection tool that can be seamlessly integrated with large scale applications such as web servers.
 It takes the binary of an program as input and it can automatically instrument the binary in order
 to detect illegitimate indirect calls at runtime. 
 We implemented \textsc{TypeShield} to show a possible remedy of this problem by introducing
-parameter types into the classification of call-sites and call-targets. 
-
-------
-bla...
-
-todo
-
-todo
+parameter types into the classification of call-sites and call-targets. We explore to
+what extent we can further narrow down the set of possible targets for indirect call sites
+and manage to stop the exploitation at the binary level.
+Our conclusion
 
 
-todo
 
-todo
-
-todo
-
-
-todo
-
-
-todo
-
-todo
-
-todo
-
-todo
-
-todo
+Our conclusion is not that all possible attacks
+can be stopped: even the tightest CFI solutions with access
+to source code are unable to guarantee perfect protection
+against all possible attacks [9]. Nevertheless, we demonstrate
+that TypeArmor, our binary-level protection prototype, can
+stop all COOP attacks published to date and significantly
+raise the bar for an adversary. Moreover, TypeArmor pro-
+vides strong mitigation for many types of code-reuse attacks
+(CRAs) for programs binaries, without requiring access to
+source code. As researchers have shown that it is easy to
+bypass existing binary-level CFI defenses [10], [11], [15],
+[18], [19], [27], this is a significant improvement.
+TypeArmor incorporates a forward-edge CFI strat 
 
 
-todo
-
-todo
-
-todo
-
-todo
-
-todo
-
-todo
-
-todo
-
-todo
-
-todo
 
 
-todo
-
-todo
-
-todo
-
-
-todo
-
-
-todo
-
-todo
-
-todo
-
-todo
-
-todo
-
-todo
-
-
-todo
-
-todo
-
-
-todo
-
-todo
-
-todo
-
-
-todo
-
-
-todo
-
-todo
-
-todo
-
-todo
-
-todo
-
-
-todo
-
-todo
-
-todo
-
-todo
-
-todo
-
-todo
-
-todo
 
 \textbf{Goal of This Paper.} The aim of this paper is twofold. First, implement our own indirect forward edge 
 classification schema in order to fix some of the shortcomings of previous state-of-the-art binary based approaches
@@ -169,7 +81,7 @@ Second, we compared our tool with TypeArmor~\cite{veen:typearmor}.
 \textbf{Contributions.} In summary, we make the following contributions:
 \label{Contribution}
 \begin{itemize}
- \item \textbf{Security analysis of illegitimate forward indirect calls.} 
+ \item \textbf{Security analysis of forward indirect calls.} 
  We analyzed the usage of illegitimate indirect forward calls in detail,
  thus providing security researchers and
 practitioners a better understanding of this emerging
@@ -178,13 +90,12 @@ attack vector.
  \item \textbf{Illegitimate indirect calls detection tool.}
  We designed and implemented \textsc{TypeSchield}, a general, automated, and easy to deploy tool
  that can be applied to C/C++ binaries in order to detect and mitigate illegitimate forward indirect calls 
- during runtime. We have shared \textsc{TypeSchield} with other researches and will make our source code 
- publicly available.
+ during runtime. An open-source implementation of \textsc{TypeSchield} is available at \url{https://github.com/tba/typeshield}.
  
  \item \textbf{Experiments.} We demonstrate trough extensive experiments that our precise
  binary-level CFI strategy can mitigate advanced code reuse attacks in absence of C++ semantics.
- For example \textsc{TypeSchield} can protect against COOP~\cite{schuster:coop} and its variations currently published 
- variations~\cite{loop:oriented, crane:readactor++, subversive-c:lettner}.
+ For example \textsc{TypeSchield} can protect against COOP~\cite{schuster:coop} and its currently published 
+ variations~\cite{crane:readactor++, subversive-c:lettner, ctf:coop, loop:oriented}.
   
 \end{itemize}
 

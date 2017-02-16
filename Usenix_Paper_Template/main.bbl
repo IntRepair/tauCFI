@@ -233,6 +233,10 @@
 {\sc Randomization, P. T. A. S.~L.}
 \newblock \url{https://pax.grsecurity.net/docs/aslr.txt}.
 
+\bibitem{ctf:coop}
+{\sc BlueLotus Team, Bctf challenge: bypass vtable read-only checks}
+\newblock \url{https://github.com/ctfs/write-ups-2015/tree/master/bctf-2015/exploit/zhongguancun}, (2015).
+
 \bibitem{schuster:coop}
 {\sc Schuster, F., Tendyck, T., Liebchen, C., Davi, L., Sadeghi, A.-R., and
   Holz, T.}
