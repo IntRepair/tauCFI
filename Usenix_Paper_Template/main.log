@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  17 FEB 2017 00:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  17 FEB 2017 00:57
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1660,7 +1660,7 @@ ost-gresql
  []
 
 LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <12> not available
-(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 24.
+(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 25.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
@@ -1672,11 +1672,11 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 File: ./postgresqlO2.pdf Graphic file (type pdf)
 
 <use ./postgresqlO2.pdf>
-Package pdftex.def Info: ./postgresqlO2.pdf used on input line 347.
+Package pdftex.def Info: ./postgresqlO2.pdf used on input line 348.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
 File: ./postgresqlO2.pdf Graphic file (type pdf)
  <use ./postgresqlO2.pdf>
-Package pdftex.def Info: ./postgresqlO2.pdf used on input line 347.
+Package pdftex.def Info: ./postgresqlO2.pdf used on input line 348.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./postgresqlO2.pdf_tex
 <postgresqlO2.pdf, id=330, page=1, 578.16pt x 433.62pt>
@@ -1686,19 +1686,19 @@ File: postgresqlO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: postgresqlO2.pdf, page1 used on input line 52.
 (pdftex.def)             Requested size: 578.15858pt x 433.63878pt.
 )
-Overfull \hbox (4.87737pt too wide) in paragraph at lines 347--348
+Overfull \hbox (4.87737pt too wide) in paragraph at lines 348--349
  [][] 
  []
 
 <./nodeO2.pdf, id=331, 578.16pt x 433.62pt>
 File: ./nodeO2.pdf Graphic file (type pdf)
  <use ./nodeO2.pdf>
-Package pdftex.def Info: ./nodeO2.pdf used on input line 354.
+Package pdftex.def Info: ./nodeO2.pdf used on input line 355.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
 File: ./nodeO2.pdf Graphic file (type pdf)
 
 <use ./nodeO2.pdf>
-Package pdftex.def Info: ./nodeO2.pdf used on input line 354.
+Package pdftex.def Info: ./nodeO2.pdf used on input line 355.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./nodeO2.pdf_tex
 <nodeO2.pdf, id=332, page=1, 578.16pt x 433.62pt>
@@ -1707,19 +1707,19 @@ File: nodeO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: nodeO2.pdf, page1 used on input line 52.
 (pdftex.def)             Requested size: 578.15858pt x 433.63878pt.
 )
-Overfull \hbox (4.87737pt too wide) in paragraph at lines 354--355
+Overfull \hbox (4.87737pt too wide) in paragraph at lines 355--356
  [][] 
  []
 
 <./proftpdO2.pdf, id=333, 578.16pt x 433.62pt>
 File: ./proftpdO2.pdf Graphic file (type pdf)
  <use ./proftpdO2.pdf>
-Package pdftex.def Info: ./proftpdO2.pdf used on input line 361.
+Package pdftex.def Info: ./proftpdO2.pdf used on input line 362.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
 File: ./proftpdO2.pdf Graphic file (type pdf)
 
 <use ./proftpdO2.pdf>
-Package pdftex.def Info: ./proftpdO2.pdf used on input line 361.
+Package pdftex.def Info: ./proftpdO2.pdf used on input line 362.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./proftpdO2.pdf_tex
 <proftpdO2.pdf, id=334, page=1, 578.16pt x 433.62pt>
@@ -1729,19 +1729,19 @@ File: proftpdO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: proftpdO2.pdf, page1 used on input line 52.
 (pdftex.def)             Requested size: 578.15858pt x 433.63878pt.
 )
-Overfull \hbox (4.87737pt too wide) in paragraph at lines 361--362
+Overfull \hbox (4.87737pt too wide) in paragraph at lines 362--363
  [][] 
  []
 
 <./mysqlO2.pdf, id=335, 578.16pt x 433.62pt>
 File: ./mysqlO2.pdf Graphic file (type pdf)
  <use ./mysqlO2.pdf>
-Package pdftex.def Info: ./mysqlO2.pdf used on input line 368.
+Package pdftex.def Info: ./mysqlO2.pdf used on input line 369.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
 File: ./mysqlO2.pdf Graphic file (type pdf)
 
 <use ./mysqlO2.pdf>
-Package pdftex.def Info: ./mysqlO2.pdf used on input line 368.
+Package pdftex.def Info: ./mysqlO2.pdf used on input line 369.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./mysqlO2.pdf_tex
 <mysqlO2.pdf, id=336, page=1, 578.16pt x 433.62pt>
@@ -1750,7 +1750,7 @@ File: mysqlO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: mysqlO2.pdf, page1 used on input line 52.
 (pdftex.def)             Requested size: 578.15858pt x 433.63878pt.
 )
-Overfull \hbox (4.87737pt too wide) in paragraph at lines 368--369
+Overfull \hbox (4.87737pt too wide) in paragraph at lines 369--370
  [][] 
  []
 
@@ -1758,10 +1758,10 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 368--369
 File: figures/speccpu2006.pdf Graphic file (type pdf)
 
 <use figures/speccpu2006.pdf>
-Package pdftex.def Info: figures/speccpu2006.pdf used on input line 391.
+Package pdftex.def Info: figures/speccpu2006.pdf used on input line 393.
 (pdftex.def)             Requested size: 247.88887pt x 137.15518pt.
 
-Overfull \hbox (3.97762pt too wide) in paragraph at lines 391--392
+Overfull \hbox (3.97762pt too wide) in paragraph at lines 393--394
  [][] 
  []
 
@@ -1824,7 +1824,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 170.
 Here is how much of TeX's memory you used:
  25632 strings out of 493105
  471346 string characters out of 6137072
- 591576 words of memory out of 5000000
+ 591577 words of memory out of 5000000
  28450 multiletter control sequences out of 15000+600000
  101645 words of font info for 121 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1841,7 +1841,7 @@ ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (15 pages, 523666 bytes).
+Output written on main.pdf (15 pages, 523673 bytes).
 PDF statistics:
  664 PDF objects out of 1000 (max. 8388607)
  534 compressed objects within 6 object streams

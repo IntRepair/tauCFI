@@ -5,17 +5,13 @@ We used the two ftp server applications \textit{vsftpd} (v.1.1.0) and \textit{pr
 applications \textit{postgresql} (v.9.0.10) and \textit{mysql} (v.5.1.65), the memory cache application \textit{memcached} (v.1.4.20) 
 and the \textit{node.js} server application (v.0.12.5). We chose these applications, which are a subset of the 
 applications also used by the TypeAmor~\cite{veen:typearmor} to allow for later comparison.
-In our evaluation we addressed the following research questions:
+In our evaluation we addressed the following research targets:
 \begin{itemize}
  \item \textbf{RQ1:} How precise is \textsc{TypeShield}? (\cref{section:typeshieldprecision})
-
- \item \textbf{RQ2:} What level of security does \textsc{TypeShield} offer? (\cref{section:typeshieldeffectiveness})
-
- \item \textbf{RQ3:} What is the runtime overhead of \textsc{TypeShield}? (\cref{section:typeshieldoverheadperformance})
-
- \item \textbf{RQ4:} What is the instrumentation overhead of \textsc{TypeShield}? (\cref{section:typeshieldoverheadinstrumentation})
-
- \item \textbf{RQ5:} Is our tool better than other tools? (\cref{RQ5: Is TypeShield better than other tools?})
+ \item \textbf{RQ2:} How effective is \textsc{TypeShield}? (\cref{section:typeshieldeffectiveness})
+ \item \textbf{RQ3:} Runtime overhead of \textsc{TypeShield} (\cref{section:typeshieldoverheadperformance})
+ \item \textbf{RQ4:} Instrumentation overhead of \textsc{TypeShield}(\cref{section:typeshieldoverheadinstrumentation})
+ \item \textbf{RQ5:} Comparison to other tools(\cref{RQ5: Is TypeShield better than other tools?})
 \end{itemize}
 \textbf{Comparison Method.} As we do not have access (we requested the Authors several times to provide access to the source code) to the source code of TypeAmor, we implemented two modes in \textsc{TypeShield}. 
 The first mode of our tool is an similar implementation of the \textit{count} 
@@ -89,8 +85,7 @@ compilation of our test-targets are incorporated into our ground truth. The comp
 necessary all source files are used for our test-target.
 
 Considering this, we can safely state that our structural matching between ground truth and \textsc{TypeShield} regarding call-targets is nearly
-perfect (above 98\%)\\
-
+perfect (above 98\%).
 
 \textbf{Call-sites.} While our structural matching of call-targets is rather simple, the matter of matching callsites is more complex. Our tool can provide accurate addressing of call-sites within the binary. However, Clang/LLVM does not have such capabilities in its intermediate representation (IR). Furthermore the IR is not the final representation within the compiler, as the IR is transformed into a machine-based representation (MR), which is the again optimized. Although we can read information regarding paramters from the IR, it is not possible with the MR. Therefore we attach that data directly after the conversion from IR to MR and read that data at the end of the compilation. To not unneccessarily pollute our dataset, we only considered call-targets, which have been found in both datasets. 
 The table \ref{tbl:matchingquality} shows three data points regarding call-sites for the optimization level O2:
@@ -173,7 +168,7 @@ We measured two data points per testtarget, the number and ratio of perfect clas
 %Efficiency
 %
 %
-\subsection{RQ2: Security Level of \textsc{TypeShield}}
+\subsection{RQ2: Effectiveness of \textsc{TypeShield}}
 \label{section:typeshieldeffectiveness}
 \todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, 
 first we need to define the fields which make most sense.}
@@ -377,7 +372,6 @@ When compared, our implementation of the \textit{type} policy allows about 7.93\
   \end{minipage} 
 \end{figure}
 
-<<<<<<< HEAD
 Figures, \ref{fig7}, \ref{fig8}, \ref{fig9}, and \ref{fig10} depict the CDFs for the following programs: node.js, proftpd, mysql, and postgresql.
 The CDFs depict the number of legal callsite targets and the difference between the type and the count policies. 
 While the count  policies have only a few number of changes, the number of changes 
@@ -387,22 +381,29 @@ is simply higher. While type policies mostly perform better than the count polic
 there are still parts within the type plot that are above the count plot, the reason 
 for that is relatively simple: the maximum number of calltargets a callsite can access 
 has been reduced, therefore a lower amount of calltargets is a higher percentage than 
-before. However, all of these results are dependent on the structure of the program.
-=======
-When looking at the CDFs of legal callsite targets as shown for postgresql \ref{fig7}, node.js \ref{fig8}, proftpd \ref{fig9}, mysql \ref{fig10}, one should instantly see the difference between the type and the count policies. While the count  policies have only a few number of changes, the number of changes that can be seen within the type policies is vastly higher. The reason for that is simple, the number of buckets that are used to classify the callsites and calltargets is simply higher. While type policies mostly perform better than the count policies, there are still parts within the type plot that are above the count plot, the reason for that is relatively simple: the maximum number of calltargets a callsite can access has been reduced, therefore a lower amount of calltargets is a higher percentage than before. However all of that is also dependent on the structure of the program.
->>>>>>> 9118c82fe0d65e2130090bc70ac08421061c7740
+before. However, all these results are dependent on the structure of the program.
 
 \subsection{RQ3: Runtime Performance Overhead}
-In general, we have an about 5\% performance drop when instrumenting using Dyninst. The reason for that are essentially cachemisses introduced by jumping between the old and the new executable section of the binary generated by duplicating and patching the duplicate. This is necessary, because when out side of the compiler it is nigh on impossible to relocate indirect controlflow, therefore everytime an indirect control flow occurs, one jumps into the old executable section and from there back to the new executable section.
-
 \label{section:typeshieldoverheadperformance}
 \todo[inline]{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
-\begin{figure}[htbp!]
+\begin{figure}[!h]
     \centering
     \includegraphics[width=0.49\textwidth]{figures/speccpu2006.pdf}
-    \caption{Awesome Image}
+    \caption{Benchmark run time normalized against the baseline for the SPEC CPU2006 benchmarks.}
     \label{fig:awesome_image}
 \end{figure}
+Figure~\ref{fig:awesome_image} depicts the runtime normalized against the baseline for
+the SPEC CPU2006 benchmarks.
+In general, we have an about 5\% performance drop when instrumenting using Dyninst. 
+The reason for that are essentially cachemisses introduced by jumping between the 
+old and the new executable section of the binary generated by duplicating and patching 
+the duplicate. This is necessary, because when out side of the compiler it is nigh on 
+impossible to relocate indirect controlflow, therefore everytime an indirect control 
+flow occurs, one jumps into the old executable section and from there back to the new 
+executable section. Moreover this is also dependent on the actual structure of the target, as it 
+depends on the number of indirect control flow operations per time unit.
+
+
 \todo[inline]{add a binary patch that does not crash none of the programs from SPEC2006.}
 \todo[inline]{need a table with all the results for each of the SPEC2006 programs and a bar diagram}
 
@@ -419,7 +420,7 @@ because of the nature of code relocation after losing the data that a compiler h
 changes are very hard to relocate. Therefore instead each important basic block in the old code contains a jump 
 instruction to the new position of the basic block.
 
-\subsection{RQ5: Comparisons with Other Tools}
+\subsection{RQ5: Comparison with Other Tools}
 \label{RQ5: Is TypeShield better than other tools?}
 \begin{table}[!h]
 \resizebox{\columnwidth}{!}{
@@ -438,7 +439,7 @@ instruction to the new position of the basic block.
 	{\csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii}% specify your coloumns here
     	\end{tabular}}
 %     	}
-	\caption {The medians of calltargets per callsite for different tools that we have values for}
+	\caption {The medians of calltargets per callsite for different tools.}
 	\label{tbl:toolcompare}
 \end{table}
 
