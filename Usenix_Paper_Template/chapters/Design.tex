@@ -206,7 +206,6 @@ binary. We will employ a modified version of liveness analysis that tracks regis
 be customizable, we look at the required merge functions to implement \emph{count} and \emph{type} policy. Furthermore we need to eliminate the passing of variadic 
 parameter lists from variadic functions, as this might cause our analysis to overestimate the required parameters.
 
-~\\
 \textbf{Variable Liveness Analysis Theory.}
 \label{subsection:livenessanalysis}
 A variable is alive before the execution of an instruction, if at least one of the originating paths contains a read access before the variable is written to again. We employ 
@@ -321,7 +320,6 @@ and non fall-through successors, as these are not handled by DynInst in our case
 
 This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the  liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
 
-~\\
 \textbf{Required Parameter Count.}
 \label{subsection:requiredparamcount}
 To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we use the same representation as TypeArmor:
@@ -400,7 +398,6 @@ which are then combined with a union like operator with $W$ preceeding $R$ prece
 
 The index of highest parameter register based on the used call convention that has the state R is considered to be the number of parameters a function at least requires to be prepared by a call-site.
 
-~\\
 \textbf{Required Parameter Wideness.}
 \label{subsection:requiredparamwideness}
 To implement the \emph{type} policy, we need a finer representation of the state of one register:
@@ -465,7 +462,6 @@ like operator with $W$ preceeding $WR$ preceeding $R$ preceeding $C$. Unless one
 %\label{tbl:TYPECTunion}
 %\end{table}
 
-~\\
 \textbf{Variadic Functions.}
 \label{subsection:variadicfunctions}
 Variadic functions are special functions in C/C++ that have a basic set of parameters, 
@@ -732,7 +728,6 @@ like operator with $T$ preceeding $S$ preceeding $U$.
 
 The index of highest parameter register based on the used call convention that has the state S is considered to be the number of parameters a callsite at most prepares.
 
-~\\
 \textbf{Provided Parameter Wideness.}
 \label{subsection:providedparamwideness}
 To implement the \emph{type} policy, we need a finer representation of the state of one register:
