@@ -9,41 +9,32 @@ sections of the attacked binary.  We also assume that the protected binary does 
 self modifying code, handcrafted assembly or any kind of obfuscation. We also consider pages 
 to be either writable or executable but not both at the same time. Furthermore we assume 
 that our attacker has the ability to execute a memory corruption to hijack the programs 
-control flow. As our schema targets only forward control flow, namely indirect function 
-calls, we assume that a solution for backward CFI edges is in place.
+control flow. We assume that a solution for backward CFI is in place.
 
+~\\
 \textbf{Invariants for Targets and Callsites.}
 \label{Invariants for Targets and Callsites}
-Advanced code reuse attacks attempt to change the calltargets that are invoked within indirect 
-call-sites, standard CFI solutions cannot defend against this and TypeArmor proposed the approach
-of creating two sets of invariants. 
+Advanced code reuse attacks change the calltargets that are invoked within indirect 
+call-sites. As standard CFI solutions can hardly restrict these, TypeArmor proposed using two base invariants:
 
 \begin{enumerate}
 \item Indirect call-sites provide a number of parameters (possibly overestimated compared to source)
 \item Call-targets require a minimum number of parameters (possibly underestimated compared to source)
 \end{enumerate}
+The idea is that a call-site might only call functions that do not require more parameters than provided by the call-site. To compute the necessary information, TypeArmor uses a modified version of forward liveness analysis for call-targets and backward reaching definitions analysis for call-sites.
 
-The main idea is now that a call-site might not call any function in the binary but only call-targets
-that do not require more parameters than provided by the call-site itself. To achieve this classification
-of call-targets and call-sites, TypeArmor proposed to use a modified version of forward liveness analysis
-for call-targets and backward reaching definitions analysis for call-sites.
-
-
+~\\
 \textbf{\textsc{TypeShield} Impact on COOP.}
 \label{TypeShild Impact on COOP}
-The problem with relying solely on the parameter count is that a call-site being classified as using
-6 or more parameters can use basically all address taken functions within the binary. This is however
-counterproductive and we attempt a possible solution, by extending the classification schema to the
-single parameters themselves:
+The problem with relying solely on the parameter count is that a call-site can use any call-target as long as the parameter count requirement is fulfilled, even if the parameter types do not match (imagine 8bit values provided but 64bit values required). Therefore we extend the classification schema to the parameter types:
 
 \begin{enumerate}
-\item Indirect call-sites provides a maximum wideness of value to each parameter (possibly overestimated compared to source)
-\item Call-targets require a minimum wideness of value for each parameter(possibly underestimated compared to source)
+\item Indirect call-sites provides a maximum wideness to each parameter (possibly overestimated compared to source)
+\item Call-targets require a minimum wideness for each parameter(possibly underestimated compared to source)
 \end{enumerate}
-
-Basically the principle stays the same, but instead of just requiring that the call-site parameter count
-is not lower than the call-target parameter count we now require the same also for the wideness of each
-parameter.
+The basic idea stays the same, the provision must be no lower than the rqeuirement. However, the approach is more finegrained applying to the wideness of each parameter. The result is that we split the buckets of TypeArmor up into smaller ones, as shown in the limited example Figure \ref{fig:lattice3264}. There we can see that while in a parameter-count oriented
+schema a call-site classified as (32,32) would be able to call functions classified as (64,0), however
+in our parameter wideness oriented schema that is not possible.
 
 \begin{figure}[h!]
 \centering
@@ -61,23 +52,18 @@ parameter.
 
 \draw[thick] (0,7) rectangle node[anchor=center]  (6464) {\LARGE{(64, 64)}} (2,8);
 
-  \draw[draw, -triangle 45, thick, arrowhead=1cm] (3264.north) -- (6464.south);
-  \draw[draw, -triangle 45, thick, arrowhead=1cm] (6432.north) -- (6464.south);
-  \draw[draw, -triangle 45, thick, arrowhead=1cm] (3232.north) -- (3264.south);
-  \draw[draw, -triangle 45, thick, arrowhead=1cm] (3232.north) -- (6432.south);
+  \draw[draw, -triangle 45, thick] (3264.north) -- (6464.south);
+  \draw[draw, -triangle 45, thick] (6432.north) -- (6464.south);
+  \draw[draw, -triangle 45, thick] (3232.north) -- (3264.south);
+  \draw[draw, -triangle 45, thick] (3232.north) -- (6432.south);
   
-  \draw[draw, -triangle 45, thick, arrowhead=1cm] (640.north) -- (6432.south);
-  \draw[draw, -triangle 45, thick, arrowhead=1cm] (320.north) -- (3232.south);
-  \draw[draw, -triangle 45, thick, arrowhead=1cm] (320.north) -- (640.south);
+  \draw[draw, -triangle 45, thick] (640.north) -- (6432.south);
+  \draw[draw, -triangle 45, thick] (320.north) -- (3232.south);
+  \draw[draw, -triangle 45, thick] (320.north) -- (640.south);
   
 \end{tikzpicture}
 }
-\caption{Example for the wideness based schema when only using a parameter wideness of 64, 32 and 0 bits.}
+\caption{Example for the wideness based schema when only using a parameter wideness of 64, 32 and 0 bits and only two parameters.}
 \label{fig:lattice3264}
 \end{figure}
-
-While there are still occurrences where call-sites may target all call-targets, we split the buckets up
-into smaller ones, as shown in Figure \ref{fig:lattice3264}. For example in the parameter-count oriented
-schema a call-site classified as (32,32) would be able to call functions classified as (64,0), however
-in the parameter wideness oriented schema that is not possible.
 
