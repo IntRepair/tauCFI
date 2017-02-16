@@ -375,43 +375,6 @@ When compared, our implementation of the \textit{type} policy allows about 7.93\
 \end{figure}
 
 
-Beispiel text ist unten. 
-
----------------------------------------------
-For a more accurate view of the invariants enforced by
-TypeArmor, we report a CDF in Figure 8 of legal callsite
-targets. For clarity, we limit the CDF to CFI and CFC with
-applications that (i) yield minimal target reduction compared
-to source-level AT results (PostgreSQL, blue), (ii) contain
-many indirect callsites and AT functions (MySQL, yellow),
-and (iii) yield high reduction (OpenSSH, red).
-Based on the CDF of Figure 8, we observe that CFC
-results for each program follow the same trend as CFI.
-This is inherent to the deployment of the callsite-oriented
-invariants, with the number of indirect callsites being con-
-stant. We observe that results for PostgreSQL, due to the
-unusual internal structure of the program and the weaker
-quality of the resulting invariants, are more conservative
-than other cases, with over 90\% of the indirect callsites
-allowing 80\% or more targets. This difference is due to
-the distribution of the argument count for AT functions: for
-PostgreSQL, over 85\% of the AT functions are detected as
-consuming at least 0 or 1 argument. This means that as
-soon as TypeArmor’s backward analysis finds that a callsite
-prepares an additional argument, it must allow all those
-85\% as a possible target. To make this more concrete,
-TypeArmor concludes that for OpenSSH, only 26 (out of
-90) AT functions accept 0 or 1 argument. Encouragingly,
-other programs exhibit a regular internal structure, resulting
-in much stronger type-based invariants. For example, we
-find that results for OpenSSH are impressive: for 90\% of all
-indirect callsites, CFC still yields an almost 50\% reduction
-of the legal targets. Moreover, for 35\% of the callsites,
-TypeArmor allows only 7\% of all AT functions as valid
-target.
-
-----------------------------------------------
-
 \subsection{RQ3: Runtime Performance Overhead}
 \label{section:typeshieldoverheadperformance}
 \todo[inline]{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
@@ -460,11 +423,11 @@ instruction to the new position of the basic block.
 	\label{tbl:toolcompare}
 \end{table}
 
-Table~\ref{tbl:toolcompare} depicts a comparison between \textsc{TypeShield}, TypeArmor and IFCC w.r.t. the count of calltargets per callsite.
+Table~\ref{tbl:toolcompare} depicts a comparison between \textsc{TypeShield}, TypeArmor and IFCC w.r.t. the count of calltargets per callsites.
 The values depicted in this table for TypeArmor and IFCC are taken from the original TypeArmor paper.
 We compare our version of address taken analysis (AT), TypeArmor, TypeShield (count), TypeShield (type) and IFCC. 
 The first thing to notice is that when comparing these values, one can see that we did not implemented a separation based on return type or the 
-CFC that TypeArmour introduced. Therefore when implementing those measures, we predict that our solution would improve even more in precision.
+CFC that TypeArmour introduced. Therefore when implementing those measures, we predict that our solution would improve even more in w.r.t precision.
 
 
 
