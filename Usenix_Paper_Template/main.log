@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  16 FEB 2017 21:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  16 FEB 2017 21:50
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1633,16 +1633,16 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <8> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 486.
 [8]
 
-Package array Warning: Column ? is already defined on input line 716.
+Package array Warning: Column ? is already defined on input line 717.
 
 
-Underfull \hbox (badness 6927) in paragraph at lines 780--782
+Underfull \hbox (badness 6927) in paragraph at lines 781--783
 []\T1/ptm/m/n/10 This gives us the fol-low-ing reg-is-ter state $\OML/ztmcm/m/i
 t/10 S[] \OT1/ztmcm/m/n/10 =
  []
 
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 854.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 855.
 [9]) (./chapters/Implementation.tex) (./chapters/Evaluation.tex
 LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <12> not available
 (Font)              Font shape `T1/ptm/b/sc' tried instead on input line 28.
