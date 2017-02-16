@@ -460,13 +460,14 @@ instruction to the new position of the basic block.
 	\label{tbl:toolcompare}
 \end{table}
 
-We look at other tools for, which we have numbers regarding count of calltargets per callsite. 
-We look at our version of address taken analysis (AT), TypeArmor, TypeShield (count), TypeShield (type) and 
-IFCC (the values of TypeArmor and IFCC are taken from within the TypeArmor paper).
-The result is in Table~\ref{tbl:toolcompare}. 
-When comparing these values, one should note that we did not implement separation based on return type or the 
-CFC that TypeArmour introduced. Therefore when implementing those measures, we predict that our solution 
-would improve drastically.
+Table~\ref{tbl:toolcompare} depicts a comparison between \textsc{TypeShield}, TypeArmor and IFCC w.r.t. the count of calltargets per callsite.
+The values depicted in this table for TypeArmor and IFCC are taken from the original TypeArmor paper.
+We compare our version of address taken analysis (AT), TypeArmor, TypeShield (count), TypeShield (type) and IFCC. 
+The first thing to notice is that when comparing these values, one can see that we did not implemented a separation based on return type or the 
+CFC that TypeArmour introduced. Therefore when implementing those measures, we predict that our solution would improve even more in precision.
+
+
+
 
 
 
