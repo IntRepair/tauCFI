@@ -413,35 +413,34 @@ target.
 
 \subsection{RQ4: Instrumentation Overhead}
 \label{section:typeshieldoverheadinstrumentation}
+
 \todo[inline]{here we need a bar chart, see TypeArmor paper.}
-Here we measure how much the binaries increased in size after the instrumentation was added to the binaries.
 \todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
+
+The instrumentation overhead or the change in size due to patching is mostly due to the method Dyninst uses to patch binaries. Essentially the executable part of the binary is duplicated and extended with the patch. The usual ratio is around 40\% to 60\% while postgres has an increase of 150\% in binary size. One cannot reduce that value significantly, because of the nature of code relocation after losing the data that a compiler has. Especially indirect control flow changes are very hard to relocate. Therefore instead each important basic block in the old code contains anjump instruction to the new position of the basic block.
 
 \subsection{RQ5: Comparisons with Other Tools}
 \label{RQ5: Is TypeShield better than other tools?}
-
+We look at other tools for, which we have numbers regarding count of calltargets per callsite. We look at our version of address taken analysis (AT), TypeArmor, TypeShield(count), TypeShield(type) and IFCC (the values of TypeArmor and IFCC are taken from within the TypeArmor paper) The result is in Table~\ref{tbl:toolcompare}. When comparing these values, one should note that we did not implement separation based on return type or the CFC that TypeArmour introduced. Therefore when implementing those measures, we predict that our solution would improve drastically.
 \begin{table}[h!]
 \resizebox{\columnwidth}{!}{
-	\begin{tabular}{l|r|r|r|r|r|r}%
+	\begin{tabular}{l|r|r|r|r|r}%
 	\toprule
-	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c|}{ {\bfseries call-targets}} & \multicolumn{3}{c}{{\bfseries call-sites} }\\
-	\bfseries Target & match & Clang miss &  tool miss &  match & Clang miss & tool miss% specify table head
+	\bfseries Target & AT & TypeArmor &  TypeShield(count) & TypeShield(type) &  IFCC% specify table head
 	\\\midrule
-	\csvreader[before filter=\ifthenelse{\equal{\csvcoli}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/matching.O2.csv}{
+	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/tools_compare.csv}{
 		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
 	}
-	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
+	{\csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii}% specify your coloumns here
 
-	\csvreader[before filter=\ifthenelse{\equal{\csvcoli}{geomean}}{\csvfilteraccept}{\csvfilterreject},  late after line=\\, late after last line=\\\bottomrule]{csvs/matching.O2.csv}{
+	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilteraccept}{\csvfilterreject},  late after line=\\, late after last line=\\\bottomrule]{csvs/tools_compare.csv}{
 		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
 	}
-	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
+	{\csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii}% specify your coloumns here
     	\end{tabular}}
 %     	}
-	\caption {Table shows the quality of structural matching provided by our automated verify and test environment, 
-	regarding call-sites and call-targets when compiling with optimization level O2. The label Clang miss 
-	denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc{TypeShield}.}
-	\label{tbl:matchingquality}
+	\caption {The medians of calltargets per callsite for different tools that we have values for}
+	\label{tbl:toolcompare}
 \end{table}
 
 
