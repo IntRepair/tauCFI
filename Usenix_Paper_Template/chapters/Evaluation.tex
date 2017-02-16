@@ -224,7 +224,7 @@ call-targets.
 
 When compared, the theoretical limit of the \textit{type} policy allows about 10\% less available call-targets in the geomean in O2 than the limit of the \textit{count} policy.
 
-\subsubsection{\textsc{TypeShield} Implementation}
+\subsubsection{Reduction achieved by \textsc{TypeShield}}
 \label{subsection:typeshieldvslimitcount}
 \textbf{Experiment Setup.} We setup our two experiment series based on our previous evaluations regarding the classification precision for the \textit{count} and the \textit{type} policy.
 
@@ -443,7 +443,8 @@ The values depicted in this table for TypeArmor and IFCC are taken from the orig
 We compare our version of address taken analysis (AT), TypeArmor, TypeShield (count), TypeShield (type) and IFCC. 
 The first thing to notice is that when comparing these values, one can see that we did not implemented a separation based on return type or the 
 CFC that TypeArmour introduced. Therefore when implementing those measures, we predict that our solution would improve even more in w.r.t precision.
-
+While we think it is possible to surpass TypeArmor implementing those two solutions in our tool, we deem it nigh on impossible to be able to compete with IFCC,
+which can directly operate on the sourcecode level. Therefore it has access to more possibilities than simply inspecting the parameters or return values.
 
 
 
