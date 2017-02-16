@@ -184,20 +184,18 @@ in its first and second parameter when using the \emph{count} policy, however in
 \label{section:instructionanalysis}
 Usually data-flow analysis algorithms are based on set of variable or sets of definitions, which both are basically unbounded. However, we are analyzing the state of registers, which are baked into hardware and therefore their number is given, thus requiring us to adapt the data-flow theory to work on tuples.
 
-The set $\mathcal{I}$ describes all possible instructions that can occur within the executable section of a binary. (in our case this is based on the instruction set for x86-64 processors)
+The set $\mathcal{I}$ describes all possible instructions that can occur within the executable section of a binary. In our case this is based on the instruction set for x86-64 processors.
 
 An instruction $i \in \mathcal{I}$ can non-exclusively perform two kinds of operations on any number of existing registers:
-\textit{1)} Read $n$-bits from the register with $n \in \{ 64, 32, 16, 8 \}$.
+\textit{1)} Read $n$-bits from the register with $n \in \{ 64, 32, 16, 8 \}$, and
 \textit{2)} Write $n$-bits to the register with $n \in \{ 64, 32, 16, 8 \}$.
 
-Thus we describe the possible change that occurs in one register with the set $S = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. Note that 0 signals the absence of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ with $m \in \{64,32,16,8\}$ and $m < n$ (e.g. $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.
+Thus we describe the possible change that occurs in one register with the set $S = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. Note that 0 signals the absence of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ with $m \in \{64,32,16,8\}$ and $m < n$ (e.g., $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.
 
 SystemV ABI specifies 16 general purpose integer registers, thus for our purpose we represent the change occurring at the processor level as $\mathcal{S} = S^{16}$.
 
 At last we declare a function, which calculates the change occurring in the processor state, when executing an instruction from $\mathcal{I}$:
-$
-decode : \mathcal{I} \mapsto \mathcal{S}
-$
+$decode : \mathcal{I} \mapsto \mathcal{S}$.
 
 However, we do not go into detail how this function actually calculates this sate, because we rely on external libraries to perform this task. Implementing this function our self is out of scope due to the lengthy work required, as the x86-64 instruction set is quite large.
 
@@ -266,7 +264,7 @@ would also fall into this category, however these would not reside within parame
 	\Return merge\_v(state, state')
 
 	}
-\caption{Algorithm to analyze the liveness of a Basic Block.}
+\caption{Algorithm to analyze the liveness of a basic block.}
 \label{alg:liveness}
 \end{algorithm}
 %However, we cannot use variable liveness analysis as is, because the analysis is based on potentially unbound variable sets, 
@@ -315,7 +313,7 @@ As the $analyze\_instr$ function calculates the effect of an instruction and is 
 and non fall-through successors, as these are not handled by DynInst in our case. We essentially have four cases that we handle:
 \textit{1)} if the instruction is an indirect call or a direct call but we chose not follow calls, then return a state where all registers are considered written.
 \textit{2)} if the instruction is a direct call and we chose to follow calls, then we spawn a new analysis and return its result.
-\textit{3)} if the instruction is a constant write (e.g. xor of two registers) then we remove the read portion before we return the decoded state.
+\textit{3)} if the instruction is a constant write (e.g., xor of two registers) then we remove the read portion before we return the decoded state.
 \textit{4)} in all other cases we simply return the decoded state.
 
 This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the  liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
@@ -522,7 +520,7 @@ xmm-passthrough block, which we call the param-passthrough block, and
 \textit{3)} We look at the param-passthrough block and set all instructions that move the value of a parameter register into memory to be
 ignored. %(in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \texttt{0x422347} and \texttt{0x42234c})
 
-\textbf{Ignoring Reads.} When one instructions writes and reads a register at the same time we give the read access precedence, however there are exceptions (also mentioned in TypeArmor, however we expand slightly on that):
+\textbf{Ignoring Reads.} When one instruction writes and reads a register at the same time we give the read access precedence, however there are exceptions (also mentioned in TypeArmor, however we expand slightly on that):
 \textit{1)} \texttt{xor \%rax, \%rax} is the first obvious scenario, as it will always result in \texttt{\%rax} holding the value 0,
 \textit{2)} \texttt{sub \%rax, \%rax} is probably the next scenario, as it results also in \texttt{\%rax} also holding the value 0, and
 \textit{3)} \texttt{sbb \%rax, \%rax} is also relevant, however it will not result in a constant value and based on the current state might either result in \texttt{\%rax} holding the value 0 or 1.
@@ -591,7 +589,7 @@ requires the last known set of definitions that reach the actual call instructio
 	\Return merge\_v(state, state')
 
 	}
-\caption{Algorithm to analyse the reaching definitions of a Basic Block.}
+\caption{Algorithm to analyse the reaching definitions of a basic block.}
 \label{alg:reaching}
 \end{algorithm}
 %
@@ -607,7 +605,7 @@ This algorithm relies on various functions that can be used to configure its beh
 function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, 
 the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function
 $analyze\_instr$. The function $pred$, which retrieves all possible predecessors of a block won't be implemented by us, 
-because we rely on the DynInst instrumentation framework to achieve this.
+because we rely on the DynInst instrumentation framework to achieve the following.
 \begin{subequations}
 \label{eq:livenesscustom}
 \begin{align}
@@ -623,7 +621,7 @@ handle non jump and non fall-through successors, as these are not handled by Dyn
 \textit{1)} if the instruction is an indirect call or a direct call but we chose not follow calls, then return a state where all trashed 
 are considered written,
 \textit{2)}  if the instruction is a direct call and we chose to follow calls, then we spawn a new analysis and return its result, and
-%\item if the instruction is a constant write (e.g. xor of two registers) then we remove the read portion before we return the decoded state
+%\item if the instruction is a constant write (e.g., xor of two registers) then we remove the read portion before we return the decoded state
 \textit{3)} in all other cases we simply return the decoded state.
 
 This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of 
@@ -824,12 +822,12 @@ A parameter list of $(64, 0, 64, 0, 0, 0)$ is concluded, although the actual par
 what we expect, the 0 at the second parameter position will cause trouble, because it is an underestimation at the single parameter level, which we need to avoid.
 Our solution is to simply scan our reaching analysis result for these holes and replace them with the wideness $64$, causing a (possible) overestimation.
 
-\paragraph{Address Wideness Unterestimation.} refers to the problem that while in the call-site a constant value of 32-bit is written to a register, however 
+\paragraph{Address Wideness Unterestimation.} This refers to the issue that while in the call-site a constant value of 32-bit is written to a register, however 
 the call-target uses the whole 64-bit register. This can occur when pointers are passed from the call-site to the call-target. Specifically this happens 
 when pointers to memory inside the ``.bss'', ``.data'' or ``.rodata'' section of the binary are passed.
 Our solution is to enhance our instruction analysis to watch out for constant writes. In case a 32-bit constant value write is detected, we check if the
 value is an address within the ``.bss'', ``.data'' or ``.rodata'' section of the binary. If this is the case, we simply return a write access of 64-bits 
-instead of 32-bits. (This is not problematic, because we are looking for an overestimation of parameter wideness)
+instead of 32-bits. This is not problematic, because we are looking for an overestimation of parameter wideness.
 It should be noted that the same problem can arise when a constant write causes the value 0 to be written to a 32-bit register. We use the same solution
 and set the wideness to 64-bits instead of 32-bits.
 %
