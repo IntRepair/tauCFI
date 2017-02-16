@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  16 FEB 2017 21:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  16 FEB 2017 22:08
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1624,25 +1624,25 @@ mcm/m/n/10 g ^^B
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [7]
-Underfull \hbox (badness 6927) in paragraph at lines 416--420
+Underfull \hbox (badness 6927) in paragraph at lines 414--418
 []\T1/ptm/m/n/10 This gives us the fol-low-ing reg-is-ter state $\OML/ztmcm/m/i
 t/10 S[] \OT1/ztmcm/m/n/10 =
  []
 
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 486.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 484.
 [8]
 
-Package array Warning: Column ? is already defined on input line 717.
+Package array Warning: Column ? is already defined on input line 715.
 
 
-Underfull \hbox (badness 6927) in paragraph at lines 781--783
+Underfull \hbox (badness 6927) in paragraph at lines 779--781
 []\T1/ptm/m/n/10 This gives us the fol-low-ing reg-is-ter state $\OML/ztmcm/m/i
 t/10 S[] \OT1/ztmcm/m/n/10 =
  []
 
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 855.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 853.
 [9]) (./chapters/Implementation.tex) (./chapters/Evaluation.tex
 LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <12> not available
 (Font)              Font shape `T1/ptm/b/sc' tried instead on input line 28.
@@ -1671,6 +1671,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 104--140
 Underfull \hbox (badness 10000) in paragraph at lines 104--140
 
  []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [11]
 Underfull \hbox (badness 10000) in paragraph at lines 145--181
@@ -1784,11 +1787,11 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 169.
 Here is how much of TeX's memory you used:
  26348 strings out of 493105
  477284 string characters out of 6137072
- 596376 words of memory out of 5000000
+ 597440 words of memory out of 5000000
  29117 multiletter control sequences out of 15000+600000
  103341 words of font info for 122 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,11n,98p,862b,1795s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 68i,11n,98p,862b,1798s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/
 fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
@@ -1801,7 +1804,7 @@ ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (18 pages, 466593 bytes).
+Output written on main.pdf (18 pages, 466541 bytes).
 PDF statistics:
  629 PDF objects out of 1000 (max. 8388607)
  552 compressed objects within 6 object streams

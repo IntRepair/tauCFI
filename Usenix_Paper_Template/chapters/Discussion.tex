@@ -25,7 +25,7 @@ counts. However we report a geometric mean of 57.36\%
 for perfect classification of call sites, which although seemingly low, is still 69.74\% of our precision
 regarding parameter counts.
 
-\textit{Reduction of Available Call Targets}
+\textit{Reduction of Available Call Targets.}
 While our count based precision focused implementation achieves a reduction in the same ballpark as
 TypeArmor regarding our test targets, lets us believe that our implementation of their classification
 schema is a sufficient approximation to compare against. However, we cannot safely compare those numbers,
@@ -71,7 +71,7 @@ whether a value is within one of three binary sections or 0.
 
 \textbf{Limitations of \textsc{TypeShield}.}
 \label{section:limit}
-First of all, we are limited by the capabilities of the DynInst instrumentation environment, the main problem,
+First, we are limited by the capabilities of the DynInst instrumentation environment, the main problem,
 we are facing here is that non returning functions like exit are not detected reliably in some cases, which is
 why we were not able to test the Pure-FTP server, as it heavily relies on these functions. The problem is that
 those non returning functions usually appear as a second branch within a function that occurs after the normal
@@ -79,10 +79,10 @@ control flow, causing basic blocks from the following function to be attributed 
 results in a malformed control flow graph and erroneous attribution of call sites and problematic miss classifications
 for both call targets and call sites.
 
-Another limitation of \textsc{TypeShield} is it reliance on variety within the binary, in particular we rely on
+Second, \textsc{TypeShield} relies on variety within the binary, in particular we rely on
 the fact that functions use more than only 64-bit values or pointers within their parameter list. Should this
 scenario occur, our analysis has nothing to work with and essentially degrades into a parameter count based
 implementation. Thankfully this occurrence is quite rare, as we experienced within our experiments. When working
-based on source level information, we could not detect a difference between our TYPE and a COUNT policies. 
+based on source level information, we could not detect a difference between our \textit{type} and a \textit{count} policies. 
 However when leveraging our tool, we were able to detect differences, which reinforces the fact, that we do 
 not rely on declaration of parameters but usage of those.
