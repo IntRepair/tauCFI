@@ -234,6 +234,8 @@ would also fall into this category, however these would not reside within parame
 %meaning that a variable occurring within this set has been written to. The set $Gen_n$ 
 %describes all variables that are alive due to the block $n$, 
 %meaning that a variable occurring within this set has been read before it was written to.
+
+\hspace{1em}{
 \begin{algorithm}[!h]
 	\SetAlgoLined
 	\SetKwProg{Fn}{Function}{ is}{end}
@@ -264,9 +266,10 @@ would also fall into this category, however these would not reside within parame
 	\Return merge\_v(state, state')
 
 	}
-\caption{Algorithm to analyze the liveness of a basic block.}
+\caption{Algorithm used to analyze the liveness of a basic block.}
 \label{alg:liveness}
-\end{algorithm}
+\end{algorithm}}
+    
 %However, we cannot use variable liveness analysis as is, because the analysis is based on potentially unbound variable sets, 
 %while we are restricted to a finite number of registers and states. We also require an underestimation of live variables an
 %not an overestimation as provided by standard liveness analysis. Furthermore we have to define how to interpret the changes
@@ -486,7 +489,7 @@ parameters and we arrive at a problematic overestimation.
 %  4222f4:       push   %rbx
 %  4222f5:       sub    $0xd0,%rsp
 %  4222fc:       mov    %esi,%r15d
-%  4222ff:       mov    %rdi,%r14
+%  4222ff:       mov    %rdi,%\begin{figure}[!h]
 %  422302:       test   %al,%al
 %  422304:       je     42233d <make_cmd+0x4d>
 %  422306:       movaps %xmm0,0x50(%rsp)
@@ -589,7 +592,7 @@ requires the last known set of definitions that reach the actual call instructio
 	\Return merge\_v(state, state')
 
 	}
-\caption{Algorithm to analyse the reaching definitions of a basic block.}
+\caption{Algorithm used to analyze the reaching definitions of a basic block.}
 \label{alg:reaching}
 \end{algorithm}
 %

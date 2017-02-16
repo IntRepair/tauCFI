@@ -28,9 +28,12 @@ In this paper, we will be concerned with dynamic
 polymorphism---based on virtual functions (10.3 and 11.5 in 
 ISO/IEC N3690~\cite{iso:iecN3690})---because these can be exploited to 
 call: 
-\textit{x)} illegitimate vTable entries not/contained in the class hierarchy by varying or not the number of parameters and types,
-\textit{y)} legitimate vTable entries not/contained in the class hierarchy by varying or not the number of parameters and types, and 
-\textit{z)} fake vTables entries not contained in the class hierarchy by varying or not the number of parameters and types.
+\textit{x)} illegitimate vTable entries not/contained in the 
+class hierarchy by varying or not the number of parameters and types,
+\textit{y)} legitimate vTable entries not/contained in the
+class hierarchy by varying or not the number of parameters and types,
+\textit{z)} fake vTables entries not contained in the class hierarchy 
+by varying or not the number of parameters and types.
 By legitimate and illegitimate vTable entries we mean those 
 vTable entries which for a single indirect call site lie in the 
 vTable hierarchy. More precisely, a vTable entry is legitimate for 
