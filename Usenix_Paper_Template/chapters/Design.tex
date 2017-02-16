@@ -4,13 +4,12 @@
 In this section, we cover the design of \textsc{TypeShield}. We first present the details of the 
 \emph{count} policy in \cref{section:countpolicy}---as introduced by \cite{veen:typearmor}---and the
 new \emph{type} policy in \cref{section:typepolicy}. 
-Then we describe general 
-theory needed to transform set-based analysis to register based ones in \cref{section:instructionanalysis}. 
-We follow this up by presenting the theory needed  implement the analysis for call-targets  in 
-\cref{section:calltargetanalysis} and  call-sites in \cref{section:callsiteanalysis} 
-for each policy. 
-Finally, in \cref{section:addresstakenanalysis} we introduce a version of 
-address taken analysis based on \cite{mingwei:sekar} to restrict the number of available call-targets even more. 
+Then we present the theory needed to transform set-based analysis to register based ones in \cref{section:instructionanalysis}. 
+Finally, we present the implementation details of the call-target analysis in 
+\cref{section:calltargetanalysis} and call-site analysis in \cref{section:callsiteanalysis} 
+for each of our policies. 
+% Finally, in \cref{section:addresstakenanalysis} we introduce a version of 
+% address taken analysis based on \cite{mingwei:sekar} to restrict the number of available call-targets even more. 
 %At last we introduce a patching schema for callsites and calltargets to enforce the invariants we inferred.
 
 \subsection{\emph{Count} Policy}
@@ -186,11 +185,8 @@ Usually data-flow analysis algorithms are based on set of variable or sets of de
 The set $\mathcal{I}$ describes all possible instructions that can occur within the executable section of a binary. (in our case this is based on the instruction set for x86-64 processors)
 
 An instruction $i \in \mathcal{I}$ can non-exclusively perform two kinds of operations on any number of existing registers:
-
-\begin{enumerate}
-\item Read $n$-bits from the register with $n \in \{ 64, 32, 16, 8 \}$.
-\item Write $n$-bits to the register with $n \in \{ 64, 32, 16, 8 \}$.
-\end{enumerate}
+\textit{1)} Read $n$-bits from the register with $n \in \{ 64, 32, 16, 8 \}$.
+\textit{2)} Write $n$-bits to the register with $n \in \{ 64, 32, 16, 8 \}$.
 
 Thus we describe the possible change that occurs in one register with the set $S = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. Note that 0 signals the absence of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ with $m \in \{64,32,16,8\}$ and $m < n$ (e.g. $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.
 
@@ -284,7 +280,7 @@ This algorithm relies on various functions that can be used to configure its beh
 $merge\_v$, which describes how to compound the state change of the current instruction and the current state, 
 the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function
 $analyze\_instr$. The function $succ$, which retrieves all possible successors of a block won't be implemented by us, 
-because we rely on the DynInst instrumentation framework to achieve this.
+because we rely on the DynInst instrumentation framework to achieve the following.
 
 \begin{subequations}
 \label{eq:livenesscustom}
@@ -315,12 +311,10 @@ succ &: \mathcal{I} \mapsto \mathcal{P}(\mathcal{I})
 
 As the $analyze\_instr$ function calculates the effect of an instruction and is the heart of the analyze function. It will also handle non jump 
 and non fall-through successors, as these are not handled by DynInst in our case. We essentially have four cases that we handle:
-\begin{enumerate}
-\item if the instruction is an indirect call or a direct call but we chose not follow calls, then return a state where all registers are considered written.
-\item if the instruction is a direct call and we chose to follow calls, then we spawn a new analysis and return its result.
-\item if the instruction is a constant write (e.g. xor of two registers) then we remove the read portion before we return the decoded state.
-\item in all other cases we simply return the decoded state
-\end{enumerate}
+\textit{1)} if the instruction is an indirect call or a direct call but we chose not follow calls, then return a state where all registers are considered written.
+\textit{2)} if the instruction is a direct call and we chose to follow calls, then we spawn a new analysis and return its result.
+\textit{3)} if the instruction is a constant write (e.g. xor of two registers) then we remove the read portion before we return the decoded state.
+\textit{4)} in all other cases we simply return the decoded state.
 
 This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the  liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
 
@@ -328,14 +322,14 @@ This leaves us with the two merge functions remaining undefined and we will leav
 \textbf{Required Parameter Count.}
 \label{subsection:requiredparamcount}
 To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we use the same representation as TypeArmor:
-\begin{enumerate}
-\item W represents write before read access
-\item R represents read before write access
-\item C represents the absence of access
-\end{enumerate}
-This gives us the following register state $S^\mathcal{L} = \{ C, R, W \}$ which translates to the register superstate $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
+\textit{1)} $W$ represents write before read access,
+\textit{2)} $R$ represents read before write access, and
+\textit{3)} $C$ represents the absence of access.
 
-We are only interested in the first occurrence of a R or W within one path, as following reads or writes do not give us more information. Therefore our vertical merge function ($merge\_v$) behaves in the following way that only when the first given state is $C$, is the return value the second state and in all other cases it will return the first state.
+This gives us the following register state $S^\mathcal{L} = \{ C, R, W \}$ which translates to the register superstate $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
+We are only interested in the first occurrence of a $R$ or $W$ within one path, as following reads or writes do not give us more information. 
+Therefore our vertical merge function ($merge\_v$) behaves in the following way that only when the first given state is $C$, 
+is the return value the second state and in all other cases it will return the first state.
 
 %\begin{align}
 %merge\_v^{r} (cur, delta) &= \left\{
@@ -347,8 +341,8 @@ We are only interested in the first occurrence of a R or W within one path, as f
 %merge\_v (cur, delta) &= (s'_0, ... s'_15) \text { with } s'_j = merge\_v^{r}(cur_j, delta_j)
 %\end{align}
 
-
-Our horizontal merge($merge\_h$) function is a simple pairwise combination of the given set of states, which are then combined with a union like operator with W preceeding R preceeding C.
+Our horizontal merge($merge\_h$) function is a simple pairwise combination of the given set of states, 
+which are then combined with a union like operator with $W$ preceeding $R$ preceeding $C$.
 %\begin{align}
 %merge\_h(\{s\}) &= s\\
 %merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
@@ -407,11 +401,10 @@ The index of highest parameter register based on the used call convention that h
 \textbf{Required Parameter Wideness.}
 \label{subsection:requiredparamwideness}
 To implement the \emph{type} policy, we need a finer representation of the state of one register:
-\begin{enumerate}
-\item W represents write before read access
-\item r8, r16, r32, r64 represents read before write access with 8, 16, 32, 64 bit wideness
-\item C represents the absence of access
-\end{enumerate}
+\textit{1)} $W$ represents write before read access,
+\textit{2)} $r8, r16, r32, r64$ represents read before write access with 8, 16, 32, 64 bit wideness, and
+\textit{3)} $C$ represents the absence of access.
+
 %\begin{enumerate}
 %\item Was the register written to before its value could be read ? \\ We represent this with the state $W$.
 %\item How much was read from the register before its value was overwritten? \\ We represent this with the states $\{ r8, r16, r32, r64 \}$ 
@@ -423,14 +416,17 @@ $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
 %Now, we assume that unless the instructions we are looking at does discard the value it is reading (\texttt{xor rax rax} would be such 
 %an instruction that we call const\_write) that reading does precede the writing withing one instruction.
 
-As there could be more than one read of a register before it is written, we might be interested in more than just the first occurrence of a write or read on a path. To allow this we allow our merge operations to also return the value RW, which represents the existence of both read and write access and then can use W as an end marker of sorts.
+As there could be more than one read of a register before it is written, we might be interested in more than just the first occurrence of a write or read on a path. 
+To allow this we allow our merge operations to also return the value $RW$, which represents the existence of both read and write access and then can use $W$ as an end 
+marker of sorts.
 % We arrive therefore at three possible vertical merge functions:
 %\begin{itemize}
 %	\item The same vertical merge operator as used in the \emph{count} policy, which only gives us the first non $C$ state ($merge\_v^{r}$).
 %	\item A vertical merge operator that conceptually intersects all read accesses along a path until the first write occurs ($merge\_v^{i}$).
 %	\item A vertical merge operator that conceptually calculates the union of all read accesses along a path until the first write occurs ($merge\_v^{u}$).
 %\end{itemize}
-Therefore our vertical merge operator conceptually intersects all read accesses along a path until the first write occurs ($merge\_v^{i}$). In any other case it behaves like the previously mentioned vertical merge function.
+Therefore our vertical merge operator conceptually intersects all read accesses along a path until the first write 
+occurs ($merge\_v^{i}$). In any other case it behaves like the previously mentioned vertical merge function.
 
 %Our horizontal merge function is a simple pairwise combination of the given set of states:
 %\begin{align}
@@ -438,7 +434,8 @@ Therefore our vertical merge operator conceptually intersects all read accesses 
 %merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
 %\end{align}
 
-Our horizontal merge($merge\_h$) function is again a simple pairwise combination of the given set of states, which are then combined with a union like operator with W preceeding WR preceeding R preceeding C. Unless one side is W, read accesses are combined in such a way that always the higher one is chosen.
+Our horizontal merge($merge\_h$) function is again a simple pairwise combination of the given set of states, which are then combined with a union 
+like operator with W preceeding WR preceeding R preceeding C. Unless one side is W, read accesses are combined in such a way that always the higher one is chosen.
 
 %The results of our experiments with the implementation of call-target classification gave presented us with essentially one possible candidate
 %that we can base our horizontal merge function on, namely the union operator with an analysis function that follows into direct calls. The 
@@ -510,38 +507,9 @@ parameters and we arrive at a problematic overestimation.
   422359:       callq  409430 <pcalloc>
 \end{lstlisting}
 \end{center}
-
-% \centering
-% \begin{BVerbatim}
-% 00000000004222f0 <make_cmd>:
-%   4222f0:       push   %r15
-%   4222f2:       push   %r14
-%   4222f4:       push   %rbx
-%   4222f5:       sub    $0xd0,%rsp
-%   4222fc:       mov    %esi,%r15d
-%   4222ff:       mov    %rdi,%r14
-%   422302:       test   %al,%al
-%   422304:       je     42233d <make_cmd+0x4d>
-%   422306:       movaps %xmm0,0x50(%rsp)
-%   42230b:       movaps %xmm1,0x60(%rsp)
-%   422310:       movaps %xmm2,0x70(%rsp)
-%   422315:       movaps %xmm3,0x80(%rsp)
-%   42231d:       movaps %xmm4,0x90(%rsp)
-%   422325:       movaps %xmm5,0xa0(%rsp)
-%   42232d:       movaps %xmm6,0xb0(%rsp)
-%   422335:       movaps %xmm7,0xc0(%rsp)
-%   42233d:       mov    %r9,0x48(%rsp)
-%   422342:       mov    %r8,0x40(%rsp)
-%   422347:       mov    %rcx,0x38(%rsp)
-%   42234c:       mov    %rdx,0x30(%rsp)
-%   422351:       mov    $0x50,%esi
-%   422356:       mov    %r14,%rdi
-%   422359:       callq  409430 <pcalloc>
-% \end{BVerbatim}
 \caption{ASM code of the \texttt{make\_cmd} function with optimize level O2, which has a variadic parameter list.}
 \label{fig:asmvariadic}
 \end{figure}
-=======
 %
 %\begin{figure}
 %% \centering
@@ -574,7 +542,6 @@ parameters and we arrive at a problematic overestimation.
 %\caption{ASM code of the \texttt{make\_cmd} function with optimize level O2, which has a variadic parameter list.}
 %\label{fig:asmvariadic}
 %\end{figure}
->>>>>>> 430261ca46d7b450bcc1cf2f5a89c3cea22cba8a
 
 Our solution to this problem is to find these spurious reads and ignore them. A compiler will implement this type of operation very 
 similar foll all cases, thus we can achieve this using the following steps:
