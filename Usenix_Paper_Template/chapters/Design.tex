@@ -406,13 +406,12 @@ The index of highest parameter register based on the used call convention that h
 ~\\
 \textbf{Required Parameter Wideness.}
 \label{subsection:requiredparamwideness}
-To implement the \emph{type} policy, we need a finer representation:
+To implement the \emph{type} policy, we need a finer representation of the state of one register:
 \begin{enumerate}
 \item W represents write before read access
-\item r8, r16, r32, r64 represents read before write access with 8, 16, 32, 64 bits wideness
+\item r8, r16, r32, r64 represents read before write access with 8, 16, 32, 64 bit wideness
 \item C represents the absence of access
 \end{enumerate}
-Furthermore we allow our merge operations to also return the value RW, which represents the existence of both read and write access.
 %\begin{enumerate}
 %\item Was the register written to before its value could be read ? \\ We represent this with the state $W$.
 %\item How much was read from the register before its value was overwritten? \\ We represent this with the states $\{ r8, r16, r32, r64 \}$ 
@@ -424,7 +423,7 @@ $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
 %Now, we assume that unless the instructions we are looking at does discard the value it is reading (\texttt{xor rax rax} would be such 
 %an instruction that we call const\_write) that reading does precede the writing withing one instruction.
 
-As there could be more than one read of a register before it is written, we might be interested in more than just the first occurrence of a write or read on a path.
+As there could be more than one read of a register before it is written, we might be interested in more than just the first occurrence of a write or read on a path. To allow this we allow our merge operations to also return the value RW, which represents the existence of both read and write access and then can use W as an end marker of sorts.
 % We arrive therefore at three possible vertical merge functions:
 %\begin{itemize}
 %	\item The same vertical merge operator as used in the \emph{count} policy, which only gives us the first non $C$ state ($merge\_v^{r}$).
@@ -527,6 +526,13 @@ ignored %(in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \te
 .
 \end{itemize}
 
+~\\
+\textbf{Ignoring Reads} When one instructions writes and reads a register at the same time we give the read access precedence, however there are exceptions (also mentioned in TypeArmor, however we expand slightly on that):
+\begin{itemize}
+\item \texttt{xor \%rax, \%rax} is the first obvious scenario, as it will always result in \texttt{\%rax} holding the value 0
+\item \texttt{sub \%rax, \%rax} is probably the next scenario, as it results also in \texttt{\%rax} also holding the value 0
+\item \texttt{sbb \%rax, \%rax} is also relevant, however it will not result in a constant value and based on the current state might either result in \texttt{\%rax} holding the value 0 or 1
+\end{itemize}
 
 \subsection{Call-site Analysis}
 \label{section:callsiteanalysis}
@@ -535,6 +541,7 @@ call-site existing within the targeted binary. We will employ a modified version
 variables to generate the needed overestimation. As our algorithm will be customizable, we look at the required merge functions to 
 implement \emph{count} and \emph{type} policy. 
 
+~\\
 \textbf{Reaching Definitions Theory.}
 \label{subsection:reachindefinitionstheory}
 An assignment of a value to a variable is a reaching definition at the end of a block $n$, if that definition is present within at 
@@ -542,25 +549,25 @@ least one path from start to the end of the block $n$ without being overwritten 
 We employ reaching definitions analysis, because we are looking for the parameters a call-site provides. This essentially 
 requires the last known set of definitions that reach the actual call instruction within the parameter registers.
 
-The book~\cite{khedker2009data} defines reaching definition analysis on blocks in the following manner:
-\begin{subequations}
-\label{eq:reachingbasedef}
-\begin{align}
-In_n &:= \left\{
-  \begin{array}{lr}
-    Bl & \text{n is start block}\\
-    \underset{p \in pred(n)}{\bigcup} Out_p & \text{otherwise}
-  \end{array}
-\right. \label{eq:reachingbasedefInt}\\
-Out_n &:= (In_n - Kill_n) \cup Gen_n \label{eq:reachingbasedefOut}
-\end{align}
-\end{subequations}
-$Bl$ is the default state at the start of a path of execution and in our case reaching that state would mean that we do not 
-know whether a value has been provided for the variable and therefore we assume that one has been provided, reaching an 
-overestimation. The set $Kill_n$ describes all definitions that are removed within this block, meaning that the value of 
-a variable has been overwritten. The set $Gen_n$ describes the new definitions that have been provided by the block $n$, 
-meaning that the value of a variable has been assigned. Considering this, we can assume that $Gen_n \subseteq Kill_n$, 
-as we can always create new definitions, but not simply remove definitions without assigning a new value to the variable.
+%The book~\cite{khedker2009data} defines reaching definition analysis on blocks in the following manner:
+%\begin{subequations}
+%\label{eq:reachingbasedef}
+%\begin{align}
+%In_n &:= \left\{
+%  \begin{array}{lr}
+%    Bl & \text{n is start block}\\
+%    \underset{p \in pred(n)}{\bigcup} Out_p & \text{otherwise}
+%  \end{array}
+%\right. \label{eq:reachingbasedefInt}\\
+%Out_n &:= (In_n - Kill_n) \cup Gen_n \label{eq:reachingbasedefOut}
+%\end{align}
+%\end{subequations}
+%$Bl$ is the default state at the start of a path of execution and in our case reaching that state would mean that we do not 
+%know whether a value has been provided for the variable and therefore we assume that one has been provided, reaching an 
+%overestimation. The set $Kill_n$ describes all definitions that are removed within this block, meaning that the value of 
+%a variable has been overwritten. The set $Gen_n$ describes the new definitions that have been provided by the block $n$, 
+%meaning that the value of a variable has been assigned. Considering this, we can assume that $Gen_n \subseteq Kill_n$, 
+%as we can always create new definitions, but not simply remove definitions without assigning a new value to the variable.
 
 \begin{algorithm}[!h]
 	\SetAlgoLined
@@ -595,12 +602,14 @@ as we can always create new definitions, but not simply remove definitions witho
 \caption{Algorithm to analyse the reaching definitions of a Basic Block.}
 \label{alg:reaching}
 \end{algorithm}
-
-However, we cannot use reaching definition analysis as is, because the analysis is again based on potentially unbound 
-variable sets, while we are restricted to a finite number of registers and states. This time however the analysis provides us with an overestimation, 
-we however want to get a result as close as possible so we again want to customize merge functions. Furthermore we have to define how 
-to interpret the changes occuring withing one block based on the the change caused by its instructions. Considering this, w, we 
-arrive at algorithm \ref{alg:reaching} to compute the liveness state at the start of a basic block.
+%
+%
+%However, we cannot use reaching definition analysis as is, because the analysis is again based on potentially unbound 
+%variable sets, while we are restricted to a finite number of registers and states. This time however the analysis provides us with an overestimation, 
+%we however want to get a result as close as possible so we again want to customize merge functions. Furthermore we have to define how 
+%to interpret the changes occuring withing one block based on the the change caused by its instructions. Considering this, w, we 
+%arrive at algorithm \ref{alg:reaching} to compute the liveness state at the start of a basic block.
+The book~\cite{khedker2009data} defines reaching definition analysis on blocks, which we use to arrive at algorithm \ref{alg:reaching} to compute the liveness state at the start of a basic block. We apply the reaching analysis at each indirect callsite directly before each callinstruction.
 
 This algorithm relies on various functions that can be used to configure its behavior. We need to define the 
 function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, 
@@ -636,43 +645,50 @@ the liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following
 %\subsection{Backward Graph Traversal}
 %\label{subsection:backwardgraphtraversal}
 
+~\\
 \textbf{Provided Parameter Count.}
 \label{subsection:providedparamcount}
-To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we are interested 
-in the following three different exclusive informations:
+To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we use the same representation as TypeArmor:
 
 \begin{itemize}
-\item Was the register value trashed ? \\ We represent this with the state T.
-\item Was the register written to ? \\ We represent this with the state S.
-\item Was the register neither trashed nor written to ? \\ We represent this with the state U.
+\item T represents a trashed register
+\item S reprents a set register (written to)
+\item U represents an untouched register
 \end{itemize}
 This gives us the following register state $S^\mathcal{L} = \{ T, S, U \}$ which translates to the register superstate $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
-We are only interested in the first occurrence of a S or T within one path, as following reads or writes do not give us more information.
-Therefore, we can define our vertical merge function in the following way:
-\begin{align}
-merge\_v^{r} (cur, delta) &= \left\{
-  \begin{array}{lr}
-     delta & cur = U \\
-     cur & otherwise
-  \end{array}
-\right. \\
-merge\_v (cur, delta) &= (s'_0, ... s'_15) \text { with } s'_j = merge\_v^{r}(cur_j, delta_j)
-\end{align}
 
-Our horizontal merge function is a simple pairwise combination of the given set of states:
-\begin{align}
-merge\_h(\{s\}) &= s\\
-merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
-\end{align}
 
-We have four viable possibilities for our combination operator $\circ$, depicted in table \ref{fig:COUNTreachingmapping}, which all (except one) give priority to $T$:
-\begin{itemize}
-\item [$\bigsqcap^{\mathcal{R}}$] is what we call the destructive combination operator, as it returns T on any mismatch.
-\item [$\bigcap^{\mathcal{R}}$] is what we call the intersection operator, as it returns U, when combining U and S, similar to an intersection.
-\item [$\bigcup^{\mathcal{R}}$] is what we call the union operator, as it returns S, when combining U and S similar to a union.
-\item [$\bigsqcup^{\mathcal{R}}$] is what we call the true union operator, as it gives S precedence over everything and returns T or 
-U only when both sides are T or U being more inclusive than a union.
-\end{itemize}
+We are only interested in the first occurrence of a S or T within one path, as following reads or writes do not give us more information. Therefore our vertical merge function ($merge\_v$) behaves in the following way that only when the first given state is $U$, is the return value the second state and in all other cases it will return the first state.
+%
+%We are only interested in the first occurrence of a S or T within one path, as following reads or writes do not give us more information.
+%Therefore, we can define our vertical merge function in the following way:
+%\begin{align}
+%merge\_v^{r} (cur, delta) &= \left\{
+%  \begin{array}{lr}
+%     delta & cur = U \\
+%     cur & otherwise
+%  \end{array}
+%\right. \\
+%merge\_v (cur, delta) &= (s'_0, ... s'_15) \text { with } s'_j = merge\_v^{r}(cur_j, delta_j)
+%\end{align}
+
+
+Our horizontal merge($merge\_h$) function is a simple pairwise combination of the given set of states, which are then combined with a union like operator with T preceeding S preceeding U.
+%
+%Our horizontal merge function is a simple pairwise combination of the given set of states:
+%\begin{align}
+%merge\_h(\{s\}) &= s\\
+%merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
+%\end{align}
+%
+%We have four viable possibilities for our combination operator $\circ$, depicted in table \ref{fig:COUNTreachingmapping}, which all (except one) give priority to $T$:
+%\begin{itemize}
+%\item [$\bigsqcap^{\mathcal{R}}$] is what we call the destructive combination operator, as it returns T on any mismatch.
+%\item [$\bigcap^{\mathcal{R}}$] is what we call the intersection operator, as it returns U, when combining U and S, similar to an intersection.
+%\item [$\bigcup^{\mathcal{R}}$] is what we call the union operator, as it returns S, when combining U and S similar to a union.
+%\item [$\bigsqcup^{\mathcal{R}}$] is what we call the true union operator, as it gives S precedence over everything and returns T or 
+%U only when both sides are T or U being more inclusive than a union.
+%\end{itemize}
 
 \newcolumntype{?}{!{\vrule width 1pt}}
 %
@@ -723,45 +739,56 @@ U only when both sides are T or U being more inclusive than a union.
 %\label{fig:COUNTreachingmapping}
 %\end{table}
 
+The index of highest parameter register based on the used call convention that has the state S is considered to be the number of parameters a callsite at most prepares.
 
+~\\
 \textbf{Provided Parameter Wideness.}
 \label{subsection:providedparamwideness}
-To implement the \emph{type} policy, we need a finer representation of the state of one register, thus we are interested in the following three informations:
+To implement the \emph{type} policy, we need a finer representation of the state of one register:
 
 \begin{itemize}
-\item Was the register value trashed ? \\ We represent this with the state T.
-\item Was the register written to and how much ? \\ We represent this with the states $\{ s64, s32, s16, s8 \}$ using S as a placeholder for arbitrary writes.
-\item Was the register neither trashed nor written to ? \\ We represent this with the state U.
+\item T represents a trashed register
+\item s8, s16, s32, s64 S reprents a set register with  8, 16, 32, 64 bit  wideness
+\item U represents an untouched register
 \end{itemize}
+
+%\begin{itemize}
+%\item Was the register value trashed ? \\ We represent this with the state T.
+%\item Was the register written to and how much ? \\ We represent this with the states $\{ s64, s32, s16, s8 \}$ using S as a placeholder for arbitrary writes.
+%\item Was the register neither trashed nor written to ? \\ We represent this with the state U.
+%\end{itemize}
 This gives us the following register state $S^\mathcal{L} = \{ T, s64, s32, s16, s8, U \}$ which translates to the register superstate $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
-Again, we are only interested in the first occurrence of a state that is not $U$ in a path, as following reads or writes do not give us more information.
 
-Therefore we can use the same vertical merge function as for the \emph{count} policy, which is essentially a pass-through until the first non $U$ state.
+Again, we are only interested in the first occurrence of a state that is not $U$ in a path, as following reads or writes do not give us more information. Therefore we can use the same vertical merge function as for the \emph{count} policy, which is essentially a pass-through until the first non $U$ state.
 
-Our horizontal merge function is again a simple pairwise combination of the given set of states:
-\begin{align}
-merge\_h(\{s\}) &= s\\
-merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
-\end{align}
 
-However, we have different possibilities regarding the merge operator. Experiments with our implementations for call-site 
-classification in the \emph{count} policy have given us the following results:
-\begin{itemize}
-\item The best candidate to minimize the problematic matches is the union operator without following direct calls.
-\item The best candidate to maximize precision is the intersection operator with following direct calls.
-\end{itemize}
+Our horizontal merge($merge\_h$) function is a simple pairwise combination of the given set of states, which are then combined with a union like operator with T preceeding S preceeding U. When both states are set, we pick the higher one.
 
-We therefore arrive at three viable possibilities for our combination operator $\circ$, depicted in table \ref{fig:TYPEreachingmapping}, 
-which all (except one) give priority to $T$:
-\begin{itemize}
-\item [$\bigcap^{\mathcal{R}}$] is what we call the intersection operator, as it returns U, when combining U and S, similar to an 
-intersection furthermore we also calculate the intersection of states when both states are set 
-(the lower of the two is returned).
-\item [$\bigsqcap^{\mathcal{R}}$] is what we call the half intersection operator, as it returns U, when combining U and S, 
-similar to an intersection but we calculate the union of states when both states are set (the higher of the two is returned).
-\item [$\bigcup^{\mathcal{R}}$] is what we call the union operator, as it returns S, when combining U and S similar to a union
-furthermore we calculate the union of states when both states are set (the higher of the two is returned).
-\end{itemize}
+%
+%Our horizontal merge function is again a simple pairwise combination of the given set of states:
+%\begin{align}
+%merge\_h(\{s\}) &= s\\
+%merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
+%\end{align}
+%
+%However, we have different possibilities regarding the merge operator. Experiments with our implementations for call-site 
+%classification in the \emph{count} policy have given us the following results:
+%\begin{itemize}
+%\item The best candidate to minimize the problematic matches is the union operator without following direct calls.
+%\item The best candidate to maximize precision is the intersection operator with following direct calls.
+%\end{itemize}
+%
+%We therefore arrive at three viable possibilities for our combination operator $\circ$, depicted in table \ref{fig:TYPEreachingmapping}, 
+%which all (except one) give priority to $T$:
+%\begin{itemize}
+%\item [$\bigcap^{\mathcal{R}}$] is what we call the intersection operator, as it returns U, when combining U and S, similar to an 
+%intersection furthermore we also calculate the intersection of states when both states are set 
+%(the lower of the two is returned).
+%\item [$\bigsqcap^{\mathcal{R}}$] is what we call the half intersection operator, as it returns U, when combining U and S, 
+%similar to an intersection but we calculate the union of states when both states are set (the higher of the two is returned).
+%\item [$\bigcup^{\mathcal{R}}$] is what we call the union operator, as it returns S, when combining U and S similar to a union
+%furthermore we calculate the union of states when both states are set (the higher of the two is returned).
+%\end{itemize}
 %
 %\begin{table}
 %
@@ -799,7 +826,8 @@ furthermore we calculate the union of states when both states are set (the highe
 %\label{fig:TYPEreachingmapping}
 %\end{table}
 
-Initial experiments with this implementation showed two problems regarding provided wideness detection.  Parameter lists with ``holes'' and address wideness underestimation.
+~\\
+Our experiments with this implementation showed two problems regarding provided wideness detection.  Parameter lists with ``holes'' and address wideness underestimation, furthermore register extension instructions are also cause of problems. To reduce runtime, we also restricted the maximum path depth to 10 blocks.
 
 \paragraph{Parameter Lists with \textit{Holes}.} This refers to parameter lists that show one or more \texttt{void} parameters between start to the last actual parameter. 
 These are not existant in actual code but our analysis has the possibility of generating them through the merge operations. An example would be the following: 
