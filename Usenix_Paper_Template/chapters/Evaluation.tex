@@ -347,37 +347,48 @@ When compared, our implementation of the \textit{type} policy allows about 7.93\
 \label{CDF Analysis}
 
 \begin{figure}[ht] 
-  \label{ fig7} 
+  
   \begin{minipage}[b]{0.5\linewidth}
     \centering
     \resizebox{1.04\columnwidth}{!}{\includesvg{postgresqlO2}}
     \caption{postgresql} 
-    \vspace{4ex}
+    \label{fig7} 
+    \vspace{1ex}
   \end{minipage}%%
   \begin{minipage}[b]{0.5\linewidth}
     \centering
     \resizebox{1.04\columnwidth}{!}{\includesvg{nodeO2}} 
     \caption{node.js} 
-    \vspace{4ex}
+    \label{fig8} 
+    \vspace{1ex}
   \end{minipage} 
   \begin{minipage}[b]{0.5\linewidth}
     \centering
     \resizebox{1.04\columnwidth}{!}{\includesvg{proftpdO2}}
     \caption{proftpd} 
-    \vspace{4ex}
+    \label{fig9} 
+    \vspace{1ex}
   \end{minipage}%% 
   \begin{minipage}[b]{0.5\linewidth}
     \centering
     \resizebox{1.04\columnwidth}{!}{\includesvg{mysqlO2}} 
     \caption{mysql} 
-    \vspace{4ex}
+    \label{fig10} 
+    \vspace{1ex}
   \end{minipage} 
 \end{figure}
 
-<<<<<<< HEAD
-=======
-When looking at the CDFs of legal callsite targets as shown for postgresql \ref{fig7}, node.js \ref{fig8}, proftpd \ref{fig9}, mysql \ref{fig10}, one should instantly see the difference between the type and the count policies. While the count  policies have only a few number of changes, the number of changes that can be seen within the type policies is vastly higher. The reason for that is simple, the number of buckets that are used to classify the callsites and calltargets is simply higher. While type policies mostly perform better than the count policies, there are still parts within the type plot that are above the count plot, the reason for that is relatively simple: the maximum number of calltargets a callsite can access has been reduced, therefore a lower amount of calltargets is a higher percentage than before. However all of that is also dependent on the structure of the program.
->>>>>>> 188918af0fba32dfee5da030a3dd46e234377067
+When looking at the CDFs of legal callsite targets as shown for 
+postgresql \ref{fig7}, node.js \ref{fig8}, proftpd \ref{fig9}, mysql \ref{fig10}, 
+one should instantly see the difference between the type and the count policies. 
+While the count  policies have only a few number of changes, the number of changes 
+that can be seen within the type policies is vastly higher. The reason for that is 
+simple, the number of buckets that are used to classify the callsites and calltargets 
+is simply higher. While type policies mostly perform better than the count policies, 
+there are still parts within the type plot that are above the count plot, the reason 
+for that is relatively simple: the maximum number of calltargets a callsite can access 
+has been reduced, therefore a lower amount of calltargets is a higher percentage than 
+before. However, all of that is also dependent on the structure of the program.
 
 \subsection{RQ3: Runtime Performance Overhead}
 \label{section:typeshieldoverheadperformance}
