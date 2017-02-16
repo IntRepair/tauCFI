@@ -3,22 +3,22 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: main.aux
 The style file: acm.bst
 Database file #1: literatur.bib.bib
-I was expecting a `,' or a `}'---line 60 of file literatur.bib.bib
+I was expecting a `,' or a `}'---line 68 of file literatur.bib.bib
  :  
  :  year = "2015",
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 66 of file literatur.bib.bib
+I was expecting a `,' or a `}'---line 74 of file literatur.bib.bib
  :  
  :  year = "2015",
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 167 of file literatur.bib.bib
+I was expecting a `,' or a `}'---line 175 of file literatur.bib.bib
  :  
  :  year = "2007",
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 345 of file literatur.bib.bib
+I was expecting a `,' or a `}'---line 353 of file literatur.bib.bib
  :  
  :  year = "2009",
 (Error may have been on previous line)
@@ -46,45 +46,45 @@ Name 1 in "PaX Team. Address Space Layout Randomization," has a comma at the end
 while executing---line 1133 of file acm.bst
 Warning--empty title in ASLR
 Warning--empty booktitle in ASLR
-You've used 51 entries,
+You've used 52 entries,
             2253 wiz_defined-function locations,
-            725 strings with 13047 characters,
-and the built_in function-call counts, 16361 in all, are:
-= -- 1276
-> -- 1048
+            728 strings with 13114 characters,
+and the built_in function-call counts, 16633 in all, are:
+= -- 1298
+> -- 1060
 < -- 0
-+ -- 431
-- -- 380
-* -- 1217
-:= -- 2685
-add.period$ -- 147
-call.type$ -- 51
-change.case$ -- 340
++ -- 436
+- -- 384
+* -- 1234
+:= -- 2728
+add.period$ -- 150
+call.type$ -- 52
+change.case$ -- 345
 chr.to.int$ -- 0
-cite$ -- 70
-duplicate$ -- 791
-empty$ -- 1420
-format.name$ -- 380
-if$ -- 3322
+cite$ -- 71
+duplicate$ -- 807
+empty$ -- 1449
+format.name$ -- 384
+if$ -- 3380
 int.to.chr$ -- 0
-int.to.str$ -- 51
-missing$ -- 52
-newline$ -- 252
-num.names$ -- 94
-pop$ -- 611
+int.to.str$ -- 52
+missing$ -- 53
+newline$ -- 257
+num.names$ -- 96
+pop$ -- 621
 preamble$ -- 1
-purify$ -- 292
+purify$ -- 296
 quote$ -- 0
-skip$ -- 288
+skip$ -- 294
 stack$ -- 0
-substring$ -- 255
-swap$ -- 89
+substring$ -- 260
+swap$ -- 91
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 202
+type$ -- 206
 warning$ -- 19
-while$ -- 94
-width$ -- 53
-write$ -- 450
+while$ -- 96
+width$ -- 54
+write$ -- 459
 (There were 6 error messages)

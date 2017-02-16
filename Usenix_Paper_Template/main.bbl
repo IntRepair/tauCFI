@@ -307,6 +307,11 @@
 \newblock In {\em Proceedings of the IEEE Symposium on Security and Privacy
   (S\&P),\/} (2013).
 
+\bibitem{zhang:usenix}
+{\sc Zhang, M., and Sekar, R.}
+\newblock {Control Flow Integrity for COTS Binaries}.
+\newblock In {\em In USENIX SEC\/} (2013).
+
 \bibitem{cfci:zhang}
 {\sc Zhang, M., and Sekar, R.}
 \newblock {Control Flow and Code Integrity for COTS binaries: An Effective
