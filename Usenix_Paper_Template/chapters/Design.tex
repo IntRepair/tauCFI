@@ -264,7 +264,7 @@ would also fall into this category, however these would not reside within parame
 	\Return merge\_v(state, state')
 
 	}
-\caption{Algorithm to analyze the liveness of a Basic Block.}
+\caption{Algorithm to analyze the liveness of a basic block.}
 \label{alg:liveness}
 \end{algorithm}
 %However, we cannot use variable liveness analysis as is, because the analysis is based on potentially unbound variable sets, 
@@ -589,7 +589,7 @@ requires the last known set of definitions that reach the actual call instructio
 	\Return merge\_v(state, state')
 
 	}
-\caption{Algorithm to analyse the reaching definitions of a Basic Block.}
+\caption{Algorithm to analyse the reaching definitions of a basic block.}
 \label{alg:reaching}
 \end{algorithm}
 %
@@ -605,7 +605,7 @@ This algorithm relies on various functions that can be used to configure its beh
 function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, 
 the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function
 $analyze\_instr$. The function $pred$, which retrieves all possible predecessors of a block won't be implemented by us, 
-because we rely on the DynInst instrumentation framework to achieve this.
+because we rely on the DynInst instrumentation framework to achieve the following.
 \begin{subequations}
 \label{eq:livenesscustom}
 \begin{align}
