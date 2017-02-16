@@ -46,8 +46,8 @@ parameters and the call-sites providing parameters as depicted in Figure \ref{fi
 \fill[black!60!white] (0,1) rectangle (6,0);
 
 
-\draw[-triangle 45, thick, arrowhead=.5cm] (-0.5,0) -- node[sloped, anchor=center, above] {\Large{growing required bits per parameter}} (-0.5,7);
-\draw[-triangle 45, thick, arrowhead=.5cm] (6.5,7) -- node[sloped, anchor=center, above] {\Large{growing provided bits per parameter}} (6.5,0);
+\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Large{growing required bits per parameter}} (-0.5,7);
+\draw[-triangle 45, thick] (6.5,7) -- node[sloped, anchor=center, above] {\Large{growing provided bits per parameter}} (6.5,0);
 
 \draw (0,7) rectangle node[anchor=center] {\Large{0 parameters}} (6,6);
 
@@ -105,8 +105,8 @@ call-site providing wideness as depicted in Figure \ref{fig:TYPEschema}.
 \fill[black!40!white] (0,3) rectangle (12,1.5);
 \fill[black!50!white] (0,1.5) rectangle (12,0);
 
-\draw[-triangle 45, thick, arrowhead=1cm,] (-0.5,0) -- node[sloped, anchor=center, above] {\Large{growing required bits per parameter}} (-0.5,7.5);
-\draw[-triangle 45, thick, arrowhead=1cm,] (12.5,7.5) -- node[sloped, anchor=center, above] {\Large{growing provided bits per parameter}} (12.5,0);
+\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Large{growing required bits per parameter}} (-0.5,7.5);
+\draw[-triangle 45, thick] (12.5,7.5) -- node[sloped, anchor=center, above] {\Large{growing provided bits per parameter}} (12.5,0);
 
 \draw (0,7.5)  --node[anchor=south] {\Large{param 6}} (2,7.5);
 \draw (2,7.5)  --node[anchor=south] {\Large{param 5}} (4,7.5);
@@ -172,13 +172,11 @@ $
 	u \leq_{type} v :\Longleftrightarrow  
 	\forall_{i = 0}^{5} {u_i \leq v_i} , \text {with } u, v \in \mathcal{T}^6
 $
-Again we allow any call-site $cs$ call any call-target $ct$, when it fulfills the requirement $ct \leq cs$. The way we represent this is by letting the type for a call-target parameter
-progress from 64-bit to 0-bit---if a call-target requires a 32-bit value in its 1st parameter, it also should accept a 64-bit value from its call-site---and similarly we let the type for
-a call-site progress from 0-bit to 64-bit - If a call-site provides a 32-bit value in its 1st parameter it also provides a 16-bit, 8-bit and 0-bit to a call-target. Now the advantage
-of the \emph{type} policy in comparison to the \emph{count} policy is that while our type comparison implies the count comparison, the other direction does not hold. Meaning, 
-just having an equal or lesser number of parameters than a call-site, does no longer allow a call-target being called there, thus restricting the number of call-targets per 
+Again we allow any call-site $cs$ call any call-target $ct$, when it fulfills the requirement $ct \leq cs$. 
+%The way we represent this is by letting the type for a call-target parameter progress from 64-bit to 0-bit---if a call-target requires a 32-bit value in its 1st parameter, it also should accept a 64-bit value from its call-site---and similarly we let the type for a call-site progress from 0-bit to 64-bit - If a call-site provides a 32-bit value in its 1st parameter it also provides a 16-bit, 8-bit and 0-bit to a call-target. Now the advantage of the \emph{type} policy in comparison to the \emph{count} policy is that while our type comparison implies the count comparison, the other direction does not hold.
+Meaning, just having an equal or lesser number of parameters than a call-site, does no longer allow a call-target being called there, thus restricting the number of call-targets per 
 call-site even further. A function that requires 64-bit in its first parameter, and 0-bit in all other parameters, would have been callable by a call-site providing 8-bit 
-in its first and second parameter when using the \emph{count} policy, however in the \emph{type} policy this is no longer possible.
+in its first and second parameter when using the \emph{count} policy, however in the \emph{type} policy this is no longer possible. Thus it should decrease the number of targets per bucket.
 
 
 \subsection{Instruction Analysis}
