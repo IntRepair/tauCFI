@@ -55,12 +55,12 @@ First, we take a look at the comparability of call-targets and second, we take a
 	\csvreader[before filter=\ifthenelse{\equal{\csvcoli}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/matching.O2.csv}{
 		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
 	}
-	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
+	{\csvcoli & \csvcoliii & \csvcoliv (\csvcolv \% )& \csvcolvi (\csvcolvii \% )& \csvcolxiii & \csvcolxiv  (\csvcolxv) & \csvcolxvi   (\csvcolvii) }% specify your coloumns here
 
 	\csvreader[before filter=\ifthenelse{\equal{\csvcoli}{geomean}}{\csvfilteraccept}{\csvfilterreject},  late after line=\\, late after last line=\\\bottomrule]{csvs/matching.O2.csv}{
 		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
 	}
-	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
+	{\csvcoli & \csvcoliii & \csvcoliv (\csvcolv \% )& \csvcolvi (\csvcolvii \% )& \csvcolxiii & \csvcolxiv  (\csvcolxv) & \csvcolxvi   (\csvcolvii) }% specify your coloumns here
     	\end{tabular}}
 %     	}
 	\caption {Table shows the quality of structural matching provided by our automated verify and test environment, 
