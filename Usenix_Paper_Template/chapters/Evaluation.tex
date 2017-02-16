@@ -7,26 +7,18 @@ and the node.js server application node (version 0.12.5). We chose these applica
 applications also used by the TypeAmor~\cite{veen:typearmor} to allow for later comparison.
 In our evaluation we addressed the following research questions:
 \begin{itemize}
+ \item \textbf{RQ1:} How precise is \textsc{TypeShield}? (\cref{section:typeshieldprecision})
 
- \item \textbf{RQ1:} How precise is \textsc{TypeShield} in recovering parameter count and type information for call-sites and call-targets from a given binary?
+ \item \textbf{RQ2:} What level of security does \textsc{TypeShield} offer? (\cref{section:typeshieldeffectiveness})
 
- \item \textbf{RQ2:} What level of security does \textsc{TypeShield} offer?
- We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
-\todo[inline]{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}
+ \item \textbf{RQ3:} What is the runtime overhead of \textsc{TypeShield}? (\cref{section:typeshieldoverheadperformance})
 
-\item \textbf{RQ3:} What is the runtime performance overhead introduced by \textsc{TypeShield}?
-% \todo[inline]{add a binary patch that does not crash none of the programs from SPEC2006.}
-% \todo[inline]{need a table with all the results for each of the SPEC2006 programs and a bar diagram}
-% 
-\item \textbf{RQ4:} What is the instrumentation overhead introduced by \textsc{TypeShield}?
-% Here we measure how much the binaries increased in size after the instrumentation was added to the binaries.
-%\todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
+ \item \textbf{RQ4:} What is the instrumentation overhead of \textsc{TypeShield}? (\cref{section:typeshieldoverheadinstrumentation})
 
-\item \textbf{RQ5:} Is our tool better than other tools?
-
+ \item \textbf{RQ5:} Is our tool better than other tools? (\cref{RQ5: Is TypeShield better than other tools?})
 \end{itemize}
 \textbf{Comparison Method.} As we do not have access to the source code of TypeAmor, we implemented two modes in \textsc{TypeShield}. 
-The first mode of our tool is an approximate implementation of the \textit{count} 
+The first mode of our tool is an similar implementation of the \textit{count} 
 policy described by TypeArmor. The second mode is our implementation of the \textit{type} policy on
 top of our \textit{count} policy implementation. 
 %
@@ -41,11 +33,10 @@ To measure the precision of \textsc{TypeShield}, we need to compare the classifi
 some sort of ground truth for our test targets. We generate this ground truth by compiling our test targets using a custom compiled Clang/LLVM
 compiler (version 4.0.0 trunk 283889) with a MachineFunction pass inside the x86 code generation implementation of LLVM. We essentially 
 collect three data points for each call-site/call-target from our LLVM-pass:
-\begin{itemize}
-\item The point of origination, which is either the name of the call-target or the name of the function the call-site resides in.
-\item The return type that is either expected by the call-site or provided by the call-target.
-\item The parameter list that is provided by the call-site or expected by the call-target, which discards the variadic argument list.
-\end{itemize}
+\textit{1)} The point of origination, which is either the name of the call-target or the name of the function the call-site resides in.
+\textit{2)} The return type that is either expected by the call-site or provided by the call-target.
+\textit{3)} The parameter list that is provided by the call-site or expected by the call-target, which discards the variadic argument list.
+
 However, before we can proceed to measure the quality and precision of \textsc{TypeShield}'s classification of call-targets and call-sites
 using our ground truth, we need to evaluate the quality and applicability of the ground truth, we collected.
 
@@ -86,11 +77,10 @@ long as they differ in namespace or parameter type. As LLVM does not know about 
 The method used for unique name generation is called mangling and composes the actual name of the function, its the return type, its name-space and the 
 types of its parameter list. We therefore need to reverse this process and then compare the fully typed names.
 Table \ref{tbl:matchingquality} shows three data points regarding call-targets for the optimization level O2:
-\begin{itemize}
-\item The number of comparable call-targets that are found in both datasets
-\item Clang miss: The number of call-targets that are found by \textsc{TypeShield} but not by our Clang/LLVM pass
-\item tool miss: The number of call-targets that are found by our Clang/LLVM pass but not by \textsc{TypeShield}
-\end{itemize}
+\textit{1)}  The number of comparable call-targets that are found in both datasets
+\textit{2)}  Clang miss: The number of call-targets that are found by \textsc{TypeShield} but not by our Clang/LLVM pass
+\textit{3)}  tool miss: The number of call-targets that are found by our Clang/LLVM pass but not by \textsc{TypeShield}
+
 The problematic column is the Clang miss column, as these might indicate problems with \textsc{TypeShield}. These numbers are relatively low (below 1\%) with only node showing a significant higher value than the rest (around 1.6\%). The column labeled tool miss lists 
 higher numbers, however these are of no real concern to us, as our ground truth pass possibly collects more data: All source files used during the 
 compilation of our test-targets are incorporated into our ground truth. The compilation might generate more than one binary and therefore not 
@@ -102,11 +92,9 @@ perfect (above 98\%)\\
 
 \textbf{Call-sites.} While our structural matching of call-targets is rather simple, the matter of matching callsites is more complex. Our tool can provide accurate addressing of call-sites within the binary. However, Clang/LLVM does not have such capabilities in its intermediate representation (IR). Furthermore the IR is not the final representation within the compiler, as the IR is transformed into a machine-based representation (MR), which is the again optimized. Although we can read information regarding paramters from the IR, it is not possible with the MR. Therefore we attach that data directly after the conversion from IR to MR and read that data at the end of the compilation. To not unneccessarily pollute our dataset, we only considered call-targets, which have been found in both datasets. 
 The table \ref{tbl:matchingquality} shows three data points regarding call-sites for the optimization level O2:
-\begin{itemize}
-\item The number of comparable call-sites that are found in both datasets.
-\item Clang miss: The number of call-sites that are discarded from the dataset of \textsc{TypeShield}.
-\item tool miss: The number of call-sites that are discarded from the dataset of our Clang/LLVM pass.
-\end{itemize}
+\textit{1)} The number of comparable call-sites that are found in both datasets.
+\textit{2)} Clang miss: The number of call-sites that are discarded from the dataset of \textsc{TypeShield}.
+\textit{3)} tool miss: The number of call-sites that are discarded from the dataset of our Clang/LLVM pass.
 
 Both columns (Clang miss and tool miss) show a relatively low number of problems (<0.5\%), therefore we can also safely state that our structural matching between ground truth and \textsc{TypeShield} regarding call-sites is also nearly perfect (above 99\%)
 
@@ -237,36 +225,24 @@ policy and third we are going to evaluate the effectiveness of our \textit{type}
 \subsubsection{Theoretical Limits.}
 \label{subsection:theoreticallimit}
 We explore the theoretical limits regarding the effectiveness of the \textit{count} and \textit{type} policies by relying on the collected ground truth data, essentially assuming perfect classification.
-
-~\\
 \textbf{Experiment Setup} Based on the type information collected by our Clang/LLVM pass, we conducted two experiment series.
 We derived the available number of call-targets for each call-site based on the collected ground truth applying the \textit{count} and \textit{type} schema
-
-
-~\\
 \textbf{Results:}
-\begin{itemize}
-\item The theoretical limit of the \textit{count*} schema has a geometric mean of 233 possible call-targets, which is 16.48\% of the geometric mean of total available 
+\textit{1)} The theoretical limit of the \textit{count*} schema has a geometric mean of 233 possible call-targets, which is 16.48\% of the geometric mean of total available 
 call-targets.
-\item The theoretical limit of the \textit{type*} schema has a geometric mean of 210 possible call-targets, which is 14.86\% of the geometric mean of total available
+\textit{2)} The theoretical limit of the \textit{type*} schema has a geometric mean of 210 possible call-targets, which is 14.86\% of the geometric mean of total available
 call-targets.
-\end{itemize}
 
 When compared, the theoretical limit of the \textit{type} policy allows about 10\% less available call-targets in the geomean in O2 than the limit of the \textit{count} policy.
 
 \subsubsection{\textsc{TypeShield} Implementation}
 \label{subsection:typeshieldvslimitcount}
-
 \textbf{Experiment Setup.} We setup our two experiment series based on our previous evaluations regarding the classification precision for the \textit{count} and the \textit{type} policy.
-
-~\\
 \textbf{Results.}
-\begin{itemize}
-\item The \textit{count} schema has a geometric mean of 315 possible call-targets, which is 22.29\% of the geometric mean of total available 
+\textit{1)}  The \textit{count} schema has a geometric mean of 315 possible call-targets, which is 22.29\% of the geometric mean of total available 
 call-targets. This is 35.19\% more than the theoretical limit of available call-targets per call-site.
-\item The \textit{type} schema has a geometric mean of 290 possible call-targets, which is 20.52\% of the geometric mean of total available
+\textit{2)}  The \textit{type} schema has a geometric mean of 290 possible call-targets, which is 20.52\% of the geometric mean of total available
 call-targets. This is 38.09\% more than the theoretical limit of available call-targets per call-site.
-\end{itemize}
 
 When compared, our implementation of the \textit{type} policy allows about 7.93\% less available call-targets in the geomean in O2 than our implementation of the \textit{type} policy.
 
@@ -444,6 +420,29 @@ Here we measure how much the binaries increased in size after the instrumentatio
 \subsection{RQ5: Comparisons with Other Tools}
 \label{RQ5: Is TypeShield better than other tools?}
 
+\begin{table}[h!]
+\resizebox{\columnwidth}{!}{
+	\begin{tabular}{l|r|r|r|r|r|r}%
+	\toprule
+	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c|}{ {\bfseries call-targets}} & \multicolumn{3}{c}{{\bfseries call-sites} }\\
+	\bfseries Target & match & Clang miss &  tool miss &  match & Clang miss & tool miss% specify table head
+	\\\midrule
+	\csvreader[before filter=\ifthenelse{\equal{\csvcoli}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/matching.O2.csv}{
+		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
+	}
+	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
+
+	\csvreader[before filter=\ifthenelse{\equal{\csvcoli}{geomean}}{\csvfilteraccept}{\csvfilterreject},  late after line=\\, late after last line=\\\bottomrule]{csvs/matching.O2.csv}{
+		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
+	}
+	{\csvcoli & \csvcoliii & \csvcoliv & \csvcolv & \csvcolix & \csvcolx & \csvcolxi }% specify your coloumns here
+    	\end{tabular}}
+%     	}
+	\caption {Table shows the quality of structural matching provided by our automated verify and test environment, 
+	regarding call-sites and call-targets when compiling with optimization level O2. The label Clang miss 
+	denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc{TypeShield}.}
+	\label{tbl:matchingquality}
+\end{table}
 
 
 

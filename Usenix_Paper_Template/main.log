@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  16 FEB 2017 20:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  16 FEB 2017 21:27
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1343,6 +1343,12 @@ LaTeX Warning: Label `subsection:typeshieldcountprecision' multiply defined.
 LaTeX Warning: Label `subsection:typeshieldcountprecision@cref' multiply define
 d.
 
+
+LaTeX Warning: Label `tbl:matchingquality' multiply defined.
+
+
+LaTeX Warning: Label `tbl:matchingquality@cref' multiply defined.
+
 )
 \openout1 = `main.aux'.
 
@@ -1588,27 +1594,25 @@ bleInputStream
 
 ) (./chapters/TypeShild_Overview.tex
 LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <10> not available
-(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 27.
-) (./chapters/Design.tex
-
-LaTeX Warning: Reference `section:addresstakenanalysis' on page 1 undefined on 
-input line 12.
-
-[5]
+(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 24.
+) (./chapters/Design.tex [5]
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 16.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 15.
 
-Overfull \hbox (5.25021pt too wide) in paragraph at lines 98--154
+Overfull \hbox (5.25021pt too wide) in paragraph at lines 97--153
  |  [] 
  []
 
-[6]
-Underfull \hbox (badness 1102) in paragraph at lines 195--196
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6]
+Underfull \hbox (badness 1102) in paragraph at lines 191--192
 []\T1/ptm/m/n/10 Thus we de-scribe the pos-si-ble change that oc-curs in
  []
 
 
-Underfull \hbox (badness 2221) in paragraph at lines 195--196
+Underfull \hbox (badness 2221) in paragraph at lines 191--192
 \T1/ptm/m/n/10 one reg-is-ter with the set $\OML/ztmcm/m/it/10 S \OT1/ztmcm/m/n
 /10 = \OMS/ztmcm/m/n/10 f\OML/ztmcm/m/it/10 w\OT1/ztmcm/m/n/10 64\OML/ztmcm/m/i
 t/10 ; w\OT1/ztmcm/m/n/10 32\OML/ztmcm/m/it/10 ; w\OT1/ztmcm/m/n/10 16\OML/ztmc
@@ -1616,141 +1620,133 @@ m/m/it/10 ; w\OT1/ztmcm/m/n/10 8\OML/ztmcm/m/it/10 ; \OT1/ztmcm/m/n/10 0\OMS/zt
 mcm/m/n/10 g ^^B
  []
 
-[7]
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 489.
-
-Overfull \hbox (19.3871pt too wide) in paragraph at lines 545--579
-[]\T1/ptm/m/n/10 ======= >>>>>>> 430261ca46d7b450bcc1cf2f5a89c3cea22cba8a 
- []
-
-[8]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[9]
-Overfull \hbox (27.33pt too wide) in paragraph at lines 725--725
-[] 
- []
-
-
-LaTeX Warning: Reference `fig:COUNTreachingmapping' on page 10 undefined on inp
-ut line 733.
-
-
-Package array Warning: Column ? is already defined on input line 742.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 801--803
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 413--417
 \T1/ptm/m/n/10 This gives us the fol-low-ing reg-is-ter state $\OML/ztmcm/m/it/
 10 S[] \OT1/ztmcm/m/n/10 =
  []
 
 
-Underfull \hbox (badness 4001) in paragraph at lines 801--803
-\OMS/ztmcm/m/n/10 f\OML/ztmcm/m/it/10 T; s\OT1/ztmcm/m/n/10 64\OML/ztmcm/m/it/1
-0 ; s\OT1/ztmcm/m/n/10 32\OML/ztmcm/m/it/10 ; s\OT1/ztmcm/m/n/10 16\OML/ztmcm/m
-/it/10 ; s\OT1/ztmcm/m/n/10 8\OML/ztmcm/m/it/10 ; U\OMS/ztmcm/m/n/10 g$ \T1/ptm
+Underfull \hbox (badness 2884) in paragraph at lines 413--417
+\OMS/ztmcm/m/n/10 f\OML/ztmcm/m/it/10 C; r\OT1/ztmcm/m/n/10 8\OML/ztmcm/m/it/10
+ ; r\OT1/ztmcm/m/n/10 16\OML/ztmcm/m/it/10 ; r\OT1/ztmcm/m/n/10 32\OML/ztmcm/m/
+it/10 ; r\OT1/ztmcm/m/n/10 64\OML/ztmcm/m/it/10 ; W\OMS/ztmcm/m/n/10 g$ \T1/ptm
 /m/n/10 which trans-lates to the reg-is-ter
  []
 
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 480.
+[8]
 
-LaTeX Warning: Reference `fig:TYPEreachingmapping' on page 10 undefined on inpu
-t line 819.
+Package array Warning: Column ? is already defined on input line 720.
 
+
+Underfull \hbox (badness 6927) in paragraph at lines 787--788
+[]\T1/ptm/m/n/10 This gives us the fol-low-ing reg-is-ter state $\OML/ztmcm/m/i
+t/10 S[] \OT1/ztmcm/m/n/10 =
+ []
+
+[9]
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 869.
-[10]) (./chapters/Implementation.tex) (./chapters/Evaluation.tex
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 859.
+) (./chapters/Implementation.tex
+Underfull \vbox (badness 2050) has occurred while \output is active []
+
+)
+(./chapters/Evaluation.tex [10]
 LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <12> not available
-(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 36.
- [11]
-Underfull \hbox (badness 10000) in paragraph at lines 99--101
+(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 28.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 89--91
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 116--152
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 104--140
 \T1/ptm/b/n/10 Experiment Setup (Call-targets) \T1/ptm/m/n/10 Union com-bi-na-t
 ion
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--152
+Underfull \hbox (badness 10000) in paragraph at lines 104--140
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--152
+Underfull \hbox (badness 10000) in paragraph at lines 104--140
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 116--152
+Underfull \hbox (badness 10000) in paragraph at lines 104--140
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--181
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--181
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--181
 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[12]
-Underfull \hbox (badness 10000) in paragraph at lines 157--193
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 157--193
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 157--193
-
- []
-
-[13] <./postgresqlO2.pdf, id=392, 578.16pt x 433.62pt>
+[12] <./postgresqlO2.pdf, id=368, 578.16pt x 433.62pt>
 File: ./postgresqlO2.pdf Graphic file (type pdf)
 
 <use ./postgresqlO2.pdf>
-Package pdftex.def Info: ./postgresqlO2.pdf used on input line 385.
+Package pdftex.def Info: ./postgresqlO2.pdf used on input line 361.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
 File: ./postgresqlO2.pdf Graphic file (type pdf)
  <use ./postgresqlO2.pdf>
-Package pdftex.def Info: ./postgresqlO2.pdf used on input line 385.
+Package pdftex.def Info: ./postgresqlO2.pdf used on input line 361.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./postgresqlO2.pdf_tex
-<postgresqlO2.pdf, id=393, page=1, 578.16pt x 433.62pt>
+<postgresqlO2.pdf, id=369, page=1, 578.16pt x 433.62pt>
 File: postgresqlO2.pdf Graphic file (type pdf)
 
 <use postgresqlO2.pdf, page 1>
 Package pdftex.def Info: postgresqlO2.pdf, page1 used on input line 52.
 (pdftex.def)             Requested size: 578.15858pt x 433.63878pt.
 )
-Overfull \hbox (9.75475pt too wide) in paragraph at lines 385--386
+Overfull \hbox (9.75475pt too wide) in paragraph at lines 361--362
  [][] 
  []
 
-<figures/speccpu2006.pdf, id=394, 442.65375pt x 244.915pt>
+<figures/speccpu2006.pdf, id=370, 442.65375pt x 244.915pt>
 File: figures/speccpu2006.pdf Graphic file (type pdf)
 
 <use figures/speccpu2006.pdf>
-Package pdftex.def Info: figures/speccpu2006.pdf used on input line 431.
+Package pdftex.def Info: figures/speccpu2006.pdf used on input line 407.
 (pdftex.def)             Requested size: 247.88887pt x 137.15518pt.
 
-Overfull \hbox (3.97762pt too wide) in paragraph at lines 431--432
+Overfull \hbox (3.97762pt too wide) in paragraph at lines 407--408
  [][] 
  []
 
-) (./chapters/Related_Work.tex [14 <./postgresqlO2.pdf> <./figures/speccpu2006.
-pdf
-
-pdfTeX warning: /usr/bin/pdflatex (file ./figures/speccpu2006.pdf): PDF inclusi
-on: multiple pdfs with page group included in a single page
->] [15]
+[13 <./postgresqlO2.pdf>]) (./chapters/Related_Work.tex [14 <./figures/speccpu2
+006.pdf>]
 Underfull \hbox (badness 1314) in paragraph at lines 111--117
 \T1/ptm/m/n/10 bi-nary in-stru-men-ta-tion in tools such as: vf-Guard [[]],
  []
 
-[16]) (./chapters/Discussion.tex) (./chapters/Future_Work.tex [17])
+[15]) (./chapters/Discussion.tex) (./chapters/Future_Work.tex [16])
 (./chapters/Conclusion.tex
 Underfull \hbox (badness 1552) in paragraph at lines 38--1
 []\T1/ptm/b/n/10 Using point-er/mem-ory anal-y-sis. \T1/ptm/m/n/10 In-tro-duc-i
@@ -1774,7 +1770,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 18--21
  i s t s /2016 / 06 / 09 / i n t e l -[] r e l e a s e -[] n e w -[] t e
  []
 
-[18]
+[17]
 Underfull \hbox (badness 1132) in paragraph at lines 104--110
 []\T1/ptm/m/sc/8 Crane, S., Vol-ck-aert, S., Schus-ter, F., Liebchen, C.,
  []
@@ -1784,7 +1780,7 @@ Underfull \hbox (badness 1859) in paragraph at lines 225--230
 []\T1/ptm/m/sc/8 Petsios, T., Ke-merlis, V. P., Poly-chron-akis, M., and
  []
 
-) [19]
+) [18]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 169.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 169.
  (./main.aux)
@@ -1794,38 +1790,34 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: B65D8C88EA37DC015F10158BA4479EC7;1741.
 
 
-LaTeX Warning: There were undefined references.
-
-
 LaTeX Warning: There were multiply-defined labels.
 
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 169.
  ) 
 Here is how much of TeX's memory you used:
- 26376 strings out of 493105
- 477292 string characters out of 6137072
+ 26341 strings out of 493105
+ 476830 string characters out of 6137072
  597376 words of memory out of 5000000
- 29117 multiletter control sequences out of 15000+600000
- 103895 words of font info for 124 fonts, out of 8000000 for 9000
+ 29107 multiletter control sequences out of 15000+600000
+ 103341 words of font info for 122 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,16n,98p,862b,1795s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 68i,11n,98p,862b,1795s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/
 fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/rsfs/rsfs10.p
-fb></usr/share/texmf/fonts/type1/public/cm-super/sfit0800.pfb></usr/share/texmf
-/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texmf/fonts/type1/public/
-cm-super/sftt1000.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usy
-r.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/urw/times/utmri8a.pfb>
-Output written on main.pdf (19 pages, 474922 bytes).
+ype1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/rsfs/rs
+fs10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfit0800.pfb></usr/share
+/texmf/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texmf/fonts/type1/p
+ublic/cm-super/sftt1000.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symb
+ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (18 pages, 464021 bytes).
 PDF statistics:
- 634 PDF objects out of 1000 (max. 8388607)
- 565 compressed objects within 6 object streams
- 176 named destinations out of 1000 (max. 500000)
+ 603 PDF objects out of 1000 (max. 8388607)
+ 536 compressed objects within 6 object streams
+ 153 named destinations out of 1000 (max. 500000)
  246 words of extra memory for PDF output out of 10000 (max. 10000000)
 
