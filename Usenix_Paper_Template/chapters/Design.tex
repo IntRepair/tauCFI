@@ -17,57 +17,58 @@ for each of our policies.
 What we call the \emph{count} policy is essentially the policy introduced by TypeArmor \cite{veen:typearmor}. 
 The basic idea revolves around classifying call-targets by the number of parameters they provide and call-sites 
 by the number of parameters they require. The schema to match those is that we have call-targets requiring 
-parameters and the call-sites providing parameters as depicted in Figure \ref{fig:COUNTschema}.
-
-\begin{figure}[!h]
-\centering
-\resizebox{0.3\textwidth}{!}{
-\begin{tikzpicture}
-
-%\fill[black!40!white] (0,0) rectangle (9,9);
-%\fill[black!30!white] (0,0) rectangle (7,7);
-%\fill[black!20!white] (0,0) rectangle (4,4);
-%\fill[black!10!white] (0,0) rectangle (2,2);
+parameters and the call-sites providing parameters.
+% as depicted in Figure \ref{fig:COUNTschema}.
 %
-%\draw (0,0) --node[anchor=south] {0 params}  (2,0)  -- (2,2) -- (0,2) -- (0,0) ;
-%\draw (0,0) -- (2,0) --node[anchor=south] {1 param} (4,0) -- (4,4) -- (0,4) -- (0,0);
-%\draw (0,0) --(4,0) --node[anchor=south] {2 ... 5 params} (7,0) -- (7,7) -- (0,7) -- (0,0);
-%\draw (0,0) --(7,0) --node[anchor=south] {6 params} (9,0) -- (9,9) -- (0,9) -- (0,0);
-%\draw[dashed] (4,4) -- (7,7);
-
-
-\fill[black!00!white] (0,7) rectangle (6,6);
-\fill[black!10!white] (0,6) rectangle (6,5);
-\fill[black!20!white] (0,5) rectangle (6,4);
-\fill[black!30!white] (0,4) rectangle (6,3);
-\fill[black!40!white] (0,3) rectangle (6,2);
-\fill[black!50!white] (0,2) rectangle (6,1);
-\fill[black!60!white] (0,1) rectangle (6,0);
-
-
-\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Large{growing required bits per parameter}} (-0.5,7);
-\draw[-triangle 45, thick] (6.5,7) -- node[sloped, anchor=center, above] {\Large{growing provided bits per parameter}} (6.5,0);
-
-\draw (0,7) rectangle node[anchor=center] {\Large{0 parameters}} (6,6);
-
-\draw (0,6) rectangle node[anchor=center] {\Large{1 parameter}}  (6,5);
-
-\draw (0,5) rectangle node[anchor=center] {\Large{2 parameters}} (6,4);
-
-\draw (0,4) rectangle node[anchor=center] {\Large{3 parameters}} (6,3);
-
-\draw (0,3) rectangle node[anchor=center] {\Large{4 parameters}} (6,2);
-
-\draw (0,2) rectangle node[anchor=center] {\Large{5 parameters}} (6,1);
-
-\draw (0,1) rectangle node[anchor=center] {\Large{6 parameters}} (6,0);
-
-
-\end{tikzpicture}
-}
-\caption{\emph{Count} policy classification schema for call-sites and call-targets.}
-\label{fig:COUNTschema}
-\end{figure}
+%\begin{figure}[!h]
+%\centering
+%\resizebox{0.3\textwidth}{!}{
+%\begin{tikzpicture}
+%
+%%\fill[black!40!white] (0,0) rectangle (9,9);
+%%\fill[black!30!white] (0,0) rectangle (7,7);
+%%\fill[black!20!white] (0,0) rectangle (4,4);
+%%\fill[black!10!white] (0,0) rectangle (2,2);
+%%
+%%\draw (0,0) --node[anchor=south] {0 params}  (2,0)  -- (2,2) -- (0,2) -- (0,0) ;
+%%\draw (0,0) -- (2,0) --node[anchor=south] {1 param} (4,0) -- (4,4) -- (0,4) -- (0,0);
+%%\draw (0,0) --(4,0) --node[anchor=south] {2 ... 5 params} (7,0) -- (7,7) -- (0,7) -- (0,0);
+%%\draw (0,0) --(7,0) --node[anchor=south] {6 params} (9,0) -- (9,9) -- (0,9) -- (0,0);
+%%\draw[dashed] (4,4) -- (7,7);
+%
+%
+%\fill[black!00!white] (0,7) rectangle (6,6);
+%\fill[black!10!white] (0,6) rectangle (6,5);
+%\fill[black!20!white] (0,5) rectangle (6,4);
+%\fill[black!30!white] (0,4) rectangle (6,3);
+%\fill[black!40!white] (0,3) rectangle (6,2);
+%\fill[black!50!white] (0,2) rectangle (6,1);
+%\fill[black!60!white] (0,1) rectangle (6,0);
+%
+%
+%\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Large{growing required bits per parameter}} (-0.5,7);
+%\draw[-triangle 45, thick] (6.5,7) -- node[sloped, anchor=center, above] {\Large{growing provided bits per parameter}} (6.5,0);
+%
+%\draw (0,7) rectangle node[anchor=center] {\Large{0 parameters}} (6,6);
+%
+%\draw (0,6) rectangle node[anchor=center] {\Large{1 parameter}}  (6,5);
+%
+%\draw (0,5) rectangle node[anchor=center] {\Large{2 parameters}} (6,4);
+%
+%\draw (0,4) rectangle node[anchor=center] {\Large{3 parameters}} (6,3);
+%
+%\draw (0,3) rectangle node[anchor=center] {\Large{4 parameters}} (6,2);
+%
+%\draw (0,2) rectangle node[anchor=center] {\Large{5 parameters}} (6,1);
+%
+%\draw (0,1) rectangle node[anchor=center] {\Large{6 parameters}} (6,0);
+%
+%
+%\end{tikzpicture}
+%}
+%\caption{\emph{Count} policy classification schema for call-sites and call-targets.}
+%\label{fig:COUNTschema}
+%\end{figure}
 
  Furthermore, generating 100\% precise measurements for such classification with binaries as the only source of information is rather difficult. 
  Therefore over-estimations of parameter count for call-sites and underestimations of the parameter count for call-targets is deemed acceptable. 
@@ -91,70 +92,72 @@ of call-sites, which can access the same set of call-targets, a route we will ex
 What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the type of a parameter. However due to complexity reasons,
 we are restricting ourselves to the general purpose registers, which the SystemV ABI designates as parameter registers. Furthermore we are not inferring 
 the actual type of the data but the wideness of the data stored in the register. The schema again is that we have call-targets requiring wideness and the
-call-site providing wideness as depicted in Figure \ref{fig:TYPEschema}.
+call-site providing wideness.
 
-\begin{figure}[!h]
-\center
-\hspace*{-.2cm} 
-\resizebox{0.5\textwidth}{!}{
-\begin{tikzpicture}
-
-\fill[black!10!white] (0,7.5) rectangle (12,6);
-\fill[black!20!white] (0,6) rectangle (12,4.5);
-\fill[black!30!white] (0,4.5) rectangle (12,3);
-\fill[black!40!white] (0,3) rectangle (12,1.5);
-\fill[black!50!white] (0,1.5) rectangle (12,0);
-
-\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Large{growing required bits per parameter}} (-0.5,7.5);
-\draw[-triangle 45, thick] (12.5,7.5) -- node[sloped, anchor=center, above] {\Large{growing provided bits per parameter}} (12.5,0);
-
-\draw (0,7.5)  --node[anchor=south] {\Large{param 6}} (2,7.5);
-\draw (2,7.5)  --node[anchor=south] {\Large{param 5}} (4,7.5);
-\draw (4,7.5)  --node[anchor=south] {\Large{param 4}} (6,7.5);
-\draw (6,7.5)  --node[anchor=south] {\Large{param 3}} (8,7.5);
-\draw (8,7.5)  --node[anchor=south] {\Large{param 2}} (10,7.5);
-\draw (10,7.5) --node[anchor=south] {\Large{param 1}} (12,7.5);
-
-\draw (0,7.5)  rectangle node[anchor=center] {\Large{0-bits}} (2,6);
-\draw (2,7.5)  rectangle node[anchor=center] {\Large{0-bits}} (4,6);
-\draw (4,7.5)  rectangle node[anchor=center] {\Large{0-bits}} (6,6);
-\draw (6,7.5)  rectangle node[anchor=center] {\Large{0-bits}} (8,6);
-\draw (8,7.5)  rectangle node[anchor=center] {\Large{0-bits}} (10,6);
-\draw (10,7.5) rectangle node[anchor=center] {\Large{0-bits}} (12,6);
-
-\draw (0,6)  rectangle node[anchor=center] {\Large{8-bits}} (2,4.5);
-\draw (2,6)  rectangle node[anchor=center] {\Large{8-bits}} (4,4.5);
-\draw (4,6)  rectangle node[anchor=center] {\Large{8-bits}} (6,4.5);
-\draw (6,6)  rectangle node[anchor=center] {\Large{8-bits}} (8,4.5);
-\draw (8,6)  rectangle node[anchor=center] {\Large{8-bits}} (10,4.5);
-\draw (10,6) rectangle node[anchor=center] {\Large{8-bits}} (12,4.5);
-
-\draw (0,4.5)  rectangle node[anchor=center] {\Large{16-bits}} (2,3);
-\draw (2,4.5)  rectangle node[anchor=center] {\Large{16-bits}} (4,3);
-\draw (4,4.5)  rectangle node[anchor=center] {\Large{16-bits}} (6,3);
-\draw (6,4.5)  rectangle node[anchor=center] {\Large{16-bits}} (8,3);
-\draw (8,4.5)  rectangle node[anchor=center] {\Large{16-bits}} (10,3);
-\draw (10,4.5) rectangle node[anchor=center] {\Large{16-bits}} (12,3);
-
-\draw (0,3)  rectangle node[anchor=center] {\Large{32-bits}} (2,1.5);
-\draw (2,3)  rectangle node[anchor=center] {\Large{32-bits}} (4,1.5);
-\draw (4,3)  rectangle node[anchor=center] {\Large{32-bits}} (6,1.5);
-\draw (6,3)  rectangle node[anchor=center] {\Large{32-bits}} (8,1.5);
-\draw (8,3)  rectangle node[anchor=center] {\Large{32-bits}} (10,1.5);
-\draw (10,3) rectangle node[anchor=center] {\Large{32-bits}} (12,1.5);
-
-\draw (0,1.5)  rectangle node[anchor=center] {\Large{64-bits}} (2,0);
-\draw (2,1.5)  rectangle node[anchor=center] {\Large{64-bits}} (4,0);
-\draw (4,1.5)  rectangle node[anchor=center] {\Large{64-bits}} (6,0);
-\draw (6,1.5)  rectangle node[anchor=center] {\Large{64-bits}} (8,0);
-\draw (8,1.5)  rectangle node[anchor=center] {\Large{64-bits}} (10,0);
-\draw (10,1.5) rectangle node[anchor=center] {\Large{64-bits}} (12,0);
-\end{tikzpicture}
-}
-
-\caption{\emph{Type} policy schema for call-sites and call-targets.}
-\label{fig:TYPEschema}
-\end{figure}
+% as depicted in Figure \ref{fig:TYPEschema}.
+%
+%\begin{figure}[!h]
+%\center
+%\hspace*{-.2cm} 
+%\resizebox{0.5\textwidth}{!}{
+%\begin{tikzpicture}
+%
+%\fill[black!10!white] (0,7.5) rectangle (12,6);
+%\fill[black!20!white] (0,6) rectangle (12,4.5);
+%\fill[black!30!white] (0,4.5) rectangle (12,3);
+%\fill[black!40!white] (0,3) rectangle (12,1.5);
+%\fill[black!50!white] (0,1.5) rectangle (12,0);
+%
+%\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Large{growing required bits per parameter}} (-0.5,7.5);
+%\draw[-triangle 45, thick] (12.5,7.5) -- node[sloped, anchor=center, above] {\Large{growing provided bits per parameter}} (12.5,0);
+%
+%\draw (0,7.5)  --node[anchor=south] {\Large{param 6}} (2,7.5);
+%\draw (2,7.5)  --node[anchor=south] {\Large{param 5}} (4,7.5);
+%\draw (4,7.5)  --node[anchor=south] {\Large{param 4}} (6,7.5);
+%\draw (6,7.5)  --node[anchor=south] {\Large{param 3}} (8,7.5);
+%\draw (8,7.5)  --node[anchor=south] {\Large{param 2}} (10,7.5);
+%\draw (10,7.5) --node[anchor=south] {\Large{param 1}} (12,7.5);
+%
+%\draw (0,7.5)  rectangle node[anchor=center] {\Large{0-bits}} (2,6);
+%\draw (2,7.5)  rectangle node[anchor=center] {\Large{0-bits}} (4,6);
+%\draw (4,7.5)  rectangle node[anchor=center] {\Large{0-bits}} (6,6);
+%\draw (6,7.5)  rectangle node[anchor=center] {\Large{0-bits}} (8,6);
+%\draw (8,7.5)  rectangle node[anchor=center] {\Large{0-bits}} (10,6);
+%\draw (10,7.5) rectangle node[anchor=center] {\Large{0-bits}} (12,6);
+%
+%\draw (0,6)  rectangle node[anchor=center] {\Large{8-bits}} (2,4.5);
+%\draw (2,6)  rectangle node[anchor=center] {\Large{8-bits}} (4,4.5);
+%\draw (4,6)  rectangle node[anchor=center] {\Large{8-bits}} (6,4.5);
+%\draw (6,6)  rectangle node[anchor=center] {\Large{8-bits}} (8,4.5);
+%\draw (8,6)  rectangle node[anchor=center] {\Large{8-bits}} (10,4.5);
+%\draw (10,6) rectangle node[anchor=center] {\Large{8-bits}} (12,4.5);
+%
+%\draw (0,4.5)  rectangle node[anchor=center] {\Large{16-bits}} (2,3);
+%\draw (2,4.5)  rectangle node[anchor=center] {\Large{16-bits}} (4,3);
+%\draw (4,4.5)  rectangle node[anchor=center] {\Large{16-bits}} (6,3);
+%\draw (6,4.5)  rectangle node[anchor=center] {\Large{16-bits}} (8,3);
+%\draw (8,4.5)  rectangle node[anchor=center] {\Large{16-bits}} (10,3);
+%\draw (10,4.5) rectangle node[anchor=center] {\Large{16-bits}} (12,3);
+%
+%\draw (0,3)  rectangle node[anchor=center] {\Large{32-bits}} (2,1.5);
+%\draw (2,3)  rectangle node[anchor=center] {\Large{32-bits}} (4,1.5);
+%\draw (4,3)  rectangle node[anchor=center] {\Large{32-bits}} (6,1.5);
+%\draw (6,3)  rectangle node[anchor=center] {\Large{32-bits}} (8,1.5);
+%\draw (8,3)  rectangle node[anchor=center] {\Large{32-bits}} (10,1.5);
+%\draw (10,3) rectangle node[anchor=center] {\Large{32-bits}} (12,1.5);
+%
+%\draw (0,1.5)  rectangle node[anchor=center] {\Large{64-bits}} (2,0);
+%\draw (2,1.5)  rectangle node[anchor=center] {\Large{64-bits}} (4,0);
+%\draw (4,1.5)  rectangle node[anchor=center] {\Large{64-bits}} (6,0);
+%\draw (6,1.5)  rectangle node[anchor=center] {\Large{64-bits}} (8,0);
+%\draw (8,1.5)  rectangle node[anchor=center] {\Large{64-bits}} (10,0);
+%\draw (10,1.5) rectangle node[anchor=center] {\Large{64-bits}} (12,0);
+%\end{tikzpicture}
+%}
+%
+%\caption{\emph{Type} policy schema for call-sites and call-targets.}
+%\label{fig:TYPEschema}
+%\end{figure}
 
 We are currently interested in x86-64 binaries, the registers we are looking at are 64-bit registers that can be accessed in four different ways:
 \textit{1)} the whole 64-bits of the register, meaning a wideness of 64,
