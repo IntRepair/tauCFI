@@ -374,7 +374,10 @@ When compared, our implementation of the \textit{type} policy allows about 7.93\
   \end{minipage} 
 \end{figure}
 
+<<<<<<< HEAD
+=======
 When looking at the CDFs of legal callsite targets as shown for postgresql \ref{fig7}, node.js \ref{fig8}, proftpd \ref{fig9}, mysql \ref{fig10}, one should instantly see the difference between the type and the count policies. While the count  policies have only a few number of changes, the number of changes that can be seen within the type policies is vastly higher. The reason for that is simple, the number of buckets that are used to classify the callsites and calltargets is simply higher. While type policies mostly perform better than the count policies, there are still parts within the type plot that are above the count plot, the reason for that is relatively simple: the maximum number of calltargets a callsite can access has been reduced, therefore a lower amount of calltargets is a higher percentage than before. However all of that is also dependent on the structure of the program.
+>>>>>>> 188918af0fba32dfee5da030a3dd46e234377067
 
 \subsection{RQ3: Runtime Performance Overhead}
 \label{section:typeshieldoverheadperformance}
@@ -424,11 +427,11 @@ instruction to the new position of the basic block.
 	\label{tbl:toolcompare}
 \end{table}
 
-Table~\ref{tbl:toolcompare} depicts a comparison between \textsc{TypeShield}, TypeArmor and IFCC w.r.t. the count of calltargets per callsite.
+Table~\ref{tbl:toolcompare} depicts a comparison between \textsc{TypeShield}, TypeArmor and IFCC w.r.t. the count of calltargets per callsites.
 The values depicted in this table for TypeArmor and IFCC are taken from the original TypeArmor paper.
 We compare our version of address taken analysis (AT), TypeArmor, TypeShield (count), TypeShield (type) and IFCC. 
 The first thing to notice is that when comparing these values, one can see that we did not implemented a separation based on return type or the 
-CFC that TypeArmour introduced. Therefore when implementing those measures, we predict that our solution would improve even more in precision.
+CFC that TypeArmour introduced. Therefore when implementing those measures, we predict that our solution would improve even more in w.r.t precision.
 While we think it is possible to surpass TypeArmor implementing those two solutions in our tool, we deem it nigh on impossible to be able to compete with IFCC,
 which can directly operate on the sourcecode level. Therefore it has access to more possibilities than simply inspecting the parameters or return values.
 
