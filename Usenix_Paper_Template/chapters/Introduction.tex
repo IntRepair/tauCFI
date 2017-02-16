@@ -60,7 +60,7 @@ Moreover, \textsc{TypeShield} provides strong mitigation for many types of code-
 (CRAs) for program binaries, without the need for source code. 
 
 \textbf{Our Insight.} \textsc{TypeShield} is based on a forward-edge CFI policy that 
-relies on a precise construction both the calle prototypes and callsite signatures
+relies on a precise construction of both the callee prototypes and callsite signatures
 and than uses this information to enforce that each callsite targets matching functions 
 only. For example, \textsc{TypeShield} disallows an indirect call that prepares
 fewer arguments than the target callee consumes and where the types of the 
@@ -147,16 +147,17 @@ attack vector.
   
 \end{itemize}
 
-\label{Outline}
-\textbf{Outline.} The rest of this paper is organized as follows.
-\cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications.
-\cref{chapter:TypeShild Overview} contains a high level overview of \textsc{TypeShield}.
-\cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}.
-\cref{chapter:Implementation} briefly presents the implementation details of \textsc{TypeShield}.
-\cref{chapter:Evaluation} evaluates several properties of \textsc{TypeShield} and
-\cref{chapter:Related_Work} surveys related work, respectively.
-\cref{chapter:Discussion} contains the discussion, respectively while 
-\cref{chapter:Future_Work} highlights future research venues. 
-Finally, \cref{chapter:Conclusion} concludes this paper.
+%the outline is not needed t this moment.
+% \label{Outline}
+% \textbf{Outline.} The rest of this paper is organized as follows.
+% \cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications.
+% \cref{chapter:TypeShild Overview} contains a high level overview of \textsc{TypeShield}.
+% \cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}.
+% \cref{chapter:Implementation} briefly presents the implementation details of \textsc{TypeShield}.
+% \cref{chapter:Evaluation} evaluates several properties of \textsc{TypeShield} and
+% \cref{chapter:Related_Work} surveys related work, respectively.
+% \cref{chapter:Discussion} contains the discussion, respectively while 
+% \cref{chapter:Future_Work} highlights future research venues. 
+% Finally, \cref{chapter:Conclusion} concludes this paper.
 
 
