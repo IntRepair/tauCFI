@@ -32,26 +32,23 @@ to the application in question is provided. However, when we are faced with prop
 binaries, which are provided as is and without the actual source code, the number of tools that can
 protect against COOP or similar attacks is rather low.
 
-\textbf{Lack.} TypeArmor~\cite{veen:typearmor} is such a tool that implements a fine grained forward edge CFI 
-solution for binaries. It calculates invariants for call-targets and indirect call-sites based on
+\textbf{Limitations.} TypeArmor~\cite{veen:typearmor} is a tool that implements a fine grained forward edge CFI 
+policy for binaries. It calculates invariants for call-targets and indirect call-sites based on
 the number of parameters they use by leveraging static analysis of the binary, which then is
 patched to enforce those invariants during run-time. However, as of today we are not able to 
 access the source code of TypeArmor, which is why we implement our own approximation of the 
-tool.
-
-The main shortcoming of TypeArmor is that even with high precision in the classification of 
-call-targets and call-sites, one cannot exclude calltargets with lower parameter number from 
+tool. The main shortcoming of TypeArmor is that even with high precision in the classification of 
+call-targets and call-sites, one cannot exclude call targets with lower parameter number from 
 call-sites, for one due compatibility and also due to variadic functions, which are a special
-case in themselves. This basically means that when a call-site prepares 6 parameters, it is 
+case in themselves. This basically means that when a call site prepares 6 parameters, it is 
 able to call all address taken functions.
-
-We implemented \textsc{TypeShield} to show a possible remedy of this problem by introducing
-parameter types into the classification of call-sites and call-targets. 
 
 \textbf{Our Idea.} In this paper, we present \textsc{TypeShield}, a runtime illegitimate forward 
 calls detection tool that can be seamlessly integrated with large scale applications such as web servers.
 It takes the binary of an program as input and it can automatically instrument the binary in order
-to detect illegitimate indirect calls at runtime.
+to detect illegitimate indirect calls at runtime. 
+We implemented \textsc{TypeShield} to show a possible remedy of this problem by introducing
+parameter types into the classification of call-sites and call-targets. 
 
 ------
 bla...
@@ -120,7 +117,6 @@ todo
 todo
 
 todo
-
 
 todo
 

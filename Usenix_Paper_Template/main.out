@@ -20,9 +20,7 @@
 \BOOKMARK [3][-]{subsubsection.6.2.3}{TypeShield implementation of the type policy}{subsection.6.2}% 20
 \BOOKMARK [2][-]{subsection.6.3}{RQ3: Runtime Performance Overhead}{section.6}% 21
 \BOOKMARK [2][-]{subsection.6.4}{RQ4: Instrumentation Overhead}{section.6}% 22
-\BOOKMARK [2][-]{subsection.6.5}{RQ5: Security Level of TypeShield}{section.6}% 23
-\BOOKMARK [2][-]{subsection.6.6}{RQ6: Add another evaluation dimention we did not think off, maybe ``RQ6: TypeShield Deployments" \(if it is easy or hard to deploy our tool in comparison with TypeArmor.\)}{section.6}% 24
-\BOOKMARK [1][-]{section.7}{Related Work}{}% 25
-\BOOKMARK [1][-]{section.8}{Discussion}{}% 26
-\BOOKMARK [1][-]{section.9}{Future Work}{}% 27
-\BOOKMARK [1][-]{section.10}{Conclusion}{}% 28
+\BOOKMARK [1][-]{section.7}{Related Work}{}% 23
+\BOOKMARK [1][-]{section.8}{Discussion}{}% 24
+\BOOKMARK [1][-]{section.9}{Future Work}{}% 25
+\BOOKMARK [1][-]{section.10}{Conclusion}{}% 26

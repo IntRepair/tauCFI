@@ -1,12 +1,11 @@
 \section{Evaluation}
 \label{chapter:Evaluation}
-We evaluated our \textsc{TypeShield} by instrumenting various open source applications and analyzing the result. 
+We evaluated \textsc{TypeShield} by instrumenting various open source applications and analyzing the results. 
 We used the two ftp server applications vsftpd (version 1.1.0) and proftpd (version 1.3.3), the two http server 
 applications postgresql (version 9.0.10) and  mysql (5.1.65), the memory cache application memcached (version 1.4.20) 
 and the node.js server application node (version 0.12.5). We chose these applications, which are a subset of the 
 applications also used by the TypeAmor~\cite{veen:typearmor} to allow for later comparison.
-In our evaluation of the two modes of 
-\textsc{TypeShield}, we are trying to answer the following questions:
+In our evaluation we addressed the following research questions:
 \begin{itemize}
 
  \item \textbf{RQ1:} How precise is \textsc{TypeShield} in recovering parameter count and type information for call-sites and call-targets from a given binary?
@@ -15,9 +14,9 @@ In our evaluation of the two modes of
  We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
 \todo[inline]{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}
 
- \item \textbf{RQ3:} What is the performance overhead introduced by \textsc{TypeShield}?
+ \item \textbf{RQ3:} What is the runtime performance overhead introduced by \textsc{TypeShield}?
  \todo[inline]{add a binary patch that does not crash none of the programs from SPEC2006.}
-\todo[inline]{need a table with all the results for each of the SPEC2006 programs and a bar diagram}
+ \todo[inline]{need a table with all the results for each of the SPEC2006 programs and a bar diagram}
  
  \item \textbf{RQ4:} What is the instrumentation overhead introduced by \textsc{TypeShield}?
  Here we measure how much the binaries increased in size after the instrumentation was added to the binaries.
@@ -25,9 +24,9 @@ In our evaluation of the two modes of
 \end{itemize}
 
 \textbf{Comparison Method.} As we do not have access to the source code of TypeAmor, we implemented two modes in \textsc{TypeShield}. 
-The first mode of our tool is an approximate implementation of what we understand is the \textit{count} 
-policy implemented by TypeAmor. The second mode is our implementation of the \textit{type} policy on
-top of our implementation of the \textit{count} policy. 
+The first mode of our tool is an approximate implementation of the \textit{count} 
+policy described by TypeArmor. The second mode is our implementation of the \textit{type} policy on
+top of our \textit{count} policy implementation. 
 
 \textbf{Experimental Setup.} We setup our environment within a VirtualBox (version 5.0.26r) instance, which runs Kubuntu 16.04 LTS (Linux Kernel
 version 4.4.0) and has access to 3GB of RAM and 4 of 8 provided hardware threads (Intel i7-4170HQ @ 2.50 GHz).
@@ -79,8 +78,8 @@ Considering this, we can safely state that our structural matching between groun
 perfect (above 98\%)
 
 \begin{table}[h!]
-\resizebox{.5\textwidth}{!}{
-	\begin{tabular}{l|c|c|c|c|c|c}%
+\resizebox{\columnwidth}{!}{
+	\begin{tabular}{l|r|r|r|r|r|r}%
 	\toprule
 	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c|}{ {\bfseries call-targets}} & \multicolumn{3}{c}{{\bfseries call-sites} }\\
 	\bfseries Target & match & Clang miss &  tool miss &  match & Clang miss & tool miss% specify table head
@@ -119,8 +118,8 @@ Furthermore we already eliminated multiple compilations of the same source file 
 
 For each experiment we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in the case of calltargets refers to overestimations and in case of callsites refers to underestimations. The results are depicted in Table \ref{tbl:precisionCOUNT}.
 \begin{table}[h!]
-\resizebox{.5\textwidth}{!}{
-	\begin{tabular}{l|c|c|c|c|c|c}%
+\resizebox{\columnwidth}{!}{
+	\begin{tabular}{l|r|r|r|r|r|r}%
 
 	\toprule
 	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c}{\bfseries Call-targets} & \multicolumn{3}{c}{\bfseries Call-sites}\\
@@ -130,7 +129,7 @@ For each experiment we measured two data points per testtarget, the number and r
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{csvs/classification_comp.sources_union_follow.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
-	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%) & \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	{\csvcolii  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxv \ (\csvcolxvi \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolvi \ (\csvcolvii\%)}% specify your coloumns here
 
     	\end{tabular}
 
@@ -169,8 +168,8 @@ The problem rate is under 0.01\%, as there is only one testtarget, that exhibit 
 
 For each experiment we measured two data points per testtarget, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in the case of calltargets refers to overestimations and in case of callsites refers to underestimations. The results are depicted in Table \ref{tbl:precisionTYPE}.
 \begin{table}[h!]
-\resizebox{0.5\textwidth}{!}{
-	\begin{tabular}{l|c|c|c|c|c|c}%
+\resizebox{\columnwidth}{!}{
+	\begin{tabular}{l|r|r|r|r|r|r}%
 
 	\toprule
 	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c}{\bfseries Call-targets} & \multicolumn{3}{c}{\bfseries Call-sites}\\
@@ -180,7 +179,7 @@ For each experiment we measured two data points per testtarget, the number and r
 	\csvreader[ late after line=\\, late after last line=\\\midrule]{csvs/classification_comp2.type_exp6.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
-	{\csvcolii  &  \csvcolxii & \csvcolxiii (\csvcolxiv \%) & \csvcolxv (\csvcolxvi \%) & \csvcoliii & \csvcoliv (\csvcolv \%) & \csvcolvi (\csvcolvii\%)}% specify your coloumns here
+	{\csvcolii  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxv \ (\csvcolxvi \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolvi \ (\csvcolvii\%)}% specify your coloumns here
 
     	\end{tabular}
 
@@ -225,9 +224,16 @@ For two thirds of the set, the problem rate is under 2\% and for last third it i
 \todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, 
 first we need to define the fields which make most sense.}
 
+\begin{figure}[htbp!]
+  \centering
+  \resizebox{1.04\columnwidth}{!}{\includesvg{postgresqlO2}}
+  \caption{svg image}
+\end{figure}
+
 \begin{table*}[htbp!]
-\resizebox{\textwidth}{!}{
-	\begin{tabular}{l|c|rcl|c|rcl|c|rcl|c|rcl|c}%
+\begin{center}
+ \resizebox{2\columnwidth}{!}{
+	\begin{tabular}{l|c|rcl|r|rcl|r|rcl|r|rcl|r}%
 
 	\toprule
 	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count}*} & \multicolumn{4}{c}{\bfseries \textit{count}} & \multicolumn{4}{c}{\bfseries \textit{type}*} & \multicolumn{4}{c}{\bfseries \textit{type}}\\
@@ -242,8 +248,9 @@ first we need to define the fields which make most sense.}
     	\end{tabular}
 
 }
-		\caption {The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an an address taken analysis for optimization level O2.}
-		\label{tbl:policycompat}
+	\caption {The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an address taken analysis for optimization level O2.}
+	\label{tbl:policycompat}
+\end{center}
 \end{table*}
 
 We are now going to evaluate the effectiveness of \textsc{TypeShield} leveraging the result of several experiment runs: First we are going to establish a baseline using the data 
@@ -423,6 +430,7 @@ When compared, the precise implementation of of the \textit{count} policy allows
 %
 
 
+
 \subsection{RQ3: Runtime Performance Overhead}
 \label{section:typeshieldoverheadperformance}
 \todo[inline]{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
@@ -439,22 +447,20 @@ Here we measure how much the binaries increased in size after the instrumentatio
 \todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
 
 
-\subsection{RQ5: Security Level of \textsc{TypeShield}}
-\label{section:mitiagtion}
-\todo[inline]{here we need a a CDF figure, see the TypeAmor paper w.r.t. security analysis in the evaluation. The buckets have to be defined first, reason about if they make sense!}
-We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
-\todo[inline]{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}
 
-\subsection{RQ6: Add another evaluation dimention we did not think off, maybe ``RQ6: TypeShield Deployments" (if it is easy or hard to deploy our tool in
-comparison with TypeArmor.)}
-\label{section:mitiagtion}
-\todo[inline]{need to define first the question.}
 
-\begin{figure}[htbp]
-  \centering
-  \resizebox{1.04\columnwidth}{!}{\includesvg{postgresqlO2}}
-  \caption{svg image}
-\end{figure}
+% \subsection{RQ5: Security Level of \textsc{TypeShield}}
+% \label{section:mitiagtion}
+% \todo[inline]{here we need a a CDF figure, see the TypeAmor paper w.r.t. security analysis in the evaluation. The buckets have to be defined first, reason about if they make sense!}
+% We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
+% \todo[inline]{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}
+% 
+% \subsection{RQ6: Add another evaluation dimention we did not think off, maybe ``RQ6: TypeShield Deployments" (if it is easy or hard to deploy our tool in
+% comparison with TypeArmor.)}
+% \label{section:mitiagtion}
+% \todo[inline]{need to define first the question.}
+
+
 
 
 % \begin{figure}
