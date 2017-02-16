@@ -14,13 +14,16 @@ In our evaluation we addressed the following research questions:
  We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
 \todo[inline]{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}
 
-% \item \textbf{RQ3:} What is the runtime performance overhead introduced by \textsc{TypeShield}?
+\item \textbf{RQ3:} What is the runtime performance overhead introduced by \textsc{TypeShield}?
 % \todo[inline]{add a binary patch that does not crash none of the programs from SPEC2006.}
 % \todo[inline]{need a table with all the results for each of the SPEC2006 programs and a bar diagram}
 % 
-% \item \textbf{RQ4:} What is the instrumentation overhead introduced by \textsc{TypeShield}?
+\item \textbf{RQ4:} What is the instrumentation overhead introduced by \textsc{TypeShield}?
 % Here we measure how much the binaries increased in size after the instrumentation was added to the binaries.
 %\todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
+
+\item \textbf{RQ5:} Is our tool better than other tools?
+
 \end{itemize}
 \textbf{Comparison Method.} As we do not have access to the source code of TypeAmor, we implemented two modes in \textsc{TypeShield}. 
 The first mode of our tool is an approximate implementation of the \textit{count} 
@@ -199,12 +202,6 @@ For two thirds of the set, the problem rate is under 2\% and for last third it i
 \todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, 
 first we need to define the fields which make most sense.}
 
-%\begin{figure}[htbp!]
-%  \centering
-%  \resizebox{1.04\columnwidth}{!}{\includesvg{postgresqlO2}}
-%  \caption{svg image}
-%\end{figure}
-
 \begin{table*}[htbp!]
 \begin{center}
  \resizebox{2\columnwidth}{!}{
@@ -257,7 +254,7 @@ call-targets.
 
 When compared, the theoretical limit of the \textit{type} policy allows about 10\% less available call-targets in the geomean in O2 than the limit of the \textit{count} policy.
 
-\subsubsection{\textsc{TypeShield} implementation}
+\subsubsection{\textsc{TypeShield} Implementation}
 \label{subsection:typeshieldvslimitcount}
 
 \textbf{Experiment Setup.} We setup our two experiment series based on our previous evaluations regarding the classification precision for the \textit{count} and the \textit{type} policy.
@@ -380,51 +377,74 @@ When compared, our implementation of the \textit{type} policy allows about 7.93\
 %\end{figure}
 %
 
+\subsubsection{CDF Analysis}
+\label{CDF Analysis}
 
-%
-%\subsection{RQ3: Runtime Performance Overhead}
-%\label{section:typeshieldoverheadperformance}
-%\todo[inline]{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
-%Here we measure how much performance overhead the instrumentation incurs.
-%Here we measure with the same SPEC2006 programs that was used in the TypeArmor paper.
-%spec 2006.
-%\todo[inline]{add a binary patch that does not crash none of the programs from SPEC2006.}
-%\todo[inline]{need a table with all the results for each of the SPEC2006 programs and a bar diagram}
-%
-%\subsection{RQ4: Instrumentation Overhead}
-%\label{section:typeshieldoverheadinstrumentation}
-%\todo[inline]{here we need a bar chart, see TypeArmor paper.}
-%Here we measure how much the binaries increased in size after the instrumentation was added to the binaries.
-%\todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
-%
+\begin{figure}[htbp!]
+ \centering
+ \resizebox{1.04\columnwidth}{!}{\includesvg{postgresqlO2}}
+ \caption{svg image}
+\end{figure}
+
+todo add text here. 
+
+---
+For a more accurate view of the invariants enforced by
+TypeArmor, we report a CDF in Figure 8 of legal callsite
+targets. For clarity, we limit the CDF to CFI and CFC with
+applications that (i) yield minimal target reduction compared
+to source-level AT results (PostgreSQL, blue), (ii) contain
+many indirect callsites and AT functions (MySQL, yellow),
+and (iii) yield high reduction (OpenSSH, red).
+Based on the CDF of Figure 8, we observe that CFC
+results for each program follow the same trend as CFI.
+This is inherent to the deployment of the callsite-oriented
+invariants, with the number of indirect callsites being con-
+stant. We observe that results for PostgreSQL, due to the
+unusual internal structure of the program and the weaker
+quality of the resulting invariants, are more conservative
+than other cases, with over 90\% of the indirect callsites
+allowing 80\% or more targets. This difference is due to
+the distribution of the argument count for AT functions: for
+PostgreSQL, over 85\% of the AT functions are detected as
+consuming at least 0 or 1 argument. This means that as
+soon as TypeArmor’s backward analysis finds that a callsite
+prepares an additional argument, it must allow all those
+85\% as a possible target. To make this more concrete,
+TypeArmor concludes that for OpenSSH, only 26 (out of
+90) AT functions accept 0 or 1 argument. Encouragingly,
+other programs exhibit a regular internal structure, resulting
+in much stronger type-based invariants. For example, we
+find that results for OpenSSH are impressive: for 90\% of all
+indirect callsites, CFC still yields an almost 50\% reduction
+of the legal targets. Moreover, for 35\% of the callsites,
+TypeArmor allows only 7\% of all AT functions as valid
+target.
+
+---
+
+\subsection{RQ3: Runtime Performance Overhead}
+\label{section:typeshieldoverheadperformance}
+\todo[inline]{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
+\begin{figure}[htbp!]
+    \centering
+    \includegraphics[width=0.49\textwidth]{figures/speccpu2006.pdf}
+    \caption{Awesome Image}
+    \label{fig:awesome_image}
+\end{figure}
+\todo[inline]{add a binary patch that does not crash none of the programs from SPEC2006.}
+\todo[inline]{need a table with all the results for each of the SPEC2006 programs and a bar diagram}
+
+\subsection{RQ4: Instrumentation Overhead}
+\label{section:typeshieldoverheadinstrumentation}
+\todo[inline]{here we need a bar chart, see TypeArmor paper.}
+Here we measure how much the binaries increased in size after the instrumentation was added to the binaries.
+\todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
+
+\subsection{RQ5: Comparisons with Other Tools}
+\label{RQ5: Is TypeShield better than other tools?}
 
 
 
-% \subsection{RQ5: Security Level of \textsc{TypeShield}}
-% \label{section:mitiagtion}
-% \todo[inline]{here we need a a CDF figure, see the TypeAmor paper w.r.t. security analysis in the evaluation. The buckets have to be defined first, reason about if they make sense!}
-% We look at our implementation conceptually and assess qualitatievly whether our implementation can interfere with various classes of attacks. 
-% \todo[inline]{see the TypeAmor paper w.r.t. security analysis in the evaluation, a CDF figure is here required.}
-% 
-% \subsection{RQ6: Add another evaluation dimention we did not think off, maybe ``RQ6: TypeShield Deployments" (if it is easy or hard to deploy our tool in
-% comparison with TypeArmor.)}
-% \label{section:mitiagtion}
-% \todo[inline]{need to define first the question.}
 
 
-
-
-% \begin{figure}
-% \centering
-% \def\svgwidth{columnwidth}
-% \input{postgresqlO2.pdf_tex}
-% \end{figure}
-
-% \subsection{COOP}
-% \label{Effectiveness against COOP}
-% 
-% \subsubsection{COOP Extensions}
-% \label{COOP Extensions}
-% 
-% \subsubsection{Pure Data-only Attacks}
-% \label{Pure Data-only Attacks}
