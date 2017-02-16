@@ -347,7 +347,6 @@ When compared, our implementation of the \textit{type} policy allows about 7.93\
 \label{CDF Analysis}
 
 \begin{figure}[ht] 
-  
   \begin{minipage}[b]{0.5\linewidth}
     \centering
     \resizebox{1.04\columnwidth}{!}{\includesvg{postgresqlO2}}
@@ -378,9 +377,8 @@ When compared, our implementation of the \textit{type} policy allows about 7.93\
   \end{minipage} 
 \end{figure}
 
-When looking at the CDFs of legal callsite targets as shown for 
-postgresql \ref{fig7}, node.js \ref{fig8}, proftpd \ref{fig9}, mysql \ref{fig10}, 
-one should instantly see the difference between the type and the count policies. 
+Figures, \ref{fig7}, \ref{fig8}, \ref{fig9}, and \ref{fig10} depict the CDFs for the following programs: node.js, proftpd, mysql, and postgresql.
+The CDFs depict the number of legal callsite targets and the difference between the type and the count policies. 
 While the count  policies have only a few number of changes, the number of changes 
 that can be seen within the type policies is vastly higher. The reason for that is 
 simple, the number of buckets that are used to classify the callsites and calltargets 
@@ -388,7 +386,7 @@ is simply higher. While type policies mostly perform better than the count polic
 there are still parts within the type plot that are above the count plot, the reason 
 for that is relatively simple: the maximum number of calltargets a callsite can access 
 has been reduced, therefore a lower amount of calltargets is a higher percentage than 
-before. However, all of that is also dependent on the structure of the program.
+before. However, all of these results are dependent on the structure of the program.
 
 \subsection{RQ3: Runtime Performance Overhead}
 \label{section:typeshieldoverheadperformance}
@@ -417,7 +415,7 @@ instruction to the new position of the basic block.
 
 \subsection{RQ5: Comparisons with Other Tools}
 \label{RQ5: Is TypeShield better than other tools?}
-\begin{table}[h!]
+\begin{table}[!h]
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r}%
 	\toprule

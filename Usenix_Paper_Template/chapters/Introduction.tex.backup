@@ -43,7 +43,7 @@ case in themselves. This basically means that when a call site prepares 6 parame
 able to call all address taken functions. This generates a considerable attack surface due to the many
 situations in which this policy can be naturally circumvented.
 
-\textbf{Our Insight.} In this paper, we present \textsc{TypeShield}, a runtime illegitimate forward 
+In this paper, we present \textsc{TypeShield}, a runtime illegitimate forward 
 calls detection tool that can be seamlessly integrated with large scale applications such as web servers.
 It takes the binary of an program as input and it can automatically instrument the binary in order
 to detect illegitimate indirect calls at runtime. 
@@ -59,8 +59,8 @@ TypeArmor and other similar tools.
 Moreover, \textsc{TypeShield} provides strong mitigation for many types of code-reuse attacks
 (CRAs) for program binaries, without the need for source code. 
 
-\textsc{TypeShield} is based on a forward-edge CFI policy that 
-relies on a precise construction both the calle prototypes and callsite signatures
+\textbf{Our Insight.} \textsc{TypeShield} is based on a forward-edge CFI policy that 
+relies on a precise construction of both the callee prototypes and callsite signatures
 and than uses this information to enforce that each callsite targets matching functions 
 only. For example, \textsc{TypeShield} disallows an indirect call that prepares
 fewer arguments than the target callee consumes and where the types of the 
@@ -89,8 +89,7 @@ efficiently leads to a more precise CFG of the binary progrma in question,
 which could be used by other systems in order to gain more a precise CFG on which to 
 enforce their policies.
 
-Once could ask himself against which attacks can~\textsc{TypeShield} protect.
-The answer is that \textsc{TypeShield} can protect only forward edges at the binary level.
+\textsc{TypeShield} can protect only forward indirect edges at the binary level.
 Previous research has shown that, a backward-edge protection 
 such as an shadow stack [14] or context-sensitive
 CFI [30] is still essential to ensure the integrity of return addresses at 
@@ -103,35 +102,26 @@ Specifically, \textsc{TypeShield} provides a precise protection
 against against COOP exploits as well as improved COOP 
 derivations~\cite{crane:readactor++, subversive-c:lettner, ctf:coop, loop:oriented}.
 
-
-
-
-
-Is TypeArmor superior to approaches like IFCC/VTV and
-CPI? No. IFCC/VTV [29] and CPI [23] are strong source-
-level defenses which produce binaries that can resist control-
-flow hijacking attacks. Source-based techniques are more
-precise in using fine-grained program constructs (such as
-the C++ class hierarchy or generic data types) for mitigation
+\textsc{TypeShield} is not more precise than source code based
+approaches such as IFCC/VTV~\cite{vtv:tice}.
+IFCC/VTV are strong compiler based defenses which produce binaries which can resist control-flow
+hijacking attacks. It is well known that source-code based techniques are more precise 
+when enforcing fine-grained policies based on program constructs (such as
+the C++ vtable hierarchy or generic data types) for mitigation
 purposes. However, there are still important reasons to study
 and improve binary-level defenses. First, the source code
 for many off-the-shelf programs is not always available.
 Second, real-world programs rely on a plethora of shared
 libraries and recompiling all shared libraries is not always
 possible. This is true even for purely open-source projects.
-For example, in VTV [29], the authors evaluate their system
-on ChromeOS, which includes legacy libraries. The authors
-had to manually whitelist these libraries, a task which is
-not trivial (certain code has to be annotated) and does not
-scale. Third, even if the source code of the libraries is
-available, recompiling big projects with dynamic depen-
-dencies is, again, a demanding task. Even state-of-the art
+Third, even if the source code of the libraries is
+available, recompiling big projects with dynamic dependencies is, 
+again, a demanding task. Even state-of-the art
 defenses that enforce CFI policies at the source level such
-as SAFEDISPATCH [21] do not support dynamic libraries.
-Note that this is not a minor issue: mixing CFI-protected
-with non-protected code is impossible. If CFI is applied in
-just a portion of the CFG, crashes due to legitimate execution
-are possible. In contrast, with a binary-level solution, we
+as Interleaving [ref] do not support dynamic libraries.
+Notice that mixing CFI-protected with non-protected code is impossible since
+applying CFI only on a part of the CFG would crash legitimate executions.
+In contrast, with a binary-level solution, we
 can offer strong protection even if the source code is not
 available or when recompilation is not feasible (or desirable).
 
@@ -153,20 +143,21 @@ attack vector.
  \item \textbf{Experiments.} We demonstrate trough extensive experiments that our precise
  binary-level CFI strategy can mitigate advanced code reuse attacks in absence of C++ semantics.
  For example \textsc{TypeSchield} can protect against COOP~\cite{schuster:coop} and its currently published 
- variations~\cite{crane:readactor++, subversive-c:lettner, ctf:coop, loop:oriented}.
+ variations~\cite{ctf:coop, crane:readactor++, loop:oriented, subversive-c:lettner}.
   
 \end{itemize}
 
-\label{Outline}
-\textbf{Outline.} The rest of this paper is organized as follows.
-\cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications.
-\cref{chapter:TypeShild Overview} contains a high level overview of \textsc{TypeShield}.
-\cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}.
-\cref{chapter:Implementation} briefly presents the implementation details of \textsc{TypeShield}.
-\cref{chapter:Evaluation} evaluates several properties of \textsc{TypeShield} and
-\cref{chapter:Related_Work} surveys related work, respectively.
-\cref{chapter:Discussion} contains the discussion, respectively while 
-\cref{chapter:Future_Work} highlights future research venues. 
-Finally, \cref{chapter:Conclusion} concludes this paper.
+%the outline is not needed t this moment.
+% \label{Outline}
+% \textbf{Outline.} The rest of this paper is organized as follows.
+% \cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications.
+% \cref{chapter:TypeShild Overview} contains a high level overview of \textsc{TypeShield}.
+% \cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}.
+% \cref{chapter:Implementation} briefly presents the implementation details of \textsc{TypeShield}.
+% \cref{chapter:Evaluation} evaluates several properties of \textsc{TypeShield} and
+% \cref{chapter:Related_Work} surveys related work, respectively.
+% \cref{chapter:Discussion} contains the discussion, respectively while 
+% \cref{chapter:Future_Work} highlights future research venues. 
+% Finally, \cref{chapter:Conclusion} concludes this paper.
 
 
