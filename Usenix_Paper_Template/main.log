@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  16 FEB 2017 09:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  16 FEB 2017 19:30
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1296,7 +1296,40 @@ File: tikzlibraryarrows.code.tex 2008/01/09 v3.0.0 (rcs-revision 1.1)
 tex
 File: pgflibraryarrows.code.tex 2013/09/23 v3.0.0 (rcs-revision 1.16)
 \arrowsize=\dimen208
-)) (./main.aux
+)) (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count172
+\lst@gtempboxa=\box55
+\lst@token=\toks45
+\lst@length=\count173
+\lst@currlwidth=\dimen209
+\lst@column=\count174
+\lst@pos=\count175
+\lst@lostspace=\dimen210
+\lst@width=\dimen211
+\lst@newlines=\count176
+\lst@lineno=\count177
+\lst@maxwidth=\dimen212
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2014/09/06 1.5e (Carsten Heinz)
+\c@lstnumber=\count178
+\lst@skipnumbers=\count179
+\lst@framebox=\box56
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2014/09/06 1.5e listings configuration
+))
+Package: listings 2014/09/06 1.5e (Carsten Heinz)
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2014/09/06 1.5e listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang2.sty
+File: lstlang2.sty 2014/09/06 1.5e listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang3.sty
+File: lstlang3.sty 2014/09/06 1.5e listings language file
+) (./main.aux
 
 LaTeX Warning: Label `eq:livenesscustom' multiply defined.
 
@@ -1310,47 +1343,40 @@ LaTeX Warning: Label `subsection:typeshieldcountprecision' multiply defined.
 LaTeX Warning: Label `subsection:typeshieldcountprecision@cref' multiply define
 d.
 
-
-LaTeX Warning: Label `subsection:typeshieldvslimitcount' multiply defined.
-
-
-LaTeX Warning: Label `subsection:typeshieldvslimitcount@cref' multiply defined.
-
-
 )
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 104.
-LaTeX Font Info:    ... okay on input line 104.
-LaTeX Font Info:    Try loading font information for T1+ptm on input line 104.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 117.
+LaTeX Font Info:    ... okay on input line 117.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 117.
+LaTeX Font Info:    ... okay on input line 117.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 117.
+LaTeX Font Info:    ... okay on input line 117.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 117.
+LaTeX Font Info:    ... okay on input line 117.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 117.
+LaTeX Font Info:    ... okay on input line 117.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 117.
+LaTeX Font Info:    ... okay on input line 117.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 117.
+LaTeX Font Info:    ... okay on input line 117.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 117.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count172
-\scratchdimen=\dimen209
-\scratchbox=\box55
-\nofMPsegments=\count173
-\nofMParguments=\count174
-\everyMPshowfont=\toks45
-\MPscratchCnt=\count175
-\MPscratchDim=\dimen210
-\MPnumerator=\count176
-\makeMPintoPDFobject=\count177
-\everyMPtoPDFconversion=\toks46
+\scratchcounter=\count180
+\scratchdimen=\dimen213
+\scratchbox=\box57
+\nofMPsegments=\count181
+\nofMParguments=\count182
+\everyMPshowfont=\toks46
+\MPscratchCnt=\count183
+\MPscratchDim=\dimen214
+\MPnumerator=\count184
+\makeMPintoPDFobject=\count185
+\everyMPtoPDFconversion=\toks47
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -1371,14 +1397,15 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
+Package caption Info: listings package is loaded.
 Package caption Info: longtable package is loaded.
 
 (/usr/share/texlive/texmf-dist/tex/latex/caption/ltcaption.sty
 Package: ltcaption 2013/02/03 v1.3-62 longtable captions (AR)
 )
 Package caption Info: End \AtBeginDocument code.
-\AtBeginShipoutBox=\box56
-Package hyperref Info: Link coloring OFF on input line 104.
+\AtBeginShipoutBox=\box58
+Package hyperref Info: Link coloring OFF on input line 117.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -1386,11 +1413,11 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count178
+\c@section@level=\count186
 )
-LaTeX Info: Redefining \ref on input line 104.
-LaTeX Info: Redefining \pageref on input line 104.
-LaTeX Info: Redefining \nameref on input line 104.
+LaTeX Info: Redefining \ref on input line 117.
+LaTeX Info: Redefining \pageref on input line 117.
+LaTeX Info: Redefining \nameref on input line 117.
 
 (./main.out) (./main.out)
 \@outlinefile=\write8
@@ -1434,73 +1461,82 @@ LaTeX Info: Redefining \nameref on input line 104.
 runsystem(pygmentize -S default -f latex > main.pyg)...executed.
 
 (./main.pyg)
+\c@lstlisting=\count187
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 125.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 138.
 LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <14.4> not available
-(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 125.
-LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 12
-5.
+(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 138.
+LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 13
+8.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
 File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 12
-5.
+LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 13
+8.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlztmcm.fd
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 12
-5.
+LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 13
+8.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsztmcm.fd
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 12
-5.
+LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 13
+8.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 125.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 138.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 125.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 138.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 125.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 138.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 125.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 138.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 131.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 144.
 
 (./components/abstract.tex) (./chapters/Introduction.tex
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 4.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 172.
+Underfull \hbox (badness 6995) in paragraph at lines 78--91
+[]\T1/ptm/m/n/10 Current bi-nary based tech-niques en-force im-pre-cise
+ []
 
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 132.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 172.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 132.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 141.
 
-Underfull \hbox (badness 1371) in paragraph at lines 172--177
-[]\T1/ptm/b/n/10 Security anal-y-sis of il-le-git-i-mate for-ward in-di-rect
- []
 
-) (./chapters/Forward_Indirect_Callsites.tex [2]
-\firstlisting=\box57
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 141.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 141.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 141.
+ [2])
+(./chapters/Forward_Indirect_Callsites.tex
+\firstlisting=\box59
 \openout6 = `main.pyg'.
 
 runsystem(pygmentize -l C++ -f latex -F tokenmerge            -P linenos -P "ve
@@ -1508,11 +1544,6 @@ rboptions= ,framesep=2mm,frame=none,firstnumber=1,framesep=1.0cm,numbersep=5pt,
 framesep=2mm,fontsize=\footnotesize " -o main.out.pyg main.pyg)...executed.
 
  (./main.out.pyg
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 1.
-
-(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 2.
 )
@@ -1520,14 +1551,8 @@ runsystem(rm main.out.pyg)...executed.
 
 runsystem(rm main.pyg)...executed.
 
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 100.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 100.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 100.
 
-<figures/loop.pdf, id=166, 391.4625pt x 556.0775pt>
+<figures/loop.pdf, id=159, 391.4625pt x 556.0775pt>
 File: figures/loop.pdf Graphic file (type pdf)
  <use figures/loop.pdf>
 Package pdftex.def Info: figures/loop.pdf used on input line 121.
@@ -1538,12 +1563,16 @@ Overfull \hbox (262.00961pt too wide) in paragraph at lines 123--124
  []
 
 [3 <./figures/loop.pdf>]
-<figures/class_hierarchy.pdf, id=219, 585.18625pt x 483.8075pt>
+<figures/class_hierarchy.pdf, id=212, 585.18625pt x 483.8075pt>
 File: figures/class_hierarchy.pdf Graphic file (type pdf)
 
 <use figures/class_hierarchy.pdf>
 Package pdftex.def Info: figures/class_hierarchy.pdf used on input line 242.
 (pdftex.def)             Requested size: 237.7689pt x 196.57584pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 
 Underfull \hbox (badness 10000) in paragraph at lines 249--267
 []\T1/ptm/m/n/10 The C++ class \T1/cmtt/m/n/10 nsMultiplexInputStream \T1/ptm/m
@@ -1555,169 +1584,41 @@ Underfull \hbox (badness 10000) in paragraph at lines 249--267
 \T1/ptm/m/n/10 tains a main loop gad-get in-side the func-tion
  []
 
-[4 <./figures/class_hierarchy.pdf>]
+[4]
 Underfull \hbox (badness 7667) in paragraph at lines 268--279
 \T1/cmtt/m/n/10 nsSeekableStream\T1/ptm/m/n/10 , \T1/cmtt/m/n/10 nsIPCSerializa
 bleInputStream
  []
 
 ) (./chapters/TypeShild_Overview.tex
-LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <12> not available
-(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 1.
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <10> not available
-(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 32.
+(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 27.
 
 
-! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
-passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.74 }
-      
-This error message was generated by an \errmessage
-command, so I can't give any explicit help.
-Pretend that you're Hercule Poirot: Examine all clues,
-and deduce the truth by order and method.
+) (./chapters/Design.tex
 
+LaTeX Warning: Reference `section:addresstakenanalysis' on page 1 undefined on 
+input line 12.
 
-! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
-passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.74 }
-      
-(That was another \errmessage.)
-
-
-! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
-passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.74 }
-      
-(That was another \errmessage.)
-
-
-! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
-passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.74 }
-      
-(That was another \errmessage.)
-
-
-! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
-passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.74 }
-      
-(That was another \errmessage.)
-
-
-! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
-passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.74 }
-      
-(That was another \errmessage.)
-
-
-! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
-passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.74 }
-      
-(That was another \errmessage.)
-
-[5]) (./chapters/Design.tex
+[5 <./figures/class_hierarchy.pdf>]
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `T1/ptm/b/it' tried instead on input line 16.
-
-
-! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
-passed '.5cm', and I am going to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.68 }
-      
-(That was another \errmessage.)
-
-
-! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
-passed '.5cm', and I am going to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.68 }
-      
-(That was another \errmessage.)
-
-
-! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
-passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.153 }
-       
-(That was another \errmessage.)
-
-
-! Package pgfkeys Error: I do not know the key '/tikz/arrowhead', to which you 
-passed '1cm', and I am going to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.153 }
-       
-(That was another \errmessage.)
-
 
 Overfull \hbox (5.25021pt too wide) in paragraph at lines 98--154
  |  [] 
  []
 
 [6]
-Underfull \hbox (badness 1102) in paragraph at lines 197--198
+Underfull \hbox (badness 1102) in paragraph at lines 195--196
 []\T1/ptm/m/n/10 Thus we de-scribe the pos-si-ble change that oc-curs in
  []
 
 
-Underfull \hbox (badness 2221) in paragraph at lines 197--198
+Underfull \hbox (badness 2221) in paragraph at lines 195--196
 \T1/ptm/m/n/10 one reg-is-ter with the set $\OML/ztmcm/m/it/10 S \OT1/ztmcm/m/n
 /10 = \OMS/ztmcm/m/n/10 f\OML/ztmcm/m/it/10 w\OT1/ztmcm/m/n/10 64\OML/ztmcm/m/i
 t/10 ; w\OT1/ztmcm/m/n/10 32\OML/ztmcm/m/it/10 ; w\OT1/ztmcm/m/n/10 16\OML/ztmc
@@ -1725,230 +1626,146 @@ m/m/it/10 ; w\OT1/ztmcm/m/n/10 8\OML/ztmcm/m/it/10 ; \OT1/ztmcm/m/n/10 0\OMS/zt
 mcm/m/n/10 g ^^B
  []
 
-[7]
-Overfull \hbox (27.33pt too wide) in paragraph at lines 351--351
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [7]
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 489.
+
+Overfull \hbox (19.3871pt too wide) in paragraph at lines 545--579
+[]\T1/ptm/m/n/10 ======= >>>>>>> 430261ca46d7b450bcc1cf2f5a89c3cea22cba8a 
+ []
+
+[8] [9]
+Overfull \hbox (27.33pt too wide) in paragraph at lines 725--725
 [] 
  []
 
-[8]
-Underfull \hbox (badness 10000) in paragraph at lines 421--425
+
+LaTeX Warning: Reference `fig:COUNTreachingmapping' on page 10 undefined on inp
+ut line 733.
+
+
+Package array Warning: Column ? is already defined on input line 742.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 801--803
 \T1/ptm/m/n/10 This gives us the fol-low-ing reg-is-ter state $\OML/ztmcm/m/it/
 10 S[] \OT1/ztmcm/m/n/10 =
  []
 
 
-Underfull \hbox (badness 2884) in paragraph at lines 421--425
-\OMS/ztmcm/m/n/10 f\OML/ztmcm/m/it/10 C; r\OT1/ztmcm/m/n/10 8\OML/ztmcm/m/it/10
- ; r\OT1/ztmcm/m/n/10 16\OML/ztmcm/m/it/10 ; r\OT1/ztmcm/m/n/10 32\OML/ztmcm/m/
-it/10 ; r\OT1/ztmcm/m/n/10 64\OML/ztmcm/m/it/10 ; W\OMS/ztmcm/m/n/10 g$ \T1/ptm
-/m/n/10 which trans-lates to the reg-is-ter
- []
-
-
-Underfull \hbox (badness 1655) in paragraph at lines 429--430
-\T1/ptm/m/n/10 pol-icy, which only gives us the first non $\OML/ztmcm/m/it/10 C
-$ \T1/ptm/m/n/10 state
- []
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[9]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[10]
-Overfull \hbox (27.33pt too wide) in paragraph at lines 652--652
-[] 
- []
-
-
-Package array Warning: Column ? is already defined on input line 669.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 674--712
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 728--730
-\T1/ptm/m/n/10 This gives us the fol-low-ing reg-is-ter state $\OML/ztmcm/m/it/
-10 S[] \OT1/ztmcm/m/n/10 =
- []
-
-
-Underfull \hbox (badness 4001) in paragraph at lines 728--730
+Underfull \hbox (badness 4001) in paragraph at lines 801--803
 \OMS/ztmcm/m/n/10 f\OML/ztmcm/m/it/10 T; s\OT1/ztmcm/m/n/10 64\OML/ztmcm/m/it/1
 0 ; s\OT1/ztmcm/m/n/10 32\OML/ztmcm/m/it/10 ; s\OT1/ztmcm/m/n/10 16\OML/ztmcm/m
 /it/10 ; s\OT1/ztmcm/m/n/10 8\OML/ztmcm/m/it/10 ; U\OMS/ztmcm/m/n/10 g$ \T1/ptm
 /m/n/10 which trans-lates to the reg-is-ter
  []
 
+
+LaTeX Warning: Reference `fig:TYPEreachingmapping' on page 10 undefined on inpu
+t line 819.
+
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 796.
-[11]) (./chapters/Implementation.tex [12]) (./chapters/Evaluation.tex [13]
-Underfull \hbox (badness 1783) in paragraph at lines 69--70
-[]\T1/ptm/m/n/10 The num-ber of call-targets that are found by our
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 869.
+[10]) (./chapters/Implementation.tex) (./chapters/Evaluation.tex
+LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <12> not available
+(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 33.
+ [11]
+Underfull \hbox (badness 10000) in paragraph at lines 96--98
+
  []
 
 
-Underfull \hbox (badness 5288) in paragraph at lines 116--116
-[]\T1/ptm/b/n/10 Precision Call-target / Call-site Clas-si-fi-ca-tion
- []
-
-
-Underfull \hbox (badness 1303) in paragraph at lines 119--164
-\T1/ptm/m/n/10 For each ex-per-i-ment we mea-sured two data points per
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 119--164
+Underfull \hbox (badness 10000) in paragraph at lines 113--149
 \T1/ptm/b/n/10 Experiment Setup (Call-targets) \T1/ptm/m/n/10 Union com-bi-na-t
 ion
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 119--164
+Underfull \hbox (badness 10000) in paragraph at lines 113--149
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 119--164
+Underfull \hbox (badness 10000) in paragraph at lines 113--149
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 119--164
-
- []
-
-[14]
-Underfull \hbox (badness 5288) in paragraph at lines 166--166
-[]\T1/ptm/b/n/10 Precision Call-target / Call-site Clas-si-fi-ca-tion
- []
-
-
-Underfull \hbox (badness 1303) in paragraph at lines 169--215
-\T1/ptm/m/n/10 For each ex-per-i-ment we mea-sured two data points per
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 169--215
+Underfull \hbox (badness 10000) in paragraph at lines 113--149
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 169--215
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 154--190
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 169--215
+Underfull \hbox (badness 10000) in paragraph at lines 154--190
 
  []
 
-<./postgresqlO2.pdf, id=390, 578.16pt x 433.62pt>
-File: ./postgresqlO2.pdf Graphic file (type pdf)
- <use ./postgresqlO2.pdf>
-Package pdftex.def Info: ./postgresqlO2.pdf used on input line 229.
-(pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
-File: ./postgresqlO2.pdf Graphic file (type pdf)
 
-<use ./postgresqlO2.pdf>
-Package pdftex.def Info: ./postgresqlO2.pdf used on input line 229.
-(pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
- (./postgresqlO2.pdf_tex
-<postgresqlO2.pdf, id=391, page=1, 578.16pt x 433.62pt>
-File: postgresqlO2.pdf Graphic file (type pdf)
+Underfull \hbox (badness 10000) in paragraph at lines 154--190
 
-<use postgresqlO2.pdf, page 1>
-Package pdftex.def Info: postgresqlO2.pdf, page1 used on input line 52.
-(pdftex.def)             Requested size: 578.15858pt x 433.63878pt.
-)
-Overfull \hbox (9.75475pt too wide) in paragraph at lines 229--230
- [][] 
  []
 
-
-Underfull \vbox (badness 8019) has occurred while \output is active []
-
-
-
-LaTeX Warning: Reference `tbl:policycomp' on page 15 undefined on input line 26
-6.
-
-
-LaTeX Warning: Reference `tbl:policycomp' on page 15 undefined on input line 26
-7.
-
-[15 <./postgresqlO2.pdf>]
-
-LaTeX Warning: Reference `tbl:policycompcount' on page 16 undefined on input li
-ne 288.
-
-
-LaTeX Warning: Reference `tbl:policycompcount' on page 16 undefined on input li
-ne 290.
-
-
-LaTeX Warning: Reference `tbl:policycomptype' on page 16 undefined on input lin
-e 312.
-
-
-LaTeX Warning: Reference `tbl:policycomptype' on page 16 undefined on input lin
-e 313.
-
-[16]) (./chapters/Related_Work.tex [17]
+[13]) (./chapters/Related_Work.tex [14]
 Underfull \hbox (badness 1314) in paragraph at lines 111--117
 \T1/ptm/m/n/10 bi-nary in-stru-men-ta-tion in tools such as: vf-Guard [[]],
  []
 
-[18]) (./chapters/Discussion.tex) (./chapters/Future_Work.tex [19])
+[15]) (./chapters/Discussion.tex [16]) (./chapters/Future_Work.tex)
 (./chapters/Conclusion.tex
-Underfull \hbox (badness 10000) in paragraph at lines 38--1
-[]\T1/ptm/b/n/10 Using pointer/memory anal-y-sis. \T1/ptm/m/n/10 In-tro-duc-ing
-
- []
-
-
-Underfull \hbox (badness 2903) in paragraph at lines 38--1
-\T1/ptm/m/n/10 pointer/memory anal-y-sis to dis-tin-guish sim-ple 32/64bit
- []
-
-
-Underfull \hbox (badness 1337) in paragraph at lines 38--1
-\T1/ptm/m/n/10 val-ues and ac-tual ad-dresses to even fur-ther re-strict the
+Underfull \hbox (badness 1552) in paragraph at lines 38--1
+[]\T1/ptm/b/n/10 Using point-er/mem-ory anal-y-sis. \T1/ptm/m/n/10 In-tro-duc-i
+ng point-
  []
 
 ) (./main.bbl
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 5.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 6.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 5.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 6.
 
-Underfull \hbox (badness 10000) in paragraph at lines 13--16
+Underfull \hbox (badness 10000) in paragraph at lines 4--7
+[]$\T1/cmtt/m/n/8 h t t p s : / / g i t h u b \OML/ztmcm/m/it/8 : \T1/cmtt/m/n/
+8 c o m / c t f s / w r i t e -[] u p s -[] 2015 / t r e e / m a s t e r / b c
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 18--21
 \T1/cmtt/m/n/8 n t e l \OML/ztmcm/m/it/8 : \T1/cmtt/m/n/8 c o m / e v a n g e l
  i s t s /2016 / 06 / 09 / i n t e l -[] r e l e a s e -[] n e w -[] t e
  []
 
-[20]
-Underfull \hbox (badness 1132) in paragraph at lines 99--105
+[17]
+Underfull \hbox (badness 1132) in paragraph at lines 104--110
 []\T1/ptm/m/sc/8 Crane, S., Vol-ck-aert, S., Schus-ter, F., Liebchen, C.,
  []
 
 
-Underfull \hbox (badness 1859) in paragraph at lines 214--219
+Underfull \hbox (badness 1859) in paragraph at lines 225--230
 []\T1/ptm/m/sc/8 Petsios, T., Ke-merlis, V. P., Poly-chron-akis, M., and
  []
 
-) [21]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 156.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 156.
+[18])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 169.
+ [19
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 169.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 156.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 156.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 169.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 169.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 570AAA81D1E68D8D289066CFDE77EBAA;1841.
+(rerunfilecheck)             Checksum: E2D724DE796BB9DDBD28D82028C66311;1424.
 
 
 LaTeX Warning: There were undefined references.
@@ -1956,16 +1773,16 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 156.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 169.
  ) 
 Here is how much of TeX's memory you used:
- 24172 strings out of 493105
- 449902 string characters out of 6137072
- 559979 words of memory out of 5000000
- 26948 multiletter control sequences out of 15000+600000
- 102199 words of font info for 123 fonts, out of 8000000 for 9000
+ 26339 strings out of 493105
+ 476415 string characters out of 6137072
+ 601376 words of memory out of 5000000
+ 29092 multiletter control sequences out of 15000+600000
+ 103895 words of font info for 124 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,16n,98p,675b,750s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 68i,16n,98p,862b,1795s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/
 fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
@@ -1979,10 +1796,10 @@ r.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/sha
 re/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/urw/times/utmri8a.pfb>
-Output written on main.pdf (21 pages, 428649 bytes).
+Output written on main.pdf (19 pages, 390612 bytes).
 PDF statistics:
- 624 PDF objects out of 1000 (max. 8388607)
- 558 compressed objects within 6 object streams
- 164 named destinations out of 1000 (max. 500000)
- 241 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 597 PDF objects out of 1000 (max. 8388607)
+ 539 compressed objects within 6 object streams
+ 170 named destinations out of 1000 (max. 500000)
+ 199 words of extra memory for PDF output out of 10000 (max. 10000000)
 

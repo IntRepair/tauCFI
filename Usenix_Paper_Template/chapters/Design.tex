@@ -478,6 +478,70 @@ usually all potential variadic parameters are moved into a contiguous block of m
 %, as can be seen in the assembly in Figure \ref{fig:asmvariadic}.
 Our analysis interprets that as a read access on all 
 parameters and we arrive at a problematic overestimation. 
+<<<<<<< HEAD
+
+\begin{figure}
+\centering
+\begin{center}
+ \begin{lstlisting}[basicstyle=\footnotesize]
+00000000004222f0 <make_cmd>:
+  4222f0:       push   %r15
+  4222f2:       push   %r14
+  4222f4:       push   %rbx
+  4222f5:       sub    $0xd0,%rsp
+  4222fc:       mov    %esi,%r15d
+  4222ff:       mov    %rdi,%r14
+  422302:       test   %al,%al
+  422304:       je     42233d <make_cmd+0x4d>
+  422306:       movaps %xmm0,0x50(%rsp)
+  42230b:       movaps %xmm1,0x60(%rsp)
+  422310:       movaps %xmm2,0x70(%rsp)
+  422315:       movaps %xmm3,0x80(%rsp)
+  42231d:       movaps %xmm4,0x90(%rsp)
+  422325:       movaps %xmm5,0xa0(%rsp)
+  42232d:       movaps %xmm6,0xb0(%rsp)
+  422335:       movaps %xmm7,0xc0(%rsp)
+  42233d:       mov    %r9,0x48(%rsp)
+  422342:       mov    %r8,0x40(%rsp)
+  422347:       mov    %rcx,0x38(%rsp)
+  42234c:       mov    %rdx,0x30(%rsp)
+  422351:       mov    $0x50,%esi
+  422356:       mov    %r14,%rdi
+  422359:       callq  409430 <pcalloc>
+\end{lstlisting}
+\end{center}
+
+% \centering
+% \begin{BVerbatim}
+% 00000000004222f0 <make_cmd>:
+%   4222f0:       push   %r15
+%   4222f2:       push   %r14
+%   4222f4:       push   %rbx
+%   4222f5:       sub    $0xd0,%rsp
+%   4222fc:       mov    %esi,%r15d
+%   4222ff:       mov    %rdi,%r14
+%   422302:       test   %al,%al
+%   422304:       je     42233d <make_cmd+0x4d>
+%   422306:       movaps %xmm0,0x50(%rsp)
+%   42230b:       movaps %xmm1,0x60(%rsp)
+%   422310:       movaps %xmm2,0x70(%rsp)
+%   422315:       movaps %xmm3,0x80(%rsp)
+%   42231d:       movaps %xmm4,0x90(%rsp)
+%   422325:       movaps %xmm5,0xa0(%rsp)
+%   42232d:       movaps %xmm6,0xb0(%rsp)
+%   422335:       movaps %xmm7,0xc0(%rsp)
+%   42233d:       mov    %r9,0x48(%rsp)
+%   422342:       mov    %r8,0x40(%rsp)
+%   422347:       mov    %rcx,0x38(%rsp)
+%   42234c:       mov    %rdx,0x30(%rsp)
+%   422351:       mov    $0x50,%esi
+%   422356:       mov    %r14,%rdi
+%   422359:       callq  409430 <pcalloc>
+% \end{BVerbatim}
+\caption{ASM code of the \texttt{make\_cmd} function with optimize level O2, which has a variadic parameter list.}
+\label{fig:asmvariadic}
+\end{figure}
+=======
 %
 %\begin{figure}
 %% \centering
@@ -510,6 +574,7 @@ parameters and we arrive at a problematic overestimation.
 %\caption{ASM code of the \texttt{make\_cmd} function with optimize level O2, which has a variadic parameter list.}
 %\label{fig:asmvariadic}
 %\end{figure}
+>>>>>>> 430261ca46d7b450bcc1cf2f5a89c3cea22cba8a
 
 Our solution to this problem is to find these spurious reads and ignore them. A compiler will implement this type of operation very 
 similar foll all cases, thus we can achieve this using the following steps:
@@ -569,7 +634,7 @@ requires the last known set of definitions that reach the actual call instructio
 %meaning that the value of a variable has been assigned. Considering this, we can assume that $Gen_n \subseteq Kill_n$, 
 %as we can always create new definitions, but not simply remove definitions without assigning a new value to the variable.
 
-\begin{algorithm}[!h]
+  \begin{algorithm}[!h]
 	\SetAlgoLined
 	\SetKwProg{Fn}{Function}{ is}{end}
 	\Fn{analyze(block : BasicBlock) : $\mathcal{S}^\mathcal{R}$}

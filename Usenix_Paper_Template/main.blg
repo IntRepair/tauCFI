@@ -3,26 +3,34 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: main.aux
 The style file: acm.bst
 Database file #1: literatur.bib.bib
-I was expecting a `,' or a `}'---line 53 of file literatur.bib.bib
+I was expecting a `,' or a `}'---line 60 of file literatur.bib.bib
  :  
  :  year = "2015",
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 154 of file literatur.bib.bib
+I was expecting a `,' or a `}'---line 66 of file literatur.bib.bib
+ :  
+ :  year = "2015",
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 167 of file literatur.bib.bib
  :  
  :  year = "2007",
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 332 of file literatur.bib.bib
+I was expecting a `,' or a `}'---line 345 of file literatur.bib.bib
  :  
  :  year = "2009",
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
+Warning--to sort, need author or key in ctf:coop
 Warning--to sort, need author or key in dynamorio:drmemory
 Name 1 in "PaX Team. Address Space Layout Randomization," has a comma at the end for entry ASLR
 while executing---line 1092 of file acm.bst
 Warning--to sort, need author or key in intel:cet
 Warning--to sort, need author or key in windows:cfguard
+Warning--empty author in ctf:coop
+Warning--empty booktitle in ctf:coop
 Warning--empty author in dynamorio:drmemory
 Warning--empty booktitle in dynamorio:drmemory
 Warning--empty author in windows:cfguard
@@ -38,45 +46,45 @@ Name 1 in "PaX Team. Address Space Layout Randomization," has a comma at the end
 while executing---line 1133 of file acm.bst
 Warning--empty title in ASLR
 Warning--empty booktitle in ASLR
-You've used 50 entries,
+You've used 52 entries,
             2253 wiz_defined-function locations,
-            720 strings with 12668 characters,
-and the built_in function-call counts, 16061 in all, are:
-= -- 1253
-> -- 1027
+            728 strings with 13125 characters,
+and the built_in function-call counts, 16633 in all, are:
+= -- 1298
+> -- 1060
 < -- 0
-+ -- 422
-- -- 372
-* -- 1190
-:= -- 2641
-add.period$ -- 145
-call.type$ -- 50
-change.case$ -- 333
++ -- 436
+- -- 384
+* -- 1234
+:= -- 2728
+add.period$ -- 150
+call.type$ -- 52
+change.case$ -- 345
 chr.to.int$ -- 0
-cite$ -- 66
-duplicate$ -- 778
-empty$ -- 1397
-format.name$ -- 372
-if$ -- 3262
+cite$ -- 71
+duplicate$ -- 807
+empty$ -- 1449
+format.name$ -- 384
+if$ -- 3380
 int.to.chr$ -- 0
-int.to.str$ -- 50
-missing$ -- 51
-newline$ -- 248
-num.names$ -- 94
-pop$ -- 597
+int.to.str$ -- 52
+missing$ -- 53
+newline$ -- 257
+num.names$ -- 96
+pop$ -- 621
 preamble$ -- 1
-purify$ -- 286
+purify$ -- 296
 quote$ -- 0
-skip$ -- 284
+skip$ -- 294
 stack$ -- 0
-substring$ -- 250
-swap$ -- 89
+substring$ -- 260
+swap$ -- 91
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 198
-warning$ -- 16
-while$ -- 94
-width$ -- 52
-write$ -- 443
-(There were 5 error messages)
+type$ -- 206
+warning$ -- 19
+while$ -- 96
+width$ -- 54
+write$ -- 459
+(There were 6 error messages)

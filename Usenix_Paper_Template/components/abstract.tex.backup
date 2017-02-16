@@ -39,7 +39,7 @@ in C++ because it allows and object to use general (its own)
 or specific functions (inherited) contained in the class hierarchy.
 Despite the alarmingly high number of \textit{vptr} corruption
 vulnerabilities, the \textit{vptr} corruption problem has not
-been sufficiently addressed by researchers.
+been sufficiently addressed by the researchers.
 
 % However, because of the specific implementation of late binding,
 % which performs no verification in order to check where an indirect call site 
@@ -59,15 +59,15 @@ In this paper, we present \textit{TypeShield}, a run-time \textit{vptr} corrupti
 detection tool. It is based on instrumentation of executables at load time
 and uses a novel run-time type and function parameter counter technique
 in order to overcome the limitations of current approaches and efficiently
-verify dynamic dispatching during runtime.
+verify dynamic dispatching during run-time.
 In particular, \textit{TypeShield} can be automatically and easily used
 in conjunction with legacy applications or where source code is missing.
 It achieves higher caller/caller matching (precision) and with reasonable
 run-time overhead.
 We have applied \textit{TypeShield} to
-web servers, FTP servers and SPEC CPU2006 benchmark and were able to efficiently
-and with low performance overhead protect this applications from forward indirect edge
-\textit{vptr} based corruptions.
+web servers, FTP servers and SPEC2006 benchmark and were able to efficiently
+and with low performance overhead protect this applications from 
+\textit{vptr} corruptions vulnerabilities.
 Our evaluation shows that our target reduction schema achieves an additional
 reduction of the possible call targets per call-site of up to 
 20\% with an overall reduction of about 9\% when comparing with other state-of-the-art
