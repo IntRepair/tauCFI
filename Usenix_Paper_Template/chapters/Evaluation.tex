@@ -374,6 +374,10 @@ When compared, our implementation of the \textit{type} policy allows about 7.93\
   \end{minipage} 
 \end{figure}
 
+<<<<<<< HEAD
+=======
+When looking at the CDFs of legal callsite targets as shown for postgresql \ref{fig7}, node.js \ref{fig8}, proftpd \ref{fig9}, mysql \ref{fig10}, one should instantly see the difference between the type and the count policies. While the count  policies have only a few number of changes, the number of changes that can be seen within the type policies is vastly higher. The reason for that is simple, the number of buckets that are used to classify the callsites and calltargets is simply higher. While type policies mostly perform better than the count policies, there are still parts within the type plot that are above the count plot, the reason for that is relatively simple: the maximum number of calltargets a callsite can access has been reduced, therefore a lower amount of calltargets is a higher percentage than before. However all of that is also dependent on the structure of the program.
+>>>>>>> 188918af0fba32dfee5da030a3dd46e234377067
 
 \subsection{RQ3: Runtime Performance Overhead}
 \label{section:typeshieldoverheadperformance}
@@ -406,7 +410,7 @@ instruction to the new position of the basic block.
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r}%
 	\toprule
-	\bfseries Target & AT & TypeArmor &  TypeShield (count) & TypeShield (type) &  IFCC% specify table head
+	\bfseries Target & AT & TypeArmor  &  IFCC &  TypeShield (count) & TypeShield (type)% specify table head
 	\\\midrule
 	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/tools_compare.csv}{
 		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
