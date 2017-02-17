@@ -17,8 +17,7 @@ for each of our policies.
 What we call the \emph{count} policy is essentially the policy introduced by TypeArmor \cite{veen:typearmor}. 
 The basic idea revolves around classifying call-targets by the number of parameters they provide and call-sites 
 by the number of parameters they require. The schema to match those is that we have call-targets requiring 
-parameters and the call-sites providing parameters.
-% as depicted in Figure \ref{fig:COUNTschema}.
+parameters and the call-sites providing them as depicted in Figure \ref{fig:COUNTschema}.
 %
 %\begin{figure}[!h]
 %\centering
@@ -92,9 +91,7 @@ of call-sites, which can access the same set of call-targets, a route we will ex
 What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the type of a parameter. However due to complexity reasons,
 we are restricting ourselves to the general purpose registers, which the SystemV ABI designates as parameter registers. Furthermore we are not inferring 
 the actual type of the data but the wideness of the data stored in the register. The schema again is that we have call-targets requiring wideness and the
-call-site providing wideness.
-
-% as depicted in Figure \ref{fig:TYPEschema}.
+call-site providing it as depicted in Figure \ref{fig:TYPEschema}.
 %
 %\begin{figure}[!h]
 %\center

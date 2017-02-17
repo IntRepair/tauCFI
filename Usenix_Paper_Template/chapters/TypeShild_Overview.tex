@@ -30,4 +30,5 @@ Therefore we extend the classification schema to the parameter types:
 \textit{2)} Call-targets require a minimum wideness for each parameter(possibly underestimated compared to source)
 
 The basic idea stays the same, the provision must be no lower than the requirement. However, the approach is more fine-grained 
-applying to the wideness of each parameter. The result is that we split the buckets of TypeArmor up into smaller ones.
+applying to the wideness of each parameter. The result is that we split the buckets of TypeArmor up into smaller ones as shown in the limited example Figure \ref{fig:lattice3264}.
+% There we can see that while in a parameter-count oriented schema a call-site classified as (32,32) would be able to call functions classified as (64,0), however in our parameter wideness oriented schema that is not possible.
