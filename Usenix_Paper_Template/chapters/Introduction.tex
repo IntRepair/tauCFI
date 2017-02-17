@@ -95,7 +95,7 @@ such as an shadow stack~\cite{dang:asiaccs} or context-sensitive
 CFI~\cite{veen:cfi} is still essential to ensure the integrity of return addresses at 
 runtime~\cite{crane:readactor++}. In this paper, we assume an ideal
 backward-edge protection mechanism such as a shadow
-stack with no design faults [12]. 
+stack with no design faults~\cite{conti:ccs}. 
 \textsc{TypeShield} complements such backward-edge defenses by addressing
 attacks that take place without violating the integrity of the return path.
 Specifically, \textsc{TypeShield} provides a precise protection 
@@ -118,7 +118,7 @@ Third, even if the source code of the libraries is
 available, recompiling big projects with dynamic dependencies is, 
 again, a demanding task. Even state-of-the art
 defenses that enforce CFI policies at the source level such
-as Interleaving [ref] do not support dynamic libraries.
+as Interleaving~\cite{bounov:interleaving} do not support dynamic libraries.
 Notice that mixing CFI-protected with non-protected code is impossible since
 applying CFI only on a part of the CFG would crash legitimate executions.
 In contrast, with a binary-level solution, we

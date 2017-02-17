@@ -51,6 +51,13 @@
 \newblock In {\em Proceedings of the USENIX conference on Security (USENIX
   SEC),\/} (2015).
 
+\bibitem{conti:ccs}
+{\sc Conti, M., Larsen, P., Crane, S., Davi, L., Franz, M., Negro, M.,
+  Liebchen, C., Qunaibit, M., and Sadeghi, A.-R.}
+\newblock {Losing Control: On the Effectiveness of Control-Flow Integrity Under
+  Stack Attacks}.
+\newblock In {\em In CCS\/} (2015).
+
 \bibitem{crane:readactor++}
 {\sc Crane, S., Volckaert, S., Schuster, F., Liebchen, C., Larsen, P., Davi,
   L., Sadeghi, A.-R., Holz, T., De~Sutter, B., and Franz, M.}
