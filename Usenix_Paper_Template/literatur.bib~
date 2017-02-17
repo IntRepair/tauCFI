@@ -69,13 +69,6 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
  year = "2013",
 } 
 
-@InProceedings{dang:asiaccs,
- author = "Dang, Thurston HY and Maniatis, Petros and Wagner, David",
- title = "{The Performance Cost of Shadow Stacks and Stack Canaries}",
- booktitle = {In ASIACCS},
- year = "2015",
-}
-
 
 @inproceedings{ctf:coop,
  title = "{BlueLotus Team, Bctf challenge: bypass vtable read-only checks}",

@@ -73,14 +73,14 @@ any callee by design. \textsc{TypeShield} trashes these so-called
 spurious arguments and thus breaks all published COOP
 and improved COOP-like exploits. These exploits all chain
 virtual method calls that disrespect calling conventions to
-achieve convenient data flows between gadgets [13].
+achieve convenient data flows between gadgets~\cite{crane:readactor++}.
 
 Current binary based techniques enforce imprecise forward-edge CFI 
 plocies, often allowing controll transfers from any valid callsite 
-to any valid referenced entry point [33], [34]. 
+to any valid referenced entry point~\cite{ccfir:zhang, zhang:usenix}. 
 In the best case, existing policies only reduce the target set by
 removing all entry points of other modules unless they were
-explicitly exported or observed at runtime [24]. 
+explicitly exported or observed at runtime~\cite{payer:dimva}. 
 In contrast, \textsc{TypeShield} matches up indirect callsites with a more precise
 target set in a considerably more precise many-to-many relationship than TypeArmor.
 It is based on a use-def analysis at all possible callees to approximated the function prototypes, 
