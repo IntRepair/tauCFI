@@ -130,6 +130,13 @@
 \newblock In {\em Proceedings of the USENIX conference on Security (USENIX
   SEC)\/} (2014).
 
+\bibitem{veen:cfi}
+{\sc Veen, V. v.~d., Andriesse, D., Göktas, E., Gras, B., Sambuc, L.,
+  Slowinska, A., Bos, H., and Giuffrida, C.}
+\newblock {Practical Context-Sensiticve CFI}.
+\newblock In {\em Proceedings of the ACM SIGSAC Conference on Computer and
+  Communications Security (CCS),\/} (2015).
+
 \bibitem{veen:typearmor}
 {\sc Veen, V. v.~d., Goktas, E., Contag, M., Pawlowski, A., Chen, X., Rawat,
   S., Bos, H., Holz, T., Athanasopoulos, E., and Giuffrida, C.}
