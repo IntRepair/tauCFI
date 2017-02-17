@@ -9,9 +9,10 @@ In our evaluation we addressed the following research questions:
 \begin{itemize}
  \item \textbf{RQ1:} How precise is \textsc{TypeShield}? (\cref{section:typeshieldprecision})
  \item \textbf{RQ2:} How effective is \textsc{TypeShield}? (\cref{section:typeshieldeffectiveness})
- \item \textbf{RQ3:} What runtime overhead has our tool? (\cref{section:typeshieldoverheadperformance})
+ \item \textbf{RQ3:} What overhead imposes \textsc{TypeShield}? (\cref{section:typeshieldoverheadperformance})
  \item \textbf{RQ4:} What is the instrumentation overhead? (\cref{section:typeshieldoverheadinstrumentation})
- \item \textbf{RQ5:} Is \textsc{TypeShield} superior to other tools? (\cref{RQ5: Is TypeShield better than other tools?})
+ \item \textbf{RQ5:} What security level offers \textsc{TypeShield}? (\cref{RQ5: Security Analysis})
+ \item \textbf{RQ6:} Is \textsc{TypeShield} superior to other tools? (\cref{RQ5: Is TypeShield better than other tools?})
 \end{itemize}
 \textbf{Comparison Method.} As we do not have access (we requested the authors of TypeArmor several times to provide us access to the source code) 
 to the source code of TypeAmor, we implemented two modes in \textsc{TypeShield}. 
@@ -22,7 +23,7 @@ top of our \textit{count} policy implementation.
 %\textbf{Experimental Setup.} We setup our environment within a VirtualBox (version 5.0.26r) instance, which runs Kubuntu 16.04 LTS (Linux Kernel
 %version 4.4.0) and has access to 3GB of RAM and 4 of 8 provided hardware threads (Intel i7-4170HQ @ 2.50 GHz).
 
-\subsection{RQ1: Precision of \textsc{TypeShield}}
+\subsection{RQ1: Precision Measurements}
 \label{section:typeshieldprecision}
 \todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
 
@@ -169,7 +170,7 @@ We measured two data points per testtarget, the number and ratio of perfect clas
 %Efficiency
 %
 %
-\subsection{RQ2: Effectiveness of \textsc{TypeShield}}
+\subsection{RQ2: Effectiveness Measurements}
 \label{section:typeshieldeffectiveness}
 \todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, 
 first we need to define the fields which make most sense.}
@@ -339,53 +340,7 @@ When compared, our implementation of the \textit{type} policy allows about 7.93\
 %\end{figure}
 %
 
-\subsubsection{CDF Analysis}
-\label{CDF Analysis}
-
-\begin{figure}[ht] 
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \resizebox{1.04\columnwidth}{!}{\includesvg{postgresqlO2}}
-    \caption{postgresql} 
-    \label{fig7} 
-    \vspace{1ex}
-  \end{minipage}%%
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \resizebox{1.04\columnwidth}{!}{\includesvg{nodeO2}} 
-    \caption{node.js} 
-    \label{fig8} 
-    \vspace{1ex}
-  \end{minipage} 
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \resizebox{1.04\columnwidth}{!}{\includesvg{proftpdO2}}
-    \caption{proftpd} 
-    \label{fig9} 
-    \vspace{1ex}
-  \end{minipage}%% 
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \resizebox{1.04\columnwidth}{!}{\includesvg{mysqlO2}} 
-    \caption{mysql} 
-    \label{fig10} 
-    \vspace{1ex}
-  \end{minipage} 
-\end{figure}
-
-Figures, \ref{fig7}, \ref{fig8}, \ref{fig9}, and \ref{fig10} depict the CDFs for the following programs: node.js, proftpd, mysql, and postgresql.
-We selected these four programs randomly.
-The CDFs depict the number of legal callsite targets and the difference between the type and the count policies. 
-While the count  policies have only a few number of changes, the number of changes 
-that can be seen within the type policies is vastly higher. The reason for that is 
-simple, the number of buckets that are used to classify the callsites and calltargets 
-is simply higher. While type policies mostly perform better than the count policies, 
-there are still parts within the type plot that are above the count plot, the reason 
-for that is relatively simple: the maximum number of calltargets a callsite can access 
-has been reduced, therefore a lower amount of calltargets is a higher percentage than 
-before. However, all these results are dependent on the structure of the program.
-
-\subsection{RQ3: Runtime Performance Overhead}
+\subsection{RQ3: Runtime Overhead}
 \label{section:typeshieldoverheadperformance}
 \todo[inline]{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
 \begin{figure}[!h]
@@ -413,7 +368,59 @@ because of the nature of code relocation after losing the data that a compiler h
 changes are very hard to relocate. Therefore instead each important basic block in the old code contains a jump 
 instruction to the new position of the basic block.
 
-\subsection{RQ5: Comparison with Other Tools}
+\subsection{RQ5: Security Analysis}
+\label{RQ5: Security Analysis}
+% \subsubsection{CDF Analysis}
+% \label{CDF Analysis}
+
+\begin{figure}[ht] 
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \resizebox{1.04\columnwidth}{!}{\includesvg{postgresqlO2}}
+    \caption{postgresql -O2} 
+    \label{fig7} 
+    \vspace{1ex}
+  \end{minipage}%%
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \resizebox{1.04\columnwidth}{!}{\includesvg{nodeO2}} 
+    \caption{node.js -O2} 
+    \label{fig8} 
+    \vspace{1ex}
+  \end{minipage} 
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \resizebox{1.04\columnwidth}{!}{\includesvg{proftpdO2}}
+    \caption{proftpd -O2} 
+    \label{fig9} 
+    \vspace{1ex}
+  \end{minipage}%% 
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \resizebox{1.04\columnwidth}{!}{\includesvg{mysqlO2}} 
+    \caption{mysql -O2} 
+    \label{fig10} 
+    \vspace{1ex}
+  \end{minipage} 
+\end{figure}
+
+Figures, \ref{fig7}, \ref{fig8}, \ref{fig9}, and \ref{fig10} depict the CDFs for the following programs: postgresql, node.js, proftpd, and mysql when compiled with the 
+-O2 Clang compiler flag.
+We selected these four programs randomly.
+The CDFs depict the number of legal callsite targets and the difference between the type and the count policies. 
+While the count  policies have only a few number of changes, the number of changes 
+that can be seen within the type policies is vastly higher. The reason for that is 
+simple, the number of buckets that are used to classify the callsites and calltargets 
+is simply higher. While type policies mostly perform better than the count policies, 
+there are still parts within the type plot that are above the count plot, the reason 
+for that is relatively simple: the maximum number of calltargets a callsite can access 
+has been reduced, therefore a lower amount of calltargets is a higher percentage than 
+before. However, all these results are dependent on the structure of the program.
+
+todo. Also, add the buckets diagram, see fig 9 in the typearmor paper.
+
+
+\subsection{RQ6: Comparison with Other Tools}
 \label{RQ5: Is TypeShield better than other tools?}
 \begin{table}[!h]
 \resizebox{\columnwidth}{!}{

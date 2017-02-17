@@ -25,6 +25,8 @@ I was expecting a `,' or a `}'---line 368 of file literatur.bib.bib
 I'm skipping whatever remains of this entry
 Warning--to sort, need author or key in ctf:coop
 Warning--to sort, need author or key in dynamorio:drmemory
+Name 1 in "PaX Team. Address Space Layout Randomization," has a comma at the end for entry ASLR
+while executing---line 1092 of file acm.bst
 Warning--to sort, need author or key in intel:cet
 Warning--to sort, need author or key in windows:cfguard
 Warning--empty author in ctf:coop
@@ -36,45 +38,53 @@ Warning--empty booktitle in windows:cfguard
 Warning--empty author in intel:cet
 Warning--empty booktitle in intel:cet
 Warning--empty booktitle in iso:iecN3690
-You've used 29 entries,
+Warning--empty booktitle in kornau:rop
+Warning--empty title in dep
+Warning--empty booktitle in dep
+Warning--empty booktitle in alan:mycroft
+Name 1 in "PaX Team. Address Space Layout Randomization," has a comma at the end for entry ASLR
+while executing---line 1133 of file acm.bst
+Warning--empty title in ASLR
+Warning--empty booktitle in ASLR
+You've used 55 entries,
             2253 wiz_defined-function locations,
-            642 strings with 9606 characters,
-and the built_in function-call counts, 9969 in all, are:
-= -- 769
-> -- 704
+            740 strings with 13657 characters,
+and the built_in function-call counts, 17728 in all, are:
+= -- 1382
+> -- 1141
 < -- 0
-+ -- 289
-- -- 260
-* -- 785
-:= -- 1647
-add.period$ -- 83
-call.type$ -- 29
-change.case$ -- 216
++ -- 469
+- -- 414
+* -- 1321
+:= -- 2911
+add.period$ -- 159
+call.type$ -- 55
+change.case$ -- 369
 chr.to.int$ -- 0
-cite$ -- 42
-duplicate$ -- 447
-empty$ -- 806
-format.name$ -- 260
-if$ -- 1999
+cite$ -- 74
+duplicate$ -- 855
+empty$ -- 1536
+format.name$ -- 414
+if$ -- 3599
 int.to.chr$ -- 0
-int.to.str$ -- 29
-missing$ -- 30
-newline$ -- 144
-num.names$ -- 50
-pop$ -- 368
+int.to.str$ -- 55
+missing$ -- 56
+newline$ -- 272
+num.names$ -- 102
+pop$ -- 660
 preamble$ -- 1
-purify$ -- 188
+purify$ -- 317
 quote$ -- 0
-skip$ -- 165
+skip$ -- 312
 stack$ -- 0
-substring$ -- 145
-swap$ -- 49
+substring$ -- 275
+swap$ -- 97
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 114
-warning$ -- 13
-while$ -- 50
-width$ -- 31
-write$ -- 256
-(There were 4 error messages)
+type$ -- 218
+warning$ -- 19
+while$ -- 102
+width$ -- 57
+write$ -- 486
+(There were 6 error messages)

@@ -2,6 +2,7 @@
 \label{C++ Bad Forward Indirect Calls}
 \textbf{Polymorphism in C++.}
 \label{Polymorphism in C++}
+
 Polymorphism along inheritance and encapsulation
 are the most used modern object-oriented concepts
 in C++. 
@@ -265,7 +266,7 @@ that a Unix shell can be opened at the end of this attack.
 This example illustrates why detecting vPointer corruptions is not trivial for real-world applications.
 As depicted in Figure~\ref{Class exploit} the class \texttt{nsInputStream} has 11 classes which inherit directly
 or indirectly from this class. The classes \texttt{nsSeekableStream}, \texttt{nsIPCSerializableInputStream}
-and \texttt{nsClonea-\allowbreak bleInputStream} provide additional inherited vTables which represent illegitimate call targets
+and \texttt{nsCloneableInputStream} provide additional inherited vTables which represent illegitimate call targets
 for the initial \texttt{nsInputStream} objects and legitimate call targets for the six fake objects which were added during the attack.
 Furthermore, declaration and usage of the objects can be wide spread in the source code. This makes
 detection of the object types (base class), range of vTables (longest vTable inheritance path for a particular call site)
