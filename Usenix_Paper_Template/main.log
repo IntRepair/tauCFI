@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  17 FEB 2017 01:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  17 FEB 2017 01:52
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1515,34 +1515,34 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 
 (./components/abstract.tex) (./chapters/Introduction.tex
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 4.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 18.
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-Underfull \hbox (badness 6995) in paragraph at lines 78--91
+Underfull \hbox (badness 6995) in paragraph at lines 76--89
 []\T1/ptm/m/n/10 Current bi-nary based tech-niques en-force im-pre-cise
  []
 
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 132.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 129.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 132.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 141.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 129.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 138.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 141.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 138.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 141.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 138.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 141.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 138.
 )
 (./chapters/Forward_Indirect_Callsites.tex [2]
 \firstlisting=\box59
@@ -1832,10 +1832,10 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 173.
  ) 
 Here is how much of TeX's memory you used:
- 25646 strings out of 493105
- 471542 string characters out of 6137072
+ 25644 strings out of 493105
+ 471513 string characters out of 6137072
  597577 words of memory out of 5000000
- 28456 multiletter control sequences out of 15000+600000
+ 28454 multiletter control sequences out of 15000+600000
  101645 words of font info for 121 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  68i,12n,98p,862b,852s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1851,7 +1851,7 @@ ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (15 pages, 524429 bytes).
+Output written on main.pdf (15 pages, 524398 bytes).
 PDF statistics:
  677 PDF objects out of 1000 (max. 8388607)
  547 compressed objects within 6 object streams

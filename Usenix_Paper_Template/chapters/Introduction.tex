@@ -1,14 +1,12 @@
 \section{Introduction}
 \label{chapter:Introduction}
 
-\textbf{Motivation.}
-\label{Motivation}
 Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} is one of the most used techniques to secure program execution 
 flows against advanced Code-Reuse Attacks (CRAs). Advanced CRAs such as the recently published COOP~\cite{schuster:coop} 
 and its extension~\cite{crane:readactor++} or the attacks described by the Control Flow Bending paper~\cite{carlini:bending}
 are able to bypass most traditional CFI solutions, as they focus on indirect call-sites, which are not as easy to determine at compile time.
 
-\textbf{Problem.} This is a problem for applications written in C++, as one of its principle is inheritance and virtual functions. 
+This is a problem for applications written in C++, as one of its principle is inheritance and virtual functions. 
 The concept of virtual functions allows the programmer to overwrite a virtual function of the base-class with his
 own implementation. While this allows for much more flexible code, this flexibility is the reason COOP actually 
 works. The problem is that in order to implement virtual functions, the compiler needs to generate a table of all
@@ -60,15 +58,15 @@ Moreover, \textsc{TypeShield} provides strong mitigation for many types of code-
 (CRAs) for program binaries, without the need for source code. 
 
 \textbf{Our Insight.} \textsc{TypeShield} is based on a forward-edge CFI policy that 
-relies on a precise construction of both the callee prototypes and callsite signatures
-and than uses this information to enforce that each callsite targets matching functions 
+relies on a precise construction of both the callee prototypes and call site signatures
+and than uses this information to enforce that each call site targets matching functions 
 only. For example, \textsc{TypeShield} disallows an indirect call that prepares
 fewer arguments than the target callee consumes and where the types of the 
 arguments provided are not super types of the arguments expected at the target.
 Additionally, \textsc{TypeShield} incorporates an improved protection policy
-which further reduces the possible target set of callees for each callsite.
+which further reduces the possible target set of callees for each call site.
 Our novel policy is based on the insight that if the binary adhere to the standard calling convention
-for indirect calls, undefined arguments at the callsite are not used by
+for indirect calls, undefined arguments at the call site are not used by
 any callee by design. \textsc{TypeShield} trashes these so-called
 spurious arguments and thus breaks all published COOP
 and improved COOP-like exploits. These exploits all chain
@@ -76,15 +74,15 @@ virtual method calls that disrespect calling conventions to
 achieve convenient data flows between gadgets~\cite{crane:readactor++}.
 
 Current binary based techniques enforce imprecise forward-edge CFI 
-plocies, often allowing controll transfers from any valid callsite 
+plocies, often allowing controll transfers from any valid call site 
 to any valid referenced entry point~\cite{ccfir:zhang, zhang:usenix}. 
 In the best case, existing policies only reduce the target set by
 removing all entry points of other modules unless they were
 explicitly exported or observed at runtime~\cite{payer:dimva}. 
-In contrast, \textsc{TypeShield} matches up indirect callsites with a more precise
+In contrast, \textsc{TypeShield} matches up indirect call sites with a more precise
 target set in a considerably more precise many-to-many relationship than TypeArmor.
 It is based on a use-def analysis at all possible callees to approximated the function prototypes, 
-and liveness analysis at indirect callsites to approximate callsite signatures. This 
+and liveness analysis at indirect call sites to approximate call site signatures. This 
 efficiently leads to a more precise CFG of the binary progrma in question, 
 which could be used by other systems in order to gain more a precise CFG on which to 
 enforce their policies.
@@ -124,7 +122,6 @@ applying CFI only on a part of the CFG would crash legitimate executions.
 In contrast, with a binary-level solution, we
 can offer strong protection even if the source code is not
 available or when recompilation is not feasible (or desirable).
-
 
 \textbf{Contributions.} In summary, we make the following contributions:
 \label{Contribution}
