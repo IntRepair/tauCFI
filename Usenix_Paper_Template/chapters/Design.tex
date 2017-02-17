@@ -6,7 +6,7 @@ In this section, we cover the design of \textsc{TypeShield}. We first present th
 new \emph{type} policy in \cref{section:typepolicy}. 
 Then we present the theory needed to transform set-based analysis to register based ones in \cref{section:instructionanalysis}. 
 Finally, we present the implementation details of the call-target analysis in 
-\cref{section:calltargetanalysis} and call-site analysis in \cref{section:callsiteanalysis} 
+\cref{section:calltargetanalysis} and call-site analysis in~\cref{section:callsiteanalysis} 
 for each of our policies. 
 % Finally, in \cref{section:addresstakenanalysis} we introduce a version of 
 % address taken analysis based on \cite{mingwei:sekar} to restrict the number of available call-targets even more. 
@@ -16,8 +16,8 @@ for each of our policies.
 \label{section:countpolicy}
 What we call the \emph{count} policy is essentially the policy introduced by TypeArmor \cite{veen:typearmor}. 
 The basic idea revolves around classifying call-targets by the number of parameters they provide and call-sites 
-by the number of parameters they require. The schema to match those is that we have call-targets requiring 
-parameters and the call-sites providing them as depicted in Figure \ref{fig:COUNTschema}.
+by the number of parameters they require. The schema to match those is based on the fact that we  
+have call-targets requiring parameters and the call-sites providing them as depicted in Figure~\ref{fig:COUNTschema}.
 %
 %\begin{figure}[!h]
 %\centering

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  17 FEB 2017 01:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  17 FEB 2017 01:44
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1602,12 +1602,12 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <10> not available
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `T1/ptm/b/it' tried instead on input line 15.
  [5]
-Underfull \hbox (badness 1102) in paragraph at lines 196--197
+Underfull \hbox (badness 1102) in paragraph at lines 193--194
 []\T1/ptm/m/n/10 Thus we de-scribe the pos-si-ble change that oc-curs in
  []
 
 
-Underfull \hbox (badness 2221) in paragraph at lines 196--197
+Underfull \hbox (badness 2221) in paragraph at lines 193--194
 \T1/ptm/m/n/10 one reg-is-ter with the set $\OML/ztmcm/m/it/10 S \OT1/ztmcm/m/n
 /10 = \OMS/ztmcm/m/n/10 f\OML/ztmcm/m/it/10 w\OT1/ztmcm/m/n/10 64\OML/ztmcm/m/i
 t/10 ; w\OT1/ztmcm/m/n/10 32\OML/ztmcm/m/it/10 ; w\OT1/ztmcm/m/n/10 16\OML/ztmc
@@ -1615,17 +1615,14 @@ m/m/it/10 ; w\OT1/ztmcm/m/n/10 8\OML/ztmcm/m/it/10 ; \OT1/ztmcm/m/n/10 0\OMS/zt
 mcm/m/n/10 g ^^B
  []
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
 [6]
-Underfull \hbox (badness 1354) in paragraph at lines 404--410
+Underfull \hbox (badness 1354) in paragraph at lines 401--407
 \T1/ptm/m/n/10 reg-is-ter: \T1/ptm/m/it/10 1) $\OML/ztmcm/m/it/10 W$ \T1/ptm/m/
 n/10 rep-re-sents write be-fore read ac-cess, \T1/ptm/m/it/10 2)
  []
 
 
-Underfull \hbox (badness 6927) in paragraph at lines 417--421
+Underfull \hbox (badness 6927) in paragraph at lines 414--418
 []\T1/ptm/m/n/10 This gives us the fol-low-ing reg-is-ter state $\OML/ztmcm/m/i
 t/10 S[] \OT1/ztmcm/m/n/10 =
  []
@@ -1634,17 +1631,18 @@ t/10 S[] \OT1/ztmcm/m/n/10 =
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-
-Package array Warning: Column ? is already defined on input line 683.
-
 [8]
-Underfull \hbox (badness 6927) in paragraph at lines 746--748
+
+Package array Warning: Column ? is already defined on input line 680.
+
+
+Underfull \hbox (badness 6927) in paragraph at lines 743--745
 []\T1/ptm/m/n/10 This gives us the fol-low-ing reg-is-ter state $\OML/ztmcm/m/i
 t/10 S[] \OT1/ztmcm/m/n/10 =
  []
 
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 820.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 817.
 ) (./chapters/Implementation.tex) (./chapters/Evaluation.tex
 Underfull \hbox (badness 5802) in paragraph at lines 3--9
 \T1/ptm/m/n/10 (v.1.3.3), the two http server ap-pli-ca-tions \T1/ptm/m/it/10 p
@@ -1662,7 +1660,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[11] <./postgresqlO2.pdf, id=337, 578.16pt x 433.62pt>
+[11] <./postgresqlO2.pdf, id=342, 578.16pt x 433.62pt>
 File: ./postgresqlO2.pdf Graphic file (type pdf)
 
 <use ./postgresqlO2.pdf>
@@ -1673,7 +1671,7 @@ File: ./postgresqlO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./postgresqlO2.pdf used on input line 348.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./postgresqlO2.pdf_tex
-<postgresqlO2.pdf, id=338, page=1, 578.16pt x 433.62pt>
+<postgresqlO2.pdf, id=343, page=1, 578.16pt x 433.62pt>
 File: postgresqlO2.pdf Graphic file (type pdf)
 
 <use postgresqlO2.pdf, page 1>
@@ -1684,7 +1682,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 348--349
  [][] 
  []
 
-<./nodeO2.pdf, id=339, 578.16pt x 433.62pt>
+<./nodeO2.pdf, id=344, 578.16pt x 433.62pt>
 File: ./nodeO2.pdf Graphic file (type pdf)
  <use ./nodeO2.pdf>
 Package pdftex.def Info: ./nodeO2.pdf used on input line 355.
@@ -1695,7 +1693,7 @@ File: ./nodeO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./nodeO2.pdf used on input line 355.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./nodeO2.pdf_tex
-<nodeO2.pdf, id=340, page=1, 578.16pt x 433.62pt>
+<nodeO2.pdf, id=345, page=1, 578.16pt x 433.62pt>
 File: nodeO2.pdf Graphic file (type pdf)
  <use nodeO2.pdf, page 1>
 Package pdftex.def Info: nodeO2.pdf, page1 used on input line 52.
@@ -1705,7 +1703,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 355--356
  [][] 
  []
 
-<./proftpdO2.pdf, id=341, 578.16pt x 433.62pt>
+<./proftpdO2.pdf, id=346, 578.16pt x 433.62pt>
 File: ./proftpdO2.pdf Graphic file (type pdf)
  <use ./proftpdO2.pdf>
 Package pdftex.def Info: ./proftpdO2.pdf used on input line 362.
@@ -1716,7 +1714,7 @@ File: ./proftpdO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./proftpdO2.pdf used on input line 362.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./proftpdO2.pdf_tex
-<proftpdO2.pdf, id=342, page=1, 578.16pt x 433.62pt>
+<proftpdO2.pdf, id=347, page=1, 578.16pt x 433.62pt>
 File: proftpdO2.pdf Graphic file (type pdf)
 
 <use proftpdO2.pdf, page 1>
@@ -1727,7 +1725,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 362--363
  [][] 
  []
 
-<./mysqlO2.pdf, id=343, 578.16pt x 433.62pt>
+<./mysqlO2.pdf, id=348, 578.16pt x 433.62pt>
 File: ./mysqlO2.pdf Graphic file (type pdf)
  <use ./mysqlO2.pdf>
 Package pdftex.def Info: ./mysqlO2.pdf used on input line 369.
@@ -1738,7 +1736,7 @@ File: ./mysqlO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./mysqlO2.pdf used on input line 369.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./mysqlO2.pdf_tex
-<mysqlO2.pdf, id=344, page=1, 578.16pt x 433.62pt>
+<mysqlO2.pdf, id=349, page=1, 578.16pt x 433.62pt>
 File: mysqlO2.pdf Graphic file (type pdf)
  <use mysqlO2.pdf, page 1>
 Package pdftex.def Info: mysqlO2.pdf, page1 used on input line 52.
@@ -1748,7 +1746,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 369--370
  [][] 
  []
 
-<figures/speccpu2006.pdf, id=349, 442.65375pt x 244.915pt>
+<figures/speccpu2006.pdf, id=354, 442.65375pt x 244.915pt>
 File: figures/speccpu2006.pdf Graphic file (type pdf)
 
 <use figures/speccpu2006.pdf>
@@ -1806,7 +1804,7 @@ Underfull \hbox (badness 1132) in paragraph at lines 62--68
  []
 
 ) (./chapters/Appendix.tex
-Overfull \hbox (5.25021pt too wide) in paragraph at lines 41--97
+Overfull \hbox (5.25021pt too wide) in paragraph at lines 38--94
  |  [] 
  []
 
@@ -1853,10 +1851,10 @@ ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (15 pages, 524451 bytes).
+Output written on main.pdf (15 pages, 524429 bytes).
 PDF statistics:
- 674 PDF objects out of 1000 (max. 8388607)
- 544 compressed objects within 6 object streams
+ 677 PDF objects out of 1000 (max. 8388607)
+ 547 compressed objects within 6 object streams
  98 named destinations out of 1000 (max. 500000)
  260 words of extra memory for PDF output out of 10000 (max. 10000000)
 
