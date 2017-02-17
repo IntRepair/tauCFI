@@ -36,45 +36,45 @@ Warning--empty booktitle in windows:cfguard
 Warning--empty author in intel:cet
 Warning--empty booktitle in intel:cet
 Warning--empty booktitle in iso:iecN3690
-You've used 27 entries,
+You've used 28 entries,
             2253 wiz_defined-function locations,
-            635 strings with 9139 characters,
-and the built_in function-call counts, 9022 in all, are:
-= -- 699
-> -- 615
+            638 strings with 9336 characters,
+and the built_in function-call counts, 9480 in all, are:
+= -- 733
+> -- 657
 < -- 0
-+ -- 253
-- -- 226
-* -- 699
-:= -- 1483
-add.period$ -- 77
-call.type$ -- 27
-change.case$ -- 193
++ -- 270
+- -- 242
+* -- 740
+:= -- 1562
+add.period$ -- 80
+call.type$ -- 28
+change.case$ -- 204
 chr.to.int$ -- 0
-cite$ -- 40
-duplicate$ -- 415
-empty$ -- 748
-format.name$ -- 226
-if$ -- 1818
+cite$ -- 41
+duplicate$ -- 431
+empty$ -- 777
+format.name$ -- 242
+if$ -- 1906
 int.to.chr$ -- 0
-int.to.str$ -- 27
-missing$ -- 28
-newline$ -- 134
-num.names$ -- 46
-pop$ -- 335
+int.to.str$ -- 28
+missing$ -- 29
+newline$ -- 139
+num.names$ -- 48
+pop$ -- 351
 preamble$ -- 1
-purify$ -- 167
+purify$ -- 177
 quote$ -- 0
-skip$ -- 153
+skip$ -- 159
 stack$ -- 0
-substring$ -- 135
-swap$ -- 45
+substring$ -- 140
+swap$ -- 47
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 106
+type$ -- 110
 warning$ -- 13
-while$ -- 46
-width$ -- 29
-write$ -- 238
+while$ -- 48
+width$ -- 30
+write$ -- 247
 (There were 4 error messages)
