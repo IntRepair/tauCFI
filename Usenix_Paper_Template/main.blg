@@ -3,22 +3,22 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: main.aux
 The style file: acm.bst
 Database file #1: literatur.bib.bib
-I was expecting a `,' or a `}'---line 68 of file literatur.bib.bib
+I was expecting a `,' or a `}'---line 76 of file literatur.bib.bib
  :  
  :  year = "2015",
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 74 of file literatur.bib.bib
+I was expecting a `,' or a `}'---line 82 of file literatur.bib.bib
  :  
  :  year = "2015",
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 175 of file literatur.bib.bib
+I was expecting a `,' or a `}'---line 183 of file literatur.bib.bib
  :  
  :  year = "2007",
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 353 of file literatur.bib.bib
+I was expecting a `,' or a `}'---line 361 of file literatur.bib.bib
  :  
  :  year = "2009",
 (Error may have been on previous line)
@@ -36,45 +36,45 @@ Warning--empty booktitle in windows:cfguard
 Warning--empty author in intel:cet
 Warning--empty booktitle in intel:cet
 Warning--empty booktitle in iso:iecN3690
-You've used 25 entries,
+You've used 26 entries,
             2253 wiz_defined-function locations,
-            627 strings with 8866 characters,
-and the built_in function-call counts, 8416 in all, are:
-= -- 651
-> -- 581
+            631 strings with 9003 characters,
+and the built_in function-call counts, 8719 in all, are:
+= -- 675
+> -- 598
 < -- 0
-+ -- 239
-- -- 214
-* -- 657
-:= -- 1385
-add.period$ -- 71
-call.type$ -- 25
-change.case$ -- 181
++ -- 246
+- -- 220
+* -- 678
+:= -- 1434
+add.period$ -- 74
+call.type$ -- 26
+change.case$ -- 187
 chr.to.int$ -- 0
-cite$ -- 38
-duplicate$ -- 383
-empty$ -- 690
-format.name$ -- 214
-if$ -- 1692
+cite$ -- 39
+duplicate$ -- 399
+empty$ -- 719
+format.name$ -- 220
+if$ -- 1755
 int.to.chr$ -- 0
-int.to.str$ -- 25
-missing$ -- 26
-newline$ -- 124
-num.names$ -- 42
-pop$ -- 313
+int.to.str$ -- 26
+missing$ -- 27
+newline$ -- 129
+num.names$ -- 44
+pop$ -- 324
 preamble$ -- 1
-purify$ -- 157
+purify$ -- 162
 quote$ -- 0
-skip$ -- 141
+skip$ -- 147
 stack$ -- 0
-substring$ -- 125
-swap$ -- 41
+substring$ -- 130
+swap$ -- 43
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 98
+type$ -- 102
 warning$ -- 13
-while$ -- 42
-width$ -- 27
-write$ -- 220
+while$ -- 44
+width$ -- 28
+write$ -- 229
 (There were 4 error messages)

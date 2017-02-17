@@ -100,6 +100,11 @@
 \newblock {Subversive-C: Abusing and Protecting Dynamic Message Dispatch}.
 \newblock In {\em USENIX Annual Technical Conference (USENIX ATC),\/} (2016).
 
+\bibitem{payer:dimva}
+{\sc Payer, M., Barresi, A., and R.~Gross, T.}
+\newblock {Fine-Grained Control-Flow Integrity through Binary Hardening}.
+\newblock In {\em In DIMVA\/} (2015).
+
 \bibitem{vfuard:aravind}
 {\sc Prakash, A., Hu, X., and Yin, H.}
 \newblock {Strict Protection for Virtual Function Calls in COTS C++ Binaries}.
