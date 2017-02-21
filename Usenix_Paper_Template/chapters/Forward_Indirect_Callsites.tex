@@ -2,7 +2,6 @@
 \label{C++ Bad Forward Indirect Calls}
 \textbf{Polymorphism in C++.}
 \label{Polymorphism in C++}
-
 Polymorphism along inheritance and encapsulation
 are the most used modern object-oriented concepts
 in C++. 
@@ -11,7 +10,7 @@ through a common base class. A pointer of the type of the base object
 can be used to point to object(s) which are derived from the base class.
 In C++ there are several types of polymorphism:
 \textit{a)} compile-time (or static, usually is implemented with templates), 
-\textit{b)} run-time (dynamic, is implemented with inheritance and virtual functions), 
+\textit{b)} runtime (dynamic, is implemented with inheritance and virtual functions), 
 \textit{c)} ad-hoc (e.g., if the range of actual types that can be used 
 is finite and the combinations must be individually specified prior to use), and
 \textit{d)} parametric (e.g., if code is written without mention of any 
@@ -33,22 +32,22 @@ call:
 \textit{y)} legitimate vTable entries not/contained in the class hierarchy by varying or not the number of parameters and types, and 
 \textit{z)} fake vTables entries not contained in the class hierarchy by varying or not the number of parameters and types.
 By legitimate and illegitimate vTable entries we mean those 
-vTable entries which for a single indirect call site lie in the 
+vTable entries which for a single indirect callsite lie in the 
 vTable hierarchy. More precisely, a vTable entry is legitimate for 
-a call site if from the call site to the vTable containing the entry there
+a callsite if from the callsite to the vTable containing the entry there
 is an inheritance path (see~\cite{haller:shrinkwrap}).
 Virtual functions have several uses and issues associated, 
 but for the scope of this paper we will look at the indirect 
-call sites which are exploiter by calling illegitimate vTable entries (functions)
+callsites which are exploiter by calling illegitimate vTable entries (functions)
 with varying number and type of parameters, \textit{x)}.
 More precisely, 
-\textit{1)} load-time enforcement: as calling each indirect call site (callee) requires 
+\textit{1)} load-time enforcement: as calling each indirect callsite (callee) requires 
 a fix number of parameters which are passed each time the caller is calling, we
 enforce a fine-grained CFI policy by statically determining the number and types of all function parameter
-that belong to an indirect call site.
-\textit{2)} run-time verification: as checking during run-time legitimate from
+that belong to an indirect callsite.
+\textit{2)} runtime verification: as checking during runtime legitimate from
 illegitimate indirect caller/callee pairs requires parameter type (along parameter number),
-we check during run-rime before each indirect call-site if the caller matches to the callee 
+we check during run-rime before each indirect callsite if the caller matches to the callee 
 based on the previously added checks.
 
 \newsavebox{\firstlisting}
@@ -128,29 +127,29 @@ Figure~\ref{Code example used to illustrate how a COOP loop gadget works}
 depicts a C++ code example where it is illustrated how a COOP loop gadget 
 (ML-G, REC-G, UNR-G, see~\cite{crane:readactor++}) works.
 (1) can be exploited in several ways, see \textit{x), y) and z)}.
-The indirect call site (line 17) can be exploited 
+The indirect callsite (line 17) can be exploited 
 to call by passing a varying number of parameters and types
 on each object contained in the array a different
 vTable entry contained in the:
 \textit{1)} class hierarchy (overall, whole program),
-\textit{2)} class hierarchy (partial, only legitimate for this call site),
+\textit{2)} class hierarchy (partial, only legitimate for this callsite),
 \textit{3)} vTable hierarchy (overall, whole program),
-\textit{4)} vTable hierarchy (partial, only legitimate for this call site),
-\textit{5)} vTable hierarchy and/or class hierarchy (partial, only legitimate for this call site), and
+\textit{4)} vTable hierarchy (partial, only legitimate for this callsite),
+\textit{5)} vTable hierarchy and/or class hierarchy (partial, only legitimate for this callsite), and
 \textit{6)} vTable hierarchy and/or class hierarchy (overall, whole program).
 There is no language semantics---such as cast checks---in C++ for vCall sites dispatch checking and as consequence
 the loop gadget indicated in Figure~\ref{Code example used to illustrate how a COOP loop gadget works}
 can basically call all around in the class and vTable hierarchy by not being constrained by any build in check during
-run-time. The attacker corrupts an indirect function call, \circled{1}, 
+runtime. The attacker corrupts an indirect function call, \circled{1}, 
 next she invokes gadgets,  \circled{1}, \circled{3}, 
 through the calls, \circled{2}, \circled{4}, contained in the loop. 
 As it can be observed in in Figure~\ref{Code example used to illustrate how a COOP loop gadget works} she 
-can invoke from the same call site legitimate functions residing in the vTable inheritance path
+can invoke from the same callsite legitimate functions residing in the vTable inheritance path
 (this type of information is usually very hard to recuperate from executables)
-for this particular call site, indicated with green color vTable entries. 
+for this particular callsite, indicated with green color vTable entries. 
 However, a real COOP attack invokes illegitimate
 vTable entries residing in the whole initial program hierarchy (or the extended one)
-with less or no relationship to the initial call site,
+with less or no relationship to the initial callsite,
 indicated with red color vTable entries.
 
 \textbf{Checking Indirect Forward-Edge Calls in Practice.}
@@ -158,21 +157,21 @@ indicated with red color vTable entries.
 As far as we know, there is only the IFCC/VTV~\cite{vtv:tice} tools (up to 8.7\% performance overhead) deployed in practice
 which can be used to check legitimate from illegitimate indirect forward-edge calls during compile time.
 vPointers are checked based on the class hierarchy. ShrinkWrap~\cite{haller:shrinkwrap} (as far as we know not deployed in practice)
-is a tool which further reduces the legitimate vTbles ranges for a given indirect call site
+is a tool which further reduces the legitimate vTbles ranges for a given indirect callsite
 through precise analysis of the program class hierarchy and vTable hierarchy. 
-Evaluation results show similar performance overhead but more precision w.r.t. to legitimate vTables entries per call site.
+Evaluation results show similar performance overhead but more precision w.r.t. to legitimate vTables entries per callsite.
 We noticed by analyzing the previous research results that the overhead incurred by
-these security checks can be very high due to the fact that for each call site many range checks 
-have to be performed during run-time. Therefore, despite its security benefit these types of
+these security checks can be very high due to the fact that for each callsite many range checks 
+have to be performed during runtime. Therefore, despite its security benefit these types of
 checks can not be applied in our opinion to high performance applications.
 
 As alternative, there are other highly promising tools (not deployed in practice) that can be used to mitigate 
 some of the drawbacks of the previous tools. 
 Bounov et al~\cite{bounov:interleaving} presented a tool ($\approx$ 1\% runtime overhead)
-for indirect forward-edge call site checking based on vTable layout interleaving. The tool has better performance
-than VTV and better precision w.r.t. allowed vTables per indirect call site. Its precision (selecting legitimate vTables for each call site)
+for indirect forward-edge callsite checking based on vTable layout interleaving. The tool has better performance
+than VTV and better precision w.r.t. allowed vTables per indirect callsite. Its precision (selecting legitimate vTables for each callsite)
 compared to ShrinkWrap is lower since it does not consider vTable inheritance paths.
-vTrust~\cite{zhang:vtrust} (average run-time overhead 2.2\%) enforces two layers of defense (virtual function type enforcement and vTable pointer sanitization)
+vTrust~\cite{zhang:vtrust} (average runtime overhead 2.2\%) enforces two layers of defense (virtual function type enforcement and vTable pointer sanitization)
 against vTable corruption, injection and reuse.
 TypeArmor~\cite{veen:typearmor} ($\le$ than 3 \% runtime overhead) enforces an CFI policy based on runtime checking of caller/caller pairs based
 on function parameter count matching (coarse grained, parameter types and more than six parameters can be used as well).
@@ -182,7 +181,7 @@ parameter count matching for indirect call/callee pairs, this could be addresses
 \textbf{Security Implications of Forbidden Indirect Calls.}
 \label{Security Implications of Forbidden Forward Indirect Calls}
 The C++ language standard (12.7~\cite{iso:iecN3690}) does not specify
-what happens when calling different vTable entries from an indirect call site.
+what happens when calling different vTable entries from an indirect callsite.
 The standard says that we have have a virtual function related undefined behavior when:
 ``a virtual function call uses an explicit class member access and the object expression refers to the complete
 object of x or one of that object’s base class subobjects but not x or one of its base class subobjects".
@@ -239,7 +238,7 @@ documented COOP exploit on a Linux machine.
     \centering
     \includegraphics[width=0.47\textwidth]{figures/class_hierarchy.pdf}
 \caption{Class inheritance hierarchy of the classes involved in the COOP attack against the Firefox browser. Red letters 
-indicate forbidden vTble entries and green letters indicate allowed vTable entries for the given indirect call site
+indicate forbidden vTble entries and green letters indicate allowed vTable entries for the given indirect callsite
 contained in the main loop gadget.}
 \label{Class exploit}
 \end{figure}
@@ -266,10 +265,10 @@ that a Unix shell can be opened at the end of this attack.
 This example illustrates why detecting vPointer corruptions is not trivial for real-world applications.
 As depicted in Figure~\ref{Class exploit} the class \texttt{nsInputStream} has 11 classes which inherit directly
 or indirectly from this class. The classes \texttt{nsSeekableStream}, \texttt{nsIPCSerializableInputStream}
-and \texttt{nsCloneableInputStream} provide additional inherited vTables which represent illegitimate call targets
-for the initial \texttt{nsInputStream} objects and legitimate call targets for the six fake objects which were added during the attack.
+and \texttt{nsCloneableInputStream} provide additional inherited vTables which represent illegitimate calltargets
+for the initial \texttt{nsInputStream} objects and legitimate calltargets for the six fake objects which were added during the attack.
 Furthermore, declaration and usage of the objects can be wide spread in the source code. This makes
-detection of the object types (base class), range of vTables (longest vTable inheritance path for a particular call site)
+detection of the object types (base class), range of vTables (longest vTable inheritance path for a particular callsite)
 and parameter types of the vTable entries (functions) in which it is allowed to call a 
 trivial task for source code (current research work is mostly concerned with performance issues)
 applications but a hard task in our opinion when one wants to apply similar security policies 

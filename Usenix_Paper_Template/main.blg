@@ -25,10 +25,10 @@ I was expecting a `,' or a `}'---line 368 of file literatur.bib.bib
 I'm skipping whatever remains of this entry
 Warning--to sort, need author or key in ctf:coop
 Warning--to sort, need author or key in dynamorio:drmemory
-Name 1 in "PaX Team. Address Space Layout Randomization," has a comma at the end for entry ASLR
-while executing---line 1092 of file acm.bst
 Warning--to sort, need author or key in intel:cet
 Warning--to sort, need author or key in windows:cfguard
+Name 1 in "PaX Team. Address Space Layout Randomization," has a comma at the end for entry ASLR
+while executing---line 1092 of file acm.bst
 Warning--empty author in ctf:coop
 Warning--empty booktitle in ctf:coop
 Warning--empty author in dynamorio:drmemory

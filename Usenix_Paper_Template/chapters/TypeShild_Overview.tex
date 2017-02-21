@@ -11,25 +11,26 @@ to be either writable or executable but not both at the same time. Furthermore w
 that our attacker has the ability to execute a memory corruption to hijack the programs 
 control flow. We assume that a solution for backward CFI is in place.
 
-\textbf{Invariants for Targets and Call Sites.}
+\textbf{Invariants for Targets and Callsites.}
 \label{Invariants for Targets and Callsites}
 Advanced code reuse attacks change the calltargets that are invoked within indirect 
-call-sites. As standard CFI solutions can hardly restrict these, TypeArmor proposed using two base invariants:
-\textit{1)} Indirect call-sites provide a number of parameters (possibly overestimated compared to source)
-\textit{2)} Call targets require a minimum number of parameters (possibly underestimated compared to source)
-The idea is that a call-site might only call functions that do not require more parameters than provided by the call-site. 
+callsites. As standard CFI solutions can hardly restrict these, TypeArmor proposed using two base invariants:
+\textit{1)} indirect callsites provide a number of parameters (possibly overestimated compared to source), and 
+\textit{2)} calltargets require a minimum number of parameters (possibly underestimated compared to source)
+The idea is that a callsite might only call functions that do not require more parameters than provided by the callsite. 
 To compute the necessary information, TypeArmor uses a modified version of forward liveness analysis for call-targets and 
-backward reaching definitions analysis for call-sites.
+backward reaching definitions analysis for callsites.
 
 \textbf{\textsc{TypeShield} Impact on COOP.}
 \label{TypeShild Impact on COOP}
-The problem with relying solely on the parameter count is that a call-site can use any call-target as long as the parameter count 
+The problem with relying solely on the parameter count is that a callsite can use any call-target as long as the parameter count 
 requirement is fulfilled, even if the parameter types do not match (imagine 8-bit values provided but 64-bit values required). 
 Therefore we extend the classification schema to the parameter types:
-\textit{1)} Indirect call-sites provides a maximum wideness to each parameter (possibly overestimated compared to source)
-\textit{2)} Call targets require a minimum wideness for each parameter(possibly underestimated compared to source)
+\textit{1)} indirect callsites provides a maximum wideness to each parameter (possibly overestimated compared to source), and 
+\textit{2)} calltargets require a minimum wideness for each parameter (possibly underestimated compared to source).
 
 The basic idea stays the same, the provision must be no lower than the requirement. However, the approach is more fine-grained 
 applying to the wideness of each parameter. The result is that we split the buckets of TypeArmor up into smaller ones as shown 
 in the limited example depicted in Figure \ref{fig:lattice3264}.
-% There we can see that while in a parameter-count oriented schema a call-site classified as (32,32) would be able to call functions classified as (64,0), however in our parameter wideness oriented schema that is not possible.
+% There we can see that while in a parameter-count oriented schema a callsite classified as (32,32) would be able to 
+% call functions classified as (64,0), however in our parameter wideness oriented schema that is not possible.
