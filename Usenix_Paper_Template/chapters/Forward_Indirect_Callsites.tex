@@ -50,77 +50,77 @@ illegitimate indirect caller/callee pairs requires parameter type (along paramet
 we check during run-rime before each indirect callsite if the caller matches to the callee 
 based on the previously added checks.
 
-\newsavebox{\firstlisting}
-\begin{lrbox}{\firstlisting}
-\begin{minipage}[c]{0.4\linewidth}
-\begin{minted}[
-% frame=lines,
-framesep=2mm,
-linenos,
-frame=none,
-firstnumber=1,
-framesep = 1.0cm,
-linenos,
-numbersep=5pt,
-%gobble=2,
-%frame=lines,
-framesep=2mm,
-%fontsize=\tiny        
-% baselinestretch=1.2,
-% bgcolor=LightGray,
-fontsize=\footnotesize,
-]{C++}
-class nsMultiplexInputStream final 
- :public nsIMultiplexInputStream //A0
- ,public nsISeekableStream //A1
- ,public nsIIPCSerializableInputStream //A2
- ,public nsICloneableInputStream{ //A3
-nsTArray<nsCOMPtr<nsIInputStream>> mStreams;
-NS_IMETHODIMP nsMultiplexInputStream::Close(){
-  MutexAutoLock lock(mLock);
-  mStatus = NS_BASE_STREAM_CLOSED;
-  //set NS_OK flag
-  nsresult rv = NS_OK;
-  //get array length
-  uint32_t len = mStreams.Length();
-  //array-based main loop gadget
- for (uint32_t i = 0; i<len; ++i){
-  //(1) hijacked indirect call
-  nsresult rv2=mStreams[i]->Close();
-  if (NS_FAILED(rv2)) {
-      rv = rv2;
-  }
- }
-  return rv;
-}
-\end{minted}
-\end{minipage}
-\end{lrbox}
-
-% \begin{figure}
-%  \begin{minipage}[!t]{.40\linewidth}
-%   \usebox{\firstlisting}
-%  \end{minipage}%%
-% \hfill
-% \hspace{1.2cm}
-% \begin{minipage}[!b]{.5\linewidth}
-%    \includegraphics[width=1.3\textwidth]{figures/loop.pdf}
+% \newsavebox{\firstlisting}
+% \begin{lrbox}{\firstlisting}
+% \begin{minipage}[c]{0.4\linewidth}
+% \begin{minted}[
+% % frame=lines,
+% framesep=2mm,
+% linenos,
+% frame=none,
+% firstnumber=1,
+% framesep = 1.0cm,
+% linenos,
+% numbersep=5pt,
+% %gobble=2,
+% %frame=lines,
+% framesep=2mm,
+% %fontsize=\tiny        
+% % baselinestretch=1.2,
+% % bgcolor=LightGray,
+% fontsize=\footnotesize,
+% ]{C++}
+% class nsMultiplexInputStream final 
+%  :public nsIMultiplexInputStream //A0
+%  ,public nsISeekableStream //A1
+%  ,public nsIIPCSerializableInputStream //A2
+%  ,public nsICloneableInputStream{ //A3
+% nsTArray<nsCOMPtr<nsIInputStream>> mStreams;
+% NS_IMETHODIMP nsMultiplexInputStream::Close(){
+%   MutexAutoLock lock(mLock);
+%   mStatus = NS_BASE_STREAM_CLOSED;
+%   //set NS_OK flag
+%   nsresult rv = NS_OK;
+%   //get array length
+%   uint32_t len = mStreams.Length();
+%   //array-based main loop gadget
+%  for (uint32_t i = 0; i<len; ++i){
+%   //(1) hijacked indirect call
+%   nsresult rv2=mStreams[i]->Close();
+%   if (NS_FAILED(rv2)) {
+%       rv = rv2;
+%   }
+%  }
+%   return rv;
+% }
+% \end{minted}
 % \end{minipage}
-% \caption{Code example used to illustrate how a COOP loop gadget works.}
+% \end{lrbox}
+% 
+% % \begin{figure}
+% %  \begin{minipage}[!t]{.40\linewidth}
+% %   \usebox{\firstlisting}
+% %  \end{minipage}%%
+% % \hfill
+% % \hspace{1.2cm}
+% % \begin{minipage}[!b]{.5\linewidth}
+% %    \includegraphics[width=1.3\textwidth]{figures/loop.pdf}
+% % \end{minipage}
+% % \caption{Code example used to illustrate how a COOP loop gadget works.}
+% % \label{Code example used to illustrate how a COOP loop gadget works}
+% % \end{figure}
+% 
+% %%%%%%%%%%%%%%%%%
+% \begin{figure}[!t]
+%    \centering
+%    \setlength{\unitlength}{0.1\textwidth}
+%    \begin{picture}(10,4)
+%      \put(2.85,0){\includegraphics[width=.3\textwidth]{figures/loop.pdf}}
+%      \put(0,2){\usebox{\firstlisting}}
+%    \end{picture}
+% \caption{Code presenting how a COOP loop gadget works.}
 % \label{Code example used to illustrate how a COOP loop gadget works}
 % \end{figure}
-
-%%%%%%%%%%%%%%%%%
-\begin{figure}[!t]
-   \centering
-   \setlength{\unitlength}{0.1\textwidth}
-   \begin{picture}(10,4)
-     \put(2.85,0){\includegraphics[width=.3\textwidth]{figures/loop.pdf}}
-     \put(0,2){\usebox{\firstlisting}}
-   \end{picture}
-\caption{Code presenting how a COOP loop gadget works.}
-\label{Code example used to illustrate how a COOP loop gadget works}
-\end{figure}
 
 
 Figure~\ref{Code example used to illustrate how a COOP loop gadget works}
