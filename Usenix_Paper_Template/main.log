@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  22 FEB 2017 09:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  22 FEB 2017 10:48
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1564,14 +1564,18 @@ File: figures/loop.pdf Graphic file (type pdf)
  <use figures/loop.pdf>
 Package pdftex.def Info: figures/loop.pdf used on input line 212.
 (pdftex.def)             Requested size: 151.76854pt x 215.5881pt.
-
-[2]) (./chapters/Forward_Indirect_Callsites.tex [3 <./figures/loop.pdf>]
-[4] <figures/class_hierarchy.pdf, id=251, 585.18625pt x 483.8075pt>
+)
+(./chapters/Forward_Indirect_Callsites.tex [2] [3 <./figures/loop.pdf>]
+<figures/class_hierarchy.pdf, id=232, 585.18625pt x 483.8075pt>
 File: figures/class_hierarchy.pdf Graphic file (type pdf)
 
 <use figures/class_hierarchy.pdf>
-Package pdftex.def Info: figures/class_hierarchy.pdf used on input line 239.
+Package pdftex.def Info: figures/class_hierarchy.pdf used on input line 226.
 (pdftex.def)             Requested size: 237.7689pt x 196.57584pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
 
 Underfull \hbox (badness 10000) in paragraph at lines 246--264
 []\T1/ptm/m/n/10 The C++ class \T1/cmtt/m/n/10 nsMultiplexInputStream \T1/ptm/m
@@ -1583,7 +1587,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 246--264
 \T1/ptm/m/n/10 tains a main loop gad-get in-side the func-tion
  []
 
-
+[4]
 Underfull \hbox (badness 7667) in paragraph at lines 265--276
 \T1/cmtt/m/n/10 nsSeekableStream\T1/ptm/m/n/10 , \T1/cmtt/m/n/10 nsIPCSerializa
 bleInputStream
@@ -1615,13 +1619,13 @@ Underfull \hbox (badness 1354) in paragraph at lines 401--407
 n/10 rep-re-sents write be-fore read ac-cess, \T1/ptm/m/it/10 2)
  []
 
-[7]
+
 Underfull \hbox (badness 6927) in paragraph at lines 414--418
 []\T1/ptm/m/n/10 This gives us the fol-low-ing reg-is-ter state $\OML/ztmcm/m/i
 t/10 S[] \OT1/ztmcm/m/n/10 =
  []
 
-[8]
+[7] [8]
 
 Package array Warning: Column ? is already defined on input line 680.
 
@@ -1639,15 +1643,7 @@ Underfull \hbox (badness 5652) in paragraph at lines 3--9
 ost-gresql
  []
 
-[10]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-Underfull \vbox (badness 2671) has occurred while \output is active []
-
- [11]
-<figures/speccpu2006.pdf, id=358, 442.65375pt x 244.915pt>
+[10] [11] <figures/speccpu2006.pdf, id=349, 442.65375pt x 244.915pt>
 File: figures/speccpu2006.pdf Graphic file (type pdf)
 
 <use figures/speccpu2006.pdf>
@@ -1658,22 +1654,19 @@ Overfull \hbox (3.97762pt too wide) in paragraph at lines 354--355
  [][] 
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [12 <./figures/speccpu2006.pdf>] <./postgresqlO2.pdf, id=377, 578.16pt x 433.6
-2pt>
+[12 <./figures/speccpu2006.pdf>]
+<./postgresqlO2.pdf, id=368, 578.16pt x 433.62pt>
+File: ./postgresqlO2.pdf Graphic file (type pdf)
+ <use ./postgresqlO2.pdf>
+Package pdftex.def Info: ./postgresqlO2.pdf used on input line 385.
+(pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
 File: ./postgresqlO2.pdf Graphic file (type pdf)
 
 <use ./postgresqlO2.pdf>
 Package pdftex.def Info: ./postgresqlO2.pdf used on input line 385.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
-File: ./postgresqlO2.pdf Graphic file (type pdf)
- <use ./postgresqlO2.pdf>
-Package pdftex.def Info: ./postgresqlO2.pdf used on input line 385.
-(pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./postgresqlO2.pdf_tex
-<postgresqlO2.pdf, id=378, page=1, 578.16pt x 433.62pt>
+<postgresqlO2.pdf, id=369, page=1, 578.16pt x 433.62pt>
 File: postgresqlO2.pdf Graphic file (type pdf)
 
 <use postgresqlO2.pdf, page 1>
@@ -1684,7 +1677,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 385--386
  [][] 
  []
 
-<./nodeO2.pdf, id=379, 578.16pt x 433.62pt>
+<./nodeO2.pdf, id=370, 578.16pt x 433.62pt>
 File: ./nodeO2.pdf Graphic file (type pdf)
  <use ./nodeO2.pdf>
 Package pdftex.def Info: ./nodeO2.pdf used on input line 392.
@@ -1695,7 +1688,7 @@ File: ./nodeO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./nodeO2.pdf used on input line 392.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./nodeO2.pdf_tex
-<nodeO2.pdf, id=380, page=1, 578.16pt x 433.62pt>
+<nodeO2.pdf, id=371, page=1, 578.16pt x 433.62pt>
 File: nodeO2.pdf Graphic file (type pdf)
  <use nodeO2.pdf, page 1>
 Package pdftex.def Info: nodeO2.pdf, page1 used on input line 52.
@@ -1705,7 +1698,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 392--393
  [][] 
  []
 
-<./proftpdO2.pdf, id=381, 578.16pt x 433.62pt>
+<./proftpdO2.pdf, id=372, 578.16pt x 433.62pt>
 File: ./proftpdO2.pdf Graphic file (type pdf)
  <use ./proftpdO2.pdf>
 Package pdftex.def Info: ./proftpdO2.pdf used on input line 399.
@@ -1716,7 +1709,7 @@ File: ./proftpdO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./proftpdO2.pdf used on input line 399.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./proftpdO2.pdf_tex
-<proftpdO2.pdf, id=382, page=1, 578.16pt x 433.62pt>
+<proftpdO2.pdf, id=373, page=1, 578.16pt x 433.62pt>
 File: proftpdO2.pdf Graphic file (type pdf)
 
 <use proftpdO2.pdf, page 1>
@@ -1727,7 +1720,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 399--400
  [][] 
  []
 
-<./mysqlO2.pdf, id=383, 578.16pt x 433.62pt>
+<./mysqlO2.pdf, id=374, 578.16pt x 433.62pt>
 File: ./mysqlO2.pdf Graphic file (type pdf)
  <use ./mysqlO2.pdf>
 Package pdftex.def Info: ./mysqlO2.pdf used on input line 406.
@@ -1738,7 +1731,7 @@ File: ./mysqlO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./mysqlO2.pdf used on input line 406.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./mysqlO2.pdf_tex
-<mysqlO2.pdf, id=384, page=1, 578.16pt x 433.62pt>
+<mysqlO2.pdf, id=375, page=1, 578.16pt x 433.62pt>
 File: mysqlO2.pdf Graphic file (type pdf)
  <use mysqlO2.pdf, page 1>
 Package pdftex.def Info: mysqlO2.pdf, page1 used on input line 52.
@@ -1747,6 +1740,9 @@ Package pdftex.def Info: mysqlO2.pdf, page1 used on input line 52.
 Overfull \hbox (4.87737pt too wide) in paragraph at lines 406--407
  [][] 
  []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 ) (./chapters/Related_Work.tex [13 <./postgresqlO2.pdf> <./nodeO2.pdf
 
@@ -1826,10 +1822,10 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 175.
  ) 
 Here is how much of TeX's memory you used:
- 25724 strings out of 493105
- 472821 string characters out of 6137072
+ 25722 strings out of 493105
+ 472798 string characters out of 6137072
  599599 words of memory out of 5000000
- 28498 multiletter control sequences out of 15000+600000
+ 28496 multiletter control sequences out of 15000+600000
  96357 words of font info for 119 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  68i,12n,98p,859b,852s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1845,10 +1841,10 @@ ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (18 pages, 553912 bytes).
+Output written on main.pdf (18 pages, 553321 bytes).
 PDF statistics:
- 791 PDF objects out of 1000 (max. 8388607)
- 657 compressed objects within 7 object streams
+ 782 PDF objects out of 1000 (max. 8388607)
+ 648 compressed objects within 7 object streams
  129 named destinations out of 1000 (max. 500000)
  276 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -220,6 +220,16 @@ attackers (e.g., used to find new vulnerabilities) and for defenders which can
 harden the source code with checks only at the places which are most exposed 
 to such vulnerabilities (i.e., we name this targeted security hardening).
 
+%%second pic
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.47\textwidth]{figures/class_hierarchy.pdf}
+\caption{Class inheritance hierarchy of the classes involved in the COOP attack against the Firefox browser. Red letters 
+indicate forbidden vTble entries and green letters indicate allowed vTable entries for the given indirect callsite
+contained in the main loop gadget.}
+\label{Class exploit}
+\end{figure}
+
 \textbf{Real COOP Attack Example.}
 \label{Running Example: CVE X}
 The given example depicted in Figure~\ref{Class exploit}
@@ -232,16 +242,6 @@ in order to perform another COOP attack on the Chromium browser. The details of 
 second attack are far to complex (i.e., involves not properly handled interaction of 
 extensions, IPC, the sync API, and Google V8) and for this reason we briefly present the first 
 documented COOP exploit on a Linux machine.
-
-%%second pic
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.47\textwidth]{figures/class_hierarchy.pdf}
-\caption{Class inheritance hierarchy of the classes involved in the COOP attack against the Firefox browser. Red letters 
-indicate forbidden vTble entries and green letters indicate allowed vTable entries for the given indirect callsite
-contained in the main loop gadget.}
-\label{Class exploit}
-\end{figure}
 
 The C++ class \texttt{nsMultiplexInputStream} contains a main loop gadget inside the function 
 \texttt{nsMultiplexInputStream::Close(void)} which is performing an indirect calls by dispatching
