@@ -198,7 +198,7 @@ At last we declare a function, which calculates the change occurring in the proc
 $decode : \mathcal{I} \mapsto \mathcal{S}$.
 
 However, we do not go into detail how this function actually calculates this sate, because we rely on external libraries to perform this task. Implementing this function our self is out of scope due to the lengthy work required, as the x86-64 instruction set is quite large.
-
+    
 \subsection{Calltarget Analysis}
 \label{section:calltargetanalysis}
 For either \emph{count} or \emph{type} policy to work, we need to arrive at an underestimation of the required parameters by any function existing within the targeted 
@@ -233,9 +233,7 @@ would also fall into this category, however these would not reside within parame
 %meaning that a variable occurring within this set has been written to. The set $Gen_n$ 
 %describes all variables that are alive due to the block $n$, 
 %meaning that a variable occurring within this set has been read before it was written to.
-
-\hspace{1em}{
-\begin{algorithm}[!h]
+\begin{algorithm}[h!]
 	\SetAlgoLined
 	\SetKwProg{Fn}{Function}{ is}{end}
 	\Fn{analyze(block : BasicBlock) : $\mathcal{S}^\mathcal{L}$}
@@ -245,7 +243,7 @@ would also fall into this category, however these would not reside within parame
  	\ForEach{inst $\in$ block}{
  	
  		state' = analyze\_instr(inst)
- 		
+
 		state = merge\_v(state, state')
 	}
 
@@ -267,8 +265,8 @@ would also fall into this category, however these would not reside within parame
 	}
 \caption{Algorithm used to analyze the liveness of a basic block.}
 \label{alg:liveness}
-\end{algorithm}}
-    
+\end{algorithm}
+
 %However, we cannot use variable liveness analysis as is, because the analysis is based on potentially unbound variable sets, 
 %while we are restricted to a finite number of registers and states. We also require an underestimation of live variables an
 %not an overestimation as provided by standard liveness analysis. Furthermore we have to define how to interpret the changes
