@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  22 FEB 2017 10:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  22 FEB 2017 14:05
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1744,7 +1744,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 406--407
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) (./chapters/Related_Work.tex [13 <./postgresqlO2.pdf> <./nodeO2.pdf
+) (./chapters/Discussion.tex [13 <./postgresqlO2.pdf> <./nodeO2.pdf
 
 pdfTeX warning: /usr/bin/pdflatex (file ./nodeO2.pdf): PDF inclusion: multiple 
 pdfs with page group included in a single page
@@ -1756,13 +1756,12 @@ le pdfs with page group included in a single page
 
 pdfTeX warning: /usr/bin/pdflatex (file ./mysqlO2.pdf): PDF inclusion: multiple
  pdfs with page group included in a single page
->]
+>]) (./chapters/Related_Work.tex [14]
 Underfull \hbox (badness 1314) in paragraph at lines 73--79
 \T1/ptm/m/n/10 bi-nary in-stru-men-ta-tion in tools such as: vf-Guard [[]],
  []
 
-[14]) (./chapters/Discussion.tex [15]) (./chapters/Future_Work.tex)
-(./chapters/Conclusion.tex
+[15]) (./chapters/Future_Work.tex) (./chapters/Conclusion.tex
 Underfull \hbox (badness 1552) in paragraph at lines 31--1
 []\T1/ptm/b/n/10 Using point-er/mem-ory anal-y-sis. \T1/ptm/m/n/10 In-tro-duc-i
 ng point-
@@ -1813,9 +1812,15 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 175.
  (./main.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 175.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 175.
-Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 8F75F323931334B50AFC38B89D9D5D86;1706.
 
+
+Package rerunfilecheck Warning: File `main.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `main.out':
+(rerunfilecheck)             Before: 8F75F323931334B50AFC38B89D9D5D86;1706
+(rerunfilecheck)             After:  14E124E94C500FD2A4B3DB8C368A94FC;1706.
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -1841,7 +1846,7 @@ ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (18 pages, 553321 bytes).
+Output written on main.pdf (18 pages, 553330 bytes).
 PDF statistics:
  782 PDF objects out of 1000 (max. 8388607)
  648 compressed objects within 7 object streams
