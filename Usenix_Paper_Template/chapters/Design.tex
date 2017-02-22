@@ -199,7 +199,7 @@ $decode : \mathcal{I} \mapsto \mathcal{S}$.
 
 However, we do not go into detail how this function actually calculates this sate, because we rely on external libraries to perform this task. Implementing this function our self is out of scope due to the lengthy work required, as the x86-64 instruction set is quite large.
 
-\subsection{Call-target Analysis}
+\subsection{Calltarget Analysis}
 \label{section:calltargetanalysis}
 For either \emph{count} or \emph{type} policy to work, we need to arrive at an underestimation of the required parameters by any function existing within the targeted 
 binary. We will employ a modified version of liveness analysis that tracks registers instead of variables to generate the needed underestimation. As our algorithm will 
@@ -524,7 +524,7 @@ ignored. %(in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \t
 \textit{2)} \texttt{sub \%rax, \%rax} is probably the next scenario, as it results also in \texttt{\%rax} also holding the value 0, and
 \textit{3)} \texttt{sbb \%rax, \%rax} is also relevant, however it will not result in a constant value and based on the current state might either result in \texttt{\%rax} holding the value 0 or 1.
 
-\subsection{Call-site Analysis}
+\subsection{Callsite Analysis}
 \label{section:callsiteanalysis}
 For either \emph{count} or \emph{type} policy to work, we need to arrive at an overestimation of the provided parameters by any indirect 
 callsite existing within the targeted binary. We will employ a modified version of reaching analysis that tracks registers instead of 

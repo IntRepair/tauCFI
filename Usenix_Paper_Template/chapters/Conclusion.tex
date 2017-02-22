@@ -23,22 +23,25 @@
 
 
 %version 2
-The family of forward indirect call based attacks which can manifest due to a series of factors such as
-a memory corruption, binary layout leackage and presence of useful
-gadgets in sufficiently large executables poses a serious security threat.
-To mitigate this we developed, \textsc{TypeShield}, a runtime based fine-grained CFI enforcing
-tool which can precissely filter legitimate from illegitimate indirect forward calls in binaries.
+% The family of forward indirect call based attacks which can manifest due to a series of factors such as
+% memory corruptions, binary layout leackages and availability of useful
+% gadgets in a sufficiently large executable poses a serious security threat.
+We presented \textsc{TypeShield}, a runtime based fine-grained CFI enforcing
+tool which can mitigate forward indirect call based attacks by
+precisely filtering legitimate from illegitimate forward indirect calls in binaries.
 \textsc{TypeShield} uses a novel runtime type checking technique based on function parameter
 type checking and parameter counting in order to efficiently filter-out legitimate
-and illegitimate forward edges.
+and illegitimate forward indirect edges.
 \textsc{TypeShield} provides a more precise analysis than existing approaches with a
 comparable performance overhead.
 We have implemented \textsc{TypeShield} and applied it to real software such as:
 web servers and FTP servers.
-We demonstrated through extensive experiments and comparisons with related software
+We demonstrated through extensive experiments and comparisons with related tools
 that \textsc{TypeShield} has higher precision and comparable performance overhead than 
-the existing state-of-the-art tools. To date, we were able to provide a more precise
-technique than parameter count based techniques by reducing the average target count by 
-on average by 20\%. This results in a more precise analysis and a considerably reduced attack surface.
+existing state-of-the-art tools. To date, we were able to provide a more precise
+technique than parameter count based techniques by reducing the possible calltargets 
+per callsite ratio by 20\% with an overall reduction of about 
+9\% when comparing with similar state-of-the-art approaches.
+This results in a more precise analysis and a considerably reduced attack surface.
 
 

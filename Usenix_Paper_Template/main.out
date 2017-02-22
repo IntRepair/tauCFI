@@ -5,8 +5,8 @@
 \BOOKMARK [2][-]{subsection.4.1}{Count Policy}{section.4}% 5
 \BOOKMARK [2][-]{subsection.4.2}{Type Policy}{section.4}% 6
 \BOOKMARK [2][-]{subsection.4.3}{Instruction Analysis}{section.4}% 7
-\BOOKMARK [2][-]{subsection.4.4}{Call-target Analysis}{section.4}% 8
-\BOOKMARK [2][-]{subsection.4.5}{Call-site Analysis}{section.4}% 9
+\BOOKMARK [2][-]{subsection.4.4}{Calltarget Analysis}{section.4}% 8
+\BOOKMARK [2][-]{subsection.4.5}{Callsite Analysis}{section.4}% 9
 \BOOKMARK [1][-]{section.5}{Implementation}{}% 10
 \BOOKMARK [1][-]{section.6}{Evaluation}{}% 11
 \BOOKMARK [2][-]{subsection.6.1}{RQ1: Precision}{section.6}% 12
