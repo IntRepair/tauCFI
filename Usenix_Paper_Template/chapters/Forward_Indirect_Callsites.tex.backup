@@ -5,7 +5,7 @@
 Polymorphism along inheritance and encapsulation
 are the most used modern object-oriented concepts
 in C++. 
-Polymorphism in C++ allows to access different types of objects 
+Polymorphism in C++ allows accessing different types of objects 
 through a common base class. A pointer of the type of the base object
 can be used to point to object(s) which are derived from the base class.
 In C++ there are several types of polymorphism:
@@ -50,77 +50,77 @@ illegitimate indirect caller/callee pairs requires parameter type (along paramet
 we check during run-rime before each indirect callsite if the caller matches to the callee 
 based on the previously added checks.
 
-\newsavebox{\firstlisting}
-\begin{lrbox}{\firstlisting}
-\begin{minipage}[c]{0.4\linewidth}
-\begin{minted}[
-% frame=lines,
-framesep=2mm,
-linenos,
-frame=none,
-firstnumber=1,
-framesep = 1.0cm,
-linenos,
-numbersep=5pt,
-%gobble=2,
-%frame=lines,
-framesep=2mm,
-%fontsize=\tiny        
-% baselinestretch=1.2,
-% bgcolor=LightGray,
-fontsize=\footnotesize,
-]{C++}
-class nsMultiplexInputStream final 
- :public nsIMultiplexInputStream //A0
- ,public nsISeekableStream //A1
- ,public nsIIPCSerializableInputStream //A2
- ,public nsICloneableInputStream{ //A3
-nsTArray<nsCOMPtr<nsIInputStream>> mStreams;
-NS_IMETHODIMP nsMultiplexInputStream::Close(){
-  MutexAutoLock lock(mLock);
-  mStatus = NS_BASE_STREAM_CLOSED;
-  //set NS_OK flag
-  nsresult rv = NS_OK;
-  //get array length
-  uint32_t len = mStreams.Length();
-  //array-based main loop gadget
- for (uint32_t i = 0; i<len; ++i){
-  //(1) hijacked indirect call
-  nsresult rv2=mStreams[i]->Close();
-  if (NS_FAILED(rv2)) {
-      rv = rv2;
-  }
- }
-  return rv;
-}
-\end{minted}
-\end{minipage}
-\end{lrbox}
-
-% \begin{figure}
-%  \begin{minipage}[!t]{.40\linewidth}
-%   \usebox{\firstlisting}
-%  \end{minipage}%%
-% \hfill
-% \hspace{1.2cm}
-% \begin{minipage}[!b]{.5\linewidth}
-%    \includegraphics[width=1.3\textwidth]{figures/loop.pdf}
+% \newsavebox{\firstlisting}
+% \begin{lrbox}{\firstlisting}
+% \begin{minipage}[c]{0.4\linewidth}
+% \begin{minted}[
+% % frame=lines,
+% framesep=2mm,
+% linenos,
+% frame=none,
+% firstnumber=1,
+% framesep = 1.0cm,
+% linenos,
+% numbersep=5pt,
+% %gobble=2,
+% %frame=lines,
+% framesep=2mm,
+% %fontsize=\tiny        
+% % baselinestretch=1.2,
+% % bgcolor=LightGray,
+% fontsize=\footnotesize,
+% ]{C++}
+% class nsMultiplexInputStream final 
+%  :public nsIMultiplexInputStream //A0
+%  ,public nsISeekableStream //A1
+%  ,public nsIIPCSerializableInputStream //A2
+%  ,public nsICloneableInputStream{ //A3
+% nsTArray<nsCOMPtr<nsIInputStream>> mStreams;
+% NS_IMETHODIMP nsMultiplexInputStream::Close(){
+%   MutexAutoLock lock(mLock);
+%   mStatus = NS_BASE_STREAM_CLOSED;
+%   //set NS_OK flag
+%   nsresult rv = NS_OK;
+%   //get array length
+%   uint32_t len = mStreams.Length();
+%   //array-based main loop gadget
+%  for (uint32_t i = 0; i<len; ++i){
+%   //(1) hijacked indirect call
+%   nsresult rv2=mStreams[i]->Close();
+%   if (NS_FAILED(rv2)) {
+%       rv = rv2;
+%   }
+%  }
+%   return rv;
+% }
+% \end{minted}
 % \end{minipage}
-% \caption{Code example used to illustrate how a COOP loop gadget works.}
+% \end{lrbox}
+% 
+% % \begin{figure}
+% %  \begin{minipage}[!t]{.40\linewidth}
+% %   \usebox{\firstlisting}
+% %  \end{minipage}%%
+% % \hfill
+% % \hspace{1.2cm}
+% % \begin{minipage}[!b]{.5\linewidth}
+% %    \includegraphics[width=1.3\textwidth]{figures/loop.pdf}
+% % \end{minipage}
+% % \caption{Code example used to illustrate how a COOP loop gadget works.}
+% % \label{Code example used to illustrate how a COOP loop gadget works}
+% % \end{figure}
+% 
+% %%%%%%%%%%%%%%%%%
+% \begin{figure}[!t]
+%    \centering
+%    \setlength{\unitlength}{0.1\textwidth}
+%    \begin{picture}(10,4)
+%      \put(2.85,0){\includegraphics[width=.3\textwidth]{figures/loop.pdf}}
+%      \put(0,2){\usebox{\firstlisting}}
+%    \end{picture}
+% \caption{Code presenting how a COOP loop gadget works.}
 % \label{Code example used to illustrate how a COOP loop gadget works}
 % \end{figure}
-
-%%%%%%%%%%%%%%%%%
-\begin{figure*}[tpb]
-   \centering
-   \setlength{\unitlength}{0.1\textwidth}
-   \begin{picture}(10,4)
-     \put(2.85,0){\includegraphics[width=.3\textwidth]{figures/loop.pdf}}
-     \put(0,2){\usebox{\firstlisting}}
-   \end{picture}
-\caption{Code presenting how a COOP loop gadget works.}
-\label{Code example used to illustrate how a COOP loop gadget works}
-\end{figure*}
 
 
 Figure~\ref{Code example used to illustrate how a COOP loop gadget works}
@@ -141,8 +141,8 @@ There is no language semantics---such as cast checks---in C++ for vCall sites di
 the loop gadget indicated in Figure~\ref{Code example used to illustrate how a COOP loop gadget works}
 can basically call all around in the class and vTable hierarchy by not being constrained by any build in check during
 runtime. The attacker corrupts an indirect function call, \circled{1}, 
-next she invokes gadgets,  \circled{1}, \circled{3}, 
-through the calls, \circled{2}, \circled{4}, contained in the loop. 
+next she invokes gadgets,  \circled{1} and \circled{3}, 
+through the calls, \circled{2} and \circled{4}, contained in the loop. 
 As it can be observed in in Figure~\ref{Code example used to illustrate how a COOP loop gadget works} she 
 can invoke from the same callsite legitimate functions residing in the vTable inheritance path
 (this type of information is usually very hard to recuperate from executables)
@@ -176,7 +176,7 @@ against vTable corruption, injection and reuse.
 TypeArmor~\cite{veen:typearmor} ($\le$ than 3 \% runtime overhead) enforces an CFI policy based on runtime checking of caller/caller pairs based
 on function parameter count matching (coarse grained, parameter types and more than six parameters can be used as well).
 Important to notice is that there are no C++ language semantics which can be used to enforce type and 
-parameter count matching for indirect call/callee pairs, this could be addresses with specifically intended language constructs in future.
+parameter count matching for indirect call/callee pairs, this could be addresses with specifically intended language constructs in the future.
 
 \textbf{Security Implications of Forbidden Indirect Calls.}
 \label{Security Implications of Forbidden Forward Indirect Calls}
@@ -220,6 +220,16 @@ attackers (e.g., used to find new vulnerabilities) and for defenders which can
 harden the source code with checks only at the places which are most exposed 
 to such vulnerabilities (i.e., we name this targeted security hardening).
 
+%%second pic
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.47\textwidth]{figures/class_hierarchy.pdf}
+\caption{Class inheritance hierarchy of the classes involved in the COOP attack against the Firefox browser. Red letters 
+indicate forbidden vTble entries and green letters indicate allowed vTable entries for the given indirect callsite
+contained in the main loop gadget.}
+\label{Class exploit}
+\end{figure}
+
 \textbf{Real COOP Attack Example.}
 \label{Running Example: CVE X}
 The given example depicted in Figure~\ref{Class exploit}
@@ -232,16 +242,6 @@ in order to perform another COOP attack on the Chromium browser. The details of 
 second attack are far to complex (i.e., involves not properly handled interaction of 
 extensions, IPC, the sync API, and Google V8) and for this reason we briefly present the first 
 documented COOP exploit on a Linux machine.
-
-%%second pic
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.47\textwidth]{figures/class_hierarchy.pdf}
-\caption{Class inheritance hierarchy of the classes involved in the COOP attack against the Firefox browser. Red letters 
-indicate forbidden vTble entries and green letters indicate allowed vTable entries for the given indirect callsite
-contained in the main loop gadget.}
-\label{Class exploit}
-\end{figure}
 
 The C++ class \texttt{nsMultiplexInputStream} contains a main loop gadget inside the function 
 \texttt{nsMultiplexInputStream::Close(void)} which is performing an indirect calls by dispatching

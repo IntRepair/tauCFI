@@ -3,9 +3,9 @@
 \textbf{Structural matching capability.} 
 Improving the structural matching capability is in our opinion the most 
 important further venue of research, as we need a reliable way to 
-match a ground truth against the resulting binary. This is important, 
+match a ground truth against the resulting binary. This is important 
 because it is a prerequisite to the ability to generate reliable 
-measurements and reduces the current uncertainy (we rely on the 
+measurements and reduces the current uncertainty (i.e., we rely on the 
 number of calltargets per callsite to match callsites and furthermore
 assume that the order within ground truth and binary is the same).
 
@@ -13,7 +13,7 @@ assume that the order within ground truth and binary is the same).
 Devising a patching schema
 that is based on Dyninst functionality, 
 which allows annotation of calltargets so they can hold at least 
-4 bytes of arbitrary data. This is required to hold the type data that
+4-bytes of arbitrary data. This is required to hold the type data that
 we generate using our classification. Keeping the runtime overhead
 of said patching schema low should be the second goal of this venue 
 after satisfying stability.
@@ -23,14 +23,14 @@ Expanding our schema to return values
 is another viable venue of further work, as we were not able to 
 reliably reduce the number of problematic classification regarding 
 the return values of functions to 
-managable levels. Should one attempt this, it should be noted that the
+manageable levels. Should one attempt this, it should be noted that the
 responsibilities of callsites and calltargets are reversed in this 
 case: The callsite requires return value wideness, while the calltarget
 needs to provide it.
 
 \textbf{Using pointer/memory analysis.} 
 Introducing pointer/memory analysis
-to distinguish simple 32/64bit values and actual addresses to even further restrict the 
+to distinguish simple 32-bit and 64-bit values and actual addresses to even further restrict the 
 possible number of calltargets per callsite. This would require more 
 precise dataflow analysis, as in calculating value possibilities for 
 registers at each instruction.

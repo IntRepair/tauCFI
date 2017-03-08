@@ -65,7 +65,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
 @InProceedings{zhang:usenix,
  author = "Zhang, Mingwei and Sekar, R.",
  title = "{Control Flow Integrity for COTS Binaries}",
- booktitle = {USENIX SEC},
+ booktitle = {In USENIX SEC},
  year = "2013",
 } 
 

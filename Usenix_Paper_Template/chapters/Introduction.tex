@@ -10,7 +10,7 @@ This is a problem for applications written in C++, as one of its principle is in
 The concept of virtual functions allows the programmer to overwrite a virtual function of the base-class with his
 own implementation. While this allows for much more flexible code, this flexibility is the reason COOP actually 
 works. The problem is that in order to implement virtual functions, the compiler needs to generate a table of all
-virtual functions for each class containing them and provide each instantiation of such a class with a pointer
+virtual functions for each class containing them and provide to each instance of such a class a pointer
 to said table. COOP now leverages a memory corruption to inject their own object with a fake virtual pointer, 
 which basically gives him control over the whole program, while the control flow still looks genuine, as no 
 code was replaced. 
@@ -43,7 +43,7 @@ situations in which this policy can be naturally circumvented.
 
 In this paper, we present \textsc{TypeShield}, a runtime illegitimate forward 
 calls detection tool that can be seamlessly integrated with large scale applications such as web servers.
-It takes the binary of an program as input and it can automatically instrument the binary in order
+It takes the binary of a program as input and it can automatically instrument the binary in order
 to detect illegitimate indirect calls at runtime. 
 We implemented \textsc{TypeShield} to demonstrate a possible remedy of this problem by introducing
 parameter types into the classification of callsites and calltargets. We explore to
@@ -59,7 +59,7 @@ Moreover, \textsc{TypeShield} provides strong mitigation for many types of code-
 
 \textbf{Our Insight.} \textsc{TypeShield} is based on a forward-edge CFI policy that 
 relies on a precise construction of both the callee prototypes and callsite signatures
-and than uses this information to enforce that each callsite targets matching functions 
+and then uses this information to enforce that each callsite targets matching functions 
 only. For example, \textsc{TypeShield} disallows an indirect call that prepares
 fewer arguments than the target callee consumes and where the types of the 
 arguments provided are not super types of the arguments expected at the target.
@@ -74,7 +74,7 @@ virtual method calls that disrespect calling conventions to
 achieve convenient data flows between gadgets~\cite{crane:readactor++}.
 
 Current binary based techniques enforce imprecise forward-edge CFI 
-plocies, often allowing controll transfers from any valid callsite 
+policies, often allowing controll transfers from any valid callsite 
 to any valid referenced entry point~\cite{ccfir:zhang, zhang:usenix}. 
 In the best case, existing policies only reduce the target set by
 removing all entry points of other modules unless they were
@@ -83,13 +83,13 @@ In contrast, \textsc{TypeShield} matches up indirect callsites with a more preci
 target set in a considerably more precise many-to-many relationship than TypeArmor.
 It is based on a use-def analysis at all possible callees to approximated the function prototypes, 
 and liveness analysis at indirect callsites to approximate callsite signatures. This 
-efficiently leads to a more precise CFG of the binary progrma in question, 
+efficiently leads to a more precise CFG of the binary program in question, 
 which could be used by other systems in order to gain more a precise CFG on which to 
 enforce their policies.
 
 \textsc{TypeShield} can protect only forward indirect edges at the binary level.
 Previous research has shown that, a backward-edge protection 
-such as an shadow stack~\cite{dang:asiaccs} or context-sensitive
+such as a shadow stack~\cite{dang:asiaccs} or context-sensitive
 CFI~\cite{veen:cfi} is still essential to ensure the integrity of return addresses at 
 runtime~\cite{crane:readactor++}. In this paper, we assume an ideal
 backward-edge protection mechanism such as a shadow
@@ -97,7 +97,7 @@ stack with no design faults~\cite{conti:ccs}.
 \textsc{TypeShield} complements such backward-edge defenses by addressing
 attacks that take place without violating the integrity of the return path.
 Specifically, \textsc{TypeShield} provides a precise protection 
-against against COOP exploits as well as improved COOP 
+against COOP exploits as well as improved COOP 
 derivations~\cite{crane:readactor++, subversive-c:lettner, ctf:coop, loop:oriented}.
 
 \textsc{TypeShield} is not more precise than source code based
@@ -105,7 +105,7 @@ approaches such as IFCC/VTV~\cite{vtv:tice}.
 IFCC/VTV are strong compiler based defenses which produce binaries which can resist control-flow
 hijacking attacks. It is well known that source-code based techniques are more precise 
 when enforcing fine-grained policies based on program constructs (such as
-the C++ vtable hierarchy or generic data types) for mitigation
+the C++ vTable hierarchy or generic data types) for mitigation
 purposes. However, there are still important reasons to study
 and improve binary-level defenses. First, the source code
 for many off-the-shelf programs is not always available.

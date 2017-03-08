@@ -14,14 +14,14 @@ environment and not sufficient data to infer its quality.
 TypeArmor reports a geometric mean of 83.26\% for the perfect classification of calltargets regarding 
 parameter count in optimization level O2, which compares rather well to our result of 82.24\%. Regarding
 the perfect classification of callsites we report a geometric mean of 81.6\% perfect classification 
-regarding parameter count, while TypeArmor reports a geometric mean of 79.19\%. However we also have
+regarding parameter count, while TypeArmor reports a geometric mean of 79.19\%. However, we also have
 a geometric mean of about 7\% regarding underestimations in the callsite classification with an upper
 bound of 16\%, while TypeArmor reports that it does not incur underestimations in their callsites.
 Now, for our type based classification we incur the cost for two error sources. First, the error from
 the parameter count classification, which we base our type analysis on and second for the type analysis
 itself. The numbers for the perfect classification of calltargets regarding parameter types we report a
 72.25\% geometric mean of perfect classification, which is 87.85\% of our precision regarding parameter
-counts. However we report a geometric mean of 57.36\%
+counts. However, we report a geometric mean of 57.36\%
 for perfect classification of callsites, which although seemingly low, is still 69.74\% of our precision
 regarding parameter counts.
 
@@ -65,7 +65,7 @@ would allow for more sophisticated callsite and calltarget invariants. Essential
 to symbolic execution or some other sort of precise abstract interpretation.
 
 Expanding the scope to also include memory, is another possible way of improving the type analysis, as it 
-would allow us to distinguish normal 32 or 64 bit values and pointer addresses. Although we already have a 
+would allow us to distinguish normal 32-bit or 64-bit values and pointer addresses. Although we already have a 
 limited approach of that in our reaching implementation, we still see room for improvement, as we only check
 whether a value is within one of three binary sections or 0.
 
@@ -84,5 +84,5 @@ the fact that functions use more than only 64-bit values or pointers within thei
 scenario occur, our analysis has nothing to work with and essentially degrades into a parameter count based
 implementation. Thankfully this occurrence is quite rare, as we experienced within our experiments. When working
 based on source level information, we could not detect a difference between our \textit{type} and a \textit{count} policies. 
-However when leveraging our tool, we were able to detect differences, which reinforces the fact, that we do 
+However, when leveraging our tool, we were able to detect differences, which reinforces the fact, that we do 
 not rely on declaration of parameters but usage of those.

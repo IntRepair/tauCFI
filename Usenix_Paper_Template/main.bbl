@@ -36,7 +36,7 @@
 {\sc Andriesse, D., Chen, X., Veen, V. v.~d., Slowinska, A., and Bos, H.}
 \newblock {An In-Depth Analysis of Disassembly on Full-Scale x86/x64 Binaries}.
 \newblock In {\em Proceedings of the USENIX Conference on Security (USENIX
-  SEC),\/} (2016).
+  SEC)\/} (2016).
 
 \bibitem{divine:balakrishnan}
 {\sc Balakrishnan, G., and Reps, T.}
@@ -59,7 +59,7 @@
 \bibitem{bounov:interleaving}
 {\sc Bounov, D., Gökhan~Kici, R., and Lerner, S.}
 \newblock {Protecting C++ Dynamic Dispatch Through VTable Interleaving}.
-\newblock In {\em Symposium on aravindNetwork and Distributed System Security
+\newblock In {\em Symposium on Network and Distributed System Security
   (NDSS),\/} (2016).
 
 \bibitem{bap:brumley}
@@ -85,13 +85,13 @@
 \newblock {Control-Flow Bending: On the Effectiveness of Control-Flow
   Integrity}.
 \newblock In {\em Proceedings of the USENIX conference on Security (USENIX
-  SEC),\/} (2015).
+  SEC)\/} (2015).
 
 \bibitem{rop:carlini}
 {\sc Carlini, N., and Wagner, D.}
 \newblock {ROP is still dangerous: Breaking Modern Defenses}.
 \newblock In {\em Proceedings of the USENIX conference on Security (USENIX
-  SEC),\/} (2014).
+  SEC)\/} (2014).
 
 \bibitem{JOP2}
 {\sc Checkoway, S., Davi, L., Dmitrienko, A., Sadeghi, A.-R., Shacham, H., and
@@ -105,7 +105,7 @@
   Liebchen, C., Qunaibit, M., and Sadeghi, A.-R.}
 \newblock {Losing Control: On the Effectiveness of Control-Flow Integrity Under
   Stack Attacks}.
-\newblock In {\em In CCS\/} (2015).
+\newblock In {\em CCS\/} (2015).
 
 \bibitem{crane:readactor++}
 {\sc Crane, S., Volckaert, S., Schuster, F., Liebchen, C., Larsen, P., Davi,
@@ -118,7 +118,7 @@
 \bibitem{dang:asiaccs}
 {\sc Dang, T.~H., Maniatis, P., and Wagner, D.}
 \newblock {The Performance Cost of Shadow Stacks and Stack Canaries}.
-\newblock In {\em In ASIACCS\/} (2015).
+\newblock In {\em ASIACCS\/} (2015).
 
 \bibitem{JOP3}
 {\sc Davi, L., Dmitrienko, A., Sadeghi, A.-R., and Winandy, M.}
@@ -236,7 +236,7 @@
 \bibitem{payer:dimva}
 {\sc Payer, M., Barresi, A., and R.~Gross, T.}
 \newblock {Fine-Grained Control-Flow Integrity through Binary Hardening}.
-\newblock In {\em In DIMVA\/} (2015).
+\newblock In {\em DIMVA\/} (2015).
 
 \bibitem{dynaguard:petsios}
 {\sc Petsios, T., Kemerlis, V.~P., Polychronakis, M., and Keromytis, A.~D.}
@@ -294,8 +294,8 @@
   S., Bos, H., Holz, T., Athanasopoulos, E., and Giuffrida, C.}
 \newblock {A Tough call: Mitigating Advanced Code-Reuse Attacks At The Binary
   Level}.
-\newblock In {\em Proceedings oaravindf the IEEE Symposium on Security and
-  Privacy (S\&P)\/} (2016).
+\newblock In {\em Proceedings of the IEEE Symposium on Security and Privacy
+  (S\&P)\/} (2016).
 
 \bibitem{cfiguard:yuan}
 {\sc Yuan, P., Zeng, Q., and Ding, X.}
@@ -327,7 +327,7 @@
 \bibitem{zhang:usenix}
 {\sc Zhang, M., and Sekar, R.}
 \newblock {Control Flow Integrity for COTS Binaries}.
-\newblock In {\em In USENIX SEC\/} (2013).
+\newblock In {\em USENIX SEC\/} (2013).
 
 \bibitem{cfci:zhang}
 {\sc Zhang, M., and Sekar, R.}

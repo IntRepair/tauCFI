@@ -7,7 +7,7 @@ We largely use the same threat model and the same basic assumptions as described
 paper \cite{veen:typearmor}, meaning that our attacker has read and write access to the data 
 sections of the attacked binary.  We also assume that the protected binary does not contain 
 self modifying code, handcrafted assembly or any kind of obfuscation. We also consider pages 
-to be either writable or executable but not both at the same time. Furthermore we assume 
+to be either writable or executable but not both at the same time. Furthermore, we assume 
 that our attacker has the ability to execute a memory corruption to hijack the programs 
 control flow. We assume that a solution for backward CFI is in place.
 
@@ -23,9 +23,39 @@ backward reaching definitions analysis for callsites.
 
 \textbf{\textsc{TypeShield} Impact on COOP.}
 \label{TypeShild Impact on COOP}
+\begin{figure}[h!]
+\centering
+\resizebox{0.25\textwidth}{!}{
+\begin{tikzpicture}
+
+\draw[thick] (0,0) rectangle node[anchor=center]  (320)  {\LARGE{(32, 0)}}  (2,-1);
+
+\draw[thick] (3,2) rectangle node[anchor=center]  (640)  {\LARGE{(64, 0)}}  (5,1);
+
+\draw[thick] (0,3) rectangle node[anchor=center]  (3232) {\LARGE{(32, 32)}} (2,4);
+
+\draw[thick] (3,5) rectangle node[anchor=center]  (6432) {\LARGE{(64, 32)}} (5,6);
+\draw[thick] (-1,5) rectangle node[anchor=center] (3264) {\LARGE{(32, 64)}} (-3,6);
+
+\draw[thick] (0,7) rectangle node[anchor=center]  (6464) {\LARGE{(64, 64)}} (2,8);
+
+  \draw[draw, -triangle 45, thick] (3264.north) -- (6464.south);
+  \draw[draw, -triangle 45, thick] (6432.north) -- (6464.south);
+  \draw[draw, -triangle 45, thick] (3232.north) -- (3264.south);
+  \draw[draw, -triangle 45, thick] (3232.north) -- (6432.south);
+  
+  \draw[draw, -triangle 45, thick] (640.north) -- (6432.south);
+  \draw[draw, -triangle 45, thick] (320.north) -- (3232.south);
+  \draw[draw, -triangle 45, thick] (320.north) -- (640.south);
+  
+\end{tikzpicture}
+}
+\caption{Example for the wideness based schema when only using a parameter wideness of 64-, 32- and 0-bit and only two parameters.}
+\label{fig:lattice3264}
+\end{figure}
 The problem with relying solely on the parameter count is that a callsite can use any call-target as long as the parameter count 
 requirement is fulfilled, even if the parameter types do not match (imagine 8-bit values provided but 64-bit values required). 
-Therefore we extend the classification schema to the parameter types:
+Therefore, we extend the classification schema to the parameter types:
 \textit{1)} indirect callsites provides a maximum wideness to each parameter (possibly overestimated compared to source), and 
 \textit{2)} calltargets require a minimum wideness for each parameter (possibly underestimated compared to source).
 
