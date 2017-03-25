@@ -1,0 +1,23 @@
+class nsMultiplexInputStream final
+ :public nsIMultiplexInputStream //A0
+ ,public nsISeekableStream //A1
+ ,public nsIIPCSerializableInputStream //A2
+ ,public nsICloneableInputStream{ //A3
+nsTArray<nsCOMPtr<nsIInputStream>> mStreams;
+NS_IMETHODIMP nsMultiplexInputStream::Close(){
+  MutexAutoLock lock(mLock);
+  mStatus = NS_BASE_STREAM_CLOSED;
+  //set NS_OK flag
+  nsresult rv = NS_OK;
+  //get array length
+  uint32_t len = mStreams.Length();
+  //array-based main loop gadget
+ for (uint32_t i = 0; i<len; ++i){
+  //(1) hijacked indirect call
+  nsresult rv2=mStreams[i]->Close();
+  if (NS_FAILED(rv2)) {
+      rv = rv2;
+  }
+ }
+  return rv;
+}

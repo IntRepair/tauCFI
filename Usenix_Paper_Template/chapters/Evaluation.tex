@@ -23,7 +23,7 @@ top of our \textit{count} policy implementation.
 %\textbf{Experimental Setup.} We setup our environment within a VirtualBox (version 5.0.26r) instance, which runs Kubuntu 16.04 LTS (Linux Kernel
 %version 4.4.0) and has access to 3GB of RAM and 4 of 8 provided hardware threads (Intel i7-4170HQ @ 2.50 GHz).
 
-\subsection{RQ1: Precision}
+\subsection{Precision}
 \label{section:typeshieldprecision}
 \todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
 
@@ -178,7 +178,7 @@ with Node.js (44.76\%) as an exception resulting in a geometric mean of 68.35\%.
 %Efficiency
 %
 %
-\subsection{RQ2: Effectiveness}
+\subsection{Effectiveness}
 \label{section:typeshieldeffectiveness}
 \todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, 
 first we need to define the fields which make most sense.}
@@ -349,7 +349,7 @@ When compared, our implementation of the \textit{type} policy allows about 7.93\
 %\end{figure}
 %
 
-\subsection{RQ3: Runtime Overhead}
+\subsection{Runtime Overhead}
 \label{section:typeshieldoverheadperformance}
 \todo[inline]{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
 \begin{figure}[!h]
@@ -369,7 +369,7 @@ Moreover, this is also dependent on the actual structure of the target, as it de
 \todo[inline]{add a binary patch that does not crash none of the programs from SPEC2006.}
 \todo[inline]{need a Table with all the results for each of the SPEC2006 programs and a bar diagram}
 
-\subsection{RQ4: Instrumentation Overhead}
+\subsection{Instrumentation Overhead}
 \label{section:typeshieldoverheadinstrumentation}
 
 \todo[inline]{here we need a bar chart, see TypeArmor paper.}
@@ -382,7 +382,7 @@ because of the nature of code relocation after losing the data that a compiler h
 changes are very hard to relocate. Therefore, instead each important basic block in the old code contains a jump 
 instruction to the new position of the basic block.
 
-\subsection{RQ5: Security Analysis}
+\subsection{Security Analysis}
 \label{RQ5: Security Analysis}
 % \subsubsection{CDF Analysis}
 % \label{CDF Analysis}
@@ -433,7 +433,7 @@ before. However, all these results are dependent on the structure of the program
 
 todo. Also, add the buckets diagram, see fig 9 in the typearmor paper.
 
-\subsection{RQ6: Comparison with Other Tools}
+\subsection{Comparison with Other Tools}
 \label{RQ5: Is TypeShield better than other tools?}
 \begin{table}[!h]
 \resizebox{\columnwidth}{!}{
