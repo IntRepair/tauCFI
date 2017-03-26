@@ -57,10 +57,8 @@ tool presented by Bounov et al.~\cite{bounov:interleaving}. These tools profit f
 since they have access to the full semantic context of the program though the scope
 of the compiler on which they are based. 
 Because of this reason, these tools target mostly other types of security problems than binary-based 
-tools address. For example some last advanced in compile based protection against 
-code reuse attacks address mainly performance issues.
-Currently, most of the above presented tools are only forward
-edge enforcers of fine-grained CFI policies with an overhead from 1\% up to 15\%.
+tools address. For example, some of the last advancements in compiler based protection against code reuse attacks address mainly performance issues.
+Currently, most of the above presented tools are only forward edge enforcers of fine-grained CFI policies with an overhead from 1\% up to 15\%.
 
 We are aware that there is still a long research path to go until binary based techniques can 
 recuperate program based semantic information from executable with the same precision as compiler based tools.
@@ -121,20 +119,20 @@ legitimate indirect callsites  during the COOP attack.
 \label{Mitigation of Code-Reuse Attacks}
 In the last couple of years researchers have provided many versions of new Code Reuse Attacks (CRAs).
 These new attacks were possible since DEP~\cite{dep} and ASLR~\cite{ASLR} were successfully bypassed mostly based
-on Return Oriented Programming (ROP)~\cite{ROP, kornau:rop, rop:shacham} on one hand and on 
-the other hand due to the discovery of new exploitable hardware and software primitives.
+on Return Oriented Programming (ROP)~\cite{ROP, kornau:rop, rop:shacham} on one hand and due to the discovery of 
+new exploitable hardware and software primitives, on the other hand.
 
 ROP started to present itself in the last couple of years in many faceted ways such as:
 Jump Oriented Programming (JOP)~\cite{JOP1, JOP2, JOP3} which uses jumps in order to divert the control flow to the next gadget and 
 Call Oriented Programming (COP)~\cite{rop:carlini} which uses calls in order to chain gadgets together.
 CRAs have many manifestations and it is out of scope of this work to list them all.
 
-On one hand, CRAs can be mitigated in general in the following ways: 
+First, CRAs can be mitigated in general in the following ways: 
 \textit{i)} binary instrumentation,
 \textit{ii)} source code recompilation and 
 \textit{iii)} runtime application monitoring.
-On the other hand, there is a plethora of tools and techniques which try to enforce CFI based
-primitives in executables, source code and during runtime. Next we briefly
+Second, there is a plethora of tools and techniques which try to enforce CFI based
+primitives in executables, source code and during runtime. Thus, we briefly
 present the solution landscape together with the approaches and the techniques on which these are based:
 \textit{a)} fine-grained CFI with hardware support, PathArmor~\cite{veen:cfi},
 \textit{b)} coarse-grained CFI used for binary instrumentation, CCFIR~\cite{ccfir:zhang},
@@ -148,6 +146,6 @@ present the solution landscape together with the approaches and the techniques o
 RockJIT~\cite{rockjit:niu} and PiCFI~\cite{perinput:niu}.
 
 The above list is not exhaustive and new protection techniques can be obtained by combining available techniques
-or by using newly available hardware features or software exploits. However, none of the above mentioned techniques and tools 
-can be used to mitigate COOP attacks.
+or by using newly available hardware features or software exploits. 
+However, notice that none of the above mentioned techniques and tools can be used to mitigate COOP attacks.
 

@@ -65,7 +65,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
 @InProceedings{zhang:usenix,
  author = "Zhang, Mingwei and Sekar, R.",
  title = "{Control Flow Integrity for COTS Binaries}",
- booktitle = {In USENIX SEC},
+ booktitle = {USENIX SEC},
  year = "2013",
 } 
 
@@ -129,7 +129,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
  author = "Crane, Stephen and Volckaert, Stijn and Schuster, Felix and Liebchen, Christopher and Larsen, Per and
  Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and De Sutter, Bjorn and Franz, Michael",
  title = "{It’s a TRaP: Table Randomization and Protection against Function-Reuse Attacks}",
- booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS),},
+ booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)},
  year = "2015",
 }
 
@@ -144,7 +144,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
  author = "Veen, Victor van der and Andriesse, Dennis and Göktas, Enes and Gras, Ben and
  Sambuc, Lionel and Slowinska, Asia and Bos, Herbert and Giuffrida, Cristiano",
  title = "{Practical Context-Sensiticve CFI}",
- booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS),},
+ booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)},
  year = "2015",
 }
 
@@ -158,14 +158,14 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
 @inproceedings{lin:rewards,
  author = "Lin, Zhiqiang and Zhang, Xiangyu and Xu, Dongyan",
  title = "{Automatic Reverse Engineering of Data Structures from Binary Execution}",
- booktitle = {Symposium on Network and Distributed System Security (NDSS),},
+ booktitle = {Symposium on Network and Distributed System Security (NDSS)},
  year = "2010",
 }
 
 @inproceedings{bap:brumley,
  author = "Brumley, David and Jager, Ivan and Avgerinos, Thanassis and Schwartz, Edward J.",
  title = "{BAP: A Binary Analysis Platform}",
- booktitle = {Proceedings of Computer AidedVTint: Protecting Virtual Function Tab Verification (CAV),},
+ booktitle = {Proceedings of Computer AidedVTint: Protecting Virtual Function Tab Verification (CAV)},
  year = "2011",
 }
 
@@ -179,7 +179,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
 @inproceedings{divine:balakrishnan,
  author = "Balakrishnan, G. and Reps, T.",
  title = "{DIVINE: Discovering Variables in Executables}",
- booktitle = {International Conference on Verification, Model Checking, and Abstract Interpretation (VMCAI),},
+ booktitle = {International Conference on Verification, Model Checking, and Abstract Interpretation (VMCAI)},
  year = "2007",
 }
 
@@ -213,7 +213,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
 @inproceedings{byoungyoung:typecasting,
  author = "Lee, Byoungyoung and Song, Chengyu and Kim, Taesoo and Lee, Wenke",
  title = "{Type Casting Verification: Stopping an Emerging Attack Vector}",
- booktitle = {Proceedings of the USENIX Conference on Security (USENIX SEC),},
+ booktitle = {Proceedings of the USENIX Conference on Security (USENIX SEC)},
  year = "2015",
 }
 

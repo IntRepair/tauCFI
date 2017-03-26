@@ -13,7 +13,7 @@ assume that the order within ground truth and binary is the same).
 Devising a patching schema
 that is based on Dyninst functionality, 
 which allows annotation of calltargets so they can hold at least 
-4-bytes of arbitrary data. This is required to hold the type data that
+4-byte of arbitrary data. This is required to hold the type data that
 we generate using our classification. Keeping the runtime overhead
 of said patching schema low should be the second goal of this venue 
 after satisfying stability.
@@ -32,5 +32,5 @@ needs to provide it.
 Introducing pointer/memory analysis
 to distinguish simple 32-bit and 64-bit values and actual addresses to even further restrict the 
 possible number of calltargets per callsite. This would require more 
-precise dataflow analysis, as in calculating value possibilities for 
+precise data flow analysis, as in calculating value possibilities for 
 registers at each instruction.

@@ -24,8 +24,7 @@
             \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
 \usepackage{verbatim}
 \usepackage{amsmath}
-\usepackage[ruled,vlined,linesnumbered,resetcount]{algorithm2e}
-\SetKwComment{Comment}{$\triangleright$\ }{}
+\usepackage[linesnumbered,ruled]{algorithm2e}
 \usepackage{array}
 \usepackage[]{xcolor}
 \usepackage{ifthen}

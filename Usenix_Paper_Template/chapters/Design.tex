@@ -155,12 +155,12 @@ the actual type of the data but the wideness of the data stored in the register.
 callsite providing it as depicted in Figure \ref{fig:TYPEschema}.
 
 We are currently interested in x86-64 binaries, the registers we are looking at are 64-bit registers that can be accessed in four different ways:
-\textit{1)} the whole 64-bits of the register, meaning a wideness of 64,
-\textit{2)} the lower 32-bits of the register, meaning a wideness of 32,
-\textit{3)} the lower 16-bits of the register, meaning a wideness of 16, and
-\textit{4)} the lower 8-bits of the register, meaning a wideness of 8.
+\textit{1)} the whole 64-bit of the register, meaning a wideness of 64,
+\textit{2)} the lower 32-bit of the register, meaning a wideness of 32,
+\textit{3)} the lower 16-bit of the register, meaning a wideness of 16, and
+\textit{4)} the lower 8-bit of the register, meaning a wideness of 8.
 
-Four of those registers can also directly access the higher 8-bits of the lower 16-bits of the register. For our purpose we register this access as a 16-bit access. 
+Four of those registers can also directly access the higher 8-bit of the lower 16-bit of the register. For our purpose we register this access as a 16-bit access. 
 Based on this information,
 we can assign a register one of 5 possible types $\mathcal{T} = \{64, 32, 16, 8, 0\}$. We also included the type 0 to model the absence of data within a register. 
 Similar to the \emph{count} policy, we allow overestimation of types in callsites and underestimation of types in calltargets. However, the matching idea is different, 
@@ -169,7 +169,7 @@ each callsite and calltarget has its type from the set of $\mathcal{T}^6$, with 
 $
 	u \leq_{type} v :\Longleftrightarrow  
 	\forall_{i = 0}^{5} {u_i \leq v_i} , \text {with } u, v \in \mathcal{T}^6
-$
+$.
 
 Again we allow any callsite $cs$ call any calltarget $ct$, when it fulfills the requirement $ct \leq cs$. 
 %The way we represent this is by letting the type for a calltarget parameter progress from 64-bit to 0-bit---if a calltarget requires a 32-bit value in its 1st parameter, it also should accept a 64-bit value from its callsite---and similarly we let the type for a callsite progress from 0-bit to 64-bit - If a callsite provides a 32-bit value in its 1st parameter it also provides a 16-bit, 8-bit and 0-bit to a calltarget. Now the advantage of the \emph{type} policy in comparison to the \emph{count} policy is that while our type comparison implies the count comparison, the other direction does not hold.
@@ -185,8 +185,8 @@ Usually data-flow analysis algorithms are based on set of variable or sets of de
 The set $\mathcal{I}$ describes all possible instructions that can occur within the executable section of a binary. In our case this is based on the instruction set for x86-64 processors.
 
 An instruction $i \in \mathcal{I}$ can non-exclusively perform two kinds of operations on any number of existing registers:
-\textit{1)} Read $n$-bits from the register with $n \in \{ 64, 32, 16, 8 \}$, and
-\textit{2)} Write $n$-bits to the register with $n \in \{ 64, 32, 16, 8 \}$.
+\textit{1)} Read $n$-bit from the register with $n \in \{ 64, 32, 16, 8 \}$, and
+\textit{2)} Write $n$-bit to the register with $n \in \{ 64, 32, 16, 8 \}$.
 
 Thus, we describe the possible change that occurs in one register with the set $S = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. Note that 0 signals the absence of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore, $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ with $m \in \{64,32,16,8\}$ and $m < n$ (e.g., $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.
 
@@ -232,7 +232,12 @@ would also fall into this category, however these would not reside within parame
 %describes all variables that are alive due to the block $n$, 
 %meaning that a variable occurring within this set has been read before it was written to.
 \begin{algorithm}[h!]
-	\SetAlgoLined
+ 	\SetAlgoLined
+	\SetKwInOut{Input}{Input}
+        \SetKwInOut{Output}{Output}
+        \Input{todo}
+        \Output{todo}
+        \BlankLine
 	\SetKwProg{Fn}{Function}{ is}{end}
 	\Fn{analyze(block : BasicBlock) : $\mathcal{S}^\mathcal{L}$}
 	{
@@ -242,7 +247,7 @@ would also fall into this category, however these would not reside within parame
  	
  		state' = analyze\_instr(inst)
 
-		state = merge\_v(state, state')
+		state = merge\_v(state, state')                     \Comment*[r]{Some comment}
 	}
 
 	states = \{\}
@@ -261,7 +266,7 @@ would also fall into this category, however these would not reside within parame
 	\Return merge\_v(state, state')
 
 	}
-\caption{Algorithm used to analyze the liveness of a basic block.}
+\caption{Liveness analysis of a basic block.}
 \label{alg:liveness}
 \end{algorithm}
 
@@ -271,7 +276,7 @@ would also fall into this category, however these would not reside within parame
 %occurring within one block based on the the change caused by its instructions. Considering this, we arrive at 
 %algorithm \ref{alg:liveness} to compute the liveness state at the start of a basic block.
 Khedker et al.~ \cite{khedker2009data} defines live variable analysis on blocks, which we used to arrive the
-algorithm depicted in Figure~\ref{alg:liveness} to compute the liveness state at the start of a basic block. 
+algorithm depicted in Algorithm~\ref{alg:liveness} to compute the liveness state at the start of a basic block. 
 We apply the liveness analysis for each function with the entry block of the function as start and the return blocks as end and after an analysis run for a function.
 
 This algorithm relies on various functions that can be used to configure its behavior. We need to define the function
@@ -554,8 +559,13 @@ requires the last known set of definitions that reach the actual call instructio
 %meaning that the value of a variable has been assigned. Considering this, we can assume that $Gen_n \subseteq Kill_n$, 
 %as we can always create new definitions, but not simply remove definitions without assigning a new value to the variable.
 
-  \begin{algorithm}[!h]
+\begin{algorithm}[!h]
 	\SetAlgoLined
+	\SetKwInOut{Input}{Input}
+        \SetKwInOut{Output}{Output}
+        \Input{todo}
+        \Output{todo}
+        \BlankLine
 	\SetKwProg{Fn}{Function}{ is}{end}
 	\Fn{analyze(block : BasicBlock) : $\mathcal{S}^\mathcal{R}$}
 	{
@@ -565,7 +575,7 @@ requires the last known set of definitions that reach the actual call instructio
  	
  		state' = analyze\_instr(inst)
  		
-		state = merge\_v(state, state')
+		state = merge\_v(state, state') \Comment*[r]{Some comment}
 	}
 
 	states = \{\}
@@ -584,7 +594,7 @@ requires the last known set of definitions that reach the actual call instructio
 	\Return merge\_v(state, state')
 
 	}
-\caption{Algorithm used to analyze the reaching definitions of a basic block.}
+\caption{Reaching definitions analysis of a basic block.}
 \label{alg:reaching}
 \end{algorithm}
 %
@@ -821,10 +831,10 @@ Our solution is to simply scan our reaching analysis result for these holes and 
 the calltarget uses the whole 64-bit register. This can occur when pointers are passed from the callsite to the calltarget. Specifically this happens 
 when pointers to memory inside the \texttt{.bss}, \texttt{.data} or \texttt{.rodata} section of the binary are passed.
 Our solution is to enhance our instruction analysis to watch out for constant writes. In case a 32-bit constant value write is detected, we check if the
-value is an address within the \texttt{.bss}, \texttt{.data} or \texttt{.rodata} section of the binary. If this is the case, we simply return a write access of 64-bits 
-instead of 32-bits. This is not problematic, because we are looking for an overestimation of parameter wideness.
+value is an address within the \texttt{.bss}, \texttt{.data} or \texttt{.rodata} section of the binary. If this is the case, we simply return a write access of 64-bit 
+instead of 32-bit. This is not problematic, because we are looking for an overestimation of parameter wideness.
 It should be noted that the same problem can arise when a constant write causes the value 0 to be written to a 32-bit register. We use the same solution
-and set the wideness to 64-bits instead of 32-bits.
+and set the wideness to 64-bit instead of 32-bit.
 %
 %\subsection{Address Taken Analysis}
 %\label{section:addresstakenanalysis}

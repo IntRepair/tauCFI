@@ -9,9 +9,9 @@ are able to bypass most traditional CFI solutions, as they focus on indirect cal
 This is a problem for applications written in C++, as one of its principle is inheritance and virtual functions. 
 The concept of virtual functions allows the programmer to overwrite a virtual function of the base-class with his
 own implementation. While this allows for much more flexible code, this flexibility is the reason COOP actually 
-works. The problem is that in order to implement virtual functions, the compiler needs to generate a table of all
+works. In fact, in order to implement virtual functions, the compiler needs to generate a table of all
 virtual functions for each class containing them and provide to each instance of such a class a pointer
-to said table. COOP now leverages a memory corruption to inject their own object with a fake virtual pointer, 
+to the said table. COOP now leverages a memory corruption to inject their own object with a fake virtual pointer, 
 which basically gives him control over the whole program, while the control flow still looks genuine, as no 
 code was replaced. 
 

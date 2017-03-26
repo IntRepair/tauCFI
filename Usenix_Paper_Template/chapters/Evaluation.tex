@@ -58,7 +58,7 @@ First, we take a look at the comparability of calltargets and second, we take a 
 	\csvreader[before filter=\ifthenelse{\equal{\csvcoli}{geomean}}{\csvfilteraccept}{\csvfilterreject},  late after line=\\, late after last line=\\\bottomrule]{csvs/matching.O2.csv}{
 		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
 	}
-	{\csvcoli & \csvcoliii & \csvcoliv \ (\csvcolv \%)& \csvcolvi \ (\csvcolvii \%)& \csvcolxiii & \csvcolxiv \ (\csvcolxv) & \csvcolxvi \ (\csvcolvii) }% specify your coloumns here
+	{\textit{\csvcoli} & \csvcoliii & \csvcoliv \ (\csvcolv \%)& \csvcolvi \ (\csvcolvii \%)& \csvcolxiii & \csvcolxiv \ (\csvcolxv) & \csvcolxvi \ (\csvcolvii) }% specify your coloumns here
     	\end{tabular}
     	
     	}
@@ -71,7 +71,7 @@ First, we take a look at the comparability of calltargets and second, we take a 
 
 \textbf{Call-targets.} The obvious choice for structural comparison regarding calltargets is their name, as these are simply functions. 
 First, we have to remove internal functions from our data-sets like the \texttt{\_init} or \texttt{\_fini} functions, which are of no consequence for us. 
-Furthermore, while C functions can simply be matched by their name as they are unique through the binary, the same cannot be said about the 
+Furthermore, while C functions can simply be matched by their name as they are unique through the binary, the same can not be said about the 
 language C++. One of the key differences between C and C++ is function overloading, which allows defining several functions with the same name, as 
 long as they differ in namespace or parameter type. As LLVM does not know about either concept, the Clang compiler needs to generate unique names. 
 The method used for unique name generation is called mangling and composes the actual name of the function, its return type, its name-space and the 
@@ -123,7 +123,7 @@ in Table \ref{tbl:precisionCOUNT}.
 	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilteraccept}{\csvfilterreject}, late after line=\\, late after last line=\\\bottomrule]{csvs/classification_comp.sources_union_follow.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
-	{\csvcolii  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxv \ (\csvcolxvi \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolvi \ (\csvcolvii\%)}% specify your coloumns here
+	{\textit{\csvcolii}  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxv \ (\csvcolxvi \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolvi \ (\csvcolvii\%)}% specify your coloumns here
     	\end{tabular}
 
 }
@@ -159,7 +159,7 @@ The results are depicted in Table \ref{tbl:precisionTYPE}.
 	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilteraccept}{\csvfilterreject},  late after line=\\, late after last line=\\\bottomrule]{csvs/classification_comp2.type_exp6.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
-	{\csvcolii  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxv \ (\csvcolxvi \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolvi \ (\csvcolvii\%)}% specify your coloumns here
+	{\textit{\csvcolii}  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxv \ (\csvcolxvi \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolvi \ (\csvcolvii\%)}% specify your coloumns here
     	\end{tabular}
 
 }
@@ -201,7 +201,7 @@ first we need to define the fields which make most sense.}
 	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilteraccept}{\csvfilterreject},  late after line=\\, late after last line=\\\bottomrule]{csvs/policy_compare_at.O2.csv}{
 	%1=opt,2=target,3=at,4=count safe avg,5=count safe sig,6=count safe median,7=count prec avg,8=count prec sig,9=count prec median,10=count* avg,11=count* sig,12=count* median,13=type safe avg,14=type safe sig,15=type safe median,16=type prec avg,17=type prec sig,18=type prec median,19=type* avg,20=type* sig,21=type* median
  }
-	{\csvcolii  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix& \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii }% specify your coloumns here
+	{\textit{\csvcolii}  &  \csvcoliii & \csvcolx & $\pm$ & \csvcolxi & \csvcolxii & \csvcolvii & $\pm$ & \csvcolviii& \csvcolix& \csvcolxix & $\pm$ & \csvcolxx& \csvcolxxi & \csvcolxvi & $\pm$ & \csvcolxvii& \csvcolxviii }% specify your coloumns here
 
     	\end{tabular}
 
@@ -377,7 +377,7 @@ Moreover, this is also dependent on the actual structure of the target, as it de
 
 The instrumentation overhead or the change in size due to patching is mostly due to the method Dyninst uses to patch binaries. 
 Essentially the executable part of the binary is duplicated and extended with the patch. The usual ratio is around 40\% to 
-60\% while Postgres has an increase of 150\% in binary size. One cannot reduce that value significantly, 
+60\% while Postgres has an increase of 150\% in binary size. One can not reduce that value significantly, 
 because of the nature of code relocation after losing the data that a compiler has. Especially indirect control flow 
 changes are very hard to relocate. Therefore, instead each important basic block in the old code contains a jump 
 instruction to the new position of the basic block.
@@ -431,7 +431,7 @@ for that is relatively simple: the maximum number of calltargets a callsite can 
 has been reduced, therefore a lower amount of calltargets is a higher percentage than 
 before. However, all these results are dependent on the structure of the program.
 
-todo. Also, add the buckets diagram, see fig 9 in the typearmor paper.
+todo. Also, add the buckets diagram, see Figure 9 in the typearmor paper.
 
 \subsection{Comparison with Other Tools}
 \label{RQ5: Is TypeShield better than other tools?}
@@ -449,7 +449,7 @@ todo. Also, add the buckets diagram, see fig 9 in the typearmor paper.
 	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilteraccept}{\csvfilterreject},  late after line=\\, late after last line=\\\bottomrule]{csvs/tools_compare.csv}{
 		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
 	}
-	{\csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii}% specify your coloumns here
+	{\textit{\csvcolii} & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii}% specify your coloumns here
     	\end{tabular}}
 %     	}
 	\caption {The medians of calltargets per callsite for different tools.}
