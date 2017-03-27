@@ -69,7 +69,7 @@ First, we take a look at the comparability of calltargets and second, we take a 
 	\label{tbl:matchingquality}
 \end{table}
 
-\textbf{Call-targets.} The obvious choice for structural comparison regarding calltargets is their name, as these are simply functions. 
+\textbf{Calltargets.} The obvious choice for structural comparison regarding calltargets is their name, as these are simply functions. 
 First, we have to remove internal functions from our data-sets like the \texttt{\_init} or \texttt{\_fini} functions, which are of no consequence for us. 
 Furthermore, while C functions can simply be matched by their name as they are unique through the binary, the same can not be said about the 
 language C++. One of the key differences between C and C++ is function overloading, which allows defining several functions with the same name, as 
@@ -89,7 +89,7 @@ necessary all source files are used for our test-target.
 Considering this, we can safely state that our structural matching between ground truth and \textsc{TypeShield} regarding calltargets is nearly
 perfect (above 98\%).
 
-\textbf{Call-sites.} While our structural matching of calltargets is rather simple, the matter of matching callsites is more complex. Our tool can provide accurate addressing of callsites within the binary. 
+\textbf{Callsites.} While our structural matching of calltargets is rather simple, the matter of matching callsites is more complex. Our tool can provide accurate addressing of callsites within the binary. 
 However, Clang/LLVM does not have such capabilities in its intermediate representation (IR). Furthermore the IR is not the final representation within the compiler, as the IR is transformed into a machine-based representation (MR), which is the again optimized. Although we can read information regarding parameters from the IR, it is not possible with the MR. 
 Therefore, we attach that data directly after the conversion from IR to MR and read that data at the end of the compilation. To not unnecessarily pollute our data set, we only considered calltargets, which have been found in both data sets. 
 Table \ref{tbl:matchingquality} shows three data points regarding callsites for the optimization level O2:
@@ -111,7 +111,7 @@ in Table \ref{tbl:precisionCOUNT}.
 	\begin{tabular}{l|r|r|r|r|r|r}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c}{\bfseries Call-targets} & \multicolumn{3}{c}{\bfseries Call-sites}\\
+	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c}{\bfseries Calltargets} & \multicolumn{3}{c}{\bfseries Callsites}\\
 	
 	\bfseries Target & \#  &  perfect &  problem & \# & perfect &  problem % specify table head
 	\\\midrule
@@ -130,10 +130,10 @@ in Table \ref{tbl:precisionCOUNT}.
 		\caption {The results for analysis using the \textit{count} policy on the O2 optimization level.}
 		\label{tbl:precisionCOUNT}
 \end{table}~\\
-\textbf{Experiment Setup (Call-targets).} Union combination operator with an $analyze$ function that follows into occurring direct calls.
-\textbf{Results (Call-targets).} The problem rate is under 0.01\%, as there are only two test targets, that exhibit a problematic classification. The rate of perfect classification is in general over 80\% with Mysql as an exception (73.85\%) resulting in a geometric mean of 86.86\%.
-\textbf{Experiment Setup (Call-sites)} Union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
-\textbf{Results (Call-sites).} The problem rate is under 0.01\%, as there is only one test target, that exhibit a problematic classification. The rate of perfect classification is in general over 60\% with Nginx (48.49\%) 
+\textbf{Experiment Setup (Calltargets).} Union combination operator with an $analyze$ function that follows into occurring direct calls.
+\textbf{Results (Calltargets).} The problem rate is under 0.01\%, as there are only two test targets, that exhibit a problematic classification. The rate of perfect classification is in general over 80\% with Mysql as an exception (73.85\%) resulting in a geometric mean of 86.86\%.
+\textbf{Experiment Setup (Callsites).} Union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
+\textbf{Results (Callsites).} The problem rate is under 0.01\%, as there is only one test target, that exhibit a problematic classification. The rate of perfect classification is in general over 60\% with Nginx (48.49\%) 
 and Node.js (56.34\%) as an exception resulting in a geometric mean of 71.97\%.
 
 
@@ -147,7 +147,7 @@ The results are depicted in Table \ref{tbl:precisionTYPE}.
 	\begin{tabular}{l|r|r|r|r|r|r}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c}{\bfseries Call-targets} & \multicolumn{3}{c}{\bfseries Call-sites}\\
+	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c}{\bfseries Calltargets} & \multicolumn{3}{c}{\bfseries Callsites}\\
 	
 	\bfseries Target & \#  &  perfect &  problem & \# & perfect &  problem % specify table head
 	\\\midrule
@@ -166,10 +166,10 @@ The results are depicted in Table \ref{tbl:precisionTYPE}.
 		\caption {The results for analysis using the \textit{type} policy on the O2 optimization level.}
 		\label{tbl:precisionTYPE}
 \end{table}~\\
-\textbf{Experiment Setup (Call-targets).} Union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that intersects all reads until the first write.
-\textbf{Results (Call-targets).} For half of the set, the problem rate is under 1\% and for the other half it is not above 10\%, resulting in a geomean of 1.92\%. The rate of perfect classification is in general over 70\% with Nginx (69.38\%) and Mysql (63.16\%)  resulting in a geometric mean of 77.15\%.
-\textbf{Experiment Setup (Call-sites).} Union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
-\textbf{Results (Call-sites).} For two thirds of the set, the problem rate is under 2\% and for last third it is not above 10\%, resulting in a geomean of 1.38\%.  The rate of perfect classification is in general over 50\% 
+\textbf{Experiment Setup (Calltargets).} Union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that intersects all reads until the first write.
+\textbf{Results (Calltargets).} For half of the set, the problem rate is under 1\% and for the other half it is not above 10\%, resulting in a geomean of 1.92\%. The rate of perfect classification is in general over 70\% with Nginx (69.38\%) and Mysql (63.16\%)  resulting in a geometric mean of 77.15\%.
+\textbf{Experiment Setup (Callsites).} Union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
+\textbf{Results (Callsites).} For two thirds of the set, the problem rate is under 2\% and for last third it is not above 10\%, resulting in a geomean of 1.38\%.  The rate of perfect classification is in general over 50\% 
 with Node.js (44.76\%) as an exception resulting in a geometric mean of 68.35\%.
 
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  27 MAR 2017 09:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  27 MAR 2017 09:34
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1940,7 +1940,11 @@ Underfull \vbox (badness 1242) has occurred while \output is active []
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[12] <figures/speccpu2006.pdf, id=417, 442.65375pt x 244.915pt>
+
+Underfull \vbox (badness 2165) has occurred while \output is active []
+
+ [12]
+<figures/speccpu2006.pdf, id=417, 442.65375pt x 244.915pt>
 File: figures/speccpu2006.pdf Graphic file (type pdf)
 
 <use figures/speccpu2006.pdf>
@@ -2109,10 +2113,10 @@ runsystem(rm main.pyg)...executed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 185.
  ) 
 Here is how much of TeX's memory you used:
- 29770 strings out of 493105
- 542249 string characters out of 6137072
- 795094 words of memory out of 5000000
- 32410 multiletter control sequences out of 15000+600000
+ 29769 strings out of 493105
+ 542242 string characters out of 6137072
+ 795090 words of memory out of 5000000
+ 32409 multiletter control sequences out of 15000+600000
  101170 words of font info for 123 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  68i,16n,98p,934b,1725s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2128,7 +2132,7 @@ ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (18 pages, 565914 bytes).
+Output written on main.pdf (18 pages, 565854 bytes).
 PDF statistics:
  855 PDF objects out of 1000 (max. 8388607)
  720 compressed objects within 8 object streams
