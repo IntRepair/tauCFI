@@ -8,7 +8,7 @@ YEAR="2009",
 @inproceedings{mingwei:sekar,
  author = "Zhang, M. and Sekar, R.",
  title = "{Control Flow Integrity for COTS Binaries}",
- booktitle = "Proceedings of the USENIX conference on Security (USENIX SEC)",
+ booktitle = "Proceedings of the USENIX conference on Security (USENIX SEC),",
  year = "2013",
 } 
 
@@ -37,7 +37,7 @@ YEAR="2009",
 @inproceedings{vtv:tice,
  author = {Tice, Caroline and Roeder, Tom and Collingbourne, Peter and Checkoway, Stephen and Erlingsson, {\'U}lfar and Lozano, Luis and Pike, Geoff},
  title = {{Enforcing Forward-Edge Control-Flow Integrity in GCC and LLVM}},
- booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC)},
+ booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC),},
  year = "2014",
 } 
 
@@ -65,14 +65,14 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
 @InProceedings{zhang:usenix,
  author = "Zhang, Mingwei and Sekar, R.",
  title = "{Control Flow Integrity for COTS Binaries}",
- booktitle = {USENIX SEC},
+ booktitle = {(USENIX SEC),},
  year = "2013",
 } 
 
 @InProceedings{dang:asiaccs,
  author = "Dang, Thurston HY and Maniatis, Petros and Wagner, David",
  title = "{The Performance Cost of Shadow Stacks and Stack Canaries}",
- booktitle = {ASIACCS},
+ booktitle = {(ASIACCS),},
  year = "2015",
 }
 
@@ -93,7 +93,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
  author = "Veen, Victor van der and Goktas, Enes and Contag, Moritz and Pawlowski, Andre and Chen, Xi and Rawat, Sanjay and
  Bos, Herbert and Holz, Thorsten and Athanasopoulos, Elias and Giuffrida, Cristiano",
  title = "{A Tough call: Mitigating Advanced Code-Reuse Attacks At The Binary Level}",
- booktitle = {Proceedings of the IEEE Symposium on Security and Privacy (S\&P)},
+ booktitle = {Proceedings of the IEEE Symposium on Security and Privacy (S\&P),},
  year = "2016",
 } 
 
@@ -107,7 +107,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
 @inproceedings{volodymyr:cpi,
  author = "Kuznetsov, Volodymyr and Szekeres, László and Payer, Mathias and Candea, George and Sekar, R. and Song, Dawn",
  title = "{Code-Pointer Integrity}",
- booktitle = {Proceedings of the USENIX Symposium on Operating Systems Design and Implementation (OSDI)},
+ booktitle = {Proceedings of the USENIX Symposium on Operating Systems Design and Implementation (OSDI),},
  year = "2014",
 } 
 
@@ -129,7 +129,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
  author = "Crane, Stephen and Volckaert, Stijn and Schuster, Felix and Liebchen, Christopher and Larsen, Per and
  Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and De Sutter, Bjorn and Franz, Michael",
  title = "{It’s a TRaP: Table Randomization and Protection against Function-Reuse Attacks}",
- booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)},
+ booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS),},
  year = "2015",
 }
 
@@ -144,28 +144,28 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
  author = "Veen, Victor van der and Andriesse, Dennis and Göktas, Enes and Gras, Ben and
  Sambuc, Lionel and Slowinska, Asia and Bos, Herbert and Giuffrida, Cristiano",
  title = "{Practical Context-Sensiticve CFI}",
- booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)},
+ booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS),},
  year = "2015",
 }
 
 @inproceedings{andriesse:indepth,
  author = "Andriesse, D. and Chen, X. and Veen, V. van der and Slowinska, A. and Bos, H.",
  title = "{An In-Depth Analysis of Disassembly on Full-Scale x86/x64 Binaries}",
- booktitle = {Proceedings of the USENIX Conference on Security (USENIX SEC)},
+ booktitle = {Proceedings of the USENIX Conference on Security (USENIX SEC),},
  year = "2016",
 }
 
 @inproceedings{lin:rewards,
  author = "Lin, Zhiqiang and Zhang, Xiangyu and Xu, Dongyan",
  title = "{Automatic Reverse Engineering of Data Structures from Binary Execution}",
- booktitle = {Symposium on Network and Distributed System Security (NDSS)},
+ booktitle = {Symposium on Network and Distributed System Security (NDSS),},
  year = "2010",
 }
 
 @inproceedings{bap:brumley,
  author = "Brumley, David and Jager, Ivan and Avgerinos, Thanassis and Schwartz, Edward J.",
  title = "{BAP: A Binary Analysis Platform}",
- booktitle = {Proceedings of Computer AidedVTint: Protecting Virtual Function Tab Verification (CAV)},
+ booktitle = {Proceedings of Computer AidedVTint: Protecting Virtual Function Tab Verification (CAV),},
  year = "2011",
 }
 
@@ -179,7 +179,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
 @inproceedings{divine:balakrishnan,
  author = "Balakrishnan, G. and Reps, T.",
  title = "{DIVINE: Discovering Variables in Executables}",
- booktitle = {International Conference on Verification, Model Checking, and Abstract Interpretation (VMCAI)},
+ booktitle = {International Conference on Verification, Model Checking, and Abstract Interpretation (VMCAI),},
  year = "2007",
 }
 
@@ -213,7 +213,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
 @inproceedings{byoungyoung:typecasting,
  author = "Lee, Byoungyoung and Song, Chengyu and Kim, Taesoo and Lee, Wenke",
  title = "{Type Casting Verification: Stopping an Emerging Attack Vector}",
- booktitle = {Proceedings of the USENIX Conference on Security (USENIX SEC)},
+ booktitle = {Proceedings of the USENIX Conference on Security (USENIX SEC),},
  year = "2015",
 }
 
@@ -357,7 +357,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
 @inproceedings{rop:carlini,
  author = "Carlini, Nicholas and Wagner, David",
  title = "{ROP is still dangerous: Breaking Modern Defenses}",
- booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC)},
+ booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC),},
  year = "2014",
 }
 
@@ -378,14 +378,14 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael",
 @inproceedings{carlini:bending,
  author = "Carlini, Nicolas and Barresi, Antonio and Payer, Mathias and Wagner, David and Gross, Thomas R.",
  title = "{Control-Flow Bending: On the Effectiveness of Control-Flow Integrity}",
- booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC)},
+ booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC),},
  year = "2015",
 }
 
 @inproceedings{conti:ccs,
  author = "Conti, Mauro and Larsen, Per and Crane, Stephen   and Davi, Lucas and Franz, Michael and Negro, Marco and  Liebchen, Christopher and Qunaibit, Mohaned and Sadeghi, Ahmad-Reza ",
  title = "{Losing Control: On the Effectiveness of Control-Flow Integrity Under Stack Attacks}",
- booktitle = {CCS},
+ booktitle = {(CCS),},
  year = "2015",
 }
 

@@ -43,6 +43,7 @@
 \expandafter\def\csname PYGdefault@tok@nt\endcsname{\let\PYGdefault@bf=\textbf\def\PYGdefault@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
 \expandafter\def\csname PYGdefault@tok@nv\endcsname{\def\PYGdefault@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
 \expandafter\def\csname PYGdefault@tok@s1\endcsname{\def\PYGdefault@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PYGdefault@tok@kd\endcsname{\let\PYGdefault@bf=\textbf\def\PYGdefault@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
 \expandafter\def\csname PYGdefault@tok@sh\endcsname{\def\PYGdefault@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
 \expandafter\def\csname PYGdefault@tok@sc\endcsname{\def\PYGdefault@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
 \expandafter\def\csname PYGdefault@tok@sx\endcsname{\def\PYGdefault@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
@@ -52,7 +53,7 @@
 \expandafter\def\csname PYGdefault@tok@c\endcsname{\let\PYGdefault@it=\textit\def\PYGdefault@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
 \expandafter\def\csname PYGdefault@tok@mf\endcsname{\def\PYGdefault@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
 \expandafter\def\csname PYGdefault@tok@err\endcsname{\def\PYGdefault@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
-\expandafter\def\csname PYGdefault@tok@kd\endcsname{\let\PYGdefault@bf=\textbf\def\PYGdefault@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PYGdefault@tok@mb\endcsname{\def\PYGdefault@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
 \expandafter\def\csname PYGdefault@tok@ss\endcsname{\def\PYGdefault@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
 \expandafter\def\csname PYGdefault@tok@sr\endcsname{\def\PYGdefault@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
 \expandafter\def\csname PYGdefault@tok@mo\endcsname{\def\PYGdefault@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}

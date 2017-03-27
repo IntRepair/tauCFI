@@ -36,7 +36,7 @@
 {\sc Andriesse, D., Chen, X., Veen, V. v.~d., Slowinska, A., and Bos, H.}
 \newblock {An In-Depth Analysis of Disassembly on Full-Scale x86/x64 Binaries}.
 \newblock In {\em Proceedings of the USENIX Conference on Security (USENIX
-  SEC)\/} (2016).
+  SEC),\/} (2016).
 
 \bibitem{divine:balakrishnan}
 {\sc Balakrishnan, G., and Reps, T.}
@@ -85,13 +85,13 @@
 \newblock {Control-Flow Bending: On the Effectiveness of Control-Flow
   Integrity}.
 \newblock In {\em Proceedings of the USENIX conference on Security (USENIX
-  SEC)\/} (2015).
+  SEC),\/} (2015).
 
 \bibitem{rop:carlini}
 {\sc Carlini, N., and Wagner, D.}
 \newblock {ROP is still dangerous: Breaking Modern Defenses}.
 \newblock In {\em Proceedings of the USENIX conference on Security (USENIX
-  SEC)\/} (2014).
+  SEC),\/} (2014).
 
 \bibitem{JOP2}
 {\sc Checkoway, S., Davi, L., Dmitrienko, A., Sadeghi, A.-R., Shacham, H., and
@@ -105,7 +105,7 @@
   Liebchen, C., Qunaibit, M., and Sadeghi, A.-R.}
 \newblock {Losing Control: On the Effectiveness of Control-Flow Integrity Under
   Stack Attacks}.
-\newblock In {\em CCS\/} (2015).
+\newblock In {\em (CCS),\/} (2015).
 
 \bibitem{crane:readactor++}
 {\sc Crane, S., Volckaert, S., Schuster, F., Liebchen, C., Larsen, P., Davi,
@@ -118,7 +118,7 @@
 \bibitem{dang:asiaccs}
 {\sc Dang, T.~H., Maniatis, P., and Wagner, D.}
 \newblock {The Performance Cost of Shadow Stacks and Stack Canaries}.
-\newblock In {\em ASIACCS\/} (2015).
+\newblock In {\em (ASIACCS),\/} (2015).
 
 \bibitem{JOP3}
 {\sc Davi, L., Dmitrienko, A., Sadeghi, A.-R., and Winandy, M.}
@@ -165,7 +165,7 @@
   D.}
 \newblock {Code-Pointer Integrity}.
 \newblock In {\em Proceedings of the USENIX Symposium on Operating Systems
-  Design and Implementation (OSDI)\/} (2014).
+  Design and Implementation (OSDI),\/} (2014).
 
 \bibitem{loop:oriented}
 {\sc Lan, B., Li, Y., Sun, H., Su, C., Liu, Y., and Zeng, Q.}
@@ -280,7 +280,7 @@
   {\'U}., Lozano, L., and Pike, G.}
 \newblock {Enforcing Forward-Edge Control-Flow Integrity in GCC and LLVM}.
 \newblock In {\em Proceedings of the USENIX conference on Security (USENIX
-  SEC)\/} (2014).
+  SEC),\/} (2014).
 
 \bibitem{veen:cfi}
 {\sc Veen, V. v.~d., Andriesse, D., Göktas, E., Gras, B., Sambuc, L.,
@@ -295,7 +295,7 @@
 \newblock {A Tough call: Mitigating Advanced Code-Reuse Attacks At The Binary
   Level}.
 \newblock In {\em Proceedings of the IEEE Symposium on Security and Privacy
-  (S\&P)\/} (2016).
+  (S\&P),\/} (2016).
 
 \bibitem{cfiguard:yuan}
 {\sc Yuan, P., Zeng, Q., and Ding, X.}
@@ -327,7 +327,7 @@
 \bibitem{zhang:usenix}
 {\sc Zhang, M., and Sekar, R.}
 \newblock {Control Flow Integrity for COTS Binaries}.
-\newblock In {\em USENIX SEC\/} (2013).
+\newblock In {\em (USENIX SEC),\/} (2013).
 
 \bibitem{cfci:zhang}
 {\sc Zhang, M., and Sekar, R.}
