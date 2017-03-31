@@ -16,11 +16,11 @@ SmartDec~\cite{fokin:smartdec}, and Divine~\cite{divine:balakrishnan}.
 These tools try with more or less success to recover 
 type information from binary programs with different goals.
 Typical goals are: 
-\textit{i)} full program reconstruction (i.e., binary to code conversion, reversing, etc.), 
+\textit{i)} full program reconstruction (\textit{i.e.,} binary to code conversion, reversing, etc.), 
 \textit{ii)} checking for buffer overflows, 
 \textit{iii)} integer overflows and other types of memory corruptions.
 For a more exhaustive review of such tools we advice the reader to
-have a look at the review of Caballero et al.~\cite{caballero:inference}.
+have a look at the review of Caballero \textit{et al.}~\cite{caballero:inference}.
 Interesting to notice is that the code from only a few of these tools is actually available.
 
 While SmartDec seemed promising due to its simple type lattice that we wanted to leverage for our classification schema. 
@@ -32,9 +32,9 @@ resulting in a simpler lattice than we initially wanted.
 % \textbf{Mitigation of Advanced Code-Reuse Attacks.}
 \textbf{Mitigation of Forward-Edge based Attacks.}
 \label{Mitigation of Advanced Code-Reuse Attacks}
-Recursive-COOP~\cite{crane:readactor++}, COOP~\cite{schuster:coop}, Subversive-C~\cite{subversive-c:lettner} and the attack of Lan et al.~\cite{loop:oriented}
+Recursive-COOP~\cite{crane:readactor++}, COOP~\cite{schuster:coop}, Subversive-C~\cite{subversive-c:lettner} and the attack of Lan \textit{et al.}~\cite{loop:oriented}
 are forward-edge based CRAs which can not be addressed with:
-\textit{i)}  with shadow stacks techniques (i.e., do not violate the caller/calle convention), 
+\textit{i)}  with shadow stacks techniques (\textit{i.e.,} do not violate the caller/calle convention), 
 \textit{ii)} coarse-grained Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} techniques are useless against these attacks, 
 \textit{iii)} hardware based approaches such as Intel CET~\cite{intel:cet} can not mitigate this attack for the same reason as in \textit{i)}, and 
 \textit{iv)} with OS-based approaches such as Windows Control Flow Guard~\cite{windows:cfguard} 
@@ -53,7 +53,7 @@ There are several source code based tools
 which can successfully protect against the COOP attack.
 Such tools are: ShrinkWrap~\cite{haller:shrinkwrap}, IFCC/VTV~\cite{vtv:tice}, 
 SafeDispatch~\cite{safedispatch:jang}, vTrust~\cite{zhang:vtrust}, Readactor++~\cite{crane:readactor++}, CPI~\cite{volodymyr:cpi} and the
-tool presented by Bounov et al.~\cite{bounov:interleaving}. These tools profit from high precision
+tool presented by Bounov \textit{et al.}~\cite{bounov:interleaving}. These tools profit from high precision
 since they have access to the full semantic context of the program though the scope
 of the compiler on which they are based. 
 Because of this reason, these tools target mostly other types of security problems than binary-based 

@@ -188,7 +188,7 @@ An instruction $i \in \mathcal{I}$ can non-exclusively perform two kinds of oper
 \textit{1)} Read $n$-bit from the register with $n \in \{ 64, 32, 16, 8 \}$, and
 \textit{2)} Write $n$-bit to the register with $n \in \{ 64, 32, 16, 8 \}$.
 
-Thus, we describe the possible change that occurs in one register with the set $S = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. Note that 0 signals the absence of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore, $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ with $m \in \{64,32,16,8\}$ and $m < n$ (e.g., $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.
+Thus, we describe the possible change that occurs in one register with the set $S = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. Note that 0 signals the absence of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore, $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ with $m \in \{64,32,16,8\}$ and $m < n$ (\textit{e.g.,} $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.
 
 SystemV ABI specifies 16 general purpose integer registers, thus for our purpose we represent the change occurring at the processor level as $\mathcal{S} = S^{16}$.
 
@@ -210,7 +210,7 @@ A variable is alive before the execution of an instruction, if at least one of t
 liveness analysis, because we are looking for the  parameters a function requires. This essentially requires read before write access, however global variables usually
 would also fall into this category, however these would not reside within parameter registers at the start of a function.
 %
-%Khedker et al.~ \cite{khedker2009data} defines live variable analysis on blocks in the following manner:
+%Khedker \textit{et al.}~ \cite{khedker2009data} defines live variable analysis on blocks in the following manner:
 %
 %\begin{subequations}
 %\label{eq:livenessbasedef}
@@ -275,7 +275,7 @@ would also fall into this category, however these would not reside within parame
 %not an overestimation as provided by standard liveness analysis. Furthermore, we have to define how to interpret the changes
 %occurring within one block based on the the change caused by its instructions. Considering this, we arrive at 
 %algorithm \ref{alg:liveness} to compute the liveness state at the start of a basic block.
-Khedker et al.~ \cite{khedker2009data} defines live variable analysis on blocks, which we used to arrive the
+Khedker \textit{et al.}~ \cite{khedker2009data} defines live variable analysis on blocks, which we used to arrive the
 algorithm depicted in Algorithm~\ref{alg:liveness} to compute the liveness state at the start of a basic block. 
 We apply the liveness analysis for each function with the entry block of the function as start and the return blocks as end and after an analysis run for a function.
 
@@ -316,7 +316,7 @@ As the $analyze\_instr$ function calculates the effect of an instruction and is 
 and non fall-through successors, as these are not handled by DynInst in our case. We essentially have four cases that we handle:
 \textit{1)} if the instruction is an indirect call or a direct call but we chose not follow calls, then return a state where all registers are considered written, 
 \textit{2)} if the instruction is a direct call and we chose to follow calls, then we spawn a new analysis and return its result,
-\textit{3)} if the instruction is a constant write (e.g., xor of two registers) then we remove the read portion before we return the decoded state, and 
+\textit{3)} if the instruction is a constant write (\textit{e.g.,} xor of two registers) then we remove the read portion before we return the decoded state, and 
 \textit{4)} in all other cases we simply return the decoded state.
 
 This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the  liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
@@ -631,7 +631,7 @@ handle non jump and non fall-through successors, as these are not handled by Dyn
 \textit{1)} if the instruction is an indirect call or a direct call but we chose not to follow calls, then return a state where all trashed 
 are considered written,
 \textit{2)}  if the instruction is a direct call and we chose to follow calls, then we spawn a new analysis and return its result, and
-%\item if the instruction is a constant write (e.g., xor of two registers) then we remove the read portion before we return the decoded state
+%\item if the instruction is a constant write (\textit{e.g.,} xor of two registers) then we remove the read portion before we return the decoded state
 \textit{3)} in all other cases we simply return the decoded state.
 
 This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of 
@@ -844,7 +844,7 @@ and set the wideness to 64-bit instead of 32-bit.
 %\label{section:addresstakenanalysis}
 %As of now, we use the maximum available set of calltargets---the set of all function entry basic blocks---as input for our algorithm. 
 %To restrict the number of calltargets per callsite even further, we explored the possibility of incorporating an address taken analysis
-%into our application. We base our theory on the paper by Zhang et al.~\cite{mingwei:sekar}, which introduced various types of taken
+%into our application. We base our theory on the paper by Zhang \textit{et al.}~\cite{mingwei:sekar}, which introduced various types of taken
 %addresses. An address is considered to be taken, when it is loaded into memory or a register.
 %
 %\textbf{Address Taken Targets.}
