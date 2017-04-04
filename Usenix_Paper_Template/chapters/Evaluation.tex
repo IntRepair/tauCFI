@@ -5,14 +5,15 @@ We used the two ftp server applications \textit{Vsftpd} (v.1.1.0) and \textit{Pr
 applications \textit{Postgresql} (v.9.0.10) and \textit{Mysql} (v.5.1.65), the memory cache application \textit{Memcached} (v.1.4.20) 
 and the \textit{Node.js} server application (v.0.12.5). We chose these applications, which are a subset of the 
 applications also used by the TypeAmor~\cite{veen:typearmor} to allow for later comparison.
-In our evaluation we addressed the following research questions w.r.t. \textsc{TypeShield}:
-\begin{itemize}
- \item \textbf{RQ1:} How precise is it? (\cref{section:typeshieldprecision})
- \item \textbf{RQ2:} How effective is it? (\cref{section:typeshieldeffectiveness})
- \item \textbf{RQ3:} What is the runtime overhead? (\cref{section:typeshieldoverheadperformance})
- \item \textbf{RQ4:} What is the instrumentation overhead? (\cref{section:typeshieldoverheadinstrumentation})
- \item \textbf{RQ5:} What security level does it offer? (\cref{RQ5: Security Analysis})
- \item \textbf{RQ6:} Is it superior w.r.t. other tools? (\cref{RQ5: Is TypeShield better than other tools?})
+In our evaluation we addressed the following research questions (RQs) w.r.t. \textsc{TypeShield}:
+
+\begin{itemize}[leftmargin=.2in]
+ \item \textbf{RQ1:} How \textbf{precise} is it? (\cref{section:typeshieldprecision})
+ \item \textbf{RQ2:} How \textbf{effective} is it? (\cref{section:typeshieldeffectiveness})
+ \item \textbf{RQ3:} What is the \textbf{runtime overhead}? (\cref{section:typeshieldoverheadperformance})
+ \item \textbf{RQ4:} What is the \textbf{instrumentation overhead}? (\cref{section:typeshieldoverheadinstrumentation})
+ \item \textbf{RQ5:} What \textbf{security level} does it offer? (\cref{RQ5: Security Analysis})
+ \item \textbf{RQ6:} Is it superior \textbf{compared} to other tools? (\cref{RQ5: Is TypeShield better than other tools?})
 \end{itemize}
 \textbf{Comparison Method.} As we do not have access (we requested the authors of TypeArmor several times to provide us access to the source code) 
 to the source code of TypeAmor, we implemented two modes in \textsc{TypeShield}. 
