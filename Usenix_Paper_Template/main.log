@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  4 APR 2017 09:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  4 APR 2017 09:50
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1812,12 +1812,6 @@ LaTeX Font Info:    Try loading font information for TS1+ptm on input line 129.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 138.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 138.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 138.
 \firstlisting=\box66
 \openout6 = `main.pyg'.
 
@@ -1827,14 +1821,21 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
 4.pygtex
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 2.
-) <figures/loop.pdf, id=163, 455.7025pt x 556.0775pt>
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 191.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 191.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 191.
+ <figures/loop.pdf, id=162, 455.7025pt x 556.0775pt>
 File: figures/loop.pdf Graphic file (type pdf)
 
 <use figures/loop.pdf>
 Package pdftex.def Info: figures/loop.pdf used on input line 212.
 (pdftex.def)             Requested size: 187.17682pt x 228.40901pt.
 ) (./chapters/Forward_Indirect_Callsites.tex [2] [3 <./figures/loop.pdf>]
-<figures/class_hierarchy.pdf, id=232, 585.18625pt x 491.8375pt>
+<figures/class_hierarchy.pdf, id=228, 585.18625pt x 491.8375pt>
 File: figures/class_hierarchy.pdf Graphic file (type pdf)
 
 <use figures/class_hierarchy.pdf>
@@ -1945,7 +1946,7 @@ Underfull \vbox (badness 1242) has occurred while \output is active []
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[12] <figures/speccpu2006.pdf, id=417, 442.65375pt x 244.915pt>
+[12] <figures/speccpu2006.pdf, id=415, 442.65375pt x 244.915pt>
 File: figures/speccpu2006.pdf Graphic file (type pdf)
 
 <use figures/speccpu2006.pdf>
@@ -1956,7 +1957,7 @@ Overfull \hbox (3.97762pt too wide) in paragraph at lines 358--359
  [][] 
  []
 
-<./postgresqlO2.pdf, id=419, 578.16pt x 433.62pt>
+<./postgresqlO2.pdf, id=417, 578.16pt x 433.62pt>
 File: ./postgresqlO2.pdf Graphic file (type pdf)
  <use ./postgresqlO2.pdf>
 Package pdftex.def Info: ./postgresqlO2.pdf used on input line 394.
@@ -1967,7 +1968,7 @@ File: ./postgresqlO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./postgresqlO2.pdf used on input line 394.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./postgresqlO2.pdf_tex
-<postgresqlO2.pdf, id=420, page=1, 578.16pt x 433.62pt>
+<postgresqlO2.pdf, id=418, page=1, 578.16pt x 433.62pt>
 File: postgresqlO2.pdf Graphic file (type pdf)
 
 <use postgresqlO2.pdf, page 1>
@@ -1978,7 +1979,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 394--395
  [][] 
  []
 
-<./nodeO2.pdf, id=421, 578.16pt x 433.62pt>
+<./nodeO2.pdf, id=419, 578.16pt x 433.62pt>
 File: ./nodeO2.pdf Graphic file (type pdf)
  <use ./nodeO2.pdf>
 Package pdftex.def Info: ./nodeO2.pdf used on input line 401.
@@ -1989,7 +1990,7 @@ File: ./nodeO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./nodeO2.pdf used on input line 401.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./nodeO2.pdf_tex
-<nodeO2.pdf, id=422, page=1, 578.16pt x 433.62pt>
+<nodeO2.pdf, id=420, page=1, 578.16pt x 433.62pt>
 File: nodeO2.pdf Graphic file (type pdf)
  <use nodeO2.pdf, page 1>
 Package pdftex.def Info: nodeO2.pdf, page1 used on input line 52.
@@ -1999,7 +2000,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 401--402
  [][] 
  []
 
-<./proftpdO2.pdf, id=423, 578.16pt x 433.62pt>
+<./proftpdO2.pdf, id=421, 578.16pt x 433.62pt>
 File: ./proftpdO2.pdf Graphic file (type pdf)
  <use ./proftpdO2.pdf>
 Package pdftex.def Info: ./proftpdO2.pdf used on input line 408.
@@ -2010,7 +2011,7 @@ File: ./proftpdO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./proftpdO2.pdf used on input line 408.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./proftpdO2.pdf_tex
-<proftpdO2.pdf, id=424, page=1, 578.16pt x 433.62pt>
+<proftpdO2.pdf, id=422, page=1, 578.16pt x 433.62pt>
 File: proftpdO2.pdf Graphic file (type pdf)
 
 <use proftpdO2.pdf, page 1>
@@ -2021,7 +2022,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 408--409
  [][] 
  []
 
-<./mysqlO2.pdf, id=425, 578.16pt x 433.62pt>
+<./mysqlO2.pdf, id=423, 578.16pt x 433.62pt>
 File: ./mysqlO2.pdf Graphic file (type pdf)
  <use ./mysqlO2.pdf>
 Package pdftex.def Info: ./mysqlO2.pdf used on input line 415.
@@ -2032,7 +2033,7 @@ File: ./mysqlO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./mysqlO2.pdf used on input line 415.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./mysqlO2.pdf_tex
-<mysqlO2.pdf, id=426, page=1, 578.16pt x 433.62pt>
+<mysqlO2.pdf, id=424, page=1, 578.16pt x 433.62pt>
 File: mysqlO2.pdf Graphic file (type pdf)
  <use mysqlO2.pdf, page 1>
 Package pdftex.def Info: mysqlO2.pdf, page1 used on input line 52.
@@ -2130,7 +2131,7 @@ ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (18 pages, 572455 bytes).
+Output written on main.pdf (18 pages, 572480 bytes).
 PDF statistics:
  855 PDF objects out of 1000 (max. 8388607)
  720 compressed objects within 8 object streams
