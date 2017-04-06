@@ -1,38 +1,25 @@
-TEXFLAGS = -e '$$pdflatex=q/pdflatex %O -shell-escape %S/' -pdf
-LATEXMK = latexmk
+SHELL=/bin/bash
+MAIN=main
+LATEX=pdflatex
+BIBTEX=bibtex
+DTM=$(shell date +%Y%m%d-%H%M%S)
 
-PACKAGE = minted.dtx \
-		  minted.ins \
-		  minted.pdf \
-		  README \
-		  Makefile
+all: clean build clear
 
-.PHONY: minted all doc dist clean cleanall
-
-minted: minted.sty
-
-doc: minted.pdf
-
-all: minted doc
-
-minted.sty: minted.ins minted.dtx
-	tex minted.ins
-
-minted.pdf: minted.sty minted.gls minted.dtx
-	$(LATEXMK) $(TEXFLAGS) minted.dtx
-
-minted.gls: minted.glo
-	makeindex -s gglo.ist -o minted.gls minted.glo
-
-minted.glo: minted.dtx minted.sty
-	$(LATEXMK) $(TEXFLAGS) minted.dtx
-
-dist: $(PACKAGE)
-	@$(RM) minted.zip
-	@zip minted-$(shell grep '^\\ProvidesPackage' < minted.sty | grep -o '\<v[[:digit:]]*\.[[:digit:]]*\>').zip $(PACKAGE)
+build:
+	$(LATEX) $(MAIN).tex
+	$(BIBTEX) $(MAIN)
+	$(LATEX) $(MAIN).tex
+	$(LATEX) $(MAIN).tex
 
 clean:
-	@$(RM) *.aux *.log *.out *.toc *.fdb_latexmk *.ilg *.glo *.gls *.lol
+	@rm -f $(MAIN).{pdf,ps,log,lot,lof,toc,out,dvi,bbl,blg} *.aux
+	@echo Cleared all temporary files and $(MAIN).pdf
 
-cleanall: clean
-	@$(RM) minted.sty minted.zip
+clear:
+	@rm -f $(MAIN).{ps,log,lot,lof,toc,out,dvi,bbl,blg} *.aux
+	@echo Cleared all temporary files
+
+draft:
+	@cp $(MAIN).pdf $(MAIN)-draft-$(DTM).pdf
+	@echo Saved the draft as: $(MAIN)-draft-$(DTM).pdf
