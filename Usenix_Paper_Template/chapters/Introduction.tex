@@ -1,11 +1,13 @@
 \section{Introduction}
 \label{chapter:Introduction}
 
+\textbf{0. What is the big picture?}
 Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} is one of the most used techniques to secure program execution 
 flows against advanced Code-Reuse Attacks (CRAs). Advanced CRAs such as the recently published COOP~\cite{schuster:coop} 
 and its extension~\cite{crane:readactor++} or the attacks described by the Control Flow Bending paper~\cite{carlini:bending}
 are able to bypass most traditional CFI solutions, as they focus on indirect callsites, which are not as easy to determine at compile time.
 
+\textbf{1.What is the problem?}
 This is a problem for applications written in C++, as one of its principle is inheritance and virtual functions. 
 The concept of virtual functions allows the programmer to overwrite a virtual function of the base-class with his
 own implementation. While this allows for much more flexible code, this flexibility is the reason COOP actually 
@@ -15,7 +17,7 @@ to the said table. COOP now leverages a memory corruption to inject their own ob
 which basically gives him control over the whole program, while the control flow still looks genuine, as no 
 code was replaced. 
 
-\textbf{Current solutions.} There exist several source code based solutions that either insert run-time checks during the compilation of 
+\textbf{2.What are the current solutions?} There exist several source code based solutions that either insert run-time checks during the compilation of 
 the program like SafeDispatch~\cite{safedispatch:jang}, ShrinkWrap \cite{haller:shrinkwrap} or IFCC/VTV~\cite{vtv:tice}, 
 which is the solution it is based on. Others modify and reorder the contents of the virtual table as their main 
 aspect like the paper by Bounov \textit{et al.}~\cite{bounov:interleaving}. While the recently published Redactor++~\cite{crane:readactor++}
@@ -30,7 +32,7 @@ to the application in question is provided. However, when we are faced with prop
 binaries, which are provided as is and without the actual source code, the number of tools that can
 protect against COOP or similar attacks is rather low.
 
-\textbf{Limitations.} TypeArmor~\cite{veen:typearmor} implements a fine grained forward edge CFI 
+\textbf{3.Where are the solutions lack (limitations)?} TypeArmor~\cite{veen:typearmor} implements a fine grained forward edge CFI 
 policy based on parameter count for binaries. It calculates invariants for calltargets and indirect callsites based on
 the number of parameters they use by leveraging static analysis of the binary, which then is
 patched to enforce those invariants during run-time. The main shortcoming of TypeArmor is that
@@ -57,7 +59,7 @@ TypeArmor and other similar tools.
 Moreover, \textsc{TypeShield} provides strong mitigation for many types of code-reuse attacks
 (CRAs) for program binaries, without the need for source code. 
 
-\textbf{Our Insight.} \textsc{TypeShield} is based on a forward-edge CFI policy that 
+\textbf{4.What is our idea (our insight)?} \textsc{TypeShield} is based on a forward-edge CFI policy that 
 relies on a precise construction of both the callee prototypes and callsite signatures
 and then uses this information to enforce that each callsite targets matching functions 
 only. For example, \textsc{TypeShield} disallows an indirect call that prepares
@@ -123,6 +125,7 @@ In contrast, with a binary-level solution, we
 can offer strong protection even if the source code is not
 available or when recompilation is not feasible (or desirable).
 
+\textbf{5.What are our contributions (how do we solve the above stated problem)?}
 \textbf{Contributions.} In summary, we make the following contributions:
 \label{Contribution}
 \begin{itemize}

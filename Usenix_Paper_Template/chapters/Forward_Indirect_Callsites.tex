@@ -1,5 +1,7 @@
 \section{C++ Forbidden Forward Calls Exposed}
 \label{C++ Bad Forward Indirect Calls}
+
+% \subsection{Polymorphism in C++}
 \textbf{Polymorphism in C++.}
 \label{Polymorphism in C++}
 Polymorphism along inheritance and encapsulation
@@ -144,6 +146,7 @@ vTable entries residing in the whole initial program hierarchy (or the extended 
 with less or no relationship to the initial callsite,
 indicated with red color vTable entries.
 
+% \subsection{Checking Indirect Forward-Edge Calls in Practice}
 \textbf{Checking Indirect Forward-Edge Calls in Practice.}
 \label{C++ Indirect Calls in Practice}
 As far as we know, there is only the IFCC/VTV~\cite{vtv:tice} tools (up to 8.7\% performance overhead) deployed in practice
@@ -170,14 +173,46 @@ on function parameter count matching (coarse grained, parameter types and more t
 Important to notice is that there are no C++ language semantics which can be used to enforce type and 
 parameter count matching for indirect call/callee pairs, this could be addresses with specifically intended language constructs in the future.
 
-\textbf{Too Permissive Parameter-Based Policies}
+% \subsection{Imprecise Parameter-Count Policies}
+\textbf{Permissive Parameter-Count-Based Policies.}
 \label{Too Permissive Parameter-Based Policies}
-ToDo: in this section talk about too permissive parameter based policy as used in the TypeArmor paper. Give theoretical upper bound values
-on this and show in contrast how this looks like when parameter types are introduced.
-Give and example why this is to permissive and give concrete numbers in order to show why this is allows to many 
-indirect forward calls to pass through. Argue that paramter based policies + parameter types are more precise and 
-state their advantages. Also maybe consider to remove 1/2 (half of a page from the Intro. section. This has to be completely rewritten.)
+TypeArmor~\cite{veen:typearmor} is a tool that can enforce a CFI runtime policy for dispatching of call sites based only on
+parameter count. The authors claim that their policy reports only an \textit{overestimation} for the parameters prepared by a call site
+and \textit{underestimation} for the number of parameters consumed by the matching call targets. The authors claim that their technique is 
+effective w.r.t. preventing COOP attacks. 
 
+We do not agree with this claim and furthermore we believe that their call site vs. call target set enforcing policy is too permissive and thus many potential indirect forward edge based 
+control flow transfers are possible. Consider the following example. In the best case for each call site preparing say $p=4 \in [0, 5]$ parameters their policy
+could theoretically allow only the call targets which consume the same number as parameters as prepared, $c=4 \in [0, 5]$. Note that this does not hold due to 
+the aforementioned call site overestimation and call target underestimation, thus all possible numerical mismatches are allowed by their policy as long as $p$ is 
+greater or equal to $c$. Note that TypeArmor:
+
+\begin{itemize}
+\item \textit{Ideally} would allow for a single call site a set of call targets containing maximum $279936$ possibilities if we consider the maximum value of provided parameters to be
+$p$=6 due to $p \in [0, 5]$ possible provided parameters. Consider 7 parameter types $t$: $bool, \ char, int, \ float, \ double, \ void, \ and \ wchar\_t$. Thus we obtain $6^{7}=279936$.
+Note that in reality $t$ is even larger  
+since there are many types of parameters in C++. 
+The complete list of fundamental types in C++ is 20 not including data structures or object types.
+Thus, all these call targets would be allowed by TypeArmor. Also, note that all other call sites having more 
+than 6 parameters would be not checked by TypeArmor during runtime.
+
+\item \textit{Actually} allows more than $p^{t}$ call targets per call site.
+If we have $t=7$ data types due to TypeArmors overestimation and underestimation we get for each call site an additional
+number of call targets. Let $p=6$ than we get $c = 6x + 5y+ 4z + 3t + 2p + 1v + 0u$ where:
+$x$ is the sum of all call targets consuming 6 parameters, 
+$y$ is the sum of all call targets consuming 5 parameters and so on up to $v$. 
+The value of $c = 2100 = 600 + 500 + 400 + 300 + 200 + 100 \ iff \ x=y=z=t=p=v=100$. We consider 100 a realistic number for sufficiently
+large C++ programs. Note that $2100$ is added to the previously value of $6^{7}$. 
+Thus for a single call site providing $p=6$ parameters TypeArmor allows in total $6^{7}+2100 = 282036$ call targets per call site.
+This situation repeats for $p=5$ where we get $5^{7} + (1500 = 500 + 400 + 300 + 200 + 100 \ iff \ x=y=z=t=p=v=100) \ = \ 79625$ allowed call target per call site. 
+This is also true for the rest of $p \in (0, 3]$.
+\end{itemize}
+Finally, in our opinion TypeArmor is too permissive and as response to this situation we present 
+\textsc{TypeShield} which copes with the variable type state explosion due to different parameter types by considering an 
+approximation (i.e., alias analysis and thus type analysis in binaries is undecidable~\cite{alias:undecidable}) of 
+parameter types based on register wideness. Consequently, the allowed call target set per call site is drastically reduced.
+
+% \subsection{Security Implications of Forbidden Indirect Calls}
 \textbf{Security Implications of Forbidden Indirect Calls.}
 \label{Security Implications of Forbidden Forward Indirect Calls}
 The C++ language standard (12.7~\cite{iso:iecN3690}) does not specify
@@ -230,9 +265,10 @@ contained in the main loop gadget.}
 \label{Class exploit}
 \end{figure}
 
+% \subsection{Real COOP Attack Example}
 \textbf{Real COOP Attack Example.}
 \label{Running Example: CVE X}
-The given example depicted in Figure~\ref{Class exploit}
+The next COOP attack example depicted in Figure~\ref{Class exploit}
 is a proof of concept exploit extracted from~\cite{schuster:coop} and used in order to perform 
 a COOP attack on the Firefox browser. A buffer overflow bug was used in order to call 
 into existing vTable entries by using a main loop gadget. 
@@ -244,10 +280,10 @@ extensions, IPC, the sync API, and Google V8) and for this reason we briefly pre
 documented COOP exploit on a Linux machine.
 
 The C++ class \texttt{nsMultiplexInputStream} contains a main loop gadget inside the function 
-\texttt{nsMultiplexInputStream::Close(void)} which is performing an indirect calls by dispatching
+\texttt{nsMultiplexInput-} \texttt{Stream::Close(void)} which is performing indirect calls by dispatching
 indirect calls on the objects contained in the array. 
 The objects contained in the array during normal execution are of type \texttt{nsInputStream} and each
-of the objects will call the \texttt{close(void)} function in order to close each of the previously opened streams.
+of the objects will call the \texttt{Close(void)} function in order to close each of the previously opened streams.
 For performing the COOP attack the attacker crafts a C++ program containing an array buffer holding 
 six fake objects. Fake objects can call inside (and outside) the initial class and vTable hierarchies
 with no constraints.

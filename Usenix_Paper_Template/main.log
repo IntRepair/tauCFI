@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  6 APR 2017 13:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  10 APR 2017 19:15
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1798,16 +1798,16 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 
 (./components/abstract.tex) (./chapters/Introduction.tex
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 18.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 4.
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-Underfull \hbox (badness 6995) in paragraph at lines 76--89
+Underfull \hbox (badness 6995) in paragraph at lines 78--91
 []\T1/ptm/m/n/10 Current bi-nary based tech-niques en-force im-pre-cise
  []
 
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 129.
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 132.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
@@ -1823,72 +1823,52 @@ LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <8> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 2.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 191.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 194.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 191.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 194.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 191.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 194.
  <figures/loop.pdf, id=162, 455.7025pt x 556.0775pt>
 File: figures/loop.pdf Graphic file (type pdf)
 
 <use figures/loop.pdf>
-Package pdftex.def Info: figures/loop.pdf used on input line 212.
+Package pdftex.def Info: figures/loop.pdf used on input line 215.
 (pdftex.def)             Requested size: 187.17682pt x 228.40901pt.
 ) (./chapters/Forward_Indirect_Callsites.tex [2] [3 <./figures/loop.pdf>]
-<figures/class_hierarchy.pdf, id=228, 585.18625pt x 491.8375pt>
+Underfull \hbox (badness 1810) in paragraph at lines 191--198
+\T1/ptm/m/n/10 vided pa-ram-e-ters. Con-sider 7 pa-ram-e-ter types $\OML/ztmcm/
+m/it/10 t$\T1/ptm/m/n/10 :
+ []
+
+[4] <figures/class_hierarchy.pdf, id=239, 585.18625pt x 491.8375pt>
 File: figures/class_hierarchy.pdf Graphic file (type pdf)
 
 <use figures/class_hierarchy.pdf>
-Package pdftex.def Info: figures/class_hierarchy.pdf used on input line 226.
+Package pdftex.def Info: figures/class_hierarchy.pdf used on input line 261.
 (pdftex.def)             Requested size: 237.7689pt x 199.8385pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 246--264
-[]\T1/ptm/m/n/10 The C++ class \T1/cmtt/m/n/10 nsMultiplexInputStream \T1/ptm/m
-/n/10 con-
- []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 246--264
-\T1/ptm/m/n/10 tains a main loop gad-get in-side the func-tion
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 246--264
-\T1/cmtt/m/n/10 nsMultiplexInputStream::Close(void) \T1/ptm/m/n/10 which is
- []
-
-
-Underfull \hbox (badness 1859) in paragraph at lines 246--264
-\T1/cmtt/m/n/10 nsInputStream \T1/ptm/m/n/10 and each of the ob-jects will call
- the
- []
-
-
-Underfull \hbox (badness 7667) in paragraph at lines 265--276
+Underfull \hbox (badness 7667) in paragraph at lines 301--312
 \T1/cmtt/m/n/10 nsSeekableStream\T1/ptm/m/n/10 , \T1/cmtt/m/n/10 nsIPCSerializa
 bleInputStream
  []
 
-) (./chapters/TypeShild_Overview.tex
+[5 <./figures/class_hierarchy.pdf>]) (./chapters/TypeShild_Overview.tex
 LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <10> not available
 (Font)              Font shape `T1/ptm/b/sc' tried instead on input line 29.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-) (./chapters/Design.tex [5 <./figures/class_hierarchy.pdf>]
+)
+(./chapters/Design.tex
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `T1/ptm/b/it' tried instead on input line 15.
-
+ [6]
 Overfull \hbox (5.25021pt too wide) in paragraph at lines 92--148
  |  [] 
  []
 
-[6]
+
 Underfull \hbox (badness 2221) in paragraph at lines 191--192
 \T1/ptm/m/n/10 one reg-is-ter with the set $\OML/ztmcm/m/it/10 S \OT1/ztmcm/m/n
 /10 = \OMS/ztmcm/m/n/10 f\OML/ztmcm/m/it/10 w\OT1/ztmcm/m/n/10 64\OML/ztmcm/m/i
@@ -1897,9 +1877,13 @@ m/m/it/10 ; w\OT1/ztmcm/m/n/10 8\OML/ztmcm/m/it/10 ; \OT1/ztmcm/m/n/10 0\OMS/zt
 mcm/m/n/10 g ^^B
  []
 
+[7]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <7> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 268.
-[7]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 Underfull \hbox (badness 1354) in paragraph at lines 402--408
 \T1/ptm/m/n/10 reg-is-ter: \T1/ptm/m/it/10 1) $\OML/ztmcm/m/it/10 W$ \T1/ptm/m/
 n/10 rep-re-sents write be-fore read ac-cess, \T1/ptm/m/it/10 2)
@@ -1911,9 +1895,10 @@ Underfull \hbox (badness 6927) in paragraph at lines 415--419
 t/10 S[] \OT1/ztmcm/m/n/10 =
  []
 
+[8]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <8> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 485.
-[8]
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
@@ -1929,24 +1914,31 @@ t/10 S[] \OT1/ztmcm/m/n/10 =
 
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
 (Font)              Font shape `T1/ptm/b/it' tried instead on input line 828.
-) (./chapters/Implementation.tex) (./chapters/Evaluation.tex
+) (./chapters/Implementation.tex
+Underfull \vbox (badness 1303) has occurred while \output is active []
+
+ [10])
+(./chapters/Evaluation.tex
 Underfull \hbox (badness 5652) in paragraph at lines 3--9
 \T1/ptm/m/n/10 (v.1.3.3), the two http server ap-pli-ca-tions \T1/ptm/m/it/10 P
 ost-gresql
  []
 
-[10]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-
+[11]
 Underfull \vbox (badness 1242) has occurred while \output is active []
 
- [11]
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[12] <figures/speccpu2006.pdf, id=415, 442.65375pt x 244.915pt>
+[12]
+Underfull \vbox (badness 2165) has occurred while \output is active []
+
+
+<figures/speccpu2006.pdf, id=415, 442.65375pt x 244.915pt>
 File: figures/speccpu2006.pdf Graphic file (type pdf)
 
 <use figures/speccpu2006.pdf>
@@ -1957,7 +1949,8 @@ Overfull \hbox (3.97762pt too wide) in paragraph at lines 358--359
  [][] 
  []
 
-<./postgresqlO2.pdf, id=417, 578.16pt x 433.62pt>
+[13 <./figures/speccpu2006.pdf>]
+<./postgresqlO2.pdf, id=436, 578.16pt x 433.62pt>
 File: ./postgresqlO2.pdf Graphic file (type pdf)
  <use ./postgresqlO2.pdf>
 Package pdftex.def Info: ./postgresqlO2.pdf used on input line 394.
@@ -1968,7 +1961,7 @@ File: ./postgresqlO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./postgresqlO2.pdf used on input line 394.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./postgresqlO2.pdf_tex
-<postgresqlO2.pdf, id=418, page=1, 578.16pt x 433.62pt>
+<postgresqlO2.pdf, id=437, page=1, 578.16pt x 433.62pt>
 File: postgresqlO2.pdf Graphic file (type pdf)
 
 <use postgresqlO2.pdf, page 1>
@@ -1979,7 +1972,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 394--395
  [][] 
  []
 
-<./nodeO2.pdf, id=419, 578.16pt x 433.62pt>
+<./nodeO2.pdf, id=438, 578.16pt x 433.62pt>
 File: ./nodeO2.pdf Graphic file (type pdf)
  <use ./nodeO2.pdf>
 Package pdftex.def Info: ./nodeO2.pdf used on input line 401.
@@ -1990,7 +1983,7 @@ File: ./nodeO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./nodeO2.pdf used on input line 401.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./nodeO2.pdf_tex
-<nodeO2.pdf, id=420, page=1, 578.16pt x 433.62pt>
+<nodeO2.pdf, id=439, page=1, 578.16pt x 433.62pt>
 File: nodeO2.pdf Graphic file (type pdf)
  <use nodeO2.pdf, page 1>
 Package pdftex.def Info: nodeO2.pdf, page1 used on input line 52.
@@ -2000,7 +1993,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 401--402
  [][] 
  []
 
-<./proftpdO2.pdf, id=421, 578.16pt x 433.62pt>
+<./proftpdO2.pdf, id=440, 578.16pt x 433.62pt>
 File: ./proftpdO2.pdf Graphic file (type pdf)
  <use ./proftpdO2.pdf>
 Package pdftex.def Info: ./proftpdO2.pdf used on input line 408.
@@ -2011,7 +2004,7 @@ File: ./proftpdO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./proftpdO2.pdf used on input line 408.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./proftpdO2.pdf_tex
-<proftpdO2.pdf, id=422, page=1, 578.16pt x 433.62pt>
+<proftpdO2.pdf, id=441, page=1, 578.16pt x 433.62pt>
 File: proftpdO2.pdf Graphic file (type pdf)
 
 <use proftpdO2.pdf, page 1>
@@ -2022,7 +2015,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 408--409
  [][] 
  []
 
-<./mysqlO2.pdf, id=423, 578.16pt x 433.62pt>
+<./mysqlO2.pdf, id=442, 578.16pt x 433.62pt>
 File: ./mysqlO2.pdf Graphic file (type pdf)
  <use ./mysqlO2.pdf>
 Package pdftex.def Info: ./mysqlO2.pdf used on input line 415.
@@ -2033,7 +2026,7 @@ File: ./mysqlO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./mysqlO2.pdf used on input line 415.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./mysqlO2.pdf_tex
-<mysqlO2.pdf, id=424, page=1, 578.16pt x 433.62pt>
+<mysqlO2.pdf, id=443, page=1, 578.16pt x 433.62pt>
 File: mysqlO2.pdf Graphic file (type pdf)
  <use mysqlO2.pdf, page 1>
 Package pdftex.def Info: mysqlO2.pdf, page1 used on input line 52.
@@ -2043,8 +2036,10 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 415--416
  [][] 
  []
 
-[13 <./figures/speccpu2006.pdf>]) (./chapters/Discussion.tex [14 <./postgresqlO
-2.pdf> <./nodeO2.pdf
+) (./chapters/Discussion.tex
+Underfull \vbox (badness 7685) has occurred while \output is active []
+
+ [14 <./postgresqlO2.pdf> <./nodeO2.pdf
 
 pdfTeX warning: /usr/bin/pdflatex (file ./nodeO2.pdf): PDF inclusion: multiple 
 pdfs with page group included in a single page
@@ -2067,7 +2062,7 @@ Underfull \hbox (badness 1552) in paragraph at lines 31--1
 ng point-
  []
 
-) (./main.bbl
+[17]) (./main.bbl
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 6.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
@@ -2085,18 +2080,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 18--21
  i s t s /2016 / 06 / 09 / i n t e l -[] r e l e a s e -[] n e w -[] t e
  []
 
-[17]
+
 Underfull \hbox (badness 1132) in paragraph at lines 111--117
 []\T1/ptm/m/sc/8 Crane, S., Vol-ck-aert, S., Schus-ter, F., Liebchen, C.,
  []
 
-
+[18]
 Underfull \hbox (badness 1859) in paragraph at lines 242--247
 []\T1/ptm/m/sc/8 Petsios, T., Ke-merlis, V. P., Poly-chron-akis, M., and
  []
 
-) [18]
+)
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 191.
+ [19
+
+]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 191.
  (./main.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 191.
@@ -2112,10 +2110,10 @@ runsystem(rm main.pyg)...executed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 191.
  ) 
 Here is how much of TeX's memory you used:
- 30047 strings out of 493105
- 547035 string characters out of 6137072
- 802192 words of memory out of 5000000
- 32683 multiletter control sequences out of 15000+600000
+ 30050 strings out of 493105
+ 547083 string characters out of 6137072
+ 801192 words of memory out of 5000000
+ 32684 multiletter control sequences out of 15000+600000
  101170 words of font info for 123 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  68i,16n,98p,934b,1728s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2131,10 +2129,10 @@ ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (18 pages, 572480 bytes).
+Output written on main.pdf (19 pages, 577107 bytes).
 PDF statistics:
- 855 PDF objects out of 1000 (max. 8388607)
- 720 compressed objects within 8 object streams
- 188 named destinations out of 1000 (max. 500000)
+ 863 PDF objects out of 1000 (max. 8388607)
+ 727 compressed objects within 8 object streams
+ 190 named destinations out of 1000 (max. 500000)
  276 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -257,6 +257,11 @@
 \newblock In {\em Annual Computer Security Applications Conference (ACSAC),\/}
   (2015).
 
+\bibitem{alias:undecidable}
+{\sc Ramalingam, G.}
+\newblock {The Undecidability of Aliasing}.
+\newblock In {\em (TOPLAS),\/} (ACM, 1994).
+
 \bibitem{ASLR}
 {\sc Randomization, P. T. A. S.~L.}
 \newblock \url{https://pax.grsecurity.net/docs/aslr.txt}.
