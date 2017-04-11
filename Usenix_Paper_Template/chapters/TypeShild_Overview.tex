@@ -1,12 +1,9 @@
 \section{Overview}
 \label{chapter:TypeShild Overview}
 
-\textbf{Adversary Model and Assumptions.}
+% \textbf{Adversary Model and Assumptions.}
+\subsection{Adversary Model and Assumptions}
 \label{Adversary Model}
-
-\begin{itemize}
- \item make this in bullet points. see coop paper
-\end{itemize}
 
 We largely use the same threat model and the same basic assumptions as described in the TypeArmor 
 paper \cite{veen:typearmor}, meaning that our attacker has read and write access to the data 
@@ -16,7 +13,8 @@ to be either writable or executable but not both at the same time. We assume
 that our attacker has the ability to execute a memory corruption to hijack the programs 
 control flow and that a solution for backward CFI is in place.
 
-\textbf{Invariants for Targets and Callsites.}
+\subsection{Invariants for Targets and Callsites}
+% \textbf{Invariants for Targets and Callsites.}
 \label{Invariants for Targets and Callsites}
 Advanced code reuse attacks change the calltargets that are invoked within indirect 
 callsites. As standard CFI solutions can hardly restrict these, TypeArmor proposed using two base invariants:
@@ -26,7 +24,8 @@ The idea is that a callsite might only call functions that do not require more p
 To compute the necessary information, TypeArmor uses a modified version of forward liveness analysis for call-targets and 
 backward reaching definitions analysis for callsites.
 
-\textbf{\textsc{TypeShield} Impact on COOP.}
+\subsection{\textsc{TypeShield} Impact on COOP}
+% \textbf{\textsc{TypeShield} Impact on COOP.}
 \label{TypeShild Impact on COOP}
 \begin{figure}[h!]
 \centering

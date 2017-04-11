@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  11 APR 2017 17:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  11 APR 2017 17:41
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1876,8 +1876,8 @@ bleInputStream
  []
 
 ) (./chapters/TypeShild_Overview.tex
-LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <10> not available
-(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 29.
+LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <12> not available
+(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 27.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -1885,7 +1885,11 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 ) (./chapters/Design.tex
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `T1/ptm/b/it' tried instead on input line 15.
- [6]
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[6]
 Overfull \hbox (5.25021pt too wide) in paragraph at lines 90--146
  |  [] 
  []
@@ -1937,11 +1941,10 @@ ost-gresql
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[11]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[12] <figures/speccpu2006.pdf, id=433, 442.65375pt x 244.915pt>
+[11] [12]
+LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <10> not available
+(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 234.
+ <figures/speccpu2006.pdf, id=435, 442.65375pt x 244.915pt>
 File: figures/speccpu2006.pdf Graphic file (type pdf)
 
 <use figures/speccpu2006.pdf>
@@ -1952,22 +1955,19 @@ Overfull \hbox (3.97762pt too wide) in paragraph at lines 358--359
  [][] 
  []
 
-
-Underfull \vbox (badness 1874) has occurred while \output is active []
-
- [13 <./figures/speccpu2006.pdf>] <./postgresqlO2.pdf, id=453, 578.16pt x 433.6
-2pt>
+[13 <./figures/speccpu2006.pdf>]
+<./postgresqlO2.pdf, id=456, 578.16pt x 433.62pt>
+File: ./postgresqlO2.pdf Graphic file (type pdf)
+ <use ./postgresqlO2.pdf>
+Package pdftex.def Info: ./postgresqlO2.pdf used on input line 394.
+(pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
 File: ./postgresqlO2.pdf Graphic file (type pdf)
 
 <use ./postgresqlO2.pdf>
 Package pdftex.def Info: ./postgresqlO2.pdf used on input line 394.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
-File: ./postgresqlO2.pdf Graphic file (type pdf)
- <use ./postgresqlO2.pdf>
-Package pdftex.def Info: ./postgresqlO2.pdf used on input line 394.
-(pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./postgresqlO2.pdf_tex
-<postgresqlO2.pdf, id=454, page=1, 578.16pt x 433.62pt>
+<postgresqlO2.pdf, id=457, page=1, 578.16pt x 433.62pt>
 File: postgresqlO2.pdf Graphic file (type pdf)
 
 <use postgresqlO2.pdf, page 1>
@@ -1978,7 +1978,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 394--395
  [][] 
  []
 
-<./nodeO2.pdf, id=455, 578.16pt x 433.62pt>
+<./nodeO2.pdf, id=458, 578.16pt x 433.62pt>
 File: ./nodeO2.pdf Graphic file (type pdf)
  <use ./nodeO2.pdf>
 Package pdftex.def Info: ./nodeO2.pdf used on input line 401.
@@ -1989,7 +1989,7 @@ File: ./nodeO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./nodeO2.pdf used on input line 401.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./nodeO2.pdf_tex
-<nodeO2.pdf, id=456, page=1, 578.16pt x 433.62pt>
+<nodeO2.pdf, id=459, page=1, 578.16pt x 433.62pt>
 File: nodeO2.pdf Graphic file (type pdf)
  <use nodeO2.pdf, page 1>
 Package pdftex.def Info: nodeO2.pdf, page1 used on input line 52.
@@ -1999,7 +1999,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 401--402
  [][] 
  []
 
-<./proftpdO2.pdf, id=457, 578.16pt x 433.62pt>
+<./proftpdO2.pdf, id=460, 578.16pt x 433.62pt>
 File: ./proftpdO2.pdf Graphic file (type pdf)
  <use ./proftpdO2.pdf>
 Package pdftex.def Info: ./proftpdO2.pdf used on input line 408.
@@ -2010,7 +2010,7 @@ File: ./proftpdO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./proftpdO2.pdf used on input line 408.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./proftpdO2.pdf_tex
-<proftpdO2.pdf, id=458, page=1, 578.16pt x 433.62pt>
+<proftpdO2.pdf, id=461, page=1, 578.16pt x 433.62pt>
 File: proftpdO2.pdf Graphic file (type pdf)
 
 <use proftpdO2.pdf, page 1>
@@ -2021,7 +2021,7 @@ Overfull \hbox (4.87737pt too wide) in paragraph at lines 408--409
  [][] 
  []
 
-<./mysqlO2.pdf, id=459, 578.16pt x 433.62pt>
+<./mysqlO2.pdf, id=462, 578.16pt x 433.62pt>
 File: ./mysqlO2.pdf Graphic file (type pdf)
  <use ./mysqlO2.pdf>
 Package pdftex.def Info: ./mysqlO2.pdf used on input line 415.
@@ -2032,7 +2032,7 @@ File: ./mysqlO2.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./mysqlO2.pdf used on input line 415.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./mysqlO2.pdf_tex
-<mysqlO2.pdf, id=460, page=1, 578.16pt x 433.62pt>
+<mysqlO2.pdf, id=463, page=1, 578.16pt x 433.62pt>
 File: mysqlO2.pdf Graphic file (type pdf)
  <use mysqlO2.pdf, page 1>
 Package pdftex.def Info: mysqlO2.pdf, page1 used on input line 52.
@@ -2110,9 +2110,15 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 197.
  (./main.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 197.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 197.
-Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 81C67ACD8F51A6D9BDEB947892DEB1CB;2084.
 
+
+Package rerunfilecheck Warning: File `main.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `main.out':
+(rerunfilecheck)             Before: 81C67ACD8F51A6D9BDEB947892DEB1CB;2084
+(rerunfilecheck)             After:  3640CB14096884CD172B41113E12CCFB;2326.
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -2120,11 +2126,11 @@ runsystem(rm main.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 30128 strings out of 493105
- 548459 string characters out of 6137072
+ 30134 strings out of 493105
+ 548536 string characters out of 6137072
  815491 words of memory out of 5000000
- 32751 multiletter control sequences out of 15000+600000
- 101170 words of font info for 123 fonts, out of 8000000 for 9000
+ 32753 multiletter control sequences out of 15000+600000
+ 106458 words of font info for 125 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  68i,16n,98p,805b,1728s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/
@@ -2139,10 +2145,10 @@ ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (19 pages, 579494 bytes).
+Output written on main.pdf (19 pages, 579583 bytes).
 PDF statistics:
- 890 PDF objects out of 1000 (max. 8388607)
- 754 compressed objects within 8 object streams
- 197 named destinations out of 1000 (max. 500000)
+ 894 PDF objects out of 1000 (max. 8388607)
+ 758 compressed objects within 8 object streams
+ 200 named destinations out of 1000 (max. 500000)
  316 words of extra memory for PDF output out of 10000 (max. 10000000)
 
