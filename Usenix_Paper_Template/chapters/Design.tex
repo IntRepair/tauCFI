@@ -527,41 +527,7 @@ ignored. %(in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \t
 \textit{2)} \texttt{sub \%rax, \%rax} is probably the next scenario, as it results also in \texttt{\%rax} also holding the value 0, and
 \textit{3)} \texttt{sbb \%rax, \%rax} is also relevant, however it will not result in a constant value and based on the current state might either result in \texttt{\%rax} holding the value 0 or 1.
 
-\subsection{Callsite Analysis}
-\label{section:callsiteanalysis}
-For either \emph{count} or \emph{type} policy to work, we need to arrive at an overestimation of the provided parameters by any indirect 
-callsite existing within the targeted binary. We will employ a modified version of reaching analysis that tracks registers instead of 
-variables to generate the needed overestimation. As our algorithm will be customizable, we look at the required merge functions to 
-implement \emph{count} and \emph{type} policy. 
-
-\textbf{Reaching Definitions Theory.}
-\label{subsection:reachindefinitionstheory}
-An assignment of a value to a variable is a reaching definition at the end of a block $n$, if that definition is present within at 
-least one path from start to the end of the block $n$ without being overwritten by another value assignment to the same variable. 
-We employ reaching definitions analysis, because we are looking for the parameters a callsite provides. This essentially 
-requires the last known set of definitions that reach the actual call instruction within the parameter registers.
-
-%The book~\cite{khedker2009data} defines reaching definition analysis on blocks in the following manner:
-%\begin{subequations}
-%\label{eq:reachingbasedef}
-%\begin{align}
-%In_n &:= \left\{
-%  \begin{array}{lr}
-%    Bl & \text{n is start block}\\
-%    \underset{p \in pred(n)}{\bigcup} Out_p & \text{otherwise}
-%  \end{array}
-%\right. \label{eq:reachingbasedefInt}\\
-%Out_n &:= (In_n - Kill_n) \cup Gen_n \label{eq:reachingbasedefOut}
-%\end{align}
-%\end{subequations}
-%$Bl$ is the default state at the start of a path of execution and in our case reaching that state would mean that we do not 
-%know whether a value has been provided for the variable and therefore we assume that one has been provided, reaching an 
-%overestimation. The set $Kill_n$ describes all definitions that are removed within this block, meaning that the value of 
-%a variable has been overwritten. The set $Gen_n$ describes the new definitions that have been provided by the block $n$, 
-%meaning that the value of a variable has been assigned. Considering this, we can assume that $Gen_n \subseteq Kill_n$, 
-%as we can always create new definitions, but not simply remove definitions without assigning a new value to the variable.
-
-\begin{algorithm}[!h]
+\begin{algorithm}[!ht]
 	\SetAlgoLined
 	\SetKwInOut{Input}{Input}
         \SetKwInOut{Output}{Output}
@@ -599,6 +565,42 @@ requires the last known set of definitions that reach the actual call instructio
 \caption{Reaching definitions analysis of a basic block.}
 \label{alg:reaching}
 \end{algorithm}
+
+\subsection{Callsite Analysis}
+\label{section:callsiteanalysis}
+For either \emph{count} or \emph{type} policy to work, we need to arrive at an overestimation of the provided parameters by any indirect 
+callsite existing within the targeted binary. We will employ a modified version of reaching analysis that tracks registers instead of 
+variables to generate the needed overestimation. As our algorithm will be customizable, we look at the required merge functions to 
+implement \emph{count} and \emph{type} policy. 
+
+\textbf{Reaching Definitions Theory.}
+\label{subsection:reachindefinitionstheory}
+An assignment of a value to a variable is a reaching definition at the end of a block $n$, if that definition is present within at 
+least one path from start to the end of the block $n$ without being overwritten by another value assignment to the same variable. 
+We employ reaching definitions analysis, because we are looking for the parameters a callsite provides. This essentially 
+requires the last known set of definitions that reach the actual call instruction within the parameter registers.
+
+%The book~\cite{khedker2009data} defines reaching definition analysis on blocks in the following manner:
+%\begin{subequations}
+%\label{eq:reachingbasedef}
+%\begin{align}
+%In_n &:= \left\{
+%  \begin{array}{lr}
+%    Bl & \text{n is start block}\\
+%    \underset{p \in pred(n)}{\bigcup} Out_p & \text{otherwise}
+%  \end{array}
+%\right. \label{eq:reachingbasedefInt}\\
+%Out_n &:= (In_n - Kill_n) \cup Gen_n \label{eq:reachingbasedefOut}
+%\end{align}
+%\end{subequations}
+%$Bl$ is the default state at the start of a path of execution and in our case reaching that state would mean that we do not 
+%know whether a value has been provided for the variable and therefore we assume that one has been provided, reaching an 
+%overestimation. The set $Kill_n$ describes all definitions that are removed within this block, meaning that the value of 
+%a variable has been overwritten. The set $Gen_n$ describes the new definitions that have been provided by the block $n$, 
+%meaning that the value of a variable has been assigned. Considering this, we can assume that $Gen_n \subseteq Kill_n$, 
+%as we can always create new definitions, but not simply remove definitions without assigning a new value to the variable.
+
+
 %
 %
 %However, we cannot use reaching definition analysis as is, because the analysis is again based on potentially unbound 
@@ -606,7 +608,7 @@ requires the last known set of definitions that reach the actual call instructio
 %we however want to get a result as close as possible so we again want to customize merge functions. Furthermore, we have to define how 
 %to interpret the changes occuring withing one block based on the the change caused by its instructions. Considering this, w, we 
 %arrive at algorithm \ref{alg:reaching} to compute the liveness state at the start of a basic block.
-The book~\cite{khedker2009data} defines reaching definition analysis on blocks, which we use to arrive at algorithm depicted in Figure~\ref{alg:reaching} to compute 
+The book~\cite{khedker2009data} defines reaching definition analysis on blocks, which we use to arrive at algorithm depicted in Algorithm~\ref{alg:reaching} to compute 
 the liveness state at the start of a basic block. We apply the reaching analysis at each indirect callsite directly before each call instruction.
 
 This algorithm relies on various functions that can be used to configure its behavior. We need to define the 

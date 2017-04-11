@@ -248,7 +248,7 @@ Than $c = 2100 = 600 + 500 + 400 + 300 + 200 + 100 \ iff \ x=y=z=t=p=v=100$.
 Note that $x=100$ is feasible under realistic conditions. Note that $2100$ is added to the previously value of $7^{6}$. 
 Thus for a single call site providing $p=6$ parameters TypeArmor allows in total $7^{6}+2100 = 1197496$ call targets per call site.
 This situation repeats for $p=5$ where we get $7^{5} + (1500 = 500 + 400 + 300 + 200 + 100 \ iff \ x=y=z=t=p=v=100) \ = \ 18307$ allowed call target per call site. 
-This relation holds for the rest of $p \in (0, 3]$.
+This relation holds for the rest of $p \in [0, 3]$.
 \end{itemize}
 Finally, TypeArmor is too permissive and as consequence we present 
 \textsc{TypeShield} which deals with the variable type state explosion due to different parameter types by considering an 

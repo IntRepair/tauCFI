@@ -11,9 +11,9 @@ runtime performance and reliability are key.
 An important C++ OOP convention is the object calling convention when virtual functions are called.
 Virtual functions are an important concept which facilitates late binding and allows the programmer to overwrite a
 virtual function of the base-class with his own implementation. In fact, in order to implement virtual functions, 
-the compiler needs to generate a table meta-data structure (\textit{i.e.,} virtual table) of all
-virtual functions for each class containing them and provide to each instance of such a class a pointer (\textit{i.e.,} virtual pointer)
-to the said table. While this allows much more flexible code to be built---through late binding---it is simplistically implemented with no security
+the compiler needs to generate a table (\textit{i.e.,} virtual table meta-data structure) of all
+virtual functions for each class containing them and provide to each instance of such a class (\textit{i.e.,} object) a pointer (\textit{i.e.,} virtual pointer)
+to the aforementioned table. While this allows much more flexible code to be built---through late binding---it is simplistically implemented with no security
 mechanisms at all.
 
 \textbf{Problem.}
@@ -38,8 +38,8 @@ CFI is one of the most used techniques for securing indirect control flow transf
 by usually adding runtime checks before each indirect call site.
 
 Source code based tools usually insert runtime checks during the compilation of 
-the program such as SafeDispatch~\cite{safedispatch:jang}, ShrinkWrap \cite{haller:shrinkwrap} or IFCC/VTV~\cite{vtv:tice}.
-Other tools modify and reorder the contents of the virtual table layout such as VTI~\textit{et al.}~\cite{bounov:interleaving} 
+the program such as SafeDispatch~\cite{safedispatch:jang}, ShrinkWrap \cite{haller:shrinkwrap} and IFCC/VTV~\cite{vtv:tice}.
+Other tools modify and reorder the contents of the virtual table layout such as VTI~\cite{bounov:interleaving} 
 in order to derive efficient range checks on each object dispatch during runtime. Nevertheless, to the best of our knowledge 
 due to runtime performance issues only IFCC/VTV~\cite{vtv:tice} is currently in production available.
 
@@ -62,32 +62,33 @@ VCI~\cite{vci:asiaccs} is a binary rewriting tool that can protect C++ binaries 
 vtable attacks. VCI strives to reconstruct several language semantics from the binary with limited success.
 These will be later on used for a CFI policy based on resolving pairings of virtual table calls (vcall)
 with precise sets of target classes. The policy is enforced similarly to TypeArmor by inserting the 
-needed checks before each virtual call.VCI perms a restricted type of alias analysis during type propagation it
-fails in some situations to identify the class types used by a vcall. Additionally, VCI can not deal with 
-virtual-dispatch-like C calls and it will also fail to find any
+needed checks before each virtual call. VCI performs a restricted type of alias analysis during type propagation.
+Also, it fails in some situations to identify the class types used by a vcall. Additionally, VCI can not deal with 
+virtual-dispatch-like C calls and it fails to find any
 constructor that defines the \textit{this} pointer. Overall, VCI tries to recuperate many high level 
-semantics from the binary with limited success.
+semantics without focusing on one of them from the binary. As result the call target set per call site is too 
+permissive.
 
 \textbf{Tool Limitations.}
-The above source code tools offer a certain degree of protection when code is provided, however 
-the above mentioned binary tools offer limited or no protection at all due to imprecision of 
-the determined call target set per call site.
+These source code tools offer a certain degree of protection when code is provided, however 
+the above mentioned binary tools offer limited or no protection due to an imprecisely determined
+call target set per call site.
 
 \textbf{Our Idea.}
 In this paper, we present \textsc{TypeShield}, a runtime illegitimate forward 
-calls detection tool that is based on an improved forward-edge CFI policy compared to TypeArmor based 
-on a more stricter set of allowed call targets per call site.
+calls detection tool that is based on an improved forward-edge CFI policy compared to TypeArmor. 
+\textsc{TypeShield} provides a more stricter set of allowed call targets per call site.
 \textsc{TypeShield} is based on a use-def callees analysis to approximated the function prototypes, 
 and liveness analysis at indirect callsites to approximate callsite signatures. This 
 efficiently leads to a more precise CFG of the binary program in question, 
-which could be used by other systems in order to gain a more precise CFG on which to 
-enforce their policies.
+which can be used also by other systems in order to gain a more precise CFG on which to 
+enforce other types of CFI related policies.
 \textsc{TypeShield} incorporates an improved protection policy which is
-based on the insight that if the binary adhere to the standard calling convention
-for indirect calls, undefined arguments at the callsite are not used by any callee by design. 
+based on the insight that if the binary adheres to the standard calling convention
+for indirect calls, undefined arguments at the call site are not used by any callee by design. 
 This further helps to reduce the possible target set of callees for each callsite.
-\textsc{TypeShield} relies on a more precise than TypeArmor construction of both the callee parameter types and call site signatures by 
-using automatically inferred parameter types which are later used into the classification of matching call sites and call targets.
+\textsc{TypeShield} relies on a more precise than TypeArmor construction of both the callee parameter types and call site signatures.
+\textsc{TypeShield} uses automatically inferred parameter types which are later used into the classification of matching call sites and call targets.
 This helps to obtain more precise callee target sets for each caller as the TypeArmor.
 \textsc{TypeShield} compared to TypeArmor uses different analysis strategies for basic block merging.
 Furthermore, \textsc{TypeShield} disallows an indirect call transfer that prepares
@@ -110,14 +111,14 @@ More precisely, \textsc{TypeShield} achieves three goals:
               types of attacks.
 \end{itemize}
 
-\textbf{Contributions.} In summary, we make the following contributions:
+\textbf{Contributions.} 
+In summary, we make the following contributions:
 \label{Contribution}
 \begin{itemize}
  \item \textbf{Security analysis of forward indirect calls.} 
  We analyzed the usage of illegitimate indirect forward calls in detail,
- thus providing security researchers and
-practitioners a better understanding of this emerging
-attack vector.
+ thus providing security researchers and practitioners a better understanding of this emerging
+ threat.
 
  \item \textbf{Illegitimate indirect calls detection tool.}
  We designed and implemented \textsc{TypeSchield}, a general, automated, and easy to deploy tool
@@ -126,8 +127,7 @@ attack vector.
  
  \item \textbf{Experiments.} We demonstrate trough extensive experiments that our precise
  binary-level CFI strategy can mitigate advanced code reuse attacks in absence of C++ semantics.
- For example \textsc{TypeSchield} can protect against COOP~\cite{schuster:coop} and its currently published 
- variations~\cite{ctf:coop, crane:readactor++, loop:oriented, subversive-c:lettner}.
+ For example \textsc{TypeSchield} can protect against the COOP attack and its variations.
 \end{itemize}
 
 \newsavebox{\firstlisting}
