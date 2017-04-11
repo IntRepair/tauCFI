@@ -1,0 +1,30 @@
+\section{Implementation}
+\label{chapter:Implementation}
+
+We implemented \textsc{TypeShield} as a module pass for the \textit{di-opt} environment pass provided by the 
+DynInst~\cite{bernat:dyninst} instrumentation framework (v.9.2.0). 
+However, converting the pass to a standalone executable is also possible, as we do not rely on an extended set of DynInst features
+except for the pass abstraction.
+We currently restricted our analysis and instrumentation to x86-64 bit elf 
+binaries using the SystemV call convention, because the DynInst library does not yet support the
+Windows platform. However, there is currently work going on in order to allow DynInst to work with
+Windows binaries as well. We focused on the SystemV call convention as most C/C++ compilers
+on Linux implement this ABI, however we encapsulated most ABI dependent behavior, so it should 
+be possible to implement other ABIs with relative ease. Therefore, we deem it possible to implement
+\textsc{TypeShield} for the Windows platform in the near future, as we do not use any other 
+platform-dependent API's. 
+We developed the core part of our pass in an instruction analyzer, which relies on the DynamoRIO~\cite{dynamorio:drmemory} library 
+(v.6.6.1) to decode single instructions and provide access to its information. The analyzer is then
+used to implement our version of the reaching and liveness analysis (similar to PathArmor~\cite{veen:typearmor}), which can
+be customized with relative ease, as we allow for arbitrary path merging functions. However, we implemented 
+the three basic versions as follows: destructive, intersection and union.
+To accomplish this we patched the DynInst library in order to allow for local annotation of calltargets with arbitrary
+information, leveraging its relocation schema, which relies on the basic block abstraction.
+We implemented a Clang/LLVM (v.4.0.0, trunk 283889) pass used for 
+collecting ground truth data in order to measure the quality and performance of our tool. 
+The ground truth data is then used to verify the output of our tool for several test targets. 
+This is accomplished with the help of our python based evaluation and test environment.
+In total we implemented \textsc{TypeShield} in 5556 source code lines (SLoC) of C++ code, our Clang/LLVM pass in 392 SLoC
+of C++ code and our test environment in 3005 SLoC of Python code. 
+
+
