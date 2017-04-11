@@ -14,6 +14,11 @@
 \newblock
   \url{http://msdn.microsoft.com/en-us/library/windows/desktop/mt637065(v=vs.85).aspx}.
 
+\bibitem{N4618}
+{2016 Working Draft, Standard for ProgrammingLanguage C++ N4618,}.
+\newblock
+  \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/n4618.pdf}.
+
 \bibitem{intel:cet}
 {Intel Control-flow Enforcement Technology (CET)}.
 \newblock
@@ -125,6 +130,11 @@
 \newblock {Return-Oriented Programming without Returns on ARM}.
 \newblock In {\em Technical report, Technical Report HGI-TR-2010-002,
   Ruhr-University Bochum,\/} (2010).
+
+\bibitem{vci:asiaccs}
+{\sc Elsabagh, M., Dan, F., and Stavrou, A.}
+\newblock {Strict Virtual Call Integrity Checking for C ++ Binaries}.
+\newblock In {\em (ASIACCS),\/} (2017).
 
 \bibitem{fokin:smartdec}
 {\sc Fokin, A., Derevenets, Y., Chernov, A., and Troshina, K.}
@@ -260,7 +270,8 @@
 \bibitem{alias:undecidable}
 {\sc Ramalingam, G.}
 \newblock {The Undecidability of Aliasing}.
-\newblock In {\em (TOPLAS),\/} (ACM, 1994).
+\newblock In {\em ACM Transactions on Programming Languages and Systems
+  (TOPLAS),\/} (1994).
 
 \bibitem{ASLR}
 {\sc Randomization, P. T. A. S.~L.}

@@ -77,9 +77,7 @@ The core of the \emph{count} policy is now to allow any callsite $cs$, which pro
 which requires $c_{ct}$ parameters, iff $c_{ct} \leq c_{cs}$ holds. However, the main problem is that while there is a significant 
 restriction of calltargets for the lower callsites, the restriction capability drops rather rapidly when reaching higher parameter 
 counts, with callsites that use 6 or more parameters being able to call all possible calltargets:
-$
-	\forall cs_1, cs_2.  c_{cs_1} \leq c_{cs_2} \Longrightarrow  \| \{ct \in \mathcal{F} | c_{ct} \leq c_{cs_1} \} \| \leq \| \{ct \in \mathcal{F} | c_{ct} \leq c_{cs_2}  \} \|
-$
+$\forall cs_1, cs_2.  c_{cs_1} \leq c_{cs_2} \Longrightarrow  \| \{ct \in \mathcal{F} | c_{ct} \leq c_{cs_1} \} \| \leq \| \{ct \in \mathcal{F} | c_{ct} \leq c_{cs_2}  \} \|$.
 
 One possible remedy would be the ability to introduce an upper bound for the classification deviation of parameter counts, 
 however as of now, this does not seem feasible with current technology. Another possibility would be the overall reduction

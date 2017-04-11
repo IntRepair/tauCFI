@@ -1,8 +1,8 @@
 \section{C++ Forbidden Forward Calls Exposed}
 \label{C++ Bad Forward Indirect Calls}
 
-% \subsection{Polymorphism in C++}
-\textbf{Polymorphism in C++.}
+\subsection{Polymorphism in C++ Programs}
+% \textbf{Polymorphism in C++.}
 \label{Polymorphism in C++}
 Polymorphism along inheritance and encapsulation
 are the most used modern object-oriented concepts in C++. 
@@ -146,11 +146,11 @@ vTable entries residing in the whole initial program hierarchy (or the extended 
 with less or no relationship to the initial callsite,
 indicated with red color vTable entries.
 
-% \subsection{Checking Indirect Forward-Edge Calls in Practice}
-\textbf{Checking Indirect Forward-Edge Calls in Practice.}
+\subsection{Checking Indirect Calls in Practice}
+% \textbf{Checking Indirect Forward-Edge Calls in Practice.}
 \label{C++ Indirect Calls in Practice}
-As far as we know, there is only the IFCC/VTV~\cite{vtv:tice} tools (up to 8.7\% performance overhead) deployed in practice
-which can be used to check legitimate from illegitimate indirect forward-edge calls during compile time.
+To the best of our knowledge, there are only the IFCC/VTV~\cite{vtv:tice} tools (up to 8.7\% performance overhead) deployed in practice
+which can be used to check legitimate from illegitimate indirect forward-edge calls during runtime.
 vPointers are checked based on the class hierarchy. Furthermore, ShrinkWrap~\cite{haller:shrinkwrap} (to the best of our knowledge not deployed in practice)
 is a tool which further reduces the legitimate vTbles ranges for a given indirect callsite
 through precise analysis of the program class hierarchy and vTable hierarchy. 
@@ -173,47 +173,8 @@ on function parameter count matching (coarse grained, parameter types and more t
 Important to notice is that there are no C++ language semantics which can be used to enforce type and 
 parameter count matching for indirect call/callee pairs, this could be addresses with specifically intended language constructs in the future.
 
-% \subsection{Imprecise Parameter-Count Policies}
-\textbf{Permissive Parameter-Count-Based Policies.}
-\label{Too Permissive Parameter-Based Policies}
-TypeArmor~\cite{veen:typearmor} is a tool that can enforce a CFI runtime policy for dispatching of call sites based only on
-parameter count. The authors claim that their policy reports only an \textit{overestimation} for the parameters prepared by a call site
-and \textit{underestimation} for the number of parameters consumed by the matching call targets. The authors claim that their technique is 
-effective w.r.t. preventing COOP attacks. 
-
-We do not agree with this claim and furthermore we believe that their call site vs. call target set enforcing policy is too permissive and thus many potential indirect forward edge based 
-control flow transfers are possible. Consider the following example. In the best case for each call site preparing say $p=4 \in [0, 5]$ parameters their policy
-could theoretically allow only the call targets which consume the same number as parameters as prepared, $c=4 \in [0, 5]$. Note that this does not hold due to 
-the aforementioned call site overestimation and call target underestimation, thus all possible numerical mismatches are allowed by their policy as long as $p$ is 
-greater or equal to $c$. Note that TypeArmor:
-
-\begin{itemize}
-\item \textit{Ideally} would allow for a single call site a set of call targets containing maximum $279936$ possibilities if we consider the maximum value of provided parameters to be
-$p$=6 due to $p \in [0, 5]$ possible provided parameters. Consider 7 parameter types $t$: $bool, \ char, int, \ float, \ double, \ void, \ and \ wchar\_t$. Thus we obtain $6^{7}=279936$.
-Note that in reality $t$ is even larger  
-since there are many types of parameters in C++. 
-The complete list of fundamental types in C++ is 20 not including data structures or object types.
-Thus, all these call targets would be allowed by TypeArmor. Also, note that all other call sites having more 
-than 6 parameters would be not checked by TypeArmor during runtime.
-
-\item \textit{Actually} allows more than $p^{t}$ call targets per call site.
-If we have $t=7$ data types due to TypeArmors overestimation and underestimation we get for each call site an additional
-number of call targets. Let $p=6$ than we get $c = 6x + 5y+ 4z + 3t + 2p + 1v + 0u$ where:
-$x$ is the sum of all call targets consuming 6 parameters, 
-$y$ is the sum of all call targets consuming 5 parameters and so on up to $v$. 
-The value of $c = 2100 = 600 + 500 + 400 + 300 + 200 + 100 \ iff \ x=y=z=t=p=v=100$. We consider 100 a realistic number for sufficiently
-large C++ programs. Note that $2100$ is added to the previously value of $6^{7}$. 
-Thus for a single call site providing $p=6$ parameters TypeArmor allows in total $6^{7}+2100 = 282036$ call targets per call site.
-This situation repeats for $p=5$ where we get $5^{7} + (1500 = 500 + 400 + 300 + 200 + 100 \ iff \ x=y=z=t=p=v=100) \ = \ 79625$ allowed call target per call site. 
-This is also true for the rest of $p \in (0, 3]$.
-\end{itemize}
-Finally, in our opinion TypeArmor is too permissive and as response to this situation we present 
-\textsc{TypeShield} which copes with the variable type state explosion due to different parameter types by considering an 
-approximation (i.e., alias analysis and thus type analysis in binaries is undecidable~\cite{alias:undecidable}) of 
-parameter types based on register wideness. Consequently, the allowed call target set per call site is drastically reduced.
-
-% \subsection{Security Implications of Forbidden Indirect Calls}
-\textbf{Security Implications of Forbidden Indirect Calls.}
+\subsection{Security Implications of Indirect Calls}
+% \textbf{Security Implications of Forbidden Indirect Calls.}
 \label{Security Implications of Forbidden Forward Indirect Calls}
 The C++ language standard (12.7~\cite{iso:iecN3690}) does not specify
 what happens when calling different vTable entries from an indirect callsite.
@@ -255,6 +216,45 @@ attackers (\textit{e.g.,} used to find new vulnerabilities) and for defenders wh
 harden the source code with checks only at the places which are most exposed 
 to such vulnerabilities (\textit{i.e.,} we name this targeted security hardening).
 
+\subsection{Imprecise Parameter-Count Policies}
+% \textbf{Permissive Parameter-Count-Based Policies.}
+\label{Too Permissive Parameter-Based Policies}
+TypeArmor~\cite{veen:typearmor} is a tool that can enforce a CFI runtime policy for dispatching of call sites based only on
+parameter count. The authors claim that their policy reports only an \textit{overestimation} for the parameters prepared by a call site
+and \textit{underestimation} for the number of parameters consumed by the matching call targets. The authors claim that their technique is 
+effective w.r.t. preventing COOP attacks. 
+
+We do not agree with this claim and furthermore we believe that their call site vs. call target set enforcing policy is too permissive and thus many potential indirect forward edge based 
+control flow transfers are possible. Consider the following example. In the best case for each call site preparing say $p=4 \in [0, 5]$ parameters their policy
+could theoretically allow only the call targets which consume the same number as parameters as prepared, $c=4 \in [0, 5]$. Note that this does not hold due to 
+the aforementioned call site overestimation and call target underestimation, thus all possible numerical mismatches are allowed by their policy as long as $p$ is 
+greater or equal to $c$.
+
+\begin{itemize}
+\item TypeArmor \textit{ideally} would allow for a single call site a set of call targets containing maximum $117649$ possibilities if we consider the maximum value of provided parameters to be
+$p$=6 due to $p \in [0, 5]$ possible provided parameters. Consider 7 C++ basic parameter types $t$ as follows: ${bool, \ char, int, \ float, \ double, \ void, \ and \ wchar\_t}$. 
+Thus we obtain $t^{p}=7^{6}=117649$ allowed call targets per call site if the TypeArmor is in place.
+Note that for simplicity reasons we considered $t=7$ but in reality $t$ is even larger since there are many types of parameters in C++. 
+The complete list of fundamental C++ types contains 20 types; not including data structures or object types.
+Thus, all these data types would be ignored by TypeArmor. Also, note that all other call sites having more than 6 parameters 
+would be not checked by TypeArmor during runtime.
+
+\item TypeArmor \textit{actually} allows more than $t^{p}$ call targets per call site.
+If we have $t=7$ data types due to TypeArmors overestimation and underestimation we get for each call site an additional
+number of call targets. Let $p=6$ than we get $c = 6x + 5y+ 4z + 3t + 2p + 1v + 0u$ where:
+$x$ is the sum of all call targets consuming 6 parameters, 
+$y$ is the sum of all call targets consuming 5 parameters and so on up to 0 parameters. 
+Than $c = 2100 = 600 + 500 + 400 + 300 + 200 + 100 \ iff \ x=y=z=t=p=v=100$. 
+Note that $x=100$ is feasible under realistic conditions. Note that $2100$ is added to the previously value of $7^{6}$. 
+Thus for a single call site providing $p=6$ parameters TypeArmor allows in total $7^{6}+2100 = 1197496$ call targets per call site.
+This situation repeats for $p=5$ where we get $7^{5} + (1500 = 500 + 400 + 300 + 200 + 100 \ iff \ x=y=z=t=p=v=100) \ = \ 18307$ allowed call target per call site. 
+This relation holds for the rest of $p \in (0, 3]$.
+\end{itemize}
+Finally, TypeArmor is too permissive and as consequence we present 
+\textsc{TypeShield} which deals with the variable type state explosion due to different parameter types by considering an 
+approximation (\textit{i.e.,} alias analysis and thus type analysis in binaries is undecidable~\cite{alias:undecidable}) of 
+parameter types based on register wideness. Consequently, the allowed call target set for each call site is drastically reduced.
+
 %%second pic
 \begin{figure}[h!]
     \centering
@@ -265,8 +265,8 @@ contained in the main loop gadget.}
 \label{Class exploit}
 \end{figure}
 
-% \subsection{Real COOP Attack Example}
-\textbf{Real COOP Attack Example.}
+\subsection{Real COOP Attack Example}
+% \textbf{Real COOP Attack Example.}
 \label{Running Example: CVE X}
 The next COOP attack example depicted in Figure~\ref{Class exploit}
 is a proof of concept exploit extracted from~\cite{schuster:coop} and used in order to perform 

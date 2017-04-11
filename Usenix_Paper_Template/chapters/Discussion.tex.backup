@@ -93,17 +93,35 @@ intended to protect backward edges with the help of shadow stack~\cite{dang:asia
 However, the main goal of \textsc{TypeShield} is to complement shadow stack based defenses which can not deal with attacks 
 which do not violate the backward-edge calling conventions such as the COOP attack.
 
-Fourth, \textsc{TypeShield} is not intended to be more precise than source code based tools such as 
-IFCC/VTV~\cite{vtv:tice}.
-On one hand, \textsc{TypeShield} is highly useful in situations where
-the source code for many off-the-shelf programs is not always available and where
-programs rely on many libraries and where the recompilation of all the shared libraries 
-is not possible. On the other hand, binary based tools as \textsc{TypeShield} can offer precise protection when
-source code is not available or recompilation is not feasible or desirable.
+Finally, 
 
-Fianlly, \textsc{TypeShield} can not stop all possible attacks since even solutions 
+\textsc{TypeShield} is not more precise than source code based
+approaches such as IFCC/VTV~\cite{vtv:tice}.
+IFCC/VTV are strong compiler based defenses which produce binaries which can resist control-flow
+hijacking attacks. It is well known that source-code based techniques are more precise 
+when enforcing fine-grained policies based on program constructs (such as
+the C++ vTable hierarchy or generic data types) for mitigation
+purposes. However, there are still important reasons to study
+and improve binary-level defenses. First, the source code
+for many off-the-shelf programs is not always available.
+Second, real-world programs rely on a plethora of shared
+libraries and recompiling all shared libraries is not always
+possible. This is true even for purely open-source projects.
+Third, even if the source code of the libraries is
+available, recompiling big projects with dynamic dependencies is, 
+again, a demanding task. Even state-of-the art
+defenses that enforce CFI policies at the source level such
+as Interleaving~\cite{bounov:interleaving} do not support dynamic libraries.
+Notice that mixing CFI-protected with non-protected code is impossible since
+applying CFI only on a part of the CFG would crash legitimate executions.
+In contrast, with a binary-level solution, we
+can offer strong protection even if the source code is not
+available or when recompilation is not feasible (or desirable).
+
+
+Our conclusion is that our tool can not stop all possible attacks since even solutions 
 with access to source code are unable to protect against all possible attacks~\cite{carlini:bending}.
 Nevertheless, we show that \textsc{TypeShield}, our binary based tool can stop all 
-COOP attacks published to date and significantly raises the bar for an adversary when compared to
-TypeArmor and other similar tools. Moreover, \textsc{TypeShield} provides a strong mitigation 
-for other types of code-reuse attacks as well.
+COOP attacks published to date and significantly raises the bar for an adversary when compared our tool with 
+TypeArmor and other similar tools. Moreover, \textsc{TypeShield} provides strong mitigation for many types of code-reuse attacks
+(CRAs) for program binaries, without the need for source code. 

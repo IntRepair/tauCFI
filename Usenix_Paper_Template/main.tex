@@ -18,7 +18,7 @@
 
 \documentclass[letterpaper,twocolumn,10pt]{article}
 \usepackage{usenix,epsfig,endnotes}
-
+\usepackage{flushend}
 \usepackage{tikz}
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
             \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
@@ -138,7 +138,8 @@
 \date{}
 
 %make title bold and 14 pt font (Latex default is non-bold, 16 pt)
-\title{\Large \bf \textsc{TypeShield}: Precise Protection of Forward Indirect Calls in Binaries}
+% \title{\Large \bf \textsc{TypeShield}: Precise Protection of Forward Indirect Calls in Binaries}
+\title{\Large \bf \textsc{TypeShield}: Protecting Forward Indirect Calls in C++ Binaries for Real}
 
 %for single author (just remove % characters)
 \author{
@@ -183,7 +184,8 @@ Second Institution
 \listoftodos
 
 %the bibliography
-% \balance
+
+
 {\footnotesize \bibliographystyle{acm}
 \bibliography{literatur.bib}}
 
