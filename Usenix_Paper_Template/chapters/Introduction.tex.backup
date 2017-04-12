@@ -2,19 +2,19 @@
 \label{chapter:Introduction}
 
 \textbf{Big Picture.}
-The concept of object-oriented programming (OOP) is \textit{de facto standard} concept for developing large and complex 
-applications because it provides inheritance for objects which are at first unrelated to each other; this in turn 
+The object-oriented programming (OOP) paradigm is \textit{de facto standard} concept for developing large and complex 
+applications because it facilitates inheritance for objects which are at first unrelated to each other; this in turn 
 facilitates better code reuse, software maintenance and software design. There are many programing languages
 which support OOP concepts, however the C++ programing language is the most used programming language for systems where 
-runtime performance and reliability are key.
+runtime performance and reliability are main goal.
 
-An important C++ OOP convention is the object calling convention when virtual functions are called.
+An important C++ OOP convention is the object calling convention when for instance virtual functions are called.
 Virtual functions are an important concept which facilitates late binding and allows the programmer to overwrite a
 virtual function of the base-class with his own implementation. In fact, in order to implement virtual functions, 
 the compiler needs to generate a table (\textit{i.e.,} virtual table meta-data structure) of all
 virtual functions for each class containing them and provide to each instance of such a class (\textit{i.e.,} object) a pointer (\textit{i.e.,} virtual pointer)
-to the aforementioned table. While this allows much more flexible code to be built---through late binding---it is simplistically implemented with no security
-mechanisms at all.
+to the aforementioned table. While this allows more flexible code to be built---through late binding---it is simplistically implemented with no security
+mechanisms at in place.
 
 \textbf{Problem.}
 The performance benefit of late binding comes with high security implications. 
@@ -71,24 +71,28 @@ permissive.
 
 \textbf{Tool Limitations.}
 These source code tools offer a certain degree of protection when code is provided, however 
-the above mentioned binary tools offer limited or no protection due to an imprecisely determined
-call target set per call site.
+the above mentioned binary tools offer limited or no protection due to an in first place
+imprecise calltarget set per callsite.
 
 \textbf{Our Idea.}
-In this paper, we present \textsc{TypeShield}, a runtime illegitimate forward 
-calls detection tool that is based on an improved forward-edge CFI policy compared to TypeArmor based 
-on a more stricter set of allowed call targets per call site.
+In this paper, we present \textsc{TypeShield}, a runtime binary-level illegitimate forward calls 
+filtering tool that is based on an improved forward-edge fine-grained CFI policy compared 
+to previous work~\cite{veen:typearmor, crane:readactor++}.
+The analysis performed by \textsc{TypeShield} considers for each function parameter a register wideness (ABI dependent)
+in order to map callsites per calltargets. The analysis is performed for all address taken (AT) calltargets.
+Further, the analysis compares individual parameters of callsites and calltargets in order to check if an indirect call transfer 
+is accepatble or not, thus this provides a more fine-grained calltarget set per callsite than other state-of-the-art tools.
 \textsc{TypeShield} is based on a use-def callees analysis to approximated the function prototypes, 
 and liveness analysis at indirect callsites to approximate callsite signatures. This 
 efficiently leads to a more precise CFG of the binary program in question, 
-which could be used by other systems in order to gain a more precise CFG on which to 
-enforce their policies.
+which can be used also by other systems in order to gain a more precise CFG on which to 
+enforce other types of CFI related policies.
 \textsc{TypeShield} incorporates an improved protection policy which is
-based on the insight that if the binary adhere to the standard calling convention
-for indirect calls, undefined arguments at the callsite are not used by any callee by design. 
+based on the insight that if the binary adheres to the standard calling convention
+for indirect calls, undefined arguments at the call site are not used by any callee by design. 
 This further helps to reduce the possible target set of callees for each callsite.
-\textsc{TypeShield} relies on a more precise than TypeArmor construction of both the callee parameter types and call site signatures by 
-using automatically inferred parameter types which are later used into the classification of matching call sites and call targets.
+\textsc{TypeShield} relies on a more precise than TypeArmor construction of both the callee parameter types and call site signatures.
+\textsc{TypeShield} uses automatically inferred parameter types which are later used into the classification of matching call sites and call targets.
 This helps to obtain more precise callee target sets for each caller as the TypeArmor.
 \textsc{TypeShield} compared to TypeArmor uses different analysis strategies for basic block merging.
 Furthermore, \textsc{TypeShield} disallows an indirect call transfer that prepares
@@ -111,14 +115,14 @@ More precisely, \textsc{TypeShield} achieves three goals:
               types of attacks.
 \end{itemize}
 
-\textbf{Contributions.} In summary, we make the following contributions:
+\textbf{Contributions.} 
+In summary, we make the following contributions:
 \label{Contribution}
 \begin{itemize}
  \item \textbf{Security analysis of forward indirect calls.} 
  We analyzed the usage of illegitimate indirect forward calls in detail,
- thus providing security researchers and
-practitioners a better understanding of this emerging
-attack vector.
+ thus providing security researchers and practitioners a better understanding of this emerging
+ threat.
 
  \item \textbf{Illegitimate indirect calls detection tool.}
  We designed and implemented \textsc{TypeSchield}, a general, automated, and easy to deploy tool

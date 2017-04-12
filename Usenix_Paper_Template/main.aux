@@ -43,13 +43,16 @@
 \citation{payer:dimva}
 \citation{veen:typearmor}
 \citation{vci:asiaccs}
+\citation{veen:typearmor}
+\citation{crane:readactor++}
+\citation{veen:typearmor}
 \citation{zhang:vtrust}
-\citation{iso:iecN3690}
-\citation{haller:shrinkwrap}
 \@LN@col{1}
 \@LN@col{2}
 \newlabel{Contribution}{{1}{2}{Introduction}{section.1}{}}
 \newlabel{Contribution@cref}{{[section][1][]1}{2}}
+\citation{iso:iecN3690}
+\citation{haller:shrinkwrap}
 \citation{crane:readactor++}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Graphic depicting how a COOP loop gadget works.\relax }}{3}{figure.caption.2}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
@@ -77,24 +80,25 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Checking Indirect Calls in Practice}{4}{subsection.2.2}}
 \newlabel{C++ Indirect Calls in Practice}{{2.2}{4}{Checking Indirect Calls in Practice}{subsection.2.2}{}}
 \newlabel{C++ Indirect Calls in Practice@cref}{{[subsection][2][2]2.2}{4}}
+\@LN@col{2}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Security Implications of Indirect Calls}{4}{subsection.2.3}}
 \newlabel{Security Implications of Forbidden Forward Indirect Calls}{{2.3}{4}{Security Implications of Indirect Calls}{subsection.2.3}{}}
 \newlabel{Security Implications of Forbidden Forward Indirect Calls@cref}{{[subsection][3][2]2.3}{4}}
-\@LN@col{2}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Imprecise Parameter-Count Policies}{4}{subsection.2.4}}
-\newlabel{Too Permissive Parameter-Based Policies}{{2.4}{4}{Imprecise Parameter-Count Policies}{subsection.2.4}{}}
-\newlabel{Too Permissive Parameter-Based Policies@cref}{{[subsection][4][2]2.4}{4}}
 \citation{alias:undecidable}
 \citation{schuster:coop}
 \citation{crane:readactor++}
 \@LN@col{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Imprecise Parameter-Count Policies}{5}{subsection.2.4}}
+\newlabel{Too Permissive Parameter-Based Policies}{{2.4}{5}{Imprecise Parameter-Count Policies}{subsection.2.4}{}}
+\newlabel{Too Permissive Parameter-Based Policies@cref}{{[subsection][4][2]2.4}{5}}
+\@LN@col{2}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Real COOP Attack Example}{5}{subsection.2.5}}
 \newlabel{Running Example: CVE X}{{2.5}{5}{Real COOP Attack Example}{subsection.2.5}{}}
 \newlabel{Running Example: CVE X@cref}{{[subsection][5][2]2.5}{5}}
-\@LN@col{2}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Class inheritance hierarchy of the classes involved in the COOP attack against the Firefox browser. Red letters indicate forbidden vTble entries and green letters indicate allowed vTable entries for the given indirect callsite contained in the main loop gadget.\relax }}{5}{figure.caption.3}}
 \newlabel{Class exploit}{{2}{5}{Class inheritance hierarchy of the classes involved in the COOP attack against the Firefox browser. Red letters indicate forbidden vTble entries and green letters indicate allowed vTable entries for the given indirect callsite contained in the main loop gadget.\relax }{figure.caption.3}{}}
 \newlabel{Class exploit@cref}{{[figure][2][]2}{5}}
+\citation{veen:typearmor}
 \citation{veen:typearmor}
 \citation{veen:typearmor}
 \citation{veen:typearmor}
@@ -105,135 +109,141 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Adversary Model and Assumptions}{6}{subsection.3.1}}
 \newlabel{Adversary Model}{{3.1}{6}{Adversary Model and Assumptions}{subsection.3.1}{}}
 \newlabel{Adversary Model@cref}{{[subsection][1][3]3.1}{6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Invariants for Targets and Callsites}{6}{subsection.3.2}}
-\newlabel{Invariants for Targets and Callsites}{{3.2}{6}{Invariants for Targets and Callsites}{subsection.3.2}{}}
-\newlabel{Invariants for Targets and Callsites@cref}{{[subsection][2][3]3.2}{6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}\textsc  {TypeShield} Impact on COOP}{6}{subsection.3.3}}
-\newlabel{TypeShild Impact on COOP}{{3.3}{6}{\textsc {TypeShield} Impact on COOP}{subsection.3.3}{}}
-\newlabel{TypeShild Impact on COOP@cref}{{[subsection][3][3]3.3}{6}}
 \@LN@col{2}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Example for the wideness based schema when only using a parameter wideness of 64-, 32- and 0-bit and only two parameters.\relax }}{6}{figure.caption.4}}
-\newlabel{fig:lattice3264}{{3}{6}{Example for the wideness based schema when only using a parameter wideness of 64-, 32- and 0-bit and only two parameters.\relax }{figure.caption.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Invariants for Calltargets and Callsites}{6}{subsection.3.2}}
+\newlabel{Invariants for Targets and Callsites}{{3.2}{6}{Invariants for Calltargets and Callsites}{subsection.3.2}{}}
+\newlabel{Invariants for Targets and Callsites@cref}{{[subsection][2][3]3.2}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}\textsc  {TypeShield} Policy Mechanism}{6}{subsection.3.3}}
+\newlabel{TypeShield Policy Mechanism}{{3.3}{6}{\textsc {TypeShield} Policy Mechanism}{subsection.3.3}{}}
+\newlabel{TypeShield Policy Mechanism@cref}{{[subsection][3][3]3.3}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}\textsc  {TypeShield} Impact on COOP}{6}{subsection.3.4}}
+\newlabel{TypeShild Impact on COOP}{{3.4}{6}{\textsc {TypeShield} Impact on COOP}{subsection.3.4}{}}
+\newlabel{TypeShild Impact on COOP@cref}{{[subsection][4][3]3.4}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Parameter register wideness based lattice using 64-bit, 32-bit and 0-bit parameter wideness with six function parameters. Note that $\top $ and $\bot $ represents the top and bottom element of the lattice, respectively. An arrow (\textit  {i.e.,} in total 8) represents an indirect control flow transfer from a callsite to a calltarget. Note that\nobreakspace  {}\cite  {veen:typearmor} would allow all 8 illegal control flow transfers and that \textsc  {TypeSchield} would forbid all of them.\relax }}{6}{figure.caption.4}}
+\newlabel{fig:lattice3264}{{3}{6}{Parameter register wideness based lattice using 64-bit, 32-bit and 0-bit parameter wideness with six function parameters. Note that $\top $ and $\bot $ represents the top and bottom element of the lattice, respectively. An arrow (\textit {i.e.,} in total 8) represents an indirect control flow transfer from a callsite to a calltarget. Note that~\cite {veen:typearmor} would allow all 8 illegal control flow transfers and that \textsc {TypeSchield} would forbid all of them.\relax }{figure.caption.4}{}}
 \newlabel{fig:lattice3264@cref}{{[figure][3][]3}{6}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Design}{6}{section.4}}
-\newlabel{chapter:Design}{{4}{6}{Design}{section.4}{}}
-\newlabel{chapter:Design@cref}{{[section][4][]4}{6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}\emph  {Count} Policy}{6}{subsection.4.1}}
-\newlabel{section:countpolicy}{{4.1}{6}{\emph {Count} Policy}{subsection.4.1}{}}
-\newlabel{section:countpolicy@cref}{{[subsection][1][4]4.1}{6}}
+\citation{veen:typearmor}
+\citation{veen:typearmor}
 \@LN@col{1}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Design}{7}{section.4}}
+\newlabel{chapter:Design}{{4}{7}{Design}{section.4}{}}
+\newlabel{chapter:Design@cref}{{[section][4][]4}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}\emph  {Count} Policy}{7}{subsection.4.1}}
+\newlabel{section:countpolicy}{{4.1}{7}{\emph {Count} Policy}{subsection.4.1}{}}
+\newlabel{section:countpolicy@cref}{{[subsection][1][4]4.1}{7}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \emph  {Count} policy classification schema for callsites and calltargets.\relax }}{7}{figure.caption.5}}
 \newlabel{fig:COUNTschema}{{4}{7}{\emph {Count} policy classification schema for callsites and calltargets.\relax }{figure.caption.5}{}}
 \newlabel{fig:COUNTschema@cref}{{[figure][4][]4}{7}}
+\@LN@col{2}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}\emph  {Type} Policy}{7}{subsection.4.2}}
 \newlabel{section:typepolicy}{{4.2}{7}{\emph {Type} Policy}{subsection.4.2}{}}
 \newlabel{section:typepolicy@cref}{{[subsection][2][4]4.2}{7}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \emph  {Type} policy schema for callsites and calltargets.\relax }}{7}{figure.caption.6}}
 \newlabel{fig:TYPEschema}{{5}{7}{\emph {Type} policy schema for callsites and calltargets.\relax }{figure.caption.6}{}}
 \newlabel{fig:TYPEschema@cref}{{[figure][5][]5}{7}}
-\@LN@col{2}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Instruction Analysis}{7}{subsection.4.3}}
-\newlabel{section:instructionanalysis}{{4.3}{7}{Instruction Analysis}{subsection.4.3}{}}
-\newlabel{section:instructionanalysis@cref}{{[subsection][3][4]4.3}{7}}
 \citation{khedker2009data}
 \@LN@col{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Instruction Analysis}{8}{subsection.4.3}}
+\newlabel{section:instructionanalysis}{{4.3}{8}{Instruction Analysis}{subsection.4.3}{}}
+\newlabel{section:instructionanalysis@cref}{{[subsection][3][4]4.3}{8}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Calltarget Analysis}{8}{subsection.4.4}}
 \newlabel{section:calltargetanalysis}{{4.4}{8}{Calltarget Analysis}{subsection.4.4}{}}
 \newlabel{section:calltargetanalysis@cref}{{[subsection][4][4]4.4}{8}}
+\@LN@col{2}
 \newlabel{subsection:livenessanalysis}{{4.4}{8}{Calltarget Analysis}{subsection.4.4}{}}
 \newlabel{subsection:livenessanalysis@cref}{{[subsection][4][4]4.4}{8}}
 \@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces Liveness analysis of a basic block.\relax }}{8}{algocf.1}}
 \newlabel{alg:liveness}{{1}{8}{Calltarget Analysis}{algocf.1}{}}
 \newlabel{alg:liveness@cref}{{[algorithm][1][]1}{8}}
-\@LN@col{2}
 \newlabel{eq:livenesscustom}{{1}{8}{Calltarget Analysis}{equation.0.1}{}}
 \newlabel{eq:livenesscustom@cref}{{[subequation][1][]1}{8}}
-\newlabel{subsection:requiredparamcount}{{15}{8}{Calltarget Analysis}{equation.0.1d}{}}
-\newlabel{subsection:requiredparamcount@cref}{{[line][15][]15}{8}}
 \@LN@col{1}
+\newlabel{subsection:requiredparamcount}{{15}{9}{Calltarget Analysis}{equation.0.1d}{}}
+\newlabel{subsection:requiredparamcount@cref}{{[line][15][]15}{9}}
 \newlabel{subsection:requiredparamwideness}{{15}{9}{Calltarget Analysis}{equation.0.1d}{}}
 \newlabel{subsection:requiredparamwideness@cref}{{[line][15][]15}{9}}
-\newlabel{subsection:variadicfunctions}{{15}{9}{Calltarget Analysis}{equation.0.1d}{}}
-\newlabel{subsection:variadicfunctions@cref}{{[line][15][]15}{9}}
 \@LN@col{2}
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces ASM code of the \texttt  {make\_cmd} function with optimize level O2, which has a variadic parameter list.\relax }}{9}{figure.caption.8}}
 \newlabel{fig:asmvariadic}{{6}{9}{ASM code of the \texttt {make\_cmd} function with optimize level O2, which has a variadic parameter list.\relax }{figure.caption.8}{}}
 \newlabel{fig:asmvariadic@cref}{{[figure][6][]6}{9}}
-\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces Reaching definitions analysis of a basic block.\relax }}{9}{algocf.2}}
-\newlabel{alg:reaching}{{2}{9}{Calltarget Analysis}{algocf.2}{}}
-\newlabel{alg:reaching@cref}{{[algorithm][2][]2}{9}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Callsite Analysis}{9}{subsection.4.5}}
-\newlabel{section:callsiteanalysis}{{4.5}{9}{Callsite Analysis}{subsection.4.5}{}}
-\newlabel{section:callsiteanalysis@cref}{{[subsection][5][4]4.5}{9}}
+\newlabel{subsection:variadicfunctions}{{15}{9}{Calltarget Analysis}{equation.0.1d}{}}
+\newlabel{subsection:variadicfunctions@cref}{{[line][15][]15}{9}}
 \citation{khedker2009data}
 \@LN@col{1}
+\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces Reaching definitions analysis of a basic block.\relax }}{10}{algocf.2}}
+\newlabel{alg:reaching}{{2}{10}{Calltarget Analysis}{algocf.2}{}}
+\newlabel{alg:reaching@cref}{{[algorithm][2][]2}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Callsite Analysis}{10}{subsection.4.5}}
+\newlabel{section:callsiteanalysis}{{4.5}{10}{Callsite Analysis}{subsection.4.5}{}}
+\newlabel{section:callsiteanalysis@cref}{{[subsection][5][4]4.5}{10}}
 \newlabel{subsection:reachindefinitionstheory}{{4.5}{10}{Callsite Analysis}{subsection.4.5}{}}
 \newlabel{subsection:reachindefinitionstheory@cref}{{[subsection][5][4]4.5}{10}}
+\@LN@col{2}
 \newlabel{eq:livenesscustom}{{2}{10}{Callsite Analysis}{equation.0.2}{}}
 \newlabel{eq:livenesscustom@cref}{{[subequation][2][]2}{10}}
 \newlabel{subsection:providedparamcount}{{4.5}{10}{Callsite Analysis}{equation.0.2d}{}}
 \newlabel{subsection:providedparamcount@cref}{{[subsection][5][4]4.5}{10}}
-\@LN@col{2}
 \newlabel{subsection:providedparamwideness}{{4.5}{10}{Callsite Analysis}{equation.0.2d}{}}
 \newlabel{subsection:providedparamwideness@cref}{{[subsection][5][4]4.5}{10}}
-\@writefile{toc}{\contentsline {paragraph}{Parameter Lists with \textit  {Holes}.}{10}{section*.10}}
-\@writefile{toc}{\contentsline {paragraph}{Address Wideness Unterestimation.}{10}{section*.11}}
 \citation{bernat:dyninst}
 \citation{dynamorio:drmemory}
 \citation{veen:typearmor}
 \citation{veen:typearmor}
 \@LN@col{1}
+\@writefile{toc}{\contentsline {paragraph}{Parameter Lists with \textit  {Holes}.}{11}{section*.10}}
+\@writefile{toc}{\contentsline {paragraph}{Address Wideness Unterestimation.}{11}{section*.11}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Implementation}{11}{section.5}}
 \newlabel{chapter:Implementation}{{5}{11}{Implementation}{section.5}{}}
 \newlabel{chapter:Implementation@cref}{{[section][5][]5}{11}}
+\@LN@col{2}
 \@writefile{toc}{\contentsline {section}{\numberline {6}Evaluation}{11}{section.6}}
 \newlabel{chapter:Evaluation}{{6}{11}{Evaluation}{section.6}{}}
 \newlabel{chapter:Evaluation@cref}{{[section][6][]6}{11}}
-\@LN@col{2}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Precision}{11}{subsection.6.1}}
-\newlabel{section:typeshieldprecision}{{6.1}{11}{Precision}{subsection.6.1}{}}
-\newlabel{section:typeshieldprecision@cref}{{[subsection][1][6]6.1}{11}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.1}Quality and Applicability of Ground Truth}{11}{subsubsection.6.1.1}}
-\newlabel{subsection:typeshieldprecision}{{6.1.1}{11}{Quality and Applicability of Ground Truth}{subsubsection.6.1.1}{}}
-\newlabel{subsection:typeshieldprecision@cref}{{[subsubsection][1][6,1]6.1.1}{11}}
 \@LN@col{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Precision}{12}{subsection.6.1}}
+\newlabel{section:typeshieldprecision}{{6.1}{12}{Precision}{subsection.6.1}{}}
+\newlabel{section:typeshieldprecision@cref}{{[subsection][1][6]6.1}{12}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.1}Quality and Applicability of Ground Truth}{12}{subsubsection.6.1.1}}
+\newlabel{subsection:typeshieldprecision}{{6.1.1}{12}{Quality and Applicability of Ground Truth}{subsubsection.6.1.1}{}}
+\newlabel{subsection:typeshieldprecision@cref}{{[subsubsection][1][6,1]6.1.1}{12}}
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with optimization level O2. The label Clang miss denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc  {TypeShield}.\relax }}{12}{table.caption.12}}
 \newlabel{tbl:matchingquality}{{1}{12}{Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with optimization level O2. The label Clang miss denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc {TypeShield}.\relax }{table.caption.12}{}}
 \newlabel{tbl:matchingquality@cref}{{[table][1][]1}{12}}
 \@LN@col{2}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.2}Classification Precision (\textit  {count})}{12}{subsubsection.6.1.2}}
-\newlabel{subsection:typeshieldcountprecision}{{6.1.2}{12}{Classification Precision (\textit {count})}{subsubsection.6.1.2}{}}
-\newlabel{subsection:typeshieldcountprecision@cref}{{[subsubsection][2][6,1]6.1.2}{12}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces The results for analysis using the \textit  {count} policy on the O2 optimization level.\relax }}{12}{table.caption.13}}
-\newlabel{tbl:precisionCOUNT}{{2}{12}{The results for analysis using the \textit {count} policy on the O2 optimization level.\relax }{table.caption.13}{}}
-\newlabel{tbl:precisionCOUNT@cref}{{[table][2][]2}{12}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.3}Classification Precision (\textit  {type})}{12}{subsubsection.6.1.3}}
-\newlabel{subsection:typeshieldcountprecision}{{6.1.3}{12}{Classification Precision (\textit {type})}{subsubsection.6.1.3}{}}
-\newlabel{subsection:typeshieldcountprecision@cref}{{[subsubsection][3][6,1]6.1.3}{12}}
 \@LN@col{1}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.2}Classification Precision (\textit  {count})}{13}{subsubsection.6.1.2}}
+\newlabel{subsection:typeshieldcountprecision}{{6.1.2}{13}{Classification Precision (\textit {count})}{subsubsection.6.1.2}{}}
+\newlabel{subsection:typeshieldcountprecision@cref}{{[subsubsection][2][6,1]6.1.2}{13}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces The results for analysis using the \textit  {count} policy on the O2 optimization level.\relax }}{13}{table.caption.13}}
+\newlabel{tbl:precisionCOUNT}{{2}{13}{The results for analysis using the \textit {count} policy on the O2 optimization level.\relax }{table.caption.13}{}}
+\newlabel{tbl:precisionCOUNT@cref}{{[table][2][]2}{13}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.3}Classification Precision (\textit  {type})}{13}{subsubsection.6.1.3}}
+\newlabel{subsection:typeshieldcountprecision}{{6.1.3}{13}{Classification Precision (\textit {type})}{subsubsection.6.1.3}{}}
+\newlabel{subsection:typeshieldcountprecision@cref}{{[subsubsection][3][6,1]6.1.3}{13}}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces The results for analysis using the \textit  {type} policy on the O2 optimization level.\relax }}{13}{table.caption.14}}
 \newlabel{tbl:precisionTYPE}{{3}{13}{The results for analysis using the \textit {type} policy on the O2 optimization level.\relax }{table.caption.14}{}}
 \newlabel{tbl:precisionTYPE@cref}{{[table][3][]3}{13}}
+\@LN@col{2}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Effectiveness}{13}{subsection.6.2}}
 \newlabel{section:typeshieldeffectiveness}{{6.2}{13}{Effectiveness}{subsection.6.2}{}}
 \newlabel{section:typeshieldeffectiveness@cref}{{[subsection][2][6]6.2}{13}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.1}Theoretical Limits.}{13}{subsubsection.6.2.1}}
 \newlabel{subsection:theoreticallimit}{{6.2.1}{13}{Theoretical Limits}{subsubsection.6.2.1}{}}
 \newlabel{subsection:theoreticallimit@cref}{{[subsubsection][1][6,2]6.2.1}{13}}
-\@LN@col{2}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.2}Reduction achieved by \textsc  {TypeShield}}{13}{subsubsection.6.2.2}}
 \newlabel{subsection:typeshieldvslimitcount}{{6.2.2}{13}{Reduction achieved by \textsc {TypeShield}}{subsubsection.6.2.2}{}}
 \newlabel{subsection:typeshieldvslimitcount@cref}{{[subsubsection][2][6,2]6.2.2}{13}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Runtime Overhead}{13}{subsection.6.3}}
-\newlabel{section:typeshieldoverheadperformance}{{6.3}{13}{Runtime Overhead}{subsection.6.3}{}}
-\newlabel{section:typeshieldoverheadperformance@cref}{{[subsection][3][6]6.3}{13}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Benchmark run time normalized against the baseline for the SPEC CPU2006 benchmarks.\relax }}{13}{figure.caption.16}}
-\newlabel{fig:awesome_image}{{7}{13}{Benchmark run time normalized against the baseline for the SPEC CPU2006 benchmarks.\relax }{figure.caption.16}{}}
-\newlabel{fig:awesome_image@cref}{{[figure][7][]7}{13}}
 \@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an address taken analysis for optimization level O2.\relax }}{14}{table.caption.15}}
 \newlabel{tbl:policycompat}{{4}{14}{The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an address taken analysis for optimization level O2.\relax }{table.caption.15}{}}
 \newlabel{tbl:policycompat@cref}{{[table][4][]4}{14}}
 \@LN@col{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Runtime Overhead}{14}{subsection.6.3}}
+\newlabel{section:typeshieldoverheadperformance}{{6.3}{14}{Runtime Overhead}{subsection.6.3}{}}
+\newlabel{section:typeshieldoverheadperformance@cref}{{[subsection][3][6]6.3}{14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Benchmark run time normalized against the baseline for the SPEC CPU2006 benchmarks.\relax }}{14}{figure.caption.16}}
+\newlabel{fig:awesome_image}{{7}{14}{Benchmark run time normalized against the baseline for the SPEC CPU2006 benchmarks.\relax }{figure.caption.16}{}}
+\newlabel{fig:awesome_image@cref}{{[figure][7][]7}{14}}
+\@LN@col{2}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Instrumentation Overhead}{14}{subsection.6.4}}
 \newlabel{section:typeshieldoverheadinstrumentation}{{6.4}{14}{Instrumentation Overhead}{subsection.6.4}{}}
 \newlabel{section:typeshieldoverheadinstrumentation@cref}{{[subsection][4][6]6.4}{14}}
@@ -252,26 +262,21 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Mysql -O2\relax }}{14}{figure.caption.17}}
 \newlabel{fig10}{{11}{14}{Mysql -O2\relax }{figure.caption.17}{}}
 \newlabel{fig10@cref}{{[figure][11][]11}{14}}
-\@LN@col{2}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.6}Comparison with Other Tools}{14}{subsection.6.6}}
-\newlabel{RQ5: Is TypeShield better than other tools?}{{6.6}{14}{Comparison with Other Tools}{subsection.6.6}{}}
-\newlabel{RQ5: Is TypeShield better than other tools?@cref}{{[subsection][6][6]6.6}{14}}
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces The medians of calltargets per callsite for different tools.\relax }}{14}{table.caption.18}}
-\newlabel{tbl:toolcompare}{{5}{14}{The medians of calltargets per callsite for different tools.\relax }{table.caption.18}{}}
-\newlabel{tbl:toolcompare@cref}{{[table][5][]5}{14}}
 \@LN@col{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.6}Comparison with Other Tools}{15}{subsection.6.6}}
+\newlabel{RQ5: Is TypeShield better than other tools?}{{6.6}{15}{Comparison with Other Tools}{subsection.6.6}{}}
+\newlabel{RQ5: Is TypeShield better than other tools?@cref}{{[subsection][6][6]6.6}{15}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces The medians of calltargets per callsite for different programs. Smaller geomean values are better. Note that \textsc  {TypeShield} currently does not include function return types as TypeArmor does.\relax }}{15}{table.caption.18}}
+\newlabel{tbl:toolcompare}{{5}{15}{The medians of calltargets per callsite for different programs. Smaller geomean values are better. Note that \textsc {TypeShield} currently does not include function return types as TypeArmor does.\relax }{table.caption.18}{}}
+\newlabel{tbl:toolcompare@cref}{{[table][5][]5}{15}}
 \@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{15}{section.7}}
 \newlabel{chapter:Discussion}{{7}{15}{Discussion}{section.7}{}}
 \newlabel{chapter:Discussion@cref}{{[section][7][]7}{15}}
 \newlabel{section:comptype}{{7}{15}{Discussion}{section.7}{}}
 \newlabel{section:comptype@cref}{{[section][7][]7}{15}}
+\@LN@col{2}
 \newlabel{section:discrep}{{7}{15}{Discussion}{section.7}{}}
 \newlabel{section:discrep@cref}{{[section][7][]7}{15}}
-\@LN@col{2}
-\newlabel{section:venuesimp}{{7}{15}{Discussion}{section.7}{}}
-\newlabel{section:venuesimp@cref}{{[section][7][]7}{15}}
-\newlabel{section:limit}{{7}{15}{Discussion}{section.7}{}}
-\newlabel{section:limit@cref}{{[section][7][]7}{15}}
 \citation{dang:asiaccs}
 \citation{conti:ccs}
 \citation{vtv:tice}
@@ -291,6 +296,19 @@
 \citation{abadi:cfi}
 \citation{intel:cet}
 \citation{windows:cfguard}
+\@LN@col{1}
+\newlabel{section:venuesimp}{{7}{16}{Discussion}{section.7}{}}
+\newlabel{section:venuesimp@cref}{{[section][7][]7}{16}}
+\newlabel{section:limit}{{7}{16}{Discussion}{section.7}{}}
+\newlabel{section:limit@cref}{{[section][7][]7}{16}}
+\@LN@col{2}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Related Work}{16}{section.8}}
+\newlabel{chapter:Related_Work}{{8}{16}{Related Work}{section.8}{}}
+\newlabel{chapter:Related_Work@cref}{{[section][8][]8}{16}}
+\newlabel{Type-Inference on Executables}{{8}{16}{Related Work}{section.8}{}}
+\newlabel{Type-Inference on Executables@cref}{{[section][8][]8}{16}}
+\newlabel{Mitigation of Advanced Code-Reuse Attacks}{{8}{16}{Related Work}{section.8}{}}
+\newlabel{Mitigation of Advanced Code-Reuse Attacks@cref}{{[section][8][]8}{16}}
 \citation{safedispatch:jang}
 \citation{vtv:tice}
 \citation{crane:readactor++}
@@ -306,15 +324,6 @@
 \citation{vfuard:aravind}
 \citation{vtint:zhang}
 \citation{veen:typearmor}
-\@LN@col{1}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Related Work}{16}{section.8}}
-\newlabel{chapter:Related_Work}{{8}{16}{Related Work}{section.8}{}}
-\newlabel{chapter:Related_Work@cref}{{[section][8][]8}{16}}
-\newlabel{Type-Inference on Executables}{{8}{16}{Related Work}{section.8}{}}
-\newlabel{Type-Inference on Executables@cref}{{[section][8][]8}{16}}
-\@LN@col{2}
-\newlabel{Mitigation of Advanced Code-Reuse Attacks}{{8}{16}{Related Work}{section.8}{}}
-\newlabel{Mitigation of Advanced Code-Reuse Attacks@cref}{{[section][8][]8}{16}}
 \citation{veen:typearmor}
 \citation{intel:cet}
 \citation{windows:cfguard}
@@ -328,6 +337,10 @@
 \citation{JOP2}
 \citation{JOP3}
 \citation{rop:carlini}
+\@LN@col{1}
+\@LN@col{2}
+\newlabel{Mitigation of Code-Reuse Attacks}{{8}{17}{Related Work}{section.8}{}}
+\newlabel{Mitigation of Code-Reuse Attacks@cref}{{[section][8][]8}{17}}
 \citation{veen:cfi}
 \citation{ccfir:zhang}
 \citation{cfci:zhang}
@@ -339,13 +352,6 @@
 \citation{mcfi:niu}
 \citation{rockjit:niu}
 \citation{perinput:niu}
-\@LN@col{1}
-\newlabel{Mitigation of Code-Reuse Attacks}{{8}{17}{Related Work}{section.8}{}}
-\newlabel{Mitigation of Code-Reuse Attacks@cref}{{[section][8][]8}{17}}
-\@LN@col{2}
-\@writefile{toc}{\contentsline {section}{\numberline {9}Future Work}{17}{section.9}}
-\newlabel{chapter:Future_Work}{{9}{17}{Future Work}{section.9}{}}
-\newlabel{chapter:Future_Work@cref}{{[section][9][]9}{17}}
 \bibstyle{acm}
 \bibdata{literatur.bib}
 \bibcite{ctf:coop}{1}
@@ -360,6 +366,14 @@
 \bibcite{bernat:dyninst}{10}
 \bibcite{JOP1}{11}
 \bibcite{bounov:interleaving}{12}
+\@LN@col{1}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Future Work}{18}{section.9}}
+\newlabel{chapter:Future_Work}{{9}{18}{Future Work}{section.9}{}}
+\newlabel{chapter:Future_Work@cref}{{[section][9][]9}{18}}
+\@LN@col{2}
+\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{18}{section.10}}
+\newlabel{chapter:Conclusion}{{10}{18}{Conclusion}{section.10}{}}
+\newlabel{chapter:Conclusion@cref}{{[section][10][]10}{18}}
 \bibcite{bap:brumley}{13}
 \bibcite{ROP}{14}
 \bibcite{caballero:inference}{15}
@@ -375,11 +389,6 @@
 \bibcite{haller:shrinkwrap}{25}
 \bibcite{safedispatch:jang}{26}
 \bibcite{iso:iecN3690}{27}
-\@LN@col{1}
-\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{18}{section.10}}
-\newlabel{chapter:Conclusion}{{10}{18}{Conclusion}{section.10}{}}
-\newlabel{chapter:Conclusion@cref}{{[section][10][]10}{18}}
-\@LN@col{2}
 \bibcite{khedker2009data}{28}
 \bibcite{kornau:rop}{29}
 \bibcite{volodymyr:cpi}{30}
@@ -405,6 +414,8 @@
 \bibcite{vtv:tice}{50}
 \bibcite{veen:cfi}{51}
 \bibcite{veen:typearmor}{52}
+\@LN@col{1}
+\@LN@col{2}
 \bibcite{cfiguard:yuan}{53}
 \bibcite{zhang:vtrust}{54}
 \bibcite{vtint:zhang}{55}
@@ -416,4 +427,3 @@
   default.pygstyle,
   4DB23247858650DF7EEB0A890003D3578F486593A96B47FBC569AA596ACDDA54.pygtex}
 \@LN@col{1}
-\@LN@col{2}

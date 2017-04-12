@@ -255,6 +255,9 @@ Finally, TypeArmor is too permissive and as consequence we present
 approximation (\textit{i.e.,} alias analysis and thus type analysis in binaries is undecidable~\cite{alias:undecidable}) of 
 parameter types based on register wideness. Consequently, the allowed call target set for each call site is drastically reduced.
 
+\subsection{Real COOP Attack Example}
+% \textbf{Real COOP Attack Example.}
+\label{Running Example: CVE X}
 %%second pic
 \begin{figure}[h!]
     \centering
@@ -264,10 +267,6 @@ indicate forbidden vTble entries and green letters indicate allowed vTable entri
 contained in the main loop gadget.}
 \label{Class exploit}
 \end{figure}
-
-\subsection{Real COOP Attack Example}
-% \textbf{Real COOP Attack Example.}
-\label{Running Example: CVE X}
 The next COOP attack example depicted in Figure~\ref{Class exploit}
 is a proof of concept exploit extracted from~\cite{schuster:coop} and used in order to perform 
 a COOP attack on the Firefox browser. A buffer overflow bug was used in order to call 
