@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  11 APR 2017 18:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  11 APR 2017 18:53
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1716,67 +1716,67 @@ d.
 )
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 138.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 138.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 137.
+LaTeX Font Info:    ... okay on input line 137.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 137.
+LaTeX Font Info:    ... okay on input line 137.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 137.
+LaTeX Font Info:    ... okay on input line 137.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 137.
+LaTeX Font Info:    ... okay on input line 137.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 137.
+LaTeX Font Info:    ... okay on input line 137.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 137.
+LaTeX Font Info:    ... okay on input line 137.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 137.
+LaTeX Font Info:    ... okay on input line 137.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 137.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 137.
 
  (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    ... okay on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <5.01874> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <5.01874> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <7.02625> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <7.02625> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <8.03> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <8.03> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9.03374> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <9.03374> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10.03749> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10.03749> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <11.04124> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <11.04124> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12.045> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12.045> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.06374> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <17.06374> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <20.075> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <20.075> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.09> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <24.09> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 138.
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 137.
 
 -- Lines per column: 61 (approximate, difference = 0.80365pt).
 ABD: EveryShipout initializing macros
@@ -1820,7 +1820,7 @@ Package: ltcaption 2013/02/03 v1.3-62 longtable captions (AR)
 )
 Package caption Info: End \AtBeginDocument code.
 \AtBeginShipoutBox=\box73
-Package hyperref Info: Link coloring ON on input line 138.
+Package hyperref Info: Link coloring ON on input line 137.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -1830,9 +1830,9 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count212
 )
-LaTeX Info: Redefining \ref on input line 138.
-LaTeX Info: Redefining \pageref on input line 138.
-LaTeX Info: Redefining \nameref on input line 138.
+LaTeX Info: Redefining \ref on input line 137.
+LaTeX Info: Redefining \pageref on input line 137.
+LaTeX Info: Redefining \nameref on input line 137.
 
 (./main.out) (./main.out)
 \@outlinefile=\write8
@@ -1874,14 +1874,14 @@ LaTeX Info: Redefining \nameref on input line 138.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \c@lstlisting=\count213
-LaTeX Font Info:    Try loading font information for T1+phv on input line 155.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 154.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.05249> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 155.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 154.
 LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <14.05249> not available
-(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 155.
+(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 154.
 
 (./components/abstract.tex) (./chapters/Introduction.tex [1{/var/lib/texmf/font
 s/map/pdftex/updmap/pdftex.map}
@@ -2231,11 +2231,11 @@ Left:686.56499pt/0.0pt
 Right:686.56499pt/0.0pt
 Output:686.56499pt
 [18]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 190.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 190.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 189.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 189.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 190.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 190.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 189.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 189.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 5D3532922FA9786421B4A34B2772B317;2374.
 
