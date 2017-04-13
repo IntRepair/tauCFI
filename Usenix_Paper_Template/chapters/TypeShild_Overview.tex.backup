@@ -39,13 +39,13 @@ backward reaching definitions analysis for callsites.
  \begin{tikzpicture}
        % labels
 %     \foreach \i in {0,...,5}
-      \path[blue] (0,-0.25) node{0} (-0.25,0) node{0};
-      \path[blue] (1/2,-0.25) node{1} (-0.25,1/2) node{1};
-      \path[blue] (2/2,-0.25) node{2} (-0.25,2/2) node{2};
-      \path[blue] (3/2,-0.25) node{4} (-0.25,3/2) node{4};
-      \path[blue] (4/2,-0.25) node{8} (-0.25,4/2) node{8};
-      \path[blue] (5/2,-0.25) node{16} (-0.25,5/2) node{16};
-      \path[blue] (6/2,-0.25) node{32} (-0.25,6/2) node{32};
+%       \path[blue] (0,-0.25) node{0} (-0.25,0) node{0};
+      \path[blue] (0.25,-0.25) node{1}  (-0.25, 0.25) node{1};
+      \path[blue] (0.75,-0.25) node{2}  (-0.25, 0.75) node{2};
+      \path[blue] (1.25,-0.25) node{4}  (-0.25, 1.25) node{4};
+      \path[blue] (1.75,-0.25) node{8}  (-0.25, 1.75) node{8};
+      \path[blue] (2.25,-0.25) node{16} (-0.25, 2.25) node{16};
+      \path[blue] (2.75,-0.25) node{32} (-0.25, 2.75) node{32};
 %       \path[blue] (7/2,-0.25) node{64} (-0.25,7/2) node{64};
     % loop over the lattice points
     \foreach \i in {0,...,6}
@@ -123,13 +123,13 @@ backward reaching definitions analysis for callsites.
  \begin{tikzpicture}
        % labels
 %     \foreach \i in {0,...,5}
-      \path[blue] (0,-0.25) node{0} (-0.25,0) node{0};
-      \path[blue] (1/2,-0.25) node{1} (-0.25,1/2) node{1};
-      \path[blue] (2/2,-0.25) node{2} (-0.25,2/2) node{2};
-      \path[blue] (3/2,-0.25) node{4} (-0.25,3/2) node{4};
-      \path[blue] (4/2,-0.25) node{8} (-0.25,4/2) node{8};
-      \path[blue] (5/2,-0.25) node{16} (-0.25,5/2) node{16};
-      \path[blue] (6/2,-0.25) node{32} (-0.25,6/2) node{32};
+%       \path[blue] (0,-0.25) node{0} (-0.25,0) node{0};
+      \path[blue] (0.25,-0.25) node{1}  (-0.25, 0.25) node{1};
+      \path[blue] (0.75,-0.25) node{2}  (-0.25, 0.75) node{2};
+      \path[blue] (1.25,-0.25) node{4}  (-0.25, 1.25) node{4};
+      \path[blue] (1.75,-0.25) node{8}  (-0.25, 1.75) node{8};
+      \path[blue] (2.25,-0.25) node{16} (-0.25, 2.25) node{16};
+      \path[blue] (2.75,-0.25) node{32} (-0.25, 2.75) node{32};
 %       \path[blue] (7/2,-0.25) node{64} (-0.25,7/2) node{64};
     % loop over the lattice points
     \foreach \i in {0,...,6}
@@ -207,13 +207,13 @@ backward reaching definitions analysis for callsites.
  \begin{tikzpicture}
     % labels
 %     \foreach \i in {0,...,5}
-      \path[blue] (0,-0.25) node{0} (-0.25,0) node{0};
-      \path[blue] (1/2,-0.25) node{1} (-0.25,1/2) node{1};
-      \path[blue] (2/2,-0.25) node{2} (-0.25,2/2) node{2};
-      \path[blue] (3/2,-0.25) node{4} (-0.25,3/2) node{4};
-      \path[blue] (4/2,-0.25) node{8} (-0.25,4/2) node{8};
-      \path[blue] (5/2,-0.25) node{16} (-0.25,5/2) node{16};
-      \path[blue] (6/2,-0.25) node{32} (-0.25,6/2) node{32};
+%       \path[blue] (0,-0.25) node{0} (-0.25,0) node{0};
+      \path[blue] (0.25,-0.25) node{1}  (-0.25, 0.25) node{1};
+      \path[blue] (0.75,-0.25) node{2}  (-0.25, 0.75) node{2};
+      \path[blue] (1.25,-0.25) node{4}  (-0.25, 1.25) node{4};
+      \path[blue] (1.75,-0.25) node{8}  (-0.25, 1.75) node{8};
+      \path[blue] (2.25,-0.25) node{16} (-0.25, 2.25) node{16};
+      \path[blue] (2.75,-0.25) node{32} (-0.25, 2.75) node{32};
 %       \path[blue] (7/2,-0.25) node{64} (-0.25,7/2) node{64};
     % loop over the lattice points
     \foreach \i in {0,...,6}
@@ -334,15 +334,307 @@ backward reaching definitions analysis for callsites.
 %       \draw (3.25, 0 + 0.25) circle(4pt);
 %       \draw [line width=0.5mm, red] (3.25, 0 + 0.25) circle (6pt);
 \end{tikzpicture}}
-\caption{Type and parameter count policy. Note that }
+\caption{Type and parameter count policy. 
+Note that our type policy performs an $\wedge$ (i.e., logical and) operation
+between each entry in the first and second matrices. 
+In two black circle located in $M1$ $\wedge$ $M2$ overlap on positions $M1_{i} = M2_{i} \wedge M1_{j} = M2_{j}$ than we have a match.
+Green circles indicate a match whereas red circles indicate a mismatch.
+If at least one match is present on each of the columns of the 
+third matrix than the indirect call transfer will be allowed by our policy, 
+otherwise not. Note that in this given situation
+the indirect call transfer will be allowed.}
 \label{Type and parameter count policy.}
 \end{figure}
 
+\resizebox{0.155\textwidth}{!}{
+\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+    \begin{scope}
+            % labels
+%     \foreach \i in {0,...,5}
+%       \path[blue] (0,-0.25) node{0} (-0.25,0) node{0};
+      \path[blue] (0.25,-0.25) node{1}  (-0.25, 0.25) node{1};
+      \path[blue] (0.75,-0.25) node{2}  (-0.25, 0.75) node{2};
+      \path[blue] (1.25,-0.25) node{4}  (-0.25, 1.25) node{4};
+      \path[blue] (1.75,-0.25) node{8}  (-0.25, 1.75) node{8};
+      \path[blue] (2.25,-0.25) node{16} (-0.25, 2.25) node{16};
+      \path[blue] (2.75,-0.25) node{32} (-0.25, 2.75) node{32};
+%       \path[blue] (7/2,-0.25) node{64} (-0.25,7/2) node{64};
+    % loop over the lattice points
+    \foreach \i in {0,...,6}
+      \foreach \j in {0,...,6}{
+        \draw (\i / 2,\j / 2) rectangle (1,1);
+        % check if (\i,\j) > (2,2)
+%         \ifnum \i < 3
+%           \ifnum \j < 3
+%             \fill[red] (\i + 0.25,\j + 0.25) circle(3pt);
+%           \fi
+%         \fi
+      };
+      
+      \fill (0   + 0.25, 0   + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0   + 0.25, 0   + 0.25) circle (6pt);
+      \fill (0.5 + 0.25, 0.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0.5 + 0.25, 0.5 + 0.25) circle (6pt);
+      \fill (0 + 0.25, 0.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0 + 0.25, 0.5 + 0.25) circle (6pt);
+      \fill (0.5 + 0.25, 0 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0.5 + 0.25, 0 + 0.25) circle (6pt);
+      \fill (0.5 + 0.25, 1 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0.5 + 0.25, 1 + 0.25) circle (6pt);
+      \fill (0 + 0.25, 1 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0 + 0.25, 1 + 0.25) circle (6pt);
+      
+%       \draw (0.5 + 0.25, 3 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (0.5 + 0.25, 3 + 0.25) circle (6pt);
+%       \draw (0 + 0.25, 3 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (0 + 0.25, 3 + 0.25) circle (6pt);
+%       \draw (1 + 0.25, 3 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (1 + 0.25, 3 + 0.25) circle (6pt);
+%       \draw (1 + 0.75, 3 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (1 + 0.75, 3 + 0.25) circle (6pt);
+%       \draw (2.25, 3 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (2.25, 3 + 0.25) circle (6pt);
+%       \draw (2.75, 3 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (2.75, 3 + 0.25) circle (6pt);
+%       \draw (3.25, 3 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (3.25, 3 + 0.25) circle (6pt);
+      
+      \draw (0.5 + 0.25, 2.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0.5 + 0.25, 2.5 + 0.25) circle (6pt);
+      \draw (0 + 0.25, 2.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0 + 0.25, 2.5 + 0.25) circle (6pt);
+      \draw (1 + 0.25, 2.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (1 + 0.25, 2.5 + 0.25) circle (6pt);
+      \draw (1 + 0.75, 2.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (1 + 0.75, 2.5 + 0.25) circle (6pt);
+      \draw (2.25, 2.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (2.25, 2.5 + 0.25) circle (6pt);
+      \draw (2.75, 2.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (2.75, 2.5 + 0.25) circle (6pt);
+%       \draw (3.25, 2.5 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (3.25, 2.5 + 0.25) circle (6pt);
+      
+      \draw (0.5 + 0.25, 2 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0.5 + 0.25, 2 + 0.25) circle (6pt);
+      \draw (0 + 0.25, 2 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0 + 0.25, 2 + 0.25) circle (6pt);
+      \draw (1 + 0.25, 2 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (1 + 0.25, 2 + 0.25) circle (6pt);
+      \draw (1 + 0.75, 2 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (1 + 0.75, 2 + 0.25) circle (6pt);
+      \draw (2.25, 2 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (2.25, 2 + 0.25) circle (6pt);
+      \draw (2.75, 2 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (2.75, 2 + 0.25) circle (6pt);
+%       \draw (3.25, 2 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (3.25, 2 + 0.25) circle (6pt);
+      
+      \fill (0.5 + 0.25, 1.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (0.5 + 0.25, 1.5 + 0.25) circle (6pt);
+      \fill (0 + 0.25, 1.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (0 + 0.25, 1.5 + 0.25) circle (6pt);
+      \fill (1 + 0.25, 1.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (1 + 0.25, 1.5 + 0.25) circle (6pt);
+      \fill (1 + 0.75, 1.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (1 + 0.75, 1.5 + 0.25) circle (6pt);
+      \draw (2.25, 1.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (2.25, 1.5 + 0.25) circle (6pt);
+      \draw (2.75, 1.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (2.75, 1.5 + 0.25) circle (6pt);
+%       \draw (3.25, 1.5 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (3.25, 1.5 + 0.25) circle (6pt);
+      
+      \fill (1 + 0.25, 1 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (1 + 0.25, 1 + 0.25) circle (6pt);
+      \fill (1 + 0.75, 1 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (1 + 0.75, 1 + 0.25) circle (6pt);
+      
+      \fill (2.25, 1 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (2.25, 1 + 0.25) circle (6pt);
+      \fill (2.75, 1 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (2.75, 1 + 0.25) circle (6pt);
+%       \draw (3.25, 1 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (3.25, 1 + 0.25) circle (6pt);
+      
+      \fill (1 + 0.25, 0.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (1 + 0.25, 0.5 + 0.25) circle (6pt);
+      \fill (1 + 0.75, 0.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (1 + 0.75, 0.5 + 0.25) circle (6pt);
+      \fill (2.25, 0.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (2.25, 0.5 + 0.25) circle (6pt);
+      \fill (2.75, 0.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (2.75, 0.5 + 0.25) circle (6pt);
+%       \draw (3.25, 0.5 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (3.25, 0.5 + 0.25) circle (6pt);
+      
+      \fill (1 + 0.25, 0 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (1 + 0.25, 0 + 0.25) circle (6pt);
+      \fill (1 + 0.75, 0 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (1 + 0.75, 0 + 0.25) circle (6pt);
+      \fill (2.25, 0 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (2.25, 0 + 0.25) circle (6pt);
+      \fill (2.75, 0 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (2.75, 0 + 0.25) circle (6pt);
+%       \draw (3.25, 0 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (3.25, 0 + 0.25) circle (6pt);
+    \end{scope}
+    
+    \begin{scope}[xshift=10cm, yshift=10cm]
+     \textbf{$\wedge$}
+    \end{scope}
+
+
+    \begin{scope}[xshift=5cm]
+            % labels
+%     \foreach \i in {0,...,5}
+%       \path[blue] (0,-0.25) node{0} (-0.25,0) node{0};
+      \path[blue] (0.25,-0.25) node{1}  (-0.25, 0.25) node{1};
+      \path[blue] (0.75,-0.25) node{2}  (-0.25, 0.75) node{2};
+      \path[blue] (1.25,-0.25) node{4}  (-0.25, 1.25) node{4};
+      \path[blue] (1.75,-0.25) node{8}  (-0.25, 1.75) node{8};
+      \path[blue] (2.25,-0.25) node{16} (-0.25, 2.25) node{16};
+      \path[blue] (2.75,-0.25) node{32} (-0.25, 2.75) node{32};
+%       \path[blue] (7/2,-0.25) node{64} (-0.25,7/2) node{64};
+    % loop over the lattice points
+    \foreach \i in {0,...,6}
+      \foreach \j in {0,...,6}{
+        \draw (\i / 2,\j / 2) rectangle (1,1);
+        % check if (\i,\j) > (2,2)
+%         \ifnum \i < 3
+%           \ifnum \j < 3
+%             \fill[red] (\i + 0.25,\j + 0.25) circle(3pt);
+%           \fi
+%         \fi
+      };
+      
+      \fill (0   + 0.25, 0   + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0   + 0.25, 0   + 0.25) circle (6pt);
+      \fill (0.5 + 0.25, 0.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0.5 + 0.25, 0.5 + 0.25) circle (6pt);
+      \fill (0 + 0.25, 0.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0 + 0.25, 0.5 + 0.25) circle (6pt);
+      \fill (0.5 + 0.25, 0 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0.5 + 0.25, 0 + 0.25) circle (6pt);
+      \fill (0.5 + 0.25, 1 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0.5 + 0.25, 1 + 0.25) circle (6pt);
+      \fill (0 + 0.25, 1 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0 + 0.25, 1 + 0.25) circle (6pt);
+      
+%       \draw (0.5 + 0.25, 3 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (0.5 + 0.25, 3 + 0.25) circle (6pt);
+%       \draw (0 + 0.25, 3 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (0 + 0.25, 3 + 0.25) circle (6pt);
+%       \draw (1 + 0.25, 3 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (1 + 0.25, 3 + 0.25) circle (6pt);
+%       \draw (1 + 0.75, 3 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (1 + 0.75, 3 + 0.25) circle (6pt);
+%       \draw (2.25, 3 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (2.25, 3 + 0.25) circle (6pt);
+%       \draw (2.75, 3 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (2.75, 3 + 0.25) circle (6pt);
+%       \draw (3.25, 3 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (3.25, 3 + 0.25) circle (6pt);
+      
+      \draw (0.5 + 0.25, 2.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0.5 + 0.25, 2.5 + 0.25) circle (6pt);
+      \draw (0 + 0.25, 2.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0 + 0.25, 2.5 + 0.25) circle (6pt);
+      \draw (1 + 0.25, 2.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (1 + 0.25, 2.5 + 0.25) circle (6pt);
+      \draw (1 + 0.75, 2.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (1 + 0.75, 2.5 + 0.25) circle (6pt);
+      \draw (2.25, 2.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (2.25, 2.5 + 0.25) circle (6pt);
+      \draw (2.75, 2.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (2.75, 2.5 + 0.25) circle (6pt);
+%       \draw (3.25, 2.5 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (3.25, 2.5 + 0.25) circle (6pt);
+      
+      \draw (0.5 + 0.25, 2 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0.5 + 0.25, 2 + 0.25) circle (6pt);
+      \draw (0 + 0.25, 2 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (0 + 0.25, 2 + 0.25) circle (6pt);
+      \draw (1 + 0.25, 2 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (1 + 0.25, 2 + 0.25) circle (6pt);
+      \draw (1 + 0.75, 2 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (1 + 0.75, 2 + 0.25) circle (6pt);
+      \draw (2.25, 2 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (2.25, 2 + 0.25) circle (6pt);
+      \draw (2.75, 2 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (2.75, 2 + 0.25) circle (6pt);
+%       \draw (3.25, 2 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (3.25, 2 + 0.25) circle (6pt);
+      
+      \fill (0.5 + 0.25, 1.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (0.5 + 0.25, 1.5 + 0.25) circle (6pt);
+      \fill (0 + 0.25, 1.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (0 + 0.25, 1.5 + 0.25) circle (6pt);
+      \fill (1 + 0.25, 1.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (1 + 0.25, 1.5 + 0.25) circle (6pt);
+      \fill (1 + 0.75, 1.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (1 + 0.75, 1.5 + 0.25) circle (6pt);
+      \draw (2.25, 1.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (2.25, 1.5 + 0.25) circle (6pt);
+      \draw (2.75, 1.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, red] (2.75, 1.5 + 0.25) circle (6pt);
+%       \draw (3.25, 1.5 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (3.25, 1.5 + 0.25) circle (6pt);
+      
+      \fill (1 + 0.25, 1 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (1 + 0.25, 1 + 0.25) circle (6pt);
+      \fill (1 + 0.75, 1 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (1 + 0.75, 1 + 0.25) circle (6pt);
+      
+      \fill (2.25, 1 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (2.25, 1 + 0.25) circle (6pt);
+      \fill (2.75, 1 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (2.75, 1 + 0.25) circle (6pt);
+%       \draw (3.25, 1 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (3.25, 1 + 0.25) circle (6pt);
+      
+      \fill (1 + 0.25, 0.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (1 + 0.25, 0.5 + 0.25) circle (6pt);
+      \fill (1 + 0.75, 0.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (1 + 0.75, 0.5 + 0.25) circle (6pt);
+      \fill (2.25, 0.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (2.25, 0.5 + 0.25) circle (6pt);
+      \fill (2.75, 0.5 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (2.75, 0.5 + 0.25) circle (6pt);
+%       \draw (3.25, 0.5 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (3.25, 0.5 + 0.25) circle (6pt);
+      
+      \fill (1 + 0.25, 0 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (1 + 0.25, 0 + 0.25) circle (6pt);
+      \fill (1 + 0.75, 0 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (1 + 0.75, 0 + 0.25) circle (6pt);
+      \fill (2.25, 0 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (2.25, 0 + 0.25) circle (6pt);
+      \fill (2.75, 0 + 0.25) circle(4pt);
+      \draw [line width=0.5mm, green] (2.75, 0 + 0.25) circle (6pt);
+%       \draw (3.25, 0 + 0.25) circle(4pt);
+%       \draw [line width=0.5mm, red] (3.25, 0 + 0.25) circle (6pt);
+    \end{scope}
+\end{tikzpicture}}
+
 Figure~\ref{Type and parameter count policy.} depicts the behavior of our type based policy
-when the callsite provides 6 parameters having following bit wideness 
-(1:4-byte, 2:4-bye, 3-4-byte, 4:4-byte, 5-2-byte, 6:2-byte) 
-and the calltarget is expecting 6 parameters having following bit wideness 
-(1:4-byte, 2:4-bye, 3:0-byte, 4:0-byte, 5-0-byte, 6:0-byte) of the expected parameters. 
+when the callsite provides 6 parameters $pcs1, ..., pcs6$ having following bit 
+wideness \textit{pcs}1:8-byte, \textit{pcs}2:8-bye, \textit{pcs}3:8-byte, \textit{pcs}4:8-byte, \textit{pcs}5:4-byte, 
+\textit{pcs}6:4-byte, and the calltarget is expecting 6 parameters $pct1, ..., pcs6$ having following bit 
+wideness \textit{pct}1:8-byte, \textit{pct}2:8-bye, \textit{pct}3:0-byte, \textit{pct}4:0-byte, \textit{pct}5:0-byte, 
+\textit{pct}6:0-byte of the expected parameters. 
+\textsc{TypeShield}'s type policy is: 
+\begin{multline}
+Let \ A \ be \ a \ calltarget \ ct_{A} \ and \ cs_{B} \ be \ a \ callsite \ than: 
+\\ ct_{A} \subseteq cs_{B} \iff \forall i \exists [1, 6], 
+wideness(parameter(A)[i]) \leq \\ wideness(parameter(B)[i]).
+\end{multline}
+
+Whereas the policy of TypeArmor is: 
+\begin{multline}
+Let \ A \ be \ a \ calltarget \ ct_{A} \ and \ cs_{B} \ be \ a \ callsite \ than: 
+\\ ct_{A} \subseteq cs_{B} \iff \forall i \exists [1, 6], 
+count(parameter(A)) \leq \\ count(parameter(B)).
+\end{multline}
 
 
 \subsection{\textsc{TypeShield} Impact on COOP}
