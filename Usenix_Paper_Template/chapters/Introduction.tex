@@ -168,7 +168,7 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
   nsresult rv = NS_OK;
   //get array length
   uint32_t len = mStreams.Length();
-  //array-based main loop gadget
+  //array-based main loop gadget (ML-G)
  for (uint32_t i = 0; i<len; ++i){
   //(1) hijacked indirect call
   nsresult rv2=mStreams[i]->Close();

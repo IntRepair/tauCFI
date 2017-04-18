@@ -238,26 +238,27 @@ greater or equal to $c$.
 \begin{itemize}
 \item TypeArmor \textit{ideally} would allow for a single call site a set of call targets containing maximum $117649$ possibilities if we 
 consider the maximum value of provided parameters to be
-$p$=6 due to $p \in [1, 6]$ possible provided parameters. Consider 7 C++ integer parameter types $t$:
+$p=6$ due to $p \in [1, 6]$ possible provided parameters. Consider 7 C++ integer parameter types $t$:
 $int, \ char, \ unsigned \ char, \ bool, \ long, \ unsigned \ long, \ and \\ \ short$. 
 Thus we obtain $t^{p}=7^{6}=117649$ allowed call targets per call site if the TypeArmor is in place.
-Note that for simplicity reasons we considered $t=7$ but in reality $t$ is even larger since there are many types of parameters in C++. 
+Note that for simplicity reasons we considered $t=7$ but in practice $t$ is even larger since there are many types of parameters in C++. 
 The complete list of fundamental C++ types contains 20 types; not including data structures or object types.
 Thus, all these data types would be ignored by TypeArmor. Also, note that all other call sites having more than 6 parameters 
 would be not checked by TypeArmor as well.
 
 \item TypeArmor \textit{actually} allows more than $t^{p}$ call targets per call site.
 If we have $t=7$ integer types due to TypeArmors overestimation and underestimation we get for each call site an additional
-number of call targets. Let $p=6$ than we get $c = 6x + 5y+ 4z + 3t + 2p + 1v + 0u$ where:
+number of call targets. Let $p=6$ than we get $c = 6x + 5y+ 4z + 3t + 2p + 1v$ where:
 $x$ is the sum of all call targets consuming 6 parameters, 
 $y$ is the sum of all call targets consuming 5 parameters 
-and so on up to 0 parameters. This holds because TypeArmor allows more parameters provided than consumed by the calltarget.
+and so on up to 0 parameters. Note that this holds since TypeArmor allows more parameters provided than consumed by the calltarget.
 Than $c = 2100 = 600 + 500 + 400 + 300 + 200 + 100 \ iff \ x=y=z=t=p=v=100$. 
-Note that $x=100$ is feasible under realistic conditions in large applications (i.e., Google Chrome, Firefox). 
+Note that $x=100$ is feasible under realistic conditions in large applications (\textit{i.e.,} Google Chrome, Firefox). 
 Next $2100$ is added to $7^{6}$. 
-Thus for a single call site providing $p=6$ parameters TypeArmor allows in total $7^{6} + 2100 = 1197496$ call targets for each callsite.
-This situation repeats for $p=5$ where we get $7^{5} + (1500 = 500 + 400 + 300 + 200 + 100 \ iff \ x=y=z=t=p=v=100) \ = \ 18307$ 
-allowed call target per call site. Note that this holds for the rest of $p \in [1, 4]$.
+Thus for a single call site providing $p=6$ parameters TypeArmor allows theoretically in 
+total $7^{6} + 2100 = 1197496$ call targets for each callsite.
+This holds for $p=5$ where we get $7^{5} + (1500 = 500 + 400 + 300 + 200 + 100) = \ 18307 \ iff \ x=y=z=t=p=v=100$ 
+allowed call target per call site. Note that this holds for $p \in [1, 4]$ too.
 \end{itemize}
 
 Finally, TypeArmor is too permissive and as consequence we present 
