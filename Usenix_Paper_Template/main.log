@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  18 APR 2017 18:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  18 APR 2017 18:45
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1993,13 +1993,13 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (2.69194pt too wide) in paragraph at lines 38--365
+Overfull \hbox (2.69194pt too wide) in paragraph at lines 38--366
 []  [] 
  []
 
 [6]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 428.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 429.
 ) (./chapters/Design.tex
 Underfull \vbox (badness 1137) has occurred while \output is active []
 
@@ -2248,11 +2248,11 @@ runsystem(rm main.pyg)...executed.
 Here is how much of TeX's memory you used:
  32642 strings out of 493105
  614651 string characters out of 6137072
- 951148 words of memory out of 5000000
+ 951240 words of memory out of 5000000
  35187 multiletter control sequences out of 15000+600000
  113892 words of font info for 153 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,16n,98p,805b,1728s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 68i,16n,98p,834b,1728s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/
 fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
@@ -2265,7 +2265,7 @@ ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (20 pages, 597866 bytes).
+Output written on main.pdf (20 pages, 597962 bytes).
 PDF statistics:
  935 PDF objects out of 1000 (max. 8388607)
  797 compressed objects within 8 object streams
