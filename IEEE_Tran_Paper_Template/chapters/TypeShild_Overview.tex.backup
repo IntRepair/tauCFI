@@ -354,11 +354,10 @@ backward reaching definitions analysis for callsites.
     \end{scope}
     
 \end{tikzpicture}}
-\caption{\textsc{TypeShield}'s parameter type and count policy. 
-The $X$ and $Y$ axis of matrices $M1, M2$ and $M3$ represent function parameter bit-widths.
+\caption{Type and parameter count policy. 
 Note that our type policy performs an $\wedge$ (i.e., logical and) operation
-between each entry in $M1$ and $M2$. 
-If two black filled circles located in $M1$ $\wedge$ $M2$ overlap on positions $M1_{i} = M2_{i} \wedge M1_{j} = M2_{j}$ than we have a match.
+between each entry in the first and second matrices. 
+In two black circle located in $M1$ $\wedge$ $M2$ overlap on positions $M1_{i} = M2_{i} \wedge M1_{j} = M2_{j}$ than we have a match.
 Green circles indicate a match whereas red circles indicate a mismatch.
 If at least one match is present on each of the columns of the 
 $M3$ than the indirect call transfer will be allowed by our policy, 
@@ -369,30 +368,34 @@ the indirect call transfer will be allowed.}
 
 Figure~\ref{Type and parameter count policy.} depicts the behavior of our type based policy
 when the callsite provides 6 parameters $pcs1, ..., pcs6$ having following bit 
-wideness \textit{pcs}1: 8-byte, \textit{pcs}2: 8-bye, \textit{pcs}3: 8-byte, \textit{pcs}4: 8-byte, \textit{pcs}5: 4-byte, 
-\textit{pcs}6: 4-byte, and the calltarget is expecting 6 parameters $pct1, ..., pcs6$ having following bit 
-wideness \textit{pct}1: 8-byte, \textit{pct}2: 8-bye, \textit{pct}3: 0-byte, \textit{pct}4: 0-byte, \textit{pct}5: 0-byte, 
-\textit{pct}6: 0-byte of the expected parameters. 
+wideness \textit{pcs}1:8-byte, \textit{pcs}2:8-bye, \textit{pcs}3:8-byte, \textit{pcs}4:8-byte, \textit{pcs}5:4-byte, 
+\textit{pcs}6:4-byte, and the calltarget is expecting 6 parameters $pct1, ..., pcs6$ having following bit 
+wideness \textit{pct}1:8-byte, \textit{pct}2:8-bye, \textit{pct}3:0-byte, \textit{pct}4:0-byte, \textit{pct}5:0-byte, 
+\textit{pct}6:0-byte of the expected parameters. 
 \textsc{TypeShield}'s type policy is: defined as follows. 
-
-\begin{definition}
+\begin{align}
 \label{eqn:1}
-Let $A$ be a call target $ct_{A}$ and $B$ a call site $cs_{B}$ than: 
-$ct_{A} \subseteq cs_{B} \iff \forall i \subseteq [1, 6],$
-wideness(parameter($A$)[i]) $\leq$ \ wideness(parameter($B$)[i]).
-\end{definition}
+\begin{split}
+Let \ A \ be \ a \ call \ target \ ct_{A} \ and \ B \ a \ call \ site \ cs_{B} \ than: 
+\\ ct_{A} \subseteq cs_{B} \iff \forall \ i \ \subseteq [1, 6], \\
+wideness(parameter(A)[i]) \leq \ wideness(parameter(B)[i]).
+\end{split}
+\end{align}
 
 Whereas the policy of TypeArmor is the following. 
-\begin{definition}
+\begin{align}
 \label{eqn:2}
-Let $A$ be a call target $ct_{A}$ and $B$ a call site $cs_{B}$ than: 
-$ct_{A} \subseteq cs_{B} \iff \forall i \subseteq [1, 6],$ 
-count(parameter($A$)) $\leq$ count(parameter($B$)).
-\end{definition}
+\begin{split}
+Let \ A \ be \ a \ call \ target \ ct_{A} \ and \ B \ a \ call \ site \ cs_{B} \ than: 
+\\ ct_{A} \subseteq cs_{B} \iff \forall \ i \ \subseteq [1, 6], \\
+count(parameter(A)) \leq \ count(parameter(B)).
+\end{split}
+\end{align}
 
-From Definitions~\eqref{eqn:1} and~\eqref{eqn:2} it can be observed that 
+From the policies~\eqref{eqn:1} and~\eqref{eqn:2} it can be observed that 
 the first policy is more fine-grained than the second one since it performs checks 
-for each parameter index in part.
+for each parameter index.
+
 
 \subsection{\textsc{TypeShield} Impact on COOP}
 % \textbf{\textsc{TypeShield} Impact on COOP.}
@@ -429,8 +432,8 @@ for each parameter index in part.
 }
 \caption{Parameter register wideness based lattice using 64-bit, 32-bit and 0-bit parameter wideness with six 
 function parameters. Note that $\top$ and $\bot$ represents the top and bottom element of the lattice, respectively.
-An arrow (\textit{i.e.,} in total 8) represents an indirect control flow transfer from a callsite to a calltarget. 
-Note that~\cite{veen:typearmor} would allow all 8 illegal control flow transfers whereas \textsc{TypeSchield} would forbid all of them.}
+An arrow (\textit{i.e.,} in total 8) represents an indirect control flow transfer from a callsite to a calltarget. Note that~\cite{veen:typearmor}
+would allow all 8 illegal control flow transfers and that \textsc{TypeSchield} would forbid all of them.}
 \label{fig:lattice3264}
 \end{figure}
 Figure~\ref{fig:lattice3264} represents the a sub-part of the total indirect transfers space in any given C/C++ program. 

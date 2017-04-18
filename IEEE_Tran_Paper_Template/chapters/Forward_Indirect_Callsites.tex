@@ -1,5 +1,10 @@
 \section{C++ Forbidden Forward Calls Exposed}
 \label{C++ Bad Forward Indirect Calls}
+In this section, we present a brief overview of the concept of C++-based polymorphism in~\cref{Polymorphism in C++}
+and how indirect calls can be checked in practice in~\cref{C++ Indirect Calls in Practice}.
+In~\cref{Security Implications of Forbidden Forward Indirect Calls} we present security implications of indirect calls.
+Finally, in~\cref{{Too Permissive Parameter-Based Policies}} we present an imprecise parameter count based policy, and 
+in~\cref{Running Example: CVE X} we present a real COOP attack example.
 
 \subsection{Polymorphism in C++ Programs}
 % \textbf{Polymorphism in C++.}
@@ -225,36 +230,45 @@ and \textit{underestimation} for the number of parameters consumed by the matchi
 effective w.r.t. preventing COOP attacks. 
 
 We do not agree with this claim and furthermore we believe that their call site vs. call target set enforcing policy is too permissive and thus many potential indirect forward edge based 
-control flow transfers are possible. Consider the following example. In the best case for each call site preparing say $p=4 \in [0, 5]$ parameters their policy
-could theoretically allow only the call targets which consume the same number as parameters as prepared, $c=4 \in [0, 5]$. Note that this does not hold due to 
+control flow transfers are possible. Consider the following example. In the best case for each call site preparing say $p=4 \in [1, 6]$ parameters their policy
+could theoretically allow only the call targets which consume the same number as parameters as prepared, $c=4 \in [1, 6]$. Note that this does not hold due to 
 the aforementioned call site overestimation and call target underestimation, thus all possible numerical mismatches are allowed by their policy as long as $p$ is 
 greater or equal to $c$.
 
 \begin{itemize}
-\item TypeArmor \textit{ideally} would allow for a single call site a set of call targets containing maximum $117649$ possibilities if we consider the maximum value of provided parameters to be
-$p$=6 due to $p \in [0, 5]$ possible provided parameters. Consider 7 C++ basic parameter types $t$ as follows: ${bool, \ char, int, \ float, \ double, \ void, \ and \ wchar\_t}$. 
+\item TypeArmor \textit{ideally} would allow for a single call site a set of call targets containing maximum $117649$ possibilities if we 
+consider the maximum value of provided parameters to be
+$p=6$ due to $p \in [1, 6]$ possible provided parameters. Consider 7 C++ integer parameter types $t$:
+$int, \ char, \ unsigned \ char, \ bool, \ long, \ unsigned \ long, \ and \\ \ short$. 
 Thus we obtain $t^{p}=7^{6}=117649$ allowed call targets per call site if the TypeArmor is in place.
-Note that for simplicity reasons we considered $t=7$ but in reality $t$ is even larger since there are many types of parameters in C++. 
+Note that for simplicity reasons we considered $t=7$ but in practice $t$ is even larger since there are many types of parameters in C++. 
 The complete list of fundamental C++ types contains 20 types; not including data structures or object types.
 Thus, all these data types would be ignored by TypeArmor. Also, note that all other call sites having more than 6 parameters 
-would be not checked by TypeArmor during runtime.
+would be not checked by TypeArmor as well.
 
 \item TypeArmor \textit{actually} allows more than $t^{p}$ call targets per call site.
-If we have $t=7$ data types due to TypeArmors overestimation and underestimation we get for each call site an additional
-number of call targets. Let $p=6$ than we get $c = 6x + 5y+ 4z + 3t + 2p + 1v + 0u$ where:
+If we have $t=7$ integer types due to TypeArmors overestimation and underestimation we get for each call site an additional
+number of call targets. Let $p=6$ than we get $c = 6x + 5y+ 4z + 3t + 2p + 1v$ where:
 $x$ is the sum of all call targets consuming 6 parameters, 
-$y$ is the sum of all call targets consuming 5 parameters and so on up to 0 parameters. 
+$y$ is the sum of all call targets consuming 5 parameters 
+and so on up to 0 parameters. Note that this holds since TypeArmor allows more parameters provided than consumed by the calltarget.
 Than $c = 2100 = 600 + 500 + 400 + 300 + 200 + 100 \ iff \ x=y=z=t=p=v=100$. 
-Note that $x=100$ is feasible under realistic conditions. Note that $2100$ is added to the previously value of $7^{6}$. 
-Thus for a single call site providing $p=6$ parameters TypeArmor allows in total $7^{6}+2100 = 1197496$ call targets per call site.
-This situation repeats for $p=5$ where we get $7^{5} + (1500 = 500 + 400 + 300 + 200 + 100 \ iff \ x=y=z=t=p=v=100) \ = \ 18307$ allowed call target per call site. 
-This relation holds for the rest of $p \in [0, 3]$.
+Note that $x=100$ is feasible under realistic conditions in large applications (\textit{i.e.,} Google Chrome, Firefox). 
+Next $2100$ is added to $7^{6}$. 
+Thus for a single call site providing $p=6$ parameters TypeArmor allows theoretically in 
+total $7^{6} + 2100 = 1197496$ call targets for each callsite.
+This holds for $p=5$ where we get $7^{5} + (1500 = 500 + 400 + 300 + 200 + 100) = \ 18307 \ iff \ x=y=z=t=p=v=100$ 
+allowed call target per call site. Note that this holds for $p \in [1, 4]$ too.
 \end{itemize}
+
 Finally, TypeArmor is too permissive and as consequence we present 
 \textsc{TypeShield} which deals with the variable type state explosion due to different parameter types by considering an 
 approximation (\textit{i.e.,} alias analysis and thus type analysis in binaries is undecidable~\cite{alias:undecidable}) of 
 parameter types based on register wideness. Consequently, the allowed call target set for each call site is drastically reduced.
 
+\subsection{Real COOP Attack Example}
+% \textbf{Real COOP Attack Example.}
+\label{Running Example: CVE X}
 %%second pic
 \begin{figure}[h!]
     \centering
@@ -264,10 +278,6 @@ indicate forbidden vTble entries and green letters indicate allowed vTable entri
 contained in the main loop gadget.}
 \label{Class exploit}
 \end{figure}
-
-\subsection{Real COOP Attack Example}
-% \textbf{Real COOP Attack Example.}
-\label{Running Example: CVE X}
 The next COOP attack example depicted in Figure~\ref{Class exploit}
 is a proof of concept exploit extracted from~\cite{schuster:coop} and used in order to perform 
 a COOP attack on the Firefox browser. A buffer overflow bug was used in order to call 
@@ -280,7 +290,7 @@ extensions, IPC, the sync API, and Google V8) and for this reason we briefly pre
 documented COOP exploit on a Linux machine.
 
 The C++ class \texttt{nsMultiplexInputStream} contains a main loop gadget inside the function 
-\texttt{nsMultiplexInputStream::Close(void)} which is performing indirect calls by dispatching
+\texttt{nsMultiplexInput-} \texttt{Stream::Close(void)} which is performing indirect calls by dispatching
 indirect calls on the objects contained in the array. 
 The objects contained in the array during normal execution are of type \texttt{nsInputStream} and each
 of the objects will call the \texttt{Close(void)} function in order to close each of the previously opened streams.
@@ -301,7 +311,7 @@ that a Unix shell can be opened at the end of this attack.
 This example illustrates why detecting vPointer corruptions is not trivial for real-world applications.
 As depicted in Figure~\ref{Class exploit} the class \texttt{nsInputStream} has 11 classes which inherit directly
 or indirectly from this class. The classes \texttt{nsSeekableStream}, \texttt{nsIPCSerializableInputStream}
-and \texttt{nsClone-} \texttt{ableInputStream} provide additional inherited vTables which represent illegitimate calltargets
+and \texttt{nsCloneableInputStream} provide additional inherited vTables which represent illegitimate calltargets
 for the initial \texttt{nsInputStream} objects and legitimate calltargets for the six fake objects which were added during the attack.
 Furthermore, declaration and usage of the objects can be wide spread in the source code. This makes
 detection of the object types (\textit{i.e.,} base class), range of vTables (\textit{i.e.,} longest vTable inheritance path for a particular callsite)

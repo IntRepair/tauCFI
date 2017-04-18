@@ -25,7 +25,14 @@
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
             \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
 \usepackage{verbatim}
-\usepackage{amsmath}
+\usepackage{amsmath, amssymb, amsthm}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem*{remark}{Remark}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
 \usepackage[ruled,vlined,linesnumbered,resetcount]{algorithm2e}
 \SetKwComment{Comment}{$\triangleright$\ }{}
 \usepackage{array}
@@ -140,7 +147,11 @@
 
 %make title bold and 14 pt font (Latex default is non-bold, 16 pt)
 % \title{\Large \bf \textsc{TypeShield}: Precise Protection of Forward Indirect Calls in Binaries}
-\title{\Large \bf \textsc{TypeShield}: Protecting Forward Indirect Calls in C++ Binaries for Real}
+% \title{\Large \bf \textsc{TypeShield}: Protecting Forward Indirect Calls in C++ Binaries for Real}
+% \title{\Large \bf \textsc{TypeShield}: Practical, Precise and Effective Protection of Forward Indirect Calls in C++ Binaries}
+% \title{\Large \bf \textsc{TypeShield}: Practical, Precise \& Effective Protection of Forward Indirect Calls}
+\title{\Large \bf \textsc{TypeShield}: Practical Protection Against Forward Indirect Call-based Attacks}
+
 
 %for single author (just remove % characters)
 \author{\IEEEauthorblockN{tba}

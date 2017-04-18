@@ -2,19 +2,19 @@
 \label{chapter:Introduction}
 
 \textbf{Big Picture.}
-The concept of object-oriented programming (OOP) is \textit{de facto standard} concept for developing large and complex 
-applications because it provides inheritance for objects which are at first unrelated to each other; this in turn 
+The object-oriented programming (OOP) paradigm is \textit{de facto standard} concept for developing large and complex 
+applications because it facilitates inheritance for objects which are at first unrelated to each other; this in turn 
 facilitates better code reuse, software maintenance and software design. There are many programing languages
 which support OOP concepts, however the C++ programing language is the most used programming language for systems where 
-runtime performance and reliability are key.
+runtime performance and reliability are main goal.
 
-An important C++ OOP convention is the object calling convention when virtual functions are called.
+An important C++ OOP convention is the object calling convention when for instance virtual functions are called.
 Virtual functions are an important concept which facilitates late binding and allows the programmer to overwrite a
 virtual function of the base-class with his own implementation. In fact, in order to implement virtual functions, 
 the compiler needs to generate a table (\textit{i.e.,} virtual table meta-data structure) of all
 virtual functions for each class containing them and provide to each instance of such a class (\textit{i.e.,} object) a pointer (\textit{i.e.,} virtual pointer)
-to the aforementioned table. While this allows much more flexible code to be built---through late binding---it is simplistically implemented with no security
-mechanisms at all.
+to the aforementioned table. While this allows more flexible code to be built---through late binding---it is simplistically implemented with no security
+mechanisms at in place.
 
 \textbf{Problem.}
 The performance benefit of late binding comes with high security implications. 
@@ -71,13 +71,18 @@ permissive.
 
 \textbf{Tool Limitations.}
 These source code tools offer a certain degree of protection when code is provided, however 
-the above mentioned binary tools offer limited or no protection due to an imprecisely determined
-call target set per call site.
+the above mentioned binary tools offer limited or no protection due to an in first place
+imprecise calltarget set per callsite.
 
 \textbf{Our Idea.}
-In this paper, we present \textsc{TypeShield}, a runtime illegitimate forward 
-calls detection tool that is based on an improved forward-edge CFI policy compared to TypeArmor. 
-\textsc{TypeShield} provides a more stricter set of allowed call targets per call site.
+In this paper, we present \textsc{TypeShield}, a runtime binary-level illegitimate forward calls 
+filtering tool that is based on an improved forward-edge fine-grained CFI policy compared 
+to previous work~\cite{veen:typearmor, crane:readactor++}.
+The analysis performed by \textsc{TypeShield}:
+\textit{1)} uses for each function parameter its register wideness (i.e., ABI dependent) in order to map calltargets per callsites,  
+\textit{2)} uses an address taken (AT) analysis similar to~\cite{veen:typearmor} for all calltargets, and 
+\textit{3)} compares individually parameters of callsites and calltargets in order to check if an indirect call transfer is acceptable or not, 
+thus this providing a more fine-grained calltarget set per callsite than other state-of-the-art tools.
 \textsc{TypeShield} is based on a use-def callees analysis to approximated the function prototypes, 
 and liveness analysis at indirect callsites to approximate callsite signatures. This 
 efficiently leads to a more precise CFG of the binary program in question, 
@@ -112,7 +117,7 @@ More precisely, \textsc{TypeShield} achieves three goals:
 \end{itemize}
 
 \textbf{Contributions.} 
-In summary, we make the following contributions:
+Summarizing, our contributions are:
 \label{Contribution}
 \begin{itemize}
  \item \textbf{Security analysis of forward indirect calls.} 
@@ -163,7 +168,7 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
   nsresult rv = NS_OK;
   //get array length
   uint32_t len = mStreams.Length();
-  //array-based main loop gadget
+  //array-based main loop gadget (ML-G)
  for (uint32_t i = 0; i<len; ++i){
   //(1) hijacked indirect call
   nsresult rv2=mStreams[i]->Close();
@@ -195,7 +200,7 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
    \setlength{\unitlength}{0.1\textwidth}
    \begin{picture}(10,4)
    \centering
-     \put(4.9,0){\includegraphics[width=.37\textwidth]{figures/loop.pdf}}
+     \put(4.81,0){\includegraphics[width=.37\textwidth]{figures/loop.pdf}}
      \put(1.5,2){\usebox{\firstlisting}}
    \end{picture}
 \caption{Graphic depicting how a COOP loop gadget works.}
