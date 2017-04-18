@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  18 APR 2017 18:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  18 APR 2017 18:30
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -975,15 +975,6 @@ File: tikzlibrarycalc.code.tex 2013/07/15 v3.0.0 (rcs-revision 1.9)
 zlibraryautomata.code.tex
 File: tikzlibraryautomata.code.tex 2008/07/14 v3.0.0 (rcs-revision 1.3)
 )
-(/usr/share/texlive/texmf-dist/tex/latex/draftwatermark/draftwatermark.sty
-Package: draftwatermark 2006/06/30 1.0 Put a gray textual watermark on document
- pages
-
-(/usr/share/texlive/texmf-dist/tex/latex/everypage/everypage.sty
-Package: everypage 2007/06/20 1.1 Hooks to run on every page
-)
-\sc@wm@fontsize=\skip77
-)
 (/usr/share/texlive/texmf-dist/tex/latex/base/latin1.def
 File: latin1.def 2014/04/30 v1.2b Input encoding file
 )
@@ -1200,15 +1191,15 @@ Now handling font encoding U ...
    defining Unicode char U+2423 (decimal 9251)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
-\fancy@headwidth=\skip78
-\f@ncyO@elh=\skip79
-\f@ncyO@erh=\skip80
-\f@ncyO@olh=\skip81
-\f@ncyO@orh=\skip82
-\f@ncyO@elf=\skip83
-\f@ncyO@erf=\skip84
-\f@ncyO@olf=\skip85
-\f@ncyO@orf=\skip86
+\fancy@headwidth=\skip77
+\f@ncyO@elh=\skip78
+\f@ncyO@erh=\skip79
+\f@ncyO@olh=\skip80
+\f@ncyO@orh=\skip81
+\f@ncyO@elf=\skip82
+\f@ncyO@erf=\skip83
+\f@ncyO@olf=\skip84
+\f@ncyO@orf=\skip85
 )
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
@@ -1321,7 +1312,7 @@ Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 )
-\Hy@SectionHShift=\skip87
+\Hy@SectionHShift=\skip86
 )
 (/usr/share/texlive/texmf-dist/tex/latex/cleveref/cleveref.sty
 Package: cleveref 2013/12/28 v0.19 Intelligent cross-referencing
@@ -1387,10 +1378,10 @@ Package: lipsum 2014/07/27 v1.3 150 paragraphs of Lorem Ipsum dummy text
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)
-\LTleft=\skip88
-\LTright=\skip89
-\LTpre=\skip90
-\LTpost=\skip91
+\LTleft=\skip87
+\LTright=\skip88
+\LTpre=\skip89
+\LTpost=\skip90
 \LTchunksize=\count159
 \LTcapwidth=\dimen214
 \LT@head=\box75
@@ -1629,7 +1620,7 @@ LaTeX Info: Redefining \\ on input line 3056.
 \c@FV@TrueTabGroupLevel=\count183
 \c@FV@TrueTabCounter=\count184
 \FV@TabBox@Group=\box81
-\FV@TmpLength=\skip92
+\FV@TmpLength=\skip91
 \c@FV@HighlightLinesStart=\count185
 \c@FV@HighlightLinesStop=\count186
 \FV@BreakIndent=\dimen228
@@ -1676,7 +1667,7 @@ Package: xstring 2013/10/13  v1.7c  String manipulations (C Tellechea)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/framed/framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip93
+\OuterFrameSep=\skip92
 \fb@frw=\dimen233
 Normal \dimen register pool exhausted, switching to extended pool.
 \fb@frh=\dimen256
@@ -1730,7 +1721,7 @@ File: lstlang3.sty 2014/09/06 1.5e listings language file
 )
 (/usr/share/texlive/texmf-dist/tex/latex/enumitem/enumitem.sty
 Package: enumitem 2011/09/28 v3.5.2 Customized lists
-\labelindent=\skip94
+\labelindent=\skip93
 \enit@outerparindent=\dimen263
 \enit@toks=\toks49
 \enit@inbox=\box89
@@ -1743,9 +1734,9 @@ Package: amsthm 2009/07/02 v2.20.1
 \thm@headfont=\toks52
 \thm@notefont=\toks53
 \thm@headpunct=\toks54
-\thm@preskip=\skip95
-\thm@postskip=\skip96
-\thm@headsep=\skip97
+\thm@preskip=\skip94
+\thm@postskip=\skip95
+\thm@headsep=\skip96
 \dth@everypar=\toks55
 )
 \c@definition=\count203
@@ -2255,11 +2246,11 @@ runsystem(rm main.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 32693 strings out of 493105
- 615688 string characters out of 6137072
- 950576 words of memory out of 5000000
- 35229 multiletter control sequences out of 15000+600000
- 116614 words of font info for 155 fonts, out of 8000000 for 9000
+ 32642 strings out of 493105
+ 614651 string characters out of 6137072
+ 951148 words of memory out of 5000000
+ 35187 multiletter control sequences out of 15000+600000
+ 113892 words of font info for 153 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  68i,16n,98p,805b,1728s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/
@@ -2274,7 +2265,7 @@ ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (20 pages, 600163 bytes).
+Output written on main.pdf (20 pages, 598716 bytes).
 PDF statistics:
  935 PDF objects out of 1000 (max. 8388607)
  797 compressed objects within 8 object streams
