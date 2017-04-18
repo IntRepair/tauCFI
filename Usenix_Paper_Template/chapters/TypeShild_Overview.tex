@@ -354,9 +354,9 @@ backward reaching definitions analysis for callsites.
     \end{scope}
     
 \end{tikzpicture}}
-\caption{Type and parameter count policy. 
+\caption{\textsc{TypeShield}'s parameter type and count policy. 
 Note that our type policy performs an $\wedge$ (i.e., logical and) operation
-between each entry in the first and second matrices. 
+between each entry in $M1$ and $M2$. 
 In two black circle located in $M1$ $\wedge$ $M2$ overlap on positions $M1_{i} = M2_{i} \wedge M1_{j} = M2_{j}$ than we have a match.
 Green circles indicate a match whereas red circles indicate a mismatch.
 If at least one match is present on each of the columns of the 
@@ -368,10 +368,10 @@ the indirect call transfer will be allowed.}
 
 Figure~\ref{Type and parameter count policy.} depicts the behavior of our type based policy
 when the callsite provides 6 parameters $pcs1, ..., pcs6$ having following bit 
-wideness \textit{pcs}1:8-byte, \textit{pcs}2:8-bye, \textit{pcs}3:8-byte, \textit{pcs}4:8-byte, \textit{pcs}5:4-byte, 
-\textit{pcs}6:4-byte, and the calltarget is expecting 6 parameters $pct1, ..., pcs6$ having following bit 
-wideness \textit{pct}1:8-byte, \textit{pct}2:8-bye, \textit{pct}3:0-byte, \textit{pct}4:0-byte, \textit{pct}5:0-byte, 
-\textit{pct}6:0-byte of the expected parameters. 
+wideness \textit{pcs}1: 8-byte, \textit{pcs}2: 8-bye, \textit{pcs}3: 8-byte, \textit{pcs}4: 8-byte, \textit{pcs}5: 4-byte, 
+\textit{pcs}6: 4-byte, and the calltarget is expecting 6 parameters $pct1, ..., pcs6$ having following bit 
+wideness \textit{pct}1: 8-byte, \textit{pct}2: 8-bye, \textit{pct}3: 0-byte, \textit{pct}4: 0-byte, \textit{pct}5: 0-byte, 
+\textit{pct}6: 0-byte of the expected parameters. 
 \textsc{TypeShield}'s type policy is: defined as follows. 
 
 \begin{definition}
