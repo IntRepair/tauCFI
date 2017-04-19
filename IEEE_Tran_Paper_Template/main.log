@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  18 APR 2017 19:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  19 APR 2017 18:18
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1951,37 +1951,8 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [3 <./figures/loop.pdf>]
-Underfull \hbox (badness 4378) in paragraph at lines 239--248
-\T1/ptm/m/n/10.03749 site a set of call tar-gets con-tain-ing max-i-mum
- []
-
-
-Underfull \hbox (badness 4699) in paragraph at lines 239--248
-\T1/ptm/m/n/10.03749 value of pro-vided pa-ram-e-ters to be $\OML/cmm/m/it/10 p
- \OT1/cmr/m/n/10 = 6$
- []
-
-
-Underfull \hbox (badness 1424) in paragraph at lines 239--248
-\T1/ptm/m/n/10.03749 due to $\OML/cmm/m/it/10 p \OMS/cmsy/m/n/10 2 \OT1/cmr/m/n
-/10 [1\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 6]$ \T1/ptm/m/n/10.03749 pos-si-ble pr
-o-vided pa-ram-e-ters.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 239--248
-\T1/ptm/m/n/10.03749 Con-sider 7 C++ in-te-ger pa-ram-e-ter types $\OML/cmm/m/i
-t/10 t$\T1/ptm/m/n/10.03749 :
- []
-
-
-Overfull \hbox (27.25513pt too wide) in paragraph at lines 239--248
-\OML/cmm/m/it/10 int;  char;  unsigned char;  bool;  long;  unsigned long;  and
-[] 
- []
-
-[4] <figures/class_hierarchy.pdf, id=287, 585.18625pt x 491.8375pt>
+ [3 <./figures/loop.pdf>] [4]
+<figures/class_hierarchy.pdf, id=287, 585.18625pt x 491.8375pt>
 File: figures/class_hierarchy.pdf Graphic file (type pdf)
 
 <use figures/class_hierarchy.pdf>
@@ -2053,18 +2024,30 @@ Underfull \vbox (badness 3826) has occurred while \output is active []
 LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <11.04124> not available
 (Font)              Font shape `T1/ptm/b/sc' tried instead on input line 32.
 Missing character: There is no ; in font nullfont!
+LaTeX Font Info:    Calculating math sizes for size <12.045> on input line 364.
+
 Missing character: There is no ; in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no q in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+LaTeX Font Info:    Calculating math sizes for size <14.05249> on input line 36
+4.
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (3.09962pt too wide) in paragraph at lines 38--366
+Overfull \hbox (2.81572pt too wide) in paragraph at lines 38--375
 []  [] 
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Font Info:    Calculating math sizes for size <17.06374> on input line 42
-9.
+LaTeX Font Info:    Calculating math sizes for size <17.06374> on input line 47
+3.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -2078,6 +2061,9 @@ Overfull \hbox (5.65665pt too wide) in paragraph at lines 90--146
  |  [] 
  []
 
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
 [7] [8]
 Underfull \hbox (badness 1661) in paragraph at lines 329--333
 []\T1/ptm/m/n/10.03749 This gives us the fol-low-ing reg-is-ter state $\OML/cmm
@@ -2090,7 +2076,7 @@ Underfull \hbox (badness 1661) in paragraph at lines 413--417
 /m/it/10 S[] \OT1/cmr/m/n/10 =
  []
 
-[9]
+[9] [10]
 
 Package array Warning: Column ? is already defined on input line 691.
 
@@ -2100,109 +2086,121 @@ Underfull \hbox (badness 1661) in paragraph at lines 754--756
 /m/it/10 S[] \OT1/cmr/m/n/10 =
  []
 
-[10]) (./chapters/Implementation.tex) (./chapters/Evaluation.tex [11] [12]
+) (./chapters/Implementation.tex) (./chapters/Evaluation.tex [11] [12]
 LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <10.03749> not available
-(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 238.
+(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 242.
 
 <figures/speccpu2006.pdf, id=478, 442.65375pt x 244.915pt>
 File: figures/speccpu2006.pdf Graphic file (type pdf)
 
 <use figures/speccpu2006.pdf>
-Package pdftex.def Info: figures/speccpu2006.pdf used on input line 360.
+Package pdftex.def Info: figures/speccpu2006.pdf used on input line 364.
 (pdftex.def)             Requested size: 247.88887pt x 137.15518pt.
 
-Overfull \hbox (3.97762pt too wide) in paragraph at lines 360--361
+Overfull \hbox (3.97762pt too wide) in paragraph at lines 364--366
  [][] 
  []
 
-[13 <./figures/speccpu2006.pdf>]
-<./postgresqlO2.pdf, id=498, 578.16pt x 433.62pt>
-File: ./postgresqlO2.pdf Graphic file (type pdf)
- <use ./postgresqlO2.pdf>
-Package pdftex.def Info: ./postgresqlO2.pdf used on input line 396.
-(pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[13] <./postgresqlO2.pdf, id=489, 578.16pt x 433.62pt>
 File: ./postgresqlO2.pdf Graphic file (type pdf)
 
 <use ./postgresqlO2.pdf>
-Package pdftex.def Info: ./postgresqlO2.pdf used on input line 396.
+Package pdftex.def Info: ./postgresqlO2.pdf used on input line 401.
+(pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
+File: ./postgresqlO2.pdf Graphic file (type pdf)
+ <use ./postgresqlO2.pdf>
+Package pdftex.def Info: ./postgresqlO2.pdf used on input line 401.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./postgresqlO2.pdf_tex
-<postgresqlO2.pdf, id=499, page=1, 578.16pt x 433.62pt>
+<postgresqlO2.pdf, id=490, page=1, 578.16pt x 433.62pt>
 File: postgresqlO2.pdf Graphic file (type pdf)
 
 <use postgresqlO2.pdf, page 1>
 Package pdftex.def Info: postgresqlO2.pdf, page1 used on input line 52.
 (pdftex.def)             Requested size: 578.15858pt x 433.63878pt.
 )
-Overfull \hbox (4.87679pt too wide) in paragraph at lines 396--397
+Overfull \hbox (4.87679pt too wide) in paragraph at lines 401--402
  [][] 
  []
 
-<./nodeO2.pdf, id=500, 578.16pt x 433.62pt>
+<./nodeO2.pdf, id=491, 578.16pt x 433.62pt>
 File: ./nodeO2.pdf Graphic file (type pdf)
  <use ./nodeO2.pdf>
-Package pdftex.def Info: ./nodeO2.pdf used on input line 403.
+Package pdftex.def Info: ./nodeO2.pdf used on input line 408.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
 File: ./nodeO2.pdf Graphic file (type pdf)
 
 <use ./nodeO2.pdf>
-Package pdftex.def Info: ./nodeO2.pdf used on input line 403.
+Package pdftex.def Info: ./nodeO2.pdf used on input line 408.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./nodeO2.pdf_tex
-<nodeO2.pdf, id=501, page=1, 578.16pt x 433.62pt>
+<nodeO2.pdf, id=492, page=1, 578.16pt x 433.62pt>
 File: nodeO2.pdf Graphic file (type pdf)
  <use nodeO2.pdf, page 1>
 Package pdftex.def Info: nodeO2.pdf, page1 used on input line 52.
 (pdftex.def)             Requested size: 578.15858pt x 433.63878pt.
 )
-Overfull \hbox (4.87679pt too wide) in paragraph at lines 403--404
+Overfull \hbox (4.87679pt too wide) in paragraph at lines 408--409
  [][] 
  []
 
-<./proftpdO2.pdf, id=502, 578.16pt x 433.62pt>
+<./proftpdO2.pdf, id=493, 578.16pt x 433.62pt>
 File: ./proftpdO2.pdf Graphic file (type pdf)
  <use ./proftpdO2.pdf>
-Package pdftex.def Info: ./proftpdO2.pdf used on input line 410.
+Package pdftex.def Info: ./proftpdO2.pdf used on input line 415.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
 File: ./proftpdO2.pdf Graphic file (type pdf)
 
 <use ./proftpdO2.pdf>
-Package pdftex.def Info: ./proftpdO2.pdf used on input line 410.
+Package pdftex.def Info: ./proftpdO2.pdf used on input line 415.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./proftpdO2.pdf_tex
-<proftpdO2.pdf, id=503, page=1, 578.16pt x 433.62pt>
+<proftpdO2.pdf, id=494, page=1, 578.16pt x 433.62pt>
 File: proftpdO2.pdf Graphic file (type pdf)
 
 <use proftpdO2.pdf, page 1>
 Package pdftex.def Info: proftpdO2.pdf, page1 used on input line 52.
 (pdftex.def)             Requested size: 578.15858pt x 433.63878pt.
 )
-Overfull \hbox (4.87679pt too wide) in paragraph at lines 410--411
+Overfull \hbox (4.87679pt too wide) in paragraph at lines 415--416
  [][] 
  []
 
-<./mysqlO2.pdf, id=504, 578.16pt x 433.62pt>
+<./mysqlO2.pdf, id=495, 578.16pt x 433.62pt>
 File: ./mysqlO2.pdf Graphic file (type pdf)
  <use ./mysqlO2.pdf>
-Package pdftex.def Info: ./mysqlO2.pdf used on input line 417.
+Package pdftex.def Info: ./mysqlO2.pdf used on input line 422.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
 File: ./mysqlO2.pdf Graphic file (type pdf)
 
 <use ./mysqlO2.pdf>
-Package pdftex.def Info: ./mysqlO2.pdf used on input line 417.
+Package pdftex.def Info: ./mysqlO2.pdf used on input line 422.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./mysqlO2.pdf_tex
-<mysqlO2.pdf, id=505, page=1, 578.16pt x 433.62pt>
+<mysqlO2.pdf, id=496, page=1, 578.16pt x 433.62pt>
 File: mysqlO2.pdf Graphic file (type pdf)
  <use mysqlO2.pdf, page 1>
 Package pdftex.def Info: mysqlO2.pdf, page1 used on input line 52.
 (pdftex.def)             Requested size: 578.15858pt x 433.63878pt.
 )
-Overfull \hbox (4.87679pt too wide) in paragraph at lines 417--418
+Overfull \hbox (4.87679pt too wide) in paragraph at lines 422--423
  [][] 
  []
 
-) (./chapters/Discussion.tex [14 <./postgresqlO2.pdf> <./nodeO2.pdf
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+) (./chapters/Discussion.tex
+Underfull \vbox (badness 2790) has occurred while \output is active []
+
+ [14 <./figures/speccpu2006.pdf> <./postgresqlO2.pdf
+
+pdfTeX warning: /usr/bin/pdflatex (file ./postgresqlO2.pdf): PDF inclusion: mul
+tiple pdfs with page group included in a single page
+> <./nodeO2.pdf
 
 pdfTeX warning: /usr/bin/pdflatex (file ./nodeO2.pdf): PDF inclusion: multiple 
 pdfs with page group included in a single page
@@ -2236,8 +2234,15 @@ Underfull \hbox (badness 5652) in paragraph at lines 33--43
 749 coarse-grained Control-Flow In-tegrity
  []
 
-[16]) (./chapters/Future_Work.tex) (./chapters/Conclusion.tex [17]) (./main.bbl
+[16]) (./chapters/Future_Work.tex
+Underfull \vbox (badness 1097) has occurred while \output is active []
+
+ [17])
+(./chapters/Conclusion.tex) (./main.bbl
 LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 26.
+
+Underfull \vbox (badness 2980) has occurred while \output is active []
+
 
 Underfull \hbox (badness 10000) in paragraph at lines 47--49
 [][]$\T1/ptm/m/n/8.03 h t t p s : / / g i t h u b \OML/cmm/m/it/8 : \T1/ptm/m/n
@@ -2297,32 +2302,33 @@ runsystem(rm main.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 31246 strings out of 493105
- 568598 string characters out of 6137072
- 881704 words of memory out of 5000000
- 33868 multiletter control sequences out of 15000+600000
- 152937 words of font info for 175 fonts, out of 8000000 for 9000
+ 31318 strings out of 493105
+ 569843 string characters out of 6137072
+ 887955 words of memory out of 5000000
+ 33939 multiletter control sequences out of 15000+600000
+ 158805 words of font info for 197 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,16n,98p,836b,1693s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 68i,16n,98p,999b,1693s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/ut
-mbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (19 pages, 589318 bytes).
+f-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/urw/courier/ucrro8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw
+/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (19 pages, 601781 bytes).
 PDF statistics:
- 947 PDF objects out of 1000 (max. 8388607)
- 805 compressed objects within 9 object streams
+ 950 PDF objects out of 1000 (max. 8388607)
+ 807 compressed objects within 9 object streams
  203 named destinations out of 1000 (max. 500000)
  356 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -54,9 +54,9 @@
 \citation{iso:iecN3690}
 \citation{haller:shrinkwrap}
 \citation{crane:readactor++}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Graphic depicting how a COOP loop gadget works.\relax }}{3}{figure.caption.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Mixed graphic/code explanation how a COOP main loop gadget works.\relax }}{3}{figure.caption.2}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{Code example used to illustrate how a COOP loop gadget works}{{1}{3}{Graphic depicting how a COOP loop gadget works.\relax }{figure.caption.2}{}}
+\newlabel{Code example used to illustrate how a COOP loop gadget works}{{1}{3}{Mixed graphic/code explanation how a COOP main loop gadget works.\relax }{figure.caption.2}{}}
 \newlabel{Code example used to illustrate how a COOP loop gadget works@cref}{{[figure][1][]1}{3}}
 \@LN@col{1}
 \@writefile{toc}{\contentsline {section}{\numberline {2}C++ Forbidden Forward Calls Exposed}{3}{section.2}}
@@ -114,8 +114,8 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}\textsc  {TypeShield} Policy Mechanism}{6}{subsection.3.3}}
 \newlabel{TypeShield Policy Mechanism}{{3.3}{6}{\textsc {TypeShield} Policy Mechanism}{subsection.3.3}{}}
 \newlabel{TypeShield Policy Mechanism@cref}{{[subsection][3][3]3.3}{6}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textsc  {TypeShield}'s parameter type and count policy. The $X$ and $Y$ axis of matrices $M1, M2$ and $M3$ represent function parameter bit-widths. Note that our type policy performs an $\wedge $ (i.e., logical and) operation between each entry in $M1$ and $M2$. If two black filled circles located in $M1$ $\wedge $ $M2$ overlap on positions $M1_{i} = M2_{i} \wedge M1_{j} = M2_{j}$ than we have a match. Green circles indicate a match whereas red circles indicate a mismatch. If at least one match is present on each of the columns of the $M3$ than the indirect call transfer will be allowed by our policy, otherwise not. Note that in this example the indirect call transfer will be allowed.\relax }}{6}{figure.caption.4}}
-\newlabel{Type and parameter count policy.}{{3}{6}{\textsc {TypeShield}'s parameter type and count policy. The $X$ and $Y$ axis of matrices $M1, M2$ and $M3$ represent function parameter bit-widths. Note that our type policy performs an $\wedge $ (i.e., logical and) operation between each entry in $M1$ and $M2$. If two black filled circles located in $M1$ $\wedge $ $M2$ overlap on positions $M1_{i} = M2_{i} \wedge M1_{j} = M2_{j}$ than we have a match. Green circles indicate a match whereas red circles indicate a mismatch. If at least one match is present on each of the columns of the $M3$ than the indirect call transfer will be allowed by our policy, otherwise not. Note that in this example the indirect call transfer will be allowed.\relax }{figure.caption.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textsc  {TypeShield}'s parameter type and count policy. The $X$ and $Y$ axis of matrices $M1, M2$ and $M3$ represent function parameter count and bit-widths in bytes, respectively. Note that our type policy performs an $\wedge $ (i.e., logical and) operation between each entry in $M1_{i,j}$ and $M2_{i,j}$ where $i$ and $j$ are column and row indexes. If two black filled circles located in $M1$ $\wedge $ $M2$ overlap on positions $M1_{i} = M2_{i} \wedge M1_{j} = M2_{j}$ than we have a match. Green circles indicate a match whereas red circles indicate a mismatch in $M3$. If at least one match is present on each of the columns of $M3$ than the indirect call transfer will be allowed by our policy, otherwise not. Note that in this example the indirect call transfer will be allowed.\relax }}{6}{figure.caption.4}}
+\newlabel{Type and parameter count policy.}{{3}{6}{\textsc {TypeShield}'s parameter type and count policy. The $X$ and $Y$ axis of matrices $M1, M2$ and $M3$ represent function parameter count and bit-widths in bytes, respectively. Note that our type policy performs an $\wedge $ (i.e., logical and) operation between each entry in $M1_{i,j}$ and $M2_{i,j}$ where $i$ and $j$ are column and row indexes. If two black filled circles located in $M1$ $\wedge $ $M2$ overlap on positions $M1_{i} = M2_{i} \wedge M1_{j} = M2_{j}$ than we have a match. Green circles indicate a match whereas red circles indicate a mismatch in $M3$. If at least one match is present on each of the columns of $M3$ than the indirect call transfer will be allowed by our policy, otherwise not. Note that in this example the indirect call transfer will be allowed.\relax }{figure.caption.4}{}}
 \newlabel{Type and parameter count policy.@cref}{{[figure][3][]3}{6}}
 \newlabel{eqn:1}{{3.1}{6}{}{definition.3.1}{}}
 \newlabel{eqn:1@cref}{{[definition][1][3]3.1}{6}}
@@ -129,8 +129,8 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4}\textsc  {TypeShield} Impact on COOP}{7}{subsection.3.4}}
 \newlabel{TypeShild Impact on COOP}{{3.4}{7}{\textsc {TypeShield} Impact on COOP}{subsection.3.4}{}}
 \newlabel{TypeShild Impact on COOP@cref}{{[subsection][4][3]3.4}{7}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Parameter register wideness based lattice using 64-bit, 32-bit and 0-bit parameter wideness with six function parameters. Note that $\top $ and $\bot $ represents the top and bottom element of the lattice, respectively. An arrow (\textit  {i.e.,} in total 8) represents an indirect control flow transfer from a callsite to a calltarget. Note that\nobreakspace  {}\cite  {veen:typearmor} would allow all 8 illegal control flow transfers whereas \textsc  {TypeSchield} would forbid all of them.\relax }}{7}{figure.caption.5}}
-\newlabel{fig:lattice3264}{{4}{7}{Parameter register wideness based lattice using 64-bit, 32-bit and 0-bit parameter wideness with six function parameters. Note that $\top $ and $\bot $ represents the top and bottom element of the lattice, respectively. An arrow (\textit {i.e.,} in total 8) represents an indirect control flow transfer from a callsite to a calltarget. Note that~\cite {veen:typearmor} would allow all 8 illegal control flow transfers whereas \textsc {TypeSchield} would forbid all of them.\relax }{figure.caption.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Transition based lattice between call targets and call sites, $a$ $\wedge $ $b$ $\in \{0-bit, 8-bit, 16-bit, 32-bit, 64-bit\}$ and the two function parameters (for brevity) having $\{0-byte, 1-byte, 2-byte, 4-byte, 8-byte\}$ register wideness. \textsc  {TypeSchield} allows a transition from $a \rightarrow b \ iff$ $a_{i} \le b_{i}$ where $i \in [1, 2]$. Note that $\top $ and $\bot $ represent the top and bottom elements of the lattice, respectively. An arrow represents an indirect control flow transfer from a callsite to a calltarget. The given lattice contains in total 8 black colored (legal) and 6 red colored (illegal) indirect control flow transitions. Note that\nobreakspace  {}\cite  {veen:typearmor} would allow all 14 indirect control flow transfers whereas \textsc  {TypeSchield} would allow the black colored and forbid the red colored transitions.\relax }}{7}{figure.caption.5}}
+\newlabel{fig:lattice3264}{{4}{7}{Transition based lattice between call targets and call sites, $a$ $\wedge $ $b$ $\in \{0-bit, 8-bit, 16-bit, 32-bit, 64-bit\}$ and the two function parameters (for brevity) having $\{0-byte, 1-byte, 2-byte, 4-byte, 8-byte\}$ register wideness. \textsc {TypeSchield} allows a transition from $a \rightarrow b \ iff$ $a_{i} \le b_{i}$ where $i \in [1, 2]$. Note that $\top $ and $\bot $ represent the top and bottom elements of the lattice, respectively. An arrow represents an indirect control flow transfer from a callsite to a calltarget. The given lattice contains in total 8 black colored (legal) and 6 red colored (illegal) indirect control flow transitions. Note that~\cite {veen:typearmor} would allow all 14 indirect control flow transfers whereas \textsc {TypeSchield} would allow the black colored and forbid the red colored transitions.\relax }{figure.caption.5}{}}
 \newlabel{fig:lattice3264@cref}{{[figure][4][]4}{7}}
 \@LN@col{2}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Design}{7}{section.4}}
@@ -156,11 +156,11 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Calltarget Analysis}{8}{subsection.4.4}}
 \newlabel{section:calltargetanalysis}{{4.4}{8}{Calltarget Analysis}{subsection.4.4}{}}
 \newlabel{section:calltargetanalysis@cref}{{[subsection][4][4]4.4}{8}}
-\newlabel{subsection:livenessanalysis}{{4.4}{8}{Calltarget Analysis}{subsection.4.4}{}}
-\newlabel{subsection:livenessanalysis@cref}{{[subsection][4][4]4.4}{8}}
 \citation{khedker2009data}
 \@LN@col{1}
-\@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces Liveness analysis of a basic block.\relax }}{9}{algocf.1}}
+\newlabel{subsection:livenessanalysis}{{4.4}{9}{Calltarget Analysis}{subsection.4.4}{}}
+\newlabel{subsection:livenessanalysis@cref}{{[subsection][4][4]4.4}{9}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces Basic block liveness analysis.\relax }}{9}{algocf.1}}
 \newlabel{alg:liveness}{{1}{9}{Calltarget Analysis}{algocf.1}{}}
 \newlabel{alg:liveness@cref}{{[algorithm][1][]1}{9}}
 \newlabel{eq:livenesscustom}{{1}{9}{Calltarget Analysis}{equation.0.1}{}}
@@ -170,15 +170,15 @@
 \newlabel{subsection:requiredparamcount@cref}{{[line][15][]15}{9}}
 \newlabel{subsection:requiredparamwideness}{{15}{9}{Calltarget Analysis}{equation.0.1d}{}}
 \newlabel{subsection:requiredparamwideness@cref}{{[line][15][]15}{9}}
-\newlabel{subsection:variadicfunctions}{{15}{9}{Calltarget Analysis}{equation.0.1d}{}}
-\newlabel{subsection:variadicfunctions@cref}{{[line][15][]15}{9}}
 \citation{khedker2009data}
 \@LN@col{1}
 \@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces ASM code of the \texttt  {make\_cmd} function with optimize level O2, which has a variadic parameter list.\relax }}{10}{figure.caption.9}}
 \newlabel{fig:asmvariadic}{{7}{10}{ASM code of the \texttt {make\_cmd} function with optimize level O2, which has a variadic parameter list.\relax }{figure.caption.9}{}}
 \newlabel{fig:asmvariadic@cref}{{[figure][7][]7}{10}}
+\newlabel{subsection:variadicfunctions}{{15}{10}{Calltarget Analysis}{equation.0.1d}{}}
+\newlabel{subsection:variadicfunctions@cref}{{[line][15][]15}{10}}
 \@LN@col{2}
-\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces Reaching definitions analysis of a basic block.\relax }}{10}{algocf.2}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces Basic block reaching definition analysis.\relax }}{10}{algocf.2}}
 \newlabel{alg:reaching}{{2}{10}{Calltarget Analysis}{algocf.2}{}}
 \newlabel{alg:reaching@cref}{{[algorithm][2][]2}{10}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Callsite Analysis}{10}{subsection.4.5}}
@@ -214,24 +214,24 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.1}Quality and Applicability of Ground Truth}{12}{subsubsection.6.1.1}}
 \newlabel{subsection:typeshieldprecision}{{6.1.1}{12}{Quality and Applicability of Ground Truth}{subsubsection.6.1.1}{}}
 \newlabel{subsection:typeshieldprecision@cref}{{[subsubsection][1][6,1]6.1.1}{12}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with optimization level O2. The label Clang miss denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc  {TypeShield}.\relax }}{12}{table.caption.13}}
-\newlabel{tbl:matchingquality}{{1}{12}{Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with optimization level O2. The label Clang miss denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc {TypeShield}.\relax }{table.caption.13}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with optimization level O2. The label Clang miss denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc  {TypeShield}. \leavevmode {\color  {red}TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if looking at this table?}\relax }}{12}{table.caption.13}}
+\newlabel{tbl:matchingquality}{{1}{12}{Table shows the quality of structural matching provided by our automated verify and test environment, regarding callsites and calltargets when compiling with optimization level O2. The label Clang miss denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc {TypeShield}. \textcolor {red}{TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if looking at this table?}\relax }{table.caption.13}{}}
 \newlabel{tbl:matchingquality@cref}{{[table][1][]1}{12}}
 \@LN@col{1}
+\@LN@col{2}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.2}Classification Precision (\textit  {count})}{13}{subsubsection.6.1.2}}
 \newlabel{subsection:typeshieldcountprecision}{{6.1.2}{13}{Classification Precision (\textit {count})}{subsubsection.6.1.2}{}}
 \newlabel{subsection:typeshieldcountprecision@cref}{{[subsubsection][2][6,1]6.1.2}{13}}
-\@LN@col{2}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces The results for analysis using the \textit  {count} policy on the O2 optimization level.\relax }}{13}{table.caption.14}}
-\newlabel{tbl:precisionCOUNT}{{2}{13}{The results for analysis using the \textit {count} policy on the O2 optimization level.\relax }{table.caption.14}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces The results for analysis using the \textit  {count} policy on the O2 optimization level. \leavevmode {\color  {red}TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if looking at this table?}\relax }}{13}{table.caption.14}}
+\newlabel{tbl:precisionCOUNT}{{2}{13}{The results for analysis using the \textit {count} policy on the O2 optimization level. \textcolor {red}{TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if looking at this table?}\relax }{table.caption.14}{}}
 \newlabel{tbl:precisionCOUNT@cref}{{[table][2][]2}{13}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.3}Classification Precision (\textit  {type})}{13}{subsubsection.6.1.3}}
 \newlabel{subsection:typeshieldcountprecision}{{6.1.3}{13}{Classification Precision (\textit {type})}{subsubsection.6.1.3}{}}
 \newlabel{subsection:typeshieldcountprecision@cref}{{[subsubsection][3][6,1]6.1.3}{13}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces The results for analysis using the \textit  {type} policy on the O2 optimization level.\relax }}{13}{table.caption.15}}
-\newlabel{tbl:precisionTYPE}{{3}{13}{The results for analysis using the \textit {type} policy on the O2 optimization level.\relax }{table.caption.15}{}}
-\newlabel{tbl:precisionTYPE@cref}{{[table][3][]3}{13}}
 \@LN@col{1}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces The results for analysis using the \textit  {type} policy on the O2 optimization level. \leavevmode {\color  {red}TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if looking at this table?}\relax }}{14}{table.caption.15}}
+\newlabel{tbl:precisionTYPE}{{3}{14}{The results for analysis using the \textit {type} policy on the O2 optimization level. \textcolor {red}{TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if looking at this table?}\relax }{table.caption.15}{}}
+\newlabel{tbl:precisionTYPE@cref}{{[table][3][]3}{14}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Effectiveness}{14}{subsection.6.2}}
 \newlabel{section:typeshieldeffectiveness}{{6.2}{14}{Effectiveness}{subsection.6.2}{}}
 \newlabel{section:typeshieldeffectiveness@cref}{{[subsection][2][6]6.2}{14}}
@@ -242,22 +242,22 @@
 \newlabel{subsection:typeshieldvslimitcount}{{6.2.2}{14}{Reduction achieved by \textsc {TypeShield}}{subsubsection.6.2.2}{}}
 \newlabel{subsection:typeshieldvslimitcount@cref}{{[subsubsection][2][6,2]6.2.2}{14}}
 \@LN@col{2}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Benchmark run time normalized against the baseline for the SPEC CPU2006 benchmarks.\relax }}{14}{figure.caption.17}}
-\newlabel{fig:awesome_image}{{8}{14}{Benchmark run time normalized against the baseline for the SPEC CPU2006 benchmarks.\relax }{figure.caption.17}{}}
-\newlabel{fig:awesome_image@cref}{{[figure][8][]8}{14}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Runtime Overhead}{14}{subsection.6.3}}
 \newlabel{section:typeshieldoverheadperformance}{{6.3}{14}{Runtime Overhead}{subsection.6.3}{}}
 \newlabel{section:typeshieldoverheadperformance@cref}{{[subsection][3][6]6.3}{14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Benchmark run time normalized against the baseline for the SPEC CPU2006 benchmarks. \leavevmode {\color  {red}TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? replace with our values. remove this stub.}\relax }}{14}{figure.caption.17}}
+\newlabel{fig:awesome_image}{{8}{14}{Benchmark run time normalized against the baseline for the SPEC CPU2006 benchmarks. \textcolor {red}{TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? replace with our values. remove this stub.}\relax }{figure.caption.17}{}}
+\newlabel{fig:awesome_image@cref}{{[figure][8][]8}{14}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Instrumentation Overhead}{14}{subsection.6.4}}
 \newlabel{section:typeshieldoverheadinstrumentation}{{6.4}{14}{Instrumentation Overhead}{subsection.6.4}{}}
 \newlabel{section:typeshieldoverheadinstrumentation@cref}{{[subsection][4][6]6.4}{14}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Security Analysis}{14}{subsection.6.5}}
-\newlabel{RQ5: Security Analysis}{{6.5}{14}{Security Analysis}{subsection.6.5}{}}
-\newlabel{RQ5: Security Analysis@cref}{{[subsection][5][6]6.5}{14}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an address taken analysis for optimization level O2. \leavevmode {\color  {red}TODO-add more description in order to indicted the advantage of our tool. What is the main thing which can be observed if looking at this table?}\relax }}{15}{table.caption.16}}
-\newlabel{tbl:policycompat}{{4}{15}{The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an address taken analysis for optimization level O2. \textcolor {red}{TODO-add more description in order to indicted the advantage of our tool. What is the main thing which can be observed if looking at this table?}\relax }{table.caption.16}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an address taken analysis for optimization level O2. \leavevmode {\color  {red}TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if looking at this table?}\relax }}{15}{table.caption.16}}
+\newlabel{tbl:policycompat}{{4}{15}{The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an address taken analysis for optimization level O2. \textcolor {red}{TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if looking at this table?}\relax }{table.caption.16}{}}
 \newlabel{tbl:policycompat@cref}{{[table][4][]4}{15}}
 \@LN@col{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Security Analysis}{15}{subsection.6.5}}
+\newlabel{RQ5: Security Analysis}{{6.5}{15}{Security Analysis}{subsection.6.5}{}}
+\newlabel{RQ5: Security Analysis@cref}{{[subsection][5][6]6.5}{15}}
 \@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Postgresql -O2\relax }}{15}{figure.caption.18}}
 \newlabel{fig7}{{9}{15}{Postgresql -O2\relax }{figure.caption.18}{}}
 \newlabel{fig7@cref}{{[figure][9][]9}{15}}
@@ -270,29 +270,29 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Mysql -O2\relax }}{15}{figure.caption.18}}
 \newlabel{fig10}{{12}{15}{Mysql -O2\relax }{figure.caption.18}{}}
 \newlabel{fig10@cref}{{[figure][12][]12}{15}}
+\@LN@col{2}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.6}Comparison with Other Tools}{15}{subsection.6.6}}
 \newlabel{RQ5: Is TypeShield better than other tools?}{{6.6}{15}{Comparison with Other Tools}{subsection.6.6}{}}
 \newlabel{RQ5: Is TypeShield better than other tools?@cref}{{[subsection][6][6]6.6}{15}}
-\@LN@col{2}
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces The medians of calltargets per callsite for different programs. Note that smaller geomean values are better and that \textsc  {TypeShield} currently does not include function return types as TypeArmor does.\relax }}{15}{table.caption.19}}
-\newlabel{tbl:toolcompare}{{5}{15}{The medians of calltargets per callsite for different programs. Note that smaller geomean values are better and that \textsc {TypeShield} currently does not include function return types as TypeArmor does.\relax }{table.caption.19}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces The medians of calltargets per callsite for different programs. Note that smaller geomean values are better and that \textsc  {TypeShield} currently does not include function return types as TypeArmor does. \leavevmode {\color  {red}TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if looking at this table?}\relax }}{15}{table.caption.19}}
+\newlabel{tbl:toolcompare}{{5}{15}{The medians of calltargets per callsite for different programs. Note that smaller geomean values are better and that \textsc {TypeShield} currently does not include function return types as TypeArmor does. \textcolor {red}{TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if looking at this table?}\relax }{table.caption.19}{}}
 \newlabel{tbl:toolcompare@cref}{{[table][5][]5}{15}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{15}{section.7}}
-\newlabel{chapter:Discussion}{{7}{15}{Discussion}{section.7}{}}
-\newlabel{chapter:Discussion@cref}{{[section][7][]7}{15}}
-\newlabel{section:comptype}{{7}{15}{Discussion}{section.7}{}}
-\newlabel{section:comptype@cref}{{[section][7][]7}{15}}
+\@LN@col{1}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{16}{section.7}}
+\newlabel{chapter:Discussion}{{7}{16}{Discussion}{section.7}{}}
+\newlabel{chapter:Discussion@cref}{{[section][7][]7}{16}}
+\newlabel{section:comptype}{{7}{16}{Discussion}{section.7}{}}
+\newlabel{section:comptype@cref}{{[section][7][]7}{16}}
+\newlabel{section:discrep}{{7}{16}{Discussion}{section.7}{}}
+\newlabel{section:discrep@cref}{{[section][7][]7}{16}}
+\@LN@col{2}
+\newlabel{section:venuesimp}{{7}{16}{Discussion}{section.7}{}}
+\newlabel{section:venuesimp@cref}{{[section][7][]7}{16}}
+\newlabel{section:limit}{{7}{16}{Discussion}{section.7}{}}
+\newlabel{section:limit@cref}{{[section][7][]7}{16}}
 \citation{dang:asiaccs}
 \citation{conti:ccs}
 \citation{vtv:tice}
-\@LN@col{1}
-\newlabel{section:discrep}{{7}{16}{Discussion}{section.7}{}}
-\newlabel{section:discrep@cref}{{[section][7][]7}{16}}
-\newlabel{section:venuesimp}{{7}{16}{Discussion}{section.7}{}}
-\newlabel{section:venuesimp@cref}{{[section][7][]7}{16}}
-\@LN@col{2}
-\newlabel{section:limit}{{7}{16}{Discussion}{section.7}{}}
-\newlabel{section:limit@cref}{{[section][7][]7}{16}}
 \citation{carlini:bending}
 \citation{andriesse:indepth}
 \citation{alan:mycroft}
@@ -324,16 +324,16 @@
 \citation{vfuard:aravind}
 \citation{vtint:zhang}
 \citation{veen:typearmor}
-\citation{veen:typearmor}
 \@LN@col{1}
 \@writefile{toc}{\contentsline {section}{\numberline {8}Related Work}{17}{section.8}}
 \newlabel{chapter:Related_Work}{{8}{17}{Related Work}{section.8}{}}
 \newlabel{chapter:Related_Work@cref}{{[section][8][]8}{17}}
 \newlabel{Type-Inference on Executables}{{8}{17}{Related Work}{section.8}{}}
 \newlabel{Type-Inference on Executables@cref}{{[section][8][]8}{17}}
+\@LN@col{2}
 \newlabel{Mitigation of Advanced Code-Reuse Attacks}{{8}{17}{Related Work}{section.8}{}}
 \newlabel{Mitigation of Advanced Code-Reuse Attacks@cref}{{[section][8][]8}{17}}
-\@LN@col{2}
+\citation{veen:typearmor}
 \citation{intel:cet}
 \citation{windows:cfguard}
 \citation{veen:cfi}
@@ -364,9 +364,6 @@
 \@writefile{toc}{\contentsline {section}{\numberline {9}Future Work}{18}{section.9}}
 \newlabel{chapter:Future_Work}{{9}{18}{Future Work}{section.9}{}}
 \newlabel{chapter:Future_Work@cref}{{[section][9][]9}{18}}
-\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{18}{section.10}}
-\newlabel{chapter:Conclusion}{{10}{18}{Conclusion}{section.10}{}}
-\newlabel{chapter:Conclusion@cref}{{[section][10][]10}{18}}
 \bibstyle{acm}
 \bibdata{literatur.bib}
 \bibcite{ctf:coop}{1}
@@ -396,6 +393,11 @@
 \bibcite{haller:shrinkwrap}{25}
 \bibcite{safedispatch:jang}{26}
 \bibcite{iso:iecN3690}{27}
+\@LN@col{1}
+\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{19}{section.10}}
+\newlabel{chapter:Conclusion}{{10}{19}{Conclusion}{section.10}{}}
+\newlabel{chapter:Conclusion@cref}{{[section][10][]10}{19}}
+\@LN@col{2}
 \bibcite{khedker2009data}{28}
 \bibcite{kornau:rop}{29}
 \bibcite{volodymyr:cpi}{30}
@@ -405,8 +407,6 @@
 \bibcite{lin:rewards}{34}
 \bibcite{ccfi:jose}{35}
 \bibcite{dep}{36}
-\@LN@col{1}
-\@LN@col{2}
 \bibcite{mohan:opaque}{37}
 \bibcite{alan:mycroft}{38}
 \bibcite{mcfi:niu}{39}

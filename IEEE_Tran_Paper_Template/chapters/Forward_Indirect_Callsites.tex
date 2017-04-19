@@ -239,7 +239,7 @@ greater or equal to $c$.
 \item TypeArmor \textit{ideally} would allow for a single call site a set of call targets containing maximum $117649$ possibilities if we 
 consider the maximum value of provided parameters to be
 $p=6$ due to $p \in [1, 6]$ possible provided parameters. Consider 7 C++ integer parameter types $t$:
-$int, \ char, \ unsigned \ char, \ bool, \ long, \ unsigned \ long, \ and \\ \ short$. 
+$int$, $char$, $unsigned char$, $bool$, $long$, $unsigned long$,  and $short$. 
 Thus we obtain $t^{p}=7^{6}=117649$ allowed call targets per call site if the TypeArmor is in place.
 Note that for simplicity reasons we considered $t=7$ but in practice $t$ is even larger since there are many types of parameters in C++. 
 The complete list of fundamental C++ types contains 20 types; not including data structures or object types.

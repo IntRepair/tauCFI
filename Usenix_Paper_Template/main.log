@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  18 APR 2017 18:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.1.26)  19 APR 2017 18:18
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1969,11 +1969,6 @@ File: figures/loop.pdf Graphic file (type pdf)
 Package pdftex.def Info: figures/loop.pdf used on input line 203.
 (pdftex.def)             Requested size: 187.17682pt x 228.40901pt.
  [2]) (./chapters/Forward_Indirect_Callsites.tex [3 <./figures/loop.pdf>] [4]
-Overfull \hbox (3.61287pt too wide) in paragraph at lines 239--248
-\OML/ztmcm/m/it/10 int;  char;  unsigned char;  bool;  long;  unsigned long;  a
-nd[] 
- []
-
 <figures/class_hierarchy.pdf, id=279, 585.18625pt x 491.8375pt>
 File: figures/class_hierarchy.pdf Graphic file (type pdf)
 
@@ -1991,18 +1986,30 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <12> not available
 (Font)              Font shape `T1/ptm/b/sc' tried instead on input line 32.
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no q in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 364.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 364.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 364.
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (2.69194pt too wide) in paragraph at lines 38--366
+Overfull \hbox (2.40207pt too wide) in paragraph at lines 38--375
 []  [] 
  []
 
 [6]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 429.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 473.
 ) (./chapters/Design.tex
-Underfull \vbox (badness 1137) has occurred while \output is active []
-
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <12> not available
 (Font)              Font shape `T1/ptm/b/it' tried instead on input line 15.
  [7]
@@ -2019,9 +2026,10 @@ m/m/it/10 ; w\OT1/ztmcm/m/n/10 8\OML/ztmcm/m/it/10 ; \OT1/ztmcm/m/n/10 0\OMS/zt
 mcm/m/n/10 g ^^B
  []
 
+[8]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <7> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 266.
-[8]
+
 Underfull \hbox (badness 1354) in paragraph at lines 400--406
 \T1/ptm/m/n/10 reg-is-ter: \T1/ptm/m/it/10 1) $\OML/ztmcm/m/it/10 W$ \T1/ptm/m/
 n/10 rep-re-sents write be-fore read ac-cess, \T1/ptm/m/it/10 2)
@@ -2036,9 +2044,6 @@ t/10 S[] \OT1/ztmcm/m/n/10 =
 [9]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <8> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 483.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
  [10]
 
 Package array Warning: Column ? is already defined on input line 691.
@@ -2058,115 +2063,112 @@ ost-gresql
  []
 
 [12]
+Underfull \vbox (badness 7081) has occurred while \output is active []
+
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [13]
 LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <10> not available
-(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 236.
+(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 240.
  <figures/speccpu2006.pdf, id=477, 442.65375pt x 244.915pt>
 File: figures/speccpu2006.pdf Graphic file (type pdf)
 
 <use figures/speccpu2006.pdf>
-Package pdftex.def Info: figures/speccpu2006.pdf used on input line 360.
+Package pdftex.def Info: figures/speccpu2006.pdf used on input line 364.
 (pdftex.def)             Requested size: 247.88887pt x 137.15518pt.
 
-Overfull \hbox (3.97762pt too wide) in paragraph at lines 360--361
+Overfull \hbox (3.97762pt too wide) in paragraph at lines 364--366
  [][] 
  []
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<./postgresqlO2.pdf, id=479, 578.16pt x 433.62pt>
+[14 <./figures/speccpu2006.pdf>]
+<./postgresqlO2.pdf, id=496, 578.16pt x 433.62pt>
 File: ./postgresqlO2.pdf Graphic file (type pdf)
  <use ./postgresqlO2.pdf>
-Package pdftex.def Info: ./postgresqlO2.pdf used on input line 396.
+Package pdftex.def Info: ./postgresqlO2.pdf used on input line 401.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
 File: ./postgresqlO2.pdf Graphic file (type pdf)
 
 <use ./postgresqlO2.pdf>
-Package pdftex.def Info: ./postgresqlO2.pdf used on input line 396.
+Package pdftex.def Info: ./postgresqlO2.pdf used on input line 401.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./postgresqlO2.pdf_tex
-<postgresqlO2.pdf, id=480, page=1, 578.16pt x 433.62pt>
+<postgresqlO2.pdf, id=497, page=1, 578.16pt x 433.62pt>
 File: postgresqlO2.pdf Graphic file (type pdf)
 
 <use postgresqlO2.pdf, page 1>
 Package pdftex.def Info: postgresqlO2.pdf, page1 used on input line 52.
 (pdftex.def)             Requested size: 578.15858pt x 433.63878pt.
 )
-Overfull \hbox (4.87737pt too wide) in paragraph at lines 396--397
+Overfull \hbox (4.87737pt too wide) in paragraph at lines 401--402
  [][] 
  []
 
-<./nodeO2.pdf, id=481, 578.16pt x 433.62pt>
+<./nodeO2.pdf, id=498, 578.16pt x 433.62pt>
 File: ./nodeO2.pdf Graphic file (type pdf)
  <use ./nodeO2.pdf>
-Package pdftex.def Info: ./nodeO2.pdf used on input line 403.
+Package pdftex.def Info: ./nodeO2.pdf used on input line 408.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
 File: ./nodeO2.pdf Graphic file (type pdf)
 
 <use ./nodeO2.pdf>
-Package pdftex.def Info: ./nodeO2.pdf used on input line 403.
+Package pdftex.def Info: ./nodeO2.pdf used on input line 408.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./nodeO2.pdf_tex
-<nodeO2.pdf, id=482, page=1, 578.16pt x 433.62pt>
+<nodeO2.pdf, id=499, page=1, 578.16pt x 433.62pt>
 File: nodeO2.pdf Graphic file (type pdf)
  <use nodeO2.pdf, page 1>
 Package pdftex.def Info: nodeO2.pdf, page1 used on input line 52.
 (pdftex.def)             Requested size: 578.15858pt x 433.63878pt.
 )
-Overfull \hbox (4.87737pt too wide) in paragraph at lines 403--404
+Overfull \hbox (4.87737pt too wide) in paragraph at lines 408--409
  [][] 
  []
 
-<./proftpdO2.pdf, id=483, 578.16pt x 433.62pt>
+<./proftpdO2.pdf, id=500, 578.16pt x 433.62pt>
 File: ./proftpdO2.pdf Graphic file (type pdf)
  <use ./proftpdO2.pdf>
-Package pdftex.def Info: ./proftpdO2.pdf used on input line 410.
+Package pdftex.def Info: ./proftpdO2.pdf used on input line 415.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
 File: ./proftpdO2.pdf Graphic file (type pdf)
 
 <use ./proftpdO2.pdf>
-Package pdftex.def Info: ./proftpdO2.pdf used on input line 410.
+Package pdftex.def Info: ./proftpdO2.pdf used on input line 415.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./proftpdO2.pdf_tex
-<proftpdO2.pdf, id=484, page=1, 578.16pt x 433.62pt>
+<proftpdO2.pdf, id=501, page=1, 578.16pt x 433.62pt>
 File: proftpdO2.pdf Graphic file (type pdf)
 
 <use proftpdO2.pdf, page 1>
 Package pdftex.def Info: proftpdO2.pdf, page1 used on input line 52.
 (pdftex.def)             Requested size: 578.15858pt x 433.63878pt.
 )
-Overfull \hbox (4.87737pt too wide) in paragraph at lines 410--411
+Overfull \hbox (4.87737pt too wide) in paragraph at lines 415--416
  [][] 
  []
 
-<./mysqlO2.pdf, id=485, 578.16pt x 433.62pt>
+<./mysqlO2.pdf, id=502, 578.16pt x 433.62pt>
 File: ./mysqlO2.pdf Graphic file (type pdf)
  <use ./mysqlO2.pdf>
-Package pdftex.def Info: ./mysqlO2.pdf used on input line 417.
+Package pdftex.def Info: ./mysqlO2.pdf used on input line 422.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
 File: ./mysqlO2.pdf Graphic file (type pdf)
 
 <use ./mysqlO2.pdf>
-Package pdftex.def Info: ./mysqlO2.pdf used on input line 417.
+Package pdftex.def Info: ./mysqlO2.pdf used on input line 422.
 (pdftex.def)             Requested size: 578.15858pt x 433.61894pt.
  (./mysqlO2.pdf_tex
-<mysqlO2.pdf, id=486, page=1, 578.16pt x 433.62pt>
+<mysqlO2.pdf, id=503, page=1, 578.16pt x 433.62pt>
 File: mysqlO2.pdf Graphic file (type pdf)
  <use mysqlO2.pdf, page 1>
 Package pdftex.def Info: mysqlO2.pdf, page1 used on input line 52.
 (pdftex.def)             Requested size: 578.15858pt x 433.63878pt.
 )
-Overfull \hbox (4.87737pt too wide) in paragraph at lines 417--418
+Overfull \hbox (4.87737pt too wide) in paragraph at lines 422--423
  [][] 
  []
-
-[14 <./figures/speccpu2006.pdf>]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 ) (./chapters/Discussion.tex [15 <./postgresqlO2.pdf> <./nodeO2.pdf
 
@@ -2185,15 +2187,13 @@ Underfull \hbox (badness 1314) in paragraph at lines 74--80
 \T1/ptm/m/n/10 bi-nary in-stru-men-ta-tion in tools such as: vf-Guard [[]],
  []
 
-[17]) (./chapters/Future_Work.tex) (./chapters/Conclusion.tex
+[17]) (./chapters/Future_Work.tex [18]) (./chapters/Conclusion.tex
 Underfull \hbox (badness 1552) in paragraph at lines 31--1
 []\T1/ptm/b/n/10 Using point-er/mem-ory anal-y-sis. \T1/ptm/m/n/10 In-tro-duc-i
 ng point-
  []
 
-[18]) (./main.bbl
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 6.
+) (./main.bbl
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 6.
 
@@ -2246,13 +2246,13 @@ runsystem(rm main.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 32642 strings out of 493105
- 614651 string characters out of 6137072
- 951248 words of memory out of 5000000
- 35187 multiletter control sequences out of 15000+600000
- 113892 words of font info for 153 fonts, out of 8000000 for 9000
+ 32699 strings out of 493105
+ 615515 string characters out of 6137072
+ 948621 words of memory out of 5000000
+ 35236 multiletter control sequences out of 15000+600000
+ 125086 words of font info for 178 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,16n,98p,836b,1728s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 68i,16n,98p,999b,1728s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/
 fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
@@ -2265,7 +2265,7 @@ ol/usyr.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (20 pages, 597962 bytes).
+Output written on main.pdf (20 pages, 598987 bytes).
 PDF statistics:
  935 PDF objects out of 1000 (max. 8388607)
  797 compressed objects within 8 object streams

@@ -66,7 +66,9 @@ First, we take a look at the comparability of calltargets and second, we take a 
 %     	}
 	\caption {Table shows the quality of structural matching provided by our automated verify and test environment, 
 	regarding callsites and calltargets when compiling with optimization level O2. The label Clang miss 
-	denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc{TypeShield}.}
+	denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc{TypeShield}. 
+	\textcolor{red}{TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
+	looking at this table?}}
 	\label{tbl:matchingquality}
 \end{table}
 
@@ -128,7 +130,8 @@ in Table \ref{tbl:precisionCOUNT}.
     	\end{tabular}
 
 }
-		\caption {The results for analysis using the \textit{count} policy on the O2 optimization level.}
+		\caption {The results for analysis using the \textit{count} policy on the O2 optimization level. \textcolor{red}{TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
+	looking at this table?}}
 		\label{tbl:precisionCOUNT}
 \end{table}~\\
 \textbf{Experiment Setup (Calltargets).} Union combination operator with an $analyze$ function that follows into occurring direct calls.
@@ -164,8 +167,9 @@ The results are depicted in Table \ref{tbl:precisionTYPE}.
     	\end{tabular}
 
 }
-		\caption {The results for analysis using the \textit{type} policy on the O2 optimization level.}
-		\label{tbl:precisionTYPE}
+	\caption {The results for analysis using the \textit{type} policy on the O2 optimization level. \textcolor{red}{TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
+	looking at this table?}}
+	\label{tbl:precisionTYPE}
 \end{table}~\\
 \textbf{Experiment Setup (Calltargets).} Union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that intersects all reads until the first write.
 \textbf{Results (Calltargets).} For half of the set, the problem rate is under 1\% and for the other half it is not above 10\%, resulting in a geomean of 1.92\%. The rate of perfect classification is in general over 70\% with Nginx (69.38\%) and Mysql (63.16\%)  resulting in a geometric mean of 77.15\%.
@@ -208,7 +212,7 @@ first we need to define the fields which make most sense.}
 
 }
 	\caption {The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an address taken analysis 
-	for optimization level O2. \textcolor{red}{TODO-add more description in order to indicted the advantage of our tool. What is the main thing which can be observed if 
+	for optimization level O2. \textcolor{red}{TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 	looking at this table?}}
 	\label{tbl:policycompat}
 \end{center}
@@ -358,7 +362,8 @@ When compared, our implementation of the \textit{type} policy allows about 7.93\
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.49\textwidth]{figures/speccpu2006.pdf}
-    \caption{Benchmark run time normalized against the baseline for the SPEC CPU2006 benchmarks.}
+    \caption{Benchmark run time normalized against the baseline for the SPEC CPU2006 benchmarks.
+    \textcolor{red}{TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, low or hig? replace with our values. remove this stub.}}
     \label{fig:awesome_image}
 \end{figure}
 Figure~\ref{fig:awesome_image} depicts the runtime normalized against the baseline for
@@ -456,7 +461,10 @@ todo. Also, add the buckets diagram, see Figure 9 in the typearmor paper.
     	\end{tabular}}
 %     	}
 	\caption {The medians of calltargets per callsite for different programs. Note that smaller geomean values are better and that
-	\textsc{TypeShield} currently does not include function return types as TypeArmor does.}
+	\textsc{TypeShield} currently does not include function return types as TypeArmor does. 
+	\textcolor{red}{TODO-add more description in order to indicted the advantage of our tool. What geomean values are good, 
+	low or hig? What is the main thing which can be observed if 
+	looking at this table?}}
 	\label{tbl:toolcompare}
 \end{table}
 

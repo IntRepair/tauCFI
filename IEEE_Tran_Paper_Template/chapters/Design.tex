@@ -233,8 +233,8 @@ would also fall into this category, however these would not reside within parame
  	\SetAlgoLined
 	\SetKwInOut{Input}{Input}
         \SetKwInOut{Output}{Output}
-        \Input{todo}
-        \Output{todo}
+        \Input{basic block}
+        \Output{$\mathcal{S}^\mathcal{L}$}
         \BlankLine
 	\SetKwProg{Fn}{Function}{ is}{end}
 	\Fn{analyze(block : BasicBlock) : $\mathcal{S}^\mathcal{L}$}
@@ -264,7 +264,7 @@ would also fall into this category, however these would not reside within parame
 	\Return merge\_v(state, state')
 
 	}
-\caption{Liveness analysis of a basic block.}
+\caption{Basic block liveness analysis.}
 \label{alg:liveness}
 \end{algorithm}
 
@@ -337,7 +337,7 @@ is the return value the second state and in all other cases it will return the f
 %     delta & cur = C \\
 %     cur & otherwise
 %  \end{array}
-%\right. \\
+%\right. \\Liveness analysis of a 
 %merge\_v (cur, delta) &= (s'_0, ... s'_15) \text { with } s'_j = merge\_v^{r}(cur_j, delta_j)
 %\end{align}
 
@@ -362,7 +362,7 @@ which are then combined with a union like operator with $W$ preceding $R$ preced
 %\begin{table}
 %
 %% \centering
-%\resizebox{\columnwidth}{!}{%
+%\resizebox{\columnwidth}{!}{%Liveness analysis of a 
 %\begin{tabular}{c?c|c|c}
 %$\bigsqcap^{\mathcal{L}}$ & C & R & W\\
 %\Xhline{1pt}
@@ -377,7 +377,7 @@ which are then combined with a union like operator with $W$ preceding $R$ preced
 %\Xhline{1pt}
 %C & C & C & W\\
 %\hline
-%R & C & R & W\\
+%R & C & R{todo} & W\\
 %\hline
 %W & W & W & W
 %\end{tabular}
@@ -452,7 +452,7 @@ like operator with $W$ preceding $WR$ preceding $R$ preceding $C$. Unless one si
 %\hline
 %R & R & $\text{R}^{\cup}$ & W & $\text{R}^{\cup}$W\\
 %\hline
-%W & W & W & W & W\\
+%W & W & W & W & W\\Liveness analysis of a 
 %\hline
 %RW & RW & $\text{R}^{\cup}$W & W & RW\\
 %\end{tabular}
@@ -518,7 +518,7 @@ similar for all cases, thus we can achieve this using the following steps:
 \textit{2)} we look at the predecessor of the xmm-passthrough block, which we call the entry block (in our case basic block %[\texttt{0x4222f0},\texttt{0x4222f2} [ )
 Check if the successors of the entry block consist of the xmm-passthrough block and the successor of the 
 xmm-passthrough block, which we call the param-passthrough block, and
-%(in our case basic block [\texttt{0x42233d}, \texttt{0x42235e} [ )
+%(in our case basic block [\texttt{0x42233d}Liveness analysis of a , \texttt{0x42235e} [ )
 \textit{3)} We look at the param-passthrough block and set all instructions that move the value of a parameter register into memory to be
 ignored. %(in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \texttt{0x422347} and \texttt{0x42234c})
 
@@ -531,8 +531,8 @@ ignored. %(in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \t
 	\SetAlgoLined
 	\SetKwInOut{Input}{Input}
         \SetKwInOut{Output}{Output}
-        \Input{todo}
-        \Output{todo}
+        \Input{basic block}
+        \Output{$\mathcal{S}^\mathcal{R}$}
         \BlankLine
 	\SetKwProg{Fn}{Function}{ is}{end}
 	\Fn{analyze(block : BasicBlock) : $\mathcal{S}^\mathcal{R}$}
@@ -562,7 +562,7 @@ ignored. %(in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \t
 	\Return merge\_v(state, state')
 
 	}
-\caption{Reaching definitions analysis of a basic block.}
+\caption{Basic block reaching definition analysis.}
 \label{alg:reaching}
 \end{algorithm}
 
