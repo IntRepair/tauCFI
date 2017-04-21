@@ -1,0 +1,93 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/dev/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: main.aux
+The style file: acm.bst
+Database file #1: literatur.bib.bib
+I was expecting a `,' or a `}'---line 102 of file literatur.bib.bib
+ :  
+ :  year = "2015",
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 108 of file literatur.bib.bib
+ :  
+ :  year = "2015",
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 209 of file literatur.bib.bib
+ :  
+ :  year = "2007",
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 387 of file literatur.bib.bib
+ :  
+ :  year = "2009",
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--to sort, need author or key in N4618
+Warning--to sort, need author or key in ctf:coop
+Warning--to sort, need author or key in dynamorio:drmemory
+Warning--to sort, need author or key in intel:cet
+Warning--to sort, need author or key in windows:cfguard
+Name 1 in "PaX Team. Address Space Layout Randomization," has a comma at the end for entry ASLR
+while executing---line 1092 of file acm.bst
+Warning--empty author in ctf:coop
+Warning--empty booktitle in ctf:coop
+Warning--empty author in dynamorio:drmemory
+Warning--empty booktitle in dynamorio:drmemory
+Warning--empty author in windows:cfguard
+Warning--empty booktitle in windows:cfguard
+Warning--empty author in N4618
+Warning--empty booktitle in N4618
+Warning--empty author in intel:cet
+Warning--empty booktitle in intel:cet
+Warning--empty booktitle in iso:iecN3690
+Warning--empty booktitle in kornau:rop
+Warning--empty title in dep
+Warning--empty booktitle in dep
+Warning--empty booktitle in alan:mycroft
+Name 1 in "PaX Team. Address Space Layout Randomization," has a comma at the end for entry ASLR
+while executing---line 1133 of file acm.bst
+Warning--empty title in ASLR
+Warning--empty booktitle in ASLR
+You've used 58 entries,
+            2253 wiz_defined-function locations,
+            750 strings with 13858 characters,
+and the built_in function-call counts, 18446 in all, are:
+= -- 1440
+> -- 1166
+< -- 0
++ -- 480
+- -- 422
+* -- 1366
+:= -- 3017
+add.period$ -- 167
+call.type$ -- 58
+change.case$ -- 382
+chr.to.int$ -- 0
+cite$ -- 80
+duplicate$ -- 900
+empty$ -- 1617
+format.name$ -- 422
+if$ -- 3754
+int.to.chr$ -- 0
+int.to.str$ -- 58
+missing$ -- 59
+newline$ -- 286
+num.names$ -- 106
+pop$ -- 689
+preamble$ -- 1
+purify$ -- 327
+quote$ -- 0
+skip$ -- 329
+stack$ -- 0
+substring$ -- 290
+swap$ -- 101
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 230
+warning$ -- 22
+while$ -- 106
+width$ -- 60
+write$ -- 511
+(There were 6 error messages)

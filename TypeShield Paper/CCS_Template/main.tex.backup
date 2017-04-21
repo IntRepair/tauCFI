@@ -1,0 +1,213 @@
+
+\documentclass[sigconf, anonymous]{acmart}
+% \usepackage{usenix,epsfig,endnotes}
+\usepackage{flushend}
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage[ruled,vlined,linesnumbered,resetcount]{algorithm2e}
+\SetKwComment{Comment}{$\triangleright$\ }{}
+\usepackage{array}
+\usepackage[]{xcolor}
+\usepackage{ifthen}
+\usepackage{makecell}
+\usepackage{booktabs}
+\usepackage[disable]{todonotes}
+% \usepackage{todonotes}
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+\usepackage{svg}
+\usepackage{amsmath,amssymb}
+\usetikzlibrary{matrix,arrows}
+\usetikzlibrary{positioning,arrows}
+\usetikzlibrary{shapes,arrows,fit,calc,positioning,automata}
+
+%use to check the not used references
+%and remove them
+% \usepackage{refcheck}
+
+%draft watermark
+% \usepackage{draftwatermark}
+% \SetWatermarkText{DRAFT}
+% \SetWatermarkScale{1}
+
+\inputencoding{latin1}
+\inputencoding{utf8}
+
+\usepackage{graphicx,fancyhdr,import}
+% \usepackage[colorlinks=true,linkcolor=blue, citecolor=blue]{hyperref}
+\usepackage{cleveref}
+\crefname{section}{§}{§§}
+\Crefname{section}{§}{§§}
+\crefformat{section}{§#2#1#3}
+
+
+\usepackage{setspace}
+\usepackage{adjustbox}
+\usepackage{lipsum}% dummy text
+\usepackage{longtable,csvsimple}
+% \usepackage[margin=.75in]{geometry}
+% \usepackage[toc,page]{appendix}
+% \renewcommand{\UrlBreaks}{\do\/\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z}
+ 
+%%algorithm stuff
+\makeatletter
+\providecommand{\bigsqcap}{%
+  \mathop{%
+    \mathpalette\@updown\bigsqcup
+  }%
+}
+\newcommand*{\@updown}[2]{%
+  \rotatebox[origin=c]{180}{$\m@th#1#2$}%
+}
+\makeatother
+
+\makeatletter
+\let\oldnl\nl% Store \nl in \oldnl
+\newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}}% Remove line number for one line
+\makeatother
+
+% \let\oldalgorithm\algorithm
+% \let\oldendalgorithm\endalgorithm
+% 
+% \let\algorithm\figure
+% \let\endalgorithm\endfigure
+
+%%% Allow more line breaks in URLs.
+\usepackage{url}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+
+%% add -shell-escape as flag for pdflatex in order to work
+\usepackage{minted}
+% \usepackage[outputdir=build]{minted}
+
+\usetikzlibrary{arrows,positioning} 
+\tikzset{
+    %Define standard arrow tip
+    >=stealth',
+    %Define style for boxes
+    punkt/.style={
+           rectangle,
+           rounded corners,
+           draw=black, very thick,
+           text width=6.5em,
+           minimum height=2em,
+           text centered},
+    % Define arrow style
+    pil/.style={
+           ->,
+           thick,
+           shorten <=2pt,
+           shorten >=2pt,}
+}
+
+\usepackage{listings}
+\lstdefinelanguage
+   [x64]{Assembler}     % add a "x64" dialect of Assembler
+   [x86masm]{Assembler} % based on the "x86masm" dialect
+   % with these extra keywords:
+   {morekeywords={CDQE,CQO,CMPSQ,CMPXCHG16B,JRCXZ,LODSQ,MOVSXD, %
+                  POPFQ,PUSHFQ,SCASQ,STOSQ,IRETQ,RDTSCP,SWAPGS, %
+                  movaps,
+                  rax,rdx,rcx,rbx,rsi,rdi,rsp,rbp, %
+                  r8, r14, r15, r15d, r8d,r8w,r8b,r9,r9d,r9w,r9b}} % etc.
+
+\lstset{language=[x64]Assembler}
+\usepackage{enumitem}
+\usepackage{amsthm}
+% \theoremstyle{definition}
+% \newtheorem{definition}{Definition}[section]
+% \newtheorem*{remark}{Remark}
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{proposition}{Theorem}[section]
+% \newtheorem{corollary}{Corollary}[theorem]
+% \newtheorem{lemma}[theorem]{Lemma}
+
+\fancyhf{} % Remove fancy page headers 
+\fancyhead[C]{Anonymous Submision \#9999 to ACM CCS 2017} % TODO: replace 9999 with your paper number
+\fancyfoot[C]{\thepage}
+
+\setcopyright{none} % No copyright notice required for submissions
+\acmConference[Anonymous Submission to ACM CCS 2017]{ACM Conference on Computer and Communications Security}{Due 19 May 2017}{Dallas, Texas}
+\acmYear{2017}
+
+\settopmatter{printacmref=false, printccs=true, printfolios=true} % We want page numbers on submissions
+
+%%\ccsPaper{9999} % TODO: replace with your paper number once obtained
+
+\begin{document}
+%don't want date printed
+\date{}
+
+%make title bold and 14 pt font (Latex default is non-bold, 16 pt)
+% \title{\Large \bf \textsc{TypeShield}: Precise Protection of Forward Indirect Calls in Binaries}
+% \title{\Large \bf \textsc{TypeShield}: Protecting Forward Indirect Calls in C++ Binaries for Real}
+% \title{\Large \bf \textsc{TypeShield}: Practical, Precise and Effective Protection of Forward Indirect Calls in C++ Binaries}
+% \title{\Large \bf \textsc{TypeShield}: Practical, Precise \& Effective Protection of Forward Indirect Calls}
+\title{\Large \bf \textsc{TypeShield}: Practical Protection Against Forward Indirect Call Based Attacks}
+
+
+%for single author (just remove % characters)
+\author{
+{\rm Your N.\ Here}\\
+Your Institution
+\and
+{\rm Second Name}\\
+Second Institution
+% copy the following lines to add more authors
+% \and
+% {\rm Name}\\
+%Name Institution
+} % end author
+
+
+
+%%add pg. number
+\thispagestyle{plain}
+\pagestyle{plain}
+
+% Use the following at camera-ready time to suppress page numbers.
+% Comment it out when you first submit the paper for review.
+\thispagestyle{empty}
+
+
+\begin{abstract}
+ \input{components/abstract}
+\end{abstract}
+
+\keywords{template, formatting, pickling} % TODO: replace with your keywords
+
+\maketitle
+	
+%contents
+\input{chapters/Introduction}
+\input{chapters/Forward_Indirect_Callsites}
+\input{chapters/TypeShild_Overview}
+\input{chapters/Design}
+\input{chapters/Implementation}
+\input{chapters/Evaluation}
+\input{chapters/Discussion}
+\input{chapters/Related_Work}
+\input{chapters/Future_Work}
+\input{chapters/Conclusion}
+
+%todos list
+\listoftodos
+
+%the bibliography
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{literatur.bib}
+
+
+% \theendnotes
+
+%appendix, taken out for now.
+% \input{chapters/Appendix}
+
+\end{document}

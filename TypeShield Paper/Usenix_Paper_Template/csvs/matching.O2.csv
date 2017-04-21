@@ -1,0 +1,10 @@
+target,opt,fn,fn not in clang,fn not in clang pct,fn not in padyn,fn not in padyn pct,at,at not in clang,at not in clang pct,at not in padyn,at not in padyn pct,cs,cs discarded clang,cs discarded clang pct,cs discarded padyn,cs discarded padyn pct
+proftpd,O2,1015,0,0.0,15,1.45,388,2,0.51,3,0.76,155,0,0.0,0,0.0
+vsftpd,O2,318,0,0.0,0,0.0,9,1,10.0,0,0.0,14,0,0.0,0,0.0
+lighttpd,O2,290,0,0.0,311,51.74,55,4,6.77,0,0.0,66,0,0.0,0,0.0
+nginx,O2,921,0,0.0,0,0.0,479,64,11.78,0,0.0,266,0,0.0,0,0.0
+mysqld,O2,9742,13,0.13,3690,27.47,5747,136,2.31,363,5.94,7923,24,0.3,25,0.31
+postgres,O2,6930,1,0.01,1512,17.91,562,1929,77.43,4,0.7,687,1,0.14,0,0.0
+memcached,O2,133,0,0.0,91,40.62,11,3,21.42,0,0.0,48,1,2.04,0,0.0
+node,O2,20638,339,1.61,620,2.91,7003,524,6.96,422,5.68,10965,29,0.26,26,0.23
+geomean,O2,1415.0,0.0,0.0,0.0,0.0,269.0,30.0,8.0,0.0,0.0,323.0,0.0,0.0,0.0,0.0

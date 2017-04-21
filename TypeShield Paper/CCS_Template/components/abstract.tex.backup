@@ -1,0 +1,74 @@
+
+%MA Thesis
+% Applications like firefox, chrome, mysql, postgresql or nginx are written in C/C++ 
+% mostly for performance reasons or to have better control thereover, availability 
+% and a vast number of third party libraries are other strong reasons. Yet using 
+% these languages comes at the price of allowing code reusage attacks, as up to this
+% day buffer overflows and other memory corruption exploits are haunting the various
+% projects using C/C++. This is not the main focus, but only a prerequisite of the 
+% attacks we are going to discuss. The language c++, which initially was built based
+% on C introduced the concept of inheritance to allow for more flexible designs. 
+% This modelled by storing a pointer to a table that stores the virtual functions 
+% of the particular object. The relatively recently discovered COOP exploits and its
+% successors leverage this pointer to change the control flow hijacking the attacked
+% program. Although C does not employ the concept of virtual calls, it is still 
+% attackable by modifying global code pointers as shown in the Control Flow Bending
+% paper.
+% 
+% While there exists extensive work to protect binaries from the source level, 
+% one might not have access to the the sourcecode or compilation process, 
+% therefore binary based solutions must also be considered , of which there
+% are near to none that can mitigate COOP exploits. In this thesis, we present
+% \textsc{TypeShield} a tool implemented ontop of the principles introduced by
+% TypeArmor, which reportedly can mitiagte COOP attacks to a certain extent. 
+% We partially verify the results of TypeArmor and implement our own matching
+% schema based on the parameter wideness of callsites and calltargets. 
+% Our classification schema achieves an additional reduction of the possible
+% calltargets per callsite of up to 20\% with an overall reduction of about 
+% 9\% when comparing to parameter count based aproaches.
+
+
+
+%Paper abstract
+High security, high performance and high availability 
+applications are usually implemented in C/C++ for modularity, 
+performance and compatibility to name just a few reasons.
+Virtual functions, which facilitate late binding,
+are a key ingredient in facilitating run-time polymorphism
+in C++ because it allows and object to use general (its own) 
+or specific functions (inherited) contained in the class hierarchy.
+Despite the alarmingly high number of \textit{vptr} corruption
+vulnerabilities, the \textit{vptr} corruption problem has not
+been sufficiently addressed by the researchers.
+
+% However, because of the specific implementation of late binding,
+% which performs no verification in order to check where an indirect call site 
+% (virtual object dispatch through virtual pointers (\textit{vptrs})) is allowed to
+% call inside the class hierarchy, this opens a large attack surface which
+% was successfully exploited by the COOP attack.
+% Since manipulation (changing or inserting new \textit{vptrs}) violates the 
+% programmer initial pointer semantics and allows an attacker to
+% redirect the control flow of the program as he desires, \textit{vptrs} corruption
+% has serious security consequences similar to those of other 
+% data-only corruption vulnerabilities.
+% Despite the alarmingly high number of \textit{vptr} corruption
+% vulnerabilities, the \textit{vptr} corruption problem has not
+% been sufficiently addressed by the researchers.
+
+In this paper, we present \textit{TypeShield}, a run-time \textit{vptr} corruption
+detection tool. It is based on instrumentation of executables at load time
+and uses a novel run-time type and function parameter counter technique
+in order to overcome the limitations of current approaches and efficiently
+verify dynamic dispatching during run-time.
+In particular, \textit{TypeShield} can be automatically and easily used
+in conjunction with legacy applications or where source code is missing.
+It achieves higher caller/caller matching (precision) and with reasonable
+run-time overhead.
+We have applied \textit{TypeShield} to
+web servers, FTP servers and SPEC2006 benchmark and were able to efficiently
+and with low performance overhead protect this applications from 
+\textit{vptr} corruptions vulnerabilities.
+Our evaluation shows that our target reduction schema achieves an additional
+reduction of the possible call targets per call-site of up to 
+20\% with an overall reduction of about 9\% when comparing with other state-of-the-art
+parameter count based approaches.
