@@ -474,9 +474,9 @@ usually all potential variadic parameters are moved into a contiguous block of m
 Our analysis interprets that as a read access on all 
 parameters and we arrive at a problematic overestimation. 
 
-\begin{center}
-\centering
-\begin{figure}
+\begin{figure}[thp] % the figure provides the caption
+\centering          % which should be centered
+\begin{tabular}{c}  % the tabular makes the listing as small as possible and centers it
 \footnotesize
 \begin{lstlisting}
 00000000004222f0 <make_cmd>:
@@ -504,12 +504,10 @@ parameters and we arrive at a problematic overestimation.
  422356:mov    %r14,%rdi
  422359:callq  409430 <pcalloc>
 \end{lstlisting}
+\end{tabular}
 \caption{ASM code of the \texttt{make\_cmd} function with optimize level O2, which has a variadic parameter list.}
 \label{fig:asmvariadic}
 \end{figure}
-\end{center}
-
-
 
 Our solution to this problem is to find these spurious reads and ignore them. A compiler will implement this type of operation very 
 similar for all cases, thus we can achieve this using the following steps:
