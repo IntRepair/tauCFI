@@ -225,8 +225,7 @@
 
 \bibitem{mcfi:niu}
 {\sc Niu, B., and Tan, G.}
-\newblock {Modular Control-Flow VTint: Protecting Virtual Function
-  TabIntegrity}.
+\newblock {Modular Control-Flow Integrity}.
 \newblock In {\em ACM Conferece on Programming Language Design and
   Implementation (PLDI),\/} (2014).
 

@@ -1,0 +1,123 @@
+Review 1:
+
+Paper summary
+This paper presents TypeShield, a run-time approach for enforcing control-flow integrity (CFI) of forward-edges (i.e., indirect calls). Enforcement is performed by checking that a call only targets a functions with the same number of arguments. This way the functions that can be targeted by indirect calls is restricted to a smaller set of all the indirectly called functions.
+Comments for author
+Strengths:
+
+TypeShield can be used with legacy applications
+TypeShield attempts to improve the on previous work TypeArmor, by allowing a more restricted set of functions to be targeted
+Evaluation includes real applications (web and ftp servers) and SPEC
+Weaknesses:
+
+This is incremental work building on the idea of TypeArmor and it does not seem to be more effective in reducing the # of call-targets/site (see table 5)
+There is a risk that TypeShield will cause false positives in larger applications, because of inaccuracies in precisely detecting the number of arguments in function with many arguments, as unlike TypeArmor enforcement requires exact matching of # of arguments
+Significant part of the introduction are taken from the TypeArmor paper with small modifications (see below for examples)
+The paper does not adhere to the submission guidelines, for instance, Fig.1 uses the entire margin of page 3
+There seems to be significant similarity with TypeArmor and unfortunately the boundaries of what is novel here vs what was also done before are blurry. Some examples: 1. TypeShield: "Our novel policy is based on the insight that if the binary adhere to the standard calling convention for indirect calls, undefined arguments at the call site are not used by any callee by design. TYPESHIELD trashes these so-called spurious arguments and thus breaks all published COOP and improved COOP-like exploits..." TypeArmor: "TypeArmor trashes these so-called spurious arguments and thus breaks all published COOP and improved COOP-like exploits."
+
+2. TypeShield: TYPESHIELD can protect only forward indirect edges at the binary level. Previous research has shown that, a backward-edge protection such as an shadow stack [12] or context-sensitive CFI [24] is still essential to ensure the in- tegrity of return addresses at runtime [11]. In this paper, we assume an ideal backward-edge protection mechanism such as a shadow stack with no design faults [10]. TYPESHIELD complements such backward-edge defenses by addressing at- tacks that take place without violating the integrity of the re- turn path. Specifically, TYPESHIELD provides a precise pro- tection against against COOP exploits as well as improved COOP derivations [11, 19, 1, 17].
+
+TypeArmor: Can TypeArmor defend against any exploit? No. Ty- peArmor protects only forward edges at the binary level. As shown by previous work, a backward-edge protection mechanism (e.g., a shadow stack [14] or context-sensitive CFI [30]) is still essential to ensure the integrity of return ad- dresses at runtime [9], [18]. In this paper, we assume an ideal backward-edge protection mechanism such as a shadow stack with no design faults [12]. TypeArmor complements such backward-edge protection by countering attacks that take place without violating the integrity of the return path. Specifically, TypeArmor provides strong (but not infallible— given also the fundamental CFI limitations [9]) protection against COOP exploits as well as improved COOP-like exploits [13] and similar advanced attacks such as Control Jujutsu [16].
+
+3. TypeShield: TYPESHIELD is not more precise than source code based approaches such as IFCC/VTV [23]. IFCC/VTV are strong compiler based defenses which produce binaries which can resist control-flow hijacking attacks. It is well known that source-code based techniques are more precise when enforc- ing fine-grained policies based on program constructs (such as the C++ vtable hierarchy or generic data types) for miti- gation purposes. However, there are still important reasons to study and improve binary-level defenses. First, the source code for many off-the-shelf programs is not always available. Second, real-world programs rely on a plethora of shared libraries and recompiling all shared libraries is not always possible. This is true even for purely open-source projects. Third, even if the source code of the libraries is available, re- compiling big projects with dynamic dependencies is, again, a demanding task. Even state-of-the art defenses that enforce CFI policies at the source level such as Interleaving [8] do not support dynamic libraries. Notice that mixing CFI-protected with non-protected code is impossible since applying CFI only on a part of the CFG would crash legitimate executions. In contrast, with a binary-level solution, we can offer strong protection even if the source code is not available or when recompilation is not feasible (or desirable). TypeArmor: Is TypeArmor superior to approaches like IFCC/VTV and CPI? No. IFCC/VTV [29] and CPI [23] are strong source- level defenses which produce binaries that can resist control- flow hijacking attacks. Source-based techniques are more precise in using fine-grained program constructs (such as the C++ class hierarchy or generic data types) for mitigation purposes. However, there are still important reasons to study and improve binary-level defenses. First, the source code for many off-the-shelf programs is not always available. Second, real-world programs rely on a plethora of shared libraries and recompiling all shared libraries is not always possible. This is true even for purely open-source projects. For example, in VTV [29], the authors evaluate their system on ChromeOS, which includes legacy libraries. The authors had to manually whitelist these libraries, a task which is not trivial (certain code has to be annotated) and does not scale. Third, even if the source code of the libraries is available, recompiling big projects with dynamic depen- dencies is, again, a demanding task. Even state-of-the art defenses that enforce CFI policies at the source level such as SAFEDISPATCH [21] do not support dynamic libraries. Note that this is not a minor issue: mixing CFI-protected with non-protected code is impossible. If CFI is applied in just a portion of the CFG, crashes due to legitimate execution are possible. In contrast, with a binary-level solution, we can offer strong protection even if the source code is not available or when recompilation is not feasible (or desirable).
+
+Nits:
+
+On page 1 'for one due to compatibility and also due to variadic functions'
+On page 2 'binary adhere_s_ to the'
+Tool miss percentages in Table 1 are identical in both cases (copy-paste error?).
+[Text] Plain textReview #560B
+
+
+
+
+Review 2:
+This paper presents an advancement in defending against COOP attacks and their variations. Specifically, it discusses the background and capabilities of attacks using inheritance and virtual functions, and then introduces a new tool, TypeShield, that defends against such attacks. The defense is done first by static analysis to estimate the number and size of function parameters at call targets and callsites, followed by runtime enforcement of the policy derived from the analysis. This reduces the number of call targets allowed at a single callsite, and thereby restricts the abilities of an attacker.
+Comments for author
+Strengths
+
+Detailed background about COOP attacks.
+Nice mathematical formalization of its policies.
+Weaknesses
+
+This paper appears to have significant plagiarism in its introduction.
+The system is an incremental improvement over prior work. Precision is worse on average than prior work with only a theoretical improvement.
+Detailed Comments
+
+Plagiarism Detected. It appears that large portions of the introduction have been copied from the paper TypeArmor [25] starting with the first paragraph of page 2 and ending before the list of contributions. Some example sentences that are identical (verbatim copy), for example, are "Second, real-world programs rely on a plethora of shared libraries and recompiling all shared libraries is not always possible. This is true even for purely open-source projects." Some words have been changed slightly in some paragraphs, but the overall form is the same. As another example, the paragraph on the top right column on page 2 corresponds to the second paragraph on page 2 of the TypeArmor paper.
+One result of some of these copied sentences is that this paper makes identical claims to those of TypeArmor. The TypeArmor paper claims that it broke all published COOP-derived exploits at its time of publication, as does TypeShield:
+
+TypeArmor: "TypeArmor trashes these so-called spurious arguments and thus breaks all published COOP and improved COOP-like exploits. These exploits all chain virtual method calls that disrespect calling conventions to achieve convenient data flows between gadgets."
+
+TypeShield: "TypeShield trashes these so-called spurious arguments and thus breaks all published COOP and improved COOP-like exploits. These exploits all chain virtual method calls that disrespect calling conventions to achieve convenient data flows between gadgets."
+
+This raises the question as to whether this paper's solution prevents any (published) attacks that have not already been addressed by TypeArmor. If not, this claim is misleading, because this is not a new contribution.
+
+Comparison with TypeArmor.
+TypeArmor seems to have a similar approach to detecting variadic functions, as the approach in both papers looks for a certain pattern of argument writes. How does this paper's approach compare to that used by TypeArmor?
+
+More comparisons with TypeArmor in the design section, specifying more clearly the details of what this paper does that TypeArmor does not, would be helpful. For example, the paper goes into a lot of detail about how it implements the count policy, which is also implemented in TypeArmor under a different name. It would be useful to give more information as to what improvements this paper's approach provides when implementing the count policy, or comparing the two approaches if they are roughly equivalent.
+
+Since TypeArmor's precision is compared to TypeShield's, why is its runtime performance not also compared with TypeShield's?
+
+The precision comparison with other tools, including TypeArmor, shows that the current implementation does not yield a significant improvement over the state-of-the-art, and in multiple cases is worse. While the authors do "predict that our solution would improve even more" if they implemented some of the additional features already provided by TypeArmor, it is still currently worse on average, and with only incremental improvement (the addition of the type policy).
+
+Figure 9 is very strange, especially when compared to Figure 7 from the TypeArmor paper. The two figures have almost identical values for the bars, except for omnetpp. However, the blue bar for this paper is labeled "baseline", which does not make sense; in TypeArmor, the two bars were for two different configurations of TypeArmor, both normalized to the baseline, which would always be 1. It makes no sense for the baseline to vary like it does in Figure 9.
+
+Other comments.
+The definitions of count* and type* should have been made more explicit.
+
+The type policy, as designed and implemented, focuses exclusively on registers due to ease of analysis. This omits 32-bit x86 code as well as the fifth and sixth arguments to functions in Microsoft's x64 calling convention for Windows. Thus, the results of estimating the size of function arguments are optimistic and results may be worse for Windows applications and 32-bit code. These caveats should have been addressed more clearly, perhaps in a limitations section.
+
+The first few sections of the paper comprising the security analysis of forward indirect calls seems more like a summary of COOP attacks than a security analysis. Although it could perhaps be useful to have a paper that gives a summary of such attacks, it might be better if it were in a more in-depth SoK paper.
+
+Typos and grammatical errors
+
+This paper has numerous issues with grammar or spelling. Here are a few examples:
+
+Abstract: "it allows and object to use general" "this applications"
+
+Introduction: "Current binary based techniques enforce imprecise forward-edge CFI plocies, often allowing controll transfers" "This efficiently leads to a more precise CFG of the binary progrma in question" "could be used by other systems in order to gain more a precise CFG" In the contributions subsection, the system name was written as "TypeSchield" multiple times "We demonstrate trough extensive experiments"
+
+C++ Forbidden Forward Calls Exposed: "indirect call sites which are exploiter by" "we check during run-rime before each indirect" "reduces the legitimate vTbles ranges" "the standard says that we have have" "details of the second attack are far to complex"
+
+Instruction Analysis: "how this function actually calculates this sate"
+
+Call-target Analysis: "very similar foll all cases" "which entierly consist"
+
+Call-site Analysis: "Address Wideness Unterestimation"
+
+Evaluation: "also used by the TypeAmor"
+
+Related Work: "invariants on the number of function paramters"
+
+APPEAL Response[Paul Muntean <paul@sec.in.tum.de>]26 Mar 2017 1:52:14pm PDT438 words
+
+
+
+
+My Appea:
+Dear PC Chair,
+
+please see under each review weakness our disagreement comment.
+
+Review1.
+
+Weakness1. Our contributions are, we: 1.have a different and more precise analysis, 2.the forward edge checking schema is different than that of TypeArmor, 3.provide a return edge schema too, but currently this is not provided in TypeShield, 4.discuss considerable disagreements with the original TypeArmor paper, 5.talk about considerable limitations of TypeArmor. 6.we provide standard deviation values and numbers of problems encountered for all programs, see Table 4.
+
+Because of these we consider our contribution to be not small as the review claims. Notice that the TypeArmor authors provide median values which are misleading, given the number series, e.g., 1, 4, 5, 8, 77. The median is 5. Mean values should be used instead. For this reason our results can not be really compared to those of TypeArmor.
+
+Weakness2. This statement has no theoretical proof and we thoroughly tested TypeShield with applications without encountering any false positives (FP). Basically FP are possible, but relatively unlikely, since TypeShield overestimate CS and undestimate CTs and thus false positives can be excluded. However, the FP possibility is almost always given and binaries should be always thoroughly tested after such patches are applied, as we did.
+
+Weakness3. The similarities are because we wanted to address the same points as the TypeArmor paper. Our paper is a considerable improvement over TypeArmor which in many parts is not exactly specifying how results were obtained. Thus, we asked the TypeArmor authors multiple times to provide us source code access but this was not given. Also, see the responses (unclear, and misleading) of the TypeArmor author to the audience questions, see video: https://www.youtube.com/watch?v=bG01qmS5bCQ
+
+Weakness4. We do not agree that this is a reason for rejection, this can be easily repaired. This issue can be easily fixed if the chance is given. We opted to address the same points as TypeAmor in the introduction and for this reason the slight overlap with the TypeArmor intro. Section.
+
+Nits. "Tool miss percentages in Table 1 are identical in both cases (copy-paste error?)." This is no copy paste error, please see again, geomean happens to be 0 if one of the values in the product is 0.
+
+Review2.
+
+Weakness1. Similar to weakness 4 from above.
+
+Weakness2. Similar to weakness 1 from Review1. TypeShield is not an incremental improvement over TypeArmor. It is a new tool with no source code borrowed from TypeArmor. The precision is higher than that of TypeArmor. TypeArmor presents not reproducible results in their paper. Finally, the theoretical improvement of TypeShield over TypeArmor unveils many theoretical limitations which were not addressed in the TypeArmor paper.
