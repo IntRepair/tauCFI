@@ -1,0 +1,20 @@
+Here are some comments. I don't work on CFI (my colleague Mathias Payer did some
+work and I can connect you with him if you think it's useful).
+
+My main comment about the intro and abstract 
+
+
+"Limitations. These source code tools offer a certain degree
+of protection when code is provided, however the above mentioned
+binary tools offer limited or no protection due to an in first place
+imprecise call target set per call site."
+
+This paragraph needs to be precise, what are the exact limitations and why your work
+addresses it.
+
+I would remove the bolded paragraphs from intro, the writing is self-explanatory.
+
+I would also describe the previous work in terms of approaches not tools. Your writing 
+actually already does that.
+
+good luck,
