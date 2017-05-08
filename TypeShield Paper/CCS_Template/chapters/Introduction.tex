@@ -1,7 +1,7 @@
 \section{Introduction}
 \label{chapter:Introduction}
 
-\textbf{Big Picture.}
+% \textbf{Big Picture.}
 The object-oriented programming (OOP) paradigm is \textit{de facto standard} concept for developing large and complex 
 applications because it facilitates inheritance for objects which are at first unrelated to each other; this in turn 
 facilitates better code reuse, software maintenance and software design. There are many programing languages
@@ -16,7 +16,7 @@ virtual functions for each class containing them and provide to each instance of
 to the aforementioned table. While this allows more flexible code to be built---through late binding---it is simplistically implemented with no security
 mechanisms at in place.
 
-\textbf{Problem.}
+% \textbf{Problem.}
 The performance benefit of late binding comes with high security implications. 
 First, dangling object pointers lead to undefined behavior---as specified by the C++ language standard N4618~\cite{N4618}---which 
 can be exploited to point into illegal (\textit{i.e.,} not previously intended) virtual tables.
@@ -32,7 +32,7 @@ become easily performable. This type of attack can bypass most of the to date CF
 \textit{2)} it exploits the forward indirect control flow transfers imprecision which can not be upfront 
 determined since alias analysis is undecidable~\cite{alias:undecidable}.
 
-\textbf{Available Tools.}
+% \textbf{Available Tools.}
 To avoid object dispatch corruptions Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} can be successfully used.
 CFI is one of the most used techniques for securing indirect control flow transfers inside programs
 by usually adding runtime checks before each indirect call site.
@@ -69,16 +69,24 @@ constructor that defines the \textit{this} pointer. Overall, VCI tries to recupe
 semantics without focusing on one of them from the binary. As result the call target set per call site is too 
 permissive.
 
-\textbf{Tool Limitations.}
+% \textbf{Tool Limitations.}
 These source code tools offer a certain degree of protection when code is provided, however 
 the above mentioned binary tools offer limited or no protection due to an in first place
 imprecise calltarget set per callsite.
 
-\textbf{Our Idea.}
+% \textbf{Our Idea.}
 In this paper, we present \textsc{TypeShield}, a runtime binary-level illegitimate forward calls 
 filtering tool that is based on an improved forward-edge fine-grained CFI policy compared 
 to previous work~\cite{veen:typearmor, crane:readactor++}.
-The analysis performed by \textsc{TypeShield}:
+\textsc{TypeShield} analyzes only 64-bit binaries and only function parameters 
+which are passed with the help of registers. This means that based on the 
+used ABI, \textsc{TypeShield} is able to track 4 or 6 arguments for the Microsoft's x64-bit calling convention
+or System V ABI, respectively. Similarly to TypeArmor we do not take into consideration floating-point 
+arguments passed via xmm registers; which we want to address in future work. However, as we will 
+demonstrate in the evaluation section, this will provide us enough information to 
+more be precisely than TypeArmor when stopping several state-of-the-art CRAs.
+
+More precisely, the analysis performed by \textsc{TypeShield}:
 \textit{1)} uses for each function parameter its register wideness (i.e., ABI dependent) in order to map calltargets per callsites,  
 \textit{2)} uses an address taken (AT) analysis similar to~\cite{veen:typearmor} for all calltargets, and 
 \textit{3)} compares individually parameters of callsites and calltargets in order to check if an indirect call transfer is acceptable or not, 
@@ -116,7 +124,7 @@ More precisely, \textsc{TypeShield} achieves three goals:
               types of attacks.
 \end{itemize}
 
-\textbf{Contributions.} 
+% \textbf{Contributions.} 
 Summarizing, our contributions are:
 \label{Contribution}
 \begin{itemize}
