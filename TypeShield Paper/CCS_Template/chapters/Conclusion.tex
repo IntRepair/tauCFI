@@ -26,12 +26,12 @@
 % The family of forward indirect call based attacks which can manifest due to a series of factors such as
 % memory corruptions, binary layout leackages and availability of useful
 % gadgets in a sufficiently large executable poses a serious security threat.
-We presented \textsc{TypeShield}, a runtime based fine-grained CFI enforcing
-tool which can mitigate forward indirect call based attacks by
-precisely filtering legitimate from illegitimate forward indirect calls in binaries.
+In this paper, we presented \textsc{TypeShield}, a program binary based runtime fine-grained CFI enforcing
+tool which can mitigate forward indirect call based attacks by precisely filtering legitimate from illegitimate 
+forward indirect control flow transfers in program binaries.
 \textsc{TypeShield} uses a novel runtime type checking technique based on function parameter
 type checking and parameter counting in order to efficiently filter-out legitimate
-and illegitimate forward indirect edges.
+and illegitimate forward indirect transfers.
 It provides a more precise analysis then existing approaches with a
 comparable performance overhead.
 We have implemented it and applied it to real software such as web servers and FTP servers.
