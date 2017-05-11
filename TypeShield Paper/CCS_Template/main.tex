@@ -26,13 +26,18 @@
 \usetikzlibrary{shapes,arrows,fit,calc,positioning,automata}
 \PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
 
+\usepackage{fix-cm}    
+
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{19}{19}}
+\makeatother 
 
 \usepackage{xcolor}
 \hypersetup{
-    colorlinks,
-    linkcolor={red!50!black},
-    citecolor={blue!50!black},
-    urlcolor={blue!80!black}
+    colorlinks=true,
+    linkcolor=red,
+    urlcolor=blue,
+    citecolor=blue
 }
 
 %use to check the not used references
@@ -61,8 +66,17 @@
 \usepackage{longtable,csvsimple}
 % \usepackage[margin=.75in]{geometry}
 % \usepackage[toc,page]{appendix}
-\renewcommand{\UrlBreaks}{\do\/\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z}
+\renewcommand{\UrlBreaks}{\do.\do\/\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z}
+\def\UrlBreaks{\do\/\do-}
  
+ \expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks% save the current one
+  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j%
+  \do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t%
+  \do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D%
+  \do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N%
+  \do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X%
+  \do\Y\do\Z\do\*\do\-\do\~\do\'\do\"\do\-\do\.}%
+  
 %%algorithm stuff
 \makeatletter
 \providecommand{\bigsqcap}{%
@@ -160,7 +174,7 @@
 % \title{\Large \bf \textsc{TypeShield}: Protecting Forward Indirect Calls in C++ Binaries for Real}
 % \title{\Large \bf \textsc{TypeShield}: Practical, Precise and Effective Protection of Forward Indirect Calls in C++ Binaries}
 % \title{\Large \bf \textsc{TypeShield}: Practical, Precise \& Effective Protection of Forward Indirect Calls}
-\title{\textsc{TypeShield}: Practical Protection Against Forward Indirect Call Based Attacks}
+\title{\textsc{TypeShield}: Practical Forward Indirect Call Based Attacks Protection}
 
 
 %for single author (just remove % characters)

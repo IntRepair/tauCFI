@@ -1,25 +1,88 @@
-SHELL=/bin/bash
-MAIN=main
-LATEX=pdflatex
-BIBTEX=bibtex
-DTM=$(shell date +%Y%m%d-%H%M%S)
+#
+# Makefile for acmart package
+#
+# This file is in public domain
+#
+# $Id: Makefile,v 1.10 2016/04/14 21:55:57 boris Exp $
+#
 
-all: clean build clear
+PACKAGE=acmart
 
-build:
-	$(LATEX) $(MAIN).tex
-	$(BIBTEX) $(MAIN)
-	$(LATEX) $(MAIN).tex
-	$(LATEX) $(MAIN).tex
+SAMPLES = \
+	sample-manuscript.tex \
+	sample-acmsmall.tex \
+	sample-acmlarge.tex \
+	sample-acmtog.tex \
+	sample-sigconf.tex \
+	sample-sigconf-authordraft.tex \
+	sample-sigplan.tex \
+	sample-sigchi.tex \
+	sample-sigchi-a.tex 
+
+
+PDF = $(PACKAGE).pdf ${SAMPLES:%.tex=%.pdf} acmguide.pdf
+
+all:  ${PDF}
+
+
+%.pdf:  %.dtx   $(PACKAGE).cls
+	pdflatex $<
+	- bibtex $*
+	pdflatex $<
+	- makeindex -s gind.ist -o $*.ind $*.idx
+	- makeindex -s gglo.ist -o $*.gls $*.glo
+	pdflatex $<
+	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $*.log) \
+	do pdflatex $<; done
+
+
+acmguide.pdf: $(PACKAGE).dtx $(PACKAGE).cls
+	pdflatex -jobname acmguide $(PACKAGE).dtx
+	- bibtex acmguide
+	pdflatex -jobname acmguide $(PACKAGE).dtx
+	while ( grep -q '^LaTeX Warning: Label(s) may have changed' acmguide.log) \
+	do 	pdflatex -jobname acmguide $(PACKAGE).dtx; done
+
+%.cls:   %.ins %.dtx  
+	pdflatex $<
+
+%.pdf:  %.tex   $(PACKAGE).cls ACM-Reference-Format.bst
+	pdflatex $<
+	- bibtex $*
+	pdflatex $<
+	pdflatex $<
+	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $*.log) \
+	do pdflatex $<; done
+
+sample-manuscript.pdf \
+sample-acmsmall.pdf \
+sample-acmlarge.pdf \
+sample-acmtog.pdf: samplebody-journals.tex
+
+sample-sigconf.pdf \
+sample-sigconf-authordraft.pdf \
+sample-sigplan.pdf \
+sample-sigchi.pdf: samplebody-conf.tex
+
+
+.PRECIOUS:  $(PACKAGE).cfg $(PACKAGE).cls
+
 
 clean:
-	@rm -f $(MAIN).{pdf,ps,log,lot,lof,toc,out,dvi,bbl,blg} *.aux
-	@echo Cleared all temporary files and $(MAIN).pdf
+	$(RM)  $(PACKAGE).cls *.log *.aux \
+	*.cfg *.glo *.idx *.toc \
+	*.ilg *.ind *.out *.lof \
+	*.lot *.bbl *.blg *.gls *.cut *.hd \
+	*.dvi *.ps *.thm *.tgz *.zip *.rpi
 
-clear:
-	@rm -f $(MAIN).{ps,log,lot,lof,toc,out,dvi,bbl,blg} *.aux
-	@echo Cleared all temporary files
+distclean: clean
+	$(RM) $(PDF) *-converted-to.pdf
 
-draft:
-	@cp $(MAIN).pdf $(MAIN)-draft-$(DTM).pdf
-	@echo Saved the draft as: $(MAIN)-draft-$(DTM).pdf
+#
+# Archive for the distribution. Includes typeset documentation
+#
+archive:  all clean
+	tar -C .. -czvf ../$(PACKAGE).tgz --exclude '*~' --exclude '*.tgz' --exclude '*.zip'  --exclude CVS --exclude '.git*' $(PACKAGE); mv ../$(PACKAGE).tgz .
+
+zip:  all clean
+	zip -r  $(PACKAGE).zip * -x '*~' -x '*.tgz' -x '*.zip' -x CVS -x 'CVS/*'

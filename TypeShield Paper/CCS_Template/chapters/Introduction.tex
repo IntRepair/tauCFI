@@ -134,13 +134,13 @@ Summarizing, our contributions are:
  threat.
 
  \item \textbf{Illegitimate indirect calls detection tool.}
- We designed and implemented \textsc{TypeSchield}, a general, automated, and easy to deploy tool
+ We designed and implemented \textsc{TypeShield}, a general, automated, and easy to deploy tool
  that can be applied to C/C++ binaries in order to detect and mitigate illegitimate forward indirect calls 
  during runtime. 
  
  \item \textbf{Experiments.} We demonstrate trough extensive experiments that our precise
  binary-level CFI strategy can mitigate advanced code reuse attacks in absence of C++ semantics.
- For example \textsc{TypeSchield} can protect against the COOP attack and its variations.
+ For example \textsc{TypeShield} can protect against the COOP attack and its variations.
 \end{itemize}
 
 \newsavebox{\firstlisting}
@@ -218,7 +218,7 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 %most probably not needed at this time.
 % \label{Outline}
 % \textbf{Outline.} 
-The remainder of this paper is organized as follows.
+The rest of this paper is organized as follows.
 \cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications.
 \cref{chapter:TypeShild Overview} contains an overview of \textsc{TypeShield}.
 \cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}.
