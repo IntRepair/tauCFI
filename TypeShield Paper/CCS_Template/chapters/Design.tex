@@ -12,83 +12,14 @@ for each of our policies.
 % address taken analysis based on \cite{mingwei:sekar} to restrict the number of available calltargets even more. 
 %At last we introduce a patching schema for callsites and calltargets to enforce the invariants we inferred.
 
-\subsection{\emph{Count} Policy}
-\label{section:countpolicy}
-\begin{figure}[!h]
-\centering
-\resizebox{0.3\textwidth}{!}{
-\begin{tikzpicture}
 
-%\fill[black!40!white] (0,0) rectangle (9,9);
-%\fill[black!30!white] (0,0) rectangle (7,7);
-%\fill[black!20!white] (0,0) rectangle (4,4);
-%\fill[black!10!white] (0,0) rectangle (2,2);
-%
-%\draw (0,0) --node[anchor=south] {0 params}  (2,0)  -- (2,2) -- (0,2) -- (0,0) ;
-%\draw (0,0) -- (2,0) --node[anchor=south] {1 param} (4,0) -- (4,4) -- (0,4) -- (0,0);
-%\draw (0,0) --(4,0) --node[anchor=south] {2 ... 5 params} (7,0) -- (7,7) -- (0,7) -- (0,0);
-%\draw (0,0) --(7,0) --node[anchor=south] {6 params} (9,0) -- (9,9) -- (0,9) -- (0,0);
-%\draw[dashed] (4,4) -- (7,7);
-
-
-\fill[black!00!white] (0,7) rectangle (6,6);
-\fill[black!10!white] (0,6) rectangle (6,5);
-\fill[black!20!white] (0,5) rectangle (6,4);
-\fill[black!30!white] (0,4) rectangle (6,3);
-\fill[black!40!white] (0,3) rectangle (6,2);
-\fill[black!50!white] (0,2) rectangle (6,1);
-\fill[black!60!white] (0,1) rectangle (6,0);
-
-
-\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\LARGE{growing required bits per parameter}} (-0.5,7);
-\draw[-triangle 45, thick] (6.5,7) -- node[sloped, anchor=center, above]  {\LARGE{growing provided bits per parameter}} (6.5,0);
-
-\draw (0,7) rectangle node[anchor=center] {\LARGE{0 parameters}} (6,6);
-
-\draw (0,6) rectangle node[anchor=center] {\LARGE{1 parameter}}  (6,5);
-
-\draw (0,5) rectangle node[anchor=center] {\LARGE{2 parameters}} (6,4);
-
-\draw (0,4) rectangle node[anchor=center] {\LARGE{3 parameters}} (6,3);
-
-\draw (0,3) rectangle node[anchor=center] {\LARGE{4 parameters}} (6,2);
-
-\draw (0,2) rectangle node[anchor=center] {\LARGE{5 parameters}} (6,1);
-
-\draw (0,1) rectangle node[anchor=center] {\LARGE{6 parameters}} (6,0);
-
-
-\end{tikzpicture}
-}
-\caption{\emph{Count} policy classification schema for callsites and calltargets.}
-\label{fig:COUNTschema}
-\end{figure}
-
-What we call the \emph{count} policy is essentially the policy introduced by TypeArmor \cite{veen:typearmor}. 
-The basic idea revolves around classifying calltargets by the number of parameters they provide and callsites 
-by the number of parameters they require. The schema to match this is based on the fact that we  
-have calltargets requiring parameters and the callsites providing them as depicted in Figure~\ref{fig:COUNTschema}.
-
-Furthermore, generating 100\% precise measurements for such classification with binaries as the only source of information is rather difficult. 
-Therefore, over-estimations of parameter count for callsites and underestimations of the parameter count for calltargets is deemed acceptable. 
-This classification is based on the general purpose registers that the call convention of the current ABI---in this case the 
-SystemV ABI---designates as parameter registers. Furthermore, we completely ignore floating point registers or multi-integer registers. 
-The core of the \emph{count} policy is now to allow any callsite $cs$, which provides $c_{cs}$ parameters, to call any calltarget $ct$, 
-which requires $c_{ct}$ parameters, iff $c_{ct} \leq c_{cs}$ holds. However, the main problem is that while there is a significant 
-restriction of calltargets for the lower callsites, the restriction capability drops rather rapidly when reaching higher parameter 
-counts, with callsites that use 6 or more parameters being able to call all possible calltargets:
-$\forall cs_1, cs_2.  c_{cs_1} \leq c_{cs_2} \Longrightarrow  \| \{ct \in \mathcal{F} | c_{ct} \leq c_{cs_1} \} \| \leq \| \{ct \in \mathcal{F} | c_{ct} \leq c_{cs_2}  \} \|$.
-
-One possible remedy would be the ability to introduce an upper bound for the classification deviation of parameter counts, 
-however as of now, this does not seem feasible with current technology. Another possibility would be the overall reduction
-of callsites, which can access the same set of calltargets, a route we will explore within this work.
 
 \subsection{\emph{Type} Policy}
 \label{section:typepolicy}
 \begin{figure}[!h]
 \center
 \hspace*{-.2cm} 
-\resizebox{0.5\textwidth}{!}{
+\resizebox{0.4\textwidth}{!}{
 \begin{tikzpicture}
 
 \fill[black!10!white] (0,7.5) rectangle (12,6);
@@ -97,50 +28,50 @@ of callsites, which can access the same set of calltargets, a route we will expl
 \fill[black!40!white] (0,3) rectangle (12,1.5);
 \fill[black!50!white] (0,1.5) rectangle (12,0);
 
-\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\LARGE{growing required bits per parameter}} (-0.5,7.5);
-\draw[-triangle 45, thick] (12.5,7.5) -- node[sloped, anchor=center, above] {\LARGE{growing provided bits per parameter}} (12.5,0);
+\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Huge{growing required bits/parameter}} (-0.5,7.5);
+\draw[-triangle 45, thick] (12.5,7.5) -- node[sloped, anchor=center, above] {\Huge{growing provided bits/parameter}} (12.5,0);
 
-\draw (0,7.5)  --node[anchor=south] {\LARGE{param 6}} (2,7.5);
-\draw (2,7.5)  --node[anchor=south] {\LARGE{param 5}} (4,7.5);
-\draw (4,7.5)  --node[anchor=south] {\LARGE{param 4}} (6,7.5);
-\draw (6,7.5)  --node[anchor=south] {\LARGE{param 3}} (8,7.5);
-\draw (8,7.5)  --node[anchor=south] {\LARGE{param 2}} (10,7.5);
-\draw (10,7.5) --node[anchor=south] {\LARGE{param 1}} (12,7.5);
+\draw (0,7.5)  --node[anchor=south] {\Huge{param 6}} (2,7.5);
+\draw (2,7.5)  --node[anchor=south] {\Huge{param 5}} (4,7.5);
+\draw (4,7.5)  --node[anchor=south] {\Huge{param 4}} (6,7.5);
+\draw (6,7.5)  --node[anchor=south] {\Huge{param 3}} (8,7.5);
+\draw (8,7.5)  --node[anchor=south] {\Huge{param 2}} (10,7.5);
+\draw (10,7.5) --node[anchor=south] {\Huge{param 1}} (12,7.5);
 
-\draw (0,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (2,6);
-\draw (2,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (4,6);
-\draw (4,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (6,6);
-\draw (6,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (8,6);
-\draw (8,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (10,6);
-\draw (10,7.5) rectangle node[anchor=center] {\LARGE{0-bits}} (12,6);
+\draw (0,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (2,6);
+\draw (2,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (4,6);
+\draw (4,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (6,6);
+\draw (6,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (8,6);
+\draw (8,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (10,6);
+\draw (10,7.5) rectangle node[anchor=center] {\Huge{0-bits}} (12,6);
 
-\draw (0,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (2,4.5);
-\draw (2,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (4,4.5);
-\draw (4,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (6,4.5);
-\draw (6,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (8,4.5);
-\draw (8,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (10,4.5);
-\draw (10,6) rectangle node[anchor=center] {\LARGE{8-bits}} (12,4.5);
+\draw (0,6)  rectangle node[anchor=center] {\Huge{8-bits}} (2,4.5);
+\draw (2,6)  rectangle node[anchor=center] {\Huge{8-bits}} (4,4.5);
+\draw (4,6)  rectangle node[anchor=center] {\Huge{8-bits}} (6,4.5);
+\draw (6,6)  rectangle node[anchor=center] {\Huge{8-bits}} (8,4.5);
+\draw (8,6)  rectangle node[anchor=center] {\Huge{8-bits}} (10,4.5);
+\draw (10,6) rectangle node[anchor=center] {\Huge{8-bits}} (12,4.5);
 
-\draw (0,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (2,3);
-\draw (2,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (4,3);
-\draw (4,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (6,3);
-\draw (6,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (8,3);
-\draw (8,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (10,3);
-\draw (10,4.5) rectangle node[anchor=center] {\LARGE{16-bits}} (12,3);
+\draw (0,4.5)  rectangle node[anchor=center] {\Huge{16-bits}} (2,3);
+\draw (2,4.5)  rectangle node[anchor=center] {\Huge{16-bits}} (4,3);
+\draw (4,4.5)  rectangle node[anchor=center] {\Huge{16-bits}} (6,3);
+\draw (6,4.5)  rectangle node[anchor=center] {\Huge{16-bits}} (8,3);
+\draw (8,4.5)  rectangle node[anchor=center] {\Huge{16-bits}} (10,3);
+\draw (10,4.5) rectangle node[anchor=center] {\Huge{16-bits}} (12,3);
 
-\draw (0,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (2,1.5);
-\draw (2,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (4,1.5);
-\draw (4,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (6,1.5);
-\draw (6,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (8,1.5);
-\draw (8,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (10,1.5);
-\draw (10,3) rectangle node[anchor=center] {\LARGE{32-bits}} (12,1.5);
+\draw (0,3)  rectangle node[anchor=center] {\Huge{32-bits}} (2,1.5);
+\draw (2,3)  rectangle node[anchor=center] {\Huge{32-bits}} (4,1.5);
+\draw (4,3)  rectangle node[anchor=center] {\Huge{32-bits}} (6,1.5);
+\draw (6,3)  rectangle node[anchor=center] {\Huge{32-bits}} (8,1.5);
+\draw (8,3)  rectangle node[anchor=center] {\Huge{32-bits}} (10,1.5);
+\draw (10,3) rectangle node[anchor=center] {\Huge{32-bits}} (12,1.5);
 
-\draw (0,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (2,0);
-\draw (2,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (4,0);
-\draw (4,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (6,0);
-\draw (6,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (8,0);
-\draw (8,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (10,0);
-\draw (10,1.5) rectangle node[anchor=center] {\LARGE{64-bits}} (12,0);
+\draw (0,1.5)  rectangle node[anchor=center] {\Huge{64-bits}} (2,0);
+\draw (2,1.5)  rectangle node[anchor=center] {\Huge{64-bits}} (4,0);
+\draw (4,1.5)  rectangle node[anchor=center] {\Huge{64-bits}} (6,0);
+\draw (6,1.5)  rectangle node[anchor=center] {\Huge{64-bits}} (8,0);
+\draw (8,1.5)  rectangle node[anchor=center] {\Huge{64-bits}} (10,0);
+\draw (10,1.5) rectangle node[anchor=center] {\Huge{64-bits}} (12,0);
 \end{tikzpicture}
 }
 
@@ -239,29 +170,29 @@ would also fall into this category, however these would not reside within parame
 	\SetKwProg{Fn}{Function}{ is}{end}
 	\Fn{analyze(block : BasicBlock) : $\mathcal{S}^\mathcal{L}$}
 	{
- 	state = Bl
+ 	state = Bl                                                  \Comment*[r]{Some comment}
  	
  	\ForEach{inst $\in$ block}{
  	
- 		state' = analyze\_instr(inst)
+ 		state' = analyze\_instr(inst);                      \Comment*[r]{Some comment}
 
 		state = merge\_v(state, state')                     \Comment*[r]{Some comment}
 	}
 
-	states = \{\}
+	states = \{\}                                               \Comment*[r]{Some comment}
 	
-	blocks = succ(block)
+	blocks = succ(block)                                        \Comment*[r]{Some comment}
 	
 	\ForEach{block' $\in$ blocks} {
 	
- 		state' = analyze(block')
+ 		state' = analyze(block')                            \Comment*[r]{Some comment}
  		
-		states = states $\cup$ \{ state' \}
+		states = states $\cup$ \{ state' \}                 \Comment*[r]{Some comment}
 	}
 
-	state' = merge\_h (states)
+	state' = merge\_h (states)                                  \Comment*[r]{Some comment}
 
-	\Return merge\_v(state, state')
+	\Return merge\_v(state, state')                             \Comment*[r]{Some comment}
 
 	}
 \caption{Basic block liveness analysis.}
@@ -535,29 +466,29 @@ ignored. %(in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \t
 	\SetKwProg{Fn}{Function}{ is}{end}
 	\Fn{analyze(block : BasicBlock) : $\mathcal{S}^\mathcal{R}$}
 	{
- 	state = Bl
+ 	state = Bl                                   \Comment*[r]{Some comment}
  	
  	\ForEach{inst $\in$ reversed(block)}{
  	
- 		state' = analyze\_instr(inst)
+ 		state' = analyze\_instr(inst)        \Comment*[r]{Some comment}
  		
-		state = merge\_v(state, state') \Comment*[r]{Some comment}
+		state = merge\_v(state, state')      \Comment*[r]{Some comment}
 	}
 
-	states = \{\}
+	states = \{\}                                \Comment*[r]{Some comment}
 	
-	blocks = pred(block)
+	blocks = pred(block)                         \Comment*[r]{Some comment}
 	
 	\ForEach{block' $\in$ blocks} {
 	
- 		state' = analyze(block')
+ 		state' = analyze(block')             \Comment*[r]{Some comment}
  		
-		states = states $\cup$ \{ state' \}
+		states = states $\cup$ \{ state' \}  \Comment*[r]{Some comment}
 	}
 
-	state' = merge\_h (states)
+	state' = merge\_h (states)                   \Comment*[r]{Some comment}
 
-	\Return merge\_v(state, state')
+	\Return merge\_v(state, state')              \Comment*[r]{Some comment}
 
 	}
 \caption{Basic block reaching definition analysis.}

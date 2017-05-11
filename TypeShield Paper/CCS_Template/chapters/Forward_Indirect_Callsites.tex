@@ -178,6 +178,77 @@ on function parameter count matching (coarse grained, parameter types and more t
 Important to notice is that there are no C++ language semantics which can be used to enforce type and 
 parameter count matching for indirect call/callee pairs, this could be addresses with specifically intended language constructs in the future.
 
+\subsection{\emph{Count} Policy}
+\label{section:countpolicy}
+\begin{figure}[!h]
+\centering
+\resizebox{0.25\textwidth}{!}{
+\begin{tikzpicture}
+
+%\fill[black!40!white] (0,0) rectangle (9,9);
+%\fill[black!30!white] (0,0) rectangle (7,7);
+%\fill[black!20!white] (0,0) rectangle (4,4);
+%\fill[black!10!white] (0,0) rectangle (2,2);
+%
+%\draw (0,0) --node[anchor=south] {0 params}  (2,0)  -- (2,2) -- (0,2) -- (0,0) ;
+%\draw (0,0) -- (2,0) --node[anchor=south] {1 param} (4,0) -- (4,4) -- (0,4) -- (0,0);
+%\draw (0,0) --(4,0) --node[anchor=south] {2 ... 5 params} (7,0) -- (7,7) -- (0,7) -- (0,0);
+%\draw (0,0) --(7,0) --node[anchor=south] {6 params} (9,0) -- (9,9) -- (0,9) -- (0,0);
+%\draw[dashed] (4,4) -- (7,7);
+
+
+\fill[black!00!white] (0,7) rectangle (6,6);
+\fill[black!10!white] (0,6) rectangle (6,5);
+\fill[black!20!white] (0,5) rectangle (6,4);
+\fill[black!30!white] (0,4) rectangle (6,3);
+\fill[black!40!white] (0,3) rectangle (6,2);
+\fill[black!50!white] (0,2) rectangle (6,1);
+\fill[black!60!white] (0,1) rectangle (6,0);
+
+
+\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Huge{growing required bits/parameter}} (-0.5,7);
+\draw[-triangle 45, thick] (6.5,7) -- node[sloped, anchor=center, above]  {\Huge{growing provided bits/parameter}} (6.5,0);
+
+\draw (0,7) rectangle node[anchor=center] {\Huge{0 parameters}} (6,6);
+
+\draw (0,6) rectangle node[anchor=center] {\Huge{1 parameter}}  (6,5);
+
+\draw (0,5) rectangle node[anchor=center] {\Huge{2 parameters}} (6,4);
+
+\draw (0,4) rectangle node[anchor=center] {\Huge{3 parameters}} (6,3);
+
+\draw (0,3) rectangle node[anchor=center] {\Huge{4 parameters}} (6,2);
+
+\draw (0,2) rectangle node[anchor=center] {\Huge{5 parameters}} (6,1);
+
+\draw (0,1) rectangle node[anchor=center] {\Huge{6 parameters}} (6,0);
+
+
+\end{tikzpicture}
+}
+\caption{\emph{Count} policy classification schema for callsites and calltargets.}
+\label{fig:COUNTschema}
+\end{figure}
+
+What we call the \emph{count} policy is essentially the policy introduced by TypeArmor \cite{veen:typearmor}. 
+The basic idea revolves around classifying calltargets by the number of parameters they provide and callsites 
+by the number of parameters they require. The schema to match this is based on the fact that we  
+have calltargets requiring parameters and the callsites providing them as depicted in Figure~\ref{fig:COUNTschema}.
+
+Furthermore, generating 100\% precise measurements for such classification with binaries as the only source of information is rather difficult. 
+Therefore, over-estimations of parameter count for callsites and underestimations of the parameter count for calltargets is deemed acceptable. 
+This classification is based on the general purpose registers that the call convention of the current ABI---in this case the 
+SystemV ABI---designates as parameter registers. Furthermore, we completely ignore floating point registers or multi-integer registers. 
+The core of the \emph{count} policy is now to allow any callsite $cs$, which provides $c_{cs}$ parameters, to call any calltarget $ct$, 
+which requires $c_{ct}$ parameters, iff $c_{ct} \leq c_{cs}$ holds. However, the main problem is that while there is a significant 
+restriction of calltargets for the lower callsites, the restriction capability drops rather rapidly when reaching higher parameter 
+counts, with callsites that use 6 or more parameters being able to call all possible calltargets:
+$\forall cs_1, cs_2.  c_{cs_1} \leq c_{cs_2} \Longrightarrow  \| \{ct \in \mathcal{F} | c_{ct} \leq c_{cs_1} \} \| \leq \| \{ct \in \mathcal{F} | c_{ct} \leq c_{cs_2}  \} \|$.
+
+One possible remedy would be the ability to introduce an upper bound for the classification deviation of parameter counts, 
+however as of now, this does not seem feasible with current technology. Another possibility would be the overall reduction
+of callsites, which can access the same set of calltargets, a route we will explore within this work.
+
 \subsection{Security Implications of Indirect Calls}
 % \textbf{Security Implications of Forbidden Indirect Calls.}
 \label{Security Implications of Forbidden Forward Indirect Calls}
