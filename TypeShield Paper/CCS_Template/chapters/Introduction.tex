@@ -2,11 +2,11 @@
 \label{chapter:Introduction}
 
 % \textbf{Big Picture.}
-The object-oriented programming (OOP) paradigm is \textit{de facto standard} concept for developing large and complex 
-applications because it facilitates inheritance for objects which are at first unrelated to each other; this in turn 
+The object-oriented programming (OOP) paradigm is \textit{de facto standard} concept for developing large, complex and efficient
+systems because it facilitates inheritance for objects which are at first unrelated to each other; this in turn 
 facilitates better code reuse, software maintenance and software design. There are many programing languages
 which support OOP concepts, however the C++ programing language is the most used programming language for systems where 
-runtime performance and reliability are main goal.
+runtime performance and reliability are the main goal.
 
 An important C++ OOP convention is the object calling convention when for instance virtual functions are called.
 Virtual functions are an important concept which facilitates late binding and allows the programmer to overwrite a
@@ -25,12 +25,12 @@ call to a virtual function can be corrupted to point into:
 \textit{1)} illegal virtual tables, 
 \textit{2)} newly inserted virtual tables, or
 \textit{3)} overwritten virtual table entries
-such that advanced Code-Reuse Attacks (CRAs) as the recently published COOP~\cite{schuster:coop} 
+such that advanced Code-Reuse Attacks (CRAs) as the advanced COOP~\cite{schuster:coop} attack
 and its extensions~\cite{crane:readactor++, crane:readactor++, subversive-c:lettner, ctf:coop, loop:oriented} 
-become easily performable. This type of attack can bypass most of the to date CFI-based enforcement policies, since
+become easily doable. This type of attack can bypass most of the to date CFI-based enforcement policies, since:
 \textit{1)} it does not exploit indirect backward edges (\textit{i.e.,} return edges) but rather
-\textit{2)} it exploits the forward indirect control flow transfers imprecision which can not be upfront 
-determined since alias analysis is undecidable~\cite{alias:undecidable}.
+\textit{2)} it exploits the forward indirect control flow transfers imprecision which can not be statically upfront 
+determined since alias analysis is undecidable~\cite{alias:undecidable} in program binaries.
 
 % \textbf{Available Tools.}
 To avoid object dispatch corruptions Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} can be successfully used.
@@ -87,7 +87,7 @@ demonstrate in the evaluation section, this will provide us enough information t
 more be precisely than TypeArmor when stopping several state-of-the-art CRAs.
 
 More precisely, the analysis performed by \textsc{TypeShield}:
-\textit{1)} uses for each function parameter its register wideness (i.e., ABI dependent) in order to map calltargets per callsites,  
+\textit{1)} uses for each function parameter its register wideness (\textit{i.e.,} ABI dependent) in order to map calltargets per callsites,  
 \textit{2)} uses an address taken (AT) analysis similar to~\cite{veen:typearmor} for all calltargets, and 
 \textit{3)} compares individually parameters of callsites and calltargets in order to check if an indirect call transfer is acceptable or not, 
 thus this providing a more fine-grained calltarget set per callsite than other state-of-the-art tools.
@@ -219,14 +219,14 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 % \label{Outline}
 % \textbf{Outline.} 
 The rest of this paper is organized as follows.
-\cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications.
+\cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications, and 
 \cref{chapter:TypeShild Overview} contains an overview of \textsc{TypeShield}.
-\cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}.
-\cref{chapter:Implementation} briefly presents the implementation details of \textsc{TypeShield}.
-\cref{chapter:Evaluation} evaluates several properties of \textsc{TypeShield} and
-\cref{chapter:Related_Work} surveys related work, respectively.
-\cref{chapter:Discussion} contains the discussion while 
-\cref{chapter:Future_Work} highlights future research venues, respectively. 
+\cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}, and
+\cref{chapter:Implementation} briefly presents the implementation details of \textsc{TypeShield}, while
+\cref{chapter:Evaluation} evaluates several properties of \textsc{TypeShield}.
+\cref{chapter:Discussion} contains the discussion, and
+\cref{chapter:Related_Work} surveys related work, while
+\cref{chapter:Future_Work} highlights future research venues. 
 Finally, \cref{chapter:Conclusion} concludes this paper.
 
 
