@@ -16,6 +16,22 @@ virtual functions for each class containing them and provide to each instance of
 to the aforementioned table. While this allows more flexible code to be built---through late binding---it is simplistically implemented with no security
 mechanisms at in place.
 
+\begin{figure}[t!]
+\centering
+\begin{tikzpicture}
+\hspace{-.5cm}
+  \node (img)  {\includegraphics[scale=0.75]{figures/distribution2.pdf}};
+%   \node[below=of img, node distance=0cm, yshift=1.2cm, xshift=.25cm, font=\color{black}] {Year};
+%   \node[left=of img, node distance=0cm, rotate=90, anchor=center,yshift=-.9cm,font=\color{black}] {\# Bad Type Casts Reported};
+ \end{tikzpicture}
+\vspace{-.5cm}
+\caption{\# of type confusions reported by the NIST NVD for the last years. 
+As of May'17, 124 type confusion bugs where reported in applications such as Google's Chrome and V8 JS engine; Mozilla Firefox; Microsoft's IE 10, Edge and Chakra JS engine; Adobe Flash Player;
+\& iOS/MacOS apps.}
+\label{typeconfusion:nvd:statistics}
+\vspace{-.7cm}
+\end{figure}
+
 % \textbf{Problem.}
 The performance benefit of late binding comes with high security implications. 
 First, dangling object pointers lead to undefined behavior---as specified by the C++ language standard N4618~\cite{N4618}---which 
@@ -110,22 +126,23 @@ arguments provided are not super types of the arguments expected at the target.
 It then uses this information to enforce that each call site targets only a strict call target set.
 \textsc{TypeShield} takes the binary of a program as input and it automatically instrument it in order
 to detect illegitimate indirect calls at runtime. 
-More precisely, \textsc{TypeShield} achieves three goals:
-\begin{itemize}
- \item \textbf{Precision.} \textsc{TypeShield} employs a more precise analysis than TypeArmor in order to reduce the call target set for each 
+More precisely, \textsc{TypeShield} achieves three goals.
+
+\textbf{Precision.} \textsc{TypeShield} employs a more precise analysis than TypeArmor in order to reduce the call target set for each 
                call site. Our evaluation shows that \textsc{TypeShield} incurs X\% precision w.r.t. TypeArmor on the same programs.
- \item \textbf{Performance.} \textsc{TypeShield} employs runtime policy optimization techniques to further reduce the runtime overheads
+
+\textbf{Performance.} \textsc{TypeShield} employs runtime policy optimization techniques to further reduce the runtime overheads
               Our evaluation shows that \textsc{TypeShield} imposes up to X\% and X\% overheads for performance-intensive benchmarks on the
               SPEC CPU2006 benchamrks and the webser applications, respectively. On
               the contrary, TypeArmor is X\% slower than \textsc{TypeShield}
               on the x Program.
- \item \textbf{Scope.} \textsc{TypeShield} can detect forbidden indirect calls and as such it can protect similarly as vTrust~\cite{zhang:vtrust} against
+              
+\textbf{Scope.} \textsc{TypeShield} can detect forbidden indirect calls and as such it can protect similarly as vTrust~\cite{zhang:vtrust} against
               virtual table injection, corruption and reuse attacks. As such \textsc{TypeShield} can serve as a platform for developing other types of defenses for different 
               types of attacks.
-\end{itemize}
 
 % \textbf{Contributions.} 
-Summarizing, our contributions are:
+In summary, we make the following contributions:
 \label{Contribution}
 \begin{itemize}
  \item \textbf{Security analysis of forward indirect calls.} 
@@ -205,10 +222,11 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 
 %%%%%%%%%%%%%%%%%
  \begin{figure*}[!t]
+    \centering
    \setlength{\unitlength}{0.1\textwidth}
    \begin{picture}(10,4)
-   \centering
-     \put(4.81,0){\includegraphics[width=.37\textwidth]{figures/loop.pdf}}
+%    \centering
+     \put(4.81,0){\includegraphics[width=.43\textwidth]{figures/loop.pdf}}
      \put(1.5,2){\usebox{\firstlisting}}
    \end{picture}
 \caption{Description of how a counterfeit object-oriented programming main loop gadget (ML-G) works.}
@@ -218,7 +236,7 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 %most probably not needed at this time.
 % \label{Outline}
 % \textbf{Outline.} 
-The rest of this paper is organized as follows.
+The remainder of this paper is organized as follows.
 \cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications, and 
 \cref{chapter:TypeShild Overview} contains an overview of \textsc{TypeShield}.
 \cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}, and
