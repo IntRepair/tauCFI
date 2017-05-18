@@ -94,6 +94,12 @@
 \newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}}% Remove line number for one line
 \makeatother
 
+\usepackage{graphicx} % http://ctan.org/pkg/graphicx
+\usepackage{booktabs} % http://ctan.org/pkg/booktabs
+\usepackage{xparse}   % http://ctan.org/pkg/xparse
+% Rotation: \rot[<angle>][<width>]{<stuff>}
+\NewDocumentCommand{\rot}{O{45} O{2em} m}{\makebox[#2][l]{\rotatebox{#1}{#3}}}%
+
 % \let\oldalgorithm\algorithm
 % \let\oldendalgorithm\endalgorithm
 % 
@@ -235,6 +241,6 @@ Second Institution
 % \theendnotes
 
 %appendix, taken out for now.
-% \input{chapters/Appendix}
+\input{chapters/Appendix}
 
 \end{document}

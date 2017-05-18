@@ -10,13 +10,18 @@ Finally we present the design of our calltarget analysis in
 
 \subsection{Analysis of Register-States}
 \label{section:instructionanalysis}
-Instead of symbol based data-flow analysis, our approach is register state based. Therefore we need to adapt the usual definitions.\\~\\
-The set $\texttt{INSTR}$ describes all possible instructions that can occur within the executable section of a binary. In our case this is based on the instruction set for x86-64 processors.\\
-An instruction $i \in \texttt{INSTR}$ can non-exclusively perform two kinds of operations on any number of existing registers:\footnote{There are registers that can directly access the higher 8-bit of the lower 16-bit. For our purpose we register this access as a 16-bit access. }\\
-\textit{1)} Read $n$-bit from the register with $n \in \{ 64, 32, 16, 8 \}$\\
-\textit{2)} Write $n$-bit to the register with $n \in \{ 64, 32, 16, 8 \}$\\
-We descibe the possible change within one register as $\delta \in \Delta$ with $\Delta = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. \footnote{Note that 0 signals the absence of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore, $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ with $m \in \{64,32,16,8\}$ and $m < n$ (\textit{e.g.,} $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.}\\
-SystemV ABI specifies 16 general purpose integer registers. Therefore we represent the change occurring at the processor level as $\delta_p \in \Delta^{16}$. We calculate this change for each instruction $i \in \texttt{INSTR}$ via the function $decode : \texttt{INSTR} \mapsto \Delta^{16}$.
+Instead of symbol based data-flow analysis, our approach is register state based. Therefore we need to adapt the usual definitions.
+The set $\texttt{INSTR}$ describes all possible instructions that can occur within the executable section of a binary. In our case this is based on the instruction set for x86-64 processors.
+An instruction $i \in \texttt{INSTR}$ can non-exclusively perform two kinds of operations on any number of existing registers:\footnote{There are registers that can directly access the higher 
+8-bit of the lower 16-bit. For our purpose we register this access as a 16-bit access.}
+\textit{1)} read $n$-bit from the register with $n \in \{ 64, 32, 16, 8 \}$, and 
+\textit{2)} write $n$-bit to the register with $n \in \{ 64, 32, 16, 8 \}$.
+We descibe the possible change within one register 
+as $\delta \in \Delta$ with $\Delta = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. \footnote{Note that 0 signals the absence
+of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore, $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ 
+with $m \in \{64,32,16,8\}$ and $m < n$ (\textit{e.g.,} $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.}
+SystemV ABI specifies 16 general purpose integer registers. Therefore we represent the change occurring at the processor level as $\delta_p \in \Delta^{16}$. 
+We calculate this change for each instruction $i \in \texttt{INSTR}$ via the function $decode : \texttt{INSTR} \mapsto \Delta^{16}$.
 
 % Finally, in \cref{section:addresstakenanalysis} we introduce a version of 
 % address taken analysis based on \cite{mingwei:sekar} to restrict the number of available calltargets even more. 
@@ -56,12 +61,12 @@ SystemV ABI specifies 16 general purpose integer registers. Therefore we represe
 \draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Huge{growing required bits/parameter}} (-0.5,7.5);
 \draw[-triangle 45, thick] (12.5,7.5) -- node[sloped, anchor=center, above] {\Huge{growing provided bits/parameter}} (12.5,0);
 
-\draw (0,7.5)  --node[anchor=south] {\Huge{param 6}} (2,7.5);
-\draw (2,7.5)  --node[anchor=south] {\Huge{param 5}} (4,7.5);
-\draw (4,7.5)  --node[anchor=south] {\Huge{param 4}} (6,7.5);
-\draw (6,7.5)  --node[anchor=south] {\Huge{param 3}} (8,7.5);
-\draw (8,7.5)  --node[anchor=south] {\Huge{param 2}} (10,7.5);
-\draw (10,7.5) --node[anchor=south] {\Huge{param 1}} (12,7.5);
+\draw (0,7.5)  --node[anchor=south] {\rot{\Huge{param 6}}} (2,7.5);
+\draw (2,7.5)  --node[anchor=south] {\rot{\Huge{param 5}}} (4,7.5);
+\draw (4,7.5)  --node[anchor=south] {\rot{\Huge{param 4}}} (6,7.5);
+\draw (6,7.5)  --node[anchor=south] {\rot{\Huge{param 3}}} (8,7.5);
+\draw (8,7.5)  --node[anchor=south] {\rot{\Huge{param 2}}} (10,7.5);
+\draw (10,7.5) --node[anchor=south] {\rot{\Huge{param 1}}} (12,7.5);
 
 \draw (0,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (2,6);
 \draw (2,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (4,6);
@@ -102,9 +107,11 @@ SystemV ABI specifies 16 general purpose integer registers. Therefore we represe
 \caption{The \emph{type} policy schema for callsites and calltargets. As is demonstrated here, when requiring wideness, one starts at the bottom and grows to the top, as it is always possible to accept more than one requires. The reverse is true for providing, as it is possible to accept less than provided.}
 \label{fig:TYPEschema}
 \end{figure}
-As shown in Figure \ref{fig:TYPEschema}, our idea is to not simply classify callsites and calltargets based on the number of parameters they provide or request, but als on the parameter type. To simplify our approach we use the wideness of the type and do not infer the actual type. \\
-As previously mentioned there are 4 types of reading and writing access each. Therefore our set of possible types for parameters is $\texttt{TYPE} = \{64, 32, 16, 8, 0\}$; 0 models the absence of a parameter. Since SystemV ABI specifies 6 registers as parameter holding registers, we classify our callsites and calltargets into $\texttt{TYPE}^6$.\\
-Similar to the policy of \texttt{TypeArmour}, we allow overestimations of callsites and underestimations of calltargets, however on the level of types. Therefore for a callsite $cs$ to be able to call the calltarget $ct$, if for each parameter of $ct$ the corresponding parameter of $cs$ is not smaller when comparing the wideness.\\
+As shown in Figure \ref{fig:TYPEschema}, our idea is to not simply classify callsites and calltargets based on the number of parameters they provide or request, but als on the parameter type. To simplify our approach we use the wideness of the type and do not infer the actual type.
+As previously mentioned there are 4 types of reading and writing access each. Therefore our set of possible types for parameters is $\texttt{TYPE} = \{64, 32, 16, 8, 0\}$; 0 models the absence of a parameter. Since SystemV ABI specifies 6 registers as parameter holding 
+registers, we classify our callsites and calltargets into $\texttt{TYPE}^6$.
+Similar to the policy of \texttt{TypeArmour}, we allow overestimations of callsites and underestimations of calltargets, however on the level of types. Therefore for a 
+callsite $cs$ to be able to call the calltarget $ct$, if for each parameter of $ct$ the corresponding parameter of $cs$ is not smaller when comparing the wideness.
 This results in a finer-grained policy further restricting the possible pool of calltargets for each callsite.
 
 %What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the parameter type. However, due to complexity reasons,
@@ -139,7 +146,7 @@ This results in a finer-grained policy further restricting the possible pool of 
     
 \subsection{Calltarget Analysis}
 \label{section:calltargetanalysis}
-For our policy we need to classify our calltargets according to the parameters they provide. Underestimations are allowed, however overestimations shall not be permitted. For this purpose we employ a customizable modified liveness analysis algorithm, which we will show first. We then present our versions for a \emph{count} and a\emph{type} based policy. Furthermore, we need to be aware of certain corner cases, which we will discuss at the end.\\
+For our policy we need to classify our calltargets according to the parameters they provide. Underestimations are allowed, however overestimations shall not be permitted. For this purpose we employ a customizable modified liveness analysis algorithm, which we will show first. We then present our versions for a \emph{count} and a\emph{type} based policy. Furthermore, we need to be aware of certain corner cases, which we will discuss at the end.
 
 \textbf{Liveness Analysis}
 A variable is alive before the execution of an instruction, if at least one of the originating paths performs a read access before any write access  on that variable. If applied to a function, this calculates essentially the variables that need to be alive at the beginning, which in essense are its parameters.
@@ -192,11 +199,12 @@ $\texttt{succ} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which 
 \label{alg:liveness}
 \end{algorithm}
 
-In our specific case, the function \texttt{analyze\_instr} needs to also handle non jump and non fallthrough successors, as these are not handled by DynInst. Essentially there are four relevant cases: 1) If the current instruction is an indirect call or a direct call and the chosen implementation should not follow calls, then return a state where all registers are considered to be written before read. 2) If the current instruction is a direct call and the chosen implementation should follow calls, then we start an analysis of the target function an return its result. 3) If the instruction is a constant write (e.g., xor of two registers), then we remove the read portion before we return the decoded state. 4) In any other case, we simply return the decoded state.\\
-This leaves us with the two undefined merge functions and the undefined liveness state $\mathcal{S}^\mathcal{L}$. In the following two paragraphs we will present two implementation variants: first similar to TypeArmour a \emph{count} based policy and second our \emph{type} based policy.\\
+In our specific case, the function \texttt{analyze\_instr} needs to also handle non jump and non fallthrough successors, as these are not handled by DynInst. Essentially there are four relevant cases: 1) If the current instruction is an indirect call or a direct call and the chosen implementation should not follow calls, then return a state where all registers are considered to be written before read. 2) If the current instruction is a direct call and the chosen implementation should follow calls, then we start an analysis of the target function an return its result. 3) If the instruction is a constant write (e.g., xor of two registers), 
+then we remove the read portion before we return the decoded state. 4) In any other case, we simply return the decoded state.
+This leaves us with the two undefined merge functions and the undefined liveness state $\mathcal{S}^\mathcal{L}$. In the following two paragraphs we will present two implementation variants: first similar to TypeArmour a \emph{count} based policy and second our \emph{type} based policy.
 
 \textbf{Required Parameter Count} To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we use the same representation as TypeArmor: 1) $W$ represents write before read access, 2) $R$ represents read before write access, and 3) $C$ represents the absence of access.
-This gives us the $S^\mathcal{L} = \{ C, R, W \}$ as register state, which translates to the register super state $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.\\
+This gives us the $S^\mathcal{L} = \{ C, R, W \}$ as register state, which translates to the register super state $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
 We implement \texttt{merge\_v} in such a way that a state within a superstate is only updated if the corresponding register has yet to be accesses, as represented by $C$. Our reasoning is that the first access is the relevant one to determine read before write.
 
 TODO  \texttt{merge\_h} (depends on numbers)
@@ -290,14 +298,13 @@ To implement the \emph{type} policy, we need a finer representation of the state
 \textit{1)} $W$ represents write before read access,
 \textit{2)} $r8, r16, r32, r64$ represents read before write access with 8-, 16-, 32-, 64-bit wideness, and
 \textit{3)} $C$ represents the absence of access.
-
 %\begin{enumerate}
 %\item Was the register written to before its value could be read ? \\ We represent this with the state $W$.
 %\item How much was read from the register before its value was overwritten? \\ We represent this with the states $\{ r8, r16, r32, r64 \}$ 
 %using $R$ as a placeholder for arbitrary reads.
 %\item Did neither read nor write access occur for the register ? \\ We represent this with the state $C$.
 %\end{enumerate}
-This gives us the following register state $S^\mathcal{L} = \{ C, r8, r16, r32, r64, W \}$ which translates to the register super state 
+This gives us the following $S^\mathcal{L} = \{ C, r8, r16, r32, r64, W \}$ register state which translates to the register super state 
 $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
 %Now, we assume that unless the instructions we are looking at does discard the value it is reading (\texttt{xor rax rax} would be such 
 %an instruction that we call const\_write) that reading does precede the writing withing one instruction.
@@ -532,8 +539,7 @@ thus we use the same representation as TypeArmor:
 \textit{1)} $T$ represents a trashed register,
 \textit{2)} $S$ represents a set register (written to), and
 \textit{3)} $U$ represents an untouched register.
-
-This gives us the following register state $S^\mathcal{L} = \{ T, S, U \}$ which translates to the register super state $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
+This gives us the following $S^\mathcal{L} = \{ T, S, U \}$  register state which translates to the register super state $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
 
 We are only interested in the first occurrence of a $S$ or $T$ within one path, as following reads or writes do not give us more information. 
 Therefore, our vertical merge function ($merge\_v$) behaves in the following way that only when the first given state is $U$, is the return value the 
@@ -627,13 +633,12 @@ To implement the \emph{type} policy, we need a finer representation of the state
 \textit{1)} $T$ represents a trashed register,
 \textit{2)} $s8, s16, s32, s64 S$ represents a set register with  8-, 16-, 32-, 64-bit  wideness, and
 \textit{3)} $U$ represents an untouched register.
-
 %\begin{itemize}
 %\item Was the register value trashed ? \\ We represent this with the state T.
 %\item Was the register written to and how much ? \\ We represent this with the states $\{ s64, s32, s16, s8 \}$ using S as a placeholder for arbitrary writes.
 %\item Was the register neither trashed nor written to ? \\ We represent this with the state U.
 %\end{itemize}
-This gives us the following register state $S^\mathcal{L} = \{ T, s64, s32, s16, s8, U \}$ which translates to the register 
+This gives us the following $S^\mathcal{L} = \{ T, s64, s32, s16, s8, U \}$ register state which translates to the register 
 super state $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
 
 Again, we are only interested in the first occurrence of a state that is not $U$ in a path, as following reads or writes do not give us more information. 
