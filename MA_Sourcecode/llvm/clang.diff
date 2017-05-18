@@ -1,0 +1,691 @@
+Index: include/llvm/CodeGen/MachineInstr.h
+===================================================================
+--- include/llvm/CodeGen/MachineInstr.h	(revision 297136)
++++ include/llvm/CodeGen/MachineInstr.h	(working copy)
+@@ -28,6 +28,7 @@
+ #include "llvm/MC/MCInstrDesc.h"
+ #include "llvm/Support/ArrayRecycler.h"
+ #include "llvm/Target/TargetOpcodes.h"
++#include "llvm/IR/CallSite.h"
+ 
+ namespace llvm {
+ 
+@@ -103,6 +104,7 @@
+   mmo_iterator MemRefs;
+ 
+   DebugLoc debugLoc;                    // Source line information.
++  ImmutableCallSite callSite;
+ 
+   MachineInstr(const MachineInstr&) = delete;
+   void operator=(const MachineInstr&) = delete;
+@@ -249,6 +251,8 @@
+   /// Returns the debug location id of this MachineInstr.
+   const DebugLoc &getDebugLoc() const { return debugLoc; }
+ 
++  const ImmutableCallSite &getCallSite() const { return callSite; }
++
+   /// Return the debug variable referenced by
+   /// this DBG_VALUE instruction.
+   const DILocalVariable *getDebugVariable() const;
+@@ -1195,6 +1199,11 @@
+     assert(debugLoc.hasTrivialDestructor() && "Expected trivial destructor");
+   }
+ 
++  void setCallSite(ImmutableCallSite cs)
++  {
++    callSite = std::move(cs);
++  }
++
+   /// Erase an operand from an instruction, leaving it with one
+   /// fewer operand than it started with.
+   void RemoveOperand(unsigned i);
+Index: include/llvm/CodeGen/MachineInstrBuilder.h
+===================================================================
+--- include/llvm/CodeGen/MachineInstrBuilder.h	(revision 297136)
++++ include/llvm/CodeGen/MachineInstrBuilder.h	(working copy)
+@@ -285,6 +285,7 @@
+ /// Builder interface. Specify how to create the initial instruction itself.
+ inline MachineInstrBuilder BuildMI(MachineFunction &MF, const DebugLoc &DL,
+                                    const MCInstrDesc &MCID) {
++  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() MIBuilder I\n";
+   return MachineInstrBuilder(MF, MF.CreateMachineInstr(MCID, DL));
+ }
+ 
+@@ -292,6 +293,7 @@
+ /// destination virtual register.
+ inline MachineInstrBuilder BuildMI(MachineFunction &MF, const DebugLoc &DL,
+                                    const MCInstrDesc &MCID, unsigned DestReg) {
++  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() MIBuilder II\n";
+   return MachineInstrBuilder(MF, MF.CreateMachineInstr(MCID, DL))
+            .addReg(DestReg, RegState::Define);
+ }
+@@ -304,6 +306,7 @@
+                                    const DebugLoc &DL, const MCInstrDesc &MCID,
+                                    unsigned DestReg) {
+   MachineFunction &MF = *BB.getParent();
++  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() MIBuilder III\n";
+   MachineInstr *MI = MF.CreateMachineInstr(MCID, DL);
+   BB.insert(I, MI);
+   return MachineInstrBuilder(MF, MI).addReg(DestReg, RegState::Define);
+@@ -320,6 +323,7 @@
+                                    const DebugLoc &DL, const MCInstrDesc &MCID,
+                                    unsigned DestReg) {
+   MachineFunction &MF = *BB.getParent();
++  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() MIBuilder IV\n";
+   MachineInstr *MI = MF.CreateMachineInstr(MCID, DL);
+   BB.insert(I, MI);
+   return MachineInstrBuilder(MF, MI).addReg(DestReg, RegState::Define);
+@@ -349,6 +353,7 @@
+                                    const DebugLoc &DL,
+                                    const MCInstrDesc &MCID) {
+   MachineFunction &MF = *BB.getParent();
++  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() MIBuilder V\n";
+   MachineInstr *MI = MF.CreateMachineInstr(MCID, DL);
+   BB.insert(I, MI);
+   return MachineInstrBuilder(MF, MI);
+@@ -359,6 +364,7 @@
+                                    const DebugLoc &DL,
+                                    const MCInstrDesc &MCID) {
+   MachineFunction &MF = *BB.getParent();
++  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() MIBuilder VI\n";
+   MachineInstr *MI = MF.CreateMachineInstr(MCID, DL);
+   BB.insert(I, MI);
+   return MachineInstrBuilder(MF, MI);
+Index: include/llvm/CodeGen/Passes.h
+===================================================================
+--- include/llvm/CodeGen/Passes.h	(revision 297136)
++++ include/llvm/CodeGen/Passes.h	(working copy)
+@@ -403,6 +403,13 @@
+   /// This pass frees the memory occupied by the MachineFunction.
+   FunctionPass *createFreeMachineFunctionPass();
+ 
++  FunctionPass *createMachineGroundTruth_FunctionPass();
++  FunctionPass *createMachineCallsiteAugment_FunctionPass();
++  FunctionPass *createMachineCallsiteTestAugment_FunctionPass(std::string stage);
++  FunctionPass *createMachineCallsiteDumpMRFunctionPass(std::string stage);
++  FunctionPass *createMachineCallsiteDumpIRFunctionPass(std::string stage);
++  
++
+   /// This pass combine basic blocks guarded by the same branch.
+   extern char &BranchCoalescingID;
+ 
+Index: include/llvm/Transforms/IPO.h
+===================================================================
+--- include/llvm/Transforms/IPO.h	(revision 297136)
++++ include/llvm/Transforms/IPO.h	(working copy)
+@@ -248,6 +248,9 @@
+ ModulePass *createSampleProfileLoaderPass();
+ ModulePass *createSampleProfileLoaderPass(StringRef Name);
+ 
++Pass *createGroundTruth_FunctionPass();
++Pass *createGroundTruthLTO_FunctionPass();
++
+ /// Write ThinLTO-ready bitcode to Str.
+ ModulePass *createWriteThinLTOBitcodePass(raw_ostream &Str);
+ 
+Index: lib/CodeGen/AsmPrinter/AsmPrinter.cpp
+===================================================================
+--- lib/CodeGen/AsmPrinter/AsmPrinter.cpp	(revision 297136)
++++ lib/CodeGen/AsmPrinter/AsmPrinter.cpp	(working copy)
+@@ -915,6 +915,57 @@
+                              MCConstantExpr::create(FrameOffset, OutContext));
+ }
+ 
++namespace {
++
++static bool isIndirCS(ImmutableCallSite &CS)
++{
++  if (!CS.isCall())
++    return false;
++
++  if (CS.getCalledFunction() || !CS.getCalledValue())
++    return false;
++
++  Instruction const *I = CS.getInstruction();
++  if (CallInst const *CI = dyn_cast<CallInst>(I)) {
++    if (CI->isInlineAsm())
++      return false;
++  }
++  if (isa<Constant>(CS.getCalledValue()))
++    return false;
++
++  return true;
++}
++
++static void indirCallSiteCheck(MachineInstr const& MI, MachineBasicBlock const& MBB, MachineFunction const& MF) {
++  auto F = MF.getFunction();
++
++  if (auto bb = MBB.getBasicBlock()) {
++    for (auto const& instr : *bb) {
++      ImmutableCallSite cs(&instr);
++
++      if (isIndirCS(cs)) {
++        if (!cs.isMustTailCall()) {
++          errs().write_escaped(F->getName()) << "; ";
++          errs() << ("<CGCS>") << "; ";
++
++          auto site_arguments = 0;
++
++          for (auto const &arg : cs.args()) {
++            errs() << (*arg->getType()) << "; ";
++            site_arguments++;
++          }
++          for (auto i = site_arguments; i < 6; ++i)
++            errs() << "; ";
++
++          errs() << "parameter_count " << site_arguments << ";";
++          errs() << "return_type " << (*cs.getType()) << ";" << '\n';
++        }
++      }
++    }
++  }
++}
++}
++
+ /// EmitFunctionBody - This method emits the body and trailer for a
+ /// function.
+ void AsmPrinter::EmitFunctionBody() {
+@@ -980,7 +1031,9 @@
+       case TargetOpcode::KILL:
+         if (isVerbose()) emitKill(&MI, *this);
+         break;
+-      default:
++      default: 
++        //if (MI.isCall())
++          //indirCallSiteCheck(MI, MBB, *MF);
+         EmitInstruction(&MI);
+         break;
+       }
+Index: lib/CodeGen/CMakeLists.txt
+===================================================================
+--- lib/CodeGen/CMakeLists.txt	(revision 297136)
++++ lib/CodeGen/CMakeLists.txt	(working copy)
+@@ -68,6 +68,8 @@
+   MachineFunction.cpp
+   MachineFunctionPass.cpp
+   MachineFunctionPrinterPass.cpp
++  MachineGroundTruth.cpp
++  MachineCallSiteAugment.cpp
+   MachineInstrBundle.cpp
+   MachineInstr.cpp
+   MachineLICM.cpp
+Index: lib/CodeGen/MIRParser/MIParser.cpp
+===================================================================
+--- lib/CodeGen/MIRParser/MIParser.cpp	(revision 297136)
++++ lib/CodeGen/MIRParser/MIParser.cpp	(working copy)
+@@ -692,6 +692,7 @@
+   }
+ 
+   // TODO: Check for extraneous machine operands.
++  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() MIParser\n";
+   MI = MF.CreateMachineInstr(MCID, DebugLocation, /*NoImplicit=*/true);
+   MI->setFlags(Flags);
+   for (const auto &Operand : Operands)
+Index: lib/CodeGen/MachineFunction.cpp
+===================================================================
+--- lib/CodeGen/MachineFunction.cpp	(revision 297136)
++++ lib/CodeGen/MachineFunction.cpp	(working copy)
+@@ -260,6 +260,8 @@
+ MachineInstr *MachineFunction::CreateMachineInstr(const MCInstrDesc &MCID,
+                                                   const DebugLoc &DL,
+                                                   bool NoImp) {
++  if (getName() == "pg_qsort")
++    errs() << getName() << " MachineFunction::CreateMachineInstr()\n";
+   return new (InstructionRecycler.Allocate<MachineInstr>(Allocator))
+     MachineInstr(*this, MCID, DL, NoImp);
+ }
+Index: lib/CodeGen/MachineInstr.cpp
+===================================================================
+--- lib/CodeGen/MachineInstr.cpp	(revision 297136)
++++ lib/CodeGen/MachineInstr.cpp	(working copy)
+@@ -725,7 +725,7 @@
+ MachineInstr::MachineInstr(MachineFunction &MF, const MachineInstr &MI)
+     : MCID(&MI.getDesc()), Parent(nullptr), Operands(nullptr), NumOperands(0),
+       Flags(0), AsmPrinterFlags(0), NumMemRefs(MI.NumMemRefs),
+-      MemRefs(MI.MemRefs), debugLoc(MI.getDebugLoc()) {
++      MemRefs(MI.MemRefs), debugLoc(MI.getDebugLoc()), callSite(MI.getCallSite()) {
+   assert(debugLoc.hasTrivialDestructor() && "Expected trivial destructor");
+ 
+   CapOperands = OperandCapacity::get(MI.getNumOperands());
+Index: lib/CodeGen/ParallelCG.cpp
+===================================================================
+--- lib/CodeGen/ParallelCG.cpp	(revision 297136)
++++ lib/CodeGen/ParallelCG.cpp	(working copy)
+@@ -12,6 +12,7 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "llvm/CodeGen/ParallelCG.h"
++#include "llvm/CodeGen/Passes.h"
+ #include "llvm/Bitcode/BitcodeReader.h"
+ #include "llvm/Bitcode/BitcodeWriter.h"
+ #include "llvm/IR/LLVMContext.h"
+Index: lib/CodeGen/TargetInstrInfo.cpp
+===================================================================
+--- lib/CodeGen/TargetInstrInfo.cpp	(revision 297136)
++++ lib/CodeGen/TargetInstrInfo.cpp	(working copy)
+@@ -464,6 +464,7 @@
+       return nullptr;
+   }
+ 
++  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() TargetInstrInfo\n";
+   MachineInstr *NewMI =
+       MF.CreateMachineInstr(TII.get(MI.getOpcode()), MI.getDebugLoc(), true);
+   MachineInstrBuilder MIB(MF, NewMI);
+Index: lib/CodeGen/TargetPassConfig.cpp
+===================================================================
+--- lib/CodeGen/TargetPassConfig.cpp	(revision 297136)
++++ lib/CodeGen/TargetPassConfig.cpp	(working copy)
+@@ -588,11 +588,18 @@
+   // Print the instruction selected machine code...
+   printAndVerify("After Instruction Selection");
+ 
++  addPass(createMachineCallsiteAugment_FunctionPass());
++  addPass(createMachineCallsiteDumpIRFunctionPass("Stage 0"));
++  addPass(createMachineCallsiteDumpMRFunctionPass("Stage 0"));
++
+   if (TM->Options.EnableIPRA)
+     addPass(createRegUsageInfoPropPass());
+ 
+   // Expand pseudo-instructions emitted by ISel.
+   addPass(&ExpandISelPseudosID);
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage I"));
++  //addPass(createMachineCallsiteDumpIRFunctionPass("Stage I"));
++  //addPass(createMachineCallsiteDumpMRFunctionPass("Stage I"));
+ 
+   // Add passes that optimize machine instructions in SSA form.
+   if (getOptLevel() != CodeGenOpt::None) {
+@@ -602,41 +609,57 @@
+     // to one another and simplify frame index references where possible.
+     addPass(&LocalStackSlotAllocationID, false);
+   }
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage II"));
+ 
+   // Run pre-ra passes.
+   addPreRegAlloc();
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage III"));
+ 
+   // Run register allocation and passes that are tightly coupled with it,
+   // including phi elimination and scheduling.
+   if (getOptimizeRegAlloc())
++  {
+     addOptimizedRegAlloc(createRegAllocPass(true));
++    addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IVa"));
++  }
+   else
++  {
+     addFastRegAlloc(createRegAllocPass(false));
++    addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IVb"));
++  }
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IV"));
+ 
+   // Run post-ra passes.
+   addPostRegAlloc();
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage V"));
+ 
+   // Insert prolog/epilog code.  Eliminate abstract frame index references...
+   if (getOptLevel() != CodeGenOpt::None)
+     addPass(&ShrinkWrapID);
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage VI"));
+ 
+   // Prolog/Epilog inserter needs a TargetMachine to instantiate. But only
+   // do so if it hasn't been disabled, substituted, or overridden.
+   if (!isPassSubstitutedOrOverridden(&PrologEpilogCodeInserterID))
+       addPass(createPrologEpilogInserterPass(TM));
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage VII"));
+ 
+   /// Add passes that optimize machine instructions after register allocation.
+   if (getOptLevel() != CodeGenOpt::None)
+     addMachineLateOptimization();
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage VIII"));
+ 
+   // Expand pseudo instructions before second scheduling pass.
+   addPass(&ExpandPostRAPseudosID);
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IX"));
+ 
+   // Run pre-sched2 passes.
+   addPreSched2();
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage X"));
+ 
+   if (EnableImplicitNullChecks)
+     addPass(&ImplicitNullChecksID);
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage XI"));;
+ 
+   // Second pass scheduler.
+   // Let Target optionally insert this pass by itself at some other
+@@ -648,6 +671,7 @@
+     else
+       addPass(&PostRASchedulerID);
+   }
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage XII"));
+ 
+   // GC
+   if (addGCPasses()) {
+@@ -654,12 +678,15 @@
+     if (PrintGCInfo)
+       addPass(createGCInfoPrinter(dbgs()), false, false);
+   }
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage XIII"));
+ 
+   // Basic block placement.
+   if (getOptLevel() != CodeGenOpt::None)
+     addBlockPlacement();
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage XIV"));
+ 
+   addPreEmitPass();
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage XV"));
+ 
+   if (TM->Options.EnableIPRA)
+     // Collect register usage information and produce a register mask of
+@@ -680,6 +707,11 @@
+   if (EnableMachineOutliner)
+     PM->add(createMachineOutlinerPass());
+ 
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage XVI"));
++  addPass(createMachineCallsiteDumpIRFunctionPass("Stage XVI"));
++  addPass(createMachineCallsiteDumpMRFunctionPass("Stage XVI"));
++  addPass(createMachineGroundTruth_FunctionPass());
++
+   AddingMachinePasses = false;
+ }
+ 
+@@ -854,16 +886,20 @@
+ 
+   // PreRA instruction scheduling.
+   addPass(&MachineSchedulerID);
++  addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IVaX"));
+ 
+   if (RegAllocPass) {
+     // Add the selected register allocation pass.
+     addPass(RegAllocPass);
++    //addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IVaXI"));
+ 
+     // Allow targets to change the register assignments before rewriting.
+     addPreRewrite();
++    //addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IVaXII"));
+ 
+     // Finally rewrite virtual registers.
+     addPass(&VirtRegRewriterID);
++    addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IVaXIII"));
+ 
+     // Perform stack slot coloring and post-ra machine LICM.
+     //
+@@ -870,11 +906,13 @@
+     // FIXME: Re-enable coloring with register when it's capable of adding
+     // kill markers.
+     addPass(&StackSlotColoringID);
++    addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IVaXIV"));
+ 
+     // Run post-ra machine LICM to hoist reloads / remats.
+     //
+     // FIXME: can this move into MachineLateOptimization?
+     addPass(&PostRAMachineLICMID);
++    addPass(createMachineCallsiteTestAugment_FunctionPass("Stage IVaXV"));
+   }
+ }
+ 
+Index: lib/Linker/LinkModules.cpp
+===================================================================
+--- lib/Linker/LinkModules.cpp	(revision 297136)
++++ lib/Linker/LinkModules.cpp	(working copy)
+@@ -573,6 +573,7 @@
+ /// relied on to be consistent.
+ bool Linker::linkModules(Module &Dest, std::unique_ptr<Module> Src,
+                          unsigned Flags) {
++  errs() << "Linking " << Src->getModuleIdentifier() << " into " << Dest.getModuleIdentifier() << "\n";
+   Linker L(Dest);
+   return L.linkInModule(std::move(Src), Flags);
+ }
+Index: lib/Target/X86/CMakeLists.txt
+===================================================================
+--- lib/Target/X86/CMakeLists.txt	(revision 297136)
++++ lib/Target/X86/CMakeLists.txt	(working copy)
+@@ -52,6 +52,7 @@
+   X86EvexToVex.cpp
+   X86MCInstLower.cpp
+   X86MachineFunctionInfo.cpp
++  X86MachineGroundTruth.cpp
+   X86MacroFusion.cpp
+   X86OptimizeLEAs.cpp
+   X86PadShortFunction.cpp
+Index: lib/Target/X86/X86.h
+===================================================================
+--- lib/Target/X86/X86.h	(revision 297136)
++++ lib/Target/X86/X86.h	(working copy)
+@@ -86,6 +86,9 @@
+ /// the upper portions of registers, and to save code size.
+ FunctionPass *createX86FixupBWInsts();
+ 
++FunctionPass *createX86MachineGroundTruth_FunctionPass();
++FunctionPass *createX86MachineCallsiteAugment_FunctionPass();
++
+ void initializeFixupBWInstPassPass(PassRegistry &);
+ 
+ /// This pass replaces EVEX ecnoded of AVX-512 instructiosn by VEX 
+Index: lib/Target/X86/X86ExpandPseudo.cpp
+===================================================================
+--- lib/Target/X86/X86ExpandPseudo.cpp	(revision 297136)
++++ lib/Target/X86/X86ExpandPseudo.cpp	(working copy)
+@@ -164,6 +164,7 @@
+ 
+     MachineInstr &NewMI = *std::prev(MBBI);
+     NewMI.copyImplicitOps(*MBBI->getParent()->getParent(), *MBBI);
++    NewMI.setCallSite(MBBI->getCallSite());
+ 
+     // Delete the pseudo instruction TCRETURN.
+     MBB.erase(MBBI);
+Index: lib/Target/X86/X86InstrInfo.cpp
+===================================================================
+--- lib/Target/X86/X86InstrInfo.cpp	(revision 297136)
++++ lib/Target/X86/X86InstrInfo.cpp	(working copy)
+@@ -7701,8 +7701,11 @@
+                                      const TargetInstrInfo &TII) {
+   // Create the base instruction with the memory operand as the first part.
+   // Omit the implicit operands, something BuildMI can't do.
++  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() X86 - I\n";
+   MachineInstr *NewMI =
+       MF.CreateMachineInstr(TII.get(Opcode), MI.getDebugLoc(), true);
++  NewMI->setCallSite(MI.getCallSite());
++
+   MachineInstrBuilder MIB(MF, NewMI);
+   addOperands(MIB, MOs);
+ 
+@@ -7729,8 +7732,11 @@
+                               MachineInstr &MI, const TargetInstrInfo &TII,
+                               int PtrOffset = 0) {
+   // Omit the implicit operands, something BuildMI can't do.
++  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() X86 - II\n";
+   MachineInstr *NewMI =
+       MF.CreateMachineInstr(TII.get(Opcode), MI.getDebugLoc(), true);
++  NewMI->setCallSite(MI.getCallSite());
++
+   MachineInstrBuilder MIB(MF, NewMI);
+ 
+   for (unsigned i = 0, e = MI.getNumOperands(); i != e; ++i) {
+@@ -8651,6 +8657,7 @@
+   }
+ 
+   // Emit the data processing instruction.
++  errs() << MF.getName() << " MachineFunction::CreateMachineInstr() X86 - III\n";
+   MachineInstr *DataMI = MF.CreateMachineInstr(MCID, MI.getDebugLoc(), true);
+   MachineInstrBuilder MIB(MF, DataMI);
+ 
+Index: lib/Target/X86/X86MCInstLower.cpp
+===================================================================
+--- lib/Target/X86/X86MCInstLower.cpp	(revision 297136)
++++ lib/Target/X86/X86MCInstLower.cpp	(working copy)
+@@ -47,6 +47,7 @@
+ #include "llvm/Support/ELF.h"
+ #include "llvm/Target/TargetLoweringObjectFile.h"
+ 
++
+ using namespace llvm;
+ 
+ namespace {
+@@ -1255,6 +1256,84 @@
+   return Comment;
+ }
+ 
++namespace {
++
++static bool callsiteOpcodeCheck(MachineInstr const& MI)
++{
++  switch(MI.getOpcode())
++  {
++    case X86::CALLpcrel32: errs() << "X86::CALLpcrel32:\n"; break;
++    case X86::CALLpcrel16: errs() << "X86::CALLpcrel16:\n"; break;
++    case X86::CALL16r: errs() << "X86::CALL16r:\n"; break;
++    case X86::CALL16m: errs() << "X86::CALL16m:\n"; break;
++    case X86::CALL32r: errs() << "X86::CALL32r:\n"; break;
++    case X86::CALL32m: errs() << "X86::CALL32m:\n"; break;
++    case X86::FARCALL16i: errs() << "X86::FARCALL16i:\n"; break;
++    case X86::FARCALL32i: errs() << "X86::FARCALL32i:\n"; break;
++    case X86::FARCALL16m: errs() << "X86::FARCALL16m:\n"; break;
++    case X86::FARCALL32m: errs() << "X86::FARCALL32m:\n"; break;
++    case X86::CALL64pcrel32: errs() << "X86::CALL64pcrel32:\n"; break;
++    case X86::CALL64r: errs() << "X86::CALL64r:\n"; break;
++    case X86::CALL64m: errs() << "X86::CALL64m:\n"; break;
++    case X86::FARCALL64: errs() << "X86::FARCALL64:\n"; break; 
++   default:
++      return false;
++  }
++  return true;
++}
++
++static bool isIndirCS(ImmutableCallSite &CS)
++{ 
++  if (!CS.isCall())
++    return false;
++  
++  if (CS.getCalledFunction() || !CS.getCalledValue())
++    return false;
++  
++  Instruction const *I = CS.getInstruction();
++  if (CallInst const *CI = dyn_cast<CallInst>(I)) {
++    if (CI->isInlineAsm())
++      return false;
++  }
++  if (isa<Constant>(CS.getCalledValue()))
++    return false;
++  
++  return true;
++}
++
++static void indirCallSiteCheck(MachineInstr const& MI, MachineBasicBlock const& MBB, MachineFunction const& MF) {
++  if (!callsiteOpcodeCheck(MI))
++    return;
++
++  auto F = MF.getFunction();
++
++  if (auto bb = MBB.getBasicBlock()) {
++    for (auto const& instr : *bb) {
++      ImmutableCallSite cs(&instr);
++
++      if (isIndirCS(cs)) {
++        if (!cs.isMustTailCall()) {
++          errs().write_escaped(F->getName()) << "; ";
++          errs() << ("<CGCS>") << "; ";
++
++          auto site_arguments = 0;
++
++          for (auto const &arg : cs.args()) {
++            errs() << (*arg->getType()) << "; ";
++            site_arguments++;
++          }
++          for (auto i = site_arguments; i < 6; ++i)
++            errs() << "; ";
++
++          errs() << "parameter_count " << site_arguments << ";";
++          errs() << "return_type " << (*cs.getType()) << ";" << '\n';
++        }
++      }
++    }
++  }
++}
++}
++
+ void X86AsmPrinter::EmitInstruction(const MachineInstr *MI) {
+   X86MCInstLower MCInstLowering(*MF, *this);
+   const X86RegisterInfo *RI = MF->getSubtarget<X86Subtarget>().getRegisterInfo();
+@@ -1752,6 +1831,7 @@
+   // in to the stackmap shadow.  The only way to achieve this is if the call
+   // is at the end of the shadow.
+   if (MI->isCall()) {
++    //indirCallSiteCheck(*MI, *(MI->getParent()), *MF);
+     // Count then size of the call towards the shadow
+     SMShadowTracker.count(TmpInst, getSubtargetInfo(), CodeEmitter.get());
+     // Then flush the shadow so that we fill with nops before the call, not
+Index: lib/Target/X86/X86TargetMachine.cpp
+===================================================================
+--- lib/Target/X86/X86TargetMachine.cpp	(revision 297136)
++++ lib/Target/X86/X86TargetMachine.cpp	(working copy)
+@@ -443,4 +443,6 @@
+     addPass(createX86FixupLEAs());
+     addPass(createX86EvexToVexInsts());
+   }
++
++  addPass(createX86MachineGroundTruth_FunctionPass());
+ }
+Index: lib/Transforms/IPO/CMakeLists.txt
+===================================================================
+--- lib/Transforms/IPO/CMakeLists.txt	(revision 297136)
++++ lib/Transforms/IPO/CMakeLists.txt	(working copy)
+@@ -13,6 +13,8 @@
+   GlobalDCE.cpp
+   GlobalOpt.cpp
+   GlobalSplit.cpp
++  GroundTruth.cpp
++  GroundTruthLTO.cpp
+   IPConstantPropagation.cpp
+   IPO.cpp
+   InferFunctionAttrs.cpp
+Index: lib/Transforms/IPO/PassManagerBuilder.cpp
+===================================================================
+--- lib/Transforms/IPO/PassManagerBuilder.cpp	(revision 297136)
++++ lib/Transforms/IPO/PassManagerBuilder.cpp	(working copy)
+@@ -414,6 +414,7 @@
+       MPM.add(createNameAnonGlobalPass());
+ 
+     addExtensionsToPM(EP_EnabledOnOptLevel0, MPM);
++    MPM.add(createGroundTruth_FunctionPass());
+     return;
+   }
+ 
+@@ -662,6 +663,7 @@
+   // Get rid of LCSSA nodes.
+   MPM.add(createInstructionSimplifierPass());
+   addExtensionsToPM(EP_OptimizerLast, MPM);
++  MPM.add(createGroundTruth_FunctionPass());
+ }
+ 
+ void PassManagerBuilder::addLTOOptimizationPasses(legacy::PassManagerBase &PM) {
+@@ -854,6 +856,8 @@
+ 
+   if (VerifyOutput)
+     PM.add(createVerifierPass());
++
++  PM.add(createGroundTruthLTO_FunctionPass());
+   PerformThinLTO = false;
+ }
+ 
+@@ -882,6 +886,8 @@
+ 
+   if (VerifyOutput)
+     PM.add(createVerifierPass());
++
++  PM.add(createGroundTruthLTO_FunctionPass());
+ }
+ 
+ inline PassManagerBuilder *unwrap(LLVMPassManagerBuilderRef P) {
+Index: tools/llvm-link/llvm-link.cpp
+===================================================================
+--- tools/llvm-link/llvm-link.cpp	(revision 297136)
++++ tools/llvm-link/llvm-link.cpp	(working copy)
+@@ -270,6 +270,8 @@
+ static bool linkFiles(const char *argv0, LLVMContext &Context, Linker &L,
+                       const cl::list<std::string> &Files,
+                       unsigned Flags) {
++
++  errs() << "linkFiles\n";
+   // Filter out flags that don't apply to the first file we load.
+   unsigned ApplicableFlags = Flags & Linker::Flags::OverrideFromSrc;
+   for (const auto &File : Files) {
