@@ -1,0 +1,200 @@
+make  all-recursive
+make[1]: Entering directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36'
+Making all in puredb
+make[2]: Entering directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/puredb'
+Making all in src
+make[3]: Entering directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/puredb/src'
+gcc -DHAVE_CONFIG_H -I. -I../..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT puredb_read.o -MD -MP -MF .deps/puredb_read.Tpo -c -o puredb_read.o puredb_read.c
+mv -f .deps/puredb_read.Tpo .deps/puredb_read.Po
+rm -f libpuredb_read.a
+ar cru libpuredb_read.a puredb_read.o 
+ranlib libpuredb_read.a
+gcc -DHAVE_CONFIG_H -I. -I../..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT puredb_write.o -MD -MP -MF .deps/puredb_write.Tpo -c -o puredb_write.o puredb_write.c
+mv -f .deps/puredb_write.Tpo .deps/puredb_write.Po
+rm -f libpuredb_write.a
+ar cru libpuredb_write.a puredb_write.o 
+ranlib libpuredb_write.a
+gcc -DHAVE_CONFIG_H -I. -I../..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT example_read.o -MD -MP -MF .deps/example_read.Tpo -c -o example_read.o example_read.c
+mv -f .deps/example_read.Tpo .deps/example_read.Po
+gcc  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero  -pie -z relro -z now -L/usr/local/lib -o example_read example_read.o libpuredb_read.a -lcrypt -lcap 
+gcc -DHAVE_CONFIG_H -I. -I../..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT example_write.o -MD -MP -MF .deps/example_write.Tpo -c -o example_write.o example_write.c
+mv -f .deps/example_write.Tpo .deps/example_write.Po
+gcc  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero  -pie -z relro -z now -L/usr/local/lib -o example_write example_write.o libpuredb_write.a -lcrypt -lcap 
+gcc -DHAVE_CONFIG_H -I. -I../..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT regression.o -MD -MP -MF .deps/regression.Tpo -c -o regression.o regression.c
+mv -f .deps/regression.Tpo .deps/regression.Po
+gcc  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero  -pie -z relro -z now -L/usr/local/lib -o regression regression.o libpuredb_read.a libpuredb_write.a -lcrypt -lcap 
+make[3]: Leaving directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/puredb/src'
+make[3]: Entering directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/puredb'
+make[3]: Nothing to be done for 'all-am'.
+make[3]: Leaving directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/puredb'
+make[2]: Leaving directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/puredb'
+Making all in src
+make[2]: Entering directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/src'
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-altlog.o -MD -MP -MF .deps/libpureftpd_a-altlog.Tpo -c -o libpureftpd_a-altlog.o `test -f 'altlog.c' || echo './'`altlog.c
+mv -f .deps/libpureftpd_a-altlog.Tpo .deps/libpureftpd_a-altlog.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-alt_arc4random.o -MD -MP -MF .deps/libpureftpd_a-alt_arc4random.Tpo -c -o libpureftpd_a-alt_arc4random.o `test -f 'alt_arc4random.c' || echo './'`alt_arc4random.c
+mv -f .deps/libpureftpd_a-alt_arc4random.Tpo .deps/libpureftpd_a-alt_arc4random.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-bonjour.o -MD -MP -MF .deps/libpureftpd_a-bonjour.Tpo -c -o libpureftpd_a-bonjour.o `test -f 'bonjour.c' || echo './'`bonjour.c
+mv -f .deps/libpureftpd_a-bonjour.Tpo .deps/libpureftpd_a-bonjour.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-bsd-glob.o -MD -MP -MF .deps/libpureftpd_a-bsd-glob.Tpo -c -o libpureftpd_a-bsd-glob.o `test -f 'bsd-glob.c' || echo './'`bsd-glob.c
+mv -f .deps/libpureftpd_a-bsd-glob.Tpo .deps/libpureftpd_a-bsd-glob.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-bsd-realpath.o -MD -MP -MF .deps/libpureftpd_a-bsd-realpath.Tpo -c -o libpureftpd_a-bsd-realpath.o `test -f 'bsd-realpath.c' || echo './'`bsd-realpath.c
+mv -f .deps/libpureftpd_a-bsd-realpath.Tpo .deps/libpureftpd_a-bsd-realpath.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-bsd-getopt_long.o -MD -MP -MF .deps/libpureftpd_a-bsd-getopt_long.Tpo -c -o libpureftpd_a-bsd-getopt_long.o `test -f 'bsd-getopt_long.c' || echo './'`bsd-getopt_long.c
+mv -f .deps/libpureftpd_a-bsd-getopt_long.Tpo .deps/libpureftpd_a-bsd-getopt_long.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-caps.o -MD -MP -MF .deps/libpureftpd_a-caps.Tpo -c -o libpureftpd_a-caps.o `test -f 'caps.c' || echo './'`caps.c
+mv -f .deps/libpureftpd_a-caps.Tpo .deps/libpureftpd_a-caps.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-crypto.o -MD -MP -MF .deps/libpureftpd_a-crypto.Tpo -c -o libpureftpd_a-crypto.o `test -f 'crypto.c' || echo './'`crypto.c
+mv -f .deps/libpureftpd_a-crypto.Tpo .deps/libpureftpd_a-crypto.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-crypto-md5.o -MD -MP -MF .deps/libpureftpd_a-crypto-md5.Tpo -c -o libpureftpd_a-crypto-md5.o `test -f 'crypto-md5.c' || echo './'`crypto-md5.c
+mv -f .deps/libpureftpd_a-crypto-md5.Tpo .deps/libpureftpd_a-crypto-md5.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-crypto-sha1.o -MD -MP -MF .deps/libpureftpd_a-crypto-sha1.Tpo -c -o libpureftpd_a-crypto-sha1.o `test -f 'crypto-sha1.c' || echo './'`crypto-sha1.c
+mv -f .deps/libpureftpd_a-crypto-sha1.Tpo .deps/libpureftpd_a-crypto-sha1.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-daemons.o -MD -MP -MF .deps/libpureftpd_a-daemons.Tpo -c -o libpureftpd_a-daemons.o `test -f 'daemons.c' || echo './'`daemons.c
+mv -f .deps/libpureftpd_a-daemons.Tpo .deps/libpureftpd_a-daemons.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-diraliases.o -MD -MP -MF .deps/libpureftpd_a-diraliases.Tpo -c -o libpureftpd_a-diraliases.o `test -f 'diraliases.c' || echo './'`diraliases.c
+mv -f .deps/libpureftpd_a-diraliases.Tpo .deps/libpureftpd_a-diraliases.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-dynamic.o -MD -MP -MF .deps/libpureftpd_a-dynamic.Tpo -c -o libpureftpd_a-dynamic.o `test -f 'dynamic.c' || echo './'`dynamic.c
+mv -f .deps/libpureftpd_a-dynamic.Tpo .deps/libpureftpd_a-dynamic.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-fakesnprintf.o -MD -MP -MF .deps/libpureftpd_a-fakesnprintf.Tpo -c -o libpureftpd_a-fakesnprintf.o `test -f 'fakesnprintf.c' || echo './'`fakesnprintf.c
+mv -f .deps/libpureftpd_a-fakesnprintf.Tpo .deps/libpureftpd_a-fakesnprintf.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-fakechroot.o -MD -MP -MF .deps/libpureftpd_a-fakechroot.Tpo -c -o libpureftpd_a-fakechroot.o `test -f 'fakechroot.c' || echo './'`fakechroot.c
+mv -f .deps/libpureftpd_a-fakechroot.Tpo .deps/libpureftpd_a-fakechroot.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-ftp_parser.o -MD -MP -MF .deps/libpureftpd_a-ftp_parser.Tpo -c -o libpureftpd_a-ftp_parser.o `test -f 'ftp_parser.c' || echo './'`ftp_parser.c
+mv -f .deps/libpureftpd_a-ftp_parser.Tpo .deps/libpureftpd_a-ftp_parser.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-ftpd.o -MD -MP -MF .deps/libpureftpd_a-ftpd.Tpo -c -o libpureftpd_a-ftpd.o `test -f 'ftpd.c' || echo './'`ftpd.c
+mv -f .deps/libpureftpd_a-ftpd.Tpo .deps/libpureftpd_a-ftpd.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-ftpwho-update.o -MD -MP -MF .deps/libpureftpd_a-ftpwho-update.Tpo -c -o libpureftpd_a-ftpwho-update.o `test -f 'ftpwho-update.c' || echo './'`ftpwho-update.c
+mv -f .deps/libpureftpd_a-ftpwho-update.Tpo .deps/libpureftpd_a-ftpwho-update.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-ftpwho-read.o -MD -MP -MF .deps/libpureftpd_a-ftpwho-read.Tpo -c -o libpureftpd_a-ftpwho-read.o `test -f 'ftpwho-read.c' || echo './'`ftpwho-read.c
+mv -f .deps/libpureftpd_a-ftpwho-read.Tpo .deps/libpureftpd_a-ftpwho-read.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-getloadavg.o -MD -MP -MF .deps/libpureftpd_a-getloadavg.Tpo -c -o libpureftpd_a-getloadavg.o `test -f 'getloadavg.c' || echo './'`getloadavg.c
+mv -f .deps/libpureftpd_a-getloadavg.Tpo .deps/libpureftpd_a-getloadavg.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-ipstack.o -MD -MP -MF .deps/libpureftpd_a-ipstack.Tpo -c -o libpureftpd_a-ipstack.o `test -f 'ipstack.c' || echo './'`ipstack.c
+mv -f .deps/libpureftpd_a-ipstack.Tpo .deps/libpureftpd_a-ipstack.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-log_unix.o -MD -MP -MF .deps/libpureftpd_a-log_unix.Tpo -c -o libpureftpd_a-log_unix.o `test -f 'log_unix.c' || echo './'`log_unix.c
+mv -f .deps/libpureftpd_a-log_unix.Tpo .deps/libpureftpd_a-log_unix.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-log_mysql.o -MD -MP -MF .deps/libpureftpd_a-log_mysql.Tpo -c -o libpureftpd_a-log_mysql.o `test -f 'log_mysql.c' || echo './'`log_mysql.c
+mv -f .deps/libpureftpd_a-log_mysql.Tpo .deps/libpureftpd_a-log_mysql.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-log_pgsql.o -MD -MP -MF .deps/libpureftpd_a-log_pgsql.Tpo -c -o libpureftpd_a-log_pgsql.o `test -f 'log_pgsql.c' || echo './'`log_pgsql.c
+mv -f .deps/libpureftpd_a-log_pgsql.Tpo .deps/libpureftpd_a-log_pgsql.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-log_pam.o -MD -MP -MF .deps/libpureftpd_a-log_pam.Tpo -c -o libpureftpd_a-log_pam.o `test -f 'log_pam.c' || echo './'`log_pam.c
+mv -f .deps/libpureftpd_a-log_pam.Tpo .deps/libpureftpd_a-log_pam.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-log_ldap.o -MD -MP -MF .deps/libpureftpd_a-log_ldap.Tpo -c -o libpureftpd_a-log_ldap.o `test -f 'log_ldap.c' || echo './'`log_ldap.c
+mv -f .deps/libpureftpd_a-log_ldap.Tpo .deps/libpureftpd_a-log_ldap.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-log_puredb.o -MD -MP -MF .deps/libpureftpd_a-log_puredb.Tpo -c -o libpureftpd_a-log_puredb.o `test -f 'log_puredb.c' || echo './'`log_puredb.c
+mv -f .deps/libpureftpd_a-log_puredb.Tpo .deps/libpureftpd_a-log_puredb.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-log_extauth.o -MD -MP -MF .deps/libpureftpd_a-log_extauth.Tpo -c -o libpureftpd_a-log_extauth.o `test -f 'log_extauth.c' || echo './'`log_extauth.c
+mv -f .deps/libpureftpd_a-log_extauth.Tpo .deps/libpureftpd_a-log_extauth.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-ls.o -MD -MP -MF .deps/libpureftpd_a-ls.Tpo -c -o libpureftpd_a-ls.o `test -f 'ls.c' || echo './'`ls.c
+mv -f .deps/libpureftpd_a-ls.Tpo .deps/libpureftpd_a-ls.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-mysnprintf.o -MD -MP -MF .deps/libpureftpd_a-mysnprintf.Tpo -c -o libpureftpd_a-mysnprintf.o `test -f 'mysnprintf.c' || echo './'`mysnprintf.c
+mv -f .deps/libpureftpd_a-mysnprintf.Tpo .deps/libpureftpd_a-mysnprintf.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-parser.o -MD -MP -MF .deps/libpureftpd_a-parser.Tpo -c -o libpureftpd_a-parser.o `test -f 'parser.c' || echo './'`parser.c
+mv -f .deps/libpureftpd_a-parser.Tpo .deps/libpureftpd_a-parser.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-privsep.o -MD -MP -MF .deps/libpureftpd_a-privsep.Tpo -c -o libpureftpd_a-privsep.o `test -f 'privsep.c' || echo './'`privsep.c
+mv -f .deps/libpureftpd_a-privsep.Tpo .deps/libpureftpd_a-privsep.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-quotas.o -MD -MP -MF .deps/libpureftpd_a-quotas.Tpo -c -o libpureftpd_a-quotas.o `test -f 'quotas.c' || echo './'`quotas.c
+mv -f .deps/libpureftpd_a-quotas.Tpo .deps/libpureftpd_a-quotas.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-safe_rw.o -MD -MP -MF .deps/libpureftpd_a-safe_rw.Tpo -c -o libpureftpd_a-safe_rw.o `test -f 'safe_rw.c' || echo './'`safe_rw.c
+mv -f .deps/libpureftpd_a-safe_rw.Tpo .deps/libpureftpd_a-safe_rw.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-tls.o -MD -MP -MF .deps/libpureftpd_a-tls.Tpo -c -o libpureftpd_a-tls.o `test -f 'tls.c' || echo './'`tls.c
+mv -f .deps/libpureftpd_a-tls.Tpo .deps/libpureftpd_a-tls.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DINCLUDE_IO_WRAPPERS=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT libpureftpd_a-upload-pipe.o -MD -MP -MF .deps/libpureftpd_a-upload-pipe.Tpo -c -o libpureftpd_a-upload-pipe.o `test -f 'upload-pipe.c' || echo './'`upload-pipe.c
+mv -f .deps/libpureftpd_a-upload-pipe.Tpo .deps/libpureftpd_a-upload-pipe.Po
+rm -f libpureftpd.a
+ar cru libpureftpd.a libpureftpd_a-altlog.o libpureftpd_a-alt_arc4random.o libpureftpd_a-bonjour.o libpureftpd_a-bsd-glob.o libpureftpd_a-bsd-realpath.o libpureftpd_a-bsd-getopt_long.o libpureftpd_a-caps.o libpureftpd_a-crypto.o libpureftpd_a-crypto-md5.o libpureftpd_a-crypto-sha1.o libpureftpd_a-daemons.o libpureftpd_a-diraliases.o libpureftpd_a-dynamic.o libpureftpd_a-fakesnprintf.o libpureftpd_a-fakechroot.o libpureftpd_a-ftp_parser.o libpureftpd_a-ftpd.o libpureftpd_a-ftpwho-update.o libpureftpd_a-ftpwho-read.o libpureftpd_a-getloadavg.o libpureftpd_a-ipstack.o libpureftpd_a-log_unix.o libpureftpd_a-log_mysql.o libpureftpd_a-log_pgsql.o libpureftpd_a-log_pam.o libpureftpd_a-log_ldap.o libpureftpd_a-log_puredb.o libpureftpd_a-log_extauth.o libpureftpd_a-ls.o libpureftpd_a-mysnprintf.o libpureftpd_a-parser.o libpureftpd_a-privsep.o libpureftpd_a-quotas.o libpureftpd_a-safe_rw.o libpureftpd_a-tls.o libpureftpd_a-upload-pipe.o 
+ranlib libpureftpd.a
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT fakesnprintf.o -MD -MP -MF .deps/fakesnprintf.Tpo -c -o fakesnprintf.o fakesnprintf.c
+mv -f .deps/fakesnprintf.Tpo .deps/fakesnprintf.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT mysnprintf.o -MD -MP -MF .deps/mysnprintf.Tpo -c -o mysnprintf.o mysnprintf.c
+mv -f .deps/mysnprintf.Tpo .deps/mysnprintf.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT pure-statsdecode.o -MD -MP -MF .deps/pure-statsdecode.Tpo -c -o pure-statsdecode.o pure-statsdecode.c
+mv -f .deps/pure-statsdecode.Tpo .deps/pure-statsdecode.Po
+gcc  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero  -pie -z relro -z now -L/usr/local/lib -o pure-statsdecode fakesnprintf.o mysnprintf.o pure-statsdecode.o  -lcrypt -lcap 
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT alt_arc4random.o -MD -MP -MF .deps/alt_arc4random.Tpo -c -o alt_arc4random.o alt_arc4random.c
+mv -f .deps/alt_arc4random.Tpo .deps/alt_arc4random.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT bsd-getopt_long.o -MD -MP -MF .deps/bsd-getopt_long.Tpo -c -o bsd-getopt_long.o bsd-getopt_long.c
+mv -f .deps/bsd-getopt_long.Tpo .deps/bsd-getopt_long.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT pure-pw.o -MD -MP -MF .deps/pure-pw.Tpo -c -o pure-pw.o pure-pw.c
+mv -f .deps/pure-pw.Tpo .deps/pure-pw.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT safe_rw.o -MD -MP -MF .deps/safe_rw.Tpo -c -o safe_rw.o safe_rw.c
+mv -f .deps/safe_rw.Tpo .deps/safe_rw.Po
+gcc  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero  -pie -z relro -z now -L/usr/local/lib -o pure-pw alt_arc4random.o bsd-getopt_long.o fakesnprintf.o mysnprintf.o pure-pw.o safe_rw.o ../puredb/src/libpuredb_write.a -lcrypt -lcap 
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT pure-pwconvert.o -MD -MP -MF .deps/pure-pwconvert.Tpo -c -o pure-pwconvert.o pure-pwconvert.c
+mv -f .deps/pure-pwconvert.Tpo .deps/pure-pwconvert.Po
+gcc  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero  -pie -z relro -z now -L/usr/local/lib -o pure-pwconvert fakesnprintf.o mysnprintf.o pure-pwconvert.o  -lcrypt -lcap 
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT ptracetest.o -MD -MP -MF .deps/ptracetest.Tpo -c -o ptracetest.o ptracetest.c
+mv -f .deps/ptracetest.Tpo .deps/ptracetest.Po
+gcc  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero  -pie -z relro -z now -L/usr/local/lib -o ptracetest ptracetest.o  -lcrypt -lcap 
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT pure-authd.o -MD -MP -MF .deps/pure-authd.Tpo -c -o pure-authd.o pure-authd.c
+mv -f .deps/pure-authd.Tpo .deps/pure-authd.Po
+gcc  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero  -pie -z relro -z now -L/usr/local/lib -o pure-authd bsd-getopt_long.o fakesnprintf.o mysnprintf.o pure-authd.o safe_rw.o  -lcrypt -lcap 
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT main.o -MD -MP -MF .deps/main.Tpo -c -o main.o main.c
+mv -f .deps/main.Tpo .deps/main.Po
+gcc  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero  -pie -z relro -z now -L/usr/local/lib -o pure-ftpd main.o libpureftpd.a ../puredb/src/libpuredb_read.a  -lcrypt -lcap 
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT ipstack.o -MD -MP -MF .deps/ipstack.Tpo -c -o ipstack.o ipstack.c
+mv -f .deps/ipstack.Tpo .deps/ipstack.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT pure-ftpwho.o -MD -MP -MF .deps/pure-ftpwho.Tpo -c -o pure-ftpwho.o pure-ftpwho.c
+mv -f .deps/pure-ftpwho.Tpo .deps/pure-ftpwho.Po
+gcc  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero  -pie -z relro -z now -L/usr/local/lib -o pure-ftpwho bsd-getopt_long.o fakesnprintf.o ipstack.o mysnprintf.o pure-ftpwho.o  -lcrypt -lcap 
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DIN_PURE_MRTGINFO=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT pure_mrtginfo-daemons.o -MD -MP -MF .deps/pure_mrtginfo-daemons.Tpo -c -o pure_mrtginfo-daemons.o `test -f 'daemons.c' || echo './'`daemons.c
+mv -f .deps/pure_mrtginfo-daemons.Tpo .deps/pure_mrtginfo-daemons.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DIN_PURE_MRTGINFO=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT pure_mrtginfo-fakesnprintf.o -MD -MP -MF .deps/pure_mrtginfo-fakesnprintf.Tpo -c -o pure_mrtginfo-fakesnprintf.o `test -f 'fakesnprintf.c' || echo './'`fakesnprintf.c
+mv -f .deps/pure_mrtginfo-fakesnprintf.Tpo .deps/pure_mrtginfo-fakesnprintf.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DIN_PURE_MRTGINFO=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT pure_mrtginfo-pure-mrtginfo.o -MD -MP -MF .deps/pure_mrtginfo-pure-mrtginfo.Tpo -c -o pure_mrtginfo-pure-mrtginfo.o `test -f 'pure-mrtginfo.c' || echo './'`pure-mrtginfo.c
+mv -f .deps/pure_mrtginfo-pure-mrtginfo.Tpo .deps/pure_mrtginfo-pure-mrtginfo.Po
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\" -DIN_PURE_MRTGINFO=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT pure_mrtginfo-mysnprintf.o -MD -MP -MF .deps/pure_mrtginfo-mysnprintf.Tpo -c -o pure_mrtginfo-mysnprintf.o `test -f 'mysnprintf.c' || echo './'`mysnprintf.c
+mv -f .deps/pure_mrtginfo-mysnprintf.Tpo .deps/pure_mrtginfo-mysnprintf.Po
+gcc -DIN_PURE_MRTGINFO=1 -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero  -pie -z relro -z now -L/usr/local/lib -o pure-mrtginfo pure_mrtginfo-daemons.o pure_mrtginfo-fakesnprintf.o pure_mrtginfo-pure-mrtginfo.o pure_mrtginfo-mysnprintf.o  -lcrypt -lcap 
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT pure-quotacheck.o -MD -MP -MF .deps/pure-quotacheck.Tpo -c -o pure-quotacheck.o pure-quotacheck.c
+mv -f .deps/pure-quotacheck.Tpo .deps/pure-quotacheck.Po
+gcc  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero  -pie -z relro -z now -L/usr/local/lib -o pure-quotacheck bsd-getopt_long.o fakesnprintf.o mysnprintf.o pure-quotacheck.o safe_rw.o  -lcrypt -lcap 
+gcc -DHAVE_CONFIG_H -I. -I..   -I/usr/local/include -D_FORTIFY_SOURCE=2 -DCONFDIR=\"/etc\" -DSTATEDIR=\"/var\"  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero -MT pure-uploadscript.o -MD -MP -MF .deps/pure-uploadscript.Tpo -c -o pure-uploadscript.o pure-uploadscript.c
+mv -f .deps/pure-uploadscript.Tpo .deps/pure-uploadscript.Po
+gcc  -g -fPIE -fno-strict-aliasing -fno-strict-overflow -fstack-protector-all -Winit-self -Wwrite-strings -Wdiv-by-zero  -pie -z relro -z now -L/usr/local/lib -o pure-uploadscript bsd-getopt_long.o fakesnprintf.o mysnprintf.o pure-uploadscript.o safe_rw.o  -lcrypt -lcap 
+make[2]: Leaving directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/src'
+Making all in contrib
+make[2]: Entering directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/contrib'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/contrib'
+Making all in man
+make[2]: Entering directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/man'
+cd .. && /bin/bash ./config.status man/pure-ftpd.8
+config.status: creating man/pure-ftpd.8
+cd .. && /bin/bash ./config.status man/pure-ftpwho.8
+config.status: creating man/pure-ftpwho.8
+cd .. && /bin/bash ./config.status man/pure-mrtginfo.8
+config.status: creating man/pure-mrtginfo.8
+cd .. && /bin/bash ./config.status man/pure-uploadscript.8
+config.status: creating man/pure-uploadscript.8
+cd .. && /bin/bash ./config.status man/pure-statsdecode.8
+config.status: creating man/pure-statsdecode.8
+cd .. && /bin/bash ./config.status man/pure-quotacheck.8
+config.status: creating man/pure-quotacheck.8
+cd .. && /bin/bash ./config.status man/pure-pw.8
+config.status: creating man/pure-pw.8
+cd .. && /bin/bash ./config.status man/pure-pwconvert.8
+config.status: creating man/pure-pwconvert.8
+cd .. && /bin/bash ./config.status man/pure-authd.8
+config.status: creating man/pure-authd.8
+make[2]: Leaving directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/man'
+Making all in pam
+make[2]: Entering directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/pam'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/pam'
+Making all in gui
+make[2]: Entering directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/gui'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/gui'
+Making all in configuration-file
+make[2]: Entering directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/configuration-file'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/configuration-file'
+Making all in m4
+make[2]: Entering directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/m4'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36/m4'
+make[2]: Entering directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36'
+make[2]: Leaving directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36'
+make[1]: Leaving directory '/home/typearmor/patharmor/src_tests/pure-ftpd-1.0.36'
