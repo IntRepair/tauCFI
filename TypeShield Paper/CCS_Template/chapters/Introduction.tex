@@ -29,7 +29,7 @@ mechanisms at in place.
 (see bag of words at the bottom of left Fig.)* reported by US NVD for the past 10 years~\cite{NVD:ACE}. In black are the ACE unrelated reports.
 X axis is years (left \& right) and Y axis is number of reports in logarithmic scale (left) and distribution in \% of the same reports (right).
 As of May'17, NVD reports in total 701 ACEs from which 143 are the cause of vptr/vtable corruption (see * above) 
-which are exploited mostly by highjacking forward indirect calls.
+which are exploited by highjacking forward indirect calls. We manually inspected all 701 reports and can confirm that 143 are based on *.
 The vulnerabilities were reported in applications such as Google's Chrome \& V8 JS eng.; Mozilla Firefox; Microsoft's IE 10, Edge \& Chakra JS eng.;
 \& iOS/MacOS apps.}
 \label{ace:nvd:statistics}
@@ -37,7 +37,7 @@ The vulnerabilities were reported in applications such as Google's Chrome \& V8 
 \end{figure}
 
 % \textbf{Problem.}
-The performance benefit of late binding comes with high security implications (\textit{i.e.,} arbitrary code executions~\cite{NVD:ACE} reported by NIST NVD, see Figure~\ref{ace:nvd:statistics})
+The performance benefit of late binding comes with high security implications (\textit{i.e.,} 701 arbitrary code executions~\cite{NVD:ACE} reported by US NIST NVD, see Figure~\ref{ace:nvd:statistics}).
 First, dangling object pointers lead to undefined behavior---as specified by the C++ language standard N4618~\cite{N4618}---which can be exploited to point into illegal (\textit{i.e.,} not previously intended) virtual tables.
 Second, trough memory corruptions (\textit{e.g.,} buffer/integer overflows) the virtual pointer of an object making a call to a virtual function can be corrupted to point into:
 \textit{1)} illegal virtual tables, 
@@ -76,16 +76,16 @@ The main shortcoming of TypeArmor is that it has low precision
 w.r.t. to the number of call targets allowed per call site 
 (see \cref{{Too Permissive Parameter-Based Policies}} for more details).
 
-VCI~\cite{vci:asiaccs} is a binary rewriting tool that can protect C++ binaries against 
-vtable attacks. VCI strives to reconstruct several language semantics from the binary with limited success.
-These will be later on used for a CFI policy based on resolving pairings of virtual table calls (vcall)
-with precise sets of target classes. The policy is enforced similarly to TypeArmor by inserting the 
-needed checks before each virtual call. VCI performs a restricted type of alias analysis during type propagation.
-Also, it fails in some situations to identify the class types used by a vcall. Additionally, VCI can not deal with 
-virtual-dispatch-like C calls and it fails to find any
-constructor that defines the \textit{this} pointer. Overall, VCI tries to recuperate many high level 
-semantics without focusing on one of them from the binary. As result the call target set per call site is too 
-permissive.
+% VCI~\cite{vci:asiaccs} is a binary rewriting tool that can protect C++ binaries against 
+% vtable attacks. VCI strives to reconstruct several language semantics from the binary with limited success.
+% These will be later on used for a CFI policy based on resolving pairings of virtual table calls (vcall)
+% with precise sets of target classes. The policy is enforced similarly to TypeArmor by inserting the 
+% needed checks before each virtual call. VCI performs a restricted type of alias analysis during type propagation.
+% Also, it fails in some situations to identify the class types used by a vcall. Additionally, VCI can not deal with 
+% virtual-dispatch-like C calls and it fails to find any
+% constructor that defines the \textit{this} pointer. Overall, VCI tries to recuperate many high level 
+% semantics without focusing on one of them from the binary. As result the call target set per call site is too 
+% permissive.
 
 % \textbf{Tool Limitations.}
 These source code tools offer a certain degree of protection when code is provided, however 
@@ -177,10 +177,10 @@ numbersep=5pt,
 %gobble=2,
 %frame=lines,
 framesep=2mm,
-%fontsize=\tiny        
+fontsize=\tiny        
 % baselinestretch=1.2,
 % bgcolor=LightGray,
-fontsize=\small,
+%fontsize=\small,
 ]{C++}
 class nsMultiplexInputStream final 
  :public nsIMultiplexInputStream //A0
@@ -223,17 +223,17 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 % \end{figure}
 
 %%%%%%%%%%%%%%%%%
- \begin{figure*}[!t]
-    \centering
-   \setlength{\unitlength}{0.1\textwidth}
-   \begin{picture}(10,4)
-%    \centering
-     \put(4.81,0){\includegraphics[width=.43\textwidth]{figures/loop.pdf}}
-     \put(1.5,2){\usebox{\firstlisting}}
-   \end{picture}
-\caption{Description of how a counterfeit object-oriented programming main loop gadget (ML-G) works.}
-\label{Code example used to illustrate how a COOP loop gadget works}
-\end{figure*}
+%  \begin{figure}[!t]
+%     \centering
+%    \setlength{\unitlength}{0.1\textwidth}
+%    \begin{picture}(10,4)
+% %    \centering
+%      \put(1.8, .69){\includegraphics[width=.27\textwidth]{figures/loop.pdf}}
+%      \put(.2, 2){\usebox{\firstlisting}}
+%    \end{picture}
+% \caption{Description of how a counterfeit object-oriented programming main loop gadget (ML-G) works.}
+% \label{Code example used to illustrate how a COOP loop gadget works}
+% \end{figure}
 
 %most probably not needed at this time.
 % \label{Outline}

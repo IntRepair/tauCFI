@@ -359,13 +359,15 @@ When compared, our implementation of the \textit{type} policy allows about 7.93\
 \subsection{Runtime Overhead}
 \label{section:typeshieldoverheadperformance}
 \todo[inline]{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
-\begin{figure}[!h]
+
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.49\textwidth]{figures/speccpu2006.pdf}
     \caption{Benchmark run time normalized against the baseline for the SPEC CPU2006 benchmarks.
     \textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? replace with our values. remove this stub.}}
     \label{fig:awesome_image}
 \end{figure}
+
 Figure~\ref{fig:awesome_image} depicts the runtime normalized against the baseline for
 the SPEC CPU2006 benchmarks. In general, we have usually about 2\%-5\% performance drop when instrumenting using Dyninst. 
 The reason for that are essentially cache misses introduced by jumping between the old and the new executable section of the binary 
