@@ -1,12 +1,12 @@
 \section{Introduction}
 \label{chapter:Introduction}
 
-\textbf{Big Picture.}
-The object-oriented programming (OOP) paradigm is \textit{de facto standard} concept for developing large and complex 
-applications because it facilitates inheritance for objects which are at first unrelated to each other; this in turn 
+% \textbf{Big Picture.}
+The object-oriented programming (OOP) paradigm is \textit{de facto standard} concept for developing large, complex and efficient
+systems because it facilitates inheritance for objects which seem to be at first not related to each other; this in turn 
 facilitates better code reuse, software maintenance and software design. There are many programing languages
 which support OOP concepts, however the C++ programing language is the most used programming language for systems where 
-runtime performance and reliability are main goal.
+runtime performance and reliability are the main goal.
 
 An important C++ OOP convention is the object calling convention when for instance virtual functions are called.
 Virtual functions are an important concept which facilitates late binding and allows the programmer to overwrite a
@@ -16,23 +16,41 @@ virtual functions for each class containing them and provide to each instance of
 to the aforementioned table. While this allows more flexible code to be built---through late binding---it is simplistically implemented with no security
 mechanisms at in place.
 
-\textbf{Problem.}
-The performance benefit of late binding comes with high security implications. 
-First, dangling object pointers lead to undefined behavior---as specified by the C++ language standard N4618~\cite{N4618}---which 
-can be exploited to point into illegal (\textit{i.e.,} not previously intended) virtual tables.
-Second, trough memory corruptions (\textit{e.g.,} buffer/integer overflows) the virtual pointer of an object making a 
-call to a virtual function can be corrupted to point into:
+\begin{figure}[t!]
+\centering
+\begin{tikzpicture}
+\hspace{-.5cm}
+  \node (img)  {\includegraphics[scale=0.75]{figures/distri.pdf}};
+%   \node[below=of img, node distance=0cm, yshift=1.2cm, xshift=.25cm, font=\color{black}] {Year};
+%   \node[left=of img, node distance=0cm, rotate=90, anchor=center,yshift=-.9cm,font=\color{black}] {\# Bad Type Casts Reported};
+ \end{tikzpicture}
+\vspace{-.5cm}
+\caption{\# (left Fig.), \% (right Fig.) of arbitrary code executions (ACE) reports related (all colors expect black) to pointer or virtual table (vptr/vtbl) corruption 
+(see bag of words at the bottom of left Fig.*) reported by NIST NVD for the past 10 years~\cite{NVD:ACE}. In black are the ACE unrelated reports.
+X axis is years (left \& right) and Y axis is number of reports in logarithmic scale (left) and distribution in \% of the same reports (right).
+As of May'17, NVD reports in total 701 ACEs from which 143 are the cause of vptr/vtable corruption (see *) 
+which are exploited mostly by highjacking forward indirect calls.
+The vulnerabilities were reported in applications such as Google's Chrome \& V8 JS eng.; Mozilla Firefox; Microsoft's IE 10, Edge \& Chakra JS eng.;
+\& iOS/MacOS apps.}
+\label{ace:nvd:statistics}
+\vspace{-.7cm}
+\end{figure}
+
+% \textbf{Problem.}
+The performance benefit of late binding comes with high security implications (\textit{i.e.,} arbitrary code executions~\cite{NVD:ACE} reported by NIST NVD, see Figure~\ref{ace:nvd:statistics})
+First, dangling object pointers lead to undefined behavior---as specified by the C++ language standard N4618~\cite{N4618}---which can be exploited to point into illegal (\textit{i.e.,} not previously intended) virtual tables.
+Second, trough memory corruptions (\textit{e.g.,} buffer/integer overflows) the virtual pointer of an object making a call to a virtual function can be corrupted to point into:
 \textit{1)} illegal virtual tables, 
 \textit{2)} newly inserted virtual tables, or
 \textit{3)} overwritten virtual table entries
-such that advanced Code-Reuse Attacks (CRAs) as the recently published COOP~\cite{schuster:coop} 
+such that advanced Code-Reuse Attacks (CRAs) as the advanced COOP~\cite{schuster:coop} attack
 and its extensions~\cite{crane:readactor++, crane:readactor++, subversive-c:lettner, ctf:coop, loop:oriented} 
-become easily performable. This type of attack can bypass most of the to date CFI-based enforcement policies, since
+become easily doable. This type of attack can bypass most of the to date CFI-based enforcement policies, since:
 \textit{1)} it does not exploit indirect backward edges (\textit{i.e.,} return edges) but rather
-\textit{2)} it exploits the forward indirect control flow transfers imprecision which can not be upfront 
-determined since alias analysis is undecidable~\cite{alias:undecidable}.
+\textit{2)} it exploits the forward indirect control flow transfers imprecision which can not be statically upfront 
+determined since alias analysis is undecidable~\cite{alias:undecidable} in program binaries.
 
-\textbf{Available Tools.}
+% \textbf{Available Tools.}
 To avoid object dispatch corruptions Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} can be successfully used.
 CFI is one of the most used techniques for securing indirect control flow transfers inside programs
 by usually adding runtime checks before each indirect call site.
@@ -69,19 +87,28 @@ constructor that defines the \textit{this} pointer. Overall, VCI tries to recupe
 semantics without focusing on one of them from the binary. As result the call target set per call site is too 
 permissive.
 
-\textbf{Tool Limitations.}
+% \textbf{Tool Limitations.}
 These source code tools offer a certain degree of protection when code is provided, however 
 the above mentioned binary tools offer limited or no protection due to an in first place
 imprecise calltarget set per callsite.
 
-\textbf{Our Idea.}
+% \textbf{Our Idea.}
 In this paper, we present \textsc{TypeShield}, a runtime binary-level illegitimate forward calls 
 filtering tool that is based on an improved forward-edge fine-grained CFI policy compared 
 to previous work~\cite{veen:typearmor, crane:readactor++}.
-The analysis performed by \textsc{TypeShield} considers for each function parameter a register wideness (ABI dependent)
-in order to map callsites per calltargets. The analysis is performed for all address taken (AT) calltargets.
-Further, the analysis compares individual parameters of callsites and calltargets in order to check if an indirect call transfer 
-is accepatble or not, thus this provides a more fine-grained calltarget set per callsite than other state-of-the-art tools.
+\textsc{TypeShield} analyzes only 64-bit binaries and only function parameters 
+which are passed with the help of registers. This means that based on the 
+used ABI, \textsc{TypeShield} is able to track 4 or 6 arguments for the Microsoft's x64-bit calling convention
+or System V ABI, respectively. Similarly to TypeArmor we do not take into consideration floating-point 
+arguments passed via xmm registers; which we want to address in future work. However, as we will 
+demonstrate in the evaluation section, this will provide us enough information to 
+more be precisely than TypeArmor when stopping several state-of-the-art CRAs.
+
+More precisely, the analysis performed by \textsc{TypeShield}:
+\textit{1)} uses for each function parameter its register wideness (\textit{i.e.,} ABI dependent) in order to map calltargets per callsites,  
+\textit{2)} uses an address taken (AT) analysis similar to~\cite{veen:typearmor} for all calltargets, and 
+\textit{3)} compares individually parameters of callsites and calltargets in order to check if an indirect call transfer is acceptable or not, 
+thus this providing a more fine-grained calltarget set per callsite than other state-of-the-art tools.
 \textsc{TypeShield} is based on a use-def callees analysis to approximated the function prototypes, 
 and liveness analysis at indirect callsites to approximate callsite signatures. This 
 efficiently leads to a more precise CFG of the binary program in question, 
@@ -101,21 +128,22 @@ arguments provided are not super types of the arguments expected at the target.
 It then uses this information to enforce that each call site targets only a strict call target set.
 \textsc{TypeShield} takes the binary of a program as input and it automatically instrument it in order
 to detect illegitimate indirect calls at runtime. 
-More precisely, \textsc{TypeShield} achieves three goals:
-\begin{itemize}
- \item \textbf{Precision.} \textsc{TypeShield} employs a more precise analysis than TypeArmor in order to reduce the call target set for each 
+More precisely, \textsc{TypeShield} achieves three goals.
+
+\textbf{Precision.} \textsc{TypeShield} employs a more precise analysis than TypeArmor in order to reduce the call target set for each 
                call site. Our evaluation shows that \textsc{TypeShield} incurs X\% precision w.r.t. TypeArmor on the same programs.
- \item \textbf{Performance.} \textsc{TypeShield} employs runtime policy optimization techniques to further reduce the runtime overheads
+
+\textbf{Performance.} \textsc{TypeShield} employs runtime policy optimization techniques to further reduce the runtime overheads
               Our evaluation shows that \textsc{TypeShield} imposes up to X\% and X\% overheads for performance-intensive benchmarks on the
               SPEC CPU2006 benchamrks and the webser applications, respectively. On
               the contrary, TypeArmor is X\% slower than \textsc{TypeShield}
               on the x Program.
- \item \textbf{Scope.} \textsc{TypeShield} can detect forbidden indirect calls and as such it can protect similarly as vTrust~\cite{zhang:vtrust} against
+              
+\textbf{Scope.} \textsc{TypeShield} can detect forbidden indirect calls and as such it can protect similarly as vTrust~\cite{zhang:vtrust} against
               virtual table injection, corruption and reuse attacks. As such \textsc{TypeShield} can serve as a platform for developing other types of defenses for different 
               types of attacks.
-\end{itemize}
 
-\textbf{Contributions.} 
+% \textbf{Contributions.} 
 In summary, we make the following contributions:
 \label{Contribution}
 \begin{itemize}
@@ -125,13 +153,13 @@ In summary, we make the following contributions:
  threat.
 
  \item \textbf{Illegitimate indirect calls detection tool.}
- We designed and implemented \textsc{TypeSchield}, a general, automated, and easy to deploy tool
+ We designed and implemented \textsc{TypeShield}, a general, automated, and easy to deploy tool
  that can be applied to C/C++ binaries in order to detect and mitigate illegitimate forward indirect calls 
  during runtime. 
  
  \item \textbf{Experiments.} We demonstrate trough extensive experiments that our precise
  binary-level CFI strategy can mitigate advanced code reuse attacks in absence of C++ semantics.
- For example \textsc{TypeSchield} can protect against the COOP attack and its variations.
+ For example \textsc{TypeShield} can protect against the COOP attack and its variations.
 \end{itemize}
 
 \newsavebox{\firstlisting}
@@ -152,7 +180,7 @@ framesep=2mm,
 %fontsize=\tiny        
 % baselinestretch=1.2,
 % bgcolor=LightGray,
-fontsize=\footnotesize,
+fontsize=\small,
 ]{C++}
 class nsMultiplexInputStream final 
  :public nsIMultiplexInputStream //A0
@@ -167,7 +195,7 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
   nsresult rv = NS_OK;
   //get array length
   uint32_t len = mStreams.Length();
-  //array-based main loop gadget
+  //array-based main loop gadget (ML-G)
  for (uint32_t i = 0; i<len; ++i){
   //(1) hijacked indirect call
   nsresult rv2=mStreams[i]->Close();
@@ -196,28 +224,29 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 
 %%%%%%%%%%%%%%%%%
  \begin{figure*}[!t]
+    \centering
    \setlength{\unitlength}{0.1\textwidth}
    \begin{picture}(10,4)
-   \centering
-     \put(4.51,0){\includegraphics[width=.37\textwidth]{figures/loop.pdf}}
+%    \centering
+     \put(4.81,0){\includegraphics[width=.43\textwidth]{figures/loop.pdf}}
      \put(1.5,2){\usebox{\firstlisting}}
    \end{picture}
-\caption{Graphic depicting how a COOP loop gadget works.}
+\caption{Description of how a counterfeit object-oriented programming main loop gadget (ML-G) works.}
 \label{Code example used to illustrate how a COOP loop gadget works}
 \end{figure*}
 
 %most probably not needed at this time.
 % \label{Outline}
 % \textbf{Outline.} 
-The remainder of this paper is organized as follows.
-\cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications.
-\cref{chapter:TypeShild Overview} contains an overview of \textsc{TypeShield}.
-\cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}.
-\cref{chapter:Implementation} briefly presents the implementation details of \textsc{TypeShield}.
-\cref{chapter:Evaluation} evaluates several properties of \textsc{TypeShield} and
-\cref{chapter:Related_Work} surveys related work, respectively.
-\cref{chapter:Discussion} contains the discussion while 
-\cref{chapter:Future_Work} highlights future research venues, respectively. 
-Finally, \cref{chapter:Conclusion} concludes this paper.
+% The remainder of this paper is organized as follows.
+% \cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications, and 
+% \cref{chapter:TypeShild Overview} contains an overview of \textsc{TypeShield}.
+% \cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}, and
+% \cref{chapter:Implementation} briefly presents the implementation details of \textsc{TypeShield}, while
+% \cref{chapter:Evaluation} evaluates several properties of \textsc{TypeShield}.
+% \cref{chapter:Discussion} contains the discussion, and
+% \cref{chapter:Related_Work} surveys related work, while
+% \cref{chapter:Future_Work} highlights future research venues. 
+% Finally, \cref{chapter:Conclusion} concludes this paper.
 
 

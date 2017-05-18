@@ -20,24 +20,26 @@ mechanisms at in place.
 \centering
 \begin{tikzpicture}
 \hspace{-.5cm}
-  \node (img)  {\includegraphics[scale=0.75]{figures/distribution2.pdf}};
+  \node (img)  {\includegraphics[scale=0.75]{figures/distri.pdf}};
 %   \node[below=of img, node distance=0cm, yshift=1.2cm, xshift=.25cm, font=\color{black}] {Year};
 %   \node[left=of img, node distance=0cm, rotate=90, anchor=center,yshift=-.9cm,font=\color{black}] {\# Bad Type Casts Reported};
  \end{tikzpicture}
 \vspace{-.5cm}
-\caption{\# of type confusions reported by the NIST NVD for the last years. 
-As of May'17, 124 type confusion bugs where reported in applications such as Google's Chrome and V8 JS engine; Mozilla Firefox; Microsoft's IE 10, Edge and Chakra JS engine; Adobe Flash Player;
+\caption{\# (left Fig.), \% (right Fig.) of arbitrary code executions (ACE) reports related (all colors expect black) to pointer or virtual table (vptr/vtbl) corruption 
+(see bag of words at the bottom of left Fig.)* reported by US NVD for the past 10 years~\cite{NVD:ACE}. In black are the ACE unrelated reports.
+X axis is years (left \& right) and Y axis is number of reports in logarithmic scale (left) and distribution in \% of the same reports (right).
+As of May'17, NVD reports in total 701 ACEs from which 143 are the cause of vptr/vtable corruption (see * above) 
+which are exploited mostly by highjacking forward indirect calls.
+The vulnerabilities were reported in applications such as Google's Chrome \& V8 JS eng.; Mozilla Firefox; Microsoft's IE 10, Edge \& Chakra JS eng.;
 \& iOS/MacOS apps.}
-\label{typeconfusion:nvd:statistics}
+\label{ace:nvd:statistics}
 \vspace{-.7cm}
 \end{figure}
 
 % \textbf{Problem.}
-The performance benefit of late binding comes with high security implications. 
-First, dangling object pointers lead to undefined behavior---as specified by the C++ language standard N4618~\cite{N4618}---which 
-can be exploited to point into illegal (\textit{i.e.,} not previously intended) virtual tables.
-Second, trough memory corruptions (\textit{e.g.,} buffer/integer overflows) the virtual pointer of an object making a 
-call to a virtual function can be corrupted to point into:
+The performance benefit of late binding comes with high security implications (\textit{i.e.,} arbitrary code executions~\cite{NVD:ACE} reported by NIST NVD, see Figure~\ref{ace:nvd:statistics})
+First, dangling object pointers lead to undefined behavior---as specified by the C++ language standard N4618~\cite{N4618}---which can be exploited to point into illegal (\textit{i.e.,} not previously intended) virtual tables.
+Second, trough memory corruptions (\textit{e.g.,} buffer/integer overflows) the virtual pointer of an object making a call to a virtual function can be corrupted to point into:
 \textit{1)} illegal virtual tables, 
 \textit{2)} newly inserted virtual tables, or
 \textit{3)} overwritten virtual table entries
@@ -236,15 +238,15 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 %most probably not needed at this time.
 % \label{Outline}
 % \textbf{Outline.} 
-The remainder of this paper is organized as follows.
-\cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications, and 
-\cref{chapter:TypeShild Overview} contains an overview of \textsc{TypeShield}.
-\cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}, and
-\cref{chapter:Implementation} briefly presents the implementation details of \textsc{TypeShield}, while
-\cref{chapter:Evaluation} evaluates several properties of \textsc{TypeShield}.
-\cref{chapter:Discussion} contains the discussion, and
-\cref{chapter:Related_Work} surveys related work, while
-\cref{chapter:Future_Work} highlights future research venues. 
-Finally, \cref{chapter:Conclusion} concludes this paper.
+% The remainder of this paper is organized as follows.
+% \cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications, and 
+% \cref{chapter:TypeShild Overview} contains an overview of \textsc{TypeShield}.
+% \cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}, and
+% \cref{chapter:Implementation} briefly presents the implementation details of \textsc{TypeShield}, while
+% \cref{chapter:Evaluation} evaluates several properties of \textsc{TypeShield}.
+% \cref{chapter:Discussion} contains the discussion, and
+% \cref{chapter:Related_Work} surveys related work, while
+% \cref{chapter:Future_Work} highlights future research venues. 
+% Finally, \cref{chapter:Conclusion} concludes this paper.
 
 
