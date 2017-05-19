@@ -176,8 +176,8 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 \end{minipage}
 \end{lrbox}
 
-% \subsection{Exploiting Object Dispatches}
-\textbf{Exploiting Object Dispatches.}
+\subsection{Exploiting Object Dispatches}
+% \textbf{Exploiting Object Dispatches.}
 \label{Exploiting Polymorphism Weaknesses}
  \begin{figure}[!h]
    \vspace{-.37cm}
@@ -250,8 +250,8 @@ indicated with red-color vTable entries.
 % Important to notice is that there are no C++ language semantics which can be used to enforce type and 
 % parameter count matching for indirect call/callee pairs, this could be addresses with specifically intended language constructs in the future.
 
-% \subsection{\emph{Count} Policy}
-\textbf{\emph{Count} Policy.}
+\subsection{\emph{Count} Policy}
+% \textbf{\emph{Count} Policy.}
 \label{section:countpolicy}
 \vspace{-1.1em}
 \begin{figure}[!h]
@@ -304,7 +304,8 @@ indicated with red-color vTable entries.
 \label{fig:COUNTschema}
 \end{figure}
 
-What we call the \emph{count} policy is essentially the policy introduced by TypeArmor \cite{veen:typearmor}. 
+We build our own \emph{count} policy which essentially resembles the policy introduced by TypeArmor \cite{veen:typearmor} and
+for this reason we opted to briefly present it herein.
 The basic idea revolves around classifying calltargets by the number of parameters they provide and callsites 
 by the number of parameters they require. The schema to match this is based on the fact that we  
 have calltargets requiring parameters and the callsites providing them as depicted in Figure~\ref{fig:COUNTschema}.

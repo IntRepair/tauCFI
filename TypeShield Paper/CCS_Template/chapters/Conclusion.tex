@@ -32,14 +32,14 @@ illegitimate forward indirect control flow transfers by using a novel runtime ty
 technique based on function parameter type-checking and parameter-counting. 
 %Further, we maintain a comparable performance overhead to existing tools. (REDUNDANT WITH BELOW)
 
-We have implemented \textsc{TypeShield} and applied it to real software such as web servers 
-and FTP servers. We demonstrated through extensive experiments that \textsc{TypeShield} has 
-higher precision than existing state-of-the-art tools, while maintaining a comparable performance overhead. 
+We have implemented~\textsc{TypeShield} and applied it to real software such as web servers, FTP servers and the SPEC CPU2006 benchmark. 
+We demonstrated through extensive experiments that~\textsc{TypeShield} has 
+higher precision than existing state-of-the-art tools, while maintaining a comparable runtime performance overhead. 
 To date, we were able to improve on parameter count based techniques by reducing the possible calltargets per 
 callsite ratio by 20\% with an overall reduction of about 9\% when comparing with similar state-of-the-art approaches. 
 Next to a more precise analysis, the tangible outcome is a considerably reduced attack surface.
-In the spirit of open research, we have made the source code of \textsc{TypeShield} publicly available 
-at \url{https://github.com/stub/typeshield}, and support reproducibility in this fast-moving 
+In the spirit of open research, we have made the source code of \textsc{TypeShield} and the evaluation results publicly available 
+at \url{https://github.com/stub/typeshield}, thus we support reproducibility in this fast-moving 
 research field by providing comprehensive descriptions of our experiments.
 
 

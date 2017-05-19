@@ -9,11 +9,11 @@ A key building block of (runtime) OOP polymorphism are virtual functions, which 
 own implementations. In order to implement virtual functions, the compiler needs to generate a virtual table meta-data structure of all virtual functions for each class containing 
 them and provide to each instance of such a class a (virtual) pointer to the aforementioned table. While this approach allows for more flexible code to be built, 
 the basic implementation provides unfortunately very little security assurances. Data about highly damaging arbitrary code executions in major applications collected by U.S. NIST 
-(see Figure~\ref{ace:nvd:statistics}~\footnote{\# (left Fig.), \% (right Fig.) of arbitrary code executions (ACE) reports related (all colors expect black) to pointer or virtual table (vptr/vtbl) corruption 
+(see Figure~\ref{ace:nvd:statistics}~\footnote{Number (\#, left Fig.) and percentage (\%, right Fig.) of arbitrary code executions (ACE) reports related (all colors expect black) to pointer or virtual table (vptr/vtbl) corruption 
 (see bag of words at the bottom of left Fig.)* reported by U.S. NVD for the past 10 years~\cite{NVD:ACE}. In black are the ACE unrelated reports.
 X axis is years (left \& right) and Y axis is number of reports in logarithmic scale (left) and distribution in \% of the same reports (right).
 As of May'17, NVD reports in total 701 ACEs from which 143 are the result of a vptr/vtable corruption (see * above) that are exploited by highjacking forward indirect calls.
-These vulnerabilities were reported in applications such as Google's Chrome \& V8 JS eng.; Mozilla Firefox; Microsoft's IE 10, Edge \& Chakra JS eng; and iOS/MacOS applications.} 
+These vulnerabilities were reported in applications such as Google's Chrome \& V8 JavaScript engine, Mozilla Firefox, Microsoft's IE 10, Edge \& Chakra JavaScript engine, and several iOS/MacOS applications.} 
 and~\cite{NVD:ACE}) demonstrates the security shortcomings and the need to address this problem space.
 
 

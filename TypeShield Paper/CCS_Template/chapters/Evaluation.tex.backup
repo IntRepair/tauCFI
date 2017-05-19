@@ -41,15 +41,13 @@ using our ground truth, we need to evaluate the quality and applicability of the
 
 \subsubsection{Quality and Applicability of Ground Truth}
 \label{subsection:typeshieldprecision}
-To assess the applicability of our collected ground truth, we essentially need to assess the structural compatibility of our two data sets.
-First, we take a look at the comparability of calltargets and second, we take a look at the compatibility of callsites. The results are depicted in Table \ref{tbl:matchingquality}.
-
+We assessed the applicability of our collected ground truth, by 
 \begin{table}[h!]
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r|r}%
 	\toprule
 	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c|}{ {\bfseries calltargets}} & \multicolumn{3}{c}{{\bfseries callsites} }\\
-	\bfseries Target & match & Clang miss &  tool miss &  match & Clang miss & tool miss% specify table head
+	\bfseries Target & match & clang miss &  tool miss &  match & clang miss & tool miss% specify table head
 	\\\midrule
 	\csvreader[before filter=\ifthenelse{\equal{\csvcoli}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/matching.O2.csv}{
 		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
@@ -65,13 +63,16 @@ First, we take a look at the comparability of calltargets and second, we take a 
     	}
 %     	}
 	\caption {Table shows the quality of structural matching provided by our automated verify and test environment, 
-	regarding callsites and calltargets when compiling with optimization level O2. The label Clang miss 
-	denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc{TypeShield}. 
+	regarding callsites and calltargets when compiling with optimization level O2. The label clang miss 
+	denotes elements not found in the data-set of the clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc{TypeShield}. 
 % 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	looking at this table?}
         }
 	\label{tbl:matchingquality}
 \end{table}
+essentially assessing the structural compatibility of our two data sets.
+First, we take a look at the comparability of calltargets. Second, we take a look at the compatibility of callsites. 
+Finally, the results are depicted in Table \ref{tbl:matchingquality}.
 
 \textbf{Calltargets.} The obvious choice for structural comparison regarding calltargets is their name, as these are simply functions. 
 First, we have to remove internal functions from our data-sets like the \texttt{\_init} or \texttt{\_fini} functions, which are of no consequence for us. 
@@ -106,47 +107,48 @@ safely state that our structural matching between ground truth and \textsc{TypeS
 
 \subsubsection{Classification Precision (\textit{count})}
 \label{subsection:typeshieldcountprecision}
-\textit{}\newline 
-
+We measured two data points per target, the number and ratio of perfect 
 \begin{table}[h!]
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r|r}%
-
 	\toprule
 	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c}{\bfseries Calltargets} & \multicolumn{3}{c}{\bfseries Callsites}\\
 	
-	\bfseries Target & \#  &  perfect &  problem & \# & perfect &  problem % specify table head
+	\bfseries Target & \#  &  perfect args &  perfect return & \# & perfect args &  perfect return % specify table head
 	\\\midrule
-	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilterreject}{\csvfilteraccept}, late after line=\\, late after last line=\\\midrule]{csvs/classification_comp.sources_union_follow.O2.csv}{
+	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilterreject}{\csvfilteraccept}, late after line=\\, late after last line=\\\midrule]{csvs/classification_count.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
-	{\csvcolii  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxv \ (\csvcolxvi \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolvi \ (\csvcolvii\%)}% specify your coloumns here
+	{\csvcolii  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxvii \ (\csvcolxviii \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolviii \ (\csvcolix\%)}% specify your coloumns here
 
-	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilteraccept}{\csvfilterreject}, late after line=\\, late after last line=\\\bottomrule]{csvs/classification_comp.sources_union_follow.O2.csv}{
+	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilteraccept}{\csvfilterreject}, late after line=\\, late after last line=\\\bottomrule]{csvs/classification_count.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
-	{\textit{\csvcolii}  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxv \ (\csvcolxvi \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolvi \ (\csvcolvii\%)}% specify your coloumns here
+	{\textit{\csvcolii}  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxvii \ (\csvcolxviii \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolviii \ (\csvcolix\%)}% specify your coloumns here
     	\end{tabular}
-
 }
-		\caption {The results for analysis using the \textit{count} policy on the O2 optimization level. 
+
+\caption {The results for classification of callsites and calltargets using our \textit{count} policy on the O2 optimization level, when comparing to the ground truth obtained by our clang/LLVM pass. The label perfect args denotes all occurrences when our result and the ground truth perfectly match regarding the required/provided arguments. The label perfect return denotes this for return values. 
 % 		\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	        looking at this table?}
                 }
 		\label{tbl:precisionCOUNT}
 \end{table}
-We measured two data points per target, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in the case of 
-calltargets refers to overestimations and in case of callsites refers to underestimations (see Table~\ref{tbl:precisionCOUNT} for more details).
+classifications and the number and ratio of problematic classifications, 
+which in the case of calltargets refers to overestimations and in case of callsites refers to underestimations (see Table~\ref{tbl:precisionCOUNT} for more details).
 \textbf{Experiment Setup (Calltargets).} Union combination operator with an $analyze$ function that follows into occurring direct calls.
-\textbf{Results (Calltargets).} The problem rate is under 0.01\%, as there are only two test targets, that exhibit a problematic classification. The rate of perfect classification is in general over 80\% with Mysql as an exception (73.85\%) resulting in a geometric mean of 86.86\%.
-\textbf{Experiment Setup (Callsites).} Union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
-\textbf{Results (Callsites).} The problem rate is under 0.01\%, as there is only one test target, that exhibit a problematic classification. The rate of perfect classification is in general over 60\% with Nginx (48.49\%) 
+\textbf{Results (Calltargets).} The problem rate is under 0.01\%, as there are only two test targets, that exhibit a problematic classification. 
+The rate of perfect classification is in general over 80\% with Mysql as an exception (73.85\%) resulting in a geometric mean of 86.86\%.
+\textbf{Experiment Setup (Callsites).} Union combination operator with an $analyze$ function that does not follow into occurring direct calls
+while relying on a backward inter-procedural analysis.
+\textbf{Results (Callsites).} The problem rate is under 0.01\%, as there is only one test target, that exhibit a problematic classification.
+The rate of perfect classification is in general over 60\% with Nginx (48.49\%) 
 and Node.js (56.34\%) as an exception resulting in a geometric mean of 71.97\%.
 
 
 \subsubsection{Classification Precision (\textit{type})}
 \label{subsection:typeshieldcountprecision}
-
+We measured two data points per test target, the number and
 \begin{table}[h!]
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r|r}%
@@ -154,29 +156,28 @@ and Node.js (56.34\%) as an exception resulting in a geometric mean of 71.97\%.
 	\toprule
 	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c}{\bfseries Calltargets} & \multicolumn{3}{c}{\bfseries Callsites}\\
 	
-	\bfseries Target & \#  &  perfect &  problem & \# & perfect &  problem % specify table head
+	\bfseries Target & \#  &  perfect  args&  perfect return& \# & perfect args &  perfect return% specify table head
 	\\\midrule
-	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/classification_comp2.type_exp6.O2.csv}{
+	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/classification_type.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
-	{\csvcolii  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxv \ (\csvcolxvi \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolvi \ (\csvcolvii\%)}% specify your coloumns here
+	{\csvcolii  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxvii \ (\csvcolxviii \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolviii \ (\csvcolix\%)}% specify your coloumns here
 
-	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilteraccept}{\csvfilterreject},  late after line=\\, late after last line=\\\bottomrule]{csvs/classification_comp2.type_exp6.O2.csv}{
+	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilteraccept}{\csvfilterreject},  late after line=\\, late after last line=\\\bottomrule]{csvs/classification_type.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
-	{\textit{\csvcolii}  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxv \ (\csvcolxvi \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolvi \ (\csvcolvii\%)}% specify your coloumns here
+	{\textit{\csvcolii}  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxvii \ (\csvcolxviii \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolviii \ (\csvcolix\%)}% specify your coloumns here
     	\end{tabular}
 
 }
-	\caption {The results for analysis using the \textit{type} policy on the O2 optimization level. 
+	\caption {The result for classification of callsites using our \textit{type} policy on the O2 optimization level, when comparing to the ground truth obtained by our clang/LLVM pass. The label perfect args denotes all occurrences when our result and the ground truth perfectly match regarding the required/provided arguments. The label perfect return denotes this for return values.
 % 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	looking at this table?}
         }
 	\label{tbl:precisionTYPE}
 \end{table}
-We measured two data points per test target, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in the case of calltargets refers to overestimations and in case of callsites refers to underestimations. 
+ ratio of perfect classifications and the number and ratio of problematic classifications, which in the case of calltargets refers to overestimations and in case of callsites refers to underestimations. 
 The results are depicted in Table \ref{tbl:precisionTYPE}.
-
 \textbf{Experiment Setup (Calltargets).} Union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that intersects all reads until the first write.
 \textbf{Results (Calltargets).} For half of the set, the problem rate is under 1\% and for the other half it is not above 10\%, resulting in a geomean of 1.92\%. The rate of perfect classification is in general over 70\% with Nginx (69.38\%) and Mysql (63.16\%)  resulting in a geometric mean of 77.15\%.
 \textbf{Experiment Setup (Callsites).} Union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
@@ -217,8 +218,12 @@ with Node.js (44.76\%) as an exception resulting in a geometric mean of 68.35\%.
     	\end{tabular}
 
 }
-	\caption {The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an address taken analysis 
-	for optimization level O2. 
+	\caption {The results regarding the restriction of allowed callsites per calltarget for several test series on various targets compiled under optimization O2. Note 
+	that the basic restriction to address taken only calltargets (see column AT) is present for each other series. The label $count^*$ denotes the best possible 
+	reduction using our \emph{count} policy based on the ground truth collected by our clang/LLVM pass, while $count$ denotes the results of our implementation of 
+	the \emph{count} policy derived from the binaries. The same applies to $type*$ and $type$ regarding the \emph{type} policy. A lesser number of calltargets per 
+	calltsite indicates a better series. We can see that \emph{type} policy is superior to the \emph{count} policy, as it allows for a stronger reduction of 
+	allowed calltargets. We provided the median and the pair of mean and standard deviation to allow for a better comparison with other state-of-the-art tools.
 % 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	looking at this table?}
         }
@@ -236,25 +241,21 @@ The results are depicted in Table \ref{tbl:policycompat}.
 We explore the theoretical limits regarding the effectiveness of the \textit{count} and \textit{type} policies by relying on the collected ground truth data, essentially assuming perfect classification.
 \textbf{Experiment Setup.} Based on the type information collected by our Clang/LLVM pass, we conducted two experiment series.
 We derived the available number of calltargets for each callsite based on the collected ground truth applying the \textit{count} and \textit{type} schema.
-
 \textbf{Results.}
 \textit{1)} The theoretical limit of the \textit{count*} schema has a geometric mean of 233 possible calltargets, which is 16.48\% of the geometric mean of total available 
 calltargets, and
 \textit{2)} The theoretical limit of the \textit{type*} schema has a geometric mean of 210 possible calltargets, which is 14.86\% of the geometric mean of total available
 calltargets.
-
 When compared, the theoretical limit of the \textit{type} policy allows about 10\% less available calltargets in the geomean in O2 than the limit of the \textit{count} policy.
 
 \subsubsection{Reduction achieved by \textsc{TypeShield}}
 \label{subsection:typeshieldvslimitcount}
 \textbf{Experiment Setup.} We setup our two experiment series based on our previous evaluations regarding the classification precision for the \textit{count} and the \textit{type} policy.
-
 \textbf{Results.}
 \textit{1)}  The \textit{count} schema has a geometric mean of 315 possible calltargets, which is 22.29\% of the geometric mean of total available 
 calltargets. This is 35.19\% more than the theoretical limit of available calltargets per callsite, and
 \textit{2)}  The \textit{type} schema has a geometric mean of 290 possible calltargets, which is 20.52\% of the geometric mean of total available
 calltargets. This is 38.09\% more than the theoretical limit of available calltargets per callsite.
-
 When compared, our implementation of the \textit{type} policy allows about 7.93\% less available calltargets in the geomean in O2 than our implementation of the \textit{type} policy.
 
 
@@ -367,10 +368,10 @@ When compared, our implementation of the \textit{type} policy allows about 7.93\
 \subsection{Runtime Overhead}
 \label{section:typeshieldoverheadperformance}
 % \todo[inline]{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
-
+\textit{}\newline
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.49\textwidth]{figures/speccpu2006.pdf}
+    \includegraphics[width=0.47\textwidth]{figures/spec_cpu2006.pdf}
     \caption{Benchmark run time normalized against the baseline for the SPEC CPU2006 benchmarks.
 %     \textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? replace with our values. remove this stub.}
     }
@@ -470,12 +471,8 @@ todo. Also, add the buckets diagram, see Figure 9 in the typearmor paper.
 	{\textit{\csvcolii} & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii}% specify your coloumns here
     	\end{tabular}}
 %     	}
-	\caption {The medians of calltargets per callsite for different programs. Note that smaller geomean values are better and that
-% 	\textsc{TypeShield} currently does not include function return types as TypeArmor does. 
-% 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, 
-% 	low or hig? What is the main thing which can be observed if 
-% 	looking at this table?}
-        }
+	\caption {The medians of calltargets per callsite for different restrictions methods. Note that the smaller the numbers, the better the method. AT is the approach to only allow calltargets that are address taken. IFCC is a compiler based approach and only here as a reference of what is possible. TypeArmor and TypeShield on the other hand are binary based tools. We can see that our type based tool on average reduces the number of calltargets by 37\% when compared to the AT method and by 12\% when comparing with TypeArmor.
+}
 	\label{tbl:toolcompare}
 \end{table}
 

@@ -112,7 +112,7 @@ control flow and that an efficient solution for backward CFI is in place.
     \end{scope}
     
     \begin{scope}[xshift=1.5cm, yshift=2.75cm]
-     \node[]    (q_1) {	\large{$M1:call \ site$}};
+     \node[]    (q_1) {	\large{$M1:callsite$}};
     \end{scope}
     
     \begin{scope}[xshift=3.25cm, yshift=1.2cm]
@@ -120,7 +120,7 @@ control flow and that an efficient solution for backward CFI is in place.
     \end{scope}
     
     \begin{scope}[xshift=5.3cm, yshift=2.75cm]
-     \node[]    (q_1) {	\large{$M2:call \ target$}};
+     \node[]    (q_1) {	\large{$M2:calltarget$}};
     \end{scope}
     
     \begin{scope}[xshift=9cm, yshift=2.75cm]
@@ -351,8 +351,11 @@ control flow and that an efficient solution for backward CFI is in place.
     \end{scope}
     
 \end{tikzpicture}}
-\caption{\textsc{TypeShield}'s parameter type and count policy. 
-The $X$ and $Y$ axis of matrices $M1, M2$ and $M3$ represent function parameter count 
+\caption{\textsc{TypeShield}'s parameter type and count policy.}
+\label{Type and parameter count policy.}
+\end{figure}
+
+Figure~\ref{Type and parameter count policy.} depicts~\footnote{The $X$ and $Y$ axis of matrices $M1, M2$ and $M3$ represent function parameter count 
 and bit-widths in bytes, respectively.
 Note that our type policy performs an $\wedge$ (\textit{i.e.,} logical and) operation
 between each entry in $M1_{i,j}$ and $M2_{i,j}$ where $i$ and $j$ are column and row indexes. 
@@ -361,11 +364,8 @@ Green circles indicate a match whereas red circles indicate a mismatch in $M3$.
 If at least one match is present on each of the columns of 
 $M3$ than the indirect call transfer will be allowed by our policy, 
 otherwise not. Note that in this example
-the indirect call transfer will be allowed.}
-\label{Type and parameter count policy.}
-\end{figure}
-
-Figure~\ref{Type and parameter count policy.} depicts the behavior of our type based policy
+the indirect call transfer will be allowed.} 
+ the behavior of our type based policy
 when the callsite provides 6 parameters $pcs1, ..., pcs6$ having following bit 
 wideness \textit{pcs}1: 4-byte, \textit{pcs}2: 4-bye, \textit{pcs}3: 4-byte, \textit{pcs}4: 8-byte, \textit{pcs}5: 2-byte, 
 \textit{pcs}6: 2-byte, and the calltarget is expecting 6 parameters $pct1, ..., pct6$ having following bit 
@@ -373,13 +373,13 @@ wideness \textit{pct}1: 4-byte, \textit{pct}2: 4-bye, \textit{pct}3: 0-byte, \te
 \textit{pct}6: 0-byte of the expected parameters. 
 \textsc{TypeShield}'s type policy is defined as follows. 
 \label{eqn:1}{
-\textit{Definition 3.1} Let $A$ be a call target $ct_{A}$ and $B$ a call site $cs_{B}$ than: 
+\textit{Definition 3.1} Let $A$ be a calltarget $ct_{A}$ and $B$ a callsite $cs_{B}$ than: 
 $ct_{A} \subseteq cs_{B} \iff \forall i \subseteq [1, 6],$
 \ wideness(parameter($A$)[i]) $\leq$ \ wideness(parameter($B$)[i]).
 }
 Whereas the policy of TypeArmor is the following. 
 \label{eqn:2}{
-\textit{Definition 3.2} Let $A$ be a call target $ct_{A}$ and $B$ a call site $cs_{B}$ than: 
+\textit{Definition 3.2} Let $A$ be a calltarget $ct_{A}$ and $B$ a callsite $cs_{B}$ than: 
 $ct_{A} \subseteq cs_{B} \iff \forall i \subseteq [1, 6],$ 
 \ count(parameter($A$)) $\leq$ count(parameter($B$)).
 }
@@ -390,12 +390,12 @@ for each parameter index in part.
 \subsection{Invariants for Calltargets and Callsites}
 % \textbf{Invariants for Targets and Callsites.}
 \label{Invariants for Targets and Callsites}
-Advanced code reuse attacks change the calltargets that are invoked within indirect 
-callsites. As standard CFI solutions can hardly restrict these, TypeArmor proposed using two base invariants:
-\textit{1)} indirect callsites provide a number of parameters (\textit{i.e.,} possibly overestimated compared to source), and 
-\textit{2)} calltargets require a minimum number of parameters (\textit{i.e.,} possibly underestimated compared to source).
-The idea is that a callsite might only call functions that do not require more parameters than provided by the callsite. 
-To compute the necessary information, TypeArmor uses a modified version of forward liveness analysis for call-targets and 
+Advanced code reuse attacks use different calltargets than the ones expected by an indirect 
+callsite. As standard CFI solutions can hardly restrict these calltarget sets, TypeArmor proposes two base invariants:
+\textit{1)} indirect callsites provide a number of parameters (\textit{i.e.,} possibly overestimated compared to program source code), and 
+\textit{2)} calltargets require a minimum number of parameters (\textit{i.e.,} possibly underestimated compared to program source code).
+The basic idea is that a callsite might only call functions that do not require more parameters than provided by the callsite. 
+Finally, to compute the necessary information, TypeArmor uses a modified version of forward liveness analysis for call-targets and 
 backward reaching definitions analysis for callsites.
 
 \subsection{Impact of \textsc{TypeShield} on COOP}
@@ -466,7 +466,7 @@ backward reaching definitions analysis for callsites.
 \end{tikzpicture}
 
 }
-\caption{Transition based lattice between call targets and call sites,
+\caption{Transition based lattice between calltargets and callsites,
 $a$ $\wedge$ $b$ $\in \{0-bit, 8-bit, 16-bit, 32-bit, 64-bit\}$ and the two 
 function parameters (for brevity) having $\{0-byte, 1-byte, 2-byte, 4-byte, 8-byte\}$ register wideness. 
 \textsc{TypeShield} allows a transition from $a \rightarrow b \ iff$ $a_{i} \le b_{i}$ where $i \in [1, 2]$.
