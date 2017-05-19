@@ -16,7 +16,9 @@ sections of the attacked program binary. We also assume that the protected binar
 self-modifying code, handcrafted assembly or any kind of obfuscation. We also consider pages 
 to be either writable or executable but not both at the same time. Further, we assume 
 that our attacker has the ability to execute a memory corruption to hijack the program
-control flow and that an efficient solution for backward CFI is in place.
+control flow. Finally, the analyzed program binary is not hand-crafted and the compiler
+which was used to generate the binary adheres to one of the 
+standard calling conventions mentioned in the first section of this paper.
 
 \subsection{\textsc{TypeShield} Policy Mechanism}
 \label{TypeShield Policy Mechanism}

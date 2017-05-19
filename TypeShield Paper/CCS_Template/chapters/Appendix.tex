@@ -100,6 +100,40 @@ The crafted buffer will be used instead of the real code in order to call differ
 This example illustrates why detecting vPointer corruptions is not trivial for real-world applications. As depicted in Figure~\ref{Class exploit}, the class \texttt{nsInputStream} has 11 classes which inherit directly or indirectly from this class. The classes \texttt{nsSeekableStream}, \texttt{nsIPCSeria- lizableInputStream} and \texttt{nsCloneableInputStream} provide additional inherited virtual tables which represent illegitimate calltargets for the initial \texttt{nsInputStream} objects and legitimate calltargets for the six fake objects which were added during the attack. Furthermore, declaration and usage of the objects can be widely spread out in the source code. This makes detection of the object types (\textit{i.e.,} base class), range of virtual tables (\textit{i.e.,} longest virtual table inheritance path for a particular callsite) and parameter types of the virtual table entries (\textit{i.e.,} functions) in which it is allowed to call a trivial task for source code applications, but a hard task when one wants to apply similar security policies 
 (\textit{e.g.,} which rely on parameter types of virtual table entries) to binary executables.
 
-
+\subsection{Variadic Function Example}
+\begin{figure}[thp] % the figure provides the caption
+\centering          % which should be centered
+\begin{tabular}{c}  % the tabular makes the listing as small as possible and centers it
+\footnotesize
+\begin{lstlisting}
+00000000004222f0 <make_cmd>:
+ 4222f0:push   %r15
+ 4222f2:push   %r14
+ 4222f4:push   %rbx
+ 4222f5:sub    $0xd0,%rsp
+ 4222fc:mov    %esi,%r15d
+ 4222ff:mov    %rdi,%\begin{figure}[!h]
+ 422302:test   %al,%al
+ 422304:je     42233d <make_cmd+0x4d>
+ 422306:movaps %xmm0,0x50(%rsp)
+ 42230b:movaps %xmm1,0x60(%rsp)
+ 422310:movaps %xmm2,0x70(%rsp)
+ 422315:movaps %xmm3,0x80(%rsp)
+ 42231d:movaps %xmm4,0x90(%rsp)
+ 422325:movaps %xmm5,0xa0(%rsp)
+ 42232d:movaps %xmm6,0xb0(%rsp)
+ 422335:movaps %xmm7,0xc0(%rsp)
+ 42233d:mov    %r9,0x48(%rsp)
+ 422342:mov    %r8,0x40(%rsp)
+ 422347:mov    %rcx,0x38(%rsp)
+ 42234c:mov    %rdx,0x30(%rsp)
+ 422351:mov    $0x50,%esi
+ 422356:mov    %r14,%rdi
+ 422359:callq  409430 <pcalloc>
+\end{lstlisting}
+\end{tabular}
+\caption{ASM code of the \texttt{make\_cmd} function with optimize level O2, which has a variadic parameter list.}
+\label{fig:asmvariadic}
+\end{figure}
 
 

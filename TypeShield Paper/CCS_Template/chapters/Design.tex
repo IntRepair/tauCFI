@@ -52,12 +52,12 @@ SystemV ABI specifies 16 general purpose integer registers. Therefore, we repres
 \draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Huge{growing required bits/parameter}} (-0.5,7.5);
 \draw[-triangle 45, thick] (12.5,7.5) -- node[sloped, anchor=center, above] {\Huge{growing provided bits/parameter}} (12.5,0);
 
-\draw (0,7.5)  --node[anchor=south] {\rot{\Huge{param. 6}}} (2,7.5);
-\draw (2,7.5)  --node[anchor=south] {\rot{\Huge{param. 5}}} (4,7.5);
-\draw (4,7.5)  --node[anchor=south] {\rot{\Huge{param. 4}}} (6,7.5);
-\draw (6,7.5)  --node[anchor=south] {\rot{\Huge{param. 3}}} (8,7.5);
-\draw (8,7.5)  --node[anchor=south] {\rot{\Huge{param. 2}}} (10,7.5);
-\draw (10,7.5) --node[anchor=south] {\rot{\Huge{param. 1}}} (12,7.5);
+\draw (0,7.5)  --node[anchor=south] {\rot{\Huge{p. 6}}} (2,7.5);
+\draw (2,7.5)  --node[anchor=south] {\rot{\Huge{p. 5}}} (4,7.5);
+\draw (4,7.5)  --node[anchor=south] {\rot{\Huge{p. 4}}} (6,7.5);
+\draw (6,7.5)  --node[anchor=south] {\rot{\Huge{p. 3}}} (8,7.5);
+\draw (8,7.5)  --node[anchor=south] {\rot{\Huge{p. 2}}} (10,7.5);
+\draw (10,7.5) --node[anchor=south] {\rot{\Huge{p. 1}}} (12,7.5);
 
 \draw (0,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (2,6);
 \draw (2,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (4,6);
@@ -95,7 +95,9 @@ SystemV ABI specifies 16 general purpose integer registers. Therefore, we repres
 \draw (10,1.5) rectangle node[anchor=center] {\Huge{64-bits}} (12,0);
 \end{tikzpicture}
 }
-\caption{The \emph{type} policy schema for callsites and calltargets. As is demonstrated here, when requiring width, one starts at the bottom and grows to the top, as it is always possible to accept more than one requires. The reverse is true for providing, as it is possible to accept less than provided.}
+\caption{The \emph{type} policy schema for callsites and calltargets. Note that p. means parameter. As it is depicted in this example, when requiring width, one starts at the 
+bottom and grows to the top, as it is always possible to accept more parameters than required.
+The reverse is true for providing, as it is possible to accept less parameters than provided.}
 \label{fig:TYPEschema}
 \end{figure}
 As shown in Figure \ref{fig:TYPEschema}, our idea is to not simply classify callsites and calltargets based on the number of parameters they provide or request, but also on the parameter type. To simplify our approach, we use the width of the type and do not infer the actual type. As previously mentioned, there are 4 types of reading and writing accesses. Therefore, our set of possible types for parameters is $\texttt{TYPE} = \{64, 32, 16, 8, 0\}$; where 0 models the absence of a parameter. Since SystemV ABI specifies 6 registers as parameter holding registers, we classify our callsites and calltargets into $\texttt{TYPE}^6$. Similar to the policy of \texttt{TypeArmor}, we allow overestimations of callsites and underestimations of calltargets, however, on the level of types. Therefore, for a callsite $cs$ it is possible to call a calltarget $ct$, only if for each parameter of $ct$ the corresponding parameter of $cs$ is not smaller w.r.t. the width. This results in a finer-grained policy which is further restricting the possible pool of calltargets for each callsite.
@@ -344,41 +346,6 @@ Our horizontal merge($merge\_h$) function is again a simple pairwise combination
 \subsubsection{Variadic Functions}
 \label{subsection:variadicfunctions}
 
-\begin{figure}[thp] % the figure provides the caption
-\centering          % which should be centered
-\begin{tabular}{c}  % the tabular makes the listing as small as possible and centers it
-\footnotesize
-\begin{lstlisting}
-00000000004222f0 <make_cmd>:
- 4222f0:push   %r15
- 4222f2:push   %r14
- 4222f4:push   %rbx
- 4222f5:sub    $0xd0,%rsp
- 4222fc:mov    %esi,%r15d
- 4222ff:mov    %rdi,%\begin{figure}[!h]
- 422302:test   %al,%al
- 422304:je     42233d <make_cmd+0x4d>
- 422306:movaps %xmm0,0x50(%rsp)
- 42230b:movaps %xmm1,0x60(%rsp)
- 422310:movaps %xmm2,0x70(%rsp)
- 422315:movaps %xmm3,0x80(%rsp)
- 42231d:movaps %xmm4,0x90(%rsp)
- 422325:movaps %xmm5,0xa0(%rsp)
- 42232d:movaps %xmm6,0xb0(%rsp)
- 422335:movaps %xmm7,0xc0(%rsp)
- 42233d:mov    %r9,0x48(%rsp)
- 422342:mov    %r8,0x40(%rsp)
- 422347:mov    %rcx,0x38(%rsp)
- 42234c:mov    %rdx,0x30(%rsp)
- 422351:mov    $0x50,%esi
- 422356:mov    %r14,%rdi
- 422359:callq  409430 <pcalloc>
-\end{lstlisting}
-\end{tabular}
-\caption{ASM code of the \texttt{make\_cmd} function with optimize level O2, which has a variadic parameter list.}
-\label{fig:asmvariadic}
-\end{figure}
-
 Variadic functions are special functions in C/C++ that have a basic set of parameters, 
 which they always require and a variadic set of parameters, which as the name suggests 
 may vary. A prominent example of this would be the $printf$ function, which is used 
@@ -516,8 +483,9 @@ callsite directly before each call instruction.
 This algorithm relies on various functions that can be used to configure its behavior. We need to define the 
 function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, 
 the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function
-$analyze\_instr$. Note, that the function $pred$, which retrieves all possible predecessors of a block has not been implemented by us, because we rely on the DynInst instrumentation framework to achieve the following.
-\vspace{-.3cm}
+$analyze\_instr$. Note, that the function $pred$, which retrieves all possible predecessors of a block has not been implemented by us, because we rely on the DynInst instrumentation 
+framework to achieve the following.
+\vspace{-.1cm}
 \begin{subequations}
 \label{eq:livenesscustom}
 \begin{align}
@@ -527,7 +495,7 @@ analyze\_instr &: \mathcal {I} \mapsto \mathcal{S}^\mathcal{R} \\
 pred &: \mathcal{I} \mapsto \mathcal{P}(\mathcal{I})
 \end{align}
 \end{subequations}
-\vspace{-.8cm}
+\vspace{-.6cm}
 
 The $analyze\_instr$ function calculates the effect of an instruction and is the heart of the analyze function. It will also 
 handle non-jump and non-fall-through successors, as these are not handled by DynInst in our case. We essentially have three cases that we handle:
