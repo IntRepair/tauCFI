@@ -176,20 +176,22 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 \end{minipage}
 \end{lrbox}
 
-\subsection{Exploiting Object Dispatches}
+% \subsection{Exploiting Object Dispatches}
+\textbf{Exploiting Object Dispatches.}
 \label{Exploiting Polymorphism Weaknesses}
  \begin{figure}[!h]
-   \vspace{-.45cm}
+   \vspace{-.37cm}
    \centering
    \resizebox{2.3\linewidth}{!}{
    \setlength{\unitlength}{0.1\textwidth}
    \begin{picture}(10,4)
 %    \centering
-     \put(1.605, 1.196){\includegraphics[width=.27\textwidth]{figures/loop.pdf}}
-     \put(.03, 2.5){\usebox{\firstlisting}}
+     \put(1.606, 1.196){\includegraphics[width=.27\textwidth]{figures/loop.pdf}}
+     \put(.031, 2.5){\usebox{\firstlisting}}
    \end{picture}}
 \vspace{-2.6cm}
-\caption{Description of how a counterfeit object-oriented programming main loop gadget (ML-G) works.}
+% \caption{Description of how a counterfeit object-oriented programming main loop gadget (ML-G) works.}
+\caption{A COOP main loop gadget (ML-G) at work.}
 \label{Code example used to illustrate how a COOP loop gadget works}
 \end{figure}
 Figure~\ref{Code example used to illustrate how a COOP loop gadget works}
@@ -248,9 +250,10 @@ indicated with red-color vTable entries.
 % Important to notice is that there are no C++ language semantics which can be used to enforce type and 
 % parameter count matching for indirect call/callee pairs, this could be addresses with specifically intended language constructs in the future.
 
-\subsection{\emph{Count} Policy}
+% \subsection{\emph{Count} Policy}
+\textbf{\emph{Count} Policy.}
 \label{section:countpolicy}
-\vspace{-2em}
+\vspace{-1.1em}
 \begin{figure}[!h]
 \centering
 \resizebox{0.25\textwidth}{!}{
@@ -366,30 +369,30 @@ of callsites, which can access the same set of calltargets, a route which we wil
 % \subsection{Imprecise Parameter-Count Policies}
 % % \textbf{Permissive Parameter-Count-Based Policies.}
 % \label{Too Permissive Parameter-Based Policies}
-% TypeArmor~\cite{veen:typearmor} is a tool that can enforce a CFI runtime policy for dispatching of call sites based only on
-% parameter count. The authors claim that their policy reports only an \textit{overestimation} for the parameters prepared by a call site
+% TypeArmor~\cite{veen:typearmor} is a tool that can enforce a CFI runtime policy for dispatching of callsites based only on
+% parameter count. The authors claim that their policy reports only an \textit{overestimation} for the parameters prepared by a callsite
 % and \textit{underestimation} for the number of parameters consumed by the matching call targets. The authors claim that their technique is 
 % effective w.r.t. preventing COOP attacks. 
 % 
-% We do not agree with this claim and furthermore we believe that their call site vs. call target set enforcing policy is too permissive and thus many potential indirect forward edge based 
-% control flow transfers are possible. Consider the following example. In the best case for each call site preparing say $p=4 \in [1, 6]$ parameters their policy
+% We do not agree with this claim and furthermore we believe that their callsite vs. call target set enforcing policy is too permissive and thus many potential indirect forward edge based 
+% control flow transfers are possible. Consider the following example. In the best case for each callsite preparing say $p=4 \in [1, 6]$ parameters their policy
 % could theoretically allow only the call targets which consume the same number as parameters as prepared, $c=4 \in [1, 6]$. Note that this does not hold due to 
-% the aforementioned call site overestimation and call target underestimation, thus all possible numerical mismatches are allowed by their policy as long as $p$ is 
+% the aforementioned callsite overestimation and call target underestimation, thus all possible numerical mismatches are allowed by their policy as long as $p$ is 
 % greater or equal to $c$.
 % 
 % \begin{itemize}
-% \item TypeArmor \textbf{\textit{ideally}} would allow for a single call site a set of call targets containing maximum $117649$ possibilities if we 
+% \item TypeArmor \textbf{\textit{ideally}} would allow for a single callsite a set of call targets containing maximum $117649$ possibilities if we 
 % consider the maximum value of provided parameters to be
 % $p=6$ due to $p \in [1, 6]$ possible provided parameters. Consider 7 C++ integer parameter types $t$:
 % $int$, $char$, $unsigned char$, $bool$, $long$, $unsigned long$,  and $short$. 
-% Thus we obtain $t^{p}=7^{6}=117649$ allowed call targets per call site if the TypeArmor is in place.
+% Thus we obtain $t^{p}=7^{6}=117649$ allowed call targets per callsite if the TypeArmor is in place.
 % Note that for simplicity reasons we considered $t=7$ but in practice $t$ is even larger since there are many types of parameters in C++. 
 % The complete list of fundamental C++ types contains 20 types; not including data structures or object types.
-% Thus, all these data types would be ignored by TypeArmor. Also, note that all other call sites having more than 6 parameters 
+% Thus, all these data types would be ignored by TypeArmor. Also, note that all other callsites having more than 6 parameters 
 % would be not checked by TypeArmor as well.
 % 
-% \item TypeArmor \textbf{\textit{actually}} allows more than $t^{p}$ call targets per call site.
-% If we have $t=7$ integer types due to TypeArmors overestimation and underestimation we get for each call site an additional
+% \item TypeArmor \textbf{\textit{actually}} allows more than $t^{p}$ call targets per callsite.
+% If we have $t=7$ integer types due to TypeArmors overestimation and underestimation we get for each callsite an additional
 % number of call targets. Let $p=6$ than we get $c = 6x + 5y+ 4z + 3t + 2p + 1v$ where:
 % $x$ is the sum of all call targets consuming 6 parameters, 
 % $y$ is the sum of all call targets consuming 5 parameters 
@@ -397,16 +400,16 @@ of callsites, which can access the same set of calltargets, a route which we wil
 % Than $c = 2100 = 600 + 500 + 400 + 300 + 200 + 100 \ iff \ x=y=z=t=p=v=100$. 
 % Note that $x=100$ is feasible under realistic conditions in large applications (\textit{i.e.,} Google Chrome, Firefox). 
 % Next $2100$ is added to $7^{6}$. 
-% Thus for a single call site providing $p=6$ parameters TypeArmor allows theoretically in 
+% Thus for a single callsite providing $p=6$ parameters TypeArmor allows theoretically in 
 % total $7^{6} + 2100 = 1197496$ call targets for each callsite.
 % This holds for $p=5$ where we get $7^{5} + (1500 = 500 + 400 + 300 + 200 + 100) = \ 18307 \ iff \ x=y=z=t=p=v=100$ 
-% allowed call target per call site. Note that this holds for $p \in [1, 4]$ too.
+% allowed call target per callsite. Note that this holds for $p \in [1, 4]$ too.
 % \end{itemize}
 % 
 % Finally, TypeArmor is too permissive and as consequence we present 
 % \textsc{TypeShield} which deals with the variable type state explosion due to different parameter types by considering an 
 % approximation (\textit{i.e.,} alias analysis and thus type analysis in binaries is undecidable~\cite{alias:undecidable}) of 
-% parameter types based on register wideness. Consequently, the allowed call target set for each call site is drastically reduced.
+% parameter types based on register wideness. Consequently, the allowed call target set for each callsite is drastically reduced.
 % 
 % \subsection{Real COOP Attack Example}
 % % \textbf{Real COOP Attack Example.}

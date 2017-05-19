@@ -26,24 +26,20 @@
 % The family of forward indirect call based attacks which can manifest due to a series of factors such as
 % memory corruptions, binary layout leackages and availability of useful
 % gadgets in a sufficiently large executable poses a serious security threat.
-In this paper, we presented \textsc{TypeShield}, a program binary based runtime fine-grained CFI enforcing
-tool which can mitigate forward indirect call based attacks by precisely filtering legitimate from illegitimate 
-forward indirect control flow transfers in program binaries.
-\textsc{TypeShield} uses a novel runtime type checking technique based on function parameter
-type checking and parameter counting in order to efficiently filter-out legitimate
-and illegitimate forward indirect transfers.
-It provides a more precise analysis then existing approaches with a
-comparable performance overhead.
-We have implemented it and applied it to real software such as web servers and FTP servers.
-We demonstrated through extensive experiments and comparisons with related tools
-that \textsc{TypeShield} has higher precision and comparable performance overhead than 
-existing state-of-the-art tools. To date, we were able to provide a more precise
-technique than parameter count based techniques by reducing the possible calltargets 
-per callsite ratio by 20\% with an overall reduction of about 
-9\% when comparing with similar state-of-the-art approaches.
-The outcome is a more precise analysis and a considerably reduced attack surface.
-In the spirit of open research,
-we have made the source code of \textsc{TypeShield}
-publicly available at \url{https://github.com/stub/typeshield}.
+In this paper, we presented \textsc{TypeShield}, a runtime fine-grained CFI-enforcing tool which 
+operates on program binaries. Our tool precisely and efficiently filters legitimate from 
+illegitimate forward indirect control flow transfers by using a novel runtime type-checking 
+technique based on function parameter type-checking and parameter-counting. 
+%Further, we maintain a comparable performance overhead to existing tools. (REDUNDANT WITH BELOW)
+
+We have implemented \textsc{TypeShield} and applied it to real software such as web servers 
+and FTP servers. We demonstrated through extensive experiments that \textsc{TypeShield} has 
+higher precision than existing state-of-the-art tools, while maintaining a comparable performance overhead. 
+To date, we were able to improve on parameter count based techniques by reducing the possible calltargets per 
+callsite ratio by 20\% with an overall reduction of about 9\% when comparing with similar state-of-the-art approaches. 
+Next to a more precise analysis, the tangible outcome is a considerably reduced attack surface.
+In the spirit of open research, we have made the source code of \textsc{TypeShield} publicly available 
+at \url{https://github.com/stub/typeshield}, and support reproducibility in this fast-moving 
+research field by providing comprehensive descriptions of our experiments.
 
 

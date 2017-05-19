@@ -112,7 +112,7 @@ control flow and that an efficient solution for backward CFI is in place.
     \end{scope}
     
     \begin{scope}[xshift=1.5cm, yshift=2.75cm]
-     \node[]    (q_1) {	\large{$M1:call \ site$}};
+     \node[]    (q_1) {	\large{$M1:callsite$}};
     \end{scope}
     
     \begin{scope}[xshift=3.25cm, yshift=1.2cm]
@@ -120,7 +120,7 @@ control flow and that an efficient solution for backward CFI is in place.
     \end{scope}
     
     \begin{scope}[xshift=5.3cm, yshift=2.75cm]
-     \node[]    (q_1) {	\large{$M2:call \ target$}};
+     \node[]    (q_1) {	\large{$M2:calltarget$}};
     \end{scope}
     
     \begin{scope}[xshift=9cm, yshift=2.75cm]
@@ -373,13 +373,13 @@ wideness \textit{pct}1: 4-byte, \textit{pct}2: 4-bye, \textit{pct}3: 0-byte, \te
 \textit{pct}6: 0-byte of the expected parameters. 
 \textsc{TypeShield}'s type policy is defined as follows. 
 \label{eqn:1}{
-\textit{Definition 3.1} Let $A$ be a call target $ct_{A}$ and $B$ a call site $cs_{B}$ than: 
+\textit{Definition 3.1} Let $A$ be a calltarget $ct_{A}$ and $B$ a callsite $cs_{B}$ than: 
 $ct_{A} \subseteq cs_{B} \iff \forall i \subseteq [1, 6],$
 \ wideness(parameter($A$)[i]) $\leq$ \ wideness(parameter($B$)[i]).
 }
 Whereas the policy of TypeArmor is the following. 
 \label{eqn:2}{
-\textit{Definition 3.2} Let $A$ be a call target $ct_{A}$ and $B$ a call site $cs_{B}$ than: 
+\textit{Definition 3.2} Let $A$ be a calltarget $ct_{A}$ and $B$ a callsite $cs_{B}$ than: 
 $ct_{A} \subseteq cs_{B} \iff \forall i \subseteq [1, 6],$ 
 \ count(parameter($A$)) $\leq$ count(parameter($B$)).
 }
@@ -466,7 +466,7 @@ backward reaching definitions analysis for callsites.
 \end{tikzpicture}
 
 }
-\caption{Transition based lattice between call targets and call sites,
+\caption{Transition based lattice between calltargets and callsites,
 $a$ $\wedge$ $b$ $\in \{0-bit, 8-bit, 16-bit, 32-bit, 64-bit\}$ and the two 
 function parameters (for brevity) having $\{0-byte, 1-byte, 2-byte, 4-byte, 8-byte\}$ register wideness. 
 \textsc{TypeShield} allows a transition from $a \rightarrow b \ iff$ $a_{i} \le b_{i}$ where $i \in [1, 2]$.

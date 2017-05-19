@@ -32,32 +32,15 @@
 % \subsection{Advanced Code-Reuse Attacks Mitigation}
 % \textbf{Mitigation of Forward-Edge based Attacks.}
 % \label{Mitigation of Advanced Code-Reuse Attacks}
-Recursive-COOP~\cite{crane:readactor++}, COOP~\cite{schuster:coop}, Subversive-C~\cite{subversive-c:lettner} and the attack of Lan \textit{et al.}~\cite{loop:oriented}
-are forward-edge based CRAs which can not be addressed with:
-\textit{i)}  with shadow stacks techniques (\textit{i.e.,} do not violate the caller/calle convention), 
-\textit{ii)} coarse-grained Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} techniques are useless against these attacks, 
-\textit{iii)} hardware based approaches such as Intel CET~\cite{intel:cet} can not mitigate this attack for the same reason as in \textit{i)}, and 
-\textit{iv)} with OS-based approaches such as Windows Control Flow Guard~\cite{windows:cfguard} 
+Recursive-COOP~\cite{crane:readactor++}, COOP~\cite{schuster:coop}, Subversive-C~\cite{subversive-c:lettner} and the attack of Lan \textit{et al.}~\cite{loop:oriented} are forward-edge based CRAs which cannot be addressed with:
+\textit{i)}  shadow stacks techniques and hardware-based approaches such as Intel CET~\cite{intel:cet} (i.e., since advanced COOP do not violate the caller/callee convention), 
+\textit{ii)} coarse-grained Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} techniques, and 
+\textit{iii)} OS-based approaches such as Windows Control Flow Guard~\cite{windows:cfguard} 
 since the precomputed CFG does not contain edges for indirect callsites which are explicitly exploited during the COOP attack.
-However, the following tools can protect against COOP attacks.
 
-\subsection{Binary Based} vTable protection is addressed through binary instrumentation in tools
-such as: vfGuard~\cite{vfuard:aravind}, vTint~\cite{vtint:zhang}. However, none of these tools can
-help to mitigate against COOP. The only binary based tool which we are aware of that
-can mitigate protect against COOP is TypeArmor~\cite{veen:typearmor}.  
-TypeArmor uses a fine-grained CFI policy based on caller (only indirect callsites)/callee matching 
-which consists in checking during runtime if the number of provided and needed parameters match.
+The following tools address vTable protection through binary instrumentation, but fail to mitigate against COOP: vfGuard~\cite{vfuard:aravind}, and vTint~\cite{vtint:zhang}. The only binary-based tool which we are aware of that can protect against COOP is TypeArmor~\cite{veen:typearmor}. TypeArmor uses a fine-grained CFI policy based on caller/callee (but only indirect callsites) matching, which checks during runtime if the number of provided and needed parameters match.
 
-\textsc{TypeShield} is most similar to TypeArmor~\cite{veen:typearmor} since
-we also enforce strong binary-level invariants on the number of function
-parameters. \textsc{TypeShield} similarly to TypeArmor targets 
-exclusive protection against advanced exploitation techniques 
-which can bypass fine-grained CFI schemes and VTable protections at the binary level.
-However, \textsc{TypeShield} offers a better restriction of calltargets to callsites, since 
-we not only restrict based on the number of parameters but also on the wideness of their types. 
-This results in much smaller buckets that in turn can only target a smaller subset of all address
-taken functions. However, we rely for that on the variety of parameter types and when there is 
-none, we will degrade into a parameter count policy.
+\textsc{TypeShield} is related to TypeArmor~\cite{veen:typearmor}, since we also enforce strong binary-level invariants on the number of function parameters. Further, \textsc{TypeShield} also aims for exclusive protection against advanced exploitation techniques, which can bypass fine-grained CFI schemes and vTable protections at the binary level. However, \textsc{TypeShield} offers a better restriction of calltargets to callsites, since we not only restrict based on the number of parameters, but also on the width of their types. This results in much smaller buckets that in turn can only target a smaller subset of all address-taken functions. %However, we rely for that on the variety of parameter types and when there is none, we will degrade into a parameter count policy.
 
 % We are aware that there is still a long research path to go until binary based techniques can 
 % recuperate program based semantic information from executable with the same precision as compiler based tools.

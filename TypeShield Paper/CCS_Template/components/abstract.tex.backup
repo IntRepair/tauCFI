@@ -44,7 +44,9 @@ binaries.
 We have applied \textsc{TypeShield} to web servers, FTP servers and the SPEC CPU2006 benchmark and were able to 
 efficiently and with low performance overhead protect these applications from forward indirect edge corruptions 
 based on virtual pointers. Further, in a direct comparison with the state-of-the-art tool, \textsc{TypeShield} 
-achieves higher caller/callee matching (i.e., precision), while maintaining a more favorable runtime overhead. 
+achieves higher caller/callee matching (\textit{i.e.,} precision), while maintaining a more favorable runtime overhead. 
 Focusing the evaluation on target reduction techniques, we can demonstrate that our approach achieves a notable 
 additional reduction of the possible calltargets per callsite of up to 20\% associated with an overall reduction
 of about 9\% in comparison to other state-of-the-art parameter-only count-based techniques.
+Finally, we want to particularly emphasis of the reproducibility of our results through a precise description
+of each experiment w.r.t. experiment setup, results, encountered problems, mean, median and geomeans all specified.
