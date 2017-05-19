@@ -1,5 +1,0 @@
-# Exim filter
-
-if $recipients contains failure then
-  fail "this message is a failure (filter fail)"
-endif   

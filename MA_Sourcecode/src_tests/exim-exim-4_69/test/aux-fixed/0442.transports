@@ -1,3 +1,0 @@
-begin transports
-t1:
-  driver = smtp

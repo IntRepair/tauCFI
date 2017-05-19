@@ -1,3 +1,0 @@
-# Redirection to same address, and "unseen"
-exim -odi userx@test.ex
-****

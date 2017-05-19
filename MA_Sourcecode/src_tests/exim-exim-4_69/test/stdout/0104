@@ -1,6 +1,0 @@
-xxx@test.ex
-  router = all, transport = appendfile
-xxx@test.ex   [duplicate, would not be delivered]
-  router = all, transport = appendfile
-xxx@test.ex   [duplicate, would not be delivered]
-  router = all, transport = appendfile

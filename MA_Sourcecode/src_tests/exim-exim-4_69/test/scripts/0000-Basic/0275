@@ -1,5 +1,0 @@
-# named domain lists
-exim -d -bt userx@test.ex
-****
-exim -d -odi userx@test.ex
-****

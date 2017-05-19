@@ -1,3 +1,0 @@
-# gid (only) set in router for pipe transport
-exim -d-all+transport+uid -odi userx@test.ex
-****

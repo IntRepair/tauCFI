@@ -1,3 +1,0 @@
-LOG: PANIC DIE
-  Exim configuration error in line 17 of TESTSUITE/test-config:
-  missing quote at end of string value for hold_domains

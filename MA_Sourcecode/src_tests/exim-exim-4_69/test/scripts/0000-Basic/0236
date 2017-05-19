@@ -1,4 +1,0 @@
-# Macro name longer than 63 characters
-1
-exim -bP qualify_domain
-****

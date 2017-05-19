@@ -1,4 +1,0 @@
-begin routers
-r1:
-  driver = accept
-  transport = t1

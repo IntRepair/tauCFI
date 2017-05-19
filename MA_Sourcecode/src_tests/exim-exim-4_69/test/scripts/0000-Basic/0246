@@ -1,4 +1,0 @@
-# forbid lookup/exists in filter - with autoreply
-exim -odi filter
-.
-****

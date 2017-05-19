@@ -1,4 +1,0 @@
-# Exim filter
-
-logfile test-private
-logwrite "Testing"

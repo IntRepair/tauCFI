@@ -1,5 +1,0 @@
-# system filter $recipients test (no shell)
-exim -odi pipe
-****
-exim -odi pipe another a-third
-****

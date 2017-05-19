@@ -1,6 +1,0 @@
-# rewrite at transport time
-exim -odi a@b.c
-From: p@q.r
-To: a@b.c
-Reply-to: e@f.g
-****

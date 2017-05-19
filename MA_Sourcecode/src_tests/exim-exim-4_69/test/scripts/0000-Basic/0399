@@ -1,4 +1,0 @@
-# expanding "more"
-1
-exim -d -bt x@y
-****

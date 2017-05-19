@@ -1,3 +1,0 @@
-# Exim filter
-
-pipe "/source/exim4/AutoTest/non-exist"

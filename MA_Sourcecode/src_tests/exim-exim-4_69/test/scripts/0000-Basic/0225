@@ -1,5 +1,0 @@
-# self = pass and unseen
-exim -odi copy@localhost
-Original message
-****
-no_message_check

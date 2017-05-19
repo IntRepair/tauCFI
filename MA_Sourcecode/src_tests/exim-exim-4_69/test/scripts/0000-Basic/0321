@@ -1,4 +1,0 @@
-# local part starting | routed to pipe
-exim -odi '|/bin/cat\ /etc/aliases\ '
-quit
-****

@@ -1,7 +1,0 @@
-# msglog frozen messages
-exim -odi freeze
-****
-exim -odi -f '<>' unknown
-****
-sudo exim -odi -f '<>' unknown
-****

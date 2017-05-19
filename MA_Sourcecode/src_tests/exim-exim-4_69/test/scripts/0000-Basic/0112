@@ -1,7 +1,0 @@
-# pipe and file deliveries from aliasfile
-exim -odi pipe
-Message to pipe.
-****
-exim -odi file
-Message to file.
-****

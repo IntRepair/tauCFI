@@ -1,9 +1,0 @@
-# mailbox_size and mailbox_filecount
-#
-exim -d-all+transport -odi userx@test.ex
-Test message
-****
-exim -DQUOTA_FILECOUNT=20 -d-all+transport -odi userx@test.ex
-Test message
-****
-no_message_check

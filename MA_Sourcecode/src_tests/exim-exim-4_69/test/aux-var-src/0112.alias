@@ -1,2 +1,0 @@
-pipe:  |/bin/sh -c "cat >DIR/test-mail/pipe"
-file:  DIR/test-mail/file

@@ -1,6 +1,0 @@
-# dsearch lookup
-exim -be
-${lookup{TESTNUM.tst}dsearch{DIR/aux-fixed}{$value}{FAIL}}
-${lookup{TESTNUM.TST}dsearch{DIR/aux-fixed}{$value}{FAIL}}
-${lookup{TESTNUM.TST}dsearch{DIR/AUX-fixed}{$value}{FAIL}}
-****

@@ -1,4 +1,0 @@
-# autoreply with failing once file
-exim -odi userx@test.ex
-Subject: first message; non-printer ><
-****

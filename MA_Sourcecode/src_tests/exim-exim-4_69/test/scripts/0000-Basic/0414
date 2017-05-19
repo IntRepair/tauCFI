@@ -1,3 +1,0 @@
-# caching in nested domainlists
-exim -d -bt x@b.domain x@a.domain
-****

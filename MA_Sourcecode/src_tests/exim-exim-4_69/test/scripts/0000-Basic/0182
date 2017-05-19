@@ -1,7 +1,0 @@
-# headers added by system filter
-exim -odi userx@test.ex
-Test message.
-.
-****
-exim -qf
-****

@@ -1,3 +1,0 @@
-# Different domains, same self_hostname for batch delivery
-exim -odi x@dom1 x@dom2 x@dom3
-****

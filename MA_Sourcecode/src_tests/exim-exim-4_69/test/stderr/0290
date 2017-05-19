@@ -1,3 +1,0 @@
-LOG: PANIC DIE
-  Exim configuration error in line 27 of TESTSUITE/test-config:
-  .include specifies a non-absolute path "non/absolute"

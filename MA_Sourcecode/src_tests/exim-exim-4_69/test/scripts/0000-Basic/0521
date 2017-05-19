@@ -1,3 +1,0 @@
-# Duplicate addresses that depend on previous routing (2)
-exim -odi abc xyz
-****               

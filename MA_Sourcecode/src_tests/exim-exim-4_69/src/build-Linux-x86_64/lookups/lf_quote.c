@@ -1,1 +1,0 @@
-../../src/lookups/lf_quote.c

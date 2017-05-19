@@ -1,3 +1,0 @@
-# repeat_use
-exim -v -bv a@one b@one a@two b@two
-****

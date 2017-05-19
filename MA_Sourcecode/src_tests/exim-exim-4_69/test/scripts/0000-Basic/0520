@@ -1,5 +1,0 @@
-# Duplicate addresses that depend on previous routing (1)
-exim -odi bob alice
-****               
-exim -odi alice bob
-****

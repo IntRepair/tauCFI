@@ -1,8 +1,0 @@
-# non-homonym redirection - marking done
-exim -d-all+route -odi defer aaaa
-****
-exim -Mvh $msg1
-****
-exim -d-all+route -qf
-****
-no_msglog_check

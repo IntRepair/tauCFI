@@ -1,7 +1,0 @@
-# malformed item in host list
-exim -bh V4NET.0.0.0
-mail from:<>
-rcpt to:<a1@b>
-rcpt to:<a2@b>
-quit
-****

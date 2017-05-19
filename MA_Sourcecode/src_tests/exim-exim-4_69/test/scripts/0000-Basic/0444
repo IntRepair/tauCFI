@@ -1,5 +1,0 @@
-# headers remove in system filter
-exim -odi userx
-X-XXX-Original-Host: some.host.name
-This is a test message.
-****

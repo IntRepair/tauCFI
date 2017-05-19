@@ -1,4 +1,0 @@
-# named domain lists - lookup defer
-1
-exim -d -bt userx@test.ex
-****

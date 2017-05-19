@@ -1,3 +1,0 @@
-postmaster@localhost
-    <-- test-bus-error@localhost
-  router = accept, transport = t1

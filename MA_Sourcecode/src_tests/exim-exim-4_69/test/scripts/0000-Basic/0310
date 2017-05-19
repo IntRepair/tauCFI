@@ -1,4 +1,0 @@
-# bounce message for quota exceeded; no_bounce_return_message
-exim -odi abcd
-This is a test message. This is a test message.
-****

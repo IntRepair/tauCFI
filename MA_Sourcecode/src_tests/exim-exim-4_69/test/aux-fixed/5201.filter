@@ -1,3 +1,0 @@
-# Exim filter
-
-if $recipients contains freeze then freeze endif

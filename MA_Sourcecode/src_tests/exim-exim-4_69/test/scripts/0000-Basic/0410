@@ -1,7 +1,0 @@
-# address_data in ACLs after verification
-exim -bs
-MAIL FROM:<oksender@y>
-rcpt to:<child@test.ex>
-rcpt to:<orig@test.ex>
-quit
-****

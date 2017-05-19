@@ -1,1 +1,0 @@
-../src/bmi_spam.c

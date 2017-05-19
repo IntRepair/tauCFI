@@ -1,4 +1,0 @@
-# foranyaddress
-exim -bf DIR/aux-fixed/TESTNUM.f-user </dev/null
-****
-no_msglog_check

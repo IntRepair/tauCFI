@@ -1,4 +1,0 @@
-# address_data
-exim -odi userx@r1 userx@r2 userx@r3 userx@r4 userx@r5
-****
-no_msglog_check

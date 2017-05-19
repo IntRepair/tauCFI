@@ -1,4 +1,0 @@
-# def:variable with a value of "0"
-exim -bs
-quit
-****

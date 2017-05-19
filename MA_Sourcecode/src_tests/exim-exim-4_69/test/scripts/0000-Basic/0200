@@ -1,4 +1,0 @@
-# syntax error in host name
-2
-exim -bt xx@host.test.ex yy@host.test.ex
-****

@@ -1,3 +1,0 @@
-# hide LDAP password in log after expansion failure (no LDAP needed)
-exim -odi userx
-****

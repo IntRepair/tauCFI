@@ -1,4 +1,0 @@
-# Lookup defer (senders)
-exim -odi userx@test.ex
-****
-no_msglog_check
