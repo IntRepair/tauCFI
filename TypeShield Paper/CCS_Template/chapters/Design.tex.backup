@@ -1,94 +1,55 @@
 \section{Design}
 \label{chapter:Design}
 
-In this section, we cover the design of \textsc{TypeShield}. We first present the details of the 
-\emph{count} policy in \cref{section:countpolicy}---as introduced by \cite{veen:typearmor}---and the
-new \emph{type} policy in \cref{section:typepolicy}. 
-Then we present the theory needed to transform set-based analysis to register based ones in \cref{section:instructionanalysis}. 
-Finally, we present the implementation details of the calltarget analysis in 
-\cref{section:calltargetanalysis} and callsite analysis in~\cref{section:callsiteanalysis} 
-for each of our policies. 
+In this section, we cover the design of \textsc{TypeShield}. 
+We first present theory and definitions for our instructions analysis based on register states.
+ \cref{section:instructionanalysis}. 
+Then we present the details of our new \emph{type} policy in \cref{section:typepolicy}. 
+Finally we present the design of our calltarget analysis in 
+\cref{section:calltargetanalysis} and the design of our callsite analysis in~\cref{section:callsiteanalysis} .
+
+\subsection{Analysis of Register-States}
+\label{section:instructionanalysis}
+Instead of symbol based data-flow analysis, our approach is register state based. Therefore we need to adapt the usual definitions.
+The set $\texttt{INSTR}$ describes all possible instructions that can occur within the executable section of a binary. In our case this is based on the instruction set for x86-64 processors.
+An instruction $i \in \texttt{INSTR}$ can non-exclusively perform two kinds of operations on any number of existing registers:\footnote{There are registers that can directly access the higher 
+8-bit of the lower 16-bit. For our purpose we register this access as a 16-bit access.}
+\textit{1)} read $n$-bit from the register with $n \in \{ 64, 32, 16, 8 \}$, and 
+\textit{2)} write $n$-bit to the register with $n \in \{ 64, 32, 16, 8 \}$.
+We descibe the possible change within one register 
+as $\delta \in \Delta$ with $\Delta = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. \footnote{Note that 0 signals the absence
+of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore, $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ 
+with $m \in \{64,32,16,8\}$ and $m < n$ (\textit{e.g.,} $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.}
+SystemV ABI specifies 16 general purpose integer registers. Therefore we represent the change occurring at the processor level as $\delta_p \in \Delta^{16}$. 
+We calculate this change for each instruction $i \in \texttt{INSTR}$ via the function $decode : \texttt{INSTR} \mapsto \Delta^{16}$.
+
 % Finally, in \cref{section:addresstakenanalysis} we introduce a version of 
 % address taken analysis based on \cite{mingwei:sekar} to restrict the number of available calltargets even more. 
 %At last we introduce a patching schema for callsites and calltargets to enforce the invariants we inferred.
 
-\subsection{\emph{Count} Policy}
-\label{section:countpolicy}
-\begin{figure}[!h]
-\centering
-\resizebox{0.3\textwidth}{!}{
-\begin{tikzpicture}
-
-%\fill[black!40!white] (0,0) rectangle (9,9);
-%\fill[black!30!white] (0,0) rectangle (7,7);
-%\fill[black!20!white] (0,0) rectangle (4,4);
-%\fill[black!10!white] (0,0) rectangle (2,2);
+%Usually data-flow analysis algorithms are based on set of variable or sets of definitions, which both are basically unbounded. However, we are analyzing the state of registers, which are baked into hardware and therefore their number is given, thus requiring us to adapt the data-flow theory to work on tuples.
 %
-%\draw (0,0) --node[anchor=south] {0 params}  (2,0)  -- (2,2) -- (0,2) -- (0,0) ;
-%\draw (0,0) -- (2,0) --node[anchor=south] {1 param} (4,0) -- (4,4) -- (0,4) -- (0,0);
-%\draw (0,0) --(4,0) --node[anchor=south] {2 ... 5 params} (7,0) -- (7,7) -- (0,7) -- (0,0);
-%\draw (0,0) --(7,0) --node[anchor=south] {6 params} (9,0) -- (9,9) -- (0,9) -- (0,0);
-%\draw[dashed] (4,4) -- (7,7);
+%The set $\mathcal{I}$ describes all possible instructions that can occur within the executable section of a binary. In our case this is based on the instruction set for x86-64 processors.
+%
+%An instruction $i \in \mathcal{I}$ can non-exclusively perform two kinds of operations on any number of existing registers:
+%\textit{1)} Read $n$-bit from the register with $n \in \{ 64, 32, 16, 8 \}$, and
+%\textit{2)} Write $n$-bit to the register with $n \in \{ 64, 32, 16, 8 \}$.
+%
+%Thus, we describe the possible change that occurs in one register with the set $S = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. Note that 0 signals the absence of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore, $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ with $m \in \{64,32,16,8\}$ and $m < n$ (\textit{e.g.,} $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.
 
+%SystemV ABI specifies 16 general purpose integer registers, thus for our purpose we represent the change occurring at the processor level as $\mathcal{S} = S^{16}$.
 
-\fill[black!00!white] (0,7) rectangle (6,6);
-\fill[black!10!white] (0,6) rectangle (6,5);
-\fill[black!20!white] (0,5) rectangle (6,4);
-\fill[black!30!white] (0,4) rectangle (6,3);
-\fill[black!40!white] (0,3) rectangle (6,2);
-\fill[black!50!white] (0,2) rectangle (6,1);
-\fill[black!60!white] (0,1) rectangle (6,0);
+%At last we declare a function, which calculates the change occurring in the processor state, when executing an instruction from $\mathcal{I}$:
+%$decode : \mathcal{I} \mapsto \mathcal{S}$.
 
+%However, we do not go into detail how this function actually calculates this sate, because we rely on external libraries to perform this task. Implementing this function our self is out of scope due to the lengthy work required, as the x86-64 instruction set is quite large.
 
-\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Large{growing required bits per parameter}} (-0.5,7);
-\draw[-triangle 45, thick] (6.5,7) -- node[sloped, anchor=center, above] {\Large{growing provided bits per parameter}} (6.5,0);
-
-\draw (0,7) rectangle node[anchor=center] {\Large{0 parameters}} (6,6);
-
-\draw (0,6) rectangle node[anchor=center] {\Large{1 parameter}}  (6,5);
-
-\draw (0,5) rectangle node[anchor=center] {\Large{2 parameters}} (6,4);
-
-\draw (0,4) rectangle node[anchor=center] {\Large{3 parameters}} (6,3);
-
-\draw (0,3) rectangle node[anchor=center] {\Large{4 parameters}} (6,2);
-
-\draw (0,2) rectangle node[anchor=center] {\Large{5 parameters}} (6,1);
-
-\draw (0,1) rectangle node[anchor=center] {\Large{6 parameters}} (6,0);
-
-
-\end{tikzpicture}
-}
-\caption{\emph{Count} policy classification schema for callsites and calltargets.}
-\label{fig:COUNTschema}
-\end{figure}
-
-What we call the \emph{count} policy is essentially the policy introduced by TypeArmor \cite{veen:typearmor}. 
-The basic idea revolves around classifying calltargets by the number of parameters they provide and callsites 
-by the number of parameters they require. The schema to match this is based on the fact that we  
-have calltargets requiring parameters and the callsites providing them as depicted in Figure~\ref{fig:COUNTschema}.
-
-Furthermore, generating 100\% precise measurements for such classification with binaries as the only source of information is rather difficult. 
-Therefore, over-estimations of parameter count for callsites and underestimations of the parameter count for calltargets is deemed acceptable. 
-This classification is based on the general purpose registers that the call convention of the current ABI---in this case the 
-SystemV ABI---designates as parameter registers. Furthermore, we completely ignore floating point registers or multi-integer registers. 
-The core of the \emph{count} policy is now to allow any callsite $cs$, which provides $c_{cs}$ parameters, to call any calltarget $ct$, 
-which requires $c_{ct}$ parameters, iff $c_{ct} \leq c_{cs}$ holds. However, the main problem is that while there is a significant 
-restriction of calltargets for the lower callsites, the restriction capability drops rather rapidly when reaching higher parameter 
-counts, with callsites that use 6 or more parameters being able to call all possible calltargets:
-$\forall cs_1, cs_2.  c_{cs_1} \leq c_{cs_2} \Longrightarrow  \| \{ct \in \mathcal{F} | c_{ct} \leq c_{cs_1} \} \| \leq \| \{ct \in \mathcal{F} | c_{ct} \leq c_{cs_2}  \} \|$.
-
-One possible remedy would be the ability to introduce an upper bound for the classification deviation of parameter counts, 
-however as of now, this does not seem feasible with current technology. Another possibility would be the overall reduction
-of callsites, which can access the same set of calltargets, a route we will explore within this work.
 
 \subsection{\emph{Type} Policy}
 \label{section:typepolicy}
 \begin{figure}[!h]
 \center
-\hspace*{-.2cm} 
-\resizebox{0.5\textwidth}{!}{
+\resizebox{\columnwidth}{!}{
 \begin{tikzpicture}
 
 \fill[black!10!white] (0,7.5) rectangle (12,6);
@@ -97,252 +58,186 @@ of callsites, which can access the same set of calltargets, a route we will expl
 \fill[black!40!white] (0,3) rectangle (12,1.5);
 \fill[black!50!white] (0,1.5) rectangle (12,0);
 
-\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Large{growing required bits per parameter}} (-0.5,7.5);
-\draw[-triangle 45, thick] (12.5,7.5) -- node[sloped, anchor=center, above] {\Large{growing provided bits per parameter}} (12.5,0);
+\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Huge{growing required bits/parameter}} (-0.5,7.5);
+\draw[-triangle 45, thick] (12.5,7.5) -- node[sloped, anchor=center, above] {\Huge{growing provided bits/parameter}} (12.5,0);
 
-\draw (0,7.5)  --node[anchor=south] {\Large{param 6}} (2,7.5);
-\draw (2,7.5)  --node[anchor=south] {\Large{param 5}} (4,7.5);
-\draw (4,7.5)  --node[anchor=south] {\Large{param 4}} (6,7.5);
-\draw (6,7.5)  --node[anchor=south] {\Large{param 3}} (8,7.5);
-\draw (8,7.5)  --node[anchor=south] {\Large{param 2}} (10,7.5);
-\draw (10,7.5) --node[anchor=south] {\Large{param 1}} (12,7.5);
+\draw (0,7.5)  --node[anchor=south] {\rot{\Huge{param 6}}} (2,7.5);
+\draw (2,7.5)  --node[anchor=south] {\rot{\Huge{param 5}}} (4,7.5);
+\draw (4,7.5)  --node[anchor=south] {\rot{\Huge{param 4}}} (6,7.5);
+\draw (6,7.5)  --node[anchor=south] {\rot{\Huge{param 3}}} (8,7.5);
+\draw (8,7.5)  --node[anchor=south] {\rot{\Huge{param 2}}} (10,7.5);
+\draw (10,7.5) --node[anchor=south] {\rot{\Huge{param 1}}} (12,7.5);
 
-\draw (0,7.5)  rectangle node[anchor=center] {\Large{0-bits}} (2,6);
-\draw (2,7.5)  rectangle node[anchor=center] {\Large{0-bits}} (4,6);
-\draw (4,7.5)  rectangle node[anchor=center] {\Large{0-bits}} (6,6);
-\draw (6,7.5)  rectangle node[anchor=center] {\Large{0-bits}} (8,6);
-\draw (8,7.5)  rectangle node[anchor=center] {\Large{0-bits}} (10,6);
-\draw (10,7.5) rectangle node[anchor=center] {\Large{0-bits}} (12,6);
+\draw (0,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (2,6);
+\draw (2,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (4,6);
+\draw (4,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (6,6);
+\draw (6,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (8,6);
+\draw (8,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (10,6);
+\draw (10,7.5) rectangle node[anchor=center] {\Huge{0-bits}} (12,6);
 
-\draw (0,6)  rectangle node[anchor=center] {\Large{8-bits}} (2,4.5);
-\draw (2,6)  rectangle node[anchor=center] {\Large{8-bits}} (4,4.5);
-\draw (4,6)  rectangle node[anchor=center] {\Large{8-bits}} (6,4.5);
-\draw (6,6)  rectangle node[anchor=center] {\Large{8-bits}} (8,4.5);
-\draw (8,6)  rectangle node[anchor=center] {\Large{8-bits}} (10,4.5);
-\draw (10,6) rectangle node[anchor=center] {\Large{8-bits}} (12,4.5);
+\draw (0,6)  rectangle node[anchor=center] {\Huge{8-bits}} (2,4.5);
+\draw (2,6)  rectangle node[anchor=center] {\Huge{8-bits}} (4,4.5);
+\draw (4,6)  rectangle node[anchor=center] {\Huge{8-bits}} (6,4.5);
+\draw (6,6)  rectangle node[anchor=center] {\Huge{8-bits}} (8,4.5);
+\draw (8,6)  rectangle node[anchor=center] {\Huge{8-bits}} (10,4.5);
+\draw (10,6) rectangle node[anchor=center] {\Huge{8-bits}} (12,4.5);
 
-\draw (0,4.5)  rectangle node[anchor=center] {\Large{16-bits}} (2,3);
-\draw (2,4.5)  rectangle node[anchor=center] {\Large{16-bits}} (4,3);
-\draw (4,4.5)  rectangle node[anchor=center] {\Large{16-bits}} (6,3);
-\draw (6,4.5)  rectangle node[anchor=center] {\Large{16-bits}} (8,3);
-\draw (8,4.5)  rectangle node[anchor=center] {\Large{16-bits}} (10,3);
-\draw (10,4.5) rectangle node[anchor=center] {\Large{16-bits}} (12,3);
+\draw (0,4.5)  rectangle node[anchor=center] {\Huge{16-bits}} (2,3);
+\draw (2,4.5)  rectangle node[anchor=center] {\Huge{16-bits}} (4,3);
+\draw (4,4.5)  rectangle node[anchor=center] {\Huge{16-bits}} (6,3);
+\draw (6,4.5)  rectangle node[anchor=center] {\Huge{16-bits}} (8,3);
+\draw (8,4.5)  rectangle node[anchor=center] {\Huge{16-bits}} (10,3);
+\draw (10,4.5) rectangle node[anchor=center] {\Huge{16-bits}} (12,3);
 
-\draw (0,3)  rectangle node[anchor=center] {\Large{32-bits}} (2,1.5);
-\draw (2,3)  rectangle node[anchor=center] {\Large{32-bits}} (4,1.5);
-\draw (4,3)  rectangle node[anchor=center] {\Large{32-bits}} (6,1.5);
-\draw (6,3)  rectangle node[anchor=center] {\Large{32-bits}} (8,1.5);
-\draw (8,3)  rectangle node[anchor=center] {\Large{32-bits}} (10,1.5);
-\draw (10,3) rectangle node[anchor=center] {\Large{32-bits}} (12,1.5);
+\draw (0,3)  rectangle node[anchor=center] {\Huge{32-bits}} (2,1.5);
+\draw (2,3)  rectangle node[anchor=center] {\Huge{32-bits}} (4,1.5);
+\draw (4,3)  rectangle node[anchor=center] {\Huge{32-bits}} (6,1.5);
+\draw (6,3)  rectangle node[anchor=center] {\Huge{32-bits}} (8,1.5);
+\draw (8,3)  rectangle node[anchor=center] {\Huge{32-bits}} (10,1.5);
+\draw (10,3) rectangle node[anchor=center] {\Huge{32-bits}} (12,1.5);
 
-\draw (0,1.5)  rectangle node[anchor=center] {\Large{64-bits}} (2,0);
-\draw (2,1.5)  rectangle node[anchor=center] {\Large{64-bits}} (4,0);
-\draw (4,1.5)  rectangle node[anchor=center] {\Large{64-bits}} (6,0);
-\draw (6,1.5)  rectangle node[anchor=center] {\Large{64-bits}} (8,0);
-\draw (8,1.5)  rectangle node[anchor=center] {\Large{64-bits}} (10,0);
-\draw (10,1.5) rectangle node[anchor=center] {\Large{64-bits}} (12,0);
+\draw (0,1.5)  rectangle node[anchor=center] {\Huge{64-bits}} (2,0);
+\draw (2,1.5)  rectangle node[anchor=center] {\Huge{64-bits}} (4,0);
+\draw (4,1.5)  rectangle node[anchor=center] {\Huge{64-bits}} (6,0);
+\draw (6,1.5)  rectangle node[anchor=center] {\Huge{64-bits}} (8,0);
+\draw (8,1.5)  rectangle node[anchor=center] {\Huge{64-bits}} (10,0);
+\draw (10,1.5) rectangle node[anchor=center] {\Huge{64-bits}} (12,0);
 \end{tikzpicture}
 }
-
-\caption{\emph{Type} policy schema for callsites and calltargets.}
+\caption{The \emph{type} policy schema for callsites and calltargets. As is demonstrated here, when requiring wideness, one starts at the bottom and grows to the top, as it is always possible to accept more than one requires. The reverse is true for providing, as it is possible to accept less than provided.}
 \label{fig:TYPEschema}
 \end{figure}
-What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the parameter type. However, due to complexity reasons,
-we are restricting ourselves to the general purpose registers, which the SystemV ABI designates as parameter registers. Furthermore, we are not inferring 
-the actual type of the data but the wideness of the data stored in the register. The schema again is that we have calltargets requiring wideness and the
-callsite providing it as depicted in Figure \ref{fig:TYPEschema}.
+As shown in Figure \ref{fig:TYPEschema}, our idea is to not simply classify callsites and calltargets based on the number of parameters they provide or request, but als on the parameter type. To simplify our approach we use the wideness of the type and do not infer the actual type.
+As previously mentioned there are 4 types of reading and writing access each. Therefore our set of possible types for parameters is $\texttt{TYPE} = \{64, 32, 16, 8, 0\}$; 0 models the absence of a parameter. Since SystemV ABI specifies 6 registers as parameter holding 
+registers, we classify our callsites and calltargets into $\texttt{TYPE}^6$.
+Similar to the policy of \texttt{TypeArmour}, we allow overestimations of callsites and underestimations of calltargets, however on the level of types. Therefore for a 
+callsite $cs$ to be able to call the calltarget $ct$, if for each parameter of $ct$ the corresponding parameter of $cs$ is not smaller when comparing the wideness.
+This results in a finer-grained policy further restricting the possible pool of calltargets for each callsite.
 
-We are currently interested in x86-64 binaries, the registers we are looking at are 64-bit registers that can be accessed in four different ways:
-\textit{1)} the whole 64-bit of the register, meaning a wideness of 64,
-\textit{2)} the lower 32-bit of the register, meaning a wideness of 32,
-\textit{3)} the lower 16-bit of the register, meaning a wideness of 16, and
-\textit{4)} the lower 8-bit of the register, meaning a wideness of 8.
+%What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the parameter type. However, due to complexity reasons,
+%we are restricting ourselves to the general purpose registers, which the SystemV ABI designates as parameter registers. Furthermore, we are not inferring 
+%the actual type of the data but the wideness of the data stored in the register. The schema again is that we have calltargets requiring wideness and the
+%callsite providing it as depicted in Figure \ref{fig:TYPEschema}.
 
-Four of those registers can also directly access the higher 8-bit of the lower 16-bit of the register. For our purpose we register this access as a 16-bit access. 
-Based on this information,
-we can assign a register one of 5 possible types $\mathcal{T} = \{64, 32, 16, 8, 0\}$. We also included the type 0 to model the absence of data within a register. 
-Similar to the \emph{count} policy, we allow overestimation of types in callsites and underestimation of types in calltargets. However, the matching idea is different, 
-because as can we depict in Figure \ref{fig:TYPEschema}, the type of a calltarget and a callsite no longer depends solely on its parameter count, 
-each callsite and calltarget has its type from the set of $\mathcal{T}^6$, with the following comparison operator:
-$
-	u \leq_{type} v :\Longleftrightarrow  
-	\forall_{i = 0}^{5} {u_i \leq v_i} , \text {with } u, v \in \mathcal{T}^6
-$.
+%e are currently interested in x86-64 binaries, the registers we are looking at are 64-bit registers that can be accessed in four different ways:
+%\textit{1)} the whole 64-bit of the register, meaning a wideness of 64,
+%\textit{2)} the lower 32-bit of the register, meaning a wideness of 32,
+%\textit{3)} the lower 16-bit of the register, meaning a wideness of 16, and
+%\textit{4)} the lower 8-bit of the register, meaning a wideness of 8.
 
-Again we allow any callsite $cs$ call any calltarget $ct$, when it fulfills the requirement $ct \leq cs$. 
+%Four of those registers can also directly access the higher 8-bit of the lower 16-bit of the register. For our purpose we register this access as a 16-bit access. 
+
+%Based on this information,we can assign a register one of 5 possible types $\mathcal{T} = \{64, 32, 16, 8, 0\}$. We also included the type 0 to model the absence of data within a register. 
+%Similar to the \emph{count} policy, we allow overestimation of types in callsites and underestimation of types in calltargets. However, the matching idea is different, 
+%because as can we depict in Figure \ref{fig:TYPEschema}, the type of a calltarget and a callsite no longer depends solely on its parameter count, 
+%each callsite and calltarget has its type from the set of $\mathcal{T}^6$, with the following comparison operator:
+%$
+%	u \leq_{type} v :\Longleftrightarrow  
+%	\forall_{i = 0}^{5} {u_i \leq v_i} , \text {with } u, v \in \mathcal{T}^6
+%$.
+
+%Again we allow any callsite $cs$ call any calltarget $ct$, when it fulfills the requirement $ct \leq cs$. 
 %The way we represent this is by letting the type for a calltarget parameter progress from 64-bit to 0-bit---if a calltarget requires a 32-bit value in its 1st parameter, it also should accept a 64-bit value from its callsite---and similarly we let the type for a callsite progress from 0-bit to 64-bit - If a callsite provides a 32-bit value in its 1st parameter it also provides a 16-bit, 8-bit and 0-bit to a calltarget. Now the advantage of the \emph{type} policy in comparison to the \emph{count} policy is that while our type comparison implies the count comparison, the other direction does not hold.
-Meaning, just having an equal or lesser number of parameters than a callsite, does no longer allow a calltarget being called there, thus restricting the number of calltargets per 
-callsite even further. A function that requires 64-bit in its first parameter, and 0-bit in all other parameters, would have been callable by a callsite providing 8-bit 
-in its first and second parameter when using the \emph{count} policy, however in the \emph{type} policy this is no longer possible. Thus, it should decrease the number of targets per bucket.
+%Meaning, just having an equal or lesser number of parameters than a callsite, does no longer allow a calltarget being called there, thus restricting the number of calltargets per 
+%callsite even further. A function that requires 64-bit in its first parameter, and 0-bit in all other parameters, would have been callable by a callsite providing 8-bit 
+%in its first and second parameter when using the \emph{count} policy, however in the \emph{type} policy this is no longer possible. Thus, it should decrease the number of targets per bucket.
 
 
-\subsection{Instruction Analysis}
-\label{section:instructionanalysis}
-Usually data-flow analysis algorithms are based on set of variable or sets of definitions, which both are basically unbounded. However, we are analyzing the state of registers, which are baked into hardware and therefore their number is given, thus requiring us to adapt the data-flow theory to work on tuples.
-
-The set $\mathcal{I}$ describes all possible instructions that can occur within the executable section of a binary. In our case this is based on the instruction set for x86-64 processors.
-
-An instruction $i \in \mathcal{I}$ can non-exclusively perform two kinds of operations on any number of existing registers:
-\textit{1)} Read $n$-bit from the register with $n \in \{ 64, 32, 16, 8 \}$, and
-\textit{2)} Write $n$-bit to the register with $n \in \{ 64, 32, 16, 8 \}$.
-
-Thus, we describe the possible change that occurs in one register with the set $S = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. Note that 0 signals the absence of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore, $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ with $m \in \{64,32,16,8\}$ and $m < n$ (\textit{e.g.,} $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.
-
-SystemV ABI specifies 16 general purpose integer registers, thus for our purpose we represent the change occurring at the processor level as $\mathcal{S} = S^{16}$.
-
-At last we declare a function, which calculates the change occurring in the processor state, when executing an instruction from $\mathcal{I}$:
-$decode : \mathcal{I} \mapsto \mathcal{S}$.
-
-However, we do not go into detail how this function actually calculates this sate, because we rely on external libraries to perform this task. Implementing this function our self is out of scope due to the lengthy work required, as the x86-64 instruction set is quite large.
     
 \subsection{Calltarget Analysis}
 \label{section:calltargetanalysis}
-For either \emph{count} or \emph{type} policy to work, we need to arrive at an underestimation of the required parameters by any function existing within the targeted 
-binary. We will employ a modified version of liveness analysis that tracks registers instead of variables to generate the needed underestimation. As our algorithm will 
-be customizable, we look at the required merge functions to implement \emph{count} and \emph{type} policy. Furthermore, we need to eliminate the passing of variadic 
-parameter lists from variadic functions, as this might cause our analysis to overestimate the required parameters.
+For our policy we need to classify our calltargets according to the parameters they provide. Underestimations are allowed, however overestimations shall not be permitted. For this purpose we employ a customizable modified liveness analysis algorithm, which we will show first. We then present our versions for a \emph{count} and a\emph{type} based policy. Furthermore, we need to be aware of certain corner cases, which we will discuss at the end.
 
-\textbf{Variable Liveness Analysis Theory.}
-\label{subsection:livenessanalysis}
-A variable is alive before the execution of an instruction, if at least one of the originating paths contains a read access before the variable is written to again. We employ 
-liveness analysis, because we are looking for the  parameters a function requires. This essentially requires read before write access, however global variables usually
-would also fall into this category, however these would not reside within parameter registers at the start of a function.
-%
-%Khedker \textit{et al.}~ \cite{khedker2009data} defines live variable analysis on blocks in the following manner:
-%
-%\begin{subequations}
-%\label{eq:livenessbasedef}
-%\begin{align}
-%In_n &:= (Out_n - Kill_n) \cup Gen_n \label{eq:livenessbasedefIn} \\
-%Out_n &:= \left\{
-%  \begin{array}{lr}
-%    Bl & \text{n is end block}\\
-%    \underset{s \in succ(n)}{\bigcup} In_s & \text{otherwise}
-%  \end{array}
-%\right. \label{eq:livenessbasedefOut}
-%\end{align}
-%\end{subequations}
-%
-%$Bl$ is the default state at the end of a path of execution and in our case reaching 
-%that state would mean that a variable has never been used (neither written nor read). 
-%The set $Kill_n$ describes all variables that are no longer live after the block $n$, 
-%meaning that a variable occurring within this set has been written to. The set $Gen_n$ 
-%describes all variables that are alive due to the block $n$, 
-%meaning that a variable occurring within this set has been read before it was written to.
+\textbf{Liveness Analysis}
+A variable is alive before the execution of an instruction, if at least one of the originating paths performs a read access before any write access  on that variable. If applied to a function, this calculates essentially the variables that need to be alive at the beginning, which in essense are its parameters.
+We based Algorithm~\ref{alg:liveness} on the liveness analysis algorithm in Khedker \textit{et al.}~ \cite{khedker2009data}, which essentially is a depth first traversal of blocks. For customization we rely on the implementation of several functions($\mathcal{S}^\mathcal{L}$ is the set of possible register states depending on the specific liveness implementation):
+
+$\texttt{merge\_v} : \mathcal{S}^\mathcal{L} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge a set of states resulting from several paths.
+
+$\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{L}) \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge the current state with the following state change.
+
+$\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{L}$, which calculates the state change that occurs due to the given instruction 
+
+$\texttt{succ} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which calculates the successors of the given block.
+
 \begin{algorithm}[h!]
  	\SetAlgoLined
 	\SetKwInOut{Input}{Input}
-        \SetKwInOut{Output}{Output}
-        \Input{basic block}
+      \SetKwInOut{Output}{Output}
+  \Input{block : $\texttt{INSTR}^*$}
         \Output{$\mathcal{S}^\mathcal{L}$}
         \BlankLine
-	\SetKwProg{Fn}{Function}{ is}{end}
-	\Fn{analyze(block : BasicBlock) : $\mathcal{S}^\mathcal{L}$}
+	\SetKwProg{Fn}{Function }{ is}{end}
+	\Fn{\texttt{analyze} (block : $\texttt{INSTR}^*$) : $\mathcal{S}^\mathcal{L}$}
 	{
- 	state = Bl
+ 	state = Bl                                                  \Comment*[r]{Initialize the state}
  	
  	\ForEach{inst $\in$ block}{
  	
- 		state' = analyze\_instr(inst)
+ 		state' = \texttt{analyze\_instr}(inst)	\Comment*[r]{Calculate changes}
 
-		state = merge\_v(state, state')                     \Comment*[r]{Some comment}
+		state = \texttt{merge\_h}(state, state')                     \Comment*[r]{Merge changes}
 	}
 
-	states = \{\}
+	states = \{\}                                               \Comment*[r]{Set of surccessor states}
 	
-	blocks = succ(block)
+	blocks = \texttt{succ(block)}                                        \Comment*[r]{Get successors}
 	
 	\ForEach{block' $\in$ blocks} {
 	
- 		state' = analyze(block')
+ 		state' = \texttt{ analyze}(block') \Comment*[r]{Analyze successor }
  		
-		states = states $\cup$ \{ state' \}
+		states = states $\cup$ \{ state' \} \Comment*[r]{Add successor states}
 	}
 
-	state' = merge\_h (states)
+	state' = \texttt{merge\_h }(states)	\Comment*[r]{Merge successor states}
 
-	\Return merge\_v(state, state')
+	\Return merge\_v(state, state')                             \Comment*[r]{Merge to final state}
 
 	}
-\caption{Liveness analysis of a basic block.}
+\caption{Basic block liveness analysis.}
 \label{alg:liveness}
 \end{algorithm}
 
-%However, we cannot use variable liveness analysis as is, because the analysis is based on potentially unbound variable sets, 
-%while we are restricted to a finite number of registers and states. We also require an underestimation of live variables an
-%not an overestimation as provided by standard liveness analysis. Furthermore, we have to define how to interpret the changes
-%occurring within one block based on the the change caused by its instructions. Considering this, we arrive at 
-%algorithm \ref{alg:liveness} to compute the liveness state at the start of a basic block.
-Khedker \textit{et al.}~ \cite{khedker2009data} defines live variable analysis on blocks, which we used to arrive the
-algorithm depicted in Algorithm~\ref{alg:liveness} to compute the liveness state at the start of a basic block. 
-We apply the liveness analysis for each function with the entry block of the function as start and the return blocks as end and after an analysis run for a function.
+In our specific case, the function \texttt{analyze\_instr} needs to also handle non jump and non fallthrough successors, as these are not handled by DynInst. Essentially there are four relevant cases: 1) If the current instruction is an indirect call or a direct call and the chosen implementation should not follow calls, then return a state where all registers are considered to be written before read. 2) If the current instruction is a direct call and the chosen implementation should follow calls, then we start an analysis of the target function an return its result. 3) If the instruction is a constant write (e.g., xor of two registers), 
+then we remove the read portion before we return the decoded state. 4) In any other case, we simply return the decoded state.
+This leaves us with the two undefined merge functions and the undefined liveness state $\mathcal{S}^\mathcal{L}$. In the following two paragraphs we will present two implementation variants: first similar to TypeArmour a \emph{count} based policy and second our \emph{type} based policy.
 
-This algorithm relies on various functions that can be used to configure its behavior. We need to define the function
-$merge\_v$, which describes how to compound the state change of the current instruction and the current state, 
-the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function
-$analyze\_instr$. The function $succ$, which retrieves all possible successors of a block won't be implemented by us, 
-because we rely on the DynInst instrumentation framework to achieve the following.
+\textbf{Required Parameter Count} To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we use the same representation as TypeArmor: 1) $W$ represents write before read access, 2) $R$ represents read before write access, and 3) $C$ represents the absence of access.
+This gives us the $S^\mathcal{L} = \{ C, R, W \}$ as register state, which translates to the register super state $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
+We implement \texttt{merge\_v} in such a way that a state within a superstate is only updated if the corresponding register has yet to be accesses, as represented by $C$. Our reasoning is that the first access is the relevant one to determine read before write.
 
-\begin{subequations}
-\label{eq:livenesscustom}
-\begin{align}
-merge\_v &: \mathcal{S}^\mathcal{L} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}\\
-merge\_h &: \mathcal{P}(\mathcal{S}^\mathcal{L}) \mapsto \mathcal{S}^\mathcal{L}\\
-analyze\_instr &: \mathcal {I} \mapsto \mathcal{S}^\mathcal{L} \\
-succ &: \mathcal{I} \mapsto \mathcal{P}(\mathcal{I})
-\end{align}
-\end{subequations}
+TODO  \texttt{merge\_h} (depends on numbers)
 
-%\begin{subequations}
-%\label{eq:livenesscustom}
-%\begin{align}
-%In_n &:= merge\_v(n, Out_n)\label{eq:livenesscustomIn} \\
-%Out_n &:= \left\{
-%  \begin{array}{lr}
-%    Bl & \text{n has no successors}\\
-%    merge\_h( \{ In_s | s \in succ(n) \} & \text{otherwise}
-%  \end{array}
-%\right. \label{eq:livenesscustomOut}\\
-%merge\_v &: \mathcal{I} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}\\
-%merge\_h &: \mathcal{P}(\mathcal{S}^\mathcal{L})  \mapsto \mathcal{S}^\mathcal{L}\\
-%succ &: \mathcal{I} \times \mathcal{P}(\mathcal{I})
-%\end{align}
-%\end{subequations}
-%We have yet to define the functions $merge\_v$, which describes how to compound a function and the outgoing state, the function $merge\_h$, which describes how to merge the states of several paths and the function $succc$, which essentially gives us the successors of the current instruction. To prevent cycles we keep track of the instructions visited within the current path and omit any instruction on the current path from the result of $succ$. These functions, the liveness state $\mathcal{S}^\mathcal{L}$ and its interpretation into parameters will be defined in the following subsections.
+The index of highest parameter register based on the used call convention that has the state R is considered to be the number of parameters a function at least requires to be prepared by a callsite.
 
-As the $analyze\_instr$ function calculates the effect of an instruction and is the heart of the analyze function. It will also handle non jump 
-and non fall-through successors, as these are not handled by DynInst in our case. We essentially have four cases that we handle:
-\textit{1)} if the instruction is an indirect call or a direct call but we chose not follow calls, then return a state where all registers are considered written, 
-\textit{2)} if the instruction is a direct call and we chose to follow calls, then we spawn a new analysis and return its result,
-\textit{3)} if the instruction is a constant write (\textit{e.g.,} xor of two registers) then we remove the read portion before we return the decoded state, and 
-\textit{4)} in all other cases we simply return the decoded state.
-
-This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the  liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
-
-\textbf{Required Parameter Count.}
-\label{subsection:requiredparamcount}
-To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we use the same representation as TypeArmor:
-\textit{1)} $W$ represents write before read access,
-\textit{2)} $R$ represents read before write access, and
-\textit{3)} $C$ represents the absence of access.
-
-This gives us the following register state $S^\mathcal{L} = \{ C, R, W \}$ which translates to the register super state $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
-We are only interested in the first occurrence of a $R$ or $W$ within one path, as following reads or writes do not give us more information. 
-Therefore, our vertical merge function ($merge\_v$) behaves in the following way that only when the first given state is $C$, 
-is the return value the second state and in all other cases it will return the first state.
-
+%
+%This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the  liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
+%
+%\textbf{Required Parameter Count.}
+%\label{subsection:requiredparamcount}
+%To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we use the same representation as TypeArmor:
+%\textit{1)} $W$ represents write before read access,
+%\textit{2)} $R$ represents read before write access, and
+%\textit{3)} $C$ represents the absence of access.
+%
+%This gives us the following register state $S^\mathcal{L} = \{ C, R, W \}$ which translates to the register super state $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
+%We are only interested in the first occurrence of a $R$ or $W$ within one path, as following reads or writes do not give us more information. 
+%Therefore, our vertical merge function ($merge\_v$) behaves in the following way that only when the first given state is $C$, 
+%is the return value the second state and in all other cases it will return the first state.
+%
 %\begin{align}
 %merge\_v^{r} (cur, delta) &= \left\{
 %  \begin{array}{lr}
 %     delta & cur = C \\
 %     cur & otherwise
 %  \end{array}
-%\right. \\
+%\right. \\Liveness analysis of a 
 %merge\_v (cur, delta) &= (s'_0, ... s'_15) \text { with } s'_j = merge\_v^{r}(cur_j, delta_j)
 %\end{align}
 
-Our horizontal merge($merge\_h$) function is a simple pairwise combination of the given set of states, 
-which are then combined with a union like operator with $W$ preceding $R$ preceding $C$.
+%Our horizontal merge($merge\_h$) function is a simple pairwise combination of the given set of states, 
+%which are then combined with a union like operator with $W$ preceding $R$ preceding $C$.
 %\begin{align}
 %merge\_h(\{s\}) &= s\\
 %merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
@@ -362,7 +257,7 @@ which are then combined with a union like operator with $W$ preceding $R$ preced
 %\begin{table}
 %
 %% \centering
-%\resizebox{\columnwidth}{!}{%
+%\resizebox{\columnwidth}{!}{%Liveness analysis of a 
 %\begin{tabular}{c?c|c|c}
 %$\bigsqcap^{\mathcal{L}}$ & C & R & W\\
 %\Xhline{1pt}
@@ -377,7 +272,7 @@ which are then combined with a union like operator with $W$ preceding $R$ preced
 %\Xhline{1pt}
 %C & C & C & W\\
 %\hline
-%R & C & R & W\\
+%R & C & R{todo} & W\\
 %\hline
 %W & W & W & W
 %\end{tabular}
@@ -395,7 +290,7 @@ which are then combined with a union like operator with $W$ preceding $R$ preced
 %\label{fig:COUNTlivenessmapping}
 %\end{table}
 
-The index of highest parameter register based on the used call convention that has the state R is considered to be the number of parameters a function at least requires to be prepared by a callsite.
+%The index of highest parameter register based on the used call convention that has the state R is considered to be the number of parameters a function at least requires to be prepared by a callsite.
 
 \textbf{Required Parameter Wideness.}
 \label{subsection:requiredparamwideness}
@@ -410,11 +305,10 @@ To implement the \emph{type} policy, we need a finer representation of the state
 %using $R$ as a placeholder for arbitrary reads.
 %\item Did neither read nor write access occur for the register ? \\ We represent this with the state $C$.
 %\end{enumerate}
-This gives us the following register state $S^\mathcal{L} = \{ C, r8, r16, r32, r64, W \}$ which translates to the register super state 
+This gives us the following $S^\mathcal{L} = \{ C, r8, r16, r32, r64, W \}$ register state which translates to the register super state 
 $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
 %Now, we assume that unless the instructions we are looking at does discard the value it is reading (\texttt{xor rax rax} would be such 
 %an instruction that we call const\_write) that reading does precede the writing withing one instruction.
-
 As there could be more than one read of a register before it is written, we might be interested in more than just the first occurrence of a write or read on a path. 
 To allow this we allow our merge operations to also return the value $RW$, which represents the existence of both read and write access and then can use $W$ as an end 
 marker of sorts.
@@ -426,13 +320,11 @@ marker of sorts.
 %\end{itemize}
 Therefore, our vertical merge operator conceptually intersects all read accesses along a path until the first write 
 occurs ($merge\_v^{i}$). In any other case it behaves like the previously mentioned vertical merge function.
-
 %Our horizontal merge function is a simple pairwise combination of the given set of states:
 %\begin{align}
 %merge\_h(\{s\}) &= s\\
 %merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
 %\end{align}
-
 Our horizontal merge($merge\_h$) function is again a simple pairwise combination of the given set of states, which are then combined with a union 
 like operator with $W$ preceding $WR$ preceding $R$ preceding $C$. Unless one side is $W$, read accesses are combined in such a way that always the higher one is chosen.
 
@@ -452,7 +344,7 @@ like operator with $W$ preceding $WR$ preceding $R$ preceding $C$. Unless one si
 %\hline
 %R & R & $\text{R}^{\cup}$ & W & $\text{R}^{\cup}$W\\
 %\hline
-%W & W & W & W & W\\
+%W & W & W & W & W\\Liveness analysis of a 
 %\hline
 %RW & RW & $\text{R}^{\cup}$W & W & RW\\
 %\end{tabular}
@@ -474,9 +366,9 @@ usually all potential variadic parameters are moved into a contiguous block of m
 Our analysis interprets that as a read access on all 
 parameters and we arrive at a problematic overestimation. 
 
-\begin{center}
- \begin{figure}
-\centering
+\begin{figure}[thp] % the figure provides the caption
+\centering          % which should be centered
+\begin{tabular}{c}  % the tabular makes the listing as small as possible and centers it
 \footnotesize
 \begin{lstlisting}
 00000000004222f0 <make_cmd>:
@@ -504,12 +396,10 @@ parameters and we arrive at a problematic overestimation.
  422356:mov    %r14,%rdi
  422359:callq  409430 <pcalloc>
 \end{lstlisting}
+\end{tabular}
 \caption{ASM code of the \texttt{make\_cmd} function with optimize level O2, which has a variadic parameter list.}
 \label{fig:asmvariadic}
 \end{figure}
-\end{center}
-
-
 
 Our solution to this problem is to find these spurious reads and ignore them. A compiler will implement this type of operation very 
 similar for all cases, thus we can achieve this using the following steps:
@@ -518,7 +408,7 @@ similar for all cases, thus we can achieve this using the following steps:
 \textit{2)} we look at the predecessor of the xmm-passthrough block, which we call the entry block (in our case basic block %[\texttt{0x4222f0},\texttt{0x4222f2} [ )
 Check if the successors of the entry block consist of the xmm-passthrough block and the successor of the 
 xmm-passthrough block, which we call the param-passthrough block, and
-%(in our case basic block [\texttt{0x42233d}, \texttt{0x42235e} [ )
+%(in our case basic block [\texttt{0x42233d}Liveness analysis of a , \texttt{0x42235e} [ )
 \textit{3)} We look at the param-passthrough block and set all instructions that move the value of a parameter register into memory to be
 ignored. %(in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \texttt{0x422347} and \texttt{0x42234c})
 
@@ -537,32 +427,32 @@ ignored. %(in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \t
 	\SetKwProg{Fn}{Function}{ is}{end}
 	\Fn{analyze(block : BasicBlock) : $\mathcal{S}^\mathcal{R}$}
 	{
- 	state = Bl
+ 	state = Bl                                   \Comment*[r]{Some comment}
  	
  	\ForEach{inst $\in$ reversed(block)}{
  	
- 		state' = analyze\_instr(inst)
+ 		state' = analyze\_instr(inst)        \Comment*[r]{Some comment}
  		
-		state = merge\_v(state, state') \Comment*[r]{Some comment}
+		state = merge\_v(state, state')      \Comment*[r]{Some comment}
 	}
 
-	states = \{\}
+	states = \{\}                                \Comment*[r]{Some comment}
 	
-	blocks = pred(block)
+	blocks = pred(block)                         \Comment*[r]{Some comment}
 	
 	\ForEach{block' $\in$ blocks} {
 	
- 		state' = analyze(block')
+ 		state' = analyze(block')             \Comment*[r]{Some comment}
  		
-		states = states $\cup$ \{ state' \}
+		states = states $\cup$ \{ state' \}  \Comment*[r]{Some comment}
 	}
 
-	state' = merge\_h (states)
+	state' = merge\_h (states)                   \Comment*[r]{Some comment}
 
-	\Return merge\_v(state, state')
+	\Return merge\_v(state, state')              \Comment*[r]{Some comment}
 
 	}
-\caption{Reaching definitions analysis of a basic block.}
+\caption{Basic block reaching definition analysis.}
 \label{alg:reaching}
 \end{algorithm}
 
@@ -651,7 +541,7 @@ thus we use the same representation as TypeArmor:
 \textit{2)} $S$ represents a set register (written to), and
 \textit{3)} $U$ represents an untouched register.
 
-This gives us the following register state $S^\mathcal{L} = \{ T, S, U \}$ which translates to the register super state $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
+This gives us the following $S^\mathcal{L} = \{ T, S, U \}$  register state which translates to the register super state $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
 
 We are only interested in the first occurrence of a $S$ or $T$ within one path, as following reads or writes do not give us more information. 
 Therefore, our vertical merge function ($merge\_v$) behaves in the following way that only when the first given state is $U$, is the return value the 
@@ -751,7 +641,7 @@ To implement the \emph{type} policy, we need a finer representation of the state
 %\item Was the register written to and how much ? \\ We represent this with the states $\{ s64, s32, s16, s8 \}$ using S as a placeholder for arbitrary writes.
 %\item Was the register neither trashed nor written to ? \\ We represent this with the state U.
 %\end{itemize}
-This gives us the following register state $S^\mathcal{L} = \{ T, s64, s32, s16, s8, U \}$ which translates to the register 
+This gives us the following $S^\mathcal{L} = \{ T, s64, s32, s16, s8, U \}$ register state which translates to the register 
 super state $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
 
 Again, we are only interested in the first occurrence of a state that is not $U$ in a path, as following reads or writes do not give us more information. 

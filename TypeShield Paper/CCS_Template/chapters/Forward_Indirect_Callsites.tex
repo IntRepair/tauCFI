@@ -1,11 +1,15 @@
 \section{Forbidden Forward Calls Exposed}
 \label{C++ Bad Forward Indirect Calls}
-In this section, we present a brief overview of the concept of C++-based polymorphism in~\cref{Polymorphism in C++}
-and how indirect calls can be checked in practice in~\cref{C++ Indirect Calls in Practice}.
-In~\cref{section:countpolicy} we present a forward edge function parameter count based policy~\cite{veen:typearmor} 
-and in~\cref{Security Implications of Forbidden Forward Indirect Calls} we present security implications of indirect calls.
-Finally, in~\cref{{Too Permissive Parameter-Based Policies}} we present an imprecise parameter count based policy, and 
-in~\cref{Running Example: CVE X} we present a real COOP attack example.
+In this section,
+we present exploitable weaknesses of object oriented polymorphism in~\cref{Exploiting Polymorphism Weaknesses},
+while in~\cref{section:countpolicy} we give an overview or our count parameter count policy which is similar to~\cite{veen:typearmor}.
+
+% we present a brief overview of the concept of C++-based polymorphism in~\cref{Polymorphism in C++}
+% and how indirect calls can be checked in practice in~\cref{C++ Indirect Calls in Practice}.
+% In~\cref{section:countpolicy} we present a forward edge function parameter count based policy~\cite{veen:typearmor} 
+% and in~\cref{Security Implications of Forbidden Forward Indirect Calls} we present security implications of indirect calls.
+% Finally, in~\cref{{Too Permissive Parameter-Based Policies}} we present an imprecise parameter count based policy, and 
+% in~\cref{Running Example: CVE X} we present a real COOP attack example.
 
 % \subsection{Polymorphism in C++ Programs}
 % % \textbf{Polymorphism in C++.}
@@ -122,21 +126,72 @@ in~\cref{Running Example: CVE X} we present a real COOP attack example.
 % \label{Code example used to illustrate how a COOP loop gadget works}
 % \end{figure}
 
- \begin{figure}[!t]
+\newsavebox{\firstlisting}
+\begin{lrbox}{\firstlisting}
+\begin{minipage}[c]{\linewidth}
+\begin{minted}[
+% frame=lines,
+framesep=2mm,
+linenos,
+%highlightlines={10},
+highlightcolor={lightgray},
+frame=none,
+firstnumber=1,
+framesep = 1.0cm,
+linenos,
+numbersep=2pt,
+%gobble=2,
+%frame=lines,
+framesep=2mm,
+fontsize=\tiny,      
+% fontsize=\scriptsize,
+% baselinestretch=1.2,
+% bgcolor=LightGray,
+% fontsize=\footnotesize,
+]{C++}
+class nsMultiplexInputStream final 
+ :public nsIMultiplexInputStream //A0
+ ,public nsISeekableStream //A1
+ ,public nsIIPCSerializableInputStream //A2
+ ,public nsICloneableInputStream{ //A3
+nsTArray<nsCOMPtr<nsIInputStream>> mStreams;
+NS_IMETHODIMP nsMultiplexInputStream::Close(){
+  MutexAutoLock lock(mLock);
+  mStatus = NS_BASE_STREAM_CLOSED;
+  //set NS_OK flag
+  nsresult rv = NS_OK;
+  //get array length
+  uint32_t len = mStreams.Length();
+  //array-based main loop gadget (ML-G)
+ for (uint32_t i = 0; i<len; ++i){
+  //(1) hijacked indirect call
+  nsresult rv2=mStreams[i]->Close();
+  if (NS_FAILED(rv2)) {
+      rv = rv2;
+  }
+ }
+  return rv;
+}
+\end{minted}
+\end{minipage}
+\end{lrbox}
+
+\subsection{Exploiting Polymorphism Weaknesses}
+\label{Exploiting Polymorphism Weaknesses}
+ \begin{figure}[!h]
+   \vspace{-.45cm}
    \centering
-   \resizebox{2.2\linewidth}{!}{
+   \resizebox{2.3\linewidth}{!}{
    \setlength{\unitlength}{0.1\textwidth}
    \begin{picture}(10,4)
 %    \centering
-     \put(1.8, 1.196){\includegraphics[width=.27\textwidth]{figures/loop.pdf}}
-     \put(.2, 2.5){\usebox{\firstlisting}}
+     \put(1.6, 1.196){\includegraphics[width=.27\textwidth]{figures/loop.pdf}}
+     \put(.03, 2.5){\usebox{\firstlisting}}
    \end{picture}}
 \vspace{-2.6cm}
 \caption{Description of how a counterfeit object-oriented programming main loop gadget (ML-G) works.}
 \label{Code example used to illustrate how a COOP loop gadget works}
 \end{figure}
-
-\subsection{Exploiting Polymorphism Weaknesses}
 Figure~\ref{Code example used to illustrate how a COOP loop gadget works}
 depicts a C++ code example where it is illustrated how a COOP loop gadget 
 (\textit{i.e.,} ML-G, REC-G, UNR-G, see~\cite{crane:readactor++}) works.
@@ -195,6 +250,7 @@ indicated with red color vTable entries.
 
 \subsection{\emph{Count} Policy}
 \label{section:countpolicy}
+\vspace{-2em}
 \begin{figure}[!h]
 \centering
 \resizebox{0.25\textwidth}{!}{
@@ -241,7 +297,7 @@ indicated with red color vTable entries.
 
 \end{tikzpicture}
 }
-\caption{\emph{Count} policy classification schema for callsites and calltargets.}
+\caption{Call(sites/targets) \emph{count} policy class. schema.}
 \label{fig:COUNTschema}
 \end{figure}
 

@@ -5,15 +5,15 @@ We used the two ftp server applications \textit{Vsftpd} (v.1.1.0) and \textit{Pr
 applications \textit{Postgresql} (v.9.0.10) and \textit{Mysql} (v.5.1.65), the memory cache application \textit{Memcached} (v.1.4.20) 
 and the \textit{Node.js} server application (v.0.12.5). We chose these applications, which are a subset of the 
 applications also used by the TypeAmor~\cite{veen:typearmor} to allow for later comparison.
-In our evaluation we addressed the following research questions (RQs) w.r.t. \textsc{TypeShield}:
+We addressed the following research questions (RQs).
 
-\begin{itemize}[leftmargin=.2in]
- \item \textbf{RQ1:} How \textbf{precise} is it? (\cref{section:typeshieldprecision})
- \item \textbf{RQ2:} How \textbf{effective} is it? (\cref{section:typeshieldeffectiveness})
- \item \textbf{RQ3:} What is the \textbf{runtime overhead}? (\cref{section:typeshieldoverheadperformance})
- \item \textbf{RQ4:} What is the \textbf{instrumentation overhead}? (\cref{section:typeshieldoverheadinstrumentation})
- \item \textbf{RQ5:} What \textbf{security level} does it offer? (\cref{RQ5: Security Analysis})
- \item \textbf{RQ6:} Is it superior \textbf{compared} to other tools? (\cref{RQ5: Is TypeShield better than other tools?})
+\begin{itemize}[leftmargin=.12in]
+ \item \textbf{RQ1:} How \textbf{precise} is \textsc{TypeShield}? (\cref{section:typeshieldprecision})
+ \item \textbf{RQ2:} How \textbf{effective} is \textsc{TypeShield}? (\cref{section:typeshieldeffectiveness})
+ \item \textbf{RQ3:} What is the \textbf{runtime overhead} of \textsc{TypeShield}? (\cref{section:typeshieldoverheadperformance})
+ \item \textbf{RQ4:} What is \textsc{TypeShield's} \textbf{instrumentation overhead}? (\cref{section:typeshieldoverheadinstrumentation})
+ \item \textbf{RQ5:} What \textbf{security level} does \textsc{TypeShield} offer? (\cref{RQ5: Security Analysis})
+ \item \textbf{RQ6:} Is \textsc{TypeShield} superior \textbf{compared} to other tools? (\cref{RQ5: Is TypeShield better than other tools?})
 \end{itemize}
 \textbf{Comparison Method.} As we do not have access (we requested the authors of TypeArmor several times to provide us access to the source code) 
 to the source code of TypeAmor, we implemented two modes in \textsc{TypeShield}. 
@@ -26,7 +26,7 @@ top of our \textit{count} policy implementation.
 
 \subsection{Precision}
 \label{section:typeshieldprecision}
-\todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
+% \todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
 
 To measure the precision of \textsc{TypeShield}, we need to compare the classification of callsites and calltargets as is given by our tool to
 some sort of ground truth for our test targets. We generate this ground truth by compiling our test targets using a custom compiled Clang/LLVM
@@ -67,8 +67,9 @@ First, we take a look at the comparability of calltargets and second, we take a 
 	\caption {Table shows the quality of structural matching provided by our automated verify and test environment, 
 	regarding callsites and calltargets when compiling with optimization level O2. The label Clang miss 
 	denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc{TypeShield}. 
-	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
-	looking at this table?}}
+% 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
+% 	looking at this table?}
+        }
 	\label{tbl:matchingquality}
 \end{table}
 
@@ -130,8 +131,10 @@ in Table \ref{tbl:precisionCOUNT}.
     	\end{tabular}
 
 }
-		\caption {The results for analysis using the \textit{count} policy on the O2 optimization level. \textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
-	looking at this table?}}
+		\caption {The results for analysis using the \textit{count} policy on the O2 optimization level. 
+% 		\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
+% 	        looking at this table?}
+                }
 		\label{tbl:precisionCOUNT}
 \end{table}~\\
 \textbf{Experiment Setup (Calltargets).} Union combination operator with an $analyze$ function that follows into occurring direct calls.
@@ -167,8 +170,10 @@ The results are depicted in Table \ref{tbl:precisionTYPE}.
     	\end{tabular}
 
 }
-	\caption {The results for analysis using the \textit{type} policy on the O2 optimization level. \textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
-	looking at this table?}}
+	\caption {The results for analysis using the \textit{type} policy on the O2 optimization level. 
+% 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
+% 	looking at this table?}
+        }
 	\label{tbl:precisionTYPE}
 \end{table}~\\
 \textbf{Experiment Setup (Calltargets).} Union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that intersects all reads until the first write.
@@ -185,8 +190,8 @@ with Node.js (44.76\%) as an exception resulting in a geometric mean of 68.35\%.
 %
 \subsection{Effectiveness}
 \label{section:typeshieldeffectiveness}
-\todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, 
-first we need to define the fields which make most sense.}
+% \todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, 
+% first we need to define the fields which make most sense.}
 
 \begin{table*}[htbp!]
 \begin{center}
@@ -212,8 +217,10 @@ first we need to define the fields which make most sense.}
 
 }
 	\caption {The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an address taken analysis 
-	for optimization level O2. \textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
-	looking at this table?}}
+	for optimization level O2. 
+% 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
+% 	looking at this table?}
+        }
 	\label{tbl:policycompat}
 \end{center}
 \end{table*}
@@ -358,13 +365,14 @@ When compared, our implementation of the \textit{type} policy allows about 7.93\
 
 \subsection{Runtime Overhead}
 \label{section:typeshieldoverheadperformance}
-\todo[inline]{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
+% \todo[inline]{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.49\textwidth]{figures/speccpu2006.pdf}
     \caption{Benchmark run time normalized against the baseline for the SPEC CPU2006 benchmarks.
-    \textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? replace with our values. remove this stub.}}
+%     \textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? replace with our values. remove this stub.}
+    }
     \label{fig:awesome_image}
 \end{figure}
 
@@ -428,7 +436,7 @@ instruction to the new position of the basic block.
   \end{minipage} 
 \end{figure}
 
-Figures, \ref{fig7}, \ref{fig8}, \ref{fig9}, and \ref{fig10} depict the CDFs for the following programs: Postgresql, Node.js, Proftpd, and Mysql when compiled with the 
+Figures~\ref{fig7}, \ref{fig8}, \ref{fig9}, and \ref{fig10} depict the CDFs for the following programs: Postgresql, Node.js, Proftpd, and Mysql when compiled with the 
 -O2 Clang compiler flag.
 We selected these four programs randomly.
 The CDFs depict the number of legal callsite targets and the difference between the type and the count policies. 
@@ -463,10 +471,11 @@ todo. Also, add the buckets diagram, see Figure 9 in the typearmor paper.
     	\end{tabular}}
 %     	}
 	\caption {The medians of calltargets per callsite for different programs. Note that smaller geomean values are better and that
-	\textsc{TypeShield} currently does not include function return types as TypeArmor does. 
-	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, 
-	low or hig? What is the main thing which can be observed if 
-	looking at this table?}}
+% 	\textsc{TypeShield} currently does not include function return types as TypeArmor does. 
+% 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, 
+% 	low or hig? What is the main thing which can be observed if 
+% 	looking at this table?}
+        }
 	\label{tbl:toolcompare}
 \end{table}
 

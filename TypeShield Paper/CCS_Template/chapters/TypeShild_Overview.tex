@@ -1,10 +1,10 @@
 \section{Overview}
 \label{chapter:TypeShild Overview}
-In this section, we present a brief overview on the 
-considered adversary model in~\cref{Adversary Model} and depict the 
-invariants for calltargets and callsites in~\cref{Invariants for Targets and Callsites}.
-Finally, in~\cref{TypeShield Policy Mechanism} we present our function parameter type aware policy and give a formal description of it
-by relating it to~\cite{veen:typearmor}, and in~\cref{TypeShild Impact on COOP} we highlight the impact of our policy on COOP.
+% In this section, we present a brief overview on the 
+% considered adversary model in~\cref{Adversary Model} and depict the 
+% invariants for calltargets and callsites in~\cref{Invariants for Targets and Callsites}.
+% Finally, in~\cref{TypeShield Policy Mechanism} we present our function parameter type aware policy and give a formal description of it
+% by relating it to~\cite{veen:typearmor}, and in~\cref{TypeShild Impact on COOP} we highlight the impact of our policy on COOP.
 
 % \textbf{Adversary Model and Assumptions.}
 \subsection{Adversary Model and Assumptions}
@@ -17,17 +17,6 @@ self modifying code, handcrafted assembly or any kind of obfuscation. We also co
 to be either writable or executable but not both at the same time. We assume 
 that our attacker has the ability to execute a memory corruption to hijack the programs 
 control flow and that a solution for backward CFI is in place.
-
-\subsection{Invariants for Calltargets and Callsites}
-% \textbf{Invariants for Targets and Callsites.}
-\label{Invariants for Targets and Callsites}
-Advanced code reuse attacks change the calltargets that are invoked within indirect 
-callsites. As standard CFI solutions can hardly restrict these, TypeArmor proposed using two base invariants:
-\textit{1)} indirect callsites provide a number of parameters (\textit{i.e.,} possibly overestimated compared to source), and 
-\textit{2)} calltargets require a minimum number of parameters (\textit{i.e.,} possibly underestimated compared to source).
-The idea is that a callsite might only call functions that do not require more parameters than provided by the callsite. 
-To compute the necessary information, TypeArmor uses a modified version of forward liveness analysis for call-targets and 
-backward reaching definitions analysis for callsites.
 
 \subsection{\textsc{TypeShield} Policy Mechanism}
 \label{TypeShield Policy Mechanism}
@@ -383,14 +372,12 @@ wideness \textit{pcs}1: 4-byte, \textit{pcs}2: 4-bye, \textit{pcs}3: 4-byte, \te
 wideness \textit{pct}1: 4-byte, \textit{pct}2: 4-bye, \textit{pct}3: 0-byte, \textit{pct}4: 0-byte, \textit{pct}5: 0-byte, 
 \textit{pct}6: 0-byte of the expected parameters. 
 \textsc{TypeShield}'s type policy is defined as follows. 
-
 \begin{definition}
 \label{eqn:1}
 Let $A$ be a call target $ct_{A}$ and $B$ a call site $cs_{B}$ than: 
 $ct_{A} \subseteq cs_{B} \iff \forall i \subseteq [1, 6],$
 wideness(parameter($A$)[i]) $\leq$ \ wideness(parameter($B$)[i]).
 \end{definition}
-
 Whereas the policy of TypeArmor is the following. 
 \begin{definition}
 \label{eqn:2}
@@ -402,6 +389,17 @@ count(parameter($A$)) $\leq$ count(parameter($B$)).
 From Definitions~\eqref{eqn:1} and~\eqref{eqn:2} it can be observed that 
 the first policy is more fine-grained than the second one since it performs checks 
 for each parameter index in part.
+
+\subsection{Invariants for Calltargets and Callsites}
+% \textbf{Invariants for Targets and Callsites.}
+\label{Invariants for Targets and Callsites}
+Advanced code reuse attacks change the calltargets that are invoked within indirect 
+callsites. As standard CFI solutions can hardly restrict these, TypeArmor proposed using two base invariants:
+\textit{1)} indirect callsites provide a number of parameters (\textit{i.e.,} possibly overestimated compared to source), and 
+\textit{2)} calltargets require a minimum number of parameters (\textit{i.e.,} possibly underestimated compared to source).
+The idea is that a callsite might only call functions that do not require more parameters than provided by the callsite. 
+To compute the necessary information, TypeArmor uses a modified version of forward liveness analysis for call-targets and 
+backward reaching definitions analysis for callsites.
 
 \subsection{\textsc{TypeShield} Impact on COOP}
 % \textbf{\textsc{TypeShield} Impact on COOP.}

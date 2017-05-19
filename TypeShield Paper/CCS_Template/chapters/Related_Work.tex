@@ -29,9 +29,9 @@
 % Therefore, we finally implemented our own version of type analysis and only focused on the wideness of the types, 
 % resulting in a simpler lattice than we initially wanted.
 
-\subsection{Advanced Code-Reuse Attacks Mitigation}
+% \subsection{Advanced Code-Reuse Attacks Mitigation}
 % \textbf{Mitigation of Forward-Edge based Attacks.}
-\label{Mitigation of Advanced Code-Reuse Attacks}
+% \label{Mitigation of Advanced Code-Reuse Attacks}
 Recursive-COOP~\cite{crane:readactor++}, COOP~\cite{schuster:coop}, Subversive-C~\cite{subversive-c:lettner} and the attack of Lan \textit{et al.}~\cite{loop:oriented}
 are forward-edge based CRAs which can not be addressed with:
 \textit{i)}  with shadow stacks techniques (\textit{i.e.,} do not violate the caller/calle convention), 
@@ -39,7 +39,7 @@ are forward-edge based CRAs which can not be addressed with:
 \textit{iii)} hardware based approaches such as Intel CET~\cite{intel:cet} can not mitigate this attack for the same reason as in \textit{i)}, and 
 \textit{iv)} with OS-based approaches such as Windows Control Flow Guard~\cite{windows:cfguard} 
 since the precomputed CFG does not contain edges for indirect callsites which are explicitly exploited during the COOP attack.
-However, the following tools can protect against COOP attacks:
+However, the following tools can protect against COOP attacks.
 
 \textbf{\textit{Binary based.}} vTable protection is addressed through binary instrumentation in tools
 such as: vfGuard~\cite{vfuard:aravind}, vTint~\cite{vtint:zhang}. However, none of these tools can
@@ -86,8 +86,8 @@ from an executable in order to make the program run as fast as possible. In ligh
 \textsc{TypeShield} is another attempt to recuperate just the needed semantic information (types and number of function parameters from
 indirect callsites) in order to be able to enforce a precise and with low overhead primitive against COOP attacks.
 
-Rather than claiming that the invariants offered by \textsc{TypeShield} are sufficient
-to mitigate all versions of the COOP attack we take a more conservative path by claiming that \textsc{TypeShield} 
+In this paper, rather than claiming that the invariants offered by~\textsc{TypeShield} are sufficient
+to mitigate all versions of the COOP (as \cite{veen:typearmor} does) attack we conservatively claim that~\textsc{TypeShield} 
 further raises the bar w.r.t. what is possible when defending against COOP attacks on the binary level.
 
 % \textbf{\textit{Runtime based.}}

@@ -94,6 +94,12 @@
 \newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}}% Remove line number for one line
 \makeatother
 
+\usepackage{graphicx} % http://ctan.org/pkg/graphicx
+\usepackage{booktabs} % http://ctan.org/pkg/booktabs
+\usepackage{xparse}   % http://ctan.org/pkg/xparse
+% Rotation: \rot[<angle>][<width>]{<stuff>}
+\NewDocumentCommand{\rot}{O{45} O{1em} m}{\makebox[#2][l]{\rotatebox{#1}{#3}}}%
+
 % \let\oldalgorithm\algorithm
 % \let\oldendalgorithm\endalgorithm
 % 
@@ -216,7 +222,8 @@ Second Institution
 \input{chapters/Design}
 \input{chapters/Implementation}
 \input{chapters/Evaluation}
-\input{chapters/Discussion}
+\input{chapters/Limitations}
+% \input{chapters/Discussion}
 \input{chapters/Related_Work}
 % \input{chapters/Future_Work}
 \input{chapters/Conclusion}
