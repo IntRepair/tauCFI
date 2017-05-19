@@ -159,12 +159,12 @@ We measured two data points per test target, the number and
 	
 	\bfseries Target & \#  &  perfect &  problem & \# & perfect &  problem % specify table head
 	\\\midrule
-	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/classification_comp2.type_exp6.O2.csv}{
+	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/classification_type.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\csvcolii  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxv \ (\csvcolxvi \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolvi \ (\csvcolvii\%)}% specify your coloumns here
 
-	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilteraccept}{\csvfilterreject},  late after line=\\, late after last line=\\\bottomrule]{csvs/classification_comp2.type_exp6.O2.csv}{
+	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilteraccept}{\csvfilterreject},  late after line=\\, late after last line=\\\bottomrule]{csvs/classification_type.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
 	{\textit{\csvcolii}  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxv \ (\csvcolxvi \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolvi \ (\csvcolvii\%)}% specify your coloumns here
