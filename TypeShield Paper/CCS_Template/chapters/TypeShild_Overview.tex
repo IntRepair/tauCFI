@@ -10,13 +10,13 @@
 \subsection{Adversary Model and Assumptions}
 \label{Adversary Model}
 
-We largely use the same threat model and the same basic assumptions as described in the TypeArmor 
-paper~\cite{veen:typearmor}, meaning that our attacker has read and write access to the data 
-sections of the attacked binary.  We also assume that the protected binary does not contain 
+We largely use the same threat model and the same basic assumptions as described in~\cite{veen:typearmor}. 
+More precisely, we assume a resourceful attacker that has read and write access to the data 
+sections of the attacked program binary. We also assume that the protected binary does not contain 
 self-modifying code, handcrafted assembly or any kind of obfuscation. We also consider pages 
-to be either writable or executable but not both at the same time. We assume 
+to be either writable or executable but not both at the same time. Further, we assume 
 that our attacker has the ability to execute a memory corruption to hijack the program
-control flow and that a solution for backward CFI is in place.
+control flow and that an efficient solution for backward CFI is in place.
 
 \subsection{\textsc{TypeShield} Policy Mechanism}
 \label{TypeShield Policy Mechanism}
@@ -390,12 +390,12 @@ for each parameter index in part.
 \subsection{Invariants for Calltargets and Callsites}
 % \textbf{Invariants for Targets and Callsites.}
 \label{Invariants for Targets and Callsites}
-Advanced code reuse attacks change the calltargets that are invoked within indirect 
-callsites. As standard CFI solutions can hardly restrict these, TypeArmor proposed using two base invariants:
-\textit{1)} indirect callsites provide a number of parameters (\textit{i.e.,} possibly overestimated compared to source), and 
-\textit{2)} calltargets require a minimum number of parameters (\textit{i.e.,} possibly underestimated compared to source).
-The idea is that a callsite might only call functions that do not require more parameters than provided by the callsite. 
-To compute the necessary information, TypeArmor uses a modified version of forward liveness analysis for call-targets and 
+Advanced code reuse attacks use different calltargets than the ones expected by an indirect 
+callsite. As standard CFI solutions can hardly restrict these calltarget sets, TypeArmor proposes two base invariants:
+\textit{1)} indirect callsites provide a number of parameters (\textit{i.e.,} possibly overestimated compared to program source code), and 
+\textit{2)} calltargets require a minimum number of parameters (\textit{i.e.,} possibly underestimated compared to program source code).
+The basic idea is that a callsite might only call functions that do not require more parameters than provided by the callsite. 
+Finally, to compute the necessary information, TypeArmor uses a modified version of forward liveness analysis for call-targets and 
 backward reaching definitions analysis for callsites.
 
 \subsection{Impact of \textsc{TypeShield} on COOP}

@@ -32,14 +32,14 @@ The vulnerabilities were reported in applications such as Google's Chrome \& V8 
 \vspace{-.5cm}
 \end{figure}
 
-While the reasons for unwanted outcomes can be highly diverse, our work is primarily motivated by memory corruption attacks (e.g., buffer/integer overflows), which can enable the 
+While the reasons for unwanted outcomes can be highly diverse, our work is primarily motivated by memory corruption attacks (\textit{e.g.,} buffer/integer overflows), which can enable the 
 execution of sophisticated Code-Reuse Attacks (CRAs) such as the advanced COOP attack~\cite{schuster:coop} and its 
 extensions~\cite{crane:readactor++, crane:readactor++, subversive-c:lettner, ctf:coop, loop:oriented}. A necessary ingredient for this class of attacks is the ability to overwrite
 virtual table entries by corrupting  virtual pointer calls of an object.
 
 To address such object dispatch corruptions, Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} was originally developed to secure indirect control flow transfers by adding 
 runtime checks before each indirect call site. Unfortunately, COOP and its brethren bypass most deployed CFI-based enforcement policies, since these attacks do not exploit indirect 
-backward edges (i.e., return edges), but rather exploit the forward indirect control flow transfer imprecision which cannot be determined statically upfront as alias analysis is 
+backward edges (\textit{i.e.,} return edges), but rather exploit the forward indirect control flow transfer imprecision which cannot be determined statically upfront as alias analysis is 
 undecidable~\cite{alias:undecidable} in program binaries.
 
 More recent techniques and tools can be distinguished into those relying on \textit{source code} access including SafeDispatch~\cite{safedispatch:jang}, ShrinkWrap~\cite{haller:shrinkwrap}, 
