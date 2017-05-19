@@ -137,9 +137,9 @@ For our policy, we need to classify calltargets according to the parameters they
 \subsubsection{Liveness Analysis}
 A variable is alive before the execution of an instruction, if at least one of the originating paths performs a read access before any write access on that variable. If applied to a function, this calculates the variables that need to be alive at the beginning, as these are its parameters. We based Algorithm~\ref{alg:liveness} on the liveness analysis algorithm presented in Khedker~\textit{et al.}~\cite{khedker2009data}, which basically is a depth-first traversal of basic blocks. For customization, we rely on the implementation of several functions ($\mathcal{S}^\mathcal{L}$ is the set of possible register states depending on the specific liveness implementation):
 
-$\texttt{merge\_v} : \mathcal{S}^\mathcal{L} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge a set of states resulting from several paths.
+$\texttt{merge\_v} : \mathcal{S}^\mathcal{L} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge the current state with the following state change.
 
-$\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{L}) \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge the current state with the following state change.
+$\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{L}) \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge a set of states resulting from several paths.
 
 $\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{L}$, which calculates the state change that occurs due to the given instruction 
 
@@ -149,8 +149,8 @@ $\texttt{succ} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which 
  	\SetAlgoLined
 	\SetKwInOut{Input}{Input}
       \SetKwInOut{Output}{Output}
-  \Input{block : $\texttt{INSTR}^*$}
-        \Output{$\mathcal{S}^\mathcal{L}$}
+  \Input{The basic block to be analyzed - block : $\texttt{INSTR}^*$}
+        \Output{The liveness state - $\mathcal{S}^\mathcal{L}$}
         \BlankLine
 	\SetKwProg{Fn}{Function }{ is}{end}
 	\Fn{\texttt{analyze} (block : $\texttt{INSTR}^*$) : $\mathcal{S}^\mathcal{L}$}
@@ -166,16 +166,16 @@ $\texttt{succ} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which 
 
 	states = \{\}                                               \Comment*[r]{Set of surccessor states}
 	
-	blocks = \texttt{succ(block)}                                        \Comment*[r]{Get successors}
+	blocks = \texttt{succ(block)}                                        \Comment*[r]{Get successors(succ.)}
 	
 	\ForEach{block' $\in$ blocks} {
 	
- 		state' = \texttt{ analyze}(block') \Comment*[r]{Analyze successor }
+ 		state' = \texttt{ analyze}(block') \Comment*[r]{Analyze succ. block}
  		
-		states = states $\cup$ \{ state' \} \Comment*[r]{Add successor states}
+		states = states $\cup$ \{ state' \} \Comment*[r]{Add succ. states}
 	}
 
-	state' = \texttt{merge\_h }(states)	\Comment*[r]{Merge successor states}
+	state' = \texttt{merge\_h }(states)	\Comment*[r]{Merge succ. states}
 
 	\Return merge\_v(state, state')                             \Comment*[r]{Merge to final state}
 
@@ -184,13 +184,21 @@ $\texttt{succ} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which 
 \label{alg:liveness}
 \end{algorithm}
 
-In our specific case, the function \texttt{analyze\_instr} needs to also handle non-jump and non-fall-through successors, as these are not handled by DynInst. Essentially, there are four relevant cases: 1) If the current instruction is an indirect call or a direct call and the chosen implementation should not follow calls, 
-then return a state where all registers are considered to be written before read. 2) If the current instruction is a direct call and the chosen implementation should follow calls, then we start an analysis of the target function and return its result. 3) If the instruction is a constant write (e.g., xor of two registers), then we remove the read portion before we return the decoded state. 4) In any other case, we simply return the decoded state. This leaves us with the two undefined merge functions and the undefined liveness state $\mathcal{S}^\mathcal{L}$. In the following two paragraphs we will present two implementation variants: first, similar to TypeArmor, a \emph{count} based policy and second our \emph{type} based policy.
+In our specific case, the function \texttt{analyze\_instr} needs to also handle non-jump and non-fall-through successors, as these are not handled by DynInst. 
+Essentially, there are three relevant cases: 1) If the current instruction is an indirect call or a direct call and the chosen implementation should not follow calls, 
+then return a state where all registers are considered to be written before read. 2) If the current instruction is a direct call and the chosen implementation should follow calls, 
+then we start an analysis of the target function an return its result.
+If the instruction is a constant write (\textit{e.g.,} xor of two registers), 
+then we remove the read portion before we return the decoded state.
+3) In any other case, we simply return the decoded state.
+This leaves us with the two undefined merge functions and the undefined liveness state $\mathcal{S}^\mathcal{L}$. In the following two paragraphs we will present two 
+implementation variants: first similar to TypeArmour a \emph{count} based policy and second our \emph{type} based policy.
 
 \subsubsection{Required Parameter Count} 
 To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we use the same representation as TypeArmor: 1) $W$ represents write before read access, 2) $R$ represents read before write access, and 3) $C$ represents the absence of access. This gives us the $S^\mathcal{L} = \{ C, R, W \}$ as register state, which translates to the register super state $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$. We implement \texttt{merge\_v} in such a way that a state within a superstate is only updated if the corresponding register has yet to be accessed, as represented by $C$. Our reasoning is that the first access is the relevant one to determine read before write.
 
-%TODO  \texttt{merge\_h} (depends on numbers)
+Our horizontal merge($merge\_h$) function is a simple pairwise combination of the given set of states, which are then combined with a union like operator with $W$ preceding $R$ preceding $C$.
+
 
 The index of highest parameter register based on the used call convention that has the state R is considered to be the number of parameters a function at least requires to be prepared by a callsite.
 
@@ -395,39 +403,56 @@ xmm-passthrough block, which we call the param-passthrough block, and
 \textit{2)} \texttt{sub \%rax, \%rax} is probably the next scenario, as it results in \texttt{\%rax} also holding the value 0, and
 \textit{3)} \texttt{sbb \%rax, \%rax} is also relevant, however, it will not result in a constant value and based on the current state might either result in \texttt{\%rax} holding the value 0 or 1.
 
+\subsection{Callsite Analysis}
+\label{section:callsiteanalysis}
+Four our policy, we need to classify our callsites according to the parameters they provide. Overestimations are allowed, however, underestimations shall not be permitted. For this purpose we empoly a customizable modified reaching definition algorithm, which we will show first. We then presen our version for a \emph{count} and a \emph{type} policy. Furthermore, we need to be awayre of certain corner cases, which we will discuss at the end.
+
+\subsubsection{Reaching Definitions}
+\label{subsection:reachindefinitionstheory}
+An assignment to a variable is a reaching definition after the execution of a set of instruction if that variable still exists in at least one possible execution path. If applied to a callsite, this calculates the values that are provided by this callsite to the function it then invokes. We based Algorithm~\ref{alg:reaching}  on the reaching defintion analysis presented in Khedker~\textit{et al.}~\cite{khedker2009data}, which basically is a reverse depth-first traversal of basic blocks. For customization, we rely on the implementation of several functions($\mathcal{S}^\mathcal{R}$ is the set of possible register states depending on the specific reaching definition implemention):
+
+$\texttt{merge\_v} : \mathcal{S}^\mathcal{R} \times \mathcal{S}^\mathcal{R} \mapsto \mathcal{S}^\mathcal{R}$, which descibes how to merge the current state with teh following state change.
+
+$\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{R}) \mapsto \mathcal{S}^\mathcal{R}$, which descibes how to merge a set of states resulting from several paths.
+
+$\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{R}$, which calculates the state state change that occurs due to the given instruction.
+
+$\texttt{pred} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which calculates the predecessors of the given block.
+
+
 \begin{algorithm}[!ht]
 	\SetAlgoLined
 	\SetKwInOut{Input}{Input}
         \SetKwInOut{Output}{Output}
-        \Input{basic block}
-        \Output{$\mathcal{S}^\mathcal{R}$}
+        \Input{The basic block to be analyzed - $block$ : $\texttt{INSTR}^*$}
+        \Output{The reaching definition state - $\mathcal{S}^\mathcal{R}$}
         \BlankLine
 	\SetKwProg{Fn}{Function}{ is}{end}
-	\Fn{analyze(block : BasicBlock) : $\mathcal{S}^\mathcal{R}$}
+	\Fn{\texttt{analyze}($block$ : $\texttt{INSTR}^*$) : $\mathcal{S}^\mathcal{R}$}
 	{
- 	state = Bl                                   \Comment*[r]{Some comment}
+ 	state = Bl                                   \Comment*[r]{Initialize the state}
  	
  	\ForEach{inst $\in$ reversed(block)}{
  	
- 		state' = analyze\_instr(inst)        \Comment*[r]{Some comment}
+ 		state' = analyze\_instr(inst)        \Comment*[r]{Calculate changes}
  		
-		state = merge\_v(state, state')      \Comment*[r]{Some comment}
+		state = merge\_v(state, state')      \Comment*[r]{Merge changes}
 	}
 
-	states = \{\}                                \Comment*[r]{Some comment}
+	states = \{\}                                \Comment*[r]{Set of predecessor states}
 	
-	blocks = pred(block)                         \Comment*[r]{Some comment}
+	blocks = pred(block)                         \Comment*[r]{Get predecessors(pred.)}
 	
 	\ForEach{block' $\in$ blocks} {
 	
- 		state' = analyze(block')             \Comment*[r]{Some comment}
+ 		state' = analyze(block')             \Comment*[r]{Analyze pred. block}
  		
-		states = states $\cup$ \{ state' \}  \Comment*[r]{Some comment}
+		states = states $\cup$ \{ state' \}  \Comment*[r]{Add pred. states}
 	}
 
-	state' = merge\_h (states)                   \Comment*[r]{Some comment}
+	state' = merge\_h (states)                   \Comment*[r]{Merge pred. states}
 
-	\Return merge\_v(state, state')              \Comment*[r]{Some comment}
+	\Return merge\_v(state, state')              \Comment*[r]{Merge to final state}
 
 	}
 \caption{Basic block reaching definition analysis.}
@@ -436,7 +461,9 @@ xmm-passthrough block, which we call the param-passthrough block, and
 
 \subsection{Callsite Analysis}
 \label{section:callsiteanalysis}
-For either \emph{count} or \emph{type} policy to work, we need to arrive at an overestimation of the provided parameters by any indirect callsite existing within the targeted binary. We will employ a modified version of reaching analysis that tracks registers instead of variables to generate the needed overestimation. As our algorithm will be customizable, we look at the required merge functions to implement the \emph{count} and \emph{type} policies. 
+For either \emph{count} or \emph{type} policy to work, we need to arrive at an overestimation of the provided parameters by any indirect callsite 
+existing within the targeted binary. We will employ a modified version of reaching analysis that tracks registers instead of variables to 
+generate the needed overestimation. As our algorithm will be customizable, we look at the required merge functions to implement the \emph{count} and \emph{type} policies. 
 
 \subsubsection{Reaching Definitions}
 \label{subsection:reachindefinitionstheory}
@@ -444,6 +471,14 @@ An assignment of a value to a variable is a reaching definition at the end of a 
 least one path from start to the end of the block $n$ without being overwritten by another value assignment to the same variable. 
 We employ reaching definitions analysis, because we are looking for the parameters a callsite provides. This essentially 
 requires the last known set of definitions that reach the actual call instruction within the parameter registers.
+
+In our specific case, the function \texttt{analyze\_instr} does not need to handle normal predecessors, as Dyninst will resolve those for us. 
+However there are serveral instructions that have to be handled nonetheless: 1) If the current instruction is an indirect call or a direct call 
+but and the chosen implementation should not follow calls, then return a state where all registers are considered trashed. 2) If the instruction 
+is a direct call and the chosen implementation should follow calls, then we start an analysis of the target function. 3) In all other cases we 
+simply return the decoded state. This leaves us with the two merge functions and the undefined reaching definitions state $\mathcal{S}^\mathcal{R}$. 
+In the following two paragraphs we will present two implementation variants: first similar to TypeArmour a \emph{count} based policy and second our \emph{type} based policy. 
+
 
 %The book~\cite{khedker2009data} defines reaching definition analysis on blocks in the following manner:
 %\begin{subequations}
@@ -473,7 +508,10 @@ requires the last known set of definitions that reach the actual call instructio
 %we however, want to get a result as close as possible so we again want to customize merge functions. Furthermore, we have to define how 
 %to interpret the changes occuring withing one block based on the the change caused by its instructions. Considering this, w, we 
 %arrive at algorithm \ref{alg:reaching} to compute the liveness state at the start of a basic block.
-Previous work~\cite{khedker2009data} provides a reaching definition analysis on blocks, which we use to arrive at the algorithm depicted in Algorithm~\ref{alg:reaching} to compute the liveness state at the start of a basic block. We apply the reaching analysis at each indirect callsite directly before each call instruction.
+
+Previous work~\cite{khedker2009data} provides a reaching definition analysis on blocks, which we use to arrive at the algorithm depicted in 
+Algorithm~\ref{alg:reaching} to compute the liveness state at the start of a basic block. We apply the reaching analysis at each indirect 
+callsite directly before each call instruction.
 
 This algorithm relies on various functions that can be used to configure its behavior. We need to define the 
 function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, 
@@ -498,7 +536,39 @@ handle non-jump and non-fall-through successors, as these are not handled by Dyn
 %\item if the instruction is a constant write (\textit{e.g.,} xor of two registers) then we remove the read portion before we return the decoded state
 \textit{3)} In all other cases, we simply return the decoded state.
 
-This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
+This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the 
+liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
+
+%The book~\cite{khedker2009data} defines reaching definition analysis on blocks, which we use to arrive at algorithm depicted in Algorithm~\ref{alg:reaching} to compute 
+%the liveness state at the start of a basic block. We apply the reaching analysis at each indirect callsite directly before each call instruction.
+
+%This algorithm relies on various functions that can be used to configure its behavior. We need to define the 
+%function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, 
+%the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function
+%$analyze\_instr$. The function $pred$, which retrieves all possible predecessors of a block won't be implemented by us, 
+%because we rely on the DynInst instrumentation framework to achieve the following.
+%\vspace{-.3cm}
+%\begin{subequations}
+%\label{eq:livenesscustom}
+%\begin{align}
+%merge\_v &: \mathcal{S}^\mathcal{R} \times \mathcal{S}^\mathcal{R} \mapsto \mathcal{S}^\mathcal{L}\\
+%merge\_h &: \mathcal{P}(\mathcal{S}^\mathcal{R}) \mapsto \mathcal{S}^\mathcal{R}\\
+%analyze\_instr &: \mathcal {I} \mapsto \mathcal{S}^\mathcal{R} \\
+%pred &: \mathcal{I} \mapsto \mathcal{P}(\mathcal{I})
+%\end{align}
+%\end{subequations}
+%\vspace{-.8cm}
+
+%As the $analyze\_instr$ function calculates the effect of an instruction and is the heart of the analyze function. It will also 
+%handle non jump and non fall-through successors, as these are not handled by DynInst in our case. We essentially have three cases that we handle:
+%\textit{1)} if the instruction is an indirect call or a direct call but we chose not to follow calls, then return a state where all trashed 
+%are considered written,
+%\textit{2)}  if the instruction is a direct call and we chose to follow calls, then we spawn a new analysis and return its result, and
+%\item if the instruction is a constant write (\textit{e.g.,} xor of two registers) then we remove the read portion before we return the decoded state
+%\textit{3)} in all other cases we simply return the decoded state.
+
+%This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of 
+%the liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
 
 %We have yet to define the functions $merge\_v$, which describes how to compound a function and the outgoing state, the function $merge\_h$, which describes how to merge the states of several paths and the function $pred$, which essentially gives us the predecessors of the current instruction. To prevent cycles we keep track of the instructions visited within the current path and omit any instruction on the current path from the result of $pred$. These functions, the reaching state $\mathcal{S}^\mathcal{R}$  and its interpretation into parameters will be defined in the following subsections.
 %
@@ -677,14 +747,17 @@ Our horizontal merge($merge\_h$) function is a simple pairwise combination of th
 %\label{fig:TYPEreachingmapping}
 %\end{table}
 
-Our experiments with this implementation showed two problems regarding the provided width detection. Parameter lists with \textit{holes} and address width underestimation, furthermore register extension instructions are also cause of problems. To reduce runtime, we also restricted the maximum path depth to 10 blocks.
+Our experiments with this implementation showed two problems regarding the provided width detection. Parameter lists with \textit{holes} and address width underestimation, 
+furthermore register extension instructions are also cause of problems. To reduce runtime, we also restricted the maximum path depth to 10 blocks.
 
-\paragraph{Parameter Lists with \textit{Holes}.} This refers to parameter lists that show one or more \texttt{void} parameters between start to the last actual parameter. These are not existent in actual code, but our analysis has the possibility of generating them through the merge operations. An example would be the following: 
+\paragraph{Parameter Lists with \textit{Holes}.} This refers to parameter lists that show one or more \texttt{void} parameters between start to the last actual parameter. 
+These are not existent in actual code, but our analysis has the possibility of generating them through the merge operations. An example would be the following: 
 A parameter list of $(64, 0, 64, 0, 0, 0)$ is concluded, although the actual parameter list might be $(64, 32, 64, 0, 0, 0)$. While the trailing 0s are 
 what we expect, the 0 at the second parameter position will cause trouble, because it is an underestimation at the single parameter level, which we need to avoid.
 Our solution is to scan our reaching analysis result for these holes and replace them with the wideness $64$, causing a (possible) overestimation.
 
-\paragraph{Address Width Unterestimation.} This refers to the issue that while in the callsite a constant value of 32-bit is written to a register, the calltarget uses the whole 64-bit register. This can occur when pointers are passed from the callsite to the calltarget. Specifically this happens 
+\paragraph{Address Width Unterestimation.} This refers to the issue that while in the callsite a constant value of 32-bit is written to a register, the calltarget uses the 
+whole 64-bit register. This can occur when pointers are passed from the callsite to the calltarget. Specifically this happens 
 when pointers to memory inside the \texttt{.bss}, \texttt{.data} or \texttt{.rodata} section of the binary are passed.
 Our solution is to enhance our instruction analysis to watch out for constant writes. In case a 32-bit constant value write is detected, we check if the
 value is an address within the \texttt{.bss}, \texttt{.data} or \texttt{.rodata} section of the binary. If this is the case, we simply return a write access of 64-bit 
