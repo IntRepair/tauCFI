@@ -1,11 +1,11 @@
-target,opt,fn,fn not in clang,fn not in clang pct,fn not in padyn,fn not in padyn pct,at,at not in clang,at not in clang pct,at not in padyn,at not in padyn pct,cs,cs discarded clang,cs discarded clang pct,cs discarded padyn,cs discarded padyn pct
-proftpd,O2,1202,0,0.0,1,0.08,395,1,0.25,0,0.0,157,0,0.0,0,0.0
-pure-ftpd,O2,276,1,0.36,0,0.0,12,1,7.69,2,14.28,8,2,20.0,5,38.46
-vsftpd,O2,419,0,0.0,0,0.0,9,1,10.0,1,10.0,14,0,0.0,0,0.0
-lighttpd,O2,420,0,0.0,0,0.0,60,3,4.76,0,0.0,66,0,0.0,0,0.0
-nginx,O2,1035,0,0.0,0,0.0,542,1,0.18,0,0.0,269,0,0.0,0,0.0
-mysqld,O2,9952,9,0.09,7,0.07,5892,4,0.06,360,5.75,8002,477,5.62,52,0.64
-postgres,O2,7079,9,0.12,0,0.0,2493,11,0.43,0,0.0,635,80,11.18,40,5.92
-memcached,O2,248,0,0.0,0,0.0,13,1,7.14,0,0.0,48,0,0.0,0,0.0
-node,O2,20337,926,4.35,23,0.11,7169,61,0.84,346,4.6,10502,584,5.26,261,2.42
-geomean,O2,1405.98,2.84,0.27,0.93,0.02,231.35,2.71,1.1,3.49,1.64,210.15,6.41,1.8,4.32,1.25
+target,opt,fn,fn not in clang,fn not in clang pct,fn not in padyn,fn not in padyn pct,at,at not in clang,at not in clang pct,at not in padyn,at not in padyn pct,cs,cs discarded clang,cs discarded clang pct,cs discarded padyn,cs discarded padyn pct,
+proftpd,O2,1202,0,0.0,1,0.08,395,1,0.25,0,0.0,157,0,0.0,0,0.0,
+pure-ftpd,O2,276,1,0.36,0,0.0,12,1,7.69,2,14.28,8,2,20.0,5,38.46,
+vsftpd,O2,419,0,0.0,0,0.0,9,1,10.0,1,10.0,14,0,0.0,0,0.0,
+lighttpd,O2,420,0,0.0,0,0.0,60,3,4.76,0,0.0,66,0,0.0,0,0.0,
+mysqld,O2,1035,0,0.0,0,0.0,542,1,0.18,0,0.0,269,0,0.0,0,0.0,
+postgres,O2,9952,9,0.09,7,0.07,5892,4,0.06,360,5.75,8002,477,5.62,52,0.64,
+memcached,O2,7079,9,0.12,0,0.0,2493,11,0.43,0,0.0,635,80,11.18,40,5.92,
+node,O2,248,0,0.0,0,0.0,13,1,7.14,0,0.0,48,0,0.0,0,0.0,
+geomean,O2,20337,926,4.35,23,0.11,7169,61,0.84,346,4.6,10502,584,5.26,261,2.42,
+,O2,1405.9892718537,Err:502,#VALUE!,Err:502,#VALUE!,231.3578606336,2.716372389,#VALUE!,Err:502,#VALUE!,210.157251202,Err:502,#VALUE!,Err:502,#VALUE!,#VALUE!
