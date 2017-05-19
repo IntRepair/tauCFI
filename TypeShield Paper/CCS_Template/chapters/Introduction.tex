@@ -175,10 +175,8 @@ $\bullet$ We designed and implemented an \textbf{illegitimate indirect calls det
  tool that can be applied to C/C++ binaries in order to detect and mitigate illegitimate forward indirect calls  during runtime. 
  Further, \textsc{TypeShield} has an expanded \textbf{scope} of analysis. Our tool can detect forbidden indirect calls and as such it can protect, 
  similarly as vTrust~\cite{zhang:vtrust}, against virtual table injection, corruption and reuse attacks. Further it can protect also against the 
- Flip 
- 
- As such \textsc{TypeShield} can serve as a 
- platform for developing other types of defenses for different types of attacks. The source code, test scripts and evaluation results 
+ control flow jujutsu attack~\cite{jujutsu} since our policy checks for void and non-void functions. 
+ As such \textsc{TypeShield} can serve as a platform for developing other types of defenses for different types of attacks. The source code, test scripts and evaluation results 
  are available at \url{https://github.com/domain/typeshield}.
  
 %  \item 
@@ -186,9 +184,9 @@ $\bullet$ We conduct a thorough set of evaluative \textbf{experiments}. In parti
  CFI technique can mitigate advanced code reuse attacks (CRAs) in absence of C++ semantics. For example, \textsc{TypeShield} can effectively protect against 
  the COOP attack and its variations. Thereby, it achieves a high degree of \textbf{precision}. Specifically, it 
  employs a more precise analysis than TypeArmor in order to reduce the calltarget set for each callsite. Our evaluation shows that it
- gains X\% precision with respect to TypeArmor on the same programs. Further, we showcase significant \textbf{performance} enhancements in 
- comparison to prior work. \textsc{TypeShield} employs runtime policy optimization techniques to further reduce runtime overheads. Our evaluation 
- shows that it imposes up to 3\% overheads for performance-intensive benchmarks on the SPEC CPU2006 benchmarks and web 
+ gains between 13\% and 35\% more precision with respect to TypeArmor on the same programs. Further, we showcase similar \textbf{performance} enhancements in 
+ comparison to prior work. \textsc{TypeShield} employs runtime policy optimization techniques to further reduce runtime overheads. This is necessary, since our runtime checks are more complex than those
+ used by TypeArmor. Our evaluation shows that it imposes up to 3\% overheads for performance-intensive benchmarks on the SPEC CPU2006 benchmarks and web 
  server applications, respectively. Which is comparable with TypeArmor on the same programs.
  Finally, we respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist}) by 
  providing for each conducted experiment a precise description of encountered problems, setup, and comprehensive results including mean, median, and geomean values.

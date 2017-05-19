@@ -151,13 +151,6 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael},
  year = {2015}
 }
 
-@inproceedings{jujutsu,
- author = {Evans, Isaac and Long, Fan and Otgonbaatar, Ulziibayar and Shrobe, Howard and Rinard, Martin and Okhravi, Hamed and Sidiroglou-Douskosr, Stelios},
- title = {Control Jujutsu: On the Weaknesses of Fine-Grained Control Flow Integrity},
- booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)},
- year = {2015}
-}
-
 @inproceedings{caballero:inference,
  author = {Caballero, Juan and Lin, Zhiqiang},
  title = {Type Inference on Executables},

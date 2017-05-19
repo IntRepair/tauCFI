@@ -364,9 +364,11 @@ changes are very hard to relocate. Therefore, instead each important basic block
 % \label{CDF Analysis}
 
 \begin{figure}[h] 
-  \begin{minipage}[b]{0.5\linewidth}
+\vspace{-.45cm}
+  \begin{minipage}[b]{0.95\linewidth}
     \centering
     \resizebox{1.04\columnwidth}{!}{\includesvg{postgresqlO2}}
+    \vspace{-.7cm}
     \caption{Postgresql -O2 CDF} 
     \label{fig7} 
     \vspace{1ex}
@@ -385,15 +387,26 @@ changes are very hard to relocate. Therefore, instead each important basic block
 %     \label{fig9} 
 %     \vspace{1ex}
 %   \end{minipage}%% 
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \resizebox{1.04\columnwidth}{!}{\includesvg{mysqlO2}} 
-    \caption{Mysql -O2 CDF} 
-    \label{fig10} 
-    \vspace{1ex}
-  \end{minipage} 
+%   \begin{minipage}[b]{0.5\linewidth}
+%     \centering
+%     \resizebox{1.04\columnwidth}{!}{\includesvg{mysqlO2}} 
+%     \caption{Mysql -O2 CDF} 
+%     \label{fig10} 
+%     \vspace{1ex}
+%   \end{minipage} 
 \end{figure}
-Figures~\ref{fig7}, \ref{fig8}, \ref{fig9}, and \ref{fig10} depict the CDFs for the following programs: Postgresql, Node.js, Proftpd, and Mysql when compiled with the -O2 Clang compiler flag. We selected these four programs randomly from our sample. The CDFs depict the number of legal callsite targets and the difference between the type and the count policies. While the count  policies have only a few changes, the number of changes that can be seen within the type policies is vastly higher. The reason for that is fairly straightforward: the number of buckets that are used to classify the callsites and calltargets is simply higher. While type policies mostly perform better than the count policies, there are still parts within the type plot that are above the count plot, the reason for that is also relatively simple: the maximum number of calltargets a callsite can access has been reduced. Therefore, a lower number of calltargets is a higher percentage than before. However, all these results are dependent on the structure of the program.
+% Figures~\ref{fig7}, \ref{fig8}, \ref{fig9}, and \ref{fig10} 
+Figures~\ref{fig7}
+depicts the CDF for the following program Postgresql when compiled with the -O2 Clang compiler flag. 
+We selected this program randomly from our sample programs. 
+The CDFs depict the number of legal callsite targets and the difference between the type and the count policies. 
+While the count  policies have only a few changes, the number of changes that can be seen within the 
+type policies is vastly higher. The reason for that is fairly straightforward: the number of buckets 
+that are used to classify the callsites and calltargets is simply higher. While type policies mostly 
+perform better than the count policies, there are still parts within the type plot that are above the 
+count plot, the reason for that is also relatively simple: the maximum number of calltargets a 
+callsite can access has been reduced. Therefore, a lower number of calltargets is a higher 
+percentage than before. However, we note that these results dependent on the structure of the program.
 
 %REMOVED THIS TODO FROM PAPER: todo. Also, add the buckets diagram, see Figure 9 in the typearmor paper.
 
@@ -420,8 +433,11 @@ Figures~\ref{fig7}, \ref{fig8}, \ref{fig9}, and \ref{fig10} depict the CDFs for 
 	the better the method is. AT is a technique which allows calltargets that are address taken. 
 	IFCC is a compiler based solution and depicted here as a reference for what is possible when 
 	source code is available. TypeArmor and TypeShield on the other hand are binary-based tools. 
-	We can see that our type-based tool on average reduces the number of calltargets by 37\% when 
-	compared to AT method and by 13\% when comparing with TypeArmor.
+	We can see that our type-based tool on average reduces the number of calltargets by 35\% when 
+	compared to AT method and by 13\% when comparing with TypeArmor. Note that we removed Nginx out of the table
+	because at the time of our evaluation it produced outlier results which we further wanted to investigate.
+	Finally, we think that with further tweaking of our analysis we can drop the value of the calltarget set 
+	per callsite.
 }
 	\label{tbl:toolcompare}
 \end{table}
