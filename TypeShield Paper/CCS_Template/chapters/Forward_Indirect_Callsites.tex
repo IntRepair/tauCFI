@@ -162,7 +162,7 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
   nsresult rv = NS_OK;
   //get array length
   uint32_t len = mStreams.Length();
-  //array-based main loop gadget (ML-G)
+ //array-based main loop gadget (ML-G)
  for (uint32_t i = 0; i<len; ++i){
   //(1) hijacked indirect call
   nsresult rv2=mStreams[i]->Close();
@@ -185,7 +185,7 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
    \setlength{\unitlength}{0.1\textwidth}
    \begin{picture}(10,4)
 %    \centering
-     \put(1.6, 1.196){\includegraphics[width=.27\textwidth]{figures/loop.pdf}}
+     \put(1.605, 1.196){\includegraphics[width=.27\textwidth]{figures/loop.pdf}}
      \put(.03, 2.5){\usebox{\firstlisting}}
    \end{picture}}
 \vspace{-2.6cm}

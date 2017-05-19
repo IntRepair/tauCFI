@@ -12,7 +12,7 @@
   \PYG{n}{nsresult} \PYG{n}{rv} \PYG{o}{=} \PYG{n}{NS\PYGZus{}OK}\PYG{p}{;}
   \PYG{c+c1}{//get array length}
   \PYG{k+kt}{uint32\PYGZus{}t} \PYG{n}{len} \PYG{o}{=} \PYG{n}{mStreams}\PYG{p}{.}\PYG{n}{Length}\PYG{p}{();}
-  \PYG{c+c1}{//array\PYGZhy{}based main loop gadget (ML\PYGZhy{}G)}
+ \PYG{c+c1}{//array\PYGZhy{}based main loop gadget (ML\PYGZhy{}G)}
  \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{uint32\PYGZus{}t} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{len}\PYG{p}{;} \PYG{o}{++}\PYG{n}{i}\PYG{p}{)\PYGZob{}}
   \PYG{c+c1}{//(1) hijacked indirect call}
   \PYG{n}{nsresult} \PYG{n}{rv2}\PYG{o}{=}\PYG{n}{mStreams}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n}{Close}\PYG{p}{();}
