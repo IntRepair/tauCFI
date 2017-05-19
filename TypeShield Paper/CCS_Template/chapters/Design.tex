@@ -2,17 +2,18 @@
 \label{chapter:Design}
 
 In this section, we cover the design of \textsc{TypeShield}. 
-We first present theory and definitions for our instructions analysis based on register states.
- \cref{section:instructionanalysis}. 
-Then we present the details of our new \emph{type} policy in \cref{section:typepolicy}. 
-Finally we present the design of our calltarget analysis in 
-\cref{section:calltargetanalysis} and the design of our callsite analysis in~\cref{section:callsiteanalysis} .
+First, we present the theory and definitions for our instructions analysis based on register states in~\cref{section:instructionanalysis}. 
+Second, we present the details of our new \emph{type} policy in~\cref{section:typepolicy}. 
+Finally, we present the design of our calltarget analysis in~\cref{section:calltargetanalysis} and the design of our 
+callsite analysis in~\cref{section:callsiteanalysis}.
 
 \subsection{Analysis of Register-States}
 \label{section:instructionanalysis}
-Instead of symbol based data-flow analysis, our approach is register state based. Therefore we need to adapt the usual definitions.
-The set $\texttt{INSTR}$ describes all possible instructions that can occur within the executable section of a binary. In our case this is based on the instruction set for x86-64 processors.
-An instruction $i \in \texttt{INSTR}$ can non-exclusively perform two kinds of operations on any number of existing registers:\footnote{There are registers that can directly access the higher 
+Instead of symbol based data-flow analysis, our approach is register state based. Therefore, we need to adapt the usual definitions.
+The set $\texttt{INSTR}$ describes all possible instructions that can occur within the executable section of a binary. In our case,
+this is based on the instruction set for x86-64 processors.
+An instruction $i \in \texttt{INSTR}$ can non-exclusively perform two kinds of operations on any number of existing 
+registers:\footnote{There are registers that can directly access the higher 
 8-bit of the lower 16-bit. For our purpose we register this access as a 16-bit access.}
 \textit{1)} read $n$-bit from the register with $n \in \{ 64, 32, 16, 8 \}$, and 
 \textit{2)} write $n$-bit to the register with $n \in \{ 64, 32, 16, 8 \}$.
@@ -20,7 +21,7 @@ We descibe the possible change within one register
 as $\delta \in \Delta$ with $\Delta = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. \footnote{Note that 0 signals the absence
 of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore, $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ 
 with $m \in \{64,32,16,8\}$ and $m < n$ (\textit{e.g.,} $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.}
-SystemV ABI specifies 16 general purpose integer registers. Therefore we represent the change occurring at the processor level as $\delta_p \in \Delta^{16}$. 
+SystemV ABI specifies 16 general purpose integer registers. Therefore, we represent the change occurring at the processor level as $\delta_p \in \Delta^{16}$. 
 We calculate this change for each instruction $i \in \texttt{INSTR}$ via the function $decode : \texttt{INSTR} \mapsto \Delta^{16}$.
 
 % Finally, in \cref{section:addresstakenanalysis} we introduce a version of 
@@ -61,12 +62,12 @@ We calculate this change for each instruction $i \in \texttt{INSTR}$ via the fun
 \draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Huge{growing required bits/parameter}} (-0.5,7.5);
 \draw[-triangle 45, thick] (12.5,7.5) -- node[sloped, anchor=center, above] {\Huge{growing provided bits/parameter}} (12.5,0);
 
-\draw (0,7.5)  --node[anchor=south] {\rot{\Huge{param 6}}} (2,7.5);
-\draw (2,7.5)  --node[anchor=south] {\rot{\Huge{param 5}}} (4,7.5);
-\draw (4,7.5)  --node[anchor=south] {\rot{\Huge{param 4}}} (6,7.5);
-\draw (6,7.5)  --node[anchor=south] {\rot{\Huge{param 3}}} (8,7.5);
-\draw (8,7.5)  --node[anchor=south] {\rot{\Huge{param 2}}} (10,7.5);
-\draw (10,7.5) --node[anchor=south] {\rot{\Huge{param 1}}} (12,7.5);
+\draw (0,7.5)  --node[anchor=south] {\rot{\Huge{param. 6}}} (2,7.5);
+\draw (2,7.5)  --node[anchor=south] {\rot{\Huge{param. 5}}} (4,7.5);
+\draw (4,7.5)  --node[anchor=south] {\rot{\Huge{param. 4}}} (6,7.5);
+\draw (6,7.5)  --node[anchor=south] {\rot{\Huge{param. 3}}} (8,7.5);
+\draw (8,7.5)  --node[anchor=south] {\rot{\Huge{param. 2}}} (10,7.5);
+\draw (10,7.5) --node[anchor=south] {\rot{\Huge{param. 1}}} (12,7.5);
 
 \draw (0,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (2,6);
 \draw (2,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (4,6);
@@ -104,14 +105,17 @@ We calculate this change for each instruction $i \in \texttt{INSTR}$ via the fun
 \draw (10,1.5) rectangle node[anchor=center] {\Huge{64-bits}} (12,0);
 \end{tikzpicture}
 }
-\caption{The \emph{type} policy schema for callsites and calltargets. As is demonstrated here, when requiring wideness, one starts at the bottom and grows to the top, as it is always possible to accept more than one requires. The reverse is true for providing, as it is possible to accept less than provided.}
+\caption{The \emph{type} policy schema for callsites and calltargets. As is demonstrated here, when requiring wideness, one starts at the bottom and grows to the 
+top, as it is always possible to accept more than one requires. The reverse is true for providing, as it is possible to accept less than provided.}
 \label{fig:TYPEschema}
 \end{figure}
-As shown in Figure \ref{fig:TYPEschema}, our idea is to not simply classify callsites and calltargets based on the number of parameters they provide or request, but als on the parameter type. To simplify our approach we use the wideness of the type and do not infer the actual type.
-As previously mentioned there are 4 types of reading and writing access each. Therefore our set of possible types for parameters is $\texttt{TYPE} = \{64, 32, 16, 8, 0\}$; 0 models the absence of a parameter. Since SystemV ABI specifies 6 registers as parameter holding 
+As shown in Figure \ref{fig:TYPEschema}, our idea is to not simply classify callsites and calltargets based on the number of parameters they provide or 
+request, but also on the parameter type. To simplify our approach we use the wideness of the type and do not infer the actual type.
+As previously mentioned, there are 4 types of reading and writing accesses. Therefore, our set of possible types for parameters is $\texttt{TYPE} = \{64, 32, 16, 8, 0\}$; 
+where 0 models the absence of a parameter. Since SystemV ABI specifies 6 registers as parameter holding 
 registers, we classify our callsites and calltargets into $\texttt{TYPE}^6$.
-Similar to the policy of \texttt{TypeArmour}, we allow overestimations of callsites and underestimations of calltargets, however on the level of types. Therefore for a 
-callsite $cs$ to be able to call the calltarget $ct$, if for each parameter of $ct$ the corresponding parameter of $cs$ is not smaller when comparing the wideness.
+Similar to the policy of \texttt{TypeArmour}, we allow overestimations of callsites and underestimations of calltargets, however, on the level of types. Therefore, for a 
+callsite $cs$ it is possible to call a calltarget $ct$, only if for each parameter of $ct$ the corresponding parameter of $cs$ is not smaller w.r.t. the wideness.
 This results in a finer-grained policy further restricting the possible pool of calltargets for each callsite.
 
 %What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the parameter type. However, due to complexity reasons,
@@ -146,11 +150,16 @@ This results in a finer-grained policy further restricting the possible pool of 
     
 \subsection{Calltarget Analysis}
 \label{section:calltargetanalysis}
-For our policy we need to classify our calltargets according to the parameters they provide. Underestimations are allowed, however overestimations shall not be permitted. For this purpose we employ a customizable modified liveness analysis algorithm, which we will show first. We then present our versions for a \emph{count} and a\emph{type} based policy. Furthermore, we need to be aware of certain corner cases, which we will discuss at the end.
+For our policy, we need to classify our calltargets according to the parameters they provide. Underestimations are allowed, however, overestimations shall not be permitted. 
+For this purpose we employ a customizable modified liveness analysis algorithm, which we will show first. We then present our versions for a~\emph{count} and a~\emph{type} 
+based policy. Furthermore, we need to be aware of certain corner cases, which we will discuss at the end.
 
 \textbf{Liveness Analysis}
-A variable is alive before the execution of an instruction, if at least one of the originating paths performs a read access before any write access  on that variable. If applied to a function, this calculates essentially the variables that need to be alive at the beginning, which in essense are its parameters.
-We based Algorithm~\ref{alg:liveness} on the liveness analysis algorithm in Khedker \textit{et al.}~ \cite{khedker2009data}, which essentially is a depth first traversal of blocks. For customization we rely on the implementation of several functions($\mathcal{S}^\mathcal{L}$ is the set of possible register states depending on the specific liveness implementation):
+A variable is alive before the execution of an instruction, if at least one of the originating paths performs a read access before any write access  on that variable. 
+If applied to a function, this calculates essentially the variables that need to be alive at the beginning, these are its parameters.
+We based Algorithm~\ref{alg:liveness} on the liveness analysis algorithm presented in Khedker~\textit{et al.}~\cite{khedker2009data}, which basically
+is a depth-first traversal of basic blocks. For customization, we rely on the implementation of several functions ($\mathcal{S}^\mathcal{L}$ is the
+set of possible register states depending on the specific liveness implementation):
 
 $\texttt{merge\_v} : \mathcal{S}^\mathcal{L} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge a set of states resulting from several paths.
 
@@ -199,17 +208,24 @@ $\texttt{succ} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which 
 \label{alg:liveness}
 \end{algorithm}
 
-In our specific case, the function \texttt{analyze\_instr} needs to also handle non jump and non fallthrough successors, as these are not handled by DynInst. Essentially there are four relevant cases: 1) If the current instruction is an indirect call or a direct call and the chosen implementation should not follow calls, then return a state where all registers are considered to be written before read. 2) If the current instruction is a direct call and the chosen implementation should follow calls, then we start an analysis of the target function an return its result. 3) If the instruction is a constant write (e.g., xor of two registers), 
+In our specific case, the function \texttt{analyze\_instr} needs to also handle non-jump and non-fall-through successors, as these are not handled by DynInst. 
+Essentially, there are four relevant cases: 1) If the current instruction is an indirect call or a direct call and the chosen implementation should not follow calls, 
+then return a state where all registers are considered to be written before read. 2) If the current instruction is a direct call and the chosen implementation should follow calls, 
+then we start an analysis of the target function an return its result. 3) If the instruction is a constant write (e.g., xor of two registers), 
 then we remove the read portion before we return the decoded state. 4) In any other case, we simply return the decoded state.
-This leaves us with the two undefined merge functions and the undefined liveness state $\mathcal{S}^\mathcal{L}$. In the following two paragraphs we will present two implementation variants: first similar to TypeArmour a \emph{count} based policy and second our \emph{type} based policy.
+This leaves us with the two undefined merge functions and the undefined liveness state $\mathcal{S}^\mathcal{L}$. In the following two paragraphs we will present two 
+implementation variants: first similar to TypeArmour a \emph{count} based policy and second our \emph{type} based policy.
 
-\textbf{Required Parameter Count} To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we use the same representation as TypeArmor: 1) $W$ represents write before read access, 2) $R$ represents read before write access, and 3) $C$ represents the absence of access.
+\textbf{Required Parameter Count} To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we use the same representation 
+as TypeArmor: 1) $W$ represents write before read access, 2) $R$ represents read before write access, and 3) $C$ represents the absence of access.
 This gives us the $S^\mathcal{L} = \{ C, R, W \}$ as register state, which translates to the register super state $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
-We implement \texttt{merge\_v} in such a way that a state within a superstate is only updated if the corresponding register has yet to be accesses, as represented by $C$. Our reasoning is that the first access is the relevant one to determine read before write.
+We implement \texttt{merge\_v} in such a way that a state within a superstate is only updated if the corresponding register has yet to be accesses, as represented by $C$. 
+Our reasoning is that the first access is the relevant one to determine read before write.
 
 TODO  \texttt{merge\_h} (depends on numbers)
 
-The index of highest parameter register based on the used call convention that has the state R is considered to be the number of parameters a function at least requires to be prepared by a callsite.
+The index of highest parameter register based on the used call convention that has the state R is considered to be the number of parameters a function at least requires 
+to be prepared by a callsite.
 
 %
 %This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the  liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
@@ -354,16 +370,6 @@ like operator with $W$ preceding $WR$ preceding $R$ preceding $C$. Unless one si
 
 \textbf{Variadic Functions.}
 \label{subsection:variadicfunctions}
-Variadic functions are special functions in C/C++ that have a basic set of parameters, 
-which they always require and a variadic set of parameters, which as the name suggests 
-may vary. A prominent example of this would be the $printf$ function, which is used 
-to output text to $stdout$.
-
-The problem with these functions is that to allow for easier processing of parameters
-usually all potential variadic parameters are moved into a contiguous block of memory
-%, as can be seen in the assembly in Figure \ref{fig:asmvariadic}.
-Our analysis interprets that as a read access on all 
-parameters and we arrive at a problematic overestimation. 
 
 \begin{figure}[thp] % the figure provides the caption
 \centering          % which should be centered
@@ -400,6 +406,16 @@ parameters and we arrive at a problematic overestimation.
 \label{fig:asmvariadic}
 \end{figure}
 
+Variadic functions are special functions in C/C++ that have a basic set of parameters, 
+which they always require and a variadic set of parameters, which as the name suggests 
+may vary. A prominent example of this would be the $printf$ function, which is used 
+to output text to $stdout$.
+This type of functions allow for an easier processing of parameters where
+usually all potential variadic parameters are moved into a contiguous block of memory, 
+as can be observed in the assembly depicted Figure \ref{fig:asmvariadic}.
+Our analysis interprets that as a read access on all parameters and thus,
+we arrive at a problematic overestimation. 
+
 Our solution to this problem is to find these spurious reads and ignore them. A compiler will implement this type of operation very 
 similar for all cases, thus we can achieve this using the following steps:
 \textit{1)} we look for what we call the xmm-passthrough block, which entirely consist of moving the values of registers \texttt{xmm0} to 
@@ -411,10 +427,12 @@ xmm-passthrough block, which we call the param-passthrough block, and
 \textit{3)} We look at the param-passthrough block and set all instructions that move the value of a parameter register into memory to be
 ignored. %(in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \texttt{0x422347} and \texttt{0x42234c})
 
-\textbf{Ignoring Reads.} When one instruction writes and reads a register at the same time we give the read access precedence, however there are exceptions (also mentioned in TypeArmor, however we expand slightly on that):
+\textbf{Ignoring Reads.} When one instruction writes and reads a register at the same time we give the read access precedence, however, there are exceptions 
+(also mentioned in TypeArmor, however, we expand slightly on that):
 \textit{1)} \texttt{xor \%rax, \%rax} is the first obvious scenario, as it will always result in \texttt{\%rax} holding the value 0,
 \textit{2)} \texttt{sub \%rax, \%rax} is probably the next scenario, as it results also in \texttt{\%rax} also holding the value 0, and
-\textit{3)} \texttt{sbb \%rax, \%rax} is also relevant, however it will not result in a constant value and based on the current state might either result in \texttt{\%rax} holding the value 0 or 1.
+\textit{3)} \texttt{sbb \%rax, \%rax} is also relevant, however, it will not result in a constant value and based on the current state might either 
+result in \texttt{\%rax} holding the value 0 or 1.
 
 \begin{algorithm}[!ht]
 	\SetAlgoLined
@@ -462,7 +480,7 @@ callsite existing within the targeted binary. We will employ a modified version 
 variables to generate the needed overestimation. As our algorithm will be customizable, we look at the required merge functions to 
 implement \emph{count} and \emph{type} policy. 
 
-\textbf{Reaching Definitions Theory.}
+\textbf{Reaching Definitions.}
 \label{subsection:reachindefinitionstheory}
 An assignment of a value to a variable is a reaching definition at the end of a block $n$, if that definition is present within at 
 least one path from start to the end of the block $n$ without being overwritten by another value assignment to the same variable. 
@@ -493,8 +511,8 @@ requires the last known set of definitions that reach the actual call instructio
 %
 %
 %However, we cannot use reaching definition analysis as is, because the analysis is again based on potentially unbound 
-%variable sets, while we are restricted to a finite number of registers and states. This time however the analysis provides us with an overestimation, 
-%we however want to get a result as close as possible so we again want to customize merge functions. Furthermore, we have to define how 
+%variable sets, while we are restricted to a finite number of registers and states. This time however, the analysis provides us with an overestimation, 
+%we however, want to get a result as close as possible so we again want to customize merge functions. Furthermore, we have to define how 
 %to interpret the changes occuring withing one block based on the the change caused by its instructions. Considering this, w, we 
 %arrive at algorithm \ref{alg:reaching} to compute the liveness state at the start of a basic block.
 The book~\cite{khedker2009data} defines reaching definition analysis on blocks, which we use to arrive at algorithm depicted in Algorithm~\ref{alg:reaching} to compute 
@@ -505,6 +523,7 @@ function $merge\_v$, which describes how to compound the state change of the cur
 the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function
 $analyze\_instr$. The function $pred$, which retrieves all possible predecessors of a block won't be implemented by us, 
 because we rely on the DynInst instrumentation framework to achieve the following.
+\vspace{-.3cm}
 \begin{subequations}
 \label{eq:livenesscustom}
 \begin{align}
@@ -514,6 +533,7 @@ analyze\_instr &: \mathcal {I} \mapsto \mathcal{S}^\mathcal{R} \\
 pred &: \mathcal{I} \mapsto \mathcal{P}(\mathcal{I})
 \end{align}
 \end{subequations}
+\vspace{-.8cm}
 
 As the $analyze\_instr$ function calculates the effect of an instruction and is the heart of the analyze function. It will also 
 handle non jump and non fall-through successors, as these are not handled by DynInst in our case. We essentially have three cases that we handle:
@@ -718,7 +738,7 @@ A parameter list of $(64, 0, 64, 0, 0, 0)$ is concluded, although the actual par
 what we expect, the 0 at the second parameter position will cause trouble, because it is an underestimation at the single parameter level, which we need to avoid.
 Our solution is to simply scan our reaching analysis result for these holes and replace them with the wideness $64$, causing a (possible) overestimation.
 
-\paragraph{Address Wideness Unterestimation.} This refers to the issue that while in the callsite a constant value of 32-bit is written to a register, however 
+\paragraph{Address Wideness Unterestimation.} This refers to the issue that while in the callsite a constant value of 32-bit is written to a register, however, 
 the calltarget uses the whole 64-bit register. This can occur when pointers are passed from the callsite to the calltarget. Specifically this happens 
 when pointers to memory inside the \texttt{.bss}, \texttt{.data} or \texttt{.rodata} section of the binary are passed.
 Our solution is to enhance our instruction analysis to watch out for constant writes. In case a 32-bit constant value write is detected, we check if the
@@ -740,10 +760,10 @@ and set the wideness to 64-bit instead of 32-bit.
 %\begin{itemize}
 %
 %\item { Code Pointer Constants (CK)} are addresses that are calculated during the compilation of the binary and point within
-%the possible range of addresses in the current module or to instruction boundaries. We are however only interested in addresses
+%the possible range of addresses in the current module or to instruction boundaries. We are however, only interested in addresses
 %that directly point to an entry basic block of a function, as these are the only valid targets for any callsite.
 %
-%\item { Computed code pointers (CC)} are the result of simple pointer arithmetic, however these are only used for intra-procedural jumps. 
+%\item { Computed code pointers (CC)} are the result of simple pointer arithmetic, however, these are only used for intra-procedural jumps. 
 %We rely on DynInst to resolve those and only focus on indirect callsites, therefore these are of no interest to us.
 %
 %\item{ Exception handling addresses (EH)} are used to handle exceptions within C++ functions and are modeled as jumps within the function. 

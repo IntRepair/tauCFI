@@ -9,7 +9,7 @@ We currently restricted our analysis and instrumentation to x86-64 bit elf
 binaries using the SystemV call convention, because the DynInst library does not yet support the
 Windows platform. However, there is currently work going on in order to allow DynInst to work with
 Windows binaries as well. We focused on the SystemV call convention as most C/C++ compilers
-on Linux implement this ABI, however we encapsulated most ABI dependent behavior, so it should 
+on Linux implement this ABI, however, we encapsulated most ABI dependent behavior, so it should 
 be possible to implement other ABIs with relative ease. Therefore, we deem it possible to implement
 \textsc{TypeShield} for the Windows platform in the near future, as we do not use any other 
 platform-dependent API's. 

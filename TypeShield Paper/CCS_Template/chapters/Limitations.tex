@@ -1,40 +1,40 @@
-\section{Limitations}
-\label{chapter:Limitations}
+\section{Discussion}
+\label{chapter:Discussion}
 
-% \textbf{Comparison with TypeArmor.}
-% \label{section:comptype}
-% We are looking at two sets of results. First of all, we compare the overall precision of our implementation
-% of the COUNT policy with the results from TypeArmor to set the perspective for the precision of our TYPE 
-% policy. We cannot compare data regarding overestimations of calltargets or underestimations of callsites, 
-% as TypeArmor did not provide sufficient data. The second point of comparison is the reduction of calltargets
-% per callsite, however, this comparison is rather crude, as we most surely do not have the same measuring
-% environment and not sufficient data to infer its quality.
-% 
-% {\textit{Precision of Classification.}}
-% TypeArmor reports a geometric mean of 83.26\% for the perfect classification of calltargets regarding 
-% parameter count in optimization level O2, which compares rather well to our result of 82.24\%. Regarding
-% the perfect classification of callsites we report a geometric mean of 81.6\% perfect classification 
-% regarding parameter count, while TypeArmor reports a geometric mean of 79.19\%. However, we also have
-% a geometric mean of about 7\% regarding underestimations in the callsite classification with an upper
-% bound of 16\%, while TypeArmor reports that it does not incur underestimations in their callsites.
-% Now, for our type based classification we incur the cost for two error sources. First, the error from
-% the parameter count classification, which we base our type analysis on and second for the type analysis
-% itself. The numbers for the perfect classification of calltargets regarding parameter types we report a
-% 72.25\% geometric mean of perfect classification, which is 87.85\% of our precision regarding parameter
-% counts. However, we report a geometric mean of 57.36\%
-% for perfect classification of callsites, which although seemingly low, is still 69.74\% of our precision
-% regarding parameter counts.
-% 
-% {\textit{Reduction of Available Calltargets.}}
-% While our count based precision focused implementation achieves a reduction in the same ballpark as
-% TypeArmor regarding our test targets, lets us believe that our implementation of their classification
-% schema is a sufficient approximation to compare against. However, we cannot safely compare those numbers,
-% as the information regarding their test environment are rather sparse and the only data available is the
-% median, which in our opinion does discard valuable information from the actual result set. This is the
-% main reason we implemented an approximation, because we needed more metrics to compare \textsc{TypeShield}
-% and TypeArmor regarding calltargets. Using average and sigma, we can report that our precision focused
-% type based classification can reduce the number of calltargets, by up to 20\% more than parameter number
-% based classification with an overall reduction of about 9\%.
+\subsection{Comparison with TypeArmor}
+\label{section:comptype}
+We are looking at two sets of results. First of all, we compare the overall precision of our implementation
+of the COUNT policy with the results from TypeArmor to set the perspective for the precision of our TYPE 
+policy. We cannot compare data regarding overestimations of calltargets or underestimations of callsites, 
+as TypeArmor did not provide sufficient data. The second point of comparison is the reduction of calltargets
+per callsite, however, this comparison is rather crude, as we most surely do not have the same measuring
+environment and not sufficient data to infer its quality.
+
+\textbf{\textit{Precision of Classification.}}
+TypeArmor reports a geometric mean of 83.26\% for the perfect classification of calltargets regarding 
+parameter count in optimization level O2, which compares rather well to our result of 82.24\%. Regarding
+the perfect classification of callsites we report a geometric mean of 81.6\% perfect classification 
+regarding parameter count, while TypeArmor reports a geometric mean of 79.19\%. However, we also have
+a geometric mean of about 7\% regarding underestimations in the callsite classification with an upper
+bound of 16\%, while TypeArmor reports that it does not incur underestimations in their callsites.
+Now, for our type based classification we incur the cost for two error sources. First, the error from
+the parameter count classification, which we base our type analysis on and second for the type analysis
+itself. The numbers for the perfect classification of calltargets regarding parameter types we report a
+72.25\% geometric mean of perfect classification, which is 87.85\% of our precision regarding parameter
+counts. However, we report a geometric mean of 57.36\%
+for perfect classification of callsites, which although seemingly low, is still 69.74\% of our precision
+regarding parameter counts.
+
+\textbf{\textit{Reduction of Available Calltargets.}}
+While our count based precision focused implementation achieves a reduction in the same ballpark as
+TypeArmor regarding our test targets, lets us believe that our implementation of their classification
+schema is a sufficient approximation to compare against. However, we cannot safely compare those numbers,
+as the information regarding their test environment are rather sparse and the only data available is the
+median, which in our opinion does discard valuable information from the actual result set. This is the
+main reason we implemented an approximation, because we needed more metrics to compare \textsc{TypeShield}
+and TypeArmor regarding calltargets. Using average and sigma, we can report that our precision focused
+type based classification can reduce the number of calltargets, by up to 20\% more than parameter number
+based classification with an overall reduction of about 9\%.
 
 % \textbf{TypeArmor Discrepancies.}
 % \label{section:discrep}
@@ -68,6 +68,7 @@
 % limited approach of that in our reaching implementation, we still see room for improvement, as we only check
 % whether a value is within one of three binary sections or 0.
 
+\subsection{Limitations}
 First, \textsc{TypeShield} is limited by the capabilities of the DynInst instrumentation environment, the main problem,
 we are facing here is that non returning functions like exit are not detected reliably in some cases, which is
 why we were not able to test the Pure-FTP server, as it heavily relies on these functions. The problem is that

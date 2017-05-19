@@ -2,17 +2,18 @@
 \label{chapter:Design}
 
 In this section, we cover the design of \textsc{TypeShield}. 
-We first present theory and definitions for our instructions analysis based on register states.
- \cref{section:instructionanalysis}. 
-Then we present the details of our new \emph{type} policy in \cref{section:typepolicy}. 
-Finally we present the design of our calltarget analysis in 
-\cref{section:calltargetanalysis} and the design of our callsite analysis in~\cref{section:callsiteanalysis} .
+First, we present the theory and definitions for our instructions analysis based on register states in~\cref{section:instructionanalysis}. 
+Second, we present the details of our new \emph{type} policy in~\cref{section:typepolicy}. 
+Finally, we present the design of our calltarget analysis in~\cref{section:calltargetanalysis} and the design of our 
+callsite analysis in~\cref{section:callsiteanalysis}.
 
 \subsection{Analysis of Register-States}
 \label{section:instructionanalysis}
-Instead of symbol based data-flow analysis, our approach is register state based. Therefore we need to adapt the usual definitions.
-The set $\texttt{INSTR}$ describes all possible instructions that can occur within the executable section of a binary. In our case this is based on the instruction set for x86-64 processors.
-An instruction $i \in \texttt{INSTR}$ can non-exclusively perform two kinds of operations on any number of existing registers:\footnote{There are registers that can directly access the higher 
+Instead of symbol based data-flow analysis, our approach is register state based. Therefore, we need to adapt the usual definitions.
+The set $\texttt{INSTR}$ describes all possible instructions that can occur within the executable section of a binary. In our case,
+this is based on the instruction set for x86-64 processors.
+An instruction $i \in \texttt{INSTR}$ can non-exclusively perform two kinds of operations on any number of existing 
+registers:\footnote{There are registers that can directly access the higher 
 8-bit of the lower 16-bit. For our purpose we register this access as a 16-bit access.}
 \textit{1)} read $n$-bit from the register with $n \in \{ 64, 32, 16, 8 \}$, and 
 \textit{2)} write $n$-bit to the register with $n \in \{ 64, 32, 16, 8 \}$.
@@ -20,7 +21,7 @@ We descibe the possible change within one register
 as $\delta \in \Delta$ with $\Delta = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. \footnote{Note that 0 signals the absence
 of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore, $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ 
 with $m \in \{64,32,16,8\}$ and $m < n$ (\textit{e.g.,} $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.}
-SystemV ABI specifies 16 general purpose integer registers. Therefore we represent the change occurring at the processor level as $\delta_p \in \Delta^{16}$. 
+SystemV ABI specifies 16 general purpose integer registers. Therefore, we represent the change occurring at the processor level as $\delta_p \in \Delta^{16}$. 
 We calculate this change for each instruction $i \in \texttt{INSTR}$ via the function $decode : \texttt{INSTR} \mapsto \Delta^{16}$.
 
 % Finally, in \cref{section:addresstakenanalysis} we introduce a version of 
@@ -104,14 +105,17 @@ We calculate this change for each instruction $i \in \texttt{INSTR}$ via the fun
 \draw (10,1.5) rectangle node[anchor=center] {\Huge{64-bits}} (12,0);
 \end{tikzpicture}
 }
-\caption{The \emph{type} policy schema for callsites and calltargets. As is demonstrated here, when requiring wideness, one starts at the bottom and grows to the top, as it is always possible to accept more than one requires. The reverse is true for providing, as it is possible to accept less than provided.}
+\caption{The \emph{type} policy schema for callsites and calltargets. As is demonstrated here, when requiring wideness, one starts at the bottom and grows to the 
+top, as it is always possible to accept more than one requires. The reverse is true for providing, as it is possible to accept less than provided.}
 \label{fig:TYPEschema}
 \end{figure}
-As shown in Figure \ref{fig:TYPEschema}, our idea is to not simply classify callsites and calltargets based on the number of parameters they provide or request, but als on the parameter type. To simplify our approach we use the wideness of the type and do not infer the actual type.
-As previously mentioned there are 4 types of reading and writing access each. Therefore our set of possible types for parameters is $\texttt{TYPE} = \{64, 32, 16, 8, 0\}$; 0 models the absence of a parameter. Since SystemV ABI specifies 6 registers as parameter holding 
+As shown in Figure \ref{fig:TYPEschema}, our idea is to not simply classify callsites and calltargets based on the number of parameters they provide or 
+request, but also on the parameter type. To simplify our approach we use the wideness of the type and do not infer the actual type.
+As previously mentioned, there are 4 types of reading and writing accesses. Therefore, our set of possible types for parameters is $\texttt{TYPE} = \{64, 32, 16, 8, 0\}$; 
+where 0 models the absence of a parameter. Since SystemV ABI specifies 6 registers as parameter holding 
 registers, we classify our callsites and calltargets into $\texttt{TYPE}^6$.
-Similar to the policy of \texttt{TypeArmour}, we allow overestimations of callsites and underestimations of calltargets, however on the level of types. Therefore for a 
-callsite $cs$ to be able to call the calltarget $ct$, if for each parameter of $ct$ the corresponding parameter of $cs$ is not smaller when comparing the wideness.
+Similar to the policy of \texttt{TypeArmour}, we allow overestimations of callsites and underestimations of calltargets, however on the level of types. Therefore, for a 
+callsite $cs$ it is possible to call a calltarget $ct$, only if for each parameter of $ct$ the corresponding parameter of $cs$ is not smaller w.r.t. the wideness.
 This results in a finer-grained policy further restricting the possible pool of calltargets for each callsite.
 
 %What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the parameter type. However, due to complexity reasons,
@@ -298,7 +302,6 @@ To implement the \emph{type} policy, we need a finer representation of the state
 \textit{1)} $W$ represents write before read access,
 \textit{2)} $r8, r16, r32, r64$ represents read before write access with 8-, 16-, 32-, 64-bit wideness, and
 \textit{3)} $C$ represents the absence of access.
-
 %\begin{enumerate}
 %\item Was the register written to before its value could be read ? \\ We represent this with the state $W$.
 %\item How much was read from the register before its value was overwritten? \\ We represent this with the states $\{ r8, r16, r32, r64 \}$ 
@@ -355,16 +358,6 @@ like operator with $W$ preceding $WR$ preceding $R$ preceding $C$. Unless one si
 
 \textbf{Variadic Functions.}
 \label{subsection:variadicfunctions}
-Variadic functions are special functions in C/C++ that have a basic set of parameters, 
-which they always require and a variadic set of parameters, which as the name suggests 
-may vary. A prominent example of this would be the $printf$ function, which is used 
-to output text to $stdout$.
-
-The problem with these functions is that to allow for easier processing of parameters
-usually all potential variadic parameters are moved into a contiguous block of memory
-%, as can be seen in the assembly in Figure \ref{fig:asmvariadic}.
-Our analysis interprets that as a read access on all 
-parameters and we arrive at a problematic overestimation. 
 
 \begin{figure}[thp] % the figure provides the caption
 \centering          % which should be centered
@@ -400,6 +393,16 @@ parameters and we arrive at a problematic overestimation.
 \caption{ASM code of the \texttt{make\_cmd} function with optimize level O2, which has a variadic parameter list.}
 \label{fig:asmvariadic}
 \end{figure}
+
+Variadic functions are special functions in C/C++ that have a basic set of parameters, 
+which they always require and a variadic set of parameters, which as the name suggests 
+may vary. A prominent example of this would be the $printf$ function, which is used 
+to output text to $stdout$.
+This type of functions allow for an easier processing of parameters where
+usually all potential variadic parameters are moved into a contiguous block of memory, 
+as can be observed in the assembly depicted Figure \ref{fig:asmvariadic}.
+Our analysis interprets that as a read access on all parameters and thus,
+we arrive at a problematic overestimation. 
 
 Our solution to this problem is to find these spurious reads and ignore them. A compiler will implement this type of operation very 
 similar for all cases, thus we can achieve this using the following steps:
@@ -463,7 +466,7 @@ callsite existing within the targeted binary. We will employ a modified version 
 variables to generate the needed overestimation. As our algorithm will be customizable, we look at the required merge functions to 
 implement \emph{count} and \emph{type} policy. 
 
-\textbf{Reaching Definitions Theory.}
+\textbf{Reaching Definitions.}
 \label{subsection:reachindefinitionstheory}
 An assignment of a value to a variable is a reaching definition at the end of a block $n$, if that definition is present within at 
 least one path from start to the end of the block $n$ without being overwritten by another value assignment to the same variable. 
@@ -506,6 +509,7 @@ function $merge\_v$, which describes how to compound the state change of the cur
 the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function
 $analyze\_instr$. The function $pred$, which retrieves all possible predecessors of a block won't be implemented by us, 
 because we rely on the DynInst instrumentation framework to achieve the following.
+\vspace{-.3cm}
 \begin{subequations}
 \label{eq:livenesscustom}
 \begin{align}
@@ -515,6 +519,7 @@ analyze\_instr &: \mathcal {I} \mapsto \mathcal{S}^\mathcal{R} \\
 pred &: \mathcal{I} \mapsto \mathcal{P}(\mathcal{I})
 \end{align}
 \end{subequations}
+\vspace{-.8cm}
 
 As the $analyze\_instr$ function calculates the effect of an instruction and is the heart of the analyze function. It will also 
 handle non jump and non fall-through successors, as these are not handled by DynInst in our case. We essentially have three cases that we handle:
@@ -540,7 +545,6 @@ thus we use the same representation as TypeArmor:
 \textit{1)} $T$ represents a trashed register,
 \textit{2)} $S$ represents a set register (written to), and
 \textit{3)} $U$ represents an untouched register.
-
 This gives us the following $S^\mathcal{L} = \{ T, S, U \}$  register state which translates to the register super state $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
 
 We are only interested in the first occurrence of a $S$ or $T$ within one path, as following reads or writes do not give us more information. 
@@ -635,7 +639,6 @@ To implement the \emph{type} policy, we need a finer representation of the state
 \textit{1)} $T$ represents a trashed register,
 \textit{2)} $s8, s16, s32, s64 S$ represents a set register with  8-, 16-, 32-, 64-bit  wideness, and
 \textit{3)} $U$ represents an untouched register.
-
 %\begin{itemize}
 %\item Was the register value trashed ? \\ We represent this with the state T.
 %\item Was the register written to and how much ? \\ We represent this with the states $\{ s64, s32, s16, s8 \}$ using S as a placeholder for arbitrary writes.

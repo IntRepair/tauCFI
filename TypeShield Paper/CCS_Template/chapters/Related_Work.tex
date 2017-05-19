@@ -53,42 +53,43 @@ we also enforce strong binary-level invariants on the number of function
 parameters. \textsc{TypeShield} similarly to TypeArmor targets 
 exclusive protection against advanced exploitation techniques 
 which can bypass fine-grained CFI schemes and VTable protections at the binary level.
-
 However, \textsc{TypeShield} offers a better restriction of calltargets to callsites, since 
 we not only restrict based on the number of parameters but also on the wideness of their types. 
 This results in much smaller buckets that in turn can only target a smaller subset of all address
 taken functions. However, we rely for that on the variety of parameter types and when there is 
 none, we will degrade into a parameter count policy.
 
-\textbf{\textit{Source code based.}} Indirect callsite targets are checked based on vTable integrity.
-Different types of CFI policies are used such as in the following tools:
-SafeDispatch~\cite{safedispatch:jang}, IFCC/VTV~\cite{vtv:tice} LLVM and GCC compiler.
-Additionally, the Redactor++~\cite{crane:readactor++} uses randomization 
-vTrust~\cite{zhang:vtrust} checks calltarget function signatures, 
-CPI~\cite{volodymyr:cpi} uses a memory safety technique
-in order to protect against the COOP attack.
+% We are aware that there is still a long research path to go until binary based techniques can 
+% recuperate program based semantic information from executable with the same precision as compiler based tools.
+% This path could be even endless since compilers are optimized for speed and are designed to remove as much as possible semantic information
+% from an executable in order to make the program run as fast as possible. In light of this fact,
+% \textsc{TypeShield} is another attempt to recuperate just the needed semantic information (types and number of function parameters from
+% indirect callsites) in order to be able to enforce a precise and with low overhead primitive against COOP attacks.
+% 
+% In this paper, rather than claiming that the invariants offered by~\textsc{TypeShield} are sufficient
+% to mitigate all versions of the COOP (as \cite{veen:typearmor} does) attack we conservatively claim that~\textsc{TypeShield} 
+% further raises the bar w.r.t. what is possible when defending against COOP attacks on the binary level.
 
-There are several source code based tools 
-which can successfully protect against the COOP attack.
-Such tools are: ShrinkWrap~\cite{haller:shrinkwrap}, IFCC/VTV~\cite{vtv:tice}, 
-SafeDispatch~\cite{safedispatch:jang}, vTrust~\cite{zhang:vtrust}, Readactor++~\cite{crane:readactor++}, CPI~\cite{volodymyr:cpi} and the
-tool presented by Bounov \textit{et al.}~\cite{bounov:interleaving}. These tools profit from high precision
-since they have access to the full semantic context of the program though the scope
-of the compiler on which they are based. 
-Because of this reason, these tools target mostly other types of security problems than binary-based 
-tools address. For example, some of the last advancements in compiler based protection against code reuse attacks address mainly performance issues.
-Currently, most of the above presented tools are only forward edge enforcers of fine-grained CFI policies with an overhead from 1\% up to 15\%.
+% \textbf{\textit{Source code based.}} Indirect callsite targets are checked based on vTable integrity.
+% Different types of CFI policies are used such as in the following tools:
+% SafeDispatch~\cite{safedispatch:jang}, IFCC/VTV~\cite{vtv:tice} LLVM and GCC compiler.
+% Additionally, the Redactor++~\cite{crane:readactor++} uses randomization 
+% vTrust~\cite{zhang:vtrust} checks calltarget function signatures, 
+% CPI~\cite{volodymyr:cpi} uses a memory safety technique
+% in order to protect against the COOP attack.
+% 
+% There are several source code based tools 
+% which can successfully protect against the COOP attack.
+% Such tools are: ShrinkWrap~\cite{haller:shrinkwrap}, IFCC/VTV~\cite{vtv:tice}, 
+% SafeDispatch~\cite{safedispatch:jang}, vTrust~\cite{zhang:vtrust}, Readactor++~\cite{crane:readactor++}, CPI~\cite{volodymyr:cpi} and the
+% tool presented by Bounov \textit{et al.}~\cite{bounov:interleaving}. These tools profit from high precision
+% since they have access to the full semantic context of the program though the scope
+% of the compiler on which they are based. 
+% Because of this reason, these tools target mostly other types of security problems than binary-based 
+% tools address. For example, some of the last advancements in compiler based protection against code reuse attacks address mainly performance issues.
+% Currently, most of the above presented tools are only forward edge enforcers of fine-grained CFI policies with an overhead from 1\% up to 15\%.
 
-We are aware that there is still a long research path to go until binary based techniques can 
-recuperate program based semantic information from executable with the same precision as compiler based tools.
-This path could be even endless since compilers are optimized for speed and are designed to remove as much as possible semantic information
-from an executable in order to make the program run as fast as possible. In light of this fact,
-\textsc{TypeShield} is another attempt to recuperate just the needed semantic information (types and number of function parameters from
-indirect callsites) in order to be able to enforce a precise and with low overhead primitive against COOP attacks.
 
-In this paper, rather than claiming that the invariants offered by~\textsc{TypeShield} are sufficient
-to mitigate all versions of the COOP (as \cite{veen:typearmor} does) attack we conservatively claim that~\textsc{TypeShield} 
-further raises the bar w.r.t. what is possible when defending against COOP attacks on the binary level.
 
 % \textbf{\textit{Runtime based.}}
 % ``There is something available out there but I can not use it'' \textit{Anonymous}.

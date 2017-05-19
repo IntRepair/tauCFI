@@ -1,10 +1,10 @@
 \section{Overview}
 \label{chapter:TypeShild Overview}
-In this section, we present a brief overview on the 
-considered adversary model in~\cref{Adversary Model} and depict the 
-invariants for calltargets and callsites in~\cref{Invariants for Targets and Callsites}.
-Finally, in~\cref{TypeShield Policy Mechanism} we present our function parameter type aware policy and give a formal description of it
-by relating it to~\cite{veen:typearmor}, and in~\cref{TypeShild Impact on COOP} we highlight the impact of our policy on COOP.
+% In this section, we present a brief overview on the 
+% considered adversary model in~\cref{Adversary Model} and depict the 
+% invariants for calltargets and callsites in~\cref{Invariants for Targets and Callsites}.
+% Finally, in~\cref{TypeShield Policy Mechanism} we present our function parameter type aware policy and give a formal description of it
+% by relating it to~\cite{veen:typearmor}, and in~\cref{TypeShild Impact on COOP} we highlight the impact of our policy on COOP.
 
 % \textbf{Adversary Model and Assumptions.}
 \subsection{Adversary Model and Assumptions}
@@ -18,17 +18,6 @@ to be either writable or executable but not both at the same time. We assume
 that our attacker has the ability to execute a memory corruption to hijack the programs 
 control flow and that a solution for backward CFI is in place.
 
-\subsection{Invariants for Calltargets and Callsites}
-% \textbf{Invariants for Targets and Callsites.}
-\label{Invariants for Targets and Callsites}
-Advanced code reuse attacks change the calltargets that are invoked within indirect 
-callsites. As standard CFI solutions can hardly restrict these, TypeArmor proposed using two base invariants:
-\textit{1)} indirect callsites provide a number of parameters (\textit{i.e.,} possibly overestimated compared to source), and 
-\textit{2)} calltargets require a minimum number of parameters (\textit{i.e.,} possibly underestimated compared to source).
-The idea is that a callsite might only call functions that do not require more parameters than provided by the callsite. 
-To compute the necessary information, TypeArmor uses a modified version of forward liveness analysis for call-targets and 
-backward reaching definitions analysis for callsites.
-
 \subsection{\textsc{TypeShield} Policy Mechanism}
 \label{TypeShield Policy Mechanism}
 
@@ -36,7 +25,7 @@ backward reaching definitions analysis for callsites.
 % \captionsetup{labelformat=empty}
 \vspace{-.5cm}
 \hspace{-.3cm}
-\resizebox{0.5\textwidth}{!}{
+\resizebox{0.49\textwidth}{!}{
 \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
     \begin{scope}
             % labels
@@ -365,7 +354,7 @@ backward reaching definitions analysis for callsites.
 \caption{\textsc{TypeShield}'s parameter type and count policy. 
 The $X$ and $Y$ axis of matrices $M1, M2$ and $M3$ represent function parameter count 
 and bit-widths in bytes, respectively.
-Note that our type policy performs an $\wedge$ (i.e., logical and) operation
+Note that our type policy performs an $\wedge$ (\textit{i.e.,} logical and) operation
 between each entry in $M1_{i,j}$ and $M2_{i,j}$ where $i$ and $j$ are column and row indexes. 
 If two black filled circles located in $M1$ $\wedge$ $M2$ overlap on positions $M1_{i} = M2_{i} \wedge M1_{j} = M2_{j}$ than we have a match.
 Green circles indicate a match whereas red circles indicate a mismatch in $M3$.
@@ -383,14 +372,12 @@ wideness \textit{pcs}1: 4-byte, \textit{pcs}2: 4-bye, \textit{pcs}3: 4-byte, \te
 wideness \textit{pct}1: 4-byte, \textit{pct}2: 4-bye, \textit{pct}3: 0-byte, \textit{pct}4: 0-byte, \textit{pct}5: 0-byte, 
 \textit{pct}6: 0-byte of the expected parameters. 
 \textsc{TypeShield}'s type policy is defined as follows. 
-
 \begin{definition}
 \label{eqn:1}
 Let $A$ be a call target $ct_{A}$ and $B$ a call site $cs_{B}$ than: 
 $ct_{A} \subseteq cs_{B} \iff \forall i \subseteq [1, 6],$
 wideness(parameter($A$)[i]) $\leq$ \ wideness(parameter($B$)[i]).
 \end{definition}
-
 Whereas the policy of TypeArmor is the following. 
 \begin{definition}
 \label{eqn:2}
@@ -403,21 +390,32 @@ From Definitions~\eqref{eqn:1} and~\eqref{eqn:2} it can be observed that
 the first policy is more fine-grained than the second one since it performs checks 
 for each parameter index in part.
 
+\subsection{Invariants for Calltargets and Callsites}
+% \textbf{Invariants for Targets and Callsites.}
+\label{Invariants for Targets and Callsites}
+Advanced code reuse attacks change the calltargets that are invoked within indirect 
+callsites. As standard CFI solutions can hardly restrict these, TypeArmor proposed using two base invariants:
+\textit{1)} indirect callsites provide a number of parameters (\textit{i.e.,} possibly overestimated compared to source), and 
+\textit{2)} calltargets require a minimum number of parameters (\textit{i.e.,} possibly underestimated compared to source).
+The idea is that a callsite might only call functions that do not require more parameters than provided by the callsite. 
+To compute the necessary information, TypeArmor uses a modified version of forward liveness analysis for call-targets and 
+backward reaching definitions analysis for callsites.
+
 \subsection{\textsc{TypeShield} Impact on COOP}
 % \textbf{\textsc{TypeShield} Impact on COOP.}
 \label{TypeShild Impact on COOP}
-\vspace{-.5cm}
+% \vspace{-.5cm}
 \begin{figure}[h!]
 \centering
-\resizebox{0.32\textwidth}{!}{
+\resizebox{0.25\textwidth}{!}{
 \begin{tikzpicture}
-\draw[thick] (0,-3) [blue] rectangle node[anchor=center]  (0)  {\LARGE{$\bot$ (0, 0)}}   (2,-4);
-\draw[thick] (0,0) rectangle node[anchor=center]  (320)  {\LARGE{(a, 0)}}  (2,-1);
-\draw[thick] (3,2) rectangle node[anchor=center]  (640)  {\LARGE{(b, 0)}}  (5,1);
-\draw[thick] (0,3) rectangle node[anchor=center]  (3232) {\LARGE{(a, a)}} (2,4);
-\draw[thick] (3,5) rectangle node[anchor=center]  (6432) {\LARGE{(b, a)}} (5,6);
-\draw[thick] (-1,5) rectangle node[anchor=center] (3264) {\LARGE{(a, b)}} (-3,6);
-\draw[thick] (0,7) [blue] rectangle node[anchor=center]  (6464) {\LARGE{$\top$ (b,b)}} (2, 8);
+\draw[thick] (0,-3) [blue] rectangle node[anchor=center]  (0)  {\HUGE{$\bot$ (0, 0)}}   (2,-4);
+\draw[thick] (0,0) rectangle node[anchor=center]  (320)  {\HUGE{(a, 0)}}  (2,-1);
+\draw[thick] (3,2) rectangle node[anchor=center]  (640)  {\HUGE{(b, 0)}}  (5,1);
+\draw[thick] (0,3) rectangle node[anchor=center]  (3232) {\HUGE{(a, a)}} (2,4);
+\draw[thick] (3,5) rectangle node[anchor=center]  (6432) {\HUGE{(b, a)}} (5,6);
+\draw[thick] (-1,5) rectangle node[anchor=center] (3264) {\HUGE{(a, b)}} (-3,6);
+\draw[thick] (0,7) [blue] rectangle node[anchor=center]  (6464) {\HUGE{$\top$ (b,b)}} (2, 8);
 
   %%TA and TS
   \draw[draw, -triangle 45, thick] (3264.north) -- (6464.south);
@@ -442,27 +440,31 @@ for each parameter index in part.
   %%draw boxes arround
   \draw[thick,dashed] (2.1,0.6) ellipse (4.5cm and 2cm);
    \begin{scope}[xshift=6cm, yshift=-.3cm]
-     \node[]    (q_1) {\LARGE{1 parameter}};
+     \node[]    (q_1) {\HUGE{1 parameter}};
    \end{scope}
    
    \draw[thick,dashed] (1,5.5) ellipse (4.8cm and 2.8cm);
    \begin{scope}[xshift=6cm, yshift=6.8cm]
-     \node[]    (q_2) {\LARGE{2 parameters}};
+     \node[]    (q_2) {\HUGE{2 parameters}};
    \end{scope}
    
    
    
-   \begin{scope}[xshift=6cm, yshift=-3cm]
-     \node[]    (q_4) {\LARGE{allowed}};
+   \begin{scope}[xshift=5cm, yshift=-1.9cm]
+     \node[]    (q_4) {\HUGE{\textit{Legend}}};
    \end{scope}
    
-   \begin{scope}[xshift=6cm, yshift=-3.4cm]
-     \node[]    (q_4) {\LARGE{allowed}};
+   \begin{scope}[xshift=5.1cm, yshift=-2.7cm]
+     \node[]    (q_4) {\HUGE{allowed}};
+     \draw[draw, -triangle 45, thick]  (1.2,-.02) -- (2.2,-.02);
    \end{scope}
    
-   \begin{scope}[xshift=6cm, yshift=-4cm]
-     \node[]    (q_3) {\LARGE{foridden}};
+   \begin{scope}[xshift=5.1cm, yshift=-3.4cm]
+     \node[]    (q_3) {\HUGE{foridden}};
+     \draw[draw, color=red, dotted, -triangle 45, thick]  (1.2,-.05) -- (2.2,-.05);
    \end{scope}
+   
+   \draw (3.8,-2.3) -- (7.4,-2.3) -- (7.4,-3.7) -- (3.8,-3.7) -- (3.8,-2.3);
    
 \end{tikzpicture}
 
@@ -470,13 +472,11 @@ for each parameter index in part.
 \caption{Transition based lattice between call targets and call sites,
 $a$ $\wedge$ $b$ $\in \{0-bit, 8-bit, 16-bit, 32-bit, 64-bit\}$ and the two 
 function parameters (for brevity) having $\{0-byte, 1-byte, 2-byte, 4-byte, 8-byte\}$ register wideness. 
-\textsc{TypeSchield} allows a transition from $a \rightarrow b \ iff$ $a_{i} \le b_{i}$ where $i \in [1, 2]$.
+\textsc{TypeShield} allows a transition from $a \rightarrow b \ iff$ $a_{i} \le b_{i}$ where $i \in [1, 2]$.
 Note that $\top$ and $\bot$ represent the top and bottom elements of the lattice, respectively.
 An arrow represents an indirect control flow transfer from a callsite to a calltarget. 
 The given lattice contains in total 8 black colored (legal) and 6 red colored (illegal) indirect control flow transitions. 
-Note that~\cite{veen:typearmor} would allow all 14 indirect control flow transfers 
-whereas \textsc{TypeSchield} would allow the black colored and 
-forbid the red colored transitions.}
+\textsc{TypeShield} allows only the legal transfers whereas~\cite{veen:typearmor} allows all of them.}
 \label{fig:lattice3264}
 \end{figure}
 

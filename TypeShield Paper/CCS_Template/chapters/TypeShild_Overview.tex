@@ -13,9 +13,9 @@
 We largely use the same threat model and the same basic assumptions as described in the TypeArmor 
 paper~\cite{veen:typearmor}, meaning that our attacker has read and write access to the data 
 sections of the attacked binary.  We also assume that the protected binary does not contain 
-self modifying code, handcrafted assembly or any kind of obfuscation. We also consider pages 
+self-modifying code, handcrafted assembly or any kind of obfuscation. We also consider pages 
 to be either writable or executable but not both at the same time. We assume 
-that our attacker has the ability to execute a memory corruption to hijack the programs 
+that our attacker has the ability to execute a memory corruption to hijack the program
 control flow and that a solution for backward CFI is in place.
 
 \subsection{\textsc{TypeShield} Policy Mechanism}
@@ -372,20 +372,17 @@ wideness \textit{pcs}1: 4-byte, \textit{pcs}2: 4-bye, \textit{pcs}3: 4-byte, \te
 wideness \textit{pct}1: 4-byte, \textit{pct}2: 4-bye, \textit{pct}3: 0-byte, \textit{pct}4: 0-byte, \textit{pct}5: 0-byte, 
 \textit{pct}6: 0-byte of the expected parameters. 
 \textsc{TypeShield}'s type policy is defined as follows. 
-\begin{definition}
-\label{eqn:1}
-Let $A$ be a call target $ct_{A}$ and $B$ a call site $cs_{B}$ than: 
+\label{eqn:1}{
+\textit{Definition 3.1} Let $A$ be a call target $ct_{A}$ and $B$ a call site $cs_{B}$ than: 
 $ct_{A} \subseteq cs_{B} \iff \forall i \subseteq [1, 6],$
-wideness(parameter($A$)[i]) $\leq$ \ wideness(parameter($B$)[i]).
-\end{definition}
+\ wideness(parameter($A$)[i]) $\leq$ \ wideness(parameter($B$)[i]).
+}
 Whereas the policy of TypeArmor is the following. 
-\begin{definition}
-\label{eqn:2}
-Let $A$ be a call target $ct_{A}$ and $B$ a call site $cs_{B}$ than: 
+\label{eqn:2}{
+\textit{Definition 3.2} Let $A$ be a call target $ct_{A}$ and $B$ a call site $cs_{B}$ than: 
 $ct_{A} \subseteq cs_{B} \iff \forall i \subseteq [1, 6],$ 
-count(parameter($A$)) $\leq$ count(parameter($B$)).
-\end{definition}
-
+\ count(parameter($A$)) $\leq$ count(parameter($B$)).
+}
 From Definitions~\eqref{eqn:1} and~\eqref{eqn:2} it can be observed that 
 the first policy is more fine-grained than the second one since it performs checks 
 for each parameter index in part.
@@ -401,13 +398,13 @@ The idea is that a callsite might only call functions that do not require more p
 To compute the necessary information, TypeArmor uses a modified version of forward liveness analysis for call-targets and 
 backward reaching definitions analysis for callsites.
 
-\subsection{\textsc{TypeShield} Impact on COOP}
+\subsection{Impact of \textsc{TypeShield} on COOP}
 % \textbf{\textsc{TypeShield} Impact on COOP.}
 \label{TypeShild Impact on COOP}
 % \vspace{-.5cm}
 \begin{figure}[h!]
 \centering
-\resizebox{0.32\textwidth}{!}{
+\resizebox{0.28\textwidth}{!}{
 \begin{tikzpicture}
 \draw[thick] (0,-3) [blue] rectangle node[anchor=center]  (0)  {\HUGE{$\bot$ (0, 0)}}   (2,-4);
 \draw[thick] (0,0) rectangle node[anchor=center]  (320)  {\HUGE{(a, 0)}}  (2,-1);
@@ -476,29 +473,27 @@ function parameters (for brevity) having $\{0-byte, 1-byte, 2-byte, 4-byte, 8-by
 Note that $\top$ and $\bot$ represent the top and bottom elements of the lattice, respectively.
 An arrow represents an indirect control flow transfer from a callsite to a calltarget. 
 The given lattice contains in total 8 black colored (legal) and 6 red colored (illegal) indirect control flow transitions. 
-Note that~\cite{veen:typearmor} would allow all 14 indirect control flow transfers 
-whereas \textsc{TypeShield} would allow the black colored and 
-forbid the red colored transitions.}
+\textsc{TypeShield} allows only the legal transfers, in contrast~\cite{veen:typearmor} allows all.}
 \label{fig:lattice3264}
 \end{figure}
 
-Figure~\ref{fig:lattice3264} represents the a sub-part of the total indirect transfers space in any given C/C++ program. 
+Figure~\ref{fig:lattice3264} represents a sub-part of the total indirect transfers space in any given C/C++ program represented as a lattice. 
 In case a CFI policy schema is based only on parameter count with callsite overestimation and calltarget subestimation 
 it is possible that a callsite can use any call-target as long as the number of 
-parameter provided and required are fullfiling the policy, even if the parameter types do not match 
+parameters provided and required are fulfilling the policy, even if the parameter types do not match 
 (\textit{i.e.,} imagine 8-bit values provided by the callsite but 64-bit values required by the calltarget). 
 Such a parameter count based policy is \textit{blind} and would allow any call transfer 
 inside the lattice space presented in Figure~\ref{fig:lattice3264} and as such the calltarget set per 
 callsite would be too permissive.
 
 In order to effectively deal with this situation we extend the above presented parameter count based policy in order to
-be able to deal with function parameter types as well.We introduce the following policy rules: 
+be able to deal with function parameter types as well. We introduce the following policy rules: 
 \textit{1)} indirect callsites provide a maximum wideness to each parameter, and
 \textit{2)} calltargets require a minimum wideness for each parameter. 
 Note that for both rules the minimum and maximum wideness for each function 
 parameter is possibly underestimated compared to the source code of the program with which we 
 also compare in \cref{chapter:Evaluation}.
-Note, that the number of provided parameters must be no lower than the requirement the number of consumed parameters. 
+Also note that the number of provided parameters must be not lower than the requirement number of consumed parameters. 
 Finally, our approach is more fine-grained by considering parameter wideness and as such the allowed calltarget lattice 
 space is considerably reduced.
 

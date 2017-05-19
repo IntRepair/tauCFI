@@ -1,8 +1,8 @@
 \section{Forbidden Forward Calls Exposed}
 \label{C++ Bad Forward Indirect Calls}
-In this section,
-we present exploitable weaknesses of object oriented polymorphism in~\cref{Exploiting Polymorphism Weaknesses},
-while in~\cref{section:countpolicy} we give an overview or our count parameter count policy which is similar to~\cite{veen:typearmor}.
+% In this section,
+% we present exploitable weaknesses of object oriented polymorphism in~\cref{Exploiting Polymorphism Weaknesses},
+% while in~\cref{section:countpolicy} we give an overview or our count parameter count policy which is similar to~\cite{veen:typearmor}.
 
 % we present a brief overview of the concept of C++-based polymorphism in~\cref{Polymorphism in C++}
 % and how indirect calls can be checked in practice in~\cref{C++ Indirect Calls in Practice}.
@@ -176,7 +176,7 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 \end{minipage}
 \end{lrbox}
 
-\subsection{Exploiting Polymorphism Weaknesses}
+\subsection{Exploiting Object Dispatches}
 \label{Exploiting Polymorphism Weaknesses}
  \begin{figure}[!h]
    \vspace{-.45cm}
@@ -193,22 +193,22 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 \label{Code example used to illustrate how a COOP loop gadget works}
 \end{figure}
 Figure~\ref{Code example used to illustrate how a COOP loop gadget works}
-depicts a C++ code example where it is illustrated how a COOP loop gadget 
-(\textit{i.e.,} ML-G, REC-G, UNR-G, see~\cite{crane:readactor++}) works.
-The vfgadget \circled{1} can be exploited in several ways, see \textit{x), y) and z)} above.
+depicts a C++ code example where it is illustrated how a COOP loop based gadget 
+(\textit{i.e.,} based on ML-G, REC-G, UNR-G, see~\cite{crane:readactor++}) works.
+Each \texttt{vfgadget} \circled{1} can be called in several ways, see ML-G, REC-G and UNR-G in 
+Figure~\ref{Code example used to illustrate how a COOP loop gadget works}.
 The indirect callsite (Figure~\ref{Code example used to illustrate how a COOP loop gadget works} line 17) can be exploited 
-to call by passing a varying number of parameters and types
-on each object contained in the array a different
-vTable entry contained in the:
+to call by passing a varying number of parameters and types on each object contained in the array of a different
+virtual table (vTable) entry contained in the:
 \textit{1)} class hierarchy (overall, whole program),
 \textit{2)} class hierarchy (partial, only legitimate for this callsite),
 \textit{3)} vTable hierarchy (overall, whole program),
 \textit{4)} vTable hierarchy (partial, only legitimate for this callsite),
 \textit{5)} vTable hierarchy and/or class hierarchy (partial, only legitimate for this callsite), and
 \textit{6)} vTable hierarchy and/or class hierarchy (overall, whole program).
-There is no language semantics---such as cast checks---in C++ for vCall sites dispatch checking and as consequence
+There are no language semantics---such as cast checks---in C++ for vCall sites dispatch checking and as consequence
 the loop gadget indicated in Figure~\ref{Code example used to illustrate how a COOP loop gadget works}
-can basically call all around in the class and vTable hierarchy by not being constrained by any build in check during
+can basically call any possible entry in the class and vTable hierarchy by not being constrained by any build-in check during
 runtime. The attacker corrupts an indirect function call, \circled{1}, 
 next she invokes gadgets,  \circled{1} and \circled{3}, 
 through the calls, \circled{2} and \circled{4}, contained in the loop. 
@@ -219,7 +219,7 @@ for this particular callsite, indicated with green color vTable entries.
 However, a real COOP attack invokes illegitimate
 vTable entries residing in the whole initial program hierarchy (or the extended one)
 with less or no relationship to the initial callsite,
-indicated with red color vTable entries.
+indicated with red-color vTable entries.
 
 % \subsection{Checking Indirect Calls in Practice}
 % % \textbf{Checking Indirect Forward-Edge Calls in Practice.}
@@ -309,16 +309,16 @@ have calltargets requiring parameters and the callsites providing them as depict
 Furthermore, generating 100\% precise measurements for such classification with binaries as the only source of information is rather difficult. 
 Therefore, over-estimations of parameter count for callsites and underestimations of the parameter count for calltargets is deemed acceptable. 
 This classification is based on the general purpose registers that the call convention of the current ABI---in this case the 
-SystemV ABI---designates as parameter registers. Furthermore, we completely ignore floating point registers or multi-integer registers. 
+SystemV ABI---designates as parameter registers. Furthermore, we do not consider floating point registers or multi-integer registers. 
 The core of the \emph{count} policy is now to allow any callsite $cs$, which provides $c_{cs}$ parameters, to call any calltarget $ct$, 
 which requires $c_{ct}$ parameters, iff $c_{ct} \leq c_{cs}$ holds. However, the main problem is that while there is a significant 
 restriction of calltargets for the lower callsites, the restriction capability drops rather rapidly when reaching higher parameter 
 counts, with callsites that use 6 or more parameters being able to call all possible calltargets:
-$\forall cs_1, cs_2.  c_{cs_1} \leq c_{cs_2} \Longrightarrow  \| \{ct \in \mathcal{F} | c_{ct} \leq c_{cs_1} \} \| \leq \| \{ct \in \mathcal{F} | c_{ct} \leq c_{cs_2}  \} \|$.
+$\forall cs_1, \ cs_2; \ c_{cs_1} \leq c_{cs_2} \Longrightarrow  \| \{ct \in \mathcal{F} | c_{ct} \leq c_{cs_1} \} \| \leq \| \{ct \in \mathcal{F} | c_{ct} \leq c_{cs_2}  \} \|$.
 
 One possible remedy would be the ability to introduce an upper bound for the classification deviation of parameter counts, 
-however as of now, this does not seem feasible with current technology. Another possibility would be the overall reduction
-of callsites, which can access the same set of calltargets, a route we will explore within this work.
+however, as of now, this does not seem feasible with current technology. Another possibility would be the overall reduction
+of callsites, which can access the same set of calltargets, a route which we will explore within this work.
 
 % \subsection{Security Implications of Indirect Calls}
 % % \textbf{Security Implications of Forbidden Indirect Calls.}

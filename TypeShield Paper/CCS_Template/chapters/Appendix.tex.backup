@@ -46,78 +46,6 @@ we check during run-rime before each indirect callsite if the caller matches to 
 based on the previously added checks.
 
 \section{Security Analysis}
-
-\subsection{Checking Indirect Calls in Practice}
-% \textbf{Checking Indirect Forward-Edge Calls in Practice.}
-\label{C++ Indirect Calls in Practice}
-To the best of our knowledge, there are only the IFCC/VTV~\cite{vtv:tice} tools (up to 8.7\% performance overhead) deployed in practice
-which can be used to check legitimate from illegitimate indirect forward-edge calls during runtime.
-vPointers are checked based on the class hierarchy. Furthermore, ShrinkWrap~\cite{haller:shrinkwrap} (to the best of our knowledge not deployed in practice)
-is a tool which further reduces the legitimate virtual table ranges for a given indirect callsite
-through precise analysis of the program class hierarchy and virtual table hierarchy. 
-Evaluation results show similar performance overhead but more precision w.r.t. to legitimate virtual tables entries per callsite.
-We noticed by analyzing the previous research results that the overhead incurred by
-these security checks can be very high due to the fact that for each callsite many range checks 
-have to be performed during runtime. Therefore, despite its security benefit these types of
-checks can not be applied in our opinion to high performance applications.
-
-As alternative, there are other highly promising tools (also not deployed in practice) that can be used to mitigate 
-some of the drawbacks of the previous tools. 
-Bounov \textit{et al.}~\cite{bounov:interleaving} presented a tool ($\approx$ 1\% runtime overhead)
-for indirect forward-edge callsite checking based on virtual table layout interleaving. The tool has better performance
-than VTV and better precision w.r.t. allowed virtual tables per indirect callsite. Its precision (selecting legitimate virtual tables for each callsite)
-compared to ShrinkWrap is lower since it does not consider virtual table inheritance paths.
-vTrust~\cite{zhang:vtrust} (average runtime overhead 2.2\%) enforces two layers of defense (virtual function type enforcement and virtual table pointer sanitization)
-against virtual table corruption, injection and reuse.
-TypeArmor~\cite{veen:typearmor} ($\le$ than 3 \% runtime overhead) enforces an CFI policy based on runtime checking of caller/caller pairs based
-on function parameter count matching (coarse grained, parameter types and more than six parameters can be used as well).
-Important to notice is that there are no C++ language semantics which can be used to enforce type and 
-parameter count matching for indirect call/callee pairs, this could be addresses with specifically intended language constructs in the future.
-
-\subsection{Security Implications of Indirect Calls}
-% \textbf{Security Implications of Forbidden Indirect Calls.}
-\label{Security Implications of Forbidden Forward Indirect Calls}
-The C++ language standard (12.7~\cite{iso:iecN3690}) does not specify
-what happens when calling different virtual table entries from an indirect callsite.
-The standard says that we have a virtual function related undefined behavior when:
-\textit{a virtual function call uses an explicit class member access and the object expression refers to the complete
-object of x or one of that object’s base class subobjects but not x or one of its base class subobjects}.
-As undefined behavior is not a clearly defined concept we argue that in order to be able to deal
-with undefined behavior or  unspecified behavior related to virtual function calls one needs to know
-how these languages dependent concepts are implemented inside the used compilers.
-
-Forbidden forward-edge indirect calls are the result of a vPointer corruption.
-A vPointer corruption is not a vulnerability but rather a capability which 
-can be the result of a spatial or temporal memory corruption through: 
-(1) bad-casting~\cite{byoungyoung:typecasting} of C++ objects, 
-(2) buffer overflow in a buffer adjacent to a C++ object or a use-after-free condition~\cite{schuster:coop}.
-A vPointer corruption can be exploited in several ways. A manipulated vPointer
-can be exploited by pointing it in any existing or added program virtual table entry 
-or into a fake virtual table which was added by an attacker. For example in case a vPointer
-was corrupted than the attacker could highjack the control flow of the program 
-and start a COOP attack~\cite{schuster:coop}.
-
-vPointer corruptions are a real security threat which can be exploited if there 
-is a memory corruption (\textit{e.g.,} buffer overflow) which is adjacent to
-the C++ object or a use-after-free condition. As a consequence each corruption 
-which can reach an object (\textit{e.g.,} bad object casts) is a potential exploit vector 
-for a vPointer corruption. Interestingly to notice in this context is that through:
-(1) memory layout analysis (through highly configurable compiler tool chains) of 
-source code based locations which are highly prone to
-memory corruptions such as declarations and uses of buffers, integers or pointer 
-deallocations one can obtain the internal machine code layout representation.
-(2) analysis of a code corruption which is adjacent (based on (1)) to a C++ object based on
-application class hierarchy, the virtual table hierarchy and each location in source code where an object
-is declared and used (\textit{e.g.,} modern compiler tool chains can spill out this information for free), 
-one can derive an analysis which can determine---up to a certain extent---if a memory corruption 
-can influence (is adjacent) to a C++ object.
-
-Finally, we notice that by building tools based on this two concepts (\textit{i.e.,} (1) and (2))
-attackers (\textit{e.g.,} used to find new vulnerabilities) and for defenders which can 
-harden the source code with checks only at the places which are most exposed 
-to such vulnerabilities (\textit{i.e.,} we name this targeted security hardening).
-
-
 \subsection{Imprecise Parameter-Count Policies}
 % \textbf{Permissive Parameter-Count-Based Policies.}
 \label{Too Permissive Parameter-Based Policies}
@@ -164,6 +92,77 @@ Finally, TypeArmor is too permissive and as consequence we present
 approximation (\textit{i.e.,} alias analysis and thus type analysis in binaries is undecidable~\cite{alias:undecidable}) of 
 parameter types based on register wideness. Consequently, the allowed call target set for each call site is drastically reduced.
 
+\subsection{Security Implications of Indirect Calls}
+% \textbf{Security Implications of Forbidden Indirect Calls.}
+\label{Security Implications of Forbidden Forward Indirect Calls}
+The C++ language standard (12.7~\cite{iso:iecN3690}) does not specify
+what happens when calling different virtual table entries from an indirect callsite.
+The standard says that we have a virtual function related undefined behavior when:
+\textit{a virtual function call uses an explicit class member access and the object expression refers to the complete
+object of x or one of that object’s base class subobjects but not x or one of its base class subobjects}.
+As undefined behavior is not a clearly defined concept we argue that in order to be able to deal
+with undefined behavior or  unspecified behavior related to virtual function calls one needs to know
+how these languages dependent concepts are implemented inside the used compilers.
+
+Forbidden forward-edge indirect calls are the result of a vPointer corruption.
+A vPointer corruption is not a vulnerability but rather a capability which 
+can be the result of a spatial or temporal memory corruption through: 
+(1) bad-casting~\cite{byoungyoung:typecasting} of C++ objects, 
+(2) buffer overflow in a buffer adjacent to a C++ object or a use-after-free condition~\cite{schuster:coop}.
+A vPointer corruption can be exploited in several ways. A manipulated vPointer
+can be exploited by pointing it in any existing or added program virtual table entry 
+or into a fake virtual table which was added by an attacker. For example in case a vPointer
+was corrupted than the attacker could highjack the control flow of the program 
+and start a COOP attack~\cite{schuster:coop}.
+
+vPointer corruptions are a real security threat which can be exploited if there 
+is a memory corruption (\textit{e.g.,} buffer overflow) which is adjacent to
+the C++ object or a use-after-free condition. As a consequence each corruption 
+which can reach an object (\textit{e.g.,} bad object casts) is a potential exploit vector 
+for a vPointer corruption. Interestingly to notice in this context is that through:
+(1) memory layout analysis (through highly configurable compiler tool chains) of 
+source code based locations which are highly prone to
+memory corruptions such as declarations and uses of buffers, integers or pointer 
+deallocations one can obtain the internal machine code layout representation.
+(2) analysis of a code corruption which is adjacent (based on (1)) to a C++ object based on
+application class hierarchy, the vTble hierarchy and each location in source code where an object
+is declared and used (\textit{e.g.,} modern compiler tool chains can spill out this information for free), 
+one can derive an analysis which can determine---up to a certain extent---if a memory corruption 
+can influence (is adjacent) to a C++ object.
+
+Finally, we notice that by building tools based on this two concepts (\textit{i.e.,} (1) and (2))
+attackers (\textit{e.g.,} used to find new vulnerabilities) and for defenders which can 
+harden the source code with checks only at the places which are most exposed 
+to such vulnerabilities (\textit{i.e.,} we name this targeted security hardening).
+
+\subsection{Checking Indirect Calls in Practice}
+% \textbf{Checking Indirect Forward-Edge Calls in Practice.}
+\label{C++ Indirect Calls in Practice}
+To the best of our knowledge, there are only the IFCC/VTV~\cite{vtv:tice} tools (up to 8.7\% performance overhead) deployed in practice
+which can be used to check legitimate from illegitimate indirect forward-edge calls during runtime.
+vPointers are checked based on the class hierarchy. Furthermore, ShrinkWrap~\cite{haller:shrinkwrap} (to the best of our knowledge not deployed in practice)
+is a tool which further reduces the legitimate vTbles ranges for a given indirect callsite
+through precise analysis of the program class hierarchy and virtual table hierarchy. 
+Evaluation results show similar performance overhead but more precision w.r.t. to legitimate virtual tables entries per callsite.
+We noticed by analyzing the previous research results that the overhead incurred by
+these security checks can be very high due to the fact that for each callsite many range checks 
+have to be performed during runtime. Therefore, despite its security benefit these types of
+checks can not be applied in our opinion to high performance applications.
+
+As alternative, there are other highly promising tools (also not deployed in practice) that can be used to mitigate 
+some of the drawbacks of the previous tools. 
+Bounov \textit{et al.}~\cite{bounov:interleaving} presented a tool ($\approx$ 1\% runtime overhead)
+for indirect forward-edge callsite checking based on virtual table layout interleaving. The tool has better performance
+than VTV and better precision w.r.t. allowed virtual tables per indirect callsite. Its precision (selecting legitimate virtual tables for each callsite)
+compared to ShrinkWrap is lower since it does not consider virtual table inheritance paths.
+vTrust~\cite{zhang:vtrust} (average runtime overhead 2.2\%) enforces two layers of defense (virtual function type enforcement and virtual table pointer sanitization)
+against virtual table corruption, injection and reuse.
+TypeArmor~\cite{veen:typearmor} ($\le$ than 3 \% runtime overhead) enforces an CFI policy based on runtime checking of caller/caller pairs based
+on function parameter count matching (coarse grained, parameter types and more than six parameters can be used as well).
+Important to notice is that there are no C++ language semantics which can be used to enforce type and 
+parameter count matching for indirect call/callee pairs, this could be addresses with specifically intended language constructs in the future.
+
+
 \subsection{Real COOP Attack Example}
 \label{Real COOP Attack Example}
 % \textbf{Real COOP Attack Example.}
@@ -173,7 +172,7 @@ parameter types based on register wideness. Consequently, the allowed call targe
     \centering
     \includegraphics[width=0.47\textwidth]{figures/class_hierarchy.pdf}
 \caption{Class inheritance hierarchy of the classes involved in the COOP attack against the Firefox browser. Red letters 
-indicate forbidden virtual table entries and green letters indicate allowed virtual table entries for the given indirect callsite
+indicate forbidden vTble entries and green letters indicate allowed virtual table entries for the given indirect callsite
 contained in the main loop gadget.}
 \label{Class exploit}
 \vspace{-.29cm}
