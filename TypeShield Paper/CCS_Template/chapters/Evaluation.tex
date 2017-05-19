@@ -47,7 +47,7 @@ We assessed the applicability of our collected ground truth, by
 	\begin{tabular}{l|r|r|r|r|r|r}%
 	\toprule
 	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c|}{ {\bfseries calltargets}} & \multicolumn{3}{c}{{\bfseries callsites} }\\
-	\bfseries Target & match & Clang miss &  tool miss &  match & Clang miss & tool miss% specify table head
+	\bfseries Target & match & clang miss &  tool miss &  match & clang miss & tool miss% specify table head
 	\\\midrule
 	\csvreader[before filter=\ifthenelse{\equal{\csvcoli}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/matching.O2.csv}{
 		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
@@ -63,8 +63,8 @@ We assessed the applicability of our collected ground truth, by
     	}
 %     	}
 	\caption {Table shows the quality of structural matching provided by our automated verify and test environment, 
-	regarding callsites and calltargets when compiling with optimization level O2. The label Clang miss 
-	denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc{TypeShield}. 
+	regarding callsites and calltargets when compiling with optimization level O2. The label clang miss 
+	denotes elements not found in the data-set of the clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc{TypeShield}. 
 % 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	looking at this table?}
         }
@@ -111,25 +111,24 @@ We measured two data points per target, the number and ratio of perfect
 \begin{table}[h!]
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r|r}%
-
 	\toprule
 	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c}{\bfseries Calltargets} & \multicolumn{3}{c}{\bfseries Callsites}\\
 	
-	\bfseries Target & \#  &  perfect &  problem & \# & perfect &  problem % specify table head
+	\bfseries Target & \#  &  perfect args &  perfect return & \# & perfect args &  perfect return % specify table head
 	\\\midrule
 	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilterreject}{\csvfilteraccept}, late after line=\\, late after last line=\\\midrule]{csvs/classification_count.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
-	{\csvcolii  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxv \ (\csvcolxvi \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolvi \ (\csvcolvii\%)}% specify your coloumns here
+	{\csvcolii  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxvii \ (\csvcolxviii \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolviii \ (\csvcolix\%)}% specify your coloumns here
 
 	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilteraccept}{\csvfilterreject}, late after line=\\, late after last line=\\\bottomrule]{csvs/classification_count.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
-	{\textit{\csvcolii}  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxv \ (\csvcolxvi \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolvi \ (\csvcolvii\%)}% specify your coloumns here
+	{\textit{\csvcolii}  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxvii \ (\csvcolxviii \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolviii \ (\csvcolix\%)}% specify your coloumns here
     	\end{tabular}
-
 }
-		\caption {The results for analysis using the \textit{count} policy on the O2 optimization level. 
+
+\caption {The results for classification of callsites and calltargets using our \textit{count} policy on the O2 optimization level, when comparing to the ground truth obtained by our clang/LLVM pass. The label perfect args denotes all occurrences when our result and the ground truth perfectly match regarding the required/provided arguments. The label perfect return denotes this for return values. 
 % 		\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	        looking at this table?}
                 }
@@ -157,21 +156,21 @@ We measured two data points per test target, the number and
 	\toprule
 	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c}{\bfseries Calltargets} & \multicolumn{3}{c}{\bfseries Callsites}\\
 	
-	\bfseries Target & \#  &  perfect &  problem & \# & perfect &  problem % specify table head
+	\bfseries Target & \#  &  perfect  args&  perfect return& \# & perfect args &  perfect return% specify table head
 	\\\midrule
 	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/classification_type.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
-	{\csvcolii  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxv \ (\csvcolxvi \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolvi \ (\csvcolvii\%)}% specify your coloumns here
+	{\csvcolii  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxvii \ (\csvcolxviii \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolviii \ (\csvcolix\%)}% specify your coloumns here
 
 	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilteraccept}{\csvfilterreject},  late after line=\\, late after last line=\\\bottomrule]{csvs/classification_type.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
 }
-	{\textit{\csvcolii}  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxv \ (\csvcolxvi \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolvi \ (\csvcolvii\%)}% specify your coloumns here
+	{\textit{\csvcolii}  &  \csvcolxii & \csvcolxiii \ (\csvcolxiv \%) & \csvcolxvii \ (\csvcolxviii \%) & \csvcoliii & \csvcoliv \ (\csvcolv \%) & \csvcolviii \ (\csvcolix\%)}% specify your coloumns here
     	\end{tabular}
 
 }
-	\caption {The results for analysis using the \textit{type} policy on the O2 optimization level. 
+	\caption {The result for classification of callsites using our \textit{type} policy on the O2 optimization level, when comparing to the ground truth obtained by our clang/LLVM pass. The label perfect args denotes all occurrences when our result and the ground truth perfectly match regarding the required/provided arguments. The label perfect return denotes this for return values.
 % 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	looking at this table?}
         }
@@ -219,8 +218,7 @@ with Node.js (44.76\%) as an exception resulting in a geometric mean of 68.35\%.
     	\end{tabular}
 
 }
-	\caption {The results of comparing our implementation results with the theoretical limits for the different restriction policies combined with an address taken analysis 
-	for optimization level O2. 
+	\caption {The results regarding the restriction of allowed callsites per calltarget for several test series on various targets compiled under optimization O2. Note that the basic restriction to address taken only calltargets (see column AT) is present for each other series. The label $count^*$ denotes the best possible reduction using our \emph{count} policy based on the ground truth collected by our clang/LLVM pass, while $count$ denotes the results of our implementation of the \emph{count} policy derived from the binaries. The same applies to $type*$ and $type$ regarding the \emph{type} policy. A lesser number of calltargets per calltsite indicates a better series. We can see that \emph{type} policy is superior to the \emph{count} policy, as it allows for a stronger reduction of allowed calltargets. We provided the median and the pair of mean and standard deviation to allow for comparison of other tools.
 % 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	looking at this table?}
         }
@@ -468,12 +466,8 @@ todo. Also, add the buckets diagram, see Figure 9 in the typearmor paper.
 	{\textit{\csvcolii} & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii}% specify your coloumns here
     	\end{tabular}}
 %     	}
-	\caption {The medians of calltargets per callsite for different programs. Note that smaller geomean values are better and that
-% 	\textsc{TypeShield} currently does not include function return types as TypeArmor does. 
-% 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, 
-% 	low or hig? What is the main thing which can be observed if 
-% 	looking at this table?}
-        }
+	\caption {The medians of calltargets per callsite for different restrictions methods. Note that the smaller the numbers, the better the method. AT is the approach to only allow calltargets that are address taken. IFCC is a compiler based approach and only here as a reference of what is possible. TypeArmor and TypeShield on the other hand are binary based tools. We can see that our type based tool on average reduces the number of calltargets by 37\% when compared to the AT method and by 12\% when comparing with TypeArmor.
+}
 	\label{tbl:toolcompare}
 \end{table}
 
