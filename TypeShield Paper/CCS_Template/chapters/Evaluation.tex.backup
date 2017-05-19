@@ -218,12 +218,14 @@ with Node.js (44.76\%) as an exception resulting in a geometric mean of 68.35\%.
     	\end{tabular}
 
 }
-	\caption {The results regarding the restriction of allowed callsites per calltarget for several test series on various targets compiled under optimization O2. Note 
+	\caption {Restriction results of allowed callsites per calltarget for several test series on various targets compiled with Clang using optimization level O2. Note 
 	that the basic restriction to address taken only calltargets (see column AT) is present for each other series. The label $count^*$ denotes the best possible 
-	reduction using our \emph{count} policy based on the ground truth collected by our clang/LLVM pass, while $count$ denotes the results of our implementation of 
-	the \emph{count} policy derived from the binaries. The same applies to $type*$ and $type$ regarding the \emph{type} policy. A lesser number of calltargets per 
-	calltsite indicates a better series. We can see that \emph{type} policy is superior to the \emph{count} policy, as it allows for a stronger reduction of 
-	allowed calltargets. We provided the median and the pair of mean and standard deviation to allow for a better comparison with other state-of-the-art tools.
+	reduction using our \emph{count} policy based on the ground truth collected by our Clang/LLVM pass, while $count$ denotes the results of our implementation of 
+	the \emph{count} policy derived from the binaries. The same applies to $type*$ and $type$ regarding the \emph{type} policy. A lower number of calltargets per calltsite indicates 
+	a better results. Note that our \emph{type} policy is superior to the \emph{count} policy, as it allows for a stronger reduction of 
+	allowed calltargets. Also, note that out \textit{type} median (150.61) is very close to the theoretical limit \textit{type*} limit (approx. 16.7\% difference). Which is 
+	in our opinion a good result which further improves the state-of-the-art.
+	We provided the median and the pair of mean and standard deviation to allow for a better comparison with other state-of-the-art tools.
 % 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	looking at this table?}
         }
@@ -396,8 +398,8 @@ Moreover, this is also dependent on the actual structure of the target, as it de
 \todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
 
 The instrumentation overhead or the change in size due to patching is mostly due to the method Dyninst uses to patch binaries. 
-Essentially the executable part of the binary is duplicated and extended with the patch. The usual ratio is around 40\% to 
-60\% while Postgres has an increase of 150\% in binary size. One can not reduce that value significantly, 
+Essentially the executable part of the binary is duplicated and extended with the patch. The usual ratio we encountered in our experiments
+is around 40\% to 60\% while Postgres having an increase of 150\% in binary size. One can not reduce that value significantly, 
 because of the nature of code relocation after losing the data that a compiler has. Especially indirect control flow 
 changes are very hard to relocate. Therefore, instead each important basic block in the old code contains a jump 
 instruction to the new position of the basic block.
@@ -471,7 +473,10 @@ todo. Also, add the buckets diagram, see Figure 9 in the typearmor paper.
 	{\textit{\csvcolii} & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii}% specify your coloumns here
     	\end{tabular}}
 %     	}
-	\caption {The medians of calltargets per callsite for different restrictions methods. Note that the smaller the numbers, the better the method. AT is the approach to only allow calltargets that are address taken. IFCC is a compiler based approach and only here as a reference of what is possible. TypeArmor and TypeShield on the other hand are binary based tools. We can see that our type based tool on average reduces the number of calltargets by 37\% when compared to the AT method and by 12\% when comparing with TypeArmor.
+	\caption {The medians of calltargets per callsite for different restrictions methods. Note that the smaller the geomean numbers are, the better the method is. 
+	AT is a technique which allows calltargets that are address taken. IFCC is a compiler based solution and depicted here as a reference for what is possible when source code is available.
+	TypeArmor and TypeShield on the other hand are binary based tools. We can see that our type based tool on average reduces the number of calltargets by 37\% when 
+	compared to AT method and by 12\% when comparing with TypeArmor.
 }
 	\label{tbl:toolcompare}
 \end{table}

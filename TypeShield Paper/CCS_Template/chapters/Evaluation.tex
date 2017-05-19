@@ -223,7 +223,9 @@ with Node.js (44.76\%) as an exception resulting in a geometric mean of 68.35\%.
 	reduction using our \emph{count} policy based on the ground truth collected by our Clang/LLVM pass, while $count$ denotes the results of our implementation of 
 	the \emph{count} policy derived from the binaries. The same applies to $type*$ and $type$ regarding the \emph{type} policy. A lower number of calltargets per calltsite indicates 
 	a better results. Note that our \emph{type} policy is superior to the \emph{count} policy, as it allows for a stronger reduction of 
-	allowed calltargets. We provided the median and the pair of mean and standard deviation to allow for a better comparison with other state-of-the-art tools.
+	allowed calltargets. Also, note that out \textit{type} median (150.61) is close to the theoretical \textit{type*} limit (111.95\%) with approx. 25\% difference. This is 
+	in our opinion a good result which further improves the state-of-the-art.
+	Finally, we provide the median and the pair of mean and standard deviation to allow for a better comparison with other state-of-the-art tools.
 % 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	looking at this table?}
         }
@@ -407,40 +409,42 @@ instruction to the new position of the basic block.
 % \subsubsection{CDF Analysis}
 % \label{CDF Analysis}
 
-\begin{figure}[h] 
-  \begin{minipage}[b]{0.5\linewidth}
+\begin{figure}[h!] 
+  \begin{minipage}[b]{0.81\linewidth}
     \centering
-    \resizebox{1.04\columnwidth}{!}{\includesvg{postgresqlO2}}
+    \resizebox{1.0\columnwidth}{!}{\includesvg{postgresqlO2}}
     \caption{Postgresql -O2 CDF} 
     \label{fig7} 
     \vspace{1ex}
   \end{minipage}%%
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \resizebox{1.04\columnwidth}{!}{\includesvg{nodeO2}} 
-    \caption{Node.js -O2 CDF} 
-    \label{fig8} 
-    \vspace{1ex}
-  \end{minipage} 
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \resizebox{1.04\columnwidth}{!}{\includesvg{proftpdO2}}
-    \caption{Proftpd -O2 CDF} 
-    \label{fig9} 
-    \vspace{1ex}
-  \end{minipage}%% 
-  \begin{minipage}[b]{0.5\linewidth}
-    \centering
-    \resizebox{1.04\columnwidth}{!}{\includesvg{mysqlO2}} 
-    \caption{Mysql -O2 CDF} 
-    \label{fig10} 
-    \vspace{1ex}
-  \end{minipage} 
+%   \begin{minipage}[b]{0.5\linewidth}
+%     \centering
+%     \resizebox{1.04\columnwidth}{!}{\includesvg{nodeO2}} 
+%     \caption{Node.js -O2 CDF} 
+%     \label{fig8} 
+%     \vspace{1ex}
+%   \end{minipage} 
+%   \begin{minipage}[b]{0.5\linewidth}
+%     \centering
+%     \resizebox{1.04\columnwidth}{!}{\includesvg{proftpdO2.svg}}
+%     \caption{Proftpd -O2 CDF} 
+%     \label{fig9} 
+%     \vspace{1ex}
+%   \end{minipage}%% 
+%   \begin{minipage}[b]{0.5\linewidth}
+%     \centering
+%     \resizebox{1.04\columnwidth}{!}{\includesvg{mysqlO2}} 
+%     \caption{Mysql -O2 CDF} 
+%     \label{fig10} 
+%     \vspace{1ex}
+%   \end{minipage} 
 \end{figure}
-Figures~\ref{fig7}, \ref{fig8}, \ref{fig9}, and \ref{fig10} depict the CDFs for the following programs: Postgresql, Node.js, Proftpd, and Mysql when compiled with the 
--O2 Clang compiler flag.
-We selected these four programs randomly.
-The CDFs depict the number of legal callsite targets and the difference between the type and the count policies. 
+
+% Figures~\ref{fig7}, \ref{fig8}, \ref{fig9}, and \ref{fig10} 
+Figures~\ref{fig7}
+depicts the CDFs for the program: Postgresql when compiled with the -O2 Clang compiler flag.
+We selected this program randomly.
+The CDF depicts the number of legal callsite targets and the difference between the type and the count policies. 
 While the count  policies have only a few number of changes, the number of changes 
 that can be seen within the type policies is vastly higher. The reason for that is 
 simple, the number of buckets that are used to classify the callsites and calltargets 
