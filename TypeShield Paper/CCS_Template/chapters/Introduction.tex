@@ -24,22 +24,21 @@ the basic implementation provides unfortunately very little security assurances.
 \caption{\# (left Fig.), \% (right Fig.) of arbitrary code executions (ACE) reports related (all colors expect black) to pointer or virtual table (vptr/vtbl) corruption 
 (see bag of words at the bottom of left Fig.)* reported by US NVD for the past 10 years~\cite{NVD:ACE}. In black are the ACE unrelated reports.
 X axis is years (left \& right) and Y axis is number of reports in logarithmic scale (left) and distribution in \% of the same reports (right).
-As of May'17, NVD reports in total 701 ACEs from which 143 are the cause of vptr/vtable corruption (see * above) 
-which are exploited mostly by highjacking forward indirect calls.
-The vulnerabilities were reported in applications such as Google's Chrome \& V8 JS eng.; Mozilla Firefox; Microsoft's IE 10, Edge \& Chakra JS eng.;
+As of May'17, NVD reports in total 701 ACEs from which 143 are the result of a vptr/vtable corruption (see * above) that are exploited by highjacking forward indirect calls.
+These vulnerabilities were reported in applications such as Google's Chrome \& V8 JS eng.; Mozilla Firefox; Microsoft's IE 10, Edge \& Chakra JS eng.;
 \& iOS/MacOS apps.}
 \label{ace:nvd:statistics}
 \vspace{-.5cm}
 \end{figure}
 
-While the reasons for unwanted outcomes can be highly diverse, our work is primarily motivated by memory corruption attacks (e.g., buffer/integer overflows), which can enable the 
+While the reasons for unwanted outcomes can be highly diverse, our work is primarily motivated by memory corruption attacks (\textit{e.g.,} buffer/integer overflows), which can enable the 
 execution of sophisticated Code-Reuse Attacks (CRAs) such as the advanced COOP attack~\cite{schuster:coop} and its 
 extensions~\cite{crane:readactor++, crane:readactor++, subversive-c:lettner, ctf:coop, loop:oriented}. A necessary ingredient for this class of attacks is the ability to overwrite
 virtual table entries by corrupting  virtual pointer calls of an object.
 
 To address such object dispatch corruptions, Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} was originally developed to secure indirect control flow transfers by adding 
 runtime checks before each indirect call site. Unfortunately, COOP and its brethren bypass most deployed CFI-based enforcement policies, since these attacks do not exploit indirect 
-backward edges (i.e., return edges), but rather exploit the forward indirect control flow transfer imprecision which cannot be determined statically upfront as alias analysis is 
+backward edges (\textit{i.e.,} return edges), but rather exploit the forward indirect control flow transfer imprecision which cannot be determined statically upfront as alias analysis is 
 undecidable~\cite{alias:undecidable} in program binaries.
 
 More recent techniques and tools can be distinguished into those relying on \textit{source code} access including SafeDispatch~\cite{safedispatch:jang}, ShrinkWrap~\cite{haller:shrinkwrap}, 

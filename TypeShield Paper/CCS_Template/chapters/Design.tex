@@ -154,7 +154,7 @@ For our policy, we need to classify our calltargets according to the parameters 
 For this purpose we employ a customizable modified liveness analysis algorithm, which we will show first. We then present our versions for a~\emph{count} and a~\emph{type} 
 based policy. Furthermore, we need to be aware of certain corner cases, which we will discuss at the end.
 
-\textbf{Liveness Analysis}
+\subsubsection{Liveness Analysis}
 A variable is alive before the execution of an instruction, if at least one of the originating paths performs a read access before any write access  on that variable. 
 If applied to a function, this calculates essentially the variables that need to be alive at the beginning, these are its parameters.
 We based Algorithm~\ref{alg:liveness} on the liveness analysis algorithm presented in Khedker~\textit{et al.}~\cite{khedker2009data}, which basically
@@ -211,12 +211,13 @@ $\texttt{succ} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which 
 In our specific case, the function \texttt{analyze\_instr} needs to also handle non-jump and non-fall-through successors, as these are not handled by DynInst. 
 Essentially, there are four relevant cases: 1) If the current instruction is an indirect call or a direct call and the chosen implementation should not follow calls, 
 then return a state where all registers are considered to be written before read. 2) If the current instruction is a direct call and the chosen implementation should follow calls, 
-then we start an analysis of the target function an return its result. 3) If the instruction is a constant write (e.g., xor of two registers), 
+then we start an analysis of the target function an return its result. 3) If the instruction is a constant write (\textit{e.g.,} xor of two registers), 
 then we remove the read portion before we return the decoded state. 4) In any other case, we simply return the decoded state.
 This leaves us with the two undefined merge functions and the undefined liveness state $\mathcal{S}^\mathcal{L}$. In the following two paragraphs we will present two 
 implementation variants: first similar to TypeArmour a \emph{count} based policy and second our \emph{type} based policy.
 
-\textbf{Required Parameter Count} To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we use the same representation 
+\subsubsection{Required Parameter Count} 
+To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we use the same representation 
 as TypeArmor: 1) $W$ represents write before read access, 2) $R$ represents read before write access, and 3) $C$ represents the absence of access.
 This gives us the $S^\mathcal{L} = \{ C, R, W \}$ as register state, which translates to the register super state $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
 We implement \texttt{merge\_v} in such a way that a state within a superstate is only updated if the corresponding register has yet to be accesses, as represented by $C$. 
@@ -308,7 +309,7 @@ to be prepared by a callsite.
 
 %The index of highest parameter register based on the used call convention that has the state R is considered to be the number of parameters a function at least requires to be prepared by a callsite.
 
-\textbf{Required Parameter Wideness.}
+\subsubsection{Required Parameter Wideness}
 \label{subsection:requiredparamwideness}
 To implement the \emph{type} policy, we need a finer representation of the state of one register:
 \textit{1)} $W$ represents write before read access,
@@ -368,7 +369,7 @@ like operator with $W$ preceding $WR$ preceding $R$ preceding $C$. Unless one si
 %\label{tbl:TYPECTunion}
 %\end{table}
 
-\textbf{Variadic Functions.}
+\subsubsection{Variadic Functions}
 \label{subsection:variadicfunctions}
 
 \begin{figure}[thp] % the figure provides the caption
@@ -414,7 +415,7 @@ This type of functions allow for an easier processing of parameters where
 usually all potential variadic parameters are moved into a contiguous block of memory, 
 as can be observed in the assembly depicted Figure \ref{fig:asmvariadic}.
 Our analysis interprets that as a read access on all parameters and thus,
-we arrive at a problematic overestimation. 
+we arrive at a potentially problematic overestimation. 
 
 Our solution to this problem is to find these spurious reads and ignore them. A compiler will implement this type of operation very 
 similar for all cases, thus we can achieve this using the following steps:
@@ -427,7 +428,7 @@ xmm-passthrough block, which we call the param-passthrough block, and
 \textit{3)} We look at the param-passthrough block and set all instructions that move the value of a parameter register into memory to be
 ignored. %(in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \texttt{0x422347} and \texttt{0x42234c})
 
-\textbf{Ignoring Reads.} When one instruction writes and reads a register at the same time we give the read access precedence, however, there are exceptions 
+\subsubsection{Ignoring Reads} When one instruction writes and reads a register at the same time we give the read access precedence, however, there are exceptions 
 (also mentioned in TypeArmor, however, we expand slightly on that):
 \textit{1)} \texttt{xor \%rax, \%rax} is the first obvious scenario, as it will always result in \texttt{\%rax} holding the value 0,
 \textit{2)} \texttt{sub \%rax, \%rax} is probably the next scenario, as it results also in \texttt{\%rax} also holding the value 0, and
@@ -480,7 +481,7 @@ callsite existing within the targeted binary. We will employ a modified version 
 variables to generate the needed overestimation. As our algorithm will be customizable, we look at the required merge functions to 
 implement \emph{count} and \emph{type} policy. 
 
-\textbf{Reaching Definitions.}
+\subsubsection{Reaching Definitions}
 \label{subsection:reachindefinitionstheory}
 An assignment of a value to a variable is a reaching definition at the end of a block $n$, if that definition is present within at 
 least one path from start to the end of the block $n$ without being overwritten by another value assignment to the same variable. 
@@ -552,7 +553,7 @@ the liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following
 %\subsection{Backward Graph Traversal}
 %\label{subsection:backwardgraphtraversal}
 
-\textbf{Provided Parameter Count.}
+\subsubsection{Provided Parameter Count}
 \label{subsection:providedparamcount}
 To implement the \emph{count} policy, we only need a coarse representation of the state of one register, 
 thus we use the same representation as TypeArmor:
@@ -647,9 +648,9 @@ like operator with $T$ preceding $S$ preceding $U$.
 
 The index of the highest parameter register based on the used call convention that has the state S is considered to be the number of parameters a callsite at most prepares.
 
-\textbf{Provided Parameter Wideness.}
+\subsubsection{Provided Parameter Wideness}
 \label{subsection:providedparamwideness}
-To implement the \emph{type} policy, we need a finer representation of the state of one register:
+In order to implement the \emph{type} policy, we need a finer representation of the state of one register:
 \textit{1)} $T$ represents a trashed register,
 \textit{2)} $s8, s16, s32, s64 S$ represents a set register with  8-, 16-, 32-, 64-bit  wideness, and
 \textit{3)} $U$ represents an untouched register.

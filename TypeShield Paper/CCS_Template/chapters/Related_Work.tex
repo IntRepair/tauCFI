@@ -41,7 +41,7 @@ are forward-edge based CRAs which can not be addressed with:
 since the precomputed CFG does not contain edges for indirect callsites which are explicitly exploited during the COOP attack.
 However, the following tools can protect against COOP attacks.
 
-\textbf{\textit{Binary based.}} vTable protection is addressed through binary instrumentation in tools
+\subsection{Binary Based} vTable protection is addressed through binary instrumentation in tools
 such as: vfGuard~\cite{vfuard:aravind}, vTint~\cite{vtint:zhang}. However, none of these tools can
 help to mitigate against COOP. The only binary based tool which we are aware of that
 can mitigate protect against COOP is TypeArmor~\cite{veen:typearmor}.  

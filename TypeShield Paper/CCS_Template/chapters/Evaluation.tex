@@ -41,9 +41,7 @@ using our ground truth, we need to evaluate the quality and applicability of the
 
 \subsubsection{Quality and Applicability of Ground Truth}
 \label{subsection:typeshieldprecision}
-To assess the applicability of our collected ground truth, we essentially need to assess the structural compatibility of our two data sets.
-First, we take a look at the comparability of calltargets and second, we take a look at the compatibility of callsites. The results are depicted in Table \ref{tbl:matchingquality}.
-
+We assessed the applicability of our collected ground truth, by 
 \begin{table}[h!]
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r|r}%
@@ -72,6 +70,9 @@ First, we take a look at the comparability of calltargets and second, we take a 
         }
 	\label{tbl:matchingquality}
 \end{table}
+essentially assessing the structural compatibility of our two data sets.
+First, we take a look at the comparability of calltargets. Second, we take a look at the compatibility of callsites. 
+Finally, the results are depicted in Table \ref{tbl:matchingquality}.
 
 \textbf{Calltargets.} The obvious choice for structural comparison regarding calltargets is their name, as these are simply functions. 
 First, we have to remove internal functions from our data-sets like the \texttt{\_init} or \texttt{\_fini} functions, which are of no consequence for us. 
@@ -94,7 +95,7 @@ Considering this, we can safely state that our structural matching between groun
 perfect (above 98\%).
 
 \textbf{Callsites.} While our structural matching of calltargets is rather simple, the matter of matching callsites is more complex. Our tool can provide accurate addressing of callsites within the binary. 
-However, Clang/LLVM does not have such capabilities in its intermediate representation (IR). Furthermore the IR is not the final representation within the compiler, as the IR is transformed into a machine-based representation (MR), which is the again optimized. Although we can read information regarding parameters from the IR, it is not possible with the MR. 
+However, Clang/LLVM does not have such capabilities in its intermediate representation (IR). Furthermore, the IR is not the final representation within the compiler, as the IR is transformed into a machine-based representation (MR), which is the again optimized. Although we can read information regarding parameters from the IR, it is not possible with the MR. 
 Therefore, we attach that data directly after the conversion from IR to MR and read that data at the end of the compilation. To not unnecessarily pollute our data set, we only considered calltargets, which have been found in both data sets. 
 Table \ref{tbl:matchingquality} shows three data points regarding callsites for the optimization level O2:
 \textit{1)} the number of comparable callsites that are found in both data sets,
@@ -106,10 +107,7 @@ safely state that our structural matching between ground truth and \textsc{TypeS
 
 \subsubsection{Classification Precision (\textit{count})}
 \label{subsection:typeshieldcountprecision}
-
-We measured two data points per target, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in the case of calltargets refers to overestimations and in case of callsites refers to underestimations. 
-The results are depicted 
-in Table \ref{tbl:precisionCOUNT}.
+We measured two data points per target, the number and ratio of perfect 
 \begin{table}[h!]
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r|r}%
@@ -136,19 +134,22 @@ in Table \ref{tbl:precisionCOUNT}.
 % 	        looking at this table?}
                 }
 		\label{tbl:precisionCOUNT}
-\end{table}~\\
+\end{table}
+classifications and the number and ratio of problematic classifications, 
+which in the case of calltargets refers to overestimations and in case of callsites refers to underestimations (see Table~\ref{tbl:precisionCOUNT} for more details).
 \textbf{Experiment Setup (Calltargets).} Union combination operator with an $analyze$ function that follows into occurring direct calls.
-\textbf{Results (Calltargets).} The problem rate is under 0.01\%, as there are only two test targets, that exhibit a problematic classification. The rate of perfect classification is in general over 80\% with Mysql as an exception (73.85\%) resulting in a geometric mean of 86.86\%.
-\textbf{Experiment Setup (Callsites).} Union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
-\textbf{Results (Callsites).} The problem rate is under 0.01\%, as there is only one test target, that exhibit a problematic classification. The rate of perfect classification is in general over 60\% with Nginx (48.49\%) 
+\textbf{Results (Calltargets).} The problem rate is under 0.01\%, as there are only two test targets, that exhibit a problematic classification. 
+The rate of perfect classification is in general over 80\% with Mysql as an exception (73.85\%) resulting in a geometric mean of 86.86\%.
+\textbf{Experiment Setup (Callsites).} Union combination operator with an $analyze$ function that does not follow into occurring direct calls
+while relying on a backward inter-procedural analysis.
+\textbf{Results (Callsites).} The problem rate is under 0.01\%, as there is only one test target, that exhibit a problematic classification.
+The rate of perfect classification is in general over 60\% with Nginx (48.49\%) 
 and Node.js (56.34\%) as an exception resulting in a geometric mean of 71.97\%.
 
 
 \subsubsection{Classification Precision (\textit{type})}
 \label{subsection:typeshieldcountprecision}
-
-We measured two data points per test target, the number and ratio of perfect classifications and the number and ratio of problematic classifications, which in the case of calltargets refers to overestimations and in case of callsites refers to underestimations. 
-The results are depicted in Table \ref{tbl:precisionTYPE}.
+We measured two data points per test target, the number and
 \begin{table}[h!]
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r|r}%
@@ -175,7 +176,9 @@ The results are depicted in Table \ref{tbl:precisionTYPE}.
 % 	looking at this table?}
         }
 	\label{tbl:precisionTYPE}
-\end{table}~\\
+\end{table}
+ ratio of perfect classifications and the number and ratio of problematic classifications, which in the case of calltargets refers to overestimations and in case of callsites refers to underestimations. 
+The results are depicted in Table \ref{tbl:precisionTYPE}.
 \textbf{Experiment Setup (Calltargets).} Union combination operator with an $analyze$ function that does follow into occurring direct calls  and a vertical merge that intersects all reads until the first write.
 \textbf{Results (Calltargets).} For half of the set, the problem rate is under 1\% and for the other half it is not above 10\%, resulting in a geomean of 1.92\%. The rate of perfect classification is in general over 70\% with Nginx (69.38\%) and Mysql (63.16\%)  resulting in a geometric mean of 77.15\%.
 \textbf{Experiment Setup (Callsites).} Union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
@@ -235,25 +238,21 @@ The results are depicted in Table \ref{tbl:policycompat}.
 We explore the theoretical limits regarding the effectiveness of the \textit{count} and \textit{type} policies by relying on the collected ground truth data, essentially assuming perfect classification.
 \textbf{Experiment Setup.} Based on the type information collected by our Clang/LLVM pass, we conducted two experiment series.
 We derived the available number of calltargets for each callsite based on the collected ground truth applying the \textit{count} and \textit{type} schema.
-
 \textbf{Results.}
 \textit{1)} The theoretical limit of the \textit{count*} schema has a geometric mean of 233 possible calltargets, which is 16.48\% of the geometric mean of total available 
 calltargets, and
 \textit{2)} The theoretical limit of the \textit{type*} schema has a geometric mean of 210 possible calltargets, which is 14.86\% of the geometric mean of total available
 calltargets.
-
 When compared, the theoretical limit of the \textit{type} policy allows about 10\% less available calltargets in the geomean in O2 than the limit of the \textit{count} policy.
 
 \subsubsection{Reduction achieved by \textsc{TypeShield}}
 \label{subsection:typeshieldvslimitcount}
 \textbf{Experiment Setup.} We setup our two experiment series based on our previous evaluations regarding the classification precision for the \textit{count} and the \textit{type} policy.
-
 \textbf{Results.}
 \textit{1)}  The \textit{count} schema has a geometric mean of 315 possible calltargets, which is 22.29\% of the geometric mean of total available 
 calltargets. This is 35.19\% more than the theoretical limit of available calltargets per callsite, and
 \textit{2)}  The \textit{type} schema has a geometric mean of 290 possible calltargets, which is 20.52\% of the geometric mean of total available
 calltargets. This is 38.09\% more than the theoretical limit of available calltargets per callsite.
-
 When compared, our implementation of the \textit{type} policy allows about 7.93\% less available calltargets in the geomean in O2 than our implementation of the \textit{type} policy.
 
 
@@ -366,7 +365,7 @@ When compared, our implementation of the \textit{type} policy allows about 7.93\
 \subsection{Runtime Overhead}
 \label{section:typeshieldoverheadperformance}
 % \todo[inline]{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
-
+\textit{}\newline
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.49\textwidth]{figures/speccpu2006.pdf}

@@ -10,7 +10,7 @@ as TypeArmor did not provide sufficient data. The second point of comparison is 
 per callsite, however, this comparison is rather crude, as we most surely do not have the same measuring
 environment and not sufficient data to infer its quality.
 
-\textbf{\textit{Precision of Classification.}}
+\subsubsection{Precision of Classification}
 TypeArmor reports a geometric mean of 83.26\% for the perfect classification of calltargets regarding 
 parameter count in optimization level O2, which compares rather well to our result of 82.24\%. Regarding
 the perfect classification of callsites we report a geometric mean of 81.6\% perfect classification 
@@ -25,7 +25,7 @@ counts. However, we report a geometric mean of 57.36\%
 for perfect classification of callsites, which although seemingly low, is still 69.74\% of our precision
 regarding parameter counts.
 
-\textbf{\textit{Reduction of Available Calltargets.}}
+\subsubsection{Reduction of Available Calltargets}
 While our count based precision focused implementation achieves a reduction in the same ballpark as
 TypeArmor regarding our test targets, lets us believe that our implementation of their classification
 schema is a sufficient approximation to compare against. However, we cannot safely compare those numbers,
