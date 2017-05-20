@@ -163,16 +163,19 @@ thus drastically limiting an attacker in his capabilities.
 % \textbf{Contributions.} 
 In summary, we make the following contributions: \newline
 \label{Contribution}
-% \begin{itemize}[leftmargin=.12in]
-%  \item 
+\begin{itemize}
+% [leftmargin=.12in]
+ \item 
 
-$\bullet$ We provide a thorough \textbf{security analysis of forward indirect calls}. We analyze the usage of illegitimate indirect forward calls in detail, 
+% $\bullet$ 
+We provide a thorough \textbf{security analysis of forward indirect calls}. We analyze the usage of illegitimate indirect forward calls in detail, 
  thus providing security researchers and practitioners a better understanding of this emerging threat 
  (see~\ref{C++ Indirect Calls in Practice},~\ref{Security Implications of Forbidden Forward Indirect Calls},~\ref{Too Permissive Parameter-Based Policies},
  and~\ref{Real COOP Attack Example} for more details).
 
-%  \item 
-$\bullet$ We designed and implemented an \textbf{illegitimate indirect calls detection tool}. \textsc{TypeShield} is a general, automated, and easy-to-deploy 
+ \item 
+% $\bullet$ 
+We designed and implemented an \textbf{illegitimate indirect calls detection tool}. \textsc{TypeShield} is a general, automated, and easy-to-deploy 
  tool that can be applied to C/C++ binaries in order to detect and mitigate illegitimate forward indirect calls  during runtime. 
  Further, \textsc{TypeShield} has an expanded \textbf{scope} of analysis. Our tool can detect forbidden indirect calls and as such it can protect, 
  similarly as vTrust~\cite{zhang:vtrust}, against virtual table injection, corruption and reuse attacks. Further it can protect also against the 
@@ -180,8 +183,9 @@ $\bullet$ We designed and implemented an \textbf{illegitimate indirect calls det
  As such \textsc{TypeShield} can serve as a platform for developing other types of defenses for different types of attacks. The source code, test scripts and evaluation results 
  are available at \url{https://github.com/domain/typeshield}.
  
-%  \item 
-$\bullet$ We conduct a thorough set of evaluative \textbf{experiments}. In particular, we demonstrate experimentally that our precise binary-level 
+ \item 
+% $\bullet$ 
+We conduct a thorough set of evaluative \textbf{experiments}. In particular, we demonstrate experimentally that our precise binary-level 
  CFI technique can mitigate advanced code reuse attacks (CRAs) in absence of C++ semantics. For example, \textsc{TypeShield} can effectively protect against 
  the COOP attack and its variations. Thereby, it achieves a high degree of \textbf{precision}. Specifically, it 
  employs a more precise analysis than TypeArmor in order to reduce the calltarget set for each callsite. Our evaluation shows that it
@@ -192,7 +196,7 @@ $\bullet$ We conduct a thorough set of evaluative \textbf{experiments}. In parti
  Finally, we respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist}) by 
  providing for each conducted experiment a precise description of encountered problems, setup, and comprehensive results including mean, median, and geomean values.
 
-% \end{itemize}
+\end{itemize}
 
 
 % 
@@ -272,15 +276,15 @@ $\bullet$ We conduct a thorough set of evaluative \textbf{experiments}. In parti
 %most probably not needed at this time.
 % \label{Outline}
 % \textbf{Outline.} 
-% The remainder of this paper is organized as follows.
-% \cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications, and 
-% \cref{chapter:TypeShild Overview} contains an overview of \textsc{TypeShield}.
-% \cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}, and
-% \cref{chapter:Implementation} briefly presents the implementation details of \textsc{TypeShield}, while
-% \cref{chapter:Evaluation} evaluates several properties of \textsc{TypeShield}.
-% \cref{chapter:Discussion} contains the discussion, and
-% \cref{chapter:Related_Work} surveys related work, while
-% \cref{chapter:Future_Work} highlights future research venues. 
-% Finally, \cref{chapter:Conclusion} concludes this paper.
+The remainder of this paper is organized as follows.
+\cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications, and 
+\cref{chapter:TypeShild Overview} contains an overview of \textsc{TypeShield}.
+\cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}, and
+\cref{chapter:Implementation} briefly presents the implementation details of \textsc{TypeShield}, while
+\cref{chapter:Evaluation} evaluates several properties of \textsc{TypeShield}.
+\cref{chapter:Discussion} contains the discussion, and
+\cref{chapter:Related_Work} surveys related work, while
+\cref{chapter:Future_Work} highlights future research venues. 
+Finally, \cref{chapter:Conclusion} concludes this paper.
 
 

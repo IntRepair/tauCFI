@@ -1,7 +1,7 @@
 \section{Future Work}
 \label{chapter:Future_Work}
 
-\subsubsection{Improving the Structural Matching} 
+\subsection{Structural Matching Capability} 
 Improving the structural matching capability is in our opinion the most 
 important further venue of research, as we need a reliable way to 
 match a ground truth against the resulting binary. This is important 
@@ -10,7 +10,7 @@ measurements and reduces the current uncertainty (\textit{i.e.,} we rely on the
 number of calltargets per callsite to match callsites and furthermore
 assume that the order within ground truth and binary is the same).
 
-\subsubsection{Improving the Patching Schema} 
+\subsection{Better Patching schema} 
 Devising a patching schema
 that is based on Dyninst functionality, 
 which allows annotation of calltargets so they can hold at least 
@@ -29,7 +29,7 @@ after satisfying stability.
 % case: The callsite requires return value wideness, while the calltarget
 % needs to provide it.
 
-\subsubsection{Using Pointer and Memory Analysis} 
+\subsection{Using Pointer and Memory Analysis} 
 Introducing pointer/memory analysis
 to distinguish simple 32-bit and 64-bit values and actual addresses to even further restrict the 
 possible number of calltargets per callsite. This would require more 

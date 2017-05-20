@@ -446,7 +446,12 @@ structure of the hardened program.
 	{\textit{\csvcolii} & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii}% specify your coloumns here
     	\end{tabular}}
 %     	}
-	\caption {The medians of calltargets per callsite for different restriction methods. Note that the smaller the geomean numbers are,
+	\caption {The medians of calltargets per callsite for different tools.} 
+	\label{tbl:toolcompare}
+	\vspace{-.5cm}
+\end{table}
+
+Table~\ref{tbl:toolcompare} depicts~\footnote{Note that the smaller the geomean numbers are,
 	the better the technique is. AT is a technique which allows calltargets that are address taken. 
 	IFCC is a compiler based solution and depicted here as a reference for what is possible when 
 	source code is available. TypeArmor and TypeShield on the other hand are binary-based tools. 
@@ -457,11 +462,7 @@ structure of the hardened program.
 	Finally, we think that in addition by tweaking of our analysis we can further reduce the calltarget set for each callsite.
 % 	Thus, increasing even more the offered security benefit.
 }
-	\label{tbl:toolcompare}
-	\vspace{-.5cm}
-\end{table}
-
-Table~\ref{tbl:toolcompare} depicts a comparison between \textsc{TypeShield}, TypeArmor and IFCC with respect to the count of calltargets per callsites. 
+a comparison between \textsc{TypeShield}, TypeArmor and IFCC with respect to the count of calltargets per callsites. 
 The values depicted in this table for TypeArmor and IFCC are taken from the original TypeArmor paper.
 We compare our version of address taken analysis (AT), TypeArmor, TypeShield (count), TypeShield (type) and IFCC. The first 
 thing to notice is that when comparing these values, one can see that we did not depicted a separation based on return type or the 
