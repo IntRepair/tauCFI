@@ -95,9 +95,9 @@ SystemV ABI specifies 16 general purpose integer registers. Therefore, we repres
 \draw (10,1.5) rectangle node[anchor=center] {\Huge{64-bits}} (12,0);
 \end{tikzpicture}
 }
-\caption{The \emph{type} policy schema for callsites and calltargets. Note that p. means parameter. As it is depicted in this example, when requiring width, one starts at the 
-bottom and grows to the top, as it is always possible to accept more parameters than required.
-The reverse is true for providing, as it is possible to accept less parameters than provided.}
+\caption{The \emph{type} policy schema for callsites and calltargets. Note that p. means parameter. As it is depicted in this example, when requiring parameter width, one starts at the 
+bottom of the above matrix and grows to the top, as it is always possible to accept more parameters than required.
+The reverse is true for providing parameters, as it is possible to accept less parameters than provided.}
 \label{fig:TYPEschema}
 \end{figure}
 As shown in Figure \ref{fig:TYPEschema}, our idea is to not simply classify callsites and calltargets based on the number of parameters they provide or request, but also on the parameter type. To simplify our approach, we use the width of the type and do not infer the actual type. As previously mentioned, there are 4 types of reading and writing accesses. Therefore, our set of possible types for parameters is $\texttt{TYPE} = \{64, 32, 16, 8, 0\}$; where 0 models the absence of a parameter. Since SystemV ABI specifies 6 registers as parameter holding registers, we classify our callsites and calltargets into $\texttt{TYPE}^6$. Similar to the policy of \texttt{TypeArmor}, we allow overestimations of callsites and underestimations of calltargets, however, on the level of types. Therefore, for a callsite $cs$ it is possible to call a calltarget $ct$, only if for each parameter of $ct$ the corresponding parameter of $cs$ is not smaller w.r.t. the width. This results in a finer-grained policy which is further restricting the possible pool of calltargets for each callsite.
@@ -134,18 +134,24 @@ As shown in Figure \ref{fig:TYPEschema}, our idea is to not simply classify call
     
 \subsection{Calltarget Analysis}
 \label{section:calltargetanalysis}
-For our policy, we need to classify calltargets according to the parameters they provide. Underestimations are allowed, however, overestimations shall not be permitted. For this purpose, we employ a customizable modified liveness analysis algorithm, which we will show first. We then present our versions for a~\emph{count} and a~\emph{type} based policy. Furthermore, we need to be aware of certain corner cases, which we will discuss at the end.
+For our policy, we need to classify calltargets according to the parameters they provide. Underestimations are allowed, however, overestimations 
+shall not be permitted. For this purpose, we employ a customizable modified liveness analysis algorithm, which we will show first. 
+We then present our versions for a~\emph{count} and a~\emph{type} based policy. Furthermore, we need to be aware of certain corner cases,
+which we will discuss at the end.
 
 \subsubsection{Liveness Analysis}
-A variable is alive before the execution of an instruction, if at least one of the originating paths performs a read access before any write access on that variable. If applied to a function, this calculates the variables that need to be alive at the beginning, as these are its parameters. We based Algorithm~\ref{alg:liveness} on the liveness analysis algorithm presented in Khedker~\textit{et al.}~\cite{khedker2009data}, which basically is a depth-first traversal of basic blocks. For customization, we rely on the implementation of several functions ($\mathcal{S}^\mathcal{L}$ is the set of possible register states depending on the specific liveness implementation):
+A variable is alive before the execution of an instruction, if at least one of the originating paths performs a read access before any write access on that variable. 
+If applied to a function, this calculates the variables that need to be alive at the beginning, as these are its parameters. We based Algorithm~\ref{alg:liveness} 
+on the liveness analysis algorithm presented in Khedker~\textit{et al.}~\cite{khedker2009data}, which basically is a depth-first traversal of basic blocks. 
+For customization, we rely on the implementation of several functions. $\mathcal{S}^\mathcal{L}$ is the set of possible register states depending on the specific liveness implementation of:
 
-$\texttt{merge\_v} : \mathcal{S}^\mathcal{L} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge the current state with the following state change.
+$\bullet$ $\texttt{merge\_v} : \mathcal{S}^\mathcal{L} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge the current state with the following state change.
 
-$\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{L}) \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge a set of states resulting from several paths.
+$\bullet$ $\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{L}) \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge a set of states resulting from several paths.
 
-$\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{L}$, which calculates the state change that occurs due to the given instruction 
+$\bullet$ $\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{L}$, which calculates the state change that occurs due to the given instruction 
 
-$\texttt{succ} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which calculates the successors of the given block.
+$\bullet$ $\texttt{succ} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which calculates the successors of the given block.
 
 \begin{algorithm}[h!]
  	\SetAlgoLined
@@ -352,7 +358,7 @@ may vary. A prominent example of this would be the $printf$ function, which is u
 to output text to $stdout$.
 This type of functions allows for an easier processing of parameters where
 usually all potential variadic parameters are moved into a contiguous block of memory, 
-as can be observed in the assembly depicted in Figure \ref{fig:asmvariadic}.
+as can be observed in the assembly depicted in Figure \ref{fig:asmvariadic} in Appendix.
 Our analysis interprets that as a read access on all parameters and thus,
 we arrive at a potentially problematic overestimation. 
 
@@ -376,15 +382,19 @@ Four our policy, we need to classify our callsites according to the parameters t
 
 \subsubsection{Reaching Definitions}
 \label{subsection:reachindefinitionstheory}
-An assignment to a variable is a reaching definition after the execution of a set of instruction if that variable still exists in at least one possible execution path. If applied to a callsite, this calculates the values that are provided by this callsite to the function it then invokes. We based Algorithm~\ref{alg:reaching}  on the reaching defintion analysis presented in Khedker~\textit{et al.}~\cite{khedker2009data}, which basically is a reverse depth-first traversal of basic blocks. For customization, we rely on the implementation of several functions($\mathcal{S}^\mathcal{R}$ is the set of possible register states depending on the specific reaching definition implemention):
+An assignment to a variable is a reaching definition after the execution of a set of instruction if that variable still exists in at least one possible execution path. 
+If applied to a callsite, this calculates the values that are provided by this callsite to the function it then invokes. 
+We based Algorithm~\ref{alg:reaching} on the reaching defintion analysis presented in Khedker~\textit{et al.}~\cite{khedker2009data}, 
+which basically is a reverse depth-first traversal of basic blocks of a program. For customization, we rely on 
+the implementation of several functions. $\mathcal{S}^\mathcal{R}$ is the set of possible register states depending on the specific reaching definition implementation of:
 
-$\texttt{merge\_v} : \mathcal{S}^\mathcal{R} \times \mathcal{S}^\mathcal{R} \mapsto \mathcal{S}^\mathcal{R}$, which descibes how to merge the current state with teh following state change.
+$\bullet$ $\texttt{merge\_v} : \mathcal{S}^\mathcal{R} \times \mathcal{S}^\mathcal{R} \mapsto \mathcal{S}^\mathcal{R}$, which describes how to merge the current state with teh following state change.
 
-$\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{R}) \mapsto \mathcal{S}^\mathcal{R}$, which descibes how to merge a set of states resulting from several paths.
+$\bullet$ $\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{R}) \mapsto \mathcal{S}^\mathcal{R}$, which describes how to merge a set of states resulting from several paths.
 
-$\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{R}$, which calculates the state state change that occurs due to the given instruction.
+$\bullet$ $\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{R}$, which calculates the state state change that occurs due to the given instruction.
 
-$\texttt{pred} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which calculates the predecessors of the given block.
+$\bullet$ $\texttt{pred} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which calculates the predecessors of the given block.
 
 
 \begin{algorithm}[!ht]

@@ -33,7 +33,7 @@
 % \textbf{Mitigation of Forward-Edge based Attacks.}
 % \label{Mitigation of Advanced Code-Reuse Attacks}
 Recursive-COOP~\cite{crane:readactor++}, COOP~\cite{schuster:coop}, Subversive-C~\cite{subversive-c:lettner} and the attack of Lan \textit{et al.}~\cite{loop:oriented} are forward-edge based CRAs which cannot be addressed with:
-\textit{i)}  shadow stacks techniques and hardware-based approaches such as Intel CET~\cite{intel:cet} (i.e., since advanced COOP do not violate the caller/callee convention), 
+\textit{i)}  shadow stacks techniques and hardware-based approaches such as Intel CET~\cite{intel:cet} (\textit{i.e.,} since advanced COOP do not violate the caller/callee convention), 
 \textit{ii)} coarse-grained Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} techniques, and 
 \textit{iii)} OS-based approaches such as Windows Control Flow Guard~\cite{windows:cfguard} 
 since the precomputed CFG does not contain edges for indirect callsites which are explicitly exploited during the COOP attack.
