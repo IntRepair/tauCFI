@@ -79,18 +79,18 @@ Occurrences of such situations are quite rare, as we learned with our experiment
 detect a difference between our \textit{type} policy and a \textit{count} policy. However, when using our tool, we were able to detect differences,
 which reinforce the fact, that we do not rely on declaration of parameters, but usage of those.
 
-Third, \textsc{TypeShield} can protect only forward indirect edges in a binary program and is currently not intended to protect backward
-edges with the help of shadow stack~\cite{dang:asiaccs}. For this reason, we assume that \textsc{TypeShield} runs side by side with an 
-ideal backward-edge protection mechanism such as a shadow~\cite{conti:ccs}. However, the main goal of \textsc{TypeShield} is to complement 
-shadow stack based defenses which fails to account for attacks not violating the backward-edge calling conventions such as the COOP attack.
+Third, \textsc{TypeShield} can protect forward and backward indirect edges 
+in a binary program and can complement a shadow stack~\cite{dang:asiaccs} protection technique. For this reason, we assume that \textsc{TypeShield} can run side by side with an 
+ideal backward-edge protection mechanism such as a shadow stack~\cite{conti:ccs}. However, the main goal of \textsc{TypeShield} is to complement 
+shadow stack based defenses which fail to account for attacks not violating the backward-edge calling conventions such as the COOP attack.
 
 Fourth, \textsc{TypeShield} is not intended to be more precise than source code based tools such as IFCC/VTV~\cite{vtv:tice}. However, 
 \textsc{TypeShield} is highly useful in situations where the source code is typically not available (\textit{e.g.,} off-the-shelf programs), 
 where programs rely on many libraries, and where the recompilation of all the shared libraries is not possible. 
-Further, binary based tools as \textsc{TypeShield} can offer precise protection when source code is not available or 
+Further, binary based tools such as \textsc{TypeShield} can offer precise protection when source code is not available or 
 recompilation is not feasible or desirable.
 
 Finally, while a major step forward, \textsc{TypeShield} cannot thwart all possible attacks, as even solutions with access to source 
 code are unable to protect against all possible attacks~\cite{carlini:bending}. In contrast, \textsc{TypeShield}, our binary-based tool, 
-can stop \textit{all} COOP attacks published to date and significantly raises the bar for an adversary when compared to
+can stop all currently COOP attacks published to date and significantly raises the bar for an adversary when compared to
 TypeArmor and similar tools. Moreover, \textsc{TypeShield} provides a strong mitigation for other types of code-reuse attacks as well.
