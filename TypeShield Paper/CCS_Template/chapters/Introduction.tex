@@ -9,8 +9,8 @@ A key building block of (runtime) OOP polymorphism are virtual functions, which 
 own implementations. In order to implement virtual functions, the compiler needs to generate a virtual table meta-data structure of all virtual functions for each class containing 
 them and provide to each instance of such a class a (virtual) pointer to the aforementioned table. While this approach allows for more flexible code to be built, 
 the basic implementation provides unfortunately very little security assurances. Data about highly damaging arbitrary code executions in major applications collected by U.S. NIST 
-(see Figure~\ref{ace:nvd:statistics}~\footnote{Number (\#, left Fig.) and percentage (\%, right Fig.) of arbitrary code executions (ACE) reports related (all colors expect black) to pointer or virtual table (vptr/vtbl) corruption 
-(see bag of words at the bottom of left Fig.)* reported by U.S. NVD for the past 10 years~\cite{NVD:ACE}. In black are the ACE unrelated reports.
+(see Figure~\ref{ace:nvd:statistics} description~\footnote{Number (\#, left side of Figure~\ref{ace:nvd:statistics}) and percentage (\%, right side of Figure~\ref{ace:nvd:statistics}) of arbitrary code executions (ACE) reports related (all colors expect black) to pointer or virtual table (vptr/vtbl) corruption 
+(see bag of words at the bottom of left Figure~\ref{ace:nvd:statistics})* reported by U.S. NVD for the past 10 years~\cite{NVD:ACE}. In black are the ACE unrelated reports.
 X axis is years (left \& right) and Y axis is number of reports in logarithmic scale (left) and distribution in \% of the same reports (right).
 As of May'17, NVD reports in total 701 ACEs from which 143 are the result of a vptr/vtable corruption (see * above) that are exploited by highjacking forward indirect calls.
 These vulnerabilities were reported in applications such as Google's Chrome \& V8 JavaScript engine, Mozilla Firefox, Microsoft's IE 10, Edge \& Chakra JavaScript engine, and several iOS/MacOS applications.} 
@@ -24,6 +24,7 @@ and~\cite{NVD:ACE}) demonstrates the security shortcomings and the need to addre
 %   \node[below=of img, node distance=0cm, yshift=1.2cm, xshift=.25cm, font=\color{black}] {Year};
 %   \node[left=of img, node distance=0cm, rotate=90, anchor=center,yshift=-.9cm,font=\color{black}] {\# Bad Type Casts Reported};
 % \vspace{-.73cm}
+\vspace{-.7cm}
 \caption{10 Years of Arbitrary Code Reuse Attacks Statistics.}
 \label{ace:nvd:statistics}
 \vspace{-.5cm}
@@ -49,9 +50,9 @@ forward edge CFI-policy based on parameter count for binaries is implemented. It
 by leveraging static analysis of the binary, which then is patched to enforce those invariants during runtime. While we believe the general approach to be highly promising, we consider 
 as a significant shortcoming that TypeArmor lacks precision with respect to the number of calltargets allowed per callsite which introduces significant 
 inefficiencies (see~\cref{{Too Permissive Parameter-Based Policies}} for more details). 
-% With our work, we aim to achieve both significant precision and efficiency enhancements.
+With our work, we aim to achieve both significant precision and runtime efficiency enhancements.
 
-In this paper, we present \textsc{TypeShield}, a runtime binary-level filtering tool for illegitimate forward calls, that is based on an improved forward-edge fine-grained CFI-policy 
+In this paper, we present \textsc{TypeShield}, a runtime binary-level fine-grained CFI tool for illegitimate forward calls, that is based on an improved forward-edge fine-grained CFI-policy 
 compared to previous work~\cite{veen:typearmor}. 
 \textsc{TypeShield} takes the binary of a program as input and it automatically instruments it in order
 to detect illegitimate indirect calls at runtime. In order to achieve this, 
@@ -152,7 +153,7 @@ for indirect calls, undefined arguments at the callsite are not used by any call
 This further helps to reduce the possible target set of callees for each callsite.
 
 \textbf{\textit{Comparison.}}~\textsc{TypeShield}, compared to TypeArmor, uses different analysis strategies for basic block merging.
-Furthermore, \textsc{TypeShield} disallows an indirect calltransfer that prepares
+Furthermore, \textsc{TypeShield}  (disallows an indirect calltransfer that prepares
 fewer arguments than the target callee consumes and where the types of the 
 arguments provided are not super types of the arguments expected at the target.
 It then uses this information to enforce that each callsite targets only a strict calltarget set.
@@ -162,16 +163,19 @@ thus drastically limiting an attacker in his capabilities.
 % \textbf{Contributions.} 
 In summary, we make the following contributions: \newline
 \label{Contribution}
-% \begin{itemize}[leftmargin=.12in]
-%  \item 
+\begin{itemize}
+% [leftmargin=.12in]
+ \item 
 
-$\bullet$ We provide a thorough \textbf{security analysis of forward indirect calls}. We analyze the usage of illegitimate indirect forward calls in detail, 
+% $\bullet$ 
+We provide a thorough \textbf{security analysis of forward indirect calls}. We analyze the usage of illegitimate indirect forward calls in detail, 
  thus providing security researchers and practitioners a better understanding of this emerging threat 
  (see~\ref{C++ Indirect Calls in Practice},~\ref{Security Implications of Forbidden Forward Indirect Calls},~\ref{Too Permissive Parameter-Based Policies},
  and~\ref{Real COOP Attack Example} for more details).
 
-%  \item 
-$\bullet$ We designed and implemented an \textbf{illegitimate indirect calls detection tool}. \textsc{TypeShield} is a general, automated, and easy-to-deploy 
+ \item 
+% $\bullet$ 
+We designed and implemented an \textbf{illegitimate indirect calls detection tool}. \textsc{TypeShield} is a general, automated, and easy-to-deploy 
  tool that can be applied to C/C++ binaries in order to detect and mitigate illegitimate forward indirect calls  during runtime. 
  Further, \textsc{TypeShield} has an expanded \textbf{scope} of analysis. Our tool can detect forbidden indirect calls and as such it can protect, 
  similarly as vTrust~\cite{zhang:vtrust}, against virtual table injection, corruption and reuse attacks. Further it can protect also against the 
@@ -179,19 +183,20 @@ $\bullet$ We designed and implemented an \textbf{illegitimate indirect calls det
  As such \textsc{TypeShield} can serve as a platform for developing other types of defenses for different types of attacks. The source code, test scripts and evaluation results 
  are available at \url{https://github.com/domain/typeshield}.
  
-%  \item 
-$\bullet$ We conduct a thorough set of evaluative \textbf{experiments}. In particular, we demonstrate experimentally that our precise binary-level 
+ \item 
+% $\bullet$ 
+We conduct a thorough set of evaluative \textbf{experiments}. In particular, we demonstrate experimentally that our precise binary-level 
  CFI technique can mitigate advanced code reuse attacks (CRAs) in absence of C++ semantics. For example, \textsc{TypeShield} can effectively protect against 
  the COOP attack and its variations. Thereby, it achieves a high degree of \textbf{precision}. Specifically, it 
  employs a more precise analysis than TypeArmor in order to reduce the calltarget set for each callsite. Our evaluation shows that it
  gains between 13\% and 35\% more precision with respect to TypeArmor on the same programs. Further, we showcase similar \textbf{performance} enhancements in 
  comparison to prior work. \textsc{TypeShield} employs runtime policy optimization techniques to further reduce runtime overheads. This is necessary, since our runtime checks are more complex than those
- used by TypeArmor. Our evaluation shows that it imposes up to 3\% overheads for performance-intensive benchmarks on the SPEC CPU2006 benchmarks and web 
- server applications, respectively. Which is comparable with TypeArmor on the same programs.
+ used by TypeArmor. Our evaluation shows that it imposes up to 2\% overheads for performance-intensive benchmarks on the SPEC CPU2006 benchmarks and web 
+ server applications, respectively. Which is lower than TypeArmors runtime overhead on the same programs.
  Finally, we respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist}) by 
  providing for each conducted experiment a precise description of encountered problems, setup, and comprehensive results including mean, median, and geomean values.
 
-% \end{itemize}
+\end{itemize}
 
 
 % 
@@ -271,15 +276,15 @@ $\bullet$ We conduct a thorough set of evaluative \textbf{experiments}. In parti
 %most probably not needed at this time.
 % \label{Outline}
 % \textbf{Outline.} 
-% The remainder of this paper is organized as follows.
-% \cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications, and 
-% \cref{chapter:TypeShild Overview} contains an overview of \textsc{TypeShield}.
-% \cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}, and
-% \cref{chapter:Implementation} briefly presents the implementation details of \textsc{TypeShield}, while
-% \cref{chapter:Evaluation} evaluates several properties of \textsc{TypeShield}.
-% \cref{chapter:Discussion} contains the discussion, and
-% \cref{chapter:Related_Work} surveys related work, while
-% \cref{chapter:Future_Work} highlights future research venues. 
-% Finally, \cref{chapter:Conclusion} concludes this paper.
+The remainder of this paper is organized as follows.
+\cref{C++ Bad Forward Indirect Calls} explains forbidden forward indirect calls issues and their security implications, and 
+\cref{chapter:TypeShild Overview} contains an overview of \textsc{TypeShield}.
+\cref{chapter:Design} describes the theory used and decisions made during the design of \textsc{TypeShield}, and
+\cref{chapter:Implementation} briefly presents the implementation details of \textsc{TypeShield}, while
+\cref{chapter:Evaluation} evaluates several properties of \textsc{TypeShield}.
+\cref{chapter:Discussion} contains the discussion, and
+\cref{chapter:Related_Work} surveys related work, while
+\cref{chapter:Future_Work} highlights future research venues. 
+Finally, \cref{chapter:Conclusion} concludes this paper.
 
 

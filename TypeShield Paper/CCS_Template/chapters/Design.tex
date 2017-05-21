@@ -38,9 +38,9 @@ SystemV ABI specifies 16 general purpose integer registers. Therefore, we repres
 
 \subsection{\emph{Type} Policy}
 \label{section:typepolicy}
-\begin{figure}[!h]
+\begin{figure}[h!]
 \center
-\resizebox{\columnwidth}{!}{
+\resizebox{.77\columnwidth}{!}{
 \begin{tikzpicture}
 
 \fill[black!10!white] (0,7.5) rectangle (12,6);
@@ -52,12 +52,12 @@ SystemV ABI specifies 16 general purpose integer registers. Therefore, we repres
 \draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Huge{growing required bits/parameter}} (-0.5,7.5);
 \draw[-triangle 45, thick] (12.5,7.5) -- node[sloped, anchor=center, above] {\Huge{growing provided bits/parameter}} (12.5,0);
 
-\draw (0,7.5)  --node[anchor=south] {\rot{\Huge{param. 6}}} (2,7.5);
-\draw (2,7.5)  --node[anchor=south] {\rot{\Huge{param. 5}}} (4,7.5);
-\draw (4,7.5)  --node[anchor=south] {\rot{\Huge{param. 4}}} (6,7.5);
-\draw (6,7.5)  --node[anchor=south] {\rot{\Huge{param. 3}}} (8,7.5);
-\draw (8,7.5)  --node[anchor=south] {\rot{\Huge{param. 2}}} (10,7.5);
-\draw (10,7.5) --node[anchor=south] {\rot{\Huge{param. 1}}} (12,7.5);
+\draw (0,7.5)  --node[anchor=south] {\rot{\Huge{p. 6}}} (2,7.5);
+\draw (2,7.5)  --node[anchor=south] {\rot{\Huge{p. 5}}} (4,7.5);
+\draw (4,7.5)  --node[anchor=south] {\rot{\Huge{p. 4}}} (6,7.5);
+\draw (6,7.5)  --node[anchor=south] {\rot{\Huge{p. 3}}} (8,7.5);
+\draw (8,7.5)  --node[anchor=south] {\rot{\Huge{p. 2}}} (10,7.5);
+\draw (10,7.5) --node[anchor=south] {\rot{\Huge{p. 1}}} (12,7.5);
 
 \draw (0,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (2,6);
 \draw (2,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (4,6);
@@ -95,7 +95,9 @@ SystemV ABI specifies 16 general purpose integer registers. Therefore, we repres
 \draw (10,1.5) rectangle node[anchor=center] {\Huge{64-bits}} (12,0);
 \end{tikzpicture}
 }
-\caption{The \emph{type} policy schema for callsites and calltargets. As is demonstrated here, when requiring width, one starts at the bottom and grows to the top, as it is always possible to accept more than one requires. The reverse is true for providing, as it is possible to accept less than provided.}
+\caption{The \emph{type} policy schema for callsites and calltargets. Note that p. means parameter. As it is depicted in this example, when requiring parameter width, one starts at the 
+bottom of the above matrix and grows to the top, as it is always possible to accept more parameters than required.
+The reverse is true for providing parameters, as it is possible to accept less parameters than provided.}
 \label{fig:TYPEschema}
 \end{figure}
 As shown in Figure \ref{fig:TYPEschema}, our idea is to not simply classify callsites and calltargets based on the number of parameters they provide or request, but also on the parameter type. To simplify our approach, we use the width of the type and do not infer the actual type. As previously mentioned, there are 4 types of reading and writing accesses. Therefore, our set of possible types for parameters is $\texttt{TYPE} = \{64, 32, 16, 8, 0\}$; where 0 models the absence of a parameter. Since SystemV ABI specifies 6 registers as parameter holding registers, we classify our callsites and calltargets into $\texttt{TYPE}^6$. Similar to the policy of \texttt{TypeArmor}, we allow overestimations of callsites and underestimations of calltargets, however, on the level of types. Therefore, for a callsite $cs$ it is possible to call a calltarget $ct$, only if for each parameter of $ct$ the corresponding parameter of $cs$ is not smaller w.r.t. the width. This results in a finer-grained policy which is further restricting the possible pool of calltargets for each callsite.
@@ -132,18 +134,24 @@ As shown in Figure \ref{fig:TYPEschema}, our idea is to not simply classify call
     
 \subsection{Calltarget Analysis}
 \label{section:calltargetanalysis}
-For our policy, we need to classify calltargets according to the parameters they provide. Underestimations are allowed, however, overestimations shall not be permitted. For this purpose, we employ a customizable modified liveness analysis algorithm, which we will show first. We then present our versions for a~\emph{count} and a~\emph{type} based policy. Furthermore, we need to be aware of certain corner cases, which we will discuss at the end.
+For our policy, we need to classify calltargets according to the parameters they provide. Underestimations are allowed, however, overestimations 
+shall not be permitted. For this purpose, we employ a customizable modified liveness analysis algorithm, which we will show first. 
+We then present our versions for a~\emph{count} and a~\emph{type} based policy. Furthermore, we need to be aware of certain corner cases,
+which we will discuss at the end.
 
 \subsubsection{Liveness Analysis}
-A variable is alive before the execution of an instruction, if at least one of the originating paths performs a read access before any write access on that variable. If applied to a function, this calculates the variables that need to be alive at the beginning, as these are its parameters. We based Algorithm~\ref{alg:liveness} on the liveness analysis algorithm presented in Khedker~\textit{et al.}~\cite{khedker2009data}, which basically is a depth-first traversal of basic blocks. For customization, we rely on the implementation of several functions ($\mathcal{S}^\mathcal{L}$ is the set of possible register states depending on the specific liveness implementation):
+A variable is alive before the execution of an instruction, if at least one of the originating paths performs a read access before any write access on that variable. 
+If applied to a function, this calculates the variables that need to be alive at the beginning, as these are its parameters. We based Algorithm~\ref{alg:liveness} 
+on the liveness analysis algorithm presented in~\cite{khedker2009data}, which basically is a depth-first traversal of basic blocks. 
+For customization, we rely on the implementation of several functions. $\mathcal{S}^\mathcal{L}$ is the set of possible register states depending on the specific liveness implementation of:
 
-$\texttt{merge\_v} : \mathcal{S}^\mathcal{L} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge the current state with the following state change.
+$\bullet$ $\texttt{merge\_v} : \mathcal{S}^\mathcal{L} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge the current state with the following state change.
 
-$\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{L}) \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge a set of states resulting from several paths.
+$\bullet$ $\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{L}) \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge a set of states resulting from several paths.
 
-$\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{L}$, which calculates the state change that occurs due to the given instruction 
+$\bullet$ $\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{L}$, which calculates the state change that occurs due to the given instruction 
 
-$\texttt{succ} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which calculates the successors of the given block.
+$\bullet$ $\texttt{succ} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which calculates the successors of the given block.
 
 \begin{algorithm}[h!]
  	\SetAlgoLined
@@ -343,7 +351,6 @@ Our horizontal merge($merge\_h$) function is again a simple pairwise combination
 
 \subsubsection{Variadic Functions}
 \label{subsection:variadicfunctions}
-
 \begin{figure}[thp] % the figure provides the caption
 \centering          % which should be centered
 \begin{tabular}{c}  % the tabular makes the listing as small as possible and centers it
@@ -385,7 +392,7 @@ may vary. A prominent example of this would be the $printf$ function, which is u
 to output text to $stdout$.
 This type of functions allows for an easier processing of parameters where
 usually all potential variadic parameters are moved into a contiguous block of memory, 
-as can be observed in the assembly depicted in Figure \ref{fig:asmvariadic}.
+as can be observed in the assembly depicted in Figure \ref{fig:asmvariadic} in Appendix.
 Our analysis interprets that as a read access on all parameters and thus,
 we arrive at a potentially problematic overestimation. 
 
@@ -401,23 +408,31 @@ xmm-passthrough block, which we call the param-passthrough block, and
 \subsubsection{Ignoring Reads} When one instruction writes and reads a register at the same time, we give the read access precedence, however, there are exceptions (also mentioned in TypeArmor, however, we expand slightly on that):
 \textit{1)} \texttt{xor \%rax, \%rax} is the first obvious scenario, as it will always result in \texttt{\%rax} holding the value 0,
 \textit{2)} \texttt{sub \%rax, \%rax} is probably the next scenario, as it results in \texttt{\%rax} also holding the value 0, and
-\textit{3)} \texttt{sbb \%rax, \%rax} is also relevant, however, it will not result in a constant value and based on the current state might either result in \texttt{\%rax} holding the value 0 or 1.
+\textit{3)} \texttt{sbb \%rax, \%rax} is also relevant, however, it will not result in a constant value and based on the current state might either result 
+in \texttt{\%rax} containing 0 or 1.
 
 \subsection{Callsite Analysis}
 \label{section:callsiteanalysis}
-Four our policy, we need to classify our callsites according to the parameters they provide. Overestimations are allowed, however, underestimations shall not be permitted. For this purpose we empoly a customizable modified reaching definition algorithm, which we will show first. We then presen our version for a \emph{count} and a \emph{type} policy. Furthermore, we need to be awayre of certain corner cases, which we will discuss at the end.
+Four our policy, we need to classify our callsites according to the parameters they provide. Overestimations are allowed, however,
+underestimations shall not be permitted. For this purpose we empoly a customizable modified reaching definition algorithm, 
+which we will show first. We then presen our version for a \emph{count} and a \emph{type} policy. Furthermore, we need to 
+be awayre of certain corner cases, which we will discuss at the end.
 
 \subsubsection{Reaching Definitions}
 \label{subsection:reachindefinitionstheory}
-An assignment to a variable is a reaching definition after the execution of a set of instruction if that variable still exists in at least one possible execution path. If applied to a callsite, this calculates the values that are provided by this callsite to the function it then invokes. We based Algorithm~\ref{alg:reaching}  on the reaching defintion analysis presented in Khedker~\textit{et al.}~\cite{khedker2009data}, which basically is a reverse depth-first traversal of basic blocks. For customization, we rely on the implementation of several functions($\mathcal{S}^\mathcal{R}$ is the set of possible register states depending on the specific reaching definition implemention):
+An assignment to a variable is a reaching definition after the execution of a set of instruction if that variable still exists in at least one possible execution path. 
+If applied to a callsite, this calculates the values that are provided by this callsite to the function it then invokes. 
+We based Algorithm~\ref{alg:reaching} on the reaching defintion analysis presented in~\cite{khedker2009data}, 
+which basically is a reverse depth-first traversal of basic blocks of a program. For customization, we rely on 
+the implementation of several functions. $\mathcal{S}^\mathcal{R}$ is the set of possible register states depending on the specific reaching definition implementation of:
 
-$\texttt{merge\_v} : \mathcal{S}^\mathcal{R} \times \mathcal{S}^\mathcal{R} \mapsto \mathcal{S}^\mathcal{R}$, which descibes how to merge the current state with teh following state change.
+$\bullet$ $\texttt{merge\_v} : \mathcal{S}^\mathcal{R} \times \mathcal{S}^\mathcal{R} \mapsto \mathcal{S}^\mathcal{R}$, which describes how to merge the current state with teh following state change.
 
-$\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{R}) \mapsto \mathcal{S}^\mathcal{R}$, which descibes how to merge a set of states resulting from several paths.
+$\bullet$ $\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{R}) \mapsto \mathcal{S}^\mathcal{R}$, which describes how to merge a set of states resulting from several paths.
 
-$\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{R}$, which calculates the state state change that occurs due to the given instruction.
+$\bullet$ $\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{R}$, which calculates the state state change that occurs due to the given instruction.
 
-$\texttt{pred} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which calculates the predecessors of the given block.
+$\bullet$ $\texttt{pred} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which calculates the predecessors of the given block.
 
 
 \begin{algorithm}[!ht]
@@ -458,19 +473,6 @@ $\texttt{pred} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which 
 \caption{Basic block reaching definition analysis.}
 \label{alg:reaching}
 \end{algorithm}
-
-\subsection{Callsite Analysis}
-\label{section:callsiteanalysis}
-For either \emph{count} or \emph{type} policy to work, we need to arrive at an overestimation of the provided parameters by any indirect callsite 
-existing within the targeted binary. We will employ a modified version of reaching analysis that tracks registers instead of variables to 
-generate the needed overestimation. As our algorithm will be customizable, we look at the required merge functions to implement the \emph{count} and \emph{type} policies. 
-
-\subsubsection{Reaching Definitions}
-\label{subsection:reachindefinitionstheory}
-An assignment of a value to a variable is a reaching definition at the end of a block $n$, if that definition is present within at 
-least one path from start to the end of the block $n$ without being overwritten by another value assignment to the same variable. 
-We employ reaching definitions analysis, because we are looking for the parameters a callsite provides. This essentially 
-requires the last known set of definitions that reach the actual call instruction within the parameter registers.
 
 In our specific case, the function \texttt{analyze\_instr} does not need to handle normal predecessors, as Dyninst will resolve those for us. 
 However there are serveral instructions that have to be handled nonetheless: 1) If the current instruction is an indirect call or a direct call 
@@ -516,8 +518,9 @@ callsite directly before each call instruction.
 This algorithm relies on various functions that can be used to configure its behavior. We need to define the 
 function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, 
 the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function
-$analyze\_instr$. Note, that the function $pred$, which retrieves all possible predecessors of a block has not been implemented by us, because we rely on the DynInst instrumentation framework to achieve the following.
-\vspace{-.3cm}
+$analyze\_instr$. Note, that the function $pred$, which retrieves all possible predecessors of a block has not been implemented by us, because we rely on the DynInst instrumentation 
+framework to achieve the following.
+\vspace{-.1cm}
 \begin{subequations}
 \label{eq:livenesscustom}
 \begin{align}
@@ -527,7 +530,7 @@ analyze\_instr &: \mathcal {I} \mapsto \mathcal{S}^\mathcal{R} \\
 pred &: \mathcal{I} \mapsto \mathcal{P}(\mathcal{I})
 \end{align}
 \end{subequations}
-\vspace{-.8cm}
+\vspace{-.6cm}
 
 The $analyze\_instr$ function calculates the effect of an instruction and is the heart of the analyze function. It will also 
 handle non-jump and non-fall-through successors, as these are not handled by DynInst in our case. We essentially have three cases that we handle:

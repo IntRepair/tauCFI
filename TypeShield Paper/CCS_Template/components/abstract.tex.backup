@@ -31,7 +31,7 @@
 
 %jens version
 Applications aiming for high performance and availability draw on several features in the C/C++ programming language. 
-A key building block are virtual functions, which facilitate late binding, and thereby supports runtime polymorphism. 
+A key building block are virtual functions, which facilitate late binding, and thereby support runtime polymorphism. 
 However, practice-driven and academic research have identified an alarmingly high number of virtual pointer corruption 
 vulnerabilities which undercut security in significant ways and are still in need of a thorough solution approach.
 
@@ -46,7 +46,8 @@ efficiently and with low performance overhead protect these applications from fo
 based on virtual pointers. Further, in a direct comparison with the state-of-the-art tool, \textsc{TypeShield} 
 achieves higher caller/callee matching (\textit{i.e.,} precision), while maintaining a more favorable runtime overhead. 
 Focusing the evaluation on target reduction techniques, we can demonstrate that our approach achieves a notable 
-additional reduction of the possible calltargets per callsite of up to 20\% associated with an overall reduction
-of about 9\% in comparison to other state-of-the-art parameter-only count-based techniques.
-Finally, we want to particularly emphasis of the reproducibility of our results through a precise description
-of each experiment w.r.t. experiment setup, results, encountered problems, mean, median and geomeans all specified.
+additional reduction of the possible calltargets per callsite of up to 35\% associated with an overall reduction
+of about 13\% and a comparable runtime performance overhead as other state-of-the-art parameter-only count-based tools.
+Finally, we want to particularly emphasize that we provide for each experiment a precise description
+w.r.t. setup, results, tool misses, mean, median and geomean values which clearly increase
+the reproducibility of our work.

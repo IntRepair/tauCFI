@@ -26,7 +26,7 @@
 % The family of forward indirect call based attacks which can manifest due to a series of factors such as
 % memory corruptions, binary layout leackages and availability of useful
 % gadgets in a sufficiently large executable poses a serious security threat.
-In this paper, we presented \textsc{TypeShield}, a runtime fine-grained CFI-enforcing tool which 
+In this paper, we presented \textsc{TypeShield}, a runtime fine-grained CFI-policy enforcing tool which 
 operates on program binaries. Our tool precisely and efficiently filters legitimate from 
 illegitimate forward indirect control flow transfers by using a novel runtime type-checking 
 technique based on function parameter type-checking and parameter-counting. 
@@ -34,11 +34,11 @@ technique based on function parameter type-checking and parameter-counting.
 
 We have implemented~\textsc{TypeShield} and applied it to real software such as web servers, FTP servers and the SPEC CPU2006 benchmark. 
 We demonstrated through extensive experiments that~\textsc{TypeShield} has 
-higher precision than existing state-of-the-art tools, while maintaining a comparable runtime performance overhead. 
+higher precision w.r.t. the calltarget set per callsite than existing state-of-the-art tools, while maintaining a lower runtime ($\le$ 2\%) performance overhead. 
 To date, we were able to improve on parameter count based techniques by reducing the possible calltargets per 
-callsite ratio by 20\% with an overall reduction of about 9\% when comparing with similar state-of-the-art approaches. 
-Next to a more precise analysis, the tangible outcome is a considerably reduced attack surface.
-In the spirit of open research, we have made the source code of \textsc{TypeShield} and the evaluation results publicly available, 
+callsite ratio by 35\% with an overall reduction of more than 13\% when comparing with similar state-of-the-art tools. 
+Next to a more precise analysis, the tangible outcome is a considerably reduced attack surface which can be further be improved by 
+tweaking our analysis. Finally, in the spirit of open research, we have made the source code of \textsc{TypeShield} and the evaluation results publicly available, 
 thus we support reproducibility in this fast-moving research field by providing comprehensive descriptions of our experiments.
 
 

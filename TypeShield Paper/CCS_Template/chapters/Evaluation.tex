@@ -20,7 +20,8 @@ applications \textit{Postgresql} (v.9.0.10) and \textit{Mysql} (v.5.1.65), the m
 \label{section:typeshieldprecision}
 % \todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
 
-To measure the precision of \textsc{TypeShield}, we need to compare the classification of callsites and calltargets as is given by our tool to some sort of ground truth for our test targets. We generate this ground truth by compiling our test targets using a custom compiled Clang/LLVM compiler (v.4.0.0 trunk 283889) with a MachineFunction pass inside the x86 code generation implementation of LLVM. We essentially collect three data points for each callsite/calltarget from our LLVM-pass:
+To measure the precision of \textsc{TypeShield}, we need to compare the classification of callsites and calltargets as is given by our tool to some sort of ground truth for our test targets. We generate this ground truth by compiling our test targets using a 
+custom compiled Clang/LLVM compiler (v.4.0.0 trunk 283889) with a MachineFunction pass inside the x86 code generation implementation of LLVM. We essentially collect three data points for each callsite/calltarget from our LLVM-pass:
 \textit{1)} the point of origination, which is either the name of the calltarget or the name of the function the callsite resides in, 
 \textit{2)} the return type that is either expected by the callsite or provided by the calltarget, and 
 \textit{3)} the parameter list that is provided by the callsite or expected by the calltarget, which discards the variadic argument list.
@@ -35,7 +36,7 @@ We assessed the applicability of our collected ground truth, by
 	\begin{tabular}{l|r|r|r|r|r|r}%
 	\toprule
 	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c|}{ {\bfseries calltargets}} & \multicolumn{3}{c}{{\bfseries callsites} }\\
-	\bfseries Target & match & clang miss &  tool miss &  match & clang miss & tool miss% specify table head
+	\bfseries Target & match & Clang miss &  tool miss &  match & Clang miss & tool miss% specify table head
 	\\\midrule
 	\csvreader[before filter=\ifthenelse{\equal{\csvcoli}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/matching.O2.csv}{
 		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
@@ -51,8 +52,8 @@ We assessed the applicability of our collected ground truth, by
     	}
 %     	}
 	\caption {Table shows the quality of structural matching provided by our automated verify and test environment, 
-	regarding callsites and calltargets when compiling with optimization level O2. The label clang miss 
-	denotes elements not found in the data-set of the clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc{TypeShield}. 
+	regarding callsites and calltargets when compiling with optimization level O2. The label Clang miss 
+	denotes elements not found in the data-set of the Clang/LLVM pass. The label tool miss denotes elements not found in the data-set of \textsc{TypeShield}. 
 % 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	looking at this table?}
         }
@@ -60,10 +61,11 @@ We assessed the applicability of our collected ground truth, by
 \end{table}
 assessing the structural compatibility of our two data sets. First, we investigate the comparability of calltargets. Second, we check the compatibility of callsites. The results are depicted in Table \ref{tbl:matchingquality}.
 
-\textbf{Calltargets.} The obvious choice for structural comparison regarding calltargets is their name, as these are simply functions. First, we have to remove internal functions from our datasets like the \texttt{\_init} or \texttt{\_fini} functions, which are of no relevance for this investigation. Furthermore, while C functions can simply be matched by their name as they are unique through the binary, the same cannot be said about the language C++. One of the key differences between C and C++ is function overloading, which allows defining several functions with the same name, as long as they differ in namespace or parameter type. As LLVM does not know about either concept, the Clang compiler needs to generate unique names. The method used for unique name generation is called mangling and composes the actual name of the function, its return type, its name-space and the types of its parameter list. Therefore, we need to reverse this process and then compare the fully typed names. Table \ref{tbl:matchingquality} shows three data points regarding calltargets for the optimization level O2:
-\textit{1)}  Number of comparable calltargets that are found in both datasets, 
-\textit{2)}  Clang miss: Number of calltargets that are found by \textsc{TypeShield}, but not by our Clang/LLVM pass, and 
-\textit{3)}  Tool miss: Number of calltargets that are found by our Clang/LLVM pass, but not by \textsc{TypeShield}
+\textbf{Calltargets.} The obvious choice for structural comparison regarding calltargets is their name, as these are simply functions. First, we have to remove internal functions from our datasets like the \texttt{\_init} or \texttt{\_fini} functions, which are of no relevance for this investigation. Furthermore, while C functions can simply be matched by their name as they are unique through the binary, the same cannot be said about the language C++. One of the key differences between C and C++ is function overloading, which allows defining several functions with the same name, as long as they differ in namespace or parameter type. 
+As LLVM does not know about either concept, the Clang compiler needs to generate unique names. The method used for unique name generation is called mangling and composes the actual name of the function, its return type, its name-space and the types of its parameter list. Therefore, we need to reverse this process and then compare the fully typed names. Table \ref{tbl:matchingquality} shows three data points regarding calltargets for the optimization level O2:
+\textit{1)} Number of comparable calltargets that are found in both datasets, 
+\textit{2)} Clang miss: Number of calltargets that are found by \textsc{TypeShield}, but not by our Clang/LLVM pass, and 
+\textit{3)} Tool miss: Number of calltargets that are found by our Clang/LLVM pass, but not by \textsc{TypeShield}
 
 The problematic column is the Clang miss column, as these values might indicate problems with \textsc{TypeShield}. These numbers are relatively low (below 1\%) with only Node.js showing a noticeable higher value than the rest (around 1.6\%). The column labeled tool miss lists higher numbers, however, these are of no real concern to us, as our ground truth pass possibly collects more data: All source files used during the compilation of our test-targets are incorporated into our ground truth. The compilation might generate more than one binary and therefore, not necessary all source files are used for our test-target.
 
@@ -100,7 +102,7 @@ We measured two data points per target, the number and ratio of perfect
     	\end{tabular}
 }
 
-\caption {The results for classification of callsites and calltargets using our \textit{count} policy on the O2 optimization level, when comparing to the ground truth obtained by our clang/LLVM pass. The label perfect args denotes all occurrences when our result and the ground truth perfectly match regarding the required/provided arguments. The label perfect return denotes this for return values. 
+\caption {The results for classification of callsites and calltargets using our \textit{count} policy on the O2 optimization level, when comparing to the ground truth obtained by our Clang/LLVM pass. The label perfect args denotes all occurrences when our result and the ground truth perfectly match regarding the required/provided arguments. The label perfect return denotes this for return values. 
 % 		\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	        looking at this table?}
                 }
@@ -117,7 +119,8 @@ and Node.js (56.34\%) as exceptions resulting in a geometric mean of 71.97\%.
 
 \subsubsection{Classification Precision (\textit{type})}
 \label{subsection:typeshieldcountprecision}
-We measured two data points per test target, the number and
+We measured two data points per test target, the number and ratio of perfect classifications 
+\newline
 \begin{table}[h!]
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r|r}%
@@ -139,13 +142,13 @@ We measured two data points per test target, the number and
     	\end{tabular}
 
 }
-	\caption {The result for classification of callsites using our \textit{type} policy on the O2 optimization level, when comparing to the ground truth obtained by our clang/LLVM pass. The label perfect args denotes all occurrences when our result and the ground truth perfectly match regarding the required/provided arguments. The label perfect return denotes this for return values.
+	\caption {The result for classification of callsites using our \textit{type} policy on the O2 optimization level, when comparing to the ground truth obtained by our Clang/LLVM pass. The label perfect args denotes all occurrences when our result and the ground truth perfectly match regarding the required/provided arguments. The label perfect return denotes this for return values.
 % 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	looking at this table?}
         }
 	\label{tbl:precisionTYPE}
 \end{table}
- ratio of perfect classifications and the number and ratio of problematic classifications, which in the case of calltargets refers to overestimations and in case of callsites refers to underestimations. The results are depicted in Table \ref{tbl:precisionTYPE}.
+and the number and ratio of problematic classifications, which in the case of calltargets refers to overestimations and in case of callsites refers to underestimations. The results are depicted in Table \ref{tbl:precisionTYPE}.
 \textbf{Experiment Setup (Calltargets).} Union combination operator with an $analyze$ function that does follow into occurring direct calls and a vertical merge that intersects all reads until the first write.
 \textbf{Results (Calltargets).} For half of the set, the problem rate is under 1\% and for the other half it is not above 10\%, resulting in a geomean of 1.92\%. The rate of perfect classification is in general over 70\% with Nginx (69.38\%) and Mysql (63.16\%) resulting in a geometric mean of 77.15\%.
 \textbf{Experiment Setup (Callsites).} Union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
@@ -333,17 +336,27 @@ When compared, our implementation of the \textit{type} policy allows about 7.93\
 \subsection{Runtime Overhead}
 \label{section:typeshieldoverheadperformance}
 % \todo[inline]{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
-\textit{}\newline
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.47\textwidth]{figures/spec_cpu2006.pdf}
-    \caption{Benchmark runtime normalized against the baseline for the SPEC CPU2006 benchmarks.
+    \caption{SPEC CPU2006 Benchmark Results.
 %     \textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? replace with our values. remove this stub.}
     }
+    \vspace{-.5cm}
     \label{fig:awesome_image}
 \end{figure}
 
-Figure~\ref{fig:awesome_image} depicts the runtime normalized against the baseline for the SPEC CPU2006 benchmarks. In general, we have about 2\%-5\% performance drop when instrumenting using Dyninst. Reasons include cache misses introduced by jumping between the old and the new executable section of the binary generated by duplicating and patching the duplicate. This is necessary, because when outside of the compiler, it is nearly impossible to relocate indirect control flow. Therefore, every time an indirect control flow occurs, one jumps into the old executable section and from there back to the new executable section. Moreover, this is also dependent on the actual structure of the target, as it depends on the number of indirect control flow operations per time unit.
+Figure~\ref{fig:awesome_image} depicts the runtime overhead obtained by applying our tool to several SPEC CPU2006 benchmarks
+in count mode and in count and type mode, respectively.
+The obtained geomean runtime overhead is under 1.1\% performance drop when instrumenting using Dyninst. 
+One reason for the performance drop includes cache misses introduced by jumping between the old and the new executable section 
+of the binary generated by duplicating and patching. This is necessary, because when
+outside of the compiler, it is nearly impossible to relocate indirect control flow. Therefore, 
+every time an indirect control flow occurs, one jumps into the old executable section and from 
+there back to the new executable section. Moreover, this is also dependent on the actual structure 
+of the target, as it depends on the number of indirect control flow operations per time unit.
+Finally, it can be observed that our runtime overhead is lower (2\%) than state-of-the-art tools (around 3\%), 
+thus qualifying \textsc{TypeSchield} as a highly practical tool.
 
 \todo[inline]{add a binary patch that does not crash none of the programs from SPEC2006.}
 \todo[inline]{need a Table with all the results for each of the SPEC2006 programs and a bar diagram}
@@ -354,8 +367,10 @@ Figure~\ref{fig:awesome_image} depicts the runtime normalized against the baseli
 \todo[inline]{here we need a bar chart, see TypeArmor paper.}
 \todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
 
-The instrumentation overhead or the change in size due to patching is mostly due to the method Dyninst uses to patch binaries. 
-Essentially, the executable part of the binary is duplicated and extended with the patch. The usual ratio we encountered in our experiments is around 40\% to 60\% with Postgres having an increase of 150\% in binary size. One cannot reduce that value significantly, because of the nature of code relocation after losing the data that a compiler has. Especially indirect control flow 
+The instrumentation overhead (\textit{i.e.,} binary blow-up) or the change in size due to patching is mostly due to the method Dyninst uses to patch binaries. 
+Essentially, the executable part of the binary is duplicated and extended with the patch. The usual ratio we encountered in our experiments is 
+around 40\% to 60\% with Postgres having an increase of 150\% in binary size. One cannot reduce that 
+value significantly, because of the nature of code relocation after loosing the information which a compiler has. Especially indirect control flow 
 changes are very hard to relocate. Therefore, instead each important basic block in the old code contains a jump instruction to the new position of the basic block.
 
 \subsection{Security Analysis}
@@ -406,12 +421,14 @@ that are used to classify the callsites and calltargets is simply higher. While 
 perform better than the count policies, there are still parts within the type plot that are above the 
 count plot, the reason for that is also relatively simple: the maximum number of calltargets a 
 callsite can access has been reduced. Therefore, a lower number of calltargets is a higher 
-percentage than before. However, we note that these results dependent on the structure of the program.
+percentage than before. However, we note that these results dependent on the particular 
+structure of the hardened program.
 
 %REMOVED THIS TODO FROM PAPER: todo. Also, add the buckets diagram, see Figure 9 in the typearmor paper.
 
 \subsection{Comparison with Other Tools}
 \label{RQ5: Is TypeShield better than other tools?}
+\vspace{-.15cm}
 \begin{table}[h]
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r}%
@@ -429,24 +446,27 @@ percentage than before. However, we note that these results dependent on the str
 	{\textit{\csvcolii} & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii}% specify your coloumns here
     	\end{tabular}}
 %     	}
-	\caption {The medians of calltargets per callsite for different restriction methods. Note that the smaller the geomean numbers are,
-	the better the method is. AT is a technique which allows calltargets that are address taken. 
-	IFCC is a compiler based solution and depicted here as a reference for what is possible when 
-	source code is available. TypeArmor and TypeShield on the other hand are binary-based tools. 
-	We can see that our type-based tool on average reduces the number of calltargets by 35\% when 
-	compared to AT method and by 13\% when comparing with TypeArmor. Note that we removed Nginx out of the table
-	because at the time of our evaluation it produced outlier results which we further wanted to investigate.
-	Finally, we think that with further tweaking of our analysis we can drop the value of the calltarget set 
-	per callsite.
-}
+	\caption {The medians of calltargets per callsite for different tools.} 
 	\label{tbl:toolcompare}
+	\vspace{-.5cm}
 \end{table}
 
-Table~\ref{tbl:toolcompare} depicts a comparison between \textsc{TypeShield}, TypeArmor and IFCC with respect to the count of calltargets per callsites. 
+Table~\ref{tbl:toolcompare} depicts~\footnote{Note that the smaller the geomean numbers are,
+	the better the technique is. AT is a technique which allows calltargets that are address taken. 
+	IFCC is a compiler based solution and depicted here as a reference for what is possible when 
+	source code is available. TypeArmor and TypeShield on the other hand are binary-based tools. 
+	We can observe that our type-based tool reduces the number of calltargets by up to 35\% when 
+	compared to the AT method and on average by 13\% when comparing with TypeArmor. 
+% 	Note that we removed Nginx out of the table
+% 	because at the time of our evaluation it produced outlier results which we further wanted to investigate.
+	Finally, we think that in addition by tweaking of our analysis we can further reduce the calltarget set for each callsite.
+% 	Thus, increasing even more the offered security benefit.
+}
+a comparison between \textsc{TypeShield}, TypeArmor and IFCC with respect to the count of calltargets per callsites. 
 The values depicted in this table for TypeArmor and IFCC are taken from the original TypeArmor paper.
 We compare our version of address taken analysis (AT), TypeArmor, TypeShield (count), TypeShield (type) and IFCC. The first 
-thing to notice is that when comparing these values, one can see that we did not implement a separation based on return type or the 
-CFC that TypeArmour introduced. Therefore, when implementing those measures, we predict that our solution would improve even 
-more with respect to precision. While we anticipate that it is possible to surpass TypeArmor implementing those two solutions 
+thing to notice is that when comparing these values, one can see that we did not depicted a separation based on return type or the 
+CFC that TypeArmour introduced. Therefore, when implementing those measures, we think that our solution would improve even 
+more with respect to precision than TypeArmor. While we anticipate that it is possible to surpass TypeArmor implementing those two solutions 
 in our tool, we deem it nearly impossible to be able to compete with IFCC, which can directly operate on the source code level 
-and having access to more possibilities than simply inspecting the parameters or return values.
+and has access to more possibilities than simply inspecting function parameters or return values.

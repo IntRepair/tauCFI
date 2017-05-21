@@ -37,17 +37,17 @@ vulnerabilities which undercut security in significant ways and are still in nee
 
 We contribute to this research area by proposing \textsc{TypeShield}, a binary runtime virtual pointer protection tool 
 which is based on instrumentation of program executables at load time. \textsc{TypeShield} applies a novel runtime 
-type and function parameter counter CFI policy in order to overcome the limitations of available approaches and to 
+type and function parameter counter control-flow integrity (CFI) policy in order to overcome the limitations of available approaches and to 
 efficiently verify dynamic dispatches during runtime. To enhance practical applicability, \textsc{TypeShield} can 
 be automatically and easily used in conjunction with legacy applications or where source code is missing to harden 
 binaries.
 We have applied \textsc{TypeShield} to web servers, FTP servers and the SPEC CPU2006 benchmark and were able to 
 efficiently and with low performance overhead protect these applications from forward indirect edge corruptions 
 based on virtual pointers. Further, in a direct comparison with the state-of-the-art tool, \textsc{TypeShield} 
-achieves higher caller/callee matching (\textit{i.e.,} precision), while maintaining a more favorable runtime overhead. 
+achieves higher caller/callee matching (\textit{i.e.,} precision), while maintaining a more favorable 
+runtime performance overhead ($\le$ 2\%) than other state-of-the-art tools.
 Focusing the evaluation on target reduction techniques, we can demonstrate that our approach achieves a notable 
-additional reduction of the possible calltargets per callsite of up to 41\% associated with an overall reduction
-of about 6\% in comparison to other state-of-the-art parameter-only count-based techniques.
-Finally, we want to particularly emphasize that we provide for each experiment a precise description
-w.r.t. setup, results, encountered problems, mean, median and geomean which consistently increase
-the reproducibility of our work.
+additional reduction of the possible calltargets per callsite of up to 35\% associated with an overall reduction
+of about 13\% and a lower runtime performance overhead as other state-of-the-art parameter-only count-based tools.
+Finally, we want to particularly emphasize that in this paper we provide for each experiment a precise description
+w.r.t. setup, results, tool misses, mean, median and geomean values which clearly increases the reproducibility.
