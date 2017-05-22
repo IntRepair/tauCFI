@@ -112,6 +112,12 @@
 \g@addto@macro{\UrlBreaks}{\UrlOrds}
 \makeatother
 
+%%my own dings
+\usepackage{tikz}
+\newcommand\encircle[1]{%
+\tikz[yshift=-2pt] 
+   \node (X) [draw, shape=circle, inner sep=0, scale=0.5, fill=black, text=white] {\strut #1};}
+   
 %% add -shell-escape as flag for pdflatex in order to work
 \usepackage{minted}
 \usepackage{placeins}
@@ -154,6 +160,7 @@
 \usepackage{amsthm}
 \usepackage[htt]{hyphenat}
 \usepackage{svg}
+\usepackage{pifont}
 % \theoremstyle{definition}
 % \newtheorem{definition}{Definition}[section]
 % \newtheorem*{remark}{Remark}

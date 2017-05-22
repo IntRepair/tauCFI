@@ -49,6 +49,6 @@
   \global\let\svgscale\undefined%
   \makeatother%
   \begin{picture}(1,0.75)%
-    \put(0,0){\includegraphics[width=\unitlength,page=1]{postgresqlO2.pdf}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{svgs/postgresqlO2.pdf}}%
   \end{picture}%
 \endgroup%

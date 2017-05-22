@@ -1,13 +1,13 @@
-\section{Forbidden Forward Calls Exposed}
+\section{Background}
 \label{C++ Bad Forward Indirect Calls}
 In this section,
 we present a brief overview of the concept of C++-based polymorphism in~\cref{Polymorphism in C++}
 and how indirect calls can be checked in practice in~\cref{C++ Indirect Calls in Practice}.
-In~\cref{section:countpolicy} we present a forward edge function parameter count based policy~\cite{veen:typearmor} 
-and in~\cref{Security Implications of Forbidden Forward Indirect Calls} we present security implications of indirect calls.
-Finally, in~\cref{{Too Permissive Parameter-Based Policies}} we show that~\cite{veen:typearmor} a state-of-the-art 
-forward edge protection tool is based on an imprecise parameter count based policy, and 
-in~\cref{Running Example: CVE X} we present the nuts and bolts of a real COOP attack~\cite{schuster:coop} example.
+In~\cref{section:countpolicy} we present a forward edge function parameter count-based policy (\cite{veen:typearmor}), and
+in~\cref{Security Implications of Forbidden Forward Indirect Calls} we highlight security implications of indirect calls ,while
+in~\cref{{Too Permissive Parameter-Based Policies}} we show that the state-of-the-art parameter count-based policy
+(\cref{section:countpolicy}) is imprecise w.r.t. to the enforced calltarget set per callsite. 
+Finally, in~\cref{Running Example: CVE X} we present in detail the nuts and bolts of a real COOP~\cite{schuster:coop} attack.
 
 \subsection{Polymorphism in C++ Programs}
 % \textbf{Polymorphism in C++.}
@@ -101,26 +101,26 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 Figure~\ref{Code example used to illustrate how a COOP loop gadget works}
 depicts a C++ code example where it is illustrated how a COOP loop based gadget 
 (\textit{i.e.,} based on ML-G, REC-G, UNR-G, see~\cite{crane:readactor++}) works.
-Each \texttt{vfgadget} \circled{1} can be called in several ways, see ML-G, REC-G and UNR-G in 
+Each \texttt{vfgadget} \ding{182} can be called in several ways, see ML-G, REC-G and UNR-G in 
 Figure~\ref{Code example used to illustrate how a COOP loop gadget works}.
 The indirect callsite (Figure~\ref{Code example used to illustrate how a COOP loop gadget works} line 17) can be exploited 
 to call by passing a varying number of parameters and types on each object contained in the array of a different
 virtual table (vTable) entry contained in the:
-\textit{1)} class hierarchy (overall, whole program),
-\textit{2)} class hierarchy (partial, only legitimate for this callsite),
-\textit{3)} vTable hierarchy (overall, whole program),
-\textit{4)} vTable hierarchy (partial, only legitimate for this callsite),
-\textit{5)} vTable hierarchy and/or class hierarchy (partial, only legitimate for this callsite), and
-\textit{6)} vTable hierarchy and/or class hierarchy (overall, whole program).
+\textit{1)} class hierarchy (\textit{i.e.,} overall, whole program),
+\textit{2)} class hierarchy (\textit{i.e.,} partial, only legitimate for this callsite),
+\textit{3)} vTable hierarchy (\textit{i.e.,} overall, whole program),
+\textit{4)} vTable hierarchy (\textit{i.e.,} partial, only legitimate for this callsite),
+\textit{5)} vTable hierarchy and/or class hierarchy (\textit{i.e.,} partial, only legitimate for this callsite), and
+\textit{6)} vTable hierarchy and/or class hierarchy (\textit{i.e.,} overall, whole program).
 There are no language semantics---such as cast checks---in C++ for vCall sites dispatch checking and as consequence
 the loop gadget indicated in Figure~\ref{Code example used to illustrate how a COOP loop gadget works}
 can basically call any possible entry in the class and vTable hierarchy by not being constrained by any build-in check during
-runtime. The attacker corrupts an indirect function call, \circled{1}, 
-next she invokes gadgets,  \circled{1} and \circled{3}, 
-through the calls, \circled{2} and \circled{4}, contained in the loop. 
+runtime. The attacker corrupts an indirect function call, \ding{182}, 
+next she invokes gadgets, \ding{182} and \ding{184} up to {\tiny\encircle{\Large{M}}}, 
+through the calls, \ding{183} and \ding{185} up to {\tiny\encircle{\Large{N}}}, contained in the loop. 
 As it can be observed in Figure~\ref{Code example used to illustrate how a COOP loop gadget works} she 
-can invoke from the same callsite legitimate functions residing in the vTable inheritance path
-(\textit{i.e.,} this type of information is usually very hard to recuperate from executables)
+can invoke from the same callsite legitimate functions (in total {\tiny\encircle{\Large{N}}}) residing in the vTable inheritance path
+(\textit{i.e.,} at the time of writing this paper this type of information is particularly hard to recuperate from program binaries)
 for this particular callsite, indicated with green color vTable entries. 
 However, a real COOP attack invokes illegitimate
 vTable entries residing in the whole initial program hierarchy (or the extended one)
