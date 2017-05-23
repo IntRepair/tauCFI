@@ -100,8 +100,9 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 \end{figure}
 Figure~\ref{Code example used to illustrate how a COOP loop gadget works}
 depicts a C++ code example where it is illustrated how a COOP loop based gadget 
-(\textit{i.e.,} based on ML-G, REC-G, UNR-G, see~\cite{crane:readactor++}) works.
-Each \texttt{vfgadget} \ding{182} can be called in several ways, see ML-G, REC-G and UNR-G in 
+(\textit{i.e.,} based either on ML-G (main-loop) or REC-G (recursive-gadget) or UNR-G (unrolled COOP gadget), 
+see~\cite{crane:readactor++} for more details) can be used to call COOP gadgets sequentially by iterating trough a loop.
+Note that each \texttt{vfgadget} \ding{182} can be called in several ways, see ML-G, REC-G and UNR-G in 
 Figure~\ref{Code example used to illustrate how a COOP loop gadget works}.
 The indirect callsite (Figure~\ref{Code example used to illustrate how a COOP loop gadget works} line 17) can be exploited 
 to call by passing a varying number of parameters and types on each object contained in the array of a different
