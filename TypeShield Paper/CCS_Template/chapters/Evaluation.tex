@@ -11,10 +11,13 @@ applications \textit{Postgresql} (v.9.0.10) and \textit{Mysql} (v.5.1.65), the m
  \item \textbf{RQ5:} What \textbf{security level} does \textsc{TypeShield} offer? (\cref{RQ5: Security Analysis})
  \item \textbf{RQ6:} Is \textsc{TypeShield} \textbf{superior} compared to other tools? (\cref{RQ5: Is TypeShield better than other tools?})
 \end{itemize}
-\textbf{Comparison Method.} As we do not have access to the source code of TypeArmor (Note: we asked the authors of TypeArmor several times to provide us access to the source code), we implemented two modes in \textsc{TypeShield}. The first mode of our tool is a similar implementation of the \textit{count} policy described by TypeArmor. The second mode is our implementation of the \textit{type} policy on top of the \textit{count} policy implementation. 
-%
-%\textbf{Experimental Setup.} We setup our environment within a VirtualBox (version 5.0.26r) instance, which runs Kubuntu 16.04 LTS (Linux Kernel
-%version 4.4.0) and has access to 3GB of RAM and 4 of 8 provided hardware threads (Intel i7-4170HQ @ 2.50 GHz).
+\textbf{Comparison Method.} As we did not had access to the source code of TypeArmor during development of \textsc{TypeShield}
+we implemented two modes in \textsc{TypeShield}. The first mode of our tool is a similar implementation of 
+the \textit{count} policy described by TypeArmor. The second mode is our implementation of the \textit{type} policy on 
+top of the \textit{count} policy implementation. 
+
+\textbf{Experimental Setup.} Our used setup consisted in a VirtualBox (version 5.0.26r) instance, in which we ran a Kubuntu 16.04 LTS (Linux Kernel
+version 4.4.0). We had access to 3GB of RAM and 4 out of 8 provided hardware threads (Intel i7-4170HQ @ 2.50 GHz).
 
 \subsection{Precision}
 \label{section:typeshieldprecision}

@@ -9,7 +9,7 @@ applications \textit{Postgresql} (v.9.0.10) and \textit{Mysql} (v.5.1.65), the m
  \item \textbf{RQ3:} What is the \textbf{runtime overhead} of \textsc{TypeShield}? (\cref{section:typeshieldoverheadperformance})
  \item \textbf{RQ4:} What is \textsc{TypeShield's} \textbf{instrumentation overhead}? (\cref{section:typeshieldoverheadinstrumentation})
  \item \textbf{RQ5:} What \textbf{security level} does \textsc{TypeShield} offer? (\cref{RQ5: Security Analysis})
- \item \textbf{RQ6:} Is \textsc{TypeShield} superior \textbf{compared} to other tools? (\cref{RQ5: Is TypeShield better than other tools?})
+ \item \textbf{RQ6:} Is \textsc{TypeShield} \textbf{superior} compared to other tools? (\cref{RQ5: Is TypeShield better than other tools?})
 \end{itemize}
 \textbf{Comparison Method.} As we do not have access to the source code of TypeArmor (Note: we asked the authors of TypeArmor several times to provide us access to the source code), we implemented two modes in \textsc{TypeShield}. The first mode of our tool is a similar implementation of the \textit{count} policy described by TypeArmor. The second mode is our implementation of the \textit{type} policy on top of the \textit{count} policy implementation. 
 %
@@ -386,35 +386,35 @@ changes are very hard to relocate. Therefore, instead each important basic block
     \centering
     \resizebox{1.04\columnwidth}{!}{\includesvg{svgs/postgresqlO2}}
 %     \vspace{-.7cm}
-    \caption{Postgresql -O2 CDF} 
+    \caption{Postgresql -O2 CDF.} 
     \label{fig7} 
     \vspace{1ex}
   \end{minipage}%%
   \begin{minipage}[b]{0.5\linewidth}
     \centering
     \resizebox{1.04\columnwidth}{!}{\includesvg{svgs/mysqlO2}} 
-    \caption{Node.js -O2 CDF} 
+    \caption{MySQL.js -O2 CDF.} 
     \label{fig8} 
     \vspace{1ex}
   \end{minipage} 
 %   \begin{minipage}[b]{0.5\linewidth}
 %     \centering
 %     \resizebox{1.04\columnwidth}{!}{\includesvg{proftpdO2.svg}}
-%     \caption{Proftpd -O2 CDF} 
+%     \caption{Proftpd -O2 CDF.} 
 %     \label{fig9} 
 %     \vspace{1ex}
 %   \end{minipage}%% 
 %   \begin{minipage}[b]{0.5\linewidth}
 %     \centering
 %     \resizebox{1.04\columnwidth}{!}{\includesvg{mysqlO2}} 
-%     \caption{Mysql -O2 CDF} 
+%     \caption{Mysql -O2 CDF.} 
 %     \label{fig10} 
 %     \vspace{1ex}
 %   \end{minipage} 
 \end{figure}
 % Figures~\ref{fig7}, \ref{fig8}, \ref{fig9}, and \ref{fig10} 
 Figures~\ref{fig7} and~\ref{fig8}
-depicts the CDFs for the Postgresql and MySQL programs when compiled with the -O2 Clang compiler flag. 
+depict the CDFs of the Postgresql and MySQL programs which were compiled with the -O2 Clang compiler flag. 
 We selected these two programs randomly from our sample programs. 
 The CDFs depict the number of legal callsite targets and the difference between the type and the count policies. 
 While the count  policies have only a few changes, the number of changes that can be seen within the 
@@ -424,11 +424,10 @@ perform better than the count policies, there are still parts within the type pl
 count plot, the reason for that is also relatively simple: the maximum number of calltargets a 
 callsite can access has been reduced. Therefore, a lower number of calltargets is a higher 
 percentage than before. However, Figure~\ref{fig8} depicts also very clearly
-that the 
-
-
-Finally, we note that these results dependent on the particular 
-structure of the hardened program.
+that the \textit{count*} and \textit{type*} have lower values as 
+\textit{count} and \textit{type}, respectively. This further, confirms our assumptions 
+w.r.t. these used metrics. Finally, note that the results dependent on the particular 
+internal structure of the hardened program.
 
 %REMOVED THIS TODO FROM PAPER: todo. Also, add the buckets diagram, see Figure 9 in the typearmor paper.
 
@@ -452,7 +451,7 @@ structure of the hardened program.
 	{\textit{\csvcolii} & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii}% specify your coloumns here
     	\end{tabular}}
 %     	}
-	\caption {The medians of calltargets per callsite for different tools.} 
+	\caption {Medians of calltargets per callsite for different tools.} 
 	\label{tbl:toolcompare}
 	\vspace{-.5cm}
 \end{table}
