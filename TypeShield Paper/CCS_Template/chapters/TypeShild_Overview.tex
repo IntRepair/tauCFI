@@ -1,24 +1,9 @@
 \section{Overview}
 \label{chapter:TypeShild Overview}
-% In this section, we present a brief overview on the 
-% considered adversary model in~\cref{Adversary Model} and depict the 
-% invariants for calltargets and callsites in~\cref{Invariants for Targets and Callsites}.
-% Finally, in~\cref{TypeShield Policy Mechanism} we present our function parameter type aware policy and give a formal description of it
-% by relating it to~\cite{veen:typearmor}, and in~\cref{TypeShild Impact on COOP} we highlight the impact of our policy on COOP.
-
-% \textbf{Adversary Model and Assumptions.}
-\subsection{Adversary Model and Assumptions}
-\label{Adversary Model}
-
-We largely use the same threat model and the same basic assumptions as described in~\cite{veen:typearmor}. 
-More precisely, we assume a resourceful attacker that has read and write access to the data 
-sections of the attacked program binary. We also assume that the protected binary does not contain 
-self-modifying code, handcrafted assembly or any kind of obfuscation. We also consider pages 
-to be either writable or executable but not both at the same time. Further, we assume 
-that our attacker has the ability to execute a memory corruption to hijack the program
-control flow. Finally, the analyzed program binary is not hand-crafted and the compiler
-which was used to generate the binary adheres to one of the 
-standard calling conventions mentioned in the first section of this paper.
+In this section, we present the 
+invariants for calltargets and callsites in~\cref{Invariants for Targets and Callsites}, and 
+in~\cref{TypeShield Policy Mechanism} we present our function parameter type aware policy and give a formal description of it
+by relating it to~\cite{veen:typearmor}. Finally, in~\cref{TypeShild Impact on COOP} we highlight the impact of our policy on COOP.
 
 \subsection{Invariants for Calltargets and Callsites}
 % \textbf{Invariants for Targets and Callsites.}
