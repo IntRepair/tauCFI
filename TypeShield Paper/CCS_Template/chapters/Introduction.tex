@@ -166,31 +166,34 @@ In summary, we make the following contributions: \newline
 \begin{itemize}
 [leftmargin=.2in]
  \item 
-
 % $\bullet$ 
-We provide a thorough \textbf{security analysis of forward indirect calls}. We analyze the usage of illegitimate indirect forward calls in detail, 
+\textbf{Security analysis of forward indirect calls.} We provide a thorough security analysis of forward indirect calls. We analyze the usage of illegitimate indirect 
+forward calls in detail, 
  thus providing security researchers and practitioners a better understanding of this emerging threat 
- (see~\ref{C++ Indirect Calls in Practice},~\ref{Security Implications of Forbidden Forward Indirect Calls},~\ref{Too Permissive Parameter-Based Policies},
- and~\ref{Real COOP Attack Example} for more details).
+ (see~\ref{C++ Indirect Calls in Practice},~\ref{Security Implications of Forbidden Forward Indirect Calls},~\ref{Real COOP Attack Example}, and ~\ref{Too Permissive Parameter-Based Policies}
+ for more details).
 
  \item 
 % $\bullet$ 
-We designed and implemented an \textbf{illegitimate indirect calls detection tool}. \textsc{TypeShield} is a general, automated, and easy-to-deploy 
+\textbf{Illegitimate indirect calls detection tool.} We designed and implemented an illegitimate indirect calls detection tool. \textsc{TypeShield} is a general, 
+automated, and easy-to-deploy 
  tool that can be applied to C/C++ binaries in order to detect and mitigate illegitimate forward indirect calls  during runtime. 
- Further, \textsc{TypeShield} has an expanded \textbf{scope} of analysis. Our tool can detect forbidden indirect calls and as such it can protect, 
+ Further, \textsc{TypeShield} has an expanded scope of analysis. Our tool can detect forbidden indirect calls and as such it can protect, 
  similarly as vTrust~\cite{zhang:vtrust}, against virtual table injection, corruption and reuse attacks. Further it can protect also against the 
  control flow jujutsu attack~\cite{jujutsu} since our policy checks for void and non-void functions. 
- As such \textsc{TypeShield} can serve as a platform for developing other types of defenses for different types of attacks. The source code, test scripts and evaluation results 
+ As such \textsc{TypeShield} can serve as a platform for developing other types of defenses for different types of attacks. The source code, test scripts and 
+ evaluation results 
  are available at \url{https://github.com/domain/typeshield}.
  
  \item 
 % $\bullet$ 
-We conduct a thorough set of evaluative \textbf{experiments}. In particular, we demonstrate experimentally that our precise binary-level 
+\textbf{Evaluation and analysis.} We conduct a thorough set of evaluative experiments. In particular, we demonstrate experimentally that our precise binary-level 
  CFI technique can mitigate advanced code reuse attacks (CRAs) in absence of C++ semantics. For example, \textsc{TypeShield} can effectively protect against 
- the COOP attack and its variations. Thereby, it achieves a high degree of \textbf{precision}. Specifically, it 
+ the COOP attack and its variations. Thereby, it achieves a high degree of precision. Specifically, it 
  employs a more precise analysis than TypeArmor in order to reduce the calltarget set for each callsite. Our evaluation shows that it
- gains between 13\% and 35\% more precision with respect to TypeArmor on the same programs. Further, we showcase similar \textbf{performance} enhancements in 
- comparison to prior work. \textsc{TypeShield} employs runtime policy optimization techniques to further reduce runtime overheads. This is necessary, since our runtime checks are more complex than those
+ gains between 13\% and 35\% more precision with respect to TypeArmor on the same programs. Further, we showcase similar {performance} enhancements in 
+ comparison to prior work. \textsc{TypeShield} employs runtime policy optimization techniques to further reduce runtime overheads. This is necessary, since our 
+ runtime checks are more complex than those
  used by TypeArmor. Our evaluation shows that it imposes up to 4\% overheads for performance-intensive benchmarks on the SPEC CPU2006 benchmarks and web 
  server applications, respectively. Which is lower than TypeArmors runtime overhead on the same programs.
  Finally, we respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist}) by 
