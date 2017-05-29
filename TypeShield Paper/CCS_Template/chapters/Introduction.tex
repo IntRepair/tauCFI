@@ -54,8 +54,11 @@ as a significant shortcoming that TypeArmor lacks precision with respect to the 
 inefficiencies (see~\cref{{Too Permissive Parameter-Based Policies}} for more details). 
 With our work, we aim to achieve both significant precision and runtime efficiency enhancements.
 
-In this paper, we present \textsc{TypeShield}, a runtime binary-level fine-grained CFI tool for illegitimate forward calls, that is based on an improved forward-edge fine-grained CFI-policy 
+In this paper, we present \textsc{TypeShield}, a runtime binary-level fine-grained CFI tool for illegitimate forward calls, 
+that is based on an improved forward-edge fine-grained CFI-policy 
 compared to previous work~\cite{veen:typearmor}. 
+\textsc{TypeShield} does not rely on RTTI data (\textit{i.e.,} metadata emitted by the compiler, most of the time stripped) or 
+particular compiler flags, and is applicable to industrial software.
 \textsc{TypeShield} takes the binary of a program as input and it automatically instruments it in order
 to detect illegitimate indirect calls at runtime. In order to achieve this, 
 \textsc{TypeShield} analyzes 64-bit binaries by focusing on function parameters which are passed with the 
