@@ -1,7 +1,7 @@
 \section{Related Work}
 \label{chapter:Related_Work}
 
-\subsection{Type-Inference on Executables.}
+\subsection{Type-Inference on Executables}
 \label{Type-Inference on Executables}
 Recovering variable types from executable programs
 is very hard in general for several reasons. 
@@ -121,9 +121,8 @@ tools address. For example, some of the last advancements in compiler based prot
 Currently, most of the above presented tools are only forward edge enforcers of fine-grained CFI policies with an overhead from 1\% up to 15\%.
 
 \subsubsection{Runtime Based Techniques}
-``There is something available out there but I can not use it'' \textit{Anonymous}.
-Long story short conclusion: There are several promising runtime-based line of defenses against
-advanced CRAs but none of them can successfully protect against the COOP attack.
+Several promising runtime-based defenses against advanced CRAs exist but currently none of them can successfully
+protect against the COOP attack.
 
 IntelCET~\cite{intel:cet} is based on, \texttt{ENDBRANCH}, a new CPU instruction which can be used to enforce
 an efficient shadow stack mechanism. The shadow stack can be used to check during program execution if caller/return pairs match.
@@ -139,9 +138,10 @@ such as COOP are still possible due the typical characteristics of COOP.
 PathArmor~\cite{veen:cfi} is yet another tool which is based on a precomputed CFG and on the LBR register which can give a string of 16 up to
 32 pairs of from/to addressed of different types of indirect instructions such as \texttt{call}, \texttt{ret}, and \texttt{jump}. 
 Because of the sporadic query of the LBR register (only during invocation of certain function calls) and because of the sheer amount of 
-% data which passes through the LBR register this approach has in our opinion a fair potential to catch different types of CRAs but
-we think that against COOP this tool can not be used. First, because of the fact that the precomputed CFG does not contain edges for all
-possible indirect callsites which are accessed during runtime and second, the LBR buffer can be easily \textit{tricked} by adding
-legitimate indirect callsites  during the COOP attack.
+data which passes through the LBR register this approach has in our opinion a fair potential to catch different types of CRAs but
+we think that against COOP this tool can be used only with limited success. 
+First, because of the fact that the precomputed CFG does not contain edges for all
+possible indirect callsites which are accessed during runtime. Second, the LBR buffer can be easily fooled by interleaving
+legitimate with illegitimate indirect callsites during the COOP attack.
 
 

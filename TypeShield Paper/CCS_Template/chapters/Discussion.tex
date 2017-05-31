@@ -74,7 +74,7 @@ First, \textsc{TypeShield} is limited by the capabilities of the DynInst instrum
 not detected reliably in some cases. As a result, we cannot test the Pure-FTP server, as it heavily relies on these functions. 
 The problem is that those non-returning functions usually appear as a second branch within a function that occurs after the normal 
 control flow, causing basic blocks from the following function to be attributed to the current function. This results in a malformed 
-control flow graph and erroneous attribution of callsites and problematic misclassifications for both calltargets and callsites.
+control flow graph and erroneous attribution of callsites and problematic mis-classifications for both calltargets and callsites.
 
 Second, \textsc{TypeShield} draws on variety within the binary. In particular, we rely on the fact that functions use more than only 
 64-bit values or pointers within their parameter list, otherwise, \textsc{TypeShield} is equivalent to a parameter count-based implementation. 

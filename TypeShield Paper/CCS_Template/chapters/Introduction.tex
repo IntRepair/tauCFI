@@ -139,7 +139,7 @@ As we demonstrate in the evaluation section, this setup provides us with enough 
 \textbf{\textit{Analysis Description.}}~More precisely, the analysis performed by \textsc{TypeShield}:
 \textit{1)} uses for each function parameter its register wideness (\textit{i.e.,} ABI dependent) in order to map calltargets per callsites,  
 \textit{2)} uses an address taken (AT) analysis similar to~\cite{veen:typearmor} for all calltargets, and 
-\textit{3)} compares individually parameters of callsites and calltargets in order to check if an indirect calltransfer is acceptable or not, 
+\textit{3)} compares individually parameters of callsites and calltargets in order to check if an indirect call transfer is acceptable or not, 
 thereby providing a more fine-grained calltarget set per callsite compared to other state-of-the-art tools.
 \textsc{TypeShield} uses automatically inferred parameter types which are used to construct
 a more precise construction of both the callee parameter types and callsite signatures. This 
@@ -175,7 +175,7 @@ In summary, we make the following contributions: \newline
 \textbf{Security analysis of forward indirect calls.} We provide a thorough security analysis of forward indirect calls. We analyze the usage of illegitimate indirect 
 forward calls in detail, 
  thus providing security researchers and practitioners a better understanding of this emerging threat 
- (see~\ref{C++ Indirect Calls in Practice},~\ref{Security Implications of Forbidden Forward Indirect Calls},~\ref{Real COOP Attack Example}, and ~\ref{Too Permissive Parameter-Based Policies}
+ (see~\cref{C++ Indirect Calls in Practice},~\cref{Security Implications of Forbidden Forward Indirect Calls},~\cref{Real COOP Attack Example}, and ~\cref{Too Permissive Parameter-Based Policies}
  for more details).
 
  \item 
@@ -293,6 +293,6 @@ The remainder of this paper is organized as follows.
 \cref{chapter:Discussion} contains the discussion, and
 \cref{chapter:Related_Work} surveys related work, while
 \cref{chapter:Future_Work} highlights future research venues. 
-Finally, \cref{chapter:Conclusion} concludes this paper.
+Finally,~\cref{chapter:Conclusion} concludes this paper.
 
 

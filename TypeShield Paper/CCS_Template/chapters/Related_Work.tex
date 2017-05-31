@@ -29,41 +29,6 @@ time consuming to extract the whole machinery and implement an interface to the 
 Therefore, we finally implemented our own version of type analysis and only focused on the wideness of the types, 
 resulting in a simpler lattice than we initially wanted.
 
-% %maybe not relevant
-\subsection{Mitigation of not Advanced CRAs}
-\label{Mitigation of Code-Reuse Attacks}
-In the last couple of years researchers have provided many versions of new Code Reuse Attacks (CRAs).
-These new attacks were possible since DEP~\cite{dep} and ASLR~\cite{ASLR} were successfully bypassed mostly based
-on Return Oriented Programming (ROP)~\cite{ROP, kornau:rop, rop:shacham} on one hand and due to the discovery of 
-new exploitable hardware and software primitives, on the other hand.
-
-ROP started to present itself in the last couple of years in many faceted ways such as:
-Jump Oriented Programming (JOP)~\cite{JOP1, JOP2, JOP3} which uses jumps in order to divert the control flow to the next gadget and 
-Call Oriented Programming (COP)~\cite{rop:carlini} which uses calls in order to chain gadgets together.
-CRAs have many manifestations and it is out of scope of this work to list them all.
-
-First, CRAs can be mitigated in general in the following ways: 
-\textit{i)} binary instrumentation,
-\textit{ii)} source code recompilation and 
-\textit{iii)} runtime application monitoring.
-Second, there is a plethora of tools and techniques which try to enforce CFI based
-primitives in executables, source code and during runtime. Thus, we briefly
-present the solution landscape together with the approaches and the techniques on which these are based:
-\textit{a)} fine-grained CFI with hardware support, PathArmor~\cite{veen:cfi},
-\textit{b)} coarse-grained CFI used for binary instrumentation, CCFIR~\cite{ccfir:zhang},
-\textit{c)} coarse-grained CFI based on binary loader, CFCI~\cite{cfci:zhang}
-\textit{d)} fine-grained code randomization, O-CFI~\cite{mohan:opaque},
-\textit{e)} cryptography with hardware support, CCFI~\cite{ccfi:jose},
-\textit{f)} ROP stack pivoting, PBlocker~\cite{pblocker:prakash},
-\textit{g)} canary based protection, DynaGuard~\cite{dynaguard:petsios},
-\textit{h)} runtime and hardware support based on a combination of LBR, PMU and BTS registers CFIGuard~\cite{cfiguard:yuan}, and
-\textit{i)} source code recompilation with CFI and/or randomization enforcement against JIT-ROP attacks, MCFI~\cite{mcfi:niu}, 
-RockJIT~\cite{rockjit:niu} and PiCFI~\cite{perinput:niu}.
-
-The above list is not exhaustive and new protection techniques can be obtained by combining available techniques
-or by using newly available hardware features or software exploits. However, notice that none of the above mentioned 
-techniques and tools can be used to mitigate COOP attacks.
-
 \subsection{Mitigation of Advanced CRAs}
 \textbf{Mitigation of Forward-Edge based Attacks.}
 \label{Mitigation of Advanced Code-Reuse Attacks}
@@ -113,7 +78,7 @@ There are several source code based tools
 which can successfully protect against the COOP attack.
 Such tools are: ShrinkWrap~\cite{haller:shrinkwrap}, IFCC/VTV~\cite{vtv:tice}, 
 SafeDispatch~\cite{safedispatch:jang}, vTrust~\cite{zhang:vtrust}, Readactor++~\cite{crane:readactor++}, CPI~\cite{volodymyr:cpi} and the
-tool presented by Bounov \textit{et al.}~\cite{bounov:interleaving}. These tools profit from high precision
+tool presented by VTI~\cite{bounov:interleaving}. These tools profit from high precision
 since they have access to the full semantic context of the program though the scope
 of the compiler on which they are based. 
 Because of this reason, these tools target mostly other types of security problems than binary-based 
@@ -143,5 +108,40 @@ we think that against COOP this tool can be used only with limited success.
 First, because of the fact that the precomputed CFG does not contain edges for all
 possible indirect callsites which are accessed during runtime. Second, the LBR buffer can be easily fooled by interleaving
 legitimate with illegitimate indirect callsites during the COOP attack.
+
+% %maybe not relevant
+\subsection{Mitigation of not Advanced CRAs}
+\label{Mitigation of Code-Reuse Attacks}
+In the last couple of years researchers have provided many versions of new Code Reuse Attacks (CRAs).
+These new attacks were possible since DEP~\cite{dep} and ASLR~\cite{ASLR} were successfully bypassed mostly based
+on Return Oriented Programming (ROP)~\cite{ROP, kornau:rop, rop:shacham} on one hand and due to the discovery of 
+new exploitable hardware and software primitives, on the other hand.
+
+ROP started to present itself in the last couple of years in many faceted ways such as:
+Jump Oriented Programming (JOP)~\cite{JOP1, JOP2, JOP3} which uses jumps in order to divert the control flow to the next gadget and 
+Call Oriented Programming (COP)~\cite{rop:carlini} which uses calls in order to chain gadgets together.
+CRAs have many manifestations and it is out of scope of this work to list them all.
+
+First, CRAs can be mitigated in general in the following ways: 
+\textit{i)} binary instrumentation,
+\textit{ii)} source code recompilation and 
+\textit{iii)} runtime application monitoring.
+Second, there is a plethora of tools and techniques which try to enforce CFI based
+primitives in executables, source code and during runtime. Thus, we briefly
+present the solution landscape together with the approaches and the techniques on which these are based:
+\textit{a)} fine-grained CFI with hardware support, PathArmor~\cite{veen:cfi},
+\textit{b)} coarse-grained CFI used for binary instrumentation, CCFIR~\cite{ccfir:zhang},
+\textit{c)} coarse-grained CFI based on binary loader, CFCI~\cite{cfci:zhang}
+\textit{d)} fine-grained code randomization, O-CFI~\cite{mohan:opaque},
+\textit{e)} cryptography with hardware support, CCFI~\cite{ccfi:jose},
+\textit{f)} ROP stack pivoting, PBlocker~\cite{pblocker:prakash},
+\textit{g)} canary based protection, DynaGuard~\cite{dynaguard:petsios},
+\textit{h)} runtime and hardware support based on a combination of LBR, PMU and BTS registers CFIGuard~\cite{cfiguard:yuan}, and
+\textit{i)} source code recompilation with CFI and/or randomization enforcement against JIT-ROP attacks, MCFI~\cite{mcfi:niu}, 
+RockJIT~\cite{rockjit:niu} and PiCFI~\cite{perinput:niu}.
+
+The above list is not exhaustive and new protection techniques can be obtained by combining available techniques
+or by using newly available hardware features or software exploits. However, notice that none of the above mentioned 
+techniques and tools can be used to mitigate COOP attacks.
 
 
