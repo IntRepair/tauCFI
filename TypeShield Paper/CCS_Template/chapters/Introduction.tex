@@ -169,41 +169,41 @@ thus drastically limiting an attacker in his capabilities.
 In summary, we make the following contributions: \newline
 \label{Contribution}
 \begin{itemize}
-[leftmargin=.2in]
- \item 
-% $\bullet$ 
-\textbf{Security analysis of forward indirect calls.} We provide a thorough security analysis of forward indirect calls. We analyze the usage of illegitimate indirect 
-forward calls in detail, 
+[leftmargin=.12in]
+
+ \item \textbf{Novel Forward Edge Based Attacks Mitigation Technique.} We designed a novel illegitimate indirect calls detection technique based on function parameter 
+ count and types which is considerably more precise w.r.t. to the enforced legitimate calltarget set per callsite than other state-of-the-art techniques.
+ 
+ \item \textbf{Implemented Prototype.} We implemented, \textsc{TypeShield}, a prototype which enforces the aforementioned technique.
+ \textsc{TypeShield} is a general, automated, and easy-to-deploy 
+ tool that can be applied to C/C++ binaries in order to detect and mitigate illegitimate forward indirect calls  during runtime. 
+ Further, \textsc{TypeShield} has an expanded scope of analysis. \textsc{TypeShield} can detect forbidden indirect calls and as such it can protect, 
+ similarly as vTrust~\cite{zhang:vtrust}, against virtual table injection, corruption and reuse attacks. Further it can protect also against the 
+ control flow jujutsu attack~\cite{jujutsu} since our policy checks for void and non-void functions. 
+ As such \textsc{TypeShield} can serve as a platform for developing other types of defenses for different types of attacks. 
+ 
+ \item \textbf{Security Analysis.} We provide a thorough security analysis of forward indirect calls. We analyze the usage of illegitimate indirect forward calls in detail, 
  thus providing security researchers and practitioners a better understanding of this emerging threat 
  (see~\cref{C++ Indirect Calls in Practice},~\cref{Security Implications of Forbidden Forward Indirect Calls},~\cref{Real COOP Attack Example}, and ~\cref{Too Permissive Parameter-Based Policies}
  for more details).
-
- \item 
-% $\bullet$ 
-\textbf{Illegitimate indirect calls detection tool.} We designed and implemented an illegitimate indirect calls detection tool based on a novel 
- function parameter count and type technique. \textsc{TypeShield} is a general, automated, and easy-to-deploy 
- tool that can be applied to C/C++ binaries in order to detect and mitigate illegitimate forward indirect calls  during runtime. 
- Further, \textsc{TypeShield} has an expanded scope of analysis. Our tool can detect forbidden indirect calls and as such it can protect, 
- similarly as vTrust~\cite{zhang:vtrust}, against virtual table injection, corruption and reuse attacks. Further it can protect also against the 
- control flow jujutsu attack~\cite{jujutsu} since our policy checks for void and non-void functions. 
- As such \textsc{TypeShield} can serve as a platform for developing other types of defenses for different types of attacks. The source code, test scripts and 
- evaluation results are available at \url{https://github.com/domain/typeshield}.
  
- \item 
-% $\bullet$ 
-\textbf{Evaluation and analysis.} We conduct a thorough set of evaluative experiments. In particular, we demonstrate experimentally that our precise binary-level 
+ \item \textbf{Evaluation.} We conduct a thorough set of evaluative experiments. In particular, we demonstrate experimentally that our precise binary-level 
  CFI technique can mitigate advanced code reuse attacks (CRAs) in absence of C++ semantics. For example, \textsc{TypeShield} can effectively protect against 
  the COOP attack and its variations. Thereby, it achieves a high degree of precision. Specifically, it 
- employs a more precise analysis than TypeArmor in order to reduce the calltarget set for each callsite. Our evaluation shows that it
- gains between 13\% and 35\% more precision with respect to TypeArmor on the same programs. Further, we showcase similar {performance} enhancements in 
+ employs a more precise analysis than TypeArmor in order to reduce the calltarget set for each callsite. 
+ 
+ \item \textbf{Detailed Comparison} Our evaluation shows that \textsc{TypeShield} imposes up to 4\% overhead for performance-intensive benchmarks such as the SPEC CPU2006 benchmarks
+ which is comparable to TypeArmors runtime overhead ($\approx$ 3\%) on the same programs.
+ Our evaluation shows that it gains between 13\% and 35\% more precision with respect to TypeArmor on the same programs. Further, we showcase similar {performance} enhancements in 
  comparison to prior work. \textsc{TypeShield} employs runtime policy optimization techniques to further reduce runtime overheads. This is necessary, since our 
- runtime checks are more complex than those used by TypeArmor. 
- Our evaluation shows that \textsc{TypeShield} imposes up to 4\% overhead for performance-intensive benchmarks such as the SPEC CPU2006 benchmarks.
- Which is comparable to TypeArmors runtime overhead ($\approx$ 3\%) on the same programs.
- Finally, we respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist}) by 
+ runtime checks are more complex than those used by TypeArmor.
+ 
+ \item \textbf{Usable Prototype and Results Reproducibility.} The source code, test scripts and 
+ evaluation results of \textsc{TypeShield} will be available at \url{https://github.com/domain/typeshield} upon paper acceptance.
+ We respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist}) by 
  providing for each conducted experiment a precise description of the experiment setup, and comprehensive results, including mean, median, geomean, standard deviation values
  and encountered issues.
-
+ 
 \end{itemize}
 
 
