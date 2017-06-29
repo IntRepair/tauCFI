@@ -202,13 +202,13 @@ If applied to a function, this calculates the variables that need to be alive at
 Algorithm~\ref{alg:liveness} is based on the liveness analysis algorithm presented in~\cite{khedker2009data}, which basically is a depth-first traversal of basic blocks. 
 For customization, we rely on the implementation of several functions. $\mathcal{S}^\mathcal{L}$ is the set of possible register states depending on the specific liveness implementation of:
 
-$\bullet$ $\texttt{merge\_v} : \mathcal{S}^\mathcal{L} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge the current state with the following state change.
+$\bullet$ $\texttt{merge\_v} : \mathcal{S}^\mathcal{L} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}$, describes how to merge the current state with the following state change.
 
-$\bullet$ $\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{L}) \mapsto \mathcal{S}^\mathcal{L}$, which describes how to merge a set of states resulting from several paths.
+$\bullet$ $\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{L}) \mapsto \mathcal{S}^\mathcal{L}$, describes how to merge a set of states resulting from several paths.
 
-$\bullet$ $\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{L}$, which calculates the state change that occurs due to the given instruction 
+$\bullet$ $\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{L}$, calculates the state change that occurs due to the given instruction.
 
-$\bullet$ $\texttt{succ} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which calculates the successors of the given block.
+$\bullet$ $\texttt{succ} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, calculates the successors of the given block.
 
 In our specific case, the function \texttt{analyze\_instr} needs to also handle non-jump and non-fall-through successors, as these are not handled by DynInst. 
 Essentially, there are three relevant cases: First, if the current instruction is an indirect call or a direct call and the chosen implementation should not follow calls, 
@@ -380,11 +380,6 @@ Variadic functions are special functions in C/C++ that have a basic set of param
 which they always require and a variadic set of parameters, which as the name suggests 
 may vary. A prominent example of this would be the $printf$ function, which is used 
 to output text to $stdout$.
-This type of functions allows for an easier processing of parameters where
-usually all potential variadic parameters are moved into a contiguous block of memory, 
-as can be observed in the assembly depicted in Figure~\ref{fig:asmvariadic} in Appendix.
-Our analysis interprets that as a read access on all parameters and thus,
-we arrive at a potentially problematic overestimation. 
 
 % \begin{figure}[thp] % the figure provides the caption
 % \centering          % which should be centered
@@ -478,7 +473,10 @@ fontsize=\scriptsize
 \caption{ASM code of the \texttt{make\_cmd} function with optimize level O2, which has a variadic parameter list.}
 \label{fig:asmvariadic}
 \end{figure}
-
+Figure~\ref{fig:asmvariadic} depicts this type of functions which allow an easier processing of parameters where
+usually all potential variadic parameters are moved into a contiguous block of memory.
+Our analysis interprets that as a read access on all parameters and thus,
+we arrive at a potentially problematic overestimation. 
 Our solution to this problem is to find these spurious reads and ignore them. A compiler will implement this type of operation very 
 similar for all cases, thus we can achieve our desired outcome using the following steps:
 \textit{1)} we search for (what we call) the xmm-passthrough block, which entirely consists of moving values of registers \texttt{xmm0} to \texttt{xmm7} into
@@ -552,13 +550,13 @@ Algorithm~\ref{alg:reaching} is based on the reaching definition analysis presen
 which basically is a reverse depth-first traversal of basic blocks of a program. For customization, we rely on 
 the implementation of several functions. $\mathcal{S}^\mathcal{R}$ is the set of possible register states depending on the specific reaching definition implementation of:
 
-$\bullet$ $\texttt{merge\_v} : \mathcal{S}^\mathcal{R} \times \mathcal{S}^\mathcal{R} \mapsto \mathcal{S}^\mathcal{R}$, which describes how to merge the current state with the following state change.
+$\bullet$ $\texttt{merge\_v} : \mathcal{S}^\mathcal{R} \times \mathcal{S}^\mathcal{R} \mapsto \mathcal{S}^\mathcal{R}$, describes how to merge the current state with the following state change.
 
-$\bullet$ $\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{R}) \mapsto \mathcal{S}^\mathcal{R}$, which describes how to merge a set of states resulting from several paths.
+$\bullet$ $\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{R}) \mapsto \mathcal{S}^\mathcal{R}$, describes how to merge a set of states resulting from several paths.
 
-$\bullet$ $\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{R}$, which calculates the state state change that occurs due to the given instruction.
+$\bullet$ $\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{R}$, calculates the state state change that occurs due to the given instruction.
 
-$\bullet$ $\texttt{pred} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, which calculates the predecessors of the given block.
+$\bullet$ $\texttt{pred} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, calculates the predecessors of the given block.
 
 In our specific case, the function \texttt{analyze\_instr} does not need to handle normal predecessors, as DynInst will resolve those for us. 
 However there are several instructions that have to be handled nonetheless: 1) If the current instruction is an indirect call or a direct call 
@@ -567,7 +565,6 @@ is a direct call and the chosen implementation should follow calls, then we star
 simply return the decoded state. This leaves us with the two merge functions and the undefined reaching definitions state $\mathcal{S}^\mathcal{R}$. 
 In the following two paragraphs we will present two implementation variants: first similar to TypeArmour a \emph{count} based policy and second our 
 \emph{type} based policy. 
-
 
 %The book~\cite{khedker2009data} defines reaching definition analysis on blocks in the following manner:
 %\begin{subequations}
@@ -588,7 +585,6 @@ In the following two paragraphs we will present two implementation variants: fir
 %a variable has been overwritten. The set $Gen_n$ describes the new definitions that have been provided by the block $n$, 
 %meaning that the value of a variable has been assigned. Considering this, we can assume that $Gen_n \subseteq Kill_n$, 
 %as we can always create new definitions, but not simply remove definitions without assigning a new value to the variable.
-
 
 %
 %
