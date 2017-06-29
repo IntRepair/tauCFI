@@ -173,7 +173,7 @@ In summary, we make the following contributions:
  \item \textbf{Novel Forward Edge Based Attacks Mitigation Technique.} We designed a novel illegitimate indirect calls detection technique based on function parameter 
  count and types which is considerably more precise w.r.t. to the enforced legitimate calltarget set per callsite than other state-of-the-art techniques.
  
- \item \textbf{Implemented Prototype.} We implemented, \textsc{TypeShield}, a prototype which enforces the aforementioned technique.
+ \item \textbf{Implemented and Usable Prototype.} We implemented, \textsc{TypeShield}, a prototype which enforces the aforementioned technique.
  \textsc{TypeShield} is a general, automated, and easy-to-deploy 
  tool that can be applied to C/C++ binaries in order to detect and mitigate illegitimate forward indirect calls  during runtime. 
  Further, \textsc{TypeShield} has an expanded scope of analysis. \textsc{TypeShield} can detect forbidden indirect calls and as such it can protect, 
@@ -197,7 +197,7 @@ In summary, we make the following contributions:
  comparison to prior work. \textsc{TypeShield} employs runtime policy optimization techniques to further reduce runtime overheads. This is necessary, since our 
  runtime checks are more complex than those used by TypeArmor.
  
- \item \textbf{Usable Prototype and Reproducibility of Results.} The source code, test scripts and 
+ \item \textbf{Reproducibility of Results.} The source code, test scripts and 
  evaluation results of \textsc{TypeShield} will be available at \url{https://github.com/domain/typeshield} upon paper acceptance.
  We respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist}) by 
  providing for each conducted experiment a precise description of the experiment setup, and comprehensive results, including mean, median, geomean, standard deviation values
