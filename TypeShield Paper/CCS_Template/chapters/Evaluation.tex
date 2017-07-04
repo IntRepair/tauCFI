@@ -388,8 +388,10 @@ there back to the new executable section. Moreover, this is also dependent on th
 of the target, as it depends on the number of indirect control flow operations per time unit.
 Another reason for the slightly higher (yer acceptable) performance overhead is due to our
 runtime policy which is more complex than that of other state-of-the-art tools.
-Finally, it can be observed that our runtime overhead is comparable (4\%) than state-of-the-art tools (around 3\%), 
-thus qualifying \textsc{TypeShield} as a highly practical tool.
+The runtime overhead of \textsc{TypeShield} (4\%) is comparable with other state-of-the-art virtual table defense
+tools such as: TypeArmor (3\%), VCI~\cite{vci} (7.79\% overall and 10.49\% on only the SPEC CPU2006 programs), vfGuard~\cite{vfuard:aravind} (10\% - 18.7\%), T-VIP~\cite{gawlik} (0.6\% - 103\%), 
+SafeDispatch~\cite{safedispatch:jang} (2\% - 30\%), and VTV/IFCC~\cite{vtv:tice} (8\% - 19.2\%).
+Finally, this results qualify \textsc{TypeShield} as a highly practical tool.
 
 \todo[inline]{add a binary patch that does not crash none of the programs from SPEC CPU2006.}
 \todo[inline]{need a Table with all the results for each of the SPEC CPU2006 programs and a bar diagram}
