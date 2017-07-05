@@ -389,7 +389,7 @@ of the target, as it depends on the number of indirect control flow operations p
 Another reason for the slightly higher (yer acceptable) performance overhead is due to our
 runtime policy which is more complex than that of other state-of-the-art tools.
 The runtime overhead of \textsc{TypeShield} (4\%) is comparable with other state-of-the-art virtual table defense
-tools such as: TypeArmor (3\%), VCI~\cite{vci} (7.79\% overall and 10.49\% on only the SPEC CPU2006 programs), vfGuard~\cite{vfuard:aravind} (10\% - 18.7\%), T-VIP~\cite{gawlik} (0.6\% - 103\%), 
+tools such as: TypeArmor (3\%), VCI~\cite{vci:asiaccs} (7.79\% overall and 10.49\% on only the SPEC CPU2006 programs), vfGuard~\cite{vfuard:aravind} (10\% - 18.7\%), T-VIP~\cite{gawlik} (0.6\% - 103\%), 
 SafeDispatch~\cite{safedispatch:jang} (2\% - 30\%), and VTV/IFCC~\cite{vtv:tice} (8\% - 19.2\%).
 Finally, this results qualify \textsc{TypeShield} as a highly practical tool.
 
@@ -502,9 +502,9 @@ Similar reasoning applies to $p=5$ where we get $7^{5} + (1500 = 500 + 400 + 300
 allowed calltarget per callsite, or $p \in [1, 4]$, too.
 \end{itemize}
 
-Finally, as TypeArmor is too permissive we present \textsc{TypeShield} which deals with the variable type state explosion due to different parameter types 
+Finally, as TypeArmor is too permissive (see also Figure H.1~\cite{vci:asiaccs}) we present \textsc{TypeShield} which deals with the variable type state explosion due to different parameter types 
 by considering an approximation (note that alias analysis and thus type analysis in binaries is undecidable~\cite{alias:undecidable}) of parameter types 
-based on register width. Consequently, the allowed calltarget set for each callsite is drastically reduced.
+based on register wideness. Consequently, the allowed calltarget set per callsite is drastically reduced.
 
 \subsection{Comparison with Other Tools}
 \label{RQ5: Is TypeShield better than other tools?}
