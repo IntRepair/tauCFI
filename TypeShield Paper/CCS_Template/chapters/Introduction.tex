@@ -62,11 +62,11 @@ particular compiler flags, and is applicable to industrial software.
 \textsc{TypeShield} takes the binary of a program as input and it automatically instruments it in order
 to detect illegitimate indirect calls at runtime. In order to achieve this, 
 \textsc{TypeShield} analyzes 64-bit binaries by focusing on function parameters which are passed with the 
-help of registers. Based on the used ABI, \textsc{TypeShield} is consequently able to track 4 or 6 arguments for the Microsoft's x64-bit calling convention or System V ABI, 
-respectively. Similarly to TypeArmor, we do not take into consideration floating-point arguments passed via xmm registers; which we want to address in future work. 
+help of registers. Based on the used ABI, \textsc{TypeShield} is consequently able to track 4 or 6 arguments for the Microsoft's C++ ABI~\cite{microsoft:abi} 64-bit calling convention or 
+Itanium C++ ABI~\cite{itanium:abi}, 
+respectively. However, we stress that the presented methodology is usable for the ARM ABI~\cite{arm:abi} as well.
+Similarly to TypeArmor, we do not take into consideration floating-point arguments passed via xmm registers; which we want to address in future work. 
 As we demonstrate in the evaluation section, this setup provides us with enough information to be significantly more precise than~\cite{veen:typearmor} when aiming to stop several state-of-the-art CRAs.
-
-
 
 %% \textbf{Problem.}
 %The performance benefit of late binding comes with high security implications (\textit{i.e.,} arbitrary code executions~\cite{NVD:ACE} reported by NIST NVD, see Figure~\ref{ace:nvd:statistics})
