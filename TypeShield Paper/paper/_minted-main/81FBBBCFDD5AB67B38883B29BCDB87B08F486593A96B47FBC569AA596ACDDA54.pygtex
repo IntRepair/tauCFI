@@ -1,0 +1,25 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{nsMultiplexInputStream} \PYG{k}{final}
+ \PYG{o}{:}\PYG{k}{public} \PYG{n}{nsIMultiplexInputStream} \PYG{c+c1}{//A0}
+ \PYG{p}{,}\PYG{k}{public} \PYG{n}{nsISeekableStream} \PYG{c+c1}{//A1}
+ \PYG{p}{,}\PYG{k}{public} \PYG{n}{nsIIPCSerializableInputStream} \PYG{c+c1}{//A2}
+ \PYG{p}{,}\PYG{k}{public} \PYG{n}{nsICloneableInputStream}\PYG{p}{\PYGZob{}} \PYG{c+c1}{//A3}
+\PYG{n}{nsTArray}\PYG{o}{\PYGZlt{}}\PYG{n}{nsCOMPtr}\PYG{o}{\PYGZlt{}}\PYG{n}{nsIInputStream}\PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n}{mStreams}\PYG{p}{;}
+\PYG{n}{NS\PYGZus{}IMETHODIMP} \PYG{n}{nsMultiplexInputStream}\PYG{o}{::}\PYG{n}{Close}\PYG{p}{()\PYGZob{}}
+  \PYG{n}{MutexAutoLock} \PYG{n}{lock}\PYG{p}{(}\PYG{n}{mLock}\PYG{p}{);}
+  \PYG{n}{mStatus} \PYG{o}{=} \PYG{n}{NS\PYGZus{}BASE\PYGZus{}STREAM\PYGZus{}CLOSED}\PYG{p}{;}
+  \PYG{c+c1}{//set NS\PYGZus{}OK flag}
+  \PYG{n}{nsresult} \PYG{n}{rv} \PYG{o}{=} \PYG{n}{NS\PYGZus{}OK}\PYG{p}{;}
+  \PYG{c+c1}{//get array length}
+  \PYG{k+kt}{uint32\PYGZus{}t} \PYG{n}{len} \PYG{o}{=} \PYG{n}{mStreams}\PYG{p}{.}\PYG{n}{Length}\PYG{p}{();}
+ \PYG{c+c1}{//array\PYGZhy{}based main loop gadget (ML\PYGZhy{}G)}
+ \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{uint32\PYGZus{}t} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{len}\PYG{p}{;} \PYG{o}{++}\PYG{n}{i}\PYG{p}{)\PYGZob{}}
+  \PYG{c+c1}{//(0)hijacked object dispatch}
+  \PYG{n}{nsresult} \PYG{n}{rv2}\PYG{o}{=}\PYG{n}{mStreams}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n}{Close}\PYG{p}{();}
+  \PYG{k}{if} \PYG{p}{(}\PYG{n}{NS\PYGZus{}FAILED}\PYG{p}{(}\PYG{n}{rv2}\PYG{p}{))} \PYG{p}{\PYGZob{}}
+      \PYG{n}{rv} \PYG{o}{=} \PYG{n}{rv2}\PYG{p}{;}
+  \PYG{p}{\PYGZcb{}}
+ \PYG{p}{\PYGZcb{}}
+  \PYG{k}{return} \PYG{n}{rv}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
