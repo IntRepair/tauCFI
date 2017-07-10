@@ -1,0 +1,1117 @@
+\section{Design}
+\label{chapter:Design}
+
+In this section, we present 
+in~\cref{Parameter Count Based Policy} we present our function parameter count based policy,
+in \cref{section:typepolicy}, we present the details of our type policy, and 
+in~\cref{section:instructionanalysis} the theory and definitions for our instructions analysis based on register states,  
+in~\cref{section:calltargetanalysis} we present the design of our calltarget analysis, while
+in~\cref{section:callsiteanalysis} we present the design of our callsite analysis.
+Finally,  
+in~\cref{Enforcing The Forward Edge Policy} we briefly present our forward edge policy instrumentation strategy, and 
+in~\cref{Backward Edge Analysis} we highlight our function backward edge analysis and policy instrumentation strategy.
+
+\subsection{Parameter Count Based Policy}
+\label{Parameter Count Based Policy}
+% \textbf{\emph{Count} Policy.}
+\label{section:countpolicy}
+% \vspace{-1.1em}
+\begin{figure}[!h]
+\centering
+\resizebox{0.25\textwidth}{!}{
+\begin{tikzpicture}
+
+%\fill[black!40!white] (0,0) rectangle (9,9);
+%\fill[black!30!white] (0,0) rectangle (7,7);
+%\fill[black!20!white] (0,0) rectangle (4,4);
+%\fill[black!10!white] (0,0) rectangle (2,2);
+%
+%\draw (0,0) --node[anchor=south] {0 params}  (2,0)  -- (2,2) -- (0,2) -- (0,0) ;
+%\draw (0,0) -- (2,0) --node[anchor=south] {1 param} (4,0) -- (4,4) -- (0,4) -- (0,0);
+%\draw (0,0) --(4,0) --node[anchor=south] {2 ... 5 params} (7,0) -- (7,7) -- (0,7) -- (0,0);
+%\draw (0,0) --(7,0) --node[anchor=south] {6 params} (9,0) -- (9,9) -- (0,9) -- (0,0);
+%\draw[dashed] (4,4) -- (7,7);
+
+
+\fill[black!00!white] (0,7) rectangle (6,6);
+\fill[black!10!white] (0,6) rectangle (6,5);
+\fill[black!20!white] (0,5) rectangle (6,4);
+\fill[black!30!white] (0,4) rectangle (6,3);
+\fill[black!40!white] (0,3) rectangle (6,2);
+\fill[black!50!white] (0,2) rectangle (6,1);
+\fill[black!60!white] (0,1) rectangle (6,0);
+
+
+\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\LARGE{growing required bits/parameter}} (-0.5,7);
+\draw[-triangle 45, thick] (6.5,7) -- node[sloped, anchor=center, above]  {\LARGE{growing provided bits/parameter}} (6.5,0);
+
+\draw (0,7) rectangle node[anchor=center] {\LARGE{0 parameters}} (6,6);
+
+\draw (0,6) rectangle node[anchor=center] {\LARGE{1 parameter}}  (6,5);
+
+\draw (0,5) rectangle node[anchor=center] {\LARGE{2 parameters}} (6,4);
+
+\draw (0,4) rectangle node[anchor=center] {\LARGE{3 parameters}} (6,3);
+
+\draw (0,3) rectangle node[anchor=center] {\LARGE{4 parameters}} (6,2);
+
+\draw (0,2) rectangle node[anchor=center] {\LARGE{5 parameters}} (6,1);
+
+\draw (0,1) rectangle node[anchor=center] {\LARGE{6 parameters}} (6,0);
+
+
+\end{tikzpicture}
+}
+\caption{Callsite \& calltargets {count} policy classification schema.}
+\label{fig:COUNTschema}
+\end{figure}
+
+Figure~\ref{fig:COUNTschema} depicts the used matching schema which shows that calltargets require
+parameters whereas callsites provide these parameters. Based on this schema we built a function parameter count-based policy
+which resembles the policy introduced by~\cite{veen:typearmor}. Calltargets are classified based on the number of parameters 
+that these provide and callsites are classified by the number of parameters that these require. 
+
+Furthermore, generating 100\% precise measurements for such classification with binaries as the only source of information is rather difficult. 
+Therefore, over-estimations of parameter count for callsites and underestimations of the parameter count for calltargets is deemed acceptable. 
+This classification is based on the general purpose registers that the call convention of the current ABI---in this case the 
+Itanium C++ ABI~\cite{itanium:abi}---designates as parameter registers. Furthermore, we do not consider floating point registers or multi-integer registers for simplicity
+reasons.
+The \emph{count} policy is based on allowing any callsite $cs$, which provides $c_{cs}$ parameters, to call any calltarget $ct$, 
+which requires $c_{ct}$ parameters, iff $c_{ct} \leq c_{cs}$ holds. However, the main problem is that while there is a significant 
+restriction of calltargets for the lower callsites, the restriction capability drops rather rapidly when reaching higher parameter 
+counts, with callsites that use 6 or more parameters being able to call all possible calltargets.
+This is more precisely expressed as 
+$\forall$ $cs_1$, $cs_2$; $c_{cs_1}$ $\leq$ $c_{cs_2}$ $\rightarrow$  $\|$ $\{ct \in \mathcal{F}$ $|$ $c_{ct}$ $\leq$ $c_{cs_1}$ $\} \| \leq$ $\|$ $\{ct \in \mathcal{F} | c_{ct} \leq c_{cs_2}  \} \|$.
+
+One possible remedy would be the ability to introduce an upper bound for the classification deviation of parameter counts, 
+however, as of now, this does not seem feasible with current technology. Another possibility would be the overall reduction
+of callsites, which can access the same set of calltargets, a route which we will explore within this work.
+
+
+\subsection{Parameter Register Wideness Based Policy}
+\label{section:typepolicy}
+\begin{figure}[h!]
+\center
+\resizebox{.77\columnwidth}{!}{
+\begin{tikzpicture}
+
+\fill[black!10!white] (0,7.5) rectangle (12,6);
+\fill[black!20!white] (0,6) rectangle (12,4.5);
+\fill[black!30!white] (0,4.5) rectangle (12,3);
+\fill[black!40!white] (0,3) rectangle (12,1.5);
+\fill[black!50!white] (0,1.5) rectangle (12,0);
+
+\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\LARGE{growing required bits/parameter}} (-0.5,7.5);
+\draw[-triangle 45, thick] (12.5,7.5) -- node[sloped, anchor=center, above] {\LARGE{growing provided bits/parameter}} (12.5,0);
+
+\draw (0,7.5)  --node[anchor=south] {\rot{\LARGE{p. 6}}} (2,7.5);
+\draw (2,7.5)  --node[anchor=south] {\rot{\LARGE{p. 5}}} (4,7.5);
+\draw (4,7.5)  --node[anchor=south] {\rot{\LARGE{p. 4}}} (6,7.5);
+\draw (6,7.5)  --node[anchor=south] {\rot{\LARGE{p. 3}}} (8,7.5);
+\draw (8,7.5)  --node[anchor=south] {\rot{\LARGE{p. 2}}} (10,7.5);
+\draw (10,7.5) --node[anchor=south] {\rot{\LARGE{p. 1}}} (12,7.5);
+
+\draw (0,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (2,6);
+\draw (2,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (4,6);
+\draw (4,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (6,6);
+\draw (6,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (8,6);
+\draw (8,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (10,6);
+\draw (10,7.5) rectangle node[anchor=center] {\LARGE{0-bits}} (12,6);
+
+\draw (0,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (2,4.5);
+\draw (2,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (4,4.5);
+\draw (4,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (6,4.5);
+\draw (6,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (8,4.5);
+\draw (8,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (10,4.5);
+\draw (10,6) rectangle node[anchor=center] {\LARGE{8-bits}} (12,4.5);
+
+\draw (0,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (2,3);
+\draw (2,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (4,3);
+\draw (4,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (6,3);
+\draw (6,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (8,3);
+\draw (8,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (10,3);
+\draw (10,4.5) rectangle node[anchor=center] {\LARGE{16-bits}} (12,3);
+
+\draw (0,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (2,1.5);
+\draw (2,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (4,1.5);
+\draw (4,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (6,1.5);
+\draw (6,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (8,1.5);
+\draw (8,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (10,1.5);
+\draw (10,3) rectangle node[anchor=center] {\LARGE{32-bits}} (12,1.5);
+
+\draw (0,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (2,0);
+\draw (2,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (4,0);
+\draw (4,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (6,0);
+\draw (6,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (8,0);
+\draw (8,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (10,0);
+\draw (10,1.5) rectangle node[anchor=center] {\LARGE{64-bits}} (12,0);
+\end{tikzpicture}
+}
+\caption{Our type policy schema for callsites and calltargets. Note that p. means parameter. As it is depicted in this example, when requiring parameter width, one starts at the 
+bottom of the above matrix and grows to the top, as it is always possible to accept more parameters than required.
+Also, the reverse is true for providing parameters, as it is possible to accept less parameters than provided.
+Note that accepting more parameters than provided is not allowed.}
+\label{fig:TYPEschema}
+\end{figure}
+
+Figure \ref{fig:TYPEschema} depicts the fact that we do to not simply classify callsites and calltargets based on the number of parameters they provide or request, but 
+also on the parameter type. We use the register width as parameter type. As previously mentioned, there are 4 types 
+of reading and writing accesses. Therefore, our set of possible types for parameters is $\texttt{TYPE} = \{64, 32, 16, 8, 0\}$; where 0 models the absence of a 
+parameter. Since Itanium C++ ABI specifies 6 registers (i.e., \texttt{rdi}, \texttt{rsi}, \texttt{rdx}, \texttt{rcx}, \texttt{r8}, and \texttt{r9}) as parameter passing registers, we classify our callsites and calltargets into $\texttt{TYPE}^6$. Similar to
+the policy of \texttt{TypeArmor}, we allow overestimations of callsites and underestimations of calltargets, however, on the parameter types as well. Therefore, for a 
+callsite $cs$ it is possible to call a calltarget $ct$, only if for each parameter of $ct$ the corresponding parameter of $cs$ is not smaller w.r.t. the register width.
+This results in a finer-grained policy which is further restricting the possible pool of calltargets for each callsite.
+
+%What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the parameter type. However, due to complexity reasons,
+%we are restricting ourselves to the general purpose registers, which the Intanium C++ ABI designates as parameter registers. Furthermore, we are not inferring 
+%the actual type of the data but the wideness of the data stored in the register. The schema again is that we have calltargets requiring wideness and the
+%callsite providing it as depicted in Figure \ref{fig:TYPEschema}.
+
+%e are currently interested in x86-64 binaries, the registers we are looking at are 64-bit registers that can be accessed in four different ways:
+%\textit{1)} the whole 64-bit of the register, meaning a wideness of 64,
+%\textit{2)} the lower 32-bit of the register, meaning a wideness of 32,
+%\textit{3)} the lower 16-bit of the register, meaning a wideness of 16, and
+%\textit{4)} the lower 8-bit of the register, meaning a wideness of 8.
+
+%Four of those registers can also directly access the higher 8-bit of the lower 16-bit of the register. For our purpose we register this access as a 16-bit access. 
+
+%Based on this information,we can assign a register one of 5 possible types $\mathcal{T} = \{64, 32, 16, 8, 0\}$. We also included the type 0 to model the absence of data within a register. 
+%Similar to the \emph{count} policy, we allow overestimation of types in callsites and underestimation of types in calltargets. However, the matching idea is different, 
+%because as can we depict in Figure \ref{fig:TYPEschema}, the type of a calltarget and a callsite no longer depends solely on its parameter count, 
+%each callsite and calltarget has its type from the set of $\mathcal{T}^6$, with the following comparison operator:
+%$
+%	u \leq_{type} v :\Longleftrightarrow  
+%	\forall_{i = 0}^{5} {u_i \leq v_i} , \text {with } u, v \in \mathcal{T}^6
+%$.
+
+%Again we allow any callsite $cs$ call any calltarget $ct$, when it fulfills the requirement $ct \leq cs$. 
+%The way we represent this is by letting the type for a calltarget parameter progress from 64-bit to 0-bit---if a calltarget requires a 32-bit value in its 1st 
+%parameter, it also should accept a 64-bit value from its callsite---and similarly we let the type for a callsite progress from 0-bit to 64-bit - If a 
+%callsite provides a 32-bit value in its 1st parameter it also provides a 16-bit, 8-bit and 0-bit to a calltarget. Now the advantage of the \emph{type} policy
+%in comparison to the \emph{count} policy is that while our type comparison implies the count comparison, the other direction does not hold.
+%Meaning, just having an equal or lesser number of parameters than a callsite, does no longer allow a calltarget being called there, thus restricting the number of calltargets per 
+%callsite even further. A function that requires 64-bit in its first parameter, and 0-bit in all other parameters, would have been callable by a callsite providing 8-bit 
+%in its first and second parameter when using the \emph{count} policy, however in the \emph{type} policy this is no longer possible. Thus, it should decrease the number of targets per bucket.
+
+
+\subsection{Analysis of Register States}
+\label{section:instructionanalysis}
+
+Our register state analysis is register state based, another alternative would be to do symbol-based data-flow analysis which we will leave as future work.
+In order for the reader to understand our analysis we will first give some definitions.
+The set $\texttt{INSTR}$ describes all possible instructions that can occur within the executable section of a program binary. In our case,
+this is based on the x86-64 instruction set. An instruction $i \in \texttt{INSTR}$ can non-exclusively perform two kinds of operations on any number of existing 
+registers. Note that there are registers that can directly access the higher 
+8-bit of the lower 16-bit. For our purpose, we register this access as a 16-bit access.
+(1) Read $n$-bit from the register with $n \in \{ 64, 32, 16, 8 \}$, and 
+(2) Write $n$-bit to the register with $n \in \{ 64, 32, 16, 8 \}$.
+
+Next, we describe the possible change within one register as $\delta \in \Delta$ with $\Delta = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. 
+Note that 0 represents 
+the absence of either a write or read access and $(0, 0)$ represents the absence of both. Furthermore, $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ with $m \in 
+\{64,32,16,8\}$ and $m < n$ (\textit{e.g.,} $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.
+Intanium C++ ABI specifies 16 general purpose integer registers. Therefore, we represent the change occurring at the processor level as $\delta_p \in \Delta^{16}$. 
+In our analysis, we calculate this change for each instruction $i \in \texttt{INSTR}$ via the function $decode : \texttt{INSTR} \mapsto \Delta^{16}$.
+
+% Finally, in \cref{section:addresstakenanalysis} we introduce a version of 
+% address taken analysis based on \cite{mingwei:sekar} to restrict the number of available calltargets even more. 
+%At last we introduce a patching schema for callsites and calltargets to enforce the invariants we inferred.
+
+%Usually data-flow analysis algorithms are based on set of variable or sets of definitions, which both are basically unbounded. However, we are analyzing the state of registers, 
+%which are baked into hardware and therefore their number is given, thus requiring us to adapt the data-flow theory to work on tuples.
+%
+%The set $\mathcal{I}$ describes all possible instructions that can occur within the executable section of a binary. In our case this is based on the instruction set for x86-64 processors.
+%
+%An instruction $i \in \mathcal{I}$ can non-exclusively perform two kinds of operations on any number of existing registers:
+%\textit{1)} Read $n$-bit from the register with $n \in \{ 64, 32, 16, 8 \}$, and
+%\textit{2)} Write $n$-bit to the register with $n \in \{ 64, 32, 16, 8 \}$.
+%
+%Thus, we describe the possible change that occurs in one register with the set $S = \{ w64, w32, w16, w8, 0 \} \times \{r64, r32, r16, r8, 0 \}$. Note that 0 signals the absence
+%of either a write or read access and $(0, 0)$ signals the absence of both. Furthermore, $wn$ or $rn$ with $n \in \{64,32,16,8\}$ implies all $wm$ or $rm$ with $m \in \{64,32,16,8\}$ 
+%and $m < n$ (\textit{e.g.,} $r64$ implies $r32$). Note that we exclude 0, as it means the absence of any access.
+
+%Intanium C++ ABI specifies 16 general purpose integer registers, thus for our purpose we represent the change occurring at the processor level as $\mathcal{S} = S^{16}$.
+
+%At last we declare a function, which calculates the change occurring in the processor state, when executing an instruction from $\mathcal{I}$:
+%$decode : \mathcal{I} \mapsto \mathcal{S}$.
+
+%However, we do not go into detail how this function actually calculates this sate, because we rely on external libraries to perform this task. Implementing this function our self 
+%is out of scope due to the lengthy work required, as the x86-64 instruction set is quite large.
+
+\subsection{Calltarget Analysis}
+\label{section:calltargetanalysis}
+Our calltarget analysis classifies calltargets according to the parameters they expect. Underestimations are allowed, however, overestimations 
+are not permitted. For this purpose, we employ a customizable modified liveness analysis algorithm, which we will describe next.
+Furthermore, we will present certain corner cases we encountered, at the end of this section.
+
+\subsubsection{Liveness Analysis}
+A variable is alive before the execution of an instruction, if at least one of the originating paths performs a read access before any write access on that variable. 
+If applied to a function, this calculates the variables that need to be alive at the beginning, as these are its parameters. 
+
+\begin{algorithm}[h!]
+%         \scriptsize
+        \footnotesize
+ 	\SetAlgoLined
+	\SetKwInOut{Input}{Input}
+        \SetKwInOut{Output}{Output}
+        \Input{The basic block to be analyzed - block : $\texttt{INSTR}^*$}
+        \Output{The liveness state - $\mathcal{S}^\mathcal{L}$}
+        \BlankLine
+	\SetKwProg{Fn}{Function }{ is}{end}
+	\Fn{\texttt{analyze} (block : $\texttt{INSTR}^*$) : $\mathcal{S}^\mathcal{L}$}
+	{
+ 	$state$ = Bl \Comment*[r]{Initialize the state with first block}
+ 	
+ 	\ForEach{inst $\in$ block}{
+ 	
+ 		$state' = \texttt{analyze\_instr}(inst)$                     \Comment*[r]{Calculate changes}
+
+		$state = \texttt{merge\_h}(state, state')$                     \Comment*[r]{Merge changes}
+	}
+
+	$states$ = $\emptyset$                                                 \Comment*[r]{Set of successor states}
+	
+	$blocks$ = $\texttt{successor(block)}$                                   \Comment*[r]{Get successors blocks}
+	
+	\ForEach{block' $\in$ blocks} {
+	
+ 		$state'$ = $\texttt{ analyze}(block')$   \Comment*[r]{Analyze successor block}
+ 		
+		$states$ = $states$ $\cup$ \{$state'$\}  \Comment*[r]{Add successor states}
+	}
+
+	$state'$ = $\texttt{merge\_h }(states)$   \Comment*[r]{Merge successor states}
+
+	\Return $merge\_v(state, state')$  \Comment*[r]{Merge to final state}
+
+	}
+\caption{Basic block liveness analysis.}
+\label{alg:liveness}
+\end{algorithm}
+
+Algorithm~\ref{alg:liveness} is based on the liveness analysis algorithm presented in~\cite{khedker2009data}, which basically is a depth-first traversal of basic blocks. 
+For customization, we rely on the implementation of several functions which we will present next. $\mathcal{S}^\mathcal{L}$ is the set of possible register states depending on the specific 
+liveness implementation of the following operations.
+
+$\bullet$ $\texttt{merge\_v} : \mathcal{S}^\mathcal{L} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}$, (merge vertically block states) describes how to merge the current state with the following state change.
+
+$\bullet$ $\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{L}) \mapsto \mathcal{S}^\mathcal{L}$, (merge horizontally block states) describes how to merge a set of states resulting from several paths.
+
+$\bullet$ $\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{L}$, (analyze instruction) calculates the state change that occurs due to the given instruction.
+
+$\bullet$ $\texttt{succ} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, (successor of a basic block) calculates the successors of the given block.
+
+In our specific case, the function \texttt{analyze\_instr} needs to also handle non-jump and non-fall-through successors, as these are not handled by DynInst. 
+Essentially, there are three relevant cases.
+First, if the current instruction is an indirect call or a direct call and the chosen implementation should not follow calls, 
+then our analysis will return a state where all registers are considered to be written before read. Second, if the current instruction is a direct call and the chosen implementation should follow calls, 
+then we start an analysis of the target function an return its result.
+If the instruction is a constant write (\textit{e.g.,} xor of two registers), 
+then we remove the read portion before we return the decoded state.
+Finally, in any other case, we simply return the decoded state.
+This leaves us with the two undefined merge functions and the undefined liveness state $\mathcal{S}^\mathcal{L}$. 
+
+\subsubsection{Required Parameter Count} 
+For our {count} policy, we need a coarse representation of the state of one register, thus we use the following representation.
+(1) $W$ represents write before read access, 
+(2) $R$ represents read before write access, and 
+(3) $C$ represents the absence of access. 
+Further, this gives us the $S^\mathcal{L} = \{ C, R, W \}$ as register state, which translates to the register super state $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$. 
+We implement \texttt{merge\_v} in such a way that a state within a superstate is only updated if the corresponding register was not accessed, as represented by $C$. 
+Our reasoning is that the first access is the relevant one in order to determine read before write.
+Our horizontal \textit{merge($merge\_h$)} function is a simple pairwise combination of the given set of states, which are then combined with a union like operator with $W$ preceding $R$ and $R$ preceding $C$.
+The index of highest parameter register based on the used call convention that has the state R considered to be the number of parameters a function at least requires to be prepared by a callsite.
+
+%
+%This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the  liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
+%
+%\textbf{Required Parameter Count.}
+%\label{subsection:requiredparamcount}
+%To implement the \emph{count} policy, we only need a coarse representation of the state of one register, thus we use the same representation as TypeArmor:
+%\textit{1)} $W$ represents write before read access,
+%\textit{2)} $R$ represents read before write access, and
+%\textit{3)} $C$ represents the absence of access.
+%
+%This gives us the following register state $S^\mathcal{L} = \{ C, R, W \}$ which translates to the register super state $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
+%We are only interested in the first occurrence of a $R$ or $W$ within one path, as following reads or writes do not give us more information. 
+%Therefore, our vertical merge function ($merge\_v$) behaves in the following way that only when the first given state is $C$, 
+%is the return value the second state and in all other cases it will return the first state.
+%
+%\begin{align}
+%merge\_v^{r} (cur, delta) &= \left\{
+%  \begin{array}{lr}
+%     delta & cur = C \\
+%     cur & otherwise
+%  \end{array}
+%\right. \\Liveness analysis of a 
+%merge\_v (cur, delta) &= (s'_0, ... s'_15) \text { with } s'_j = merge\_v^{r}(cur_j, delta_j)
+%\end{align}
+
+%Our horizontal merge($merge\_h$) function is a simple pairwise combination of the given set of states, 
+%which are then combined with a union like operator with $W$ preceding $R$ preceding $C$.
+%\begin{align}
+%merge\_h(\{s\}) &= s\\
+%merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
+%\end{align}
+
+%
+%We have three viable possibilities for our combination operator $\circ$, depicted in Table \ref{fig:COUNTlivenessmapping}, which all give priority to $W$:
+%\begin{itemize}
+%\item [$\bigsqcap^{\mathcal{L}}$] is what we call the destructive combination operator, as it returns W on any mismatch.
+%\item [$\bigcap^{\mathcal{L}}$] is what we call the intersection operator, as it returns C, when combining C and R, similar to an intersection.
+%\item [$\bigcup^{\mathcal{L}}$] is what we call the union operator, as it returns R, when combining C and R similar to a union.
+%\end{itemize}
+
+
+\newcolumntype{?}{!{\vrule width 1pt}}
+%
+%\begin{table}
+%
+%% \centering
+%\resizebox{\columnwidth}{!}{%Liveness analysis of a 
+%\begin{tabular}{c?c|c|c}
+%$\bigsqcap^{\mathcal{L}}$ & C & R & W\\
+%\Xhline{1pt}
+%C & C & W & W\\
+%\hline
+%R & W & R & W\\
+%\hline
+%W & W & W & W
+%\end{tabular}
+%\begin{tabular}{c?c|c|c}
+%$\bigcap^{\mathcal{L}}$  & C & R & W\\(merge vertically block states)
+%\Xhline{1pt}
+%C & C & C & W\\
+%\hline
+%R & C & R{todo} & W\\
+%\hline
+%W & W & W & W
+%\end{tabular}
+%\begin{tabular}{c?c|c|c}
+%$\bigcup^{\mathcal{L}}$  & C & R & W\\
+%\Xhline{1pt}
+%C & C & R & W\\
+%\hline
+%R & R & R & W\\
+%\hline
+%W & W & W & W
+%\end{tabular}}
+%\caption{Different mappings for combining two liveness state values in horizontal matching for the \emph{count} policy.}
+%
+%\label{fig:COUNTlivenessmapping}
+%\end{table}
+(merge vertically block states)
+%The index of highest parameter register based on the used call convention that has the state R is considered to be the number of parameters a function at least requires to be prepared by a callsite.
+
+\subsubsection{Required Parameter Wideness}
+\label{subsection:requiredparamwideness}
+For our type policy, we need a finer representation of the state of one register as follows.
+(1) $W$ represents write before read access,
+(2) $r8, r16, r32, r64$ represents read before write access with 8-, 16-, 32-, 64-bit width, and
+(3) $C$ represents the absence of access.
+%\begin{enumerate}
+%\item Was the register written to before its value could be read ? \\ We represent this with the state $W$.
+%\item How much was read from the register before its value was overwritten? \\ We represent this with the states $\{ r8, r16, r32, r64 \}$ 
+%using $R$ as a placeholder for arbitrary reads.
+%\item Did neither read nor write access occur for the register ? \\ We represent this with the state $C$.
+%\end{enumerate}
+This gives us the following $S^\mathcal{L} = \{ C, r8, r16, r32, r64, W \}$ register state which translates to the register super state 
+$\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$.
+%Now, we assume that unless the instructions we are looking at does discard the value it is reading (\texttt{xor rax rax} would be such 
+%an instruction that we call const\_write) that reading does precede the writing withing one instruction.
+As there could be more than one read of a register before it is written, we might be interested in more than just the first occurrence of a write or read on a path. 
+To permit this, we allow our merge operations to also return the value $RW$, which represents the existence of both read and write access and then can use $W$ with the functionality of an end marker.
+% We arrive therefore at three possible vertical merge functions:
+%\begin{itemize}
+%	\item The same vertical merge operator as used in the \emph{count} policy, which only gives us the first non $C$ state ($merge\_v^{r}$).
+%	\item A vertical merge operator that conceptually intersects all read accesses along a path until the first write occurs ($merge\_v^{i}$).
+%	\item A vertical merge operator that conceptually calculates the union of all read accesses along a path until the first write occurs ($merge\_v^{u}$).
+%\end{itemize}
+Therefore, our vertical merge operator conceptually intersects all read accesses along a path until the first write 
+occurs ($merge\_v^{i}$). In any other case, it behaves like the previously mentioned vertical merge function.
+%Our horizontal merge function is a simple pairwise combination of the given set of states:
+%\begin{align}
+%merge\_h(\{s\}) &= s\\
+%merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
+%\end{align}
+Our horizontal \textit{merge($merge\_h$)} function is a pairwise combination of the given set of states, which are then combined with a union-like operator 
+with $W$ preceding $WR$ and $WR$ preceding $R$ and $R$ preceding $C$. Unless one side is $W$, read accesses are combined in such a way that always the higher one is selected.
+
+%The results of our experiments with the implementation of calltarget classification gave presented us with essentially one possible candidate
+%that we can base our horizontal merge function on, namely the union operator with an analysis function that follows into direct calls. The 
+%basic schema of the merging is depicted in \ref{tbl:TYPECTunion} and it essentially behaves as if it was the union operator (when both states
+%are set, the higher one is chosen). However, we have to account for W being used as an end marker, which is why we added mapping for RW, 
+%which is essentially that. 
+%
+%\begin{table}[h]
+%\centering
+%% \resizebox{\columnwidth}{!}{%
+%\begin{tabular}{c?c|c|c|c}
+%$\bigcup^{\mathcal{L}}$  & C & R & W & RW\\
+%\Xhline{1pt}
+%C & C & R & W & RW\\
+%\hline
+%R & R & $\text{R}^{\cup}$ & W & $\text{R}^{\cup}$W\\
+%\hline
+%W & W & W & W & W\\Liveness analysis of a 
+%\hline
+%RW & RW & $\text{R}^{\cup}$W & W & RW\\
+%\end{tabular}
+%% }
+%\caption{The union mapping operator for liveness in the \emph{type} policy.}
+%\label{tbl:TYPECTunion}
+%\end{table}
+
+\subsubsection{Encountered Analysis Issues}
+\paragraph{Variadic Functions}
+\label{subsection:variadicfunctions}
+Variadic functions are special functions in C/C++ that have a basic set of parameters, 
+which they always require and a variadic set of parameters, which as the name suggests 
+may vary. A prominent example of this would be the $printf$ function, which is used 
+to output text to $stdout$.
+
+% \begin{figure}[thp] % the figure provides the caption
+% \centering          % which should be centered
+% \begin{tabular}{c}  % the tabular makes the listing as small as possible and centers it
+% \footnotesize
+% \begin{lstlisting}
+% 00000000004222f0 <make_cmd>:
+%  4222f0:push   %r15
+%  4222f2:push   %r14
+%  4222f4:push   %rbx
+%  4222f5:sub    $0xd0,%rsp
+%  4222fc:mov    %esi,%r15d
+%  4222ff:mov    %rdi,%\begin{figure}[!h]
+%  422302:test   %al,%al
+%  422304:je     42233d <make_cmd+0x4d>
+%  422306:movaps %xmm0,0x50(%rsp)
+%  42230b:movaps %xmm1,0x60(%rsp)
+%  422310:movaps %xmm2,0x70(%rsp)
+%  422315:movaps %xmm3,0x80(%rsp)
+%  42231d:movaps %xmm4,0x90(%rsp)
+%  422325:movaps %xmm5,0xa0(%rsp)
+%  42232d:movaps %xmm6,0xb0(%rsp)
+%  422335:movaps %xmm7,0xc0(%rsp)
+%  42233d:mov    %r9,0x48(%rsp)
+%  422342:mov    %r8,0x40(%rsp)
+%  422347:mov    %rcx,0x38(%rsp)
+%  42234c:mov    %rdx,0x30(%rsp)
+%  422351:mov    $0x50,%esi
+%  422356:mov    %r14,%rdi
+%  422359:callq  409430 <pcalloc>
+% \end{lstlisting}
+% \end{tabular}
+% \caption{ASM code of the \texttt{make\_cmd} function with optimize level O2, which has a variadic parameter list.}
+% \label{fig:asmvariadic}
+% \end{figure}
+
+\newsavebox{\firstlistingA}
+\begin{lrbox}{\firstlistingA}
+\begin{minipage}[c]{0.45\linewidth}
+\begin{minted}[
+% frame=lines,
+framesep=2mm,
+linenos,
+frame=none,
+firstnumber=1,
+linenos,
+highlightlines={10-17},
+highlightcolor={lightgray},
+numbersep=2pt,
+%gobble=2,
+%frame=lines,
+framesep=2mm,
+% fontsize=\tiny       
+fontsize=\scriptsize      
+% baselinestretch=1.2,
+% bgcolor=LightGray,
+% fontsize=\footnotesize,
+%use in terminal: pygmentize -L lexers to see all code highlighting options
+]{asm}
+00000000004222f0 <make_cmd>:
+ 4222f0:push   %r15
+ 4222f2:push   %r14
+ 4222f4:push   %rbx
+ 4222f5:sub    $0xd0,%rsp
+ 4222fc:mov    %esi,%r15d
+ 4222ff:mov    %rdi,%\begin{figure}[!h]
+ 422302:test   %al,%al
+ 422304:je     42233d <make_cmd+0x4d>
+ 422306:movaps %xmm0,0x50(%rsp)
+ 42230b:movaps %xmm1,0x60(%rsp)
+ 422310:movaps %xmm2,0x70(%rsp)
+ 422315:movaps %xmm3,0x80(%rsp)
+ 42231d:movaps %xmm4,0x90(%rsp)
+ 422325:movaps %xmm5,0xa0(%rsp)
+ 42232d:movaps %xmm6,0xb0(%rsp)
+ 422335:movaps %xmm7,0xc0(%rsp)
+ 42233d:mov    %r9,0x48(%rsp)
+ 422342:mov    %r8,0x40(%rsp)
+ 422347:mov    %rcx,0x38(%rsp)
+ 42234c:mov    %rdx,0x30(%rsp)
+ 422351:mov    $0x50,%esi
+ 422356:mov    %r14,%rdi
+ 422359:callq  409430 <pcalloc>
+\end{minted}
+\end{minipage}
+\end{lrbox}
+\begin{figure}[H]
+\centering
+% \subfloat[]
+{\usebox{\firstlistingA}} 
+\caption{Assembly code of the \texttt{make\_cmd} function which was compiled with Clang -O2 flag, which has a variadic parameter list, shaded gray above.}
+\label{fig:asmvariadic}
+\end{figure}
+
+Figure~\ref{fig:asmvariadic} depicts the binary code of a variadic function which allows an easier processing of parameters
+due to the fact that all potential variadic parameters are moved into a contiguous block of memory.
+Our analysis interprets this functions as a read access on all parameters and thus, we arrive at a potentially problematic overestimation. 
+In our solution we opted to find these spurious reads and ignore them for now. A compiler will implement this type of operation very 
+similar for all cases, thus we can achieve our desired outcome using the following steps:
+(1) we search for (what we call) the xmm-passthrough block, which entirely consists of moving values of registers \texttt{xmm0} to \texttt{xmm7} into
+contiguous memory, % (in our case basic block [\texttt{0x422306}, \texttt{0x42233d} [ ).
+(2) we look at the predecessor of the xmm-passthrough block, which we call the entry block (in our case basic block %[\texttt{0x4222f0},\texttt{0x4222f2} [ )
+Check if the successors of the entry block consist of the xmm-passthrough block and the successor of the 
+xmm-passthrough block, which we call the param-passthrough block, and
+%(in our case basic block [\texttt{0x42233d}Liveness analysis of a , \texttt{0x42235e} [ )
+(3) we look at the param-passthrough block and set all instructions that move the value of a parameter register into memory to be ignored. 
+%(in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \texttt{0x422347} and \texttt{0x42234c})
+
+\paragraph{Ignoring Reads} When one instruction writes and reads a register at the same time, we give the read access precedence, however, there 
+are exceptions (also mentioned in TypeArmor). However, we expand slightly on that as follows:
+(1) \texttt{xor \%rax, \%rax} is the first obvious scenario, as it will always result in \texttt{\%rax} holding the value 0,
+(2) \texttt{sub \%rax, \%rax} is probably the next scenario, as it results in \texttt{\%rax} also holding the value 0, and
+(3) \texttt{sbb \%rax, \%rax} is also relevant, however, it will not result in a constant value and based on the current state might either result in \texttt{\%rax} containing 0 or 1.
+
+\subsection{Callsite Analysis}
+\label{section:callsiteanalysis}
+Our callsite analysis classifies callsites according to the parameters they provide. Overestimations are allowed, however,
+underestimations are not be permitted. For this purpose we employ a customizable modified reaching definition algorithm, 
+which we will show first. Furthermore, we will highlight some corner cases we encountered.(merge vertically block states)
+
+\subsubsection{Reaching Definitions}
+\label{subsection:reachindefinitionstheory}
+An assignment to a variable is a reaching definition after the execution of a set of instruction if that variable still exists in at least one possible execution path. 
+If applied to a callsite, this calculates the values that are provided by this callsite to the function it then invokes. 
+
+\begin{algorithm}[!ht]
+%         \scriptsize
+        \footnotesize
+	\SetAlgoLined
+	\SetKwInOut{Input}{Input}
+        \SetKwInOut{Output}{Output}
+        \Input{The basic block to be analyzed - $block$ : $\texttt{INSTR}^*$}
+        \Output{The reaching definition state - $\mathcal{S}^\mathcal{R}$}
+        \BlankLine
+	\SetKwProg{Fn}{Function}{ is}{end}
+	\Fn{\texttt{analyze}($block$ : $\texttt{INSTR}^*$) : $\mathcal{S}^\mathcal{R}$}
+	{
+ 	$state$ = Bl                                   \Comment*[r]{Initialize the state with first block}
+ 	
+ 	\ForEach{inst $\in$ reversed(block)}{
+ 	
+ 		$state' = analyze\_instr(inst)$        \Comment*[r]{Calculate changes}
+ 		
+		$state = merge\_v(state, state')$      \Comment*[r]{Merge changes}
+	}
+
+	$states$ = $\emptyset$                         \Comment*[r]{Set of predecessor states}
+	
+	$blocks$ = $pred(block)$                         \Comment*[r]{Get predecessors blocks}
+	
+	\ForEach{block' $\in$ blocks} {
+	
+ 		$state' = analyze(block')$             \Comment*[r]{Analyze predecessors block}
+ 		
+		$states$ = $states$ $\cup$ \{$state'$\}  \Comment*[r]{Add predecessors states}
+	}
+
+	$state'$ = $merge\_h (states)$                   \Comment*[r]{Merge predecessors states}
+
+	\Return $merge\_v(state, state')$              \Comment*[r]{Merge to final state}
+
+	}
+\caption{Basic block reaching definition analysis.}
+\label{alg:reaching}
+\end{algorithm}
+
+Algorithm~\ref{alg:reaching} is based on the reaching definition analysis presented in~\cite{khedker2009data}, 
+which basically is a reverse depth-first traversal of basic blocks of a program. For customization, we rely on 
+the implementation of several functions. $\mathcal{S}^\mathcal{R}$ is the set of possible register states 
+depending on the specific reaching definition implementation of the following operations.
+
+$\bullet$ $\texttt{merge\_v} : \mathcal{S}^\mathcal{R} \times \mathcal{S}^\mathcal{R} \mapsto \mathcal{S}^\mathcal{R}$, (merge vertically block states) describes how to merge the current state with the following state change.
+
+$\bullet$ $\texttt{merge\_h} : \mathcal{P}(\mathcal{S}^\mathcal{R}) \mapsto \mathcal{S}^\mathcal{R}$, (merge horizontally block states) describes how to merge a set of states resulting from several paths.
+
+$\bullet$ $\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal{R}$, (analyze instruction) calculates the state state change that occurs due to the given instruction.
+
+$\bullet$ $\texttt{pred} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, (predecessor of a basic block) calculates the predecessors of the given block.
+
+In our specific case, the function \texttt{analyze\_instr} does not need to handle normal predecessors, as DynInst will resolve those for us. 
+However there are several instructions that have to be handled as depicted in the following situations. 
+(1) If the current instruction is an indirect call or a direct call 
+but and the chosen implementation should not follow calls, then return a state where all registers are considered trashed. 
+(2) If the instruction 
+is a direct call and the chosen implementation should follow calls, then we start an analysis of the target function. 
+(3) In all other cases we 
+simply return the decoded state. This leaves us with the two merge functions and the undefined reaching definitions state $\mathcal{S}^\mathcal{R}$. 
+
+%The book~\cite{khedker2009data} defines reaching definition analysis on blocks in the following manner:
+%\begin{subequations}
+%\label{eq:reachingbasedef}
+%\begin{align}
+%In_n &:= \left\{
+%  \begin{array}{lr}
+%    Bl & \text{n is start block}\\
+%    \underset{p \in pred(n)}{\bigcup} Out_p & \text{otherwise}
+%  \end{array}
+%\right. \label{eq:reachingbasedefInt}\\
+%Out_n &:= (In_n - Kill_n) \cup Gen_n \label{eq:reachingbasedefOut}
+%\end{align}
+%\end{subequations}
+%$Bl$ is the default state at the start of a path of execution and in our case reaching that state would mean that we do not 
+%know whether a value has been provided for the variable and therefore we assume that one has been provided, reaching an 
+%overestimation. The set $Kill_n$ describes all definitions that are removed within this block, meaning that the value of 
+%a variable has been overwritten. The set $Gen_n$ describes the new definitions that have been provided by the block $n$, 
+%meaning that the value of a variable has been assigned. Considering this, we can assume that $Gen_n \subseteq Kill_n$, 
+%as we can always create new definitions, but not simply remove definitions without assigning a new value to the variable.
+
+%
+%
+%However, we cannot use reaching definition analysis as is, because the analysis is again based on potentially unbound 
+%variable sets, while we are restricted to a finite number of registers and states. This time however, the analysis provides us with an overestimation, 
+%we however, want to get a result as close as possible so we again want to customize merge functions. Furthermore, we have to define how 
+%to interpret the changes occuring withing one block based on the the change caused by its instructions. Considering this, w, we 
+%arrive at algorithm \ref{alg:reaching} to compute the liveness state at the start of a basic block.
+
+Previous work~\cite{khedker2009data} provides a reaching definition analysis on blocks, which we use to arrive at the algorithm depicted in 
+Algorithm~\ref{alg:reaching} to compute the liveness state at the start of a basic block. We apply the reaching analysis at each indirect 
+callsite directly before each call instruction.
+
+This algorithm relies on various functions that can be used to configure its behavior. We define the 
+function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, 
+the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function
+$analyze\_instr$. Note, that the function $pred$, which retrieves all possible predecessors of a block 
+is provided by the DynInst instrumentation framework.
+
+% \begin{subequations}
+% \label{eq:livenesscustom}
+% \begin{align}
+% merge\_v &: \mathcal{S}^\mathcal{R} \times \mathcal{S}^\mathcal{R} \mapsto \mathcal{S}^\mathcal{L}\\
+% merge\_h &: \mathcal{P}(\mathcal{S}^\mathcal{R}) \mapsto \mathcal{S}^\mathcal{R}\\
+% analyze\_instr &: \mathcal {I} \mapsto \mathcal{S}^\mathcal{R} \\
+% pred &: \mathcal{I} \mapsto \mathcal{P}(\mathcal{I})
+% \end{align}
+% \end{subequations}
+
+The $analyze\_instr$ function calculates the effect of an instruction and is the core of the analyze function (see Algorithm~\ref{alg:reaching}). It will also 
+handle non-jump and non-fall-through successors, as these are not handled by DynInst in our case. We essentially have three cases that we handle:
+(1) If the instruction is an indirect call or a direct call but we chose not to follow calls, then return a state where all trashed are considered written,
+(2) If the instruction is a direct call and we chose to follow calls, then we spawn a new analysis and return its result, and
+%\item if the instruction is a constant write (\textit{e.g.,} xor of two registers) then we remove the read portion before we return the decoded state
+(3) In all other cases, we simply return the decoded state.
+
+This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of the 
+liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
+
+%The book~\cite{khedker2009data} defines reaching definition analysis on blocks, which we use to arrive at algorithm depicted in Algorithm~\ref{alg:reaching} to compute 
+%the liveness state at the start of a basic block. We apply the reaching analysis at each indirect callsite directly before each call instruction.
+
+%This algorithm relies on various functions that can be used to configure its behavior. We need to define the 
+%function $merge\_v$, which describes how to compound the state change of the current instruction and the current state, 
+%the function $merge\_h$, which describes how to merge the states of several paths, the instruction analysis function
+%$analyze\_instr$. The function $pred$, which retrieves all possible predecessors of a block won't be implemented by us, 
+%because we rely on the DynInst instrumentation framework to achieve the following.
+%\vspace{-.3cm}
+%\begin{subequations}
+%\label{eq:livenesscustom}
+%\begin{align}
+%merge\_v &: \mathcal{S}^\mathcal{R} \times \mathcal{S}^\mathcal{R} \mapsto \mathcal{S}^\mathcal{L}\\
+%merge\_h &: \mathcal{P}(\mathcal{S}^\mathcal{R}) \mapsto \mathcal{S}^\mathcal{R}\\
+%analyze\_instr &: \mathcal {I} \mapsto \mathcal{S}^\mathcal{R} \\
+%pred &: \mathcal{I} \mapsto \mathcal{P}(\mathcal{I})
+%\end{align}
+%\end{subequations}
+%\vspace{-.8cm}
+
+%As the $analyze\_instr$ function calculates the effect of an instruction and is the core of the analyze function. It will also 
+%handle non jump and non fall-through successors, as these are not handled by DynInst in our case. We essentially have three cases that we handle:
+%\textit{1)} if the instruction is an indirect call or a direct call but we chose not to follow calls, then return a state where all trashed 
+%are considered written,
+%\textit{2)}  if the instruction is a direct call and we chose to follow calls, then we spawn a new analysis and return its result, and
+%\item if the instruction is a constant write (\textit{e.g.,} xor of two registers) then we remove the read portion before we return the decoded state
+%\textit{3)} in all other cases we simply return the decoded state.
+
+%This leaves us with the two merge functions remaining undefined and we will leave the implementation of these and the interpretation of 
+%the liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following subsections.
+
+%We have yet to define the functions $merge\_v$, which describes how to compound a function and the outgoing state, the function $merge\_h$, which describes how to
+%merge the states of several paths and the function $pred$, which essentially gives us the predecessors of the current instruction. To prevent cycles we keep 
+%track of the instructions visited within the current path and omit any instruction on the current path from the result of $pred$. These functions, the 
+%reaching state $\mathcal{S}^\mathcal{R}$  and its interpretation into parameters will be defined in the following subsections.
+%
+%
+%\subsection{Backward Graph Traversal}
+%\label{subsection:backwardgraphtraversal}
+
+\subsubsection{Provided Parameter Count}
+\label{subsection:providedparamcount}
+For implementing the our {count} policy, we need a coarse representation of the state of one register, thus we use the following representation.
+(1) $T$ represents a trashed register,
+(2) $S$ represents a set register (written to), and
+(3) $U$ represents an untouched register.
+This gives us the following $S^\mathcal{L} = \{ T, S, U \}$  register state which translates to the register super state $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
+
+We are only interested in the first occurrence of a $S$ or $T$ within one path, as following reads or writes do not give us more information. Therefore, our vertical 
+merge function $merge\_v$ behaves as follows. In case the first given state is $U$, than the return value is the second state and in all other cases it will return the first state.
+%
+%We are only interested in the first occurrence of a S or T within one path, as following reads or writes do not give us more information.
+%Therefore, we can define our vertical merge function in the following way:
+%\begin{align}
+%merge\_v^{r} (cur, delta) &= \left\{
+%  \begin{array}{lr}
+%     delta & cur = U \\
+%     cur & otherwise
+%  \end{array}
+%\right. \\
+%merge\_v (cur, delta) &= (s'_0, ... s'_15) \text { with } s'_j = merge\_v^{r}(cur_j, delta_j)
+%\end{align}
+
+
+Our horizontal merge $merge\_h$ function is a pairwise combination of the given set of states, which are then combined with a union like operator with $T$ preceding $S$ and $S$ preceding $U$.
+%
+%Our horizontal merge function is a simple pairwise combination of the given set of states:
+%\begin{align}
+%merge\_h(\{s\}) &= s\\
+%merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
+%\end{align}
+%
+%We have four viable possibilities for our combination operator $\circ$, depicted in table \ref{fig:COUNTreachingmapping}, which all (except one) give priority to $T$:
+%\begin{itemize}
+%\item [$\bigsqcap^{\mathcal{R}}$] is what we call the destructive combination operator, as it returns T on any mismatch.
+%\item [$\bigcap^{\mathcal{R}}$] is what we call the intersection operator, as it returns U, when combining U and S, similar to an intersection.
+%\item [$\bigcup^{\mathcal{R}}$] is what we call the union operator, as it returns S, when combining U and S similar to a union.
+%\item [$\bigsqcup^{\mathcal{R}}$] is what we call the true union operator, as it gives S precedence over everything and returns T or 
+%U only when both sides are T or U being more inclusive than a union.
+%\end{itemize}
+
+\newcolumntype{?}{!{\vrule width 1pt}}
+%
+%\begin{table}
+%% \centering
+%{
+%\resizebox{\columnwidth}{!}{%
+%\begin{tabular}{c?c|c|c}
+%$\bigsqcap^{\mathcal{R}}$ & U & S & T\\
+%\Xhline{1pt}
+%U & U & T & T\\
+%\hline
+%S & T & S & T\\
+%\hline
+%T & T & T & T
+%\end{tabular}
+%\begin{tabular}{c?c|c|c}
+%$\bigcap^{\mathcal{R}}$  & U & S & T\\
+%\Xhline{1pt}
+%U & U & U & T\\
+%\hline
+%S & U & S & T\\
+%\hline
+%T & T & T & T
+%\end{tabular}
+%\begin{tabular}{c?c|c|c}
+%$\bigcup^{\mathcal{R}}$  & U & S & T\\
+%\Xhline{1pt}
+%U & U & S & T\\
+%\hline
+%S & S & S & T\\
+%\hline
+%T & T & T & T
+%\end{tabular}
+%\begin{tabular}{c?c|c|c}
+%$\bigsqcup^{\mathcal{R}}$  & U & S & T\\
+%\Xhline{1pt}
+%U & U & S & T\\
+%\hline
+%S & S & S & S\\
+%\hline
+%T & T & S & T
+%\end{tabular}}
+%}
+%
+%\caption{Different mappings for combining two reaching state values in horizontal matching for the \emph{count} policy.}
+%
+%\label{fig:COUNTreachingmapping}
+%\end{table}
+
+The index of the highest parameter register based on the used call convention that has the state $S$ is considered to be the number of parameters a callsite prepares at most.
+
+\subsubsection{Provided Parameter Width}
+\label{subsection:providedparamwideness}
+In order to implement our {type} policy, we need a finer representation of the states of one register, thus we consider:
+(1) $T$ represents a trashed register,
+(2) $s8, s16, s32, s64 S$ represents a set register with  8-, 16-, 32-, 64-bit width, and
+(3) $U$ represents an untouched register.
+%\begin{itemize}
+%\item Was the register value trashed ? \\ We represent this with the state T.
+%\item Was the register written to and how much ? \\ We represent this with the states $\{ s64, s32, s16, s8 \}$ using S as a placeholder for arbitrary writes.
+%\item Was the register neither trashed nor written to ? \\ We represent this with the state U.
+%\end{itemize}
+This gives us the following $S^\mathcal{L} = \{ T, s64, s32, s16, s8, U \}$ register state which translates to the register 
+super state $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
+
+Again, we are only interested in the first occurrence of a state that is not $U$ in a path, as following reads or writes do not give us more information. Therefore, we can use 
+the same vertical merge function as for the \emph{count} policy, which is essentially a pass-through until the first non $U$ state.
+
+Our horizontal merge($merge\_h$) function is a simple pairwise combination of the given set of states, which are then combined with a union like operator with $T$ 
+preceding $S$ and $S$ preceding $U$. When both states are set, we pick the higher one.
+
+%
+%Our horizontal merge function is again a simple pairwise combination of the given set of states:
+%\begin{align}
+%merge\_h(\{s\}) &= s\\
+%merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
+%\end{align}
+%
+%However, we have different possibilities regarding the merge operator. Experiments with our implementations for callsite 
+%classification in the \emph{count} policy have given us the following results:
+%\begin{itemize}
+%\item The best candidate to minimize the problematic matches is the union operator without following direct calls.
+%\item The best candidate to maximize precision is the intersection operator with following direct calls.
+%\end{itemize}
+%
+%We therefore arrive at three viable possibilities for our combination operator $\circ$, depicted in table \ref{fig:TYPEreachingmapping}, 
+%which all (except one) give priority to $T$:
+%\begin{itemize}
+%\item [$\bigcap^{\mathcal{R}}$] is what we call the intersection operator, as it returns U, when combining U and S, similar to an 
+%intersection furthermore we also calculate the intersection of states when both states are set 
+%(the lower of the two is returned).
+%\item [$\bigsqcap^{\mathcal{R}}$] is what we call the half intersection operator, as it returns U, when combining U and S, 
+%similar to an intersection but we calculate the union of states when both states are set (the higher of the two is returned).
+%\item [$\bigcup^{\mathcal{R}}$] is what we call the union operator, as it returns S, when combining U and S similar to a union
+%furthermore we calculate the union of states when both states are set (the higher of the two is returned).
+%\end{itemize}
+%
+%\begin{table}
+%
+%% \centering
+%\resizebox{\columnwidth}{!}{%
+%\begin{tabular}{c?c|c|c}
+%$\bigcap^{\mathcal{R}}$  & U & S & T\\
+%\Xhline{1pt}
+%U & U & U & T\\
+%\hline
+%S & U & $\text{S}^{\cap{}{}}$ & T\\
+%\hline
+%T & T & T & T
+%\end{tabular}
+%\begin{tabular}{c?c|c|c}
+%$\bigsqcap^{\mathcal{R}}$  & U & S & T\\
+%\Xhline{1pt}
+%U & U & U & T\\
+%\hline
+%S & U & $\text{S}^{\cup{}{}}$ & T\\
+%\hline
+%T & T & T & T
+%\end{tabular}
+%\begin{tabular}{c?c|c|c}
+%$\bigcup^{\mathcal{R}}$  & U & S & T\\
+%\Xhline{1pt}
+%U & U & S & T\\
+%\hline
+%S & S & $\text{S}^{\cup{}{}}$ & T\\
+%\hline
+%T & T & T & T
+%\end{tabular}}
+%
+%\caption{Different mappings for combining two reaching state values in horizontal matching for the \emph{type} policy.}
+%\label{fig:TYPEreachingmapping}
+%\end{table}
+
+\subsubsection{Encountered Analysis Issues}
+Our experiments with this implementation highlighted two issues.
+First, parameter lists with \textit{holes} and address width underestimation.
+Second, register extension instructions can be also a cause for analysis problems. 
+Finally, to reduce analysis runtime overhead, we also restricted the maximum path depth to 10 blocks.
+
+\paragraph{Parameter Lists with \textit{Holes}.} This refers to parameter lists that show one or more \texttt{void} parameters between start to the last actual parameter. 
+These are not existent in actual code, but our analysis has the possibility of generating them through the merge operations. An example would be the following: 
+A parameter list of $(64, 0, 64, 0, 0, 0)$ is concluded, although the actual parameter list might be $(64, 32, 64, 0, 0, 0)$. While the trailing 0s are 
+what we expect, the 0 at the second parameter position will cause trouble, because it is an underestimation at the single parameter level, which we need to avoid.
+Our solution relies on scanning our reaching analysis result for these holes and replace them with the wideness $64$, causing a (possible) overestimation.
+
+\paragraph{Address Width Unterestimation.} This refers to the issue that while in the callsite a constant value of 32-bit is written to a register, the calltarget uses the 
+whole 64-bit register. This can occur when pointers are passed from the callsite to the calltarget. Specifically this happens 
+when pointers to memory inside the \texttt{.bss}, \texttt{.data} or \texttt{.rodata} section of the binary are passed.
+Our solution is to enhance our instruction analysis to watch out for constant writes. In case a 32-bit constant value write is detected, we check if the
+value is an address within the \texttt{.bss}, \texttt{.data} or \texttt{.rodata} section of the binary. If this is the case, we simply return a write access of 64-bit 
+instead of 32-bit. This is not problematic, because we are looking for an overestimation of parameter wideness.
+It should be noted that the same problem can arise when a constant write causes the value 0 to be written to a 32-bit register. We use the same solution
+and set the width to 64-bit instead of 32-bit.
+%
+%\subsection{Address Taken Analysis}
+%\label{section:addresstakenanalysis}
+%As of now, we use the maximum available set of calltargets---the set of all function entry basic blocks---as input for our algorithm. 
+%To restrict the number of calltargets per callsite even further, we explored the possibility of incorporating an address taken analysis
+%into our application. We base our theory on the paper by Zhang \textit{et al.}~\cite{mingwei:sekar}, which introduced various types of taken
+%addresses. An address is considered to be taken, when it is loaded into memory or a register.
+%
+%\textbf{Address Taken Targets.}
+%Based on the notions of \cite{mingwei:sekar}, which classified taken addresses into several types of indirect control flow targets,
+%we only chose { Code Pointer Constants (CK)} and discarded the others:
+%\begin{itemize}
+%
+%\item { Code Pointer Constants (CK)} are addresses that are calculated during the compilation of the binary and point within
+%the possible range of addresses in the current module or to instruction boundaries. We are however, only interested in addresses
+%that directly point to an entry basic block of a function, as these are the only valid targets for any callsite.
+%
+%\item { Computed code pointers (CC)} are the result of simple pointer arithmetic, however, these are only used for intra-procedural jumps. 
+%We rely on DynInst to resolve those and only focus on indirect callsites, therefore these are of no interest to us.
+%
+%\item{ Exception handling addresses (EH)} are used to handle exceptions within C++ functions and are modeled as jumps within the function. 
+%These are therefore within the normal control flow that we rely on DynInst to resolve for us.
+%
+%\item{ Exported function addresses (ES)} are essentially functions that point outside of our current module (usually to dynamically 
+%linked libraries) and are implemented as jumps, which are of no concern to us, because our analysis is only concerned about the current object.
+%
+%\item { Return addresses (RA)}, which are the addresses next to a call instruction, are also of no interest to us, because we only 
+%implement forward { control flow integrity}.
+%\end{itemize}
+%
+%\textbf{Binary Analysis.}
+%Our approach of identifying taken addresses consists of two steps: First, we iterate over the raw binary content of data sections. Second,
+%we iterate over all functions within the disassembled binary. We rely on DynInst to provide us with the boundaries of the sections inside
+%the binary and in case of shared libraries with the needed translation to current memory addresses:
+%
+%\begin{itemize}
+%\item We look at three different data sections of the binary, which could possibly contain taken addresses: the .data, .rodata and .dynsym
+%sections. As \cite{mingwei:sekar} proposed, we slide a four byte window over the data within those sections and look for addresses that
+%point to function entry blocks. However, we are looking at x64 binaries therefore we additionally use an eight byte window. In case of 
+%shared libraries, we need to let DynInst translate the raw address, we extracted, so we can perform the function check.
+%
+%\item We specifically look for instructions that load a constant value into a register or memory, and again check whether the address 
+%points to the entry block of a function.
+%\end{itemize}
+
+%\section{Runtime Enforcement}
+%\label{section:runtimeenforcement}
+%
+%\subsection{Calltarget Annotation}
+%\label{subsection:patchingschema}
+%
+%\subsection{Callsite Instrumentation}
+%\label{subsection:patchingschema}
+
+\subsection{Enforcing The Forward Edge Policy}
+\label{Enforcing The Forward Edge Policy}
+The result of the forward callsite and calltarget analysis is a mapping between the allowed calltargets for each callsite.
+In order to enforce this mapping during runtime each callsite and calltarget contained in the previous mapping are instrumented
+inside the binary program with two labels and a callsite located CFI-based checking mechanism. At each callsite the number of 
+provided parameters are encoded as a series of six bits. At the calltarget the label contains six bits denoting how 
+many parameters the calltarget expects. Additionally, at the callsite six bits encode which register wideness types each of the provided parameters have 
+while at the calltarget another six bits are used to encode the types of the parameters expected. Further, at the callsite another bit 
+is used to define if the function is expecting a \texttt{void} return type of not. All this information are written in labels before
+each callsite and calltarget. During runtime before each callsite the these labels are compared by performing a xor operations between 
+the bits contained in the previously mentioned labels. In case the xor operation returns true
+than the transfer is allowed else the program execution is terminated.
+
+\subsection{Backward Edge Analysis}
+\label{Backward Edge Analysis}
+In order to protect the backward edges of our previously 
+determined calltargets for each callsite we designed an
+analysis which can determine possible legitimate return target addresses.
+
+\begin{algorithm}[!ht]
+%         \scriptsize
+        \footnotesize
+	\SetAlgoLined
+	\SetKwInOut{Input}{Input}
+        \SetKwInOut{Output}{Output}
+        \Input{Forward edge callsite to calltargets map- $fMap$}
+        \Output{Backward edge to return addresses map - $rMap$}
+        \BlankLine
+	\SetKwProg{Fn}{Function}{ is}{end}
+	\Fn{\texttt{backwardAddressMapping}($fMap$) : $rMap$}
+	{
+	
+ 	\tcp{visit all detected callsites in the binary}
+ 	
+ 	\ForEach{callsite $\in$ $fMap$}{  
+ 	  
+ 	  \tcp{get all calltargets for a given callsite address key}
+ 	  
+ 	  $calltargetSet$ = $getCalltargetSet(callsite, fMap)$\;
+        
+           \tcp{visit all calltargets of a callsite}
+           
+           \tcp{calltarget is the start address of a function}
+           
+          \ForEach{calltarget $\in$ $calltargetSet$}{
+ 	  
+ 	    \tcp{get the next address after the callsite}
+ 	    
+ 	    $rTarget$ = $getNextAddress(callsiteKey)$\;
+ 	    
+ 	    \tcp{find the address of function return}
+ 	    
+ 	    $rAddress$ = $getReturnOfCalltarget(calltarget)$\; 
+ 	    
+ 	    \tcp{rAddress is map key \& rTarget is then value}
+ 	    
+ 	    $rMap$ = $rMap$ $\cup$ $rMap \ add \ (rAddress, rTarget)$\;
+ 	   
+ 	  }core
+ 	 }
+        
+        \tcp{return the backward edge addresses mappings}
+        
+	\Return $rMap$\;                         
+
+	}
+\caption{Calltarget return set analysis.}
+\label{alg:returns}
+\end{algorithm}
+
+Algorithm~\ref{alg:returns} depicts how the forward mapping between 
+callsites and calltargets is used in order to determine the backward address set 
+for each return address contained in each address taken function. The 
+$fMap$ is obtained after running the callsite and 
+calltarget analysis (see \cref{section:calltargetanalysis} and \cref{section:callsiteanalysis}). 
+These mapping contains for each callsite the legal calltargets where the forward edge
+indirect control flow transfer is allowed to jump to. This mapping is reflected back by construction a second
+mapping between the return address of each function for which we have the start 
+address and a return target address. 
+
+This is determined by incrementing the current address of
+the callsite for which the forward edge propagation algorithm is applied 
+by one (i.e., recall the caller callee calling convention).
+The $rMap$ is obtained by visiting each function return address and assigning to it the address next to the callsite
+which was used in order to transfer the control flow to the function in first place. 
+At the end 
+all callsites and all function returns have been visited and a set for each function return address of backward edge 
+addresses will be obtained.
+Note that the function boundary address (i.e., retn) was detected by a linear search from the beginning of 
+the function (calltarget) until the first return instruction was encountered. We are aware that other promising approaches for recuperating 
+function boundaries (e.g.,~\cite{function:boundary}) exist, but we leave this as future work.
+
+\subsubsection{Enforcing The Backward Edge Policy}
+The previously determined $rMap$ in Algorithm~\ref{alg:returns} will be used to insert a check before each 
+function return present in the $rMap$. We propose two modes of operation based on two types
+of checks which can be inserted before each function return instruction, depending on specific needs.
+
+\textbf{Fast path.} Based on the $rMap$ for each function return the minimum and the maximum address out of the return set for a particular 
+ $rAdress$ return address will be determined. Next, these two values will be used to insert a range check having as left and right boundaries these
+ two values. Before the return instruction of the function is executed the value of the function return is compared against these two values previously
+ mentioned. In case the check fails than the program will be terminated else the indirect control flow transfer will be allowed.
+ Note that this check has insignificant runtime overhead but on the other side it could contain not legitimate return addresses depending 
+ on the entropy of the $rAddress$es.
+ 
+\textbf{Slow path.} Based on the $rMap$ for each function return a series of comparison checks are inserted in the binary. 
+ Before the return instruction of the function a series of comparison checks between the appropriate 
+ addresses stored in $rMap$ and the address where the function wants to return are performed. In case one of the check fails than the 
+ program will be terminated. The total number of comparison checks added is equal to the size of return address set which contains $rTarget$ values. 
+ Note that these types of checks are precise since only legitimate addresses are allowed but on the other side the runtime overhead is higher than in the 
+ case of the fast path because the number of checks is in general higher.
+
+
