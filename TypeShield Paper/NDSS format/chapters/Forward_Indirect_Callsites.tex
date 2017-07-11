@@ -210,14 +210,14 @@ Third, in total six fake objects are used to call into functions residing in unr
 and return types. The final goal of this attack is to prepare the program memory such that a Unix shell can be opened at 
 the end of this attack.
 
-% \begin{center}
-% \begin{figure*}[t!]
-% \centering
-%    \includegraphics[width=.88\textwidth]{figures/overview.pdf}
-%     \caption{System overview.}
-%     \label{System overview.}
-%  \end{figure*}
-% \end{center}
+\begin{center}
+\begin{figure*}[t!]
+\centering
+   \includegraphics[width=.88\textwidth]{figures/overview.pdf}
+    \caption{System overview.}
+    \label{System overview.}
+ \end{figure*}
+\end{center}
 
 Finally, this example illustrates why detecting vPointer corruptions is not trivial for real-world applications. As depicted in 
 Figure~\ref{Class exploit}, the class \texttt{nsInputStream} has 11 classes which inherit directly or indirectly from 
