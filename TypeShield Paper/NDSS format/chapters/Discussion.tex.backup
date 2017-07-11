@@ -38,34 +38,33 @@ based classification with an overall reduction of about 13\%.
 
 \subsection{TypeArmor Discrepancies}
 \label{section:discrep}
-As we have no access to source code of TypeArmor, we implemented an approximation
-of TypeArmor. Using this approximation we found some discrepancies between the data that we collected
-and data that was presented in the TypeArmor paper.
-A minor discrepancy between our results and the results of TypeArmor is that, while they basically implemented
+Next we will report some discrepancies which we think are worthwhile to be mentioned herein.
+A minor discrepancy between our results and the results of TypeArmor is that, while TypeArmor basically implements
 what we call a destructive merge operator for the liveness analysis. However, our data suggests that this
 operator is marginally inferior to the union path merge operator, when we compared them in our implementation.
 A major concern is the classification of calltargets, while we were able to reduce the number of overestimations
 of calltargets regarding parameter counts to essentially 0, the number of underestimations of calltarget did
-stay at a geometric mean of 7\%. This error rate is rather large when compared to the reported 0\% underestimation
+stay around 5\%. This error rate is rather large when compared to the reported 0\% underestimation
 of TypeArmor, however we are not entirely sure what has caused this discrepancy. A possibility is the differing
 test environments, or a bug within our implementation that we are not aware of, or simply reaching definitions
-analysis alone is not the best possible algorithm for this particular problem.
+analysis alone is not the best possible algorithm for this particular scenario.
 
 \subsection{Improving \textsc{TypeShield}}
 \label{section:venuesimp}
-To improve our type analysis, we see at least two possibilities. Incorporating refined data flow analysis and 
-expanding the scope to also include memory. The main point of improvement is not the precision but for now 
-more importantly the reduction of underestimations in the callsite analysis.
+In order to improve our type analysis, we briefly highlight two possibilities. 
 
-To refine the data flow analysis, we propose the actual tracking of data values and simple operations, as these
+First, incorporating a refined data flow analysis and 
+expanding the scope of the analysis include memory analysis as well. The main point of improvement is not the precision but for now 
+more importantly the reduction of underestimations in the callsite analysis.
+In order to refine the data flow analysis, we propose the actual tracking of data values and simple operations, as these
 can be used to better differentiate the actual wideness stored within the current register. The highest gain, 
 we see here would be the establishment of upper and lower bounds regarding values within the register, which 
 would allow for more sophisticated callsite and calltarget invariants. Essentially we would have to resort 
 to symbolic execution or some other sort of precise abstract interpretation.
 
-Expanding the scope to also include memory, is another possible way of improving the type analysis, as it 
-would allow us to distinguish normal 32-bit or 64-bit values and pointer addresses. Although we already have a 
-limited approach of that in our reaching implementation, we still see room for improvement, as we only check
+Second, expanding the scope to include memory analysis, is another possible way of improving the type analysis, as it 
+would allow to distinguish normal 32-bit or 64-bit values and pointer addresses. Although we already have a 
+limited approach of that in our reaching implementation. Further, we see room for improvement, as we only check
 whether a value is within one of three binary sections or 0.
 
 \subsection{Limitations of \textsc{TypeShield}}
@@ -89,11 +88,12 @@ shadow stack based defenses which fail to account for attacks not violating the 
 
 Fourth, \textsc{TypeShield} is not intended to be more precise than source code based tools such as IFCC/VTV~\cite{vtv:tice}. However, 
 \textsc{TypeShield} is highly useful in situations where the source code is typically not available (\textit{e.g.,} off-the-shelf programs), 
-where programs rely on many libraries, and where the recompilation of all the shared libraries is not possible. 
+where programs rely on third party libraries, and where the recompilation of all the shared libraries is not possible. 
 Further, binary based tools such as \textsc{TypeShield} can offer precise protection when source code is not available or 
 recompilation is not feasible or desirable.
 
 Finally, while a major step forward, \textsc{TypeShield} cannot thwart all possible attacks, as even solutions with access to source 
 code are unable to protect against all possible attacks~\cite{carlini:bending}. In contrast, \textsc{TypeShield}, our binary-based tool, 
 can stop all currently COOP attacks published to date and significantly raises the bar for an adversary when compared to
-TypeArmor and similar tools. Moreover, \textsc{TypeShield} provides a strong mitigation for other types of code-reuse attacks as well.
+TypeArmor and similar tools. Moreover, \textsc{TypeShield} provides a strong mitigation for other types of code-reuse attacks as well
+which violate the caller callee calling convention.

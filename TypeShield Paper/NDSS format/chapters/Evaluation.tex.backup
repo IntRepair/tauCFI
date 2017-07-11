@@ -1,20 +1,25 @@
 \section{Evaluation}
 \label{chapter:Evaluation}
 We evaluated \textsc{TypeShield} by instrumenting various open source applications and conducting a thorough analysis. Our test sample includes the two 
-ftp server applications \textit{Vsftpd} (v.1.1.0) and \textit{Proftpd} (v.1.3.3), the two database server 
-applications \textit{Postgresql} (v.9.0.10) and \textit{Mysql} (v.5.1.65), the memory cache application \textit{Memcached} (v.1.4.20) and the \textit{Node.js} 
+FTP server applications \textit{Vsftpd} (v.1.1.0) and \textit{Proftpd} (v.1.3.3), web server Lighttpd (v.1.4.28); FTP server Pure-ftpd (v.1.0.36) the two database server 
+applications \textit{Postgresql} (v.9.0.10) and \textit{Mysql} (v.5.1.65), the memory cache application \textit{Memcached} (v.1.4.20), the \textit{Node.js} 
 server application (v.0.12.5). We selected these applications in order to allow for comparison with~\cite{veen:typearmor}. 
-In our evaluation we addressed the following research questions (RQs).
+In our evaluation we addressed the following research questions (RQs) w.r.t \textsc{TypeShield}.
 
-\begin{itemize}
- \item[\textbf{RQ1:}] How \textbf{precise} is \textsc{TypeShield}? (\cref{section:typeshieldprecision})
- \item[\textbf{RQ2:}] How \textbf{effective} is \textsc{TypeShield}? (\cref{section:typeshieldeffectiveness})
- \item[\textbf{RQ3:}] What \textbf{runtime overhead} has \textsc{TypeShield}? (\cref{section:typeshieldoverheadperformance})
- \item[\textbf{RQ4:}]What is \textsc{TypeShield's} \textbf{instrumentation overhead}? (\cref{section:typeshieldoverheadinstrumentation})
- \item[\textbf{RQ5:}] What \textbf{security level} does \textsc{TypeShield} offer? (\cref{RQ5: Security Analysis})
- \item[\textbf{RQ6:}] Which \textbf{upper bounds} can \textsc{TypeShield} enforce? (\cref{RQ6:TyperArmor's Imprecise Parameter-Count Policy})
- \item[\textbf{RQ7:}] Is \textsc{TypeShield} \textbf{superior} compared to other tools? (\cref{RQ5: Is TypeShield better than other tools?})
-\end{itemize}
+\textbf{RQ1:} How \textbf{precise} is it? (\cref{section:typeshieldprecision})
+
+\textbf{RQ2:} How \textbf{effective} is it? (\cref{section:typeshieldeffectiveness})
+
+\textbf{RQ3:} What \textbf{runtime overhead} has does it have? (\cref{section:typeshieldoverheadperformance})
+
+\textbf{RQ4:} What is its \textbf{instrumentation overhead}? (\cref{section:typeshieldoverheadinstrumentation})
+
+\textbf{RQ5:} What \textbf{security level} does it offer? (\cref{RQ5: Security Analysis})
+
+\textbf{RQ6:} Which \textbf{upper bounds} can it enforce? (\cref{RQ6:TyperArmor's Imprecise Parameter-Count Policy})
+
+\textbf{RQ7:} Is it \textbf{superior} compared to other tools? (\cref{RQ5: Is TypeShield better than other tools?})
+
 \textbf{Comparison Method.} We used \textsc{TypeShield} to analyze each program binary individually. Next \textsc{TypeShield} was used to harden each binary with forward and 
 backward checks. The data generated during analysis and binary hardening was written external files for later processing. Finally, the previous obtained 
 data was extracted with our Python based framework and inserted into spreedsheet files in order to better compare the results with other tools.
@@ -44,7 +49,7 @@ During compilation, we essentially collect three data points for each callsite a
 	\begin{tabular}{l|r|r|r|r|r|r}%
 	\toprule
 	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c|}{ {\bfseries calltargets}} & \multicolumn{3}{c}{{\bfseries callsites} }\\
-	\bfseries Target & match & Clang miss &  TS miss &  match & Clang miss & TS miss% specify table head
+	\bfseries Target & match & Clang miss &  TypeShield miss &  match & Clang miss & TypeShield miss% specify table head
 	\\\midrule
 	\csvreader[before filter=\ifthenelse{\equal{\csvcoli}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/matching.O2.csv}{
 		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
@@ -61,7 +66,7 @@ During compilation, we essentially collect three data points for each callsite a
 %     	}
 	\caption {Table shows the quality of structural matching provided by our automated verify and test environment, 
 	regarding callsites and calltargets when compiling with optimization level O2. The label Clang miss 
-	denotes elements not found in the data-set of the Clang/LLVM pass. The label TS denotes elements not found in the data-set of \textsc{TypeShield}. 
+	denotes elements not found in the data-set of the Clang/LLVM pass. The label TypeShield denotes elements not found in the data-set of \textsc{TypeShield}. 
 % 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	looking at this table?}
         }
@@ -81,7 +86,7 @@ typed names.
 Table~\ref{tbl:matchingquality} shows three data points w.r.t. calltargets for the optimization level -O2:
 (1) Number of comparable calltargets that are found in both datasets, 
 (2) Clang miss: Number of calltargets that are found by \textsc{TypeShield}, but not by our Clang/LLVM pass, and 
-(3) TS miss: Number of calltargets that are found by our Clang/LLVM pass, but not by \textsc{TypeShield}.
+(3) TypeShield miss: Number of calltargets that are found by our Clang/LLVM pass, but not by \textsc{TypeShield}.
 
 The problematic column is the Clang miss column, as these values might indicate problems with \textsc{TypeShield}. These numbers are relatively low (below 1\%) with only Node.js
 shows a noticeable higher value than the rest. The column labeled tool miss lists higher numbers, however, these are of no real concern to us, as our ground truth 
@@ -89,17 +94,17 @@ pass possibly collects more data: All source files used during the compilation o
 one binary and therefore, not necessary all source files are used for our test-target.
 Considering this, we can state that our structural matching between ground truth and \textsc{TypeShield}s calltargets is very good.
 
-\textbf{Callsites.} While our structural matching of calltargets is rather simple, the matter of matching callsites is more complex. Our tool can provide accurate addressing of 
+\textbf{Callsites.} While our structural matching of calltargets is rather simple, matching callsites is more complex. Our tool can provide accurate addressing of 
 callsites within the binary. However, Clang/LLVM does not have such capabilities in its intermediate representation (IR). Furthermore, the IR is not the final representation within
 the compiler, as the IR is transformed into a machine-based representation (MR), which is again optimized. Although, we can read information regarding parameters from the IR, it 
-is not possible with the MR. Therefore, we extract that data directly after the conversion from IR to MR and read that data at the end of the compilation. To not unnecessarily 
+is not possible with the MR. Therefore, we extract that data directly after the conversion from IR to MR and read the data at the end of the compilation. To not unnecessarily 
 pollute our dataset, we only considered calltargets, which have been found in both datasets. 
 
 Table~\ref{tbl:matchingquality} shows three data points regarding callsites for the optimization level -O2:
 (1) Number of comparable callsites that are found in both datasets,
 (2) Clang miss: Number of callsites that are discarded from the data set of \textsc{TypeShield}, and
-(3) TS miss: Number of callsites that are discarded from the data set of our Clang/LLVM pass.
-Both columns (Clang miss and TS miss) show a relatively low number of encountered misses. Therefore, we can 
+(3) TypeShield miss: Number of callsites that are discarded from the data set of our Clang/LLVM pass.
+Both columns (Clang miss and TypeShield miss) show a relatively low number of encountered misses. Therefore, we can 
 state that our structural matching between ground truth and \textsc{TypeShield}s callsites is almost perfect.
 
 \subsubsection{Count Based Classification Precision}
@@ -137,14 +142,11 @@ The label perfect args denotes all occurrences when our result and the ground tr
 Table~\ref{tbl:precisionCOUNT} depicts the number and ratio of perfect 
 classifications and the number and ratio of problematic classifications, which in the case of calltargets refers to overestimations and in case of callsites refers to underestimations.
 
-\textbf{Experiment Setup (Calltargets).} Union combination operator with an $analyze$ function that follows into occurring direct calls.
+\textbf{Calltargets.} For the first experiment we used a union combination operator with an $analyze$ function that follows into occurring direct calls.
+The results indicate a perfect classification of around 86\% while for the returns it is over 68\%.
 
-\textbf{Results (Calltargets).}
-The rate of perfect classification is in general over 86\% while for the calltargets it is over 70\%.
-
-\textbf{Experiment Setup (Callsites).} Union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
-
-\textbf{Results (Callsites).} The rate of perfect classification is over 71\% while for the returns it over 88\%.
+\textbf{Callsites.} For the second experiment we used a union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
+The results indicate a rate of perfect classification of over 73\% while for the returns it is over 88\%.
 
 \subsubsection{Type Based Classification Precision}
 \label{subsection:typeshieldcountprecision}
@@ -182,13 +184,14 @@ Table \ref{tbl:precisionTYPE} depicts the number and ratio of perfect classifica
 and the number and ratio of problematic classifications, which in the case of calltargets refers to overestimations and in case of 
 callsites refers to underestimations.
 
-\textbf{Experiment Setup (Calltargets).} We used the union combination operator with an $analyze$ function that follow into occurring direct calls and a vertical merge and that intersects all reads until the first write.
+\textbf{Calltargets.} 
+For the first experiment we used the union combination operator with an $analyze$ function that follow into occurring direct calls 
+and a vertical merge and that intersects all reads until the first write.
+The results indicate a rate of perfect calltargets classification is over 79\% while for the returns it is over 65\%.
 
-\textbf{Results (Calltargets).} The rate of perfect calltargets classification is over 77\% while for the returns is over 77\%.
-
-\textbf{Experiment Setup (Callsites).} We used the union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
-
-\textbf{Results (Callsites).} The rate of perfect classification is in general over 66\% while for the returns is over 88\%.
+\textbf{Callsites.} 
+For the second experiment we used the union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
+The results indicate a rate of perfect classification of over 68\% while for the returns it is over 88\%.
 
 \subsection{Effectiveness}
 \label{section:typeshieldeffectiveness}
@@ -422,7 +425,7 @@ Finally, this results should not represent an issue for memory resourceful syste
 % \label{CDF Analysis}
 
 \begin{figure}[h] 
-% \hspace{-.65cm}
+\hspace{-.3cm}
   \begin{minipage}[b]{1.0\linewidth}
     \centering
     \resizebox{1.04\columnwidth}{!}{\includesvg{svgs/postgresqlO2}}

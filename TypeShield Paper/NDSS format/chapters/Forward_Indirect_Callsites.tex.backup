@@ -97,7 +97,7 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
    \setlength{\unitlength}{0.1\textwidth}
    \begin{picture}(10,4)
 %    \centering
-     \put(1.606, 1.196){\includegraphics[width=.27\textwidth]{figures/loop.pdf}}
+     \put(2.1, 1.5){\includegraphics[width=.22\textwidth]{figures/loop.pdf}}
      \put(.031, 2.5){\usebox{\firstlisting}}
    \end{picture}}
 \vspace{-2.6cm}
@@ -115,7 +115,7 @@ a loop controlled by the attacker.
 First, the object dispatch (see Figure~\ref{Code example used to illustrate how a COOP loop gadget works} line 17) is exploited by the attacker
 in order to call different functions in the whole program by iterating on an array of fake objects previously inserted.
 
-Second, in order to achieve this the attacker previously exploits an existing program memory corruption (e.g., buffer overflow) 
+Second, in order to achieve this the attacker previously exploits an existing program memory corruption (\textit{e.g.,} buffer overflow) 
 which is further used to corrupt an object dispatch, \ding{182}, by inserting fake objects in the array and by changing the number of initial loop iterations.
 Next she invokes gadgets, \ding{182} and \ding{184} up to {\tiny\encircle{\Large{M}}}, 
 through the calls, \ding{183} and \ding{185} up to {\tiny\encircle{\Large{N}}}, contained in the loop. 
@@ -173,6 +173,11 @@ to harden the source code only at the places which are most exposed to such vuln
 \subsection{Real COOP Attack Example}
 \label{Real COOP Attack Example}
 % \textbf{Real COOP Attack Example.}
+The bug CVE-2014-3176 was exploited by Crane \textit{et al.}~\cite{crane:readactor++} in order to perform a
+COOP attack, on the Google Chromium Web browser. The details of this attack are highly complex involving not properly 
+handled interaction of browser extensions between the IPC, the sync API, and Google V8 engine and for this reason we briefly present a better
+documented COOP exploit which is in principle similar with this attack.
+
 \label{Running Example: CVE X}
 %%second pic
 \begin{figure}[h!]
@@ -184,32 +189,37 @@ to harden the source code only at the places which are most exposed to such vuln
 \end{figure}
 Figure~\ref{Class exploit} depicts~\footnote{The class inheritance hierarchy of the classes involved in the COOP attack against the Firefox browser. Red letters 
 indicate forbidden virtual table entries and green letters indicate allowed virtual table entries for the given indirect callsite
-contained in the main loop gadget.}
-the COOP attack example used as proof of concept exploit presented in~\cite{schuster:coop} which was employed to 
-perform a COOP attack on the Mozilla Firefox Web browser. A buffer overflow bug was used in order to call into existing virtual table 
-entries by using a main loop gadget. The attack concludes with opening of an Unix shell. 
+contained in the main loop gadget.} a turing complete COOP attack~\cite{schuster:coop} which was used to attack the Mozilla Firefox Web browser. 
+By exploiting an existing buffer overflow bug the attacker was able to call into existing virtual table entries by having a main loop gadget at his disposal.
 
-Another real-world bug, CVE-2014-3176, was exploited by Crane \textit{et al.}~\cite{crane:readactor++} in order to perform yet another 
-COOP attack, on the Google Chromium Web browser. The details of the second attack are highly complex (\textit{i.e.,} involving not properly 
-handled interaction of extensions, IPC, the sync API, and Google V8) and for this reason we briefly present next the first 
-documented COOP exploit on a Linux machine.
+First, the attacker used the C++ class \texttt{nsMultiplexInputStream} (see Figure~\ref{Class exploit}) which contains a 
+main loop gadget (ML-G) inside the \texttt{nsMultiplexInputStream::Close(void)} 
+function in order to perform indirect calls by dispatching calls on the fake objects contained in the array. The objects 
+contained in the array during normal execution are of \texttt{nsInputStream} type and each of the objects will call the 
+\texttt{Close(void)} function in order to close each of the previously opened streams. 
 
-The C++ class \texttt{nsMultiplexInputStream} (see Figure~\ref{Class exploit}) contains a main loop gadget (ML-G) inside the \texttt{nsMultiplexInputStream::Close(void)} 
-function which is performing indirect calls by dispatching indirect calls on the objects contained in the array. The objects 
-contained in the array during normal execution are of type \texttt{nsInputStream} and each of the objects will call the 
-\texttt{Close(void)} function in order to close each of the previously opened streams. For performing the COOP attack, the 
+Second, for performing the COOP attack, the 
 attacker crafts a C++ program containing an array buffer holding six fake objects. These fake objects can call inside (and outside) 
 the initial class and virtual table hierarchies with no constraints. During the attack a buffer is created in order to hold the 
-fake objects.
-The crafted buffer will be used instead of the real code in order to call different functions available in the program code. 
+fake objects. The crafted buffer will be used instead of the real code in order to call different functions available in the program code. 
 For example, the attacker calls a function contained in the class \texttt{xpcAccessibleGeneric} which is not in the class 
 hierarchy or virtual table hierarchy of the initially intended type of objects used inside the array. Moreover, the header 
-file of this class (\texttt{xpcAccessibleGeneric}) is not included in the class \texttt{nsMultiplex-InputStream}. In total 
-six fake objects are used to call into functions residing in unrelated class hierarchies with varying number of parameters 
+file of this class (\texttt{xpcAccessibleGeneric}) is not included in the class \texttt{nsMultiplex-InputStream}. 
+
+Third, in total six fake objects are used to call into functions residing in unrelated class hierarchies with varying number of parameters 
 and return types. The final goal of this attack is to prepare the program memory such that a Unix shell can be opened at 
 the end of this attack.
 
-This example illustrates why detecting vPointer corruptions is not trivial for real-world applications. As depicted in 
+% \begin{center}
+% \begin{figure*}[t!]
+% \centering
+%    \includegraphics[width=.88\textwidth]{figures/overview.pdf}
+%     \caption{System overview.}
+%     \label{System overview.}
+%  \end{figure*}
+% \end{center}
+
+Finally, this example illustrates why detecting vPointer corruptions is not trivial for real-world applications. As depicted in 
 Figure~\ref{Class exploit}, the class \texttt{nsInputStream} has 11 classes which inherit directly or indirectly from 
 this class. The classes \texttt{nsSeekableStream}, \texttt{nsIPCSeria- lizableInputStream} and \texttt{nsCloneableInputStream}
 provide additional inherited virtual tables which represent illegitimate calltargets for the initial \texttt{nsInputStream} 
@@ -223,8 +233,8 @@ security policies (\textit{e.g.,} which rely on parameter types of virtual table
 \subsection{Checking Indirect Calls in Practice}
 % \textbf{Checking Indirect Forward-Edge Calls in Practice.}
 \label{C++ Indirect Calls in Practice}
-To the best of our knowledge, only the IFCC/VTV~\cite{vtv:tice} tools (up to 8.7\% performance overhead) are deployed in practice
-which can be used to check legitimate from illegitimate indirect forward-edge calls during runtime. vPointers are checked based on the class hierarchy. 
+To the best of our knowledge, only the IFCC/VTV~\cite{vtv:tice} tools (up to 8.7\% performance overhead) is deployed in practice
+and can be used to check legitimate from illegitimate indirect forward-edge calls during runtime. vPointers are checked based on the class hierarchy. 
 Furthermore, ShrinkWrap~\cite{haller:shrinkwrap} (to the best of our knowledge not deployed in practice) is a tool which further reduces the legitimate 
 virtual table ranges for a given indirect callsite through precise analysis of the program class hierarchy and virtual table hierarchy. Evaluation results
 show similar performance overhead but more precision with respect to legitimate virtual table entries per callsite. We noticed by analyzing the previous 

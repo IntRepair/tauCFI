@@ -54,7 +54,7 @@ inefficiencies (see~\cref{{Too Permissive Parameter-Based Policies}} for more de
 With our work, we aim to achieve both significant precision and runtime efficiency enhancements.
 
 In this paper, we present \textsc{TypeShield}, a runtime binary-level fine-grained CFI tool for illegitimate forward calls, 
-that is based on an improved forward-edge fine-grained CFI-policy 
+that is based on an improved forward-edge and backward-edge fine-grained CFI-policy 
 compared to previous work~\cite{veen:typearmor}. 
 \textsc{TypeShield} does not rely on RTTI data (\textit{i.e.,} metadata emitted by the compiler, most of the time stripped) or 
 particular compiler flags, and is applicable to industrial software.
@@ -164,7 +164,8 @@ This further helps to reduce the possible target set of callees for each callsit
 which is based on a set of possible return addresses for function returns which follow the caller calle function calling convention.
 The policy is implemented as (1) a fast mode where a range is determined for each function return formed by the minimum and maximum value and
 as (2) slow mode where each return address of a function return is compared individually with the return address where the function wants to return.
-This represents a fine-grained alternative to shadow stack which were recently shown to be bypassed (see SafeStack, BlackHat).
+This represents a fine-grained alternative to SafeStack which was
+bypassed~\cite{safestack:bypassing}.
 
 \textbf{\textit{Comparison.}}~\textsc{TypeShield} uses partially different basic block analysis strategies than TypeArmor,
 and no control flow graph as TypeArmor does. Further,~\textsc{TypeShield}
@@ -226,16 +227,16 @@ In summary, we make the following contributions:
  \item \textbf{Novel CFI-based protection technique.} We designed a novel fine-grained CFI technique for protecting forward and backward edges in a CFG
  against code reuse attacks.
  
- \item \textbf{Implemented an Usable Prototype.} We implemented, \textsc{TypeShield}, a prototype which enforces the aforementioned technique
+ \item \textbf{Implemented an usable prototype.} We implemented, \textsc{TypeShield}, a prototype which enforces the aforementioned technique
  in stripped program binaries. \textsc{TypeShield} can serve as platform for developing other binary based protection mechanisms.
  
- \item \textbf{Evaluation.} We conduct a thorough set of evaluative experiments in which we show that \textsc{TypeShield} is more precise, effective and has lower performance overhead than 
+ \item \textbf{Evaluation.} We conduct a thorough set of evaluative experiments in which we show that \textsc{TypeShield} is more precise and effective than 
  other state-f-the-art tools. Further, we show that our tool has a higher calltarget set reduction per callsite, thus further reducing the attack surface.
  
- \item \textbf{Reproducibility of Results.} 
+ \item \textbf{Reproducibility of results.} 
  We respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist}) by 
  releasing \textsc{TypeShield} open source and by providing for each conducted experiment a precise description of the conducted experiment, 
- thus increasing the reproducibility of the results.
+ thus increasing the reproducibility of our results.
  
 \end{itemize}
 

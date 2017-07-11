@@ -113,21 +113,21 @@ see~\cite{crane:readactor++} for more details) is used to sequentially call COOP
 a loop controlled by the attacker.
 
 First, the object dispatch (see Figure~\ref{Code example used to illustrate how a COOP loop gadget works} line 17) is exploited by the attacker
-in order to call different functions in the whole program by iterating on an array of fake objects previously inserted.
+in order to call different functions in the whole program by iterating on an array of fake objects previously inserted in the array.
 
-Second, in order to achieve this the attacker previously exploits an existing program memory corruption (e.g., buffer overflow) 
+Second, in order to achieve this the attacker previously exploits an existing program memory corruption (\textit{e.g.,} buffer overflow) 
 which is further used to corrupt an object dispatch, \ding{182}, by inserting fake objects in the array and by changing the number of initial loop iterations.
 Next she invokes gadgets, \ding{182} and \ding{184} up to {\tiny\encircle{\Large{M}}}, 
 through the calls, \ding{183} and \ding{185} up to {\tiny\encircle{\Large{N}}}, contained in the loop. 
 As it can be observed in Figure~\ref{Code example used to illustrate how a COOP loop gadget works} she 
-can invoke from the same callsite legitimate functions (in total {\tiny\encircle{\Large{N}}}) residing in the vTable inheritance path
+can invoke from the same callsite legitimate functions (in total {\tiny\encircle{\Large{N}}}) residing in the virtual table (vTable) inheritance path
 (\textit{i.e.,} at the time of writing this paper this type of information is particularly hard to recuperate from program binaries)
 for this particular callsite, indicated with green color vTable entries. 
 However, a real COOP attack invokes illegitimate vTable entries residing in the whole initial program hierarchy (or the extended one)
 with less or no relationship to the initial callsite,
 indicated with red-color vTable entries.
 
-Third, in this way different addresses contained in the program (1) virtual table (vTable) hierarchy (contains only virtual members), 
+Third, in this way different addresses contained in the program (1) (vTable) hierarchy (contains only virtual members), 
 (2) class hierarchy (contains both virtual and non-virtual members) and (or) the whole program address space can be called. 
 For example the attacker can call in any entry in the:
 (1) class hierarchy of the whole program,
@@ -138,8 +138,8 @@ For example the attacker can call in any entry in the:
 (6) virtual table hierarchy and class hierarchy of the whole program.
 
 Finally, because there are no intrinsic language semantics---such as object cast checks---in the C++ programming language for object dispatches
-the loop gadget indicated in Figure~\ref{Code example used to illustrate how a COOP loop gadget works} can be freely used to call 
-any possible entry in the whole program. Thus, this make any possible part of the program a potential attack gadget.
+the loop gadget indicated in Figure~\ref{Code example used to illustrate how a COOP loop gadget works} can be unconstrained used to call 
+any possible entry in the whole program. Thus, making any program address a gadget part.
 
 \subsubsection{Security Implications of Indirect Calls}
 % \textbf{Security Implications of Forbidden Indirect Calls.}
@@ -192,7 +192,7 @@ indicate forbidden virtual table entries and green letters indicate allowed virt
 contained in the main loop gadget.} a turing complete COOP attack~\cite{schuster:coop} which was used to attack the Mozilla Firefox Web browser. 
 By exploiting an existing buffer overflow bug the attacker was able to call into existing virtual table entries by having a main loop gadget at his disposal.
 
-First, the attacker used the C++ class \texttt{nsMultiplexInputStream} (see Figure~\ref{Class exploit}) which contains a 
+First, the attacker uses the C++ class \texttt{nsMultiplexInputStream} (see Figure~\ref{Class exploit}) which contains a 
 main loop gadget (ML-G) inside the \texttt{nsMultiplexInputStream::Close(void)} 
 function in order to perform indirect calls by dispatching calls on the fake objects contained in the array. The objects 
 contained in the array during normal execution are of \texttt{nsInputStream} type and each of the objects will call the 

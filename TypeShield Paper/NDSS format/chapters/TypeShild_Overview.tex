@@ -385,7 +385,7 @@ $M3$ than the indirect call transfer will be allowed.}
 
 Figure~\ref{Type and parameter count policy.} depicts
 the behavior of our type based policy
-when the callsite provides 6 parameters $\langle$ $pcs1, ..., pcs6$ $\rangle$ having following bit 
+when the callsite provides 6 parameters $\langle pcs1, ..., pcs6 \rangle$ having following bit 
 wideness \textit{pcs}1: 4-byte, \textit{pcs}2: 4-bye, \textit{pcs}3: 4-byte, \textit{pcs}4: 8-byte, \textit{pcs}5: 2-byte, 
 \textit{pcs}6: 2-byte, and the calltarget is expecting 6 parameters $pct1, ..., pct6$ having following bit 
 wideness \textit{pct}1: 4-byte, \textit{pct}2: 4-bye, \textit{pct}3: 0-byte, \textit{pct}4: 0-byte, \textit{pct}5: 0-byte, 
@@ -394,8 +394,8 @@ wideness \textit{pct}1: 4-byte, \textit{pct}2: 4-bye, \textit{pct}3: 0-byte, \te
 
 \begin{definition}
 \label{eqn:1} Let $A$ be a calltarget $ct_{A}$ and $B$ a callsite $cs_{B}$ than: 
-$ct_{A} \subseteq cs_{B} \iff \forall i \subseteq [1, 6],$
-$wideness(parameter($A$)[i])$ $\leq$ \ $wideness(parameter($B$)[i])$.
+$ct_{A}$ $\subseteq$ $cs_{B}$ $\iff$ $\forall$ $i$ $\subseteq$ $[1, 6],$
+$wideness$ $(parameter($A$)[i])$ $\leq$ \ $wideness(parameter($B$)[i])$.
 \end{definition}
 Whereas the policy of TypeArmor is the following. 
 \begin{definition}
@@ -409,17 +409,17 @@ for each parameter index in part separately whereas the second performs only a p
 
 \subsection{Backward Edge Policy}
 \label{Backward Edge CFI Policy}
-\textsc{TypeShield} uses a backward edge (i.e., \texttt{retn}) fine-grained CFI protection policy which 
+\textsc{TypeShield} uses a backward edge (\textit{i.e.,} \texttt{retn}) fine-grained CFI protection policy which 
 is based on two aspects. First, the forward edge addresses after each callsite are enforced
-to all legitimate calltargets return addresses (i.e., function return address). 
+to all legitimate calltargets return addresses (\textit{i.e.,} function return address). 
 Second, the caller callee calling convention 
 which basically enforces that each function should return to the next address after the callsite that 
 was used in first place to call that function is enforced. \textsc{TypeShield} uses two modes of operation for
-protecting the backward edge. The first mode (i.e., fast path) is based on enforcing a range determined by the minimum and
+protecting the backward edge. The first mode (\textit{i.e.,} fast path) is based on enforcing a range determined by the minimum and
 maximum of all legitimate (based on forward edge policy) return addresses. This range check is inserted before each function
-return of every calltarget (i.e., function start address). Note that the fast path mode has a low runtime overhead but
+return of every calltarget (\textit{i.e.,} function start address). Note that the fast path mode has a low runtime overhead but
 at the same time it could allow illegitimate return addresses due to the range check used.
-The second mode (i.e., slow path) is based on enforcing a comparison check for each possible legitimate
+The second mode (\textit{i.e.,} slow path) is based on enforcing a comparison check for each possible legitimate
 function return address determined by the forward edge policy. The slow path has a higher runtime overhead as 
 the fast path since for each address a compare check is performed but it is more precise since 
 illegitimate return addresses are excluded.
@@ -493,7 +493,7 @@ illegitimate return addresses are excluded.
 
 }
 \caption{Transition lattice between calltargets and callsites having two parameters.
-$a$ $\wedge$ $b$ $\in \{0-bit, 8-bit, 16-bit, 32-bit, 64-bit\}$ and the two 
+$a$ $\wedge$ $b$ $\in \{0-byte, 8-byte, 16-byte, 32-byte, 64-byte\}$ and the two 
 function parameters have $\{0-byte, 1-byte, 2-byte, 4-byte, 8-byte\}$ register wideness. 
 \textsc{TypeShield} allows a transition from $a \rightarrow b \ iff$ $a_{i} \le b_{i}$ where $i \in [1, 2]$.
 Note that $\top$ and $\bot$ represent the top and bottom elements of the lattice, respectively.
@@ -503,20 +503,20 @@ The given lattice contains in total 8 black colored arrows (legal) and 6 red col
 \label{fig:lattice3264}
 \end{figure}
 
-Figure~\ref{fig:lattice3264} represents
+Figure~\ref{fig:lattice3264} depicts
 a subset of the total indirect control flow transfer space in any given C/C++ program represented as a lattice. 
-In case a CFI policy schema is on function parameter count with callsite overestimation and calltarget subestimation 
+In case a CFI policy schema is based on function parameter count with callsite overestimation and calltarget subestimation 
 it is possible that a callsite can use any calltarget as long as the number of 
 parameters provided and required are fulfilling the policy, even if the parameter types do not match 
 (\textit{i.e.,} consider a 8-bit value provided by the callsite but a 64-bit values required by the calltarget). 
-Such a parameter count based policy is not precise and would allow any call transfer 
+Such a parameter count based policy is not precise~\cite{vci:asiaccs} and would allow any call transfer 
 inside the lattice space presented in Figure~\ref{fig:lattice3264} and as such the calltarget set per 
 callsite would be too permissive.
 
-In order to effectively deal with this limitation we extend the above presented parameter count based policy in order to
-be able to deal with function parameter types as well. We introduce the following policy rules: 
-\textit{1)} indirect callsites provide a maximum wideness to each parameter, and
-\textit{2)} calltargets require a minimum wideness for each parameter. 
+In order to effectively deal with this limitation we extend the above presented parameter count based policy 
+to parameters types (\textit{i.e.,} register wideness) as well. We introduce the following policy rules: 
+(1) indirect callsites provide a maximum wideness to each parameter, and
+(2) calltargets require a minimum wideness for each parameter. 
 Note that for both rules the minimum and maximum wideness for each function 
 parameter is possibly underestimated compared to the source code of the program with which we 
 also compare in \cref{chapter:Evaluation}.
