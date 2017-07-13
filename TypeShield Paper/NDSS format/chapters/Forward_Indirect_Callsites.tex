@@ -221,7 +221,7 @@ the end of this attack.
 
 Finally, this example illustrates why detecting vPointer corruptions is not trivial for real-world applications. As depicted in 
 Figure~\ref{Class exploit}, the class \texttt{nsInputStream} has 11 classes which inherit directly or indirectly from 
-this class. The classes \texttt{nsSeekableStream}, \texttt{nsIPCSeria- lizableInputStream} and \texttt{nsCloneableInputStream}
+this class. The classes \texttt{nsSeekableStream}, \texttt{nsIPCSerializableInputStream} and \texttt{nsCloneableInputStream}
 provide additional inherited virtual tables which represent illegitimate calltargets for the initial \texttt{nsInputStream} 
 objects and legitimate calltargets for the six fake objects which were added during the attack. Furthermore, declaration and
 usage of the objects can be widely spread out in the source code. This makes detection of the object types 

@@ -14,8 +14,7 @@ of arbitrary code executions (ACE) reports related (all colors expect black) to 
 (see bag of words at the bottom of left Figure~\ref{ace:nvd:statistics})* reported by U.S. NVD for the past 10 years~\cite{NVD:ACE}. In black are the ACE unrelated reports.
 X axis is years (left \& right) and Y axis is number of reports in logarithmic scale (left, 143) and distribution in \% of the reports (right, 700).
 As of May'17, U.S. NVD reports in total 700 ACEs from which 143 are the result of a vptr/vtable corruption (see * above) that are exploited by highjacking forward indirect calls.
-These vulnerabilities were reported in applications such as Google's Chrome \& V8 JavaScript engine, Mozilla Firefox, Microsoft's IE 10, Edge \& Chakra JavaScript engine, 
-and iOS/MacOS apps.} 
+These vulnerabilities were reported in applications such as Google's Chrome \& V8 JavaScript engine, Mozilla Firefox, Microsoft's IE 10, Edge \& Chakra JavaScript engine, and iOS/MacOS apps.} 
 and~\cite{NVD:ACE}) demonstrates the security shortcomings and the need to address this problem space.
 
 
@@ -26,8 +25,8 @@ and~\cite{NVD:ACE}) demonstrates the security shortcomings and the need to addre
 %   \node[below=of img, node distance=0cm, yshift=1.2cm, xshift=.25cm, font=\color{black}] {Year};
 %   \node[left=of img, node distance=0cm, rotate=90, anchor=center,yshift=-.9cm,font=\color{black}] {\# Bad Type Casts Reported};
 % \vspace{-.73cm}
-\vspace{-.7cm}
-\caption{10 Years of Arbitrary Code Reuse Attacks Statistics.}
+% \vspace{-.7cm}
+\caption{Arbitrary Code Reuse Attacks vs. Object Corruptions.}
 \label{ace:nvd:statistics}
 \vspace{-.5cm}
 \end{figure}
@@ -44,29 +43,31 @@ undecidable~\cite{alias:undecidable} in program binaries.
 
 More recent techniques and tools can be distinguished into those relying on \textit{source code} access including SafeDispatch~\cite{safedispatch:jang}, ShrinkWrap~\cite{haller:shrinkwrap}, 
 VTI~\cite{bounov:interleaving}, and IFCC/VTV~\cite{vtv:tice}; the latter being used in production, but the reliance on source-code availability limits the applicability of the approach. 
-In contrast, \textit{binary}-based tools typically rely on forward-edge CFI policies. Examples include binCFI~\cite{ccfir:zhang, zhang:usenix}, VCI~\cite{vci:asiaccs} and 
+In contrast, \textit{binary}-based tools typically rely on forward-edge CFI policies. Examples include binCFI~\cite{ccfir:zhang, zhang:usenix}, VCI~\cite{vci:asiaccs}, Marx~\cite{marx} and 
 TypeArmor~\cite{veen:typearmor}. 
 
-According to our assessment of the literature, TypeArmor serves as the state-of-the-art of binary-based defense tools against advanced CRAs. In TypeArmor, a fine-grained 
-forward edge CFI-policy based on parameter count for binaries is implemented. It calculates invariants for calltargets and indirect callsites based on the number of parameters they use 
-by leveraging static analysis of the binary, which then is patched to enforce those invariants during runtime. While we believe the general approach to be highly promising, we consider 
+TypeArmor, is based on a fine-grained forward edge CFI based policy relying on function parameter count checking during runtime. It calculates invariants for calltargets and indirect 
+callsites based on the number of parameters provided at the callsite and consumed at the calltarget  
+by leveraging static binary analysis. At the end of the analysis the binary is patched in order to enforce those invariants during runtime. 
+While we believe that the general approach to be highly promising, we consider 
 as a significant shortcoming that TypeArmor lacks precision with respect to the number of calltargets allowed per callsite which introduces significant 
 inefficiencies (see~\cref{{Too Permissive Parameter-Based Policies}} for more details). 
-With our work, we aim to achieve both significant precision and runtime efficiency enhancements.
+With our work, we aim to achieve both significant precision enhancements and calltarget set per callsite reduction.
 
 In this paper, we present \textsc{TypeShield}, a runtime binary-level fine-grained CFI tool for illegitimate forward calls, 
-that is based on an improved forward-edge fine-grained CFI-policy 
+that is based on an improved forward-edge and backward-edge fine-grained CFI-policy 
 compared to previous work~\cite{veen:typearmor}. 
 \textsc{TypeShield} does not rely on RTTI data (\textit{i.e.,} metadata emitted by the compiler, most of the time stripped) or 
 particular compiler flags, and is applicable to industrial software.
 \textsc{TypeShield} takes the binary of a program as input and it automatically instruments it in order
 to detect illegitimate indirect calls at runtime. In order to achieve this, 
 \textsc{TypeShield} analyzes 64-bit binaries by focusing on function parameters which are passed with the 
-help of registers. Based on the used ABI, \textsc{TypeShield} is consequently able to track 4 or 6 arguments for the Microsoft's C++ ABI~\cite{microsoft:abi} 64-bit calling convention or 
-Itanium C++ ABI~\cite{itanium:abi}, 
-respectively. However, we stress that the presented methodology is usable for the ARM ABI~\cite{arm:abi} as well.
+help of registers. Based on the used ABI, \textsc{TypeShield} is consequently able to track up to 6 function arguments for the 
+Itanium C++ ABI~\cite{itanium:abi} 64-bit calling convention.
+However, we stress that the presented methodology is usable for the ARM ABI~\cite{arm:abi} and Microsoft's C++ ABI~\cite{microsoft:abi} as well.
 Similarly to TypeArmor, we do not take into consideration floating-point arguments passed via xmm registers; which we want to address in future work. 
-As we demonstrate in the evaluation section, this setup provides us with enough information to be significantly more precise than~\cite{veen:typearmor} when aiming to stop several state-of-the-art CRAs.
+As we demonstrate in the evaluation section, this setup provides us with enough information to be significantly more precise than~\cite{veen:typearmor} 
+when aiming to stop several state-of-the-art CRAs.
 
 %% \textbf{Problem.}
 %The performance benefit of late binding comes with high security implications (\textit{i.e.,} arbitrary code executions~\cite{NVD:ACE} reported by NIST NVD, see Figure~\ref{ace:nvd:statistics})
@@ -137,14 +138,14 @@ As we demonstrate in the evaluation section, this setup provides us with enough 
 %more be precisely than TypeArmor when stopping several state-of-the-art CRAs.
 
 \textbf{\textit{Analysis Description.}}~More precisely, the analysis performed by \textsc{TypeShield}:
-\textit{1)} uses for each function parameter its register wideness (\textit{i.e.,} ABI dependent) in order to map calltargets per callsites,  
-\textit{2)} uses an address taken (AT) analysis similar to~\cite{veen:typearmor} for all calltargets, and 
-\textit{3)} compares individually parameters of callsites and calltargets in order to check if an indirect call transfer is acceptable or not, 
+(1) uses for each function parameter its register wideness (\textit{i.e.,} ABI dependent) in order to map calltargets per callsites,  
+(2) uses an address taken (AT) analysis similar to~\cite{veen:typearmor} for all calltargets, and 
+(3) compares individually parameters of callsites and calltargets in order to check if an indirect call transfer is acceptable or not, 
 thereby providing a more fine-grained calltarget set per callsite compared to other state-of-the-art tools.
 \textsc{TypeShield} uses automatically inferred parameter types which are used to construct
 a more precise construction of both the callee parameter types and callsite signatures. This 
 is later used in the classification of matching callsites and calltargets.
-The result is a more precise callee target set for each caller than TypeArmor.
+The result is a more precise callee target set for each caller than other state-of-the-art tools.
 
 \textbf{\textit{Analysis Details.}}~The \textsc{TypeShield} analysis is based on a use-def callees analysis to approximate the function prototypes, 
 and liveness analysis at indirect callsites to approximate callsite signatures. This 
@@ -165,54 +166,79 @@ This further helps to reduce the possible target set of callees for each callsit
 which is based on a set of possible return addresses for function returns which follow the caller calle function calling convention.
 The policy is implemented as (1) a fast mode where a range is determined for each function return formed by the minimum and maximum value and
 as (2) slow mode where each return address of a function return is compared individually with the return address where the function wants to return.
-This represents a fine-grained alternative to shadow stack which were recently shown to be bypassed (see SafeStack, BlackHat).
+This represents a fine-grained alternative to SafeStack which was
+bypassed~\cite{safestack:bypassing}.
 
-\textbf{\textit{Comparison.}}~\textsc{TypeShield}, compared to TypeArmor, uses different analysis strategies for basic block merging and
-disallows an indirect call transfer where the types of the 
-arguments provided are not super types of the arguments expected at the target. 
-Further, (as TypeArmor does) \textsc{TypeShield} disallows forward indirect control flow transfers that 
+\textbf{\textit{Comparison.}}~\textsc{TypeShield} uses partially different basic block analysis strategies than TypeArmor,
+and no control flow graph as TypeArmor does. Further,~\textsc{TypeShield}
+disallows an forward indirect call transfer where the types of the arguments provided are not super 
+types of the arguments expected at the target. Also, it disallows backward edge indirect control flow transfers which do not 
+point to addresses located after a callsite which is allowed to call the function (calltarget) containing the function 
+return (backward edge starting point).
+Further, similar to TypeArmor, \textsc{TypeShield} disallows forward indirect control flow transfers that 
 prepares fewer arguments than the target callee consumes since otherwise it would risk breaking the binary.
 This invariants are used to enforce that each callsite targets only a strict calltarget set.
-Finally, the program binary hardened by \textsc{TypeShield} contains a considerably reduced available calltarget set per callsite,
-thus drastically limiting an attacker in his capabilities.
+Finally, the program binary hardened by \textsc{TypeShield} contains a considerably reduced available calltarget set per callsite 
+and return set per function returnsite, thus drastically limiting an attacker in his capabilities.
 
 % \textbf{Contributions.} 
 In summary, we make the following contributions:
-\label{Contribution}
-\begin{itemize}[leftmargin=.12in]
+%%long version
+% \label{Contribution}
+% \begin{itemize}[leftmargin=.12in]
+% 
+%  \item \textbf{Novel Forward-Backward Edge Protection Technique.} We designed a novel illegitimate indirect calls detection technique based on function parameter 
+%  count and types which is considerably more precise w.r.t. to the enforced legitimate calltarget set per callsite than other state-of-the-art techniques.
+%  
+%  \item \textbf{Implemented and Usable Prototype.} We implemented, \textsc{TypeShield}, a prototype which enforces the aforementioned technique.
+%  \textsc{TypeShield} is a general, automated, and easy-to-deploy 
+%  tool that can be applied to C/C++ binaries in order to detect and mitigate illegitimate forward indirect calls  during runtime. 
+%  Further, \textsc{TypeShield} has an expanded scope of analysis. \textsc{TypeShield} can detect forbidden indirect calls and as such it can protect, 
+%  similarly as vTrust~\cite{zhang:vtrust}, against virtual table injection, corruption and reuse attacks. Further it can protect also against the 
+%  control flow jujutsu attack~\cite{jujutsu} since our policy checks for void and non-void functions. 
+%  As such \textsc{TypeShield} can serve as a platform for developing other types of defenses for different types of attacks. 
+%  
+%  \item \textbf{Security Analysis.} We provide a thorough security analysis of forward indirect calls. We analyze the usage of illegitimate indirect forward calls in detail, 
+%  thus providing security researchers and practitioners a better understanding of this emerging threat 
+%  (see~\cref{C++ Indirect Calls in Practice},~\cref{Security Implications of Forbidden Forward Indirect Calls},~\cref{Real COOP Attack Example}, and ~\cref{Too Permissive Parameter-Based Policies}
+%  for more details).
+%  
+%  \item \textbf{Evaluation.} We conduct a thorough set of evaluative experiments. In particular, we demonstrate experimentally that our precise binary-level 
+%  CFI technique can mitigate advanced code reuse attacks (CRAs) in absence of C++ semantics. For example, \textsc{TypeShield} can effectively protect against 
+%  the COOP attack and its variations. Thereby, it achieves a high degree of precision. Specifically, it 
+%  employs a more precise analysis than TypeArmor in order to reduce the calltarget set for each callsite. 
+%  
+%  \item \textbf{Detailed Comparison} Our evaluation shows that \textsc{TypeShield} imposes up to 4\% overhead for performance-intensive benchmarks such as the SPEC CPU2006 benchmarks
+%  which is comparable to TypeArmors runtime overhead ($\approx$ 3\%) on the same programs.
+%  Our evaluation shows that it gains between 13\% and 35\% more precision with respect to TypeArmor on the same programs. Further, we showcase similar {performance} enhancements in 
+%  comparison to prior work. \textsc{TypeShield} employs runtime policy optimization techniques to further reduce runtime overheads. This is necessary, since our 
+%  runtime checks are more complex than those used by TypeArmor.
+%  
+%  \item \textbf{Reproducibility of Results.} The source code, test scripts and 
+%  evaluation results of \textsc{TypeShield} will be available at \url{https://github.com/domain/typeshield} upon paper acceptance.
+%  We respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist}) by 
+%  providing for each conducted experiment a precise description of the experiment setup, and comprehensive results, including mean, median, geomean, standard deviation values
+%  and encountered issues.
+%  
+% \end{itemize}
 
- \item \textbf{Novel Forward-Backward Edge Protection Technique.} We designed a novel illegitimate indirect calls detection technique based on function parameter 
- count and types which is considerably more precise w.r.t. to the enforced legitimate calltarget set per callsite than other state-of-the-art techniques.
+%short version
+\label{Contribution}
+\begin{itemize}
+
+ \item \textbf{Novel CFI-based protection technique.} We designed a novel fine-grained CFI technique for protecting forward and backward edges in a CFG
+ against code reuse attacks.
  
- \item \textbf{Implemented and Usable Prototype.} We implemented, \textsc{TypeShield}, a prototype which enforces the aforementioned technique.
- \textsc{TypeShield} is a general, automated, and easy-to-deploy 
- tool that can be applied to C/C++ binaries in order to detect and mitigate illegitimate forward indirect calls  during runtime. 
- Further, \textsc{TypeShield} has an expanded scope of analysis. \textsc{TypeShield} can detect forbidden indirect calls and as such it can protect, 
- similarly as vTrust~\cite{zhang:vtrust}, against virtual table injection, corruption and reuse attacks. Further it can protect also against the 
- control flow jujutsu attack~\cite{jujutsu} since our policy checks for void and non-void functions. 
- As such \textsc{TypeShield} can serve as a platform for developing other types of defenses for different types of attacks. 
+ \item \textbf{Implemented an usable prototype.} We implemented, \textsc{TypeShield}, a prototype which enforces the aforementioned technique
+ in stripped program binaries. \textsc{TypeShield} can serve as platform for developing other binary based protection mechanisms.
  
- \item \textbf{Security Analysis.} We provide a thorough security analysis of forward indirect calls. We analyze the usage of illegitimate indirect forward calls in detail, 
- thus providing security researchers and practitioners a better understanding of this emerging threat 
- (see~\cref{C++ Indirect Calls in Practice},~\cref{Security Implications of Forbidden Forward Indirect Calls},~\cref{Real COOP Attack Example}, and ~\cref{Too Permissive Parameter-Based Policies}
- for more details).
+ \item \textbf{Evaluation.} We conduct a thorough set of evaluative experiments in which we show that \textsc{TypeShield} is more precise and effective than 
+ other state-f-the-art tools. Further, we show that our tool has a higher calltarget set reduction per callsite, thus further reducing the attack surface.
  
- \item \textbf{Evaluation.} We conduct a thorough set of evaluative experiments. In particular, we demonstrate experimentally that our precise binary-level 
- CFI technique can mitigate advanced code reuse attacks (CRAs) in absence of C++ semantics. For example, \textsc{TypeShield} can effectively protect against 
- the COOP attack and its variations. Thereby, it achieves a high degree of precision. Specifically, it 
- employs a more precise analysis than TypeArmor in order to reduce the calltarget set for each callsite. 
- 
- \item \textbf{Detailed Comparison} Our evaluation shows that \textsc{TypeShield} imposes up to 4\% overhead for performance-intensive benchmarks such as the SPEC CPU2006 benchmarks
- which is comparable to TypeArmors runtime overhead ($\approx$ 3\%) on the same programs.
- Our evaluation shows that it gains between 13\% and 35\% more precision with respect to TypeArmor on the same programs. Further, we showcase similar {performance} enhancements in 
- comparison to prior work. \textsc{TypeShield} employs runtime policy optimization techniques to further reduce runtime overheads. This is necessary, since our 
- runtime checks are more complex than those used by TypeArmor.
- 
- \item \textbf{Reproducibility of Results.} The source code, test scripts and 
- evaluation results of \textsc{TypeShield} will be available at \url{https://github.com/domain/typeshield} upon paper acceptance.
+ \item \textbf{Reproducibility of results.} 
  We respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist}) by 
- providing for each conducted experiment a precise description of the experiment setup, and comprehensive results, including mean, median, geomean, standard deviation values
- and encountered issues.
+ releasing \textsc{TypeShield} open source and by providing for each conducted experiment a precise description of the conducted experiment, 
+ thus increasing the reproducibility of our results.
  
 \end{itemize}
 
