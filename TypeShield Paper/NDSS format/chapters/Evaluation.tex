@@ -527,7 +527,7 @@ calltarget set per callsite as shown herein.
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r}%
 	\toprule
-	\bfseries Target & AT & TypeArmor  &  IFCC &  TypeShield (count) & TypeShield (type)% specify table head
+	\bfseries Target & IFCC  & TypeArmor  & AT  &  TypeShield (count) & TypeShield (type)% specify table head
 	\\\midrule
 	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/tools_compare.csv}{
 		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
