@@ -1,9 +1,16 @@
 \section{Evaluation}
 \label{chapter:Evaluation}
 We evaluated \textsc{TypeShield} by instrumenting various open source applications and conducting a thorough analysis. Our test sample includes the two 
-FTP server applications \textit{Vsftpd} (v.1.1.0) and \textit{Proftpd} (v.1.3.3), web server Lighttpd (v.1.4.28); FTP server Pure-ftpd (v.1.0.36) the two database server 
-applications \textit{Postgresql} (v.9.0.10) and \textit{Mysql} (v.5.1.65), the memory cache application \textit{Memcached} (v.1.4.20), the \textit{Node.js} 
-server application (v.0.12.5). We selected these applications in order to allow for comparison with~\cite{veen:typearmor}. 
+FTP server applications \textit{Vsftpd} (v.1.1.0, C) and 
+\textit{Proftpd} (v.1.3.3, C), 
+web server Lighttpd (v.1.4.28, C); 
+FTP server Pure-ftpd (v.1.0.36, C) 
+the two database server applications 
+\textit{Postgresql} (v.9.0.10, C) and 
+\textit{Mysql} (v.5.1.65, C++), the memory cache application 
+\textit{Memcached} (v.1.4.20, C), 
+the \textit{Node.js} application server (v.0.12.5, C++). 
+We selected these applications in order to allow for comparison with~\cite{veen:typearmor}. 
 In our evaluation we addressed the following research questions (RQs) w.r.t \textsc{TypeShield}.
 
 \textbf{RQ1:} How \textbf{precise} is it? (\cref{section:typeshieldprecision})
