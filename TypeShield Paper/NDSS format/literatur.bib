@@ -1,3 +1,8 @@
+\RequirePackage{filecontents}
+\begin{filecontents}{\literatur.bib}
+@IEEEtranBSTCTL{IEEEexample:BSTcontrol,
+CTLdash_repeated_names= "no",
+}
 @BOOK{khedker2009data,
 AUTHOR={Khedker, Uday and Sanyal, Amitabha and Sathe, Bageshri},
 TITLE={Data flow analysis: Theory and Practice},
@@ -254,7 +259,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael},
  title = {DynamoRIO},
  note={\url{http://dynamorio.org/home.html}}
 }
----
+
 @inproceedings{iso:iecN3690,
  author = {I. JTC1/SC22WG21},
  title = {ISO/IEC 14882:2013 Programming Language C++ (N3690)},
@@ -269,11 +274,32 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael},
  year = {2015}
 }
 
+@inproceedings{rockjit:niu,
+ author = {Niu, Ben and Tan, Gang},
+ title = {RockJIT: Securing Just-In-Time Compilation Using Modular Control-Flow Inegrity},
+ booktitle = {Proceedings of the ACM Conference on Computer and Communications Security (CCS)},
+ year = {2014}
+}
+
+@inproceedings{vtint:zhang,
+ author = {Zhang, Chao and Song, Chengyu and Zhijie, Kevin Chen and Chen, Zhaofeng and Song, Dawn},
+ title = {vTint: Protecting Virtual Function Tables\' Integrity},
+ booktitle = {Proceedings of the Symposium on Network and Distributed System Security (NDSS)},
+ year = {2015}
+}
+
 @inproceedings{abadi:cfi2,
  author = {Abadi, Martin and Budiu, Mihai and Erlingsson, {\'U}lfar and Ligatti, Jay},
  title = {Control Flow Integrity},
  booktitle = {Proceedings of the 12th ACM Conference on Computer and Communications Security (CCS)},
  year = {2005}
+}
+
+@inproceedings{perinput:niu,
+ author = {Niu, Ben and Tan, Gang},
+ title = {Per-Input Control-Flow Integrity},
+ booktitle = {Proceedings the ACM Conference on Computer and Communications Security (CCS)},
+ year = {2015}
 }
 
 @inproceedings{abadi:cfi,
@@ -285,36 +311,15 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael},
 
 @inproceedings{mcfi:niu,
  author = {Niu, Ben and Tan, Gang},
- title = {Modular Control-Flow VTint: Protecting Virtual Function TabIntegrity},
+ title = {Modular Control-Flow Integrity},
  booktitle = {ACM Conferece on Programming Language Design and Implementation (PLDI)},
  year = {2014}
-}
-
-@inproceedings{rockjit:niu,
- author = {Niu, Ben and Tan, Gang},
- title = {RockJIT: Securing Just-In-Time Compilation Using Modular Control-Flow Inegrity},
- booktitle = {Proceedings of the ACM Conference on Computer and Communications Security (CCS)},
- year = {2014}
-}
-
-@inproceedings{perinput:niu,
- author = {Niu, Ben and Tan, Gang},
- title = {Per-Input Control-Flow Integrity},
- booktitle = {Proceedings the ACM Conference on Computer and Communications Security (CCS)},
- year = {2015}
-}
-
-@inproceedings{vtint:zhang,
- author = {Zhang, Chao and Song, Chengyu and Zhijie, Kevin Chen and Chen, Zhaofeng and Song, Dawn},
- title = {vTint: Protecting Virtual Function Tables\' Integrity},
- booktitle = {Proceedings of the Symposium on Network and Distributed System Security (NDSS)},
- year = {2015}
 }
 
 @inproceedings{vfuard:aravind,
  author = {Prakash, Aravind and Hu, Xunchao and Yin, Heng},
  title = {Strict Protection for Virtual Function Calls in COTS C++ Binaries},
- booktitle = {Symposium on Network and Dist---ributed System Security (NDSS)},
+ booktitle = {Symposium on Network and Distributed System Security (NDSS)},
  year = {2015}
 }
 
@@ -335,7 +340,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael},
 @inproceedings{mohan:opaque,
  author = {Mohan, Vishwath and Larsen, Per and Brunthaler, Stefan and Hamlen, Kevin W. and Franz, Michael},
  title = {Opaque Control-Flow Integrity},
- booktitle = {Symposium on Network and Dist---ributed System Security (NDSS)},
+ booktitle = {Symposium on Network and Distributed System Security (NDSS)},
  year = {2015}
 }
 
@@ -368,7 +373,8 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael},
 }
 
 @inproceedings{dep,
- author = {Microsoft, Changes to Functionality in Microsoft Windows XP Service Pack 2.},
+ author = {},
+ title = {Microsoft, Changes to Functionality in Microsoft Windows XP Service Pack 2.},
  note={\url{https://technet.microsoft.com/en-us/library/bb457151.aspx.}}
 }
 

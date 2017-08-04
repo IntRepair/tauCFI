@@ -381,18 +381,18 @@ wideness \textit{pcs}1: 4-byte, \textit{pcs}2: 4-bye, \textit{pcs}3: 4-byte, \te
 \textit{pcs}6: 2-byte, and the calltarget is expecting 6 parameters $pct1, ..., pct6$ having following bit 
 wideness \textit{pct}1: 4-byte, \textit{pct}2: 4-bye, \textit{pct}3: 0-byte, \textit{pct}4: 0-byte, \textit{pct}5: 0-byte, 
 \textit{pct}6: 0-byte of the expected parameters. 
-\textsc{TypeShield}'s type policy is defined as follows. 
+TypeArmor's parameter count policy is the following.
 
-\begin{definition}
-\label{eqn:1} Let $A$ be a calltarget $ct_{A}$ and $B$ a callsite $cs_{B}$ than: 
-$ct_{A}$ $\subseteq$ $cs_{B}$ $\iff$ $\forall$ $i$ $\subseteq$ $[1, 6],$
-$wideness$ $(parameter($A$)[i])$ $\leq$ \ $wideness(parameter($B$)[i])$.
-\end{definition}
-Whereas the policy of TypeArmor is the following. 
 \begin{definition}
  \label{eqn:2}Let $A$ be a calltarget $ct_{A}$ and $B$ a callsite $cs_{B}$ than: 
 $ct_{A} \subseteq cs_{B} \iff \forall i \subseteq [1, 6],$ 
 $count(parameter($A$))$ $\leq$ $count(parameter($B$))$.
+\end{definition}
+Whereas the policy of \textsc{TypeShield} is as follows.
+\begin{definition}
+\label{eqn:1} Let $A$ be a calltarget $ct_{A}$ and $B$ a callsite $cs_{B}$ than: 
+$ct_{A}$ $\subseteq$ $cs_{B}$ $\iff$ $\forall$ $i$ $\subseteq$ $[1, 6],$
+$wideness$ $(parameter($A$)[i])$ $\leq$ \ $wideness (parameter($B$)[i])$.
 \end{definition}
 
 However, one can observe that the first policy (Definition~\ref{eqn:1}) is more fine-grained than the second policy (Definition~\ref{eqn:2}) since it performs checks 

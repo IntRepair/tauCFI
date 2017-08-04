@@ -28,8 +28,9 @@ In our evaluation we addressed the following research questions (RQs) w.r.t \tex
 \textbf{RQ7:} Is it \textbf{superior} compared to other tools? (\cref{RQ5: Is TypeShield better than other tools?})
 
 \textbf{Comparison Method.} We used \textsc{TypeShield} to analyze each program binary individually. Next \textsc{TypeShield} was used to harden each binary with forward and 
-backward checks. The data generated during analysis and binary hardening was written external files for later processing. Finally, the previous obtained 
-data was extracted with our Python based framework and inserted into spreedsheet files in order to better compare the results with other tools.
+backward checks. The data generated during analysis and binary hardening was written into external files for later processing. Finally, the previous obtained 
+data was extracted with our Python based framework and inserted into spreedsheet files in order to be able to better compare the obtained 
+results with other existing tools.
 
 \textbf{Experimental Setup.} Our used setup consisted in a VirtualBox (version 5.0.26r) instance, in which we ran a Kubuntu 16.04 LTS (Linux Kernel
 version 4.4.0). We had access to 3GB of RAM and 4 out of 8 provided hardware threads (Intel i7-4170HQ @ 2.50 GHz).
@@ -81,6 +82,10 @@ During compilation, we essentially collect three data points for each callsite a
 \end{table}
 Table~\ref{tbl:matchingquality} depicts the results obtained w.r.t. the investigation of callrgets comparability and the callsites compatibility.
 We assessed the applicability of our collected ground truth, by assessing the structural compatibility of our two data sets. 
+Table~\ref{tbl:matchingquality} shows three data points w.r.t. calltargets for the optimization level -O2:
+(1) Number of comparable calltargets that are found in both datasets, 
+(2) Clang miss: Number of calltargets that are found by \textsc{TypeShield}, but not by our Clang/LLVM pass, and 
+(3) TypeShield miss: Number of calltargets that are found by our Clang/LLVM pass, but not by \textsc{TypeShield}.
 
 \textbf{Calltargets.} The obvious choice for structural comparison regarding calltargets is their name, as these are functions. First, we have to remove internal 
 functions from our datasets like the \texttt{\_init} or \texttt{\_fini} functions, which are of no relevance for this investigation. Furthermore, while C functions can
@@ -89,11 +94,6 @@ function overloading, which allows defining several functions with the same name
 As LLVM does not know about either concept, the Clang compiler needs to generate unique names. The method used for unique name generation is called mangling and composes
 the actual name of the function, its return type, its name-space and the types of its parameter list. Therefore, we need to reverse this process and then compare the fully
 typed names. 
-
-Table~\ref{tbl:matchingquality} shows three data points w.r.t. calltargets for the optimization level -O2:
-(1) Number of comparable calltargets that are found in both datasets, 
-(2) Clang miss: Number of calltargets that are found by \textsc{TypeShield}, but not by our Clang/LLVM pass, and 
-(3) TypeShield miss: Number of calltargets that are found by our Clang/LLVM pass, but not by \textsc{TypeShield}.
 
 The problematic column is the Clang miss column, as these values might indicate problems with \textsc{TypeShield}. These numbers are relatively low (below 1\%) with only Node.js
 shows a noticeable higher value than the rest. The column labeled tool miss lists higher numbers, however, these are of no real concern to us, as our ground truth 
