@@ -11,14 +11,15 @@ Finally, in~\cref{TypeShild Impact on COOP} we talk about parameter count vs. pa
 \begin{figure*}[t!]
 \centering
    \includegraphics[width=.88\textwidth]{figures/overview.pdf}
-    \caption{System overview.}
-%     The program binary is analyzed by \textsc{TypeShield} and the calltargets and callsite analysis are performed for determining how many parameters are 
-%     provided, how many are consumed and thyr register wideness.
-%     After this step labels are inserted at each previously identified callsite and at each calltargets. 
-%     Next for each function return the set of address sets which are next to each callsite that is allowed to call the function in first place are collected.
-%     In this way we have for each function return site a set of legitimate addresses where the function return site is allowed to dispatch to.
-%     Finally, range or compare checks are inserted before each function return site. This checks are used to check during runtime if the 
-%     address where the function return wants to dispatch to is contained in the legitimate set for each particular return site.}
+    \caption{System overview.
+    The program binary is analyzed by \textsc{TypeShield} and the calltargets and callsite analysis are performed for determining how many parameters are 
+    provided, how many are consumed and their register wideness.
+    After this step labels are inserted at each previously identified callsite and at each calltargets. Black dots above are allowed to call only legitimate red dots.
+    Next for each function return the set of address sets which are next to each callsite that is allowed to call the function in first place are collected.
+    In this way we have for each function return site a set of legitimate addresses where the function return site is allowed to dispatch to.
+    Finally, range or compare checks are inserted before each function return site. This checks are used to check during runtime if the 
+    address where the function return wants to dispatch to is contained in the legitimate set for each particular return site.
+    Green dots above are allowed to call only legitimate blue dots.}
     \label{System overview.}
  \end{figure*}
 \end{center}
@@ -377,20 +378,20 @@ blue dots.
     \end{scope}
     
 \end{tikzpicture}}
-\caption{Depicts our forward parameter type and count policy for a legitimate
-forward indirect control flow transfer.
-The $X$ axis (parameter count) and $Y$ axis (register wideness) of matrices $M1$, $M2$ and $M3$ represent function parameter count 
+\caption{Forward indirect edges parameter type \& count policy.}
+\label{Type and parameter count policy.}
+\end{figure}
+
+Figure~\ref{Type and parameter count policy.} depicts
+on the $X$ axis (parameter count) and $Y$ axis (register wideness) of matrices $M1$, $M2$ and $M3$ which represent function parameter count 
 and bit-widths in bytes, respectively.
 Note that our type policy performs an $\wedge$ (\textit{i.e.,} logical and) operation
 between each entry in $M1_{i,j}$ and $M2_{i,j}$ where $i$ and $j$ are column and row indexes. 
 If two black filled circles located in $M1$ $\wedge$ $M2$ overlap on positions $M1_{i} = M2_{i} \wedge M1_{j} = M2_{j}$ than we have a match.
 Green circles indicate a match whereas red circles indicate a mismatch in $M3$.
 Only if at least one match (green circle) is present in each of the matrix columns of 
-$M3$ than the indirect call transfer will be allowed.} 
-\label{Type and parameter count policy.}
-\end{figure}
-
-Figure~\ref{Type and parameter count policy.} depicts
+$M3$ than the indirect call transfer will be allowed.
+Further, Figure~\ref{Type and parameter count policy.} highlights
 the behavior of our type based policy
 when the callsite provides 6 parameters $\langle pcs1, ..., pcs6 \rangle$ having following bit 
 wideness \textit{pcs}1: 4-byte, \textit{pcs}2: 4-bye, \textit{pcs}3: 4-byte, \textit{pcs}4: 8-byte, \textit{pcs}5: 2-byte, 
@@ -499,18 +500,17 @@ illegitimate return addresses are excluded.
 \end{tikzpicture}
 
 }
-\caption{Transition lattice between calltargets and callsites having two parameters.
-$a$ $\wedge$ $b$ $\in \{0-byte, 8-byte, 16-byte, 32-byte, 64-byte\}$ and the two 
-function parameters have $\{0-byte, 1-byte, 2-byte, 4-byte, 8-byte\}$ register wideness. 
+\caption{Calltargets \& callsites transition lattice with 2 params.}
+\label{fig:lattice3264}
+\end{figure}
+Figure~\ref{fig:lattice3264} depicts with $a$ $\wedge$ $b$ $\in \{0 \ byte, 8 \ byte, 16 \ byte, $ $32 \ byte, 64 \ byte\}$ two 
+function parameters that have $\{0 \ byte, 1 \ byte, 2 \ byte, 4 \ byte, 8 \ byte\}$ register wideness. 
 \textsc{TypeShield} allows a transition from $a \rightarrow b \ iff$ $a_{i} \le b_{i}$ where $i \in [1, 2]$.
 Note that $\top$ and $\bot$ represent the top and bottom elements of the lattice, respectively.
 An arrow represents an indirect control flow transfer from a callsite to a calltarget. 
 The given lattice contains in total 8 black colored arrows (legal) and 6 red colored arrows (illegal) indirect control flow transitions. 
-\textsc{TypeShield} allows only the legal transfers whereas~\cite{veen:typearmor} allows all of them.}
-\label{fig:lattice3264}
-\end{figure}
-
-Figure~\ref{fig:lattice3264} depicts
+\textsc{TypeShield} allows only the legal transfers whereas~\cite{veen:typearmor} allows all of them.
+Further, Figure~\ref{fig:lattice3264} depicts
 a subset of the total indirect control flow transfer space in any given C/C++ program represented as a lattice. 
 In case a CFI policy schema is based on function parameter count with callsite overestimation and calltarget subestimation 
 it is possible that a callsite can use any calltarget as long as the number of 
