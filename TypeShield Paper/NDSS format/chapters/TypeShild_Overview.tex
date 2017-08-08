@@ -11,13 +11,14 @@ Finally, in~\cref{TypeShild Impact on COOP} we talk about parameter count vs. pa
 \begin{figure*}[t!]
 \centering
    \includegraphics[width=.88\textwidth]{figures/overview.pdf}
-    \caption{System overview. The program binary is analyzed by \textsc{TypeShield} and the calltargets and callsite analysis are performed for determining how many parameters are 
-    provided, how many are consumed and thyr register wideness.
-    After this step labels are inserted at each previously identified callsite and at each calltargets. 
-    Next for each function return the set of address sets which are next to each callsite that is allowed to call the function in first place are collected.
-    In this way we have for each function return site a set of legitimate addresses where the function return site is allowed to dispatch to.
-    Finally, range or compare checks are inserted before each function return site. This checks are used to check during runtime if the 
-    address where the function return wants to dispatch to is contained in the legitimate set for each particular return site.}
+    \caption{System overview.}
+%     The program binary is analyzed by \textsc{TypeShield} and the calltargets and callsite analysis are performed for determining how many parameters are 
+%     provided, how many are consumed and thyr register wideness.
+%     After this step labels are inserted at each previously identified callsite and at each calltargets. 
+%     Next for each function return the set of address sets which are next to each callsite that is allowed to call the function in first place are collected.
+%     In this way we have for each function return site a set of legitimate addresses where the function return site is allowed to dispatch to.
+%     Finally, range or compare checks are inserted before each function return site. This checks are used to check during runtime if the 
+%     address where the function return wants to dispatch to is contained in the legitimate set for each particular return site.}
     \label{System overview.}
  \end{figure*}
 \end{center}
