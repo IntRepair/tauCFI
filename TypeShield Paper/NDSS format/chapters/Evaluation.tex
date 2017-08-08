@@ -500,14 +500,16 @@ preparing, say, $p=6 \in [1, 6]$ parameters. Then TypeArmor policy would allow c
 prepared, $c=6 \in [1, 6]$ or a lower value. Thus all possible numerical parameter mismatches are allowed by TypeArmors policy as long
 as $p$ is greater or equal than $c$.
 
-\begin{itemize}
-\item TypeArmor \textbf{\textit{ideally}} would allow for a single callsite a set of calltargets containing a maximum of $4096$ possibilities if we 
+% \begin{itemize}
+% \item 
+TypeArmor \textbf{\textit{ideally}} would allow for a single callsite a set of calltargets containing a maximum of $4096$ possibilities if we 
 consider the maximum value of provided parameters to be $p=6$ (due to $p \in [1, 6]$ possible provided parameters). Now, consider 4 C++ integer parameter
 types $t$ which use: 8, 16, 32 and 64 byte function parameter register wideness. Thus, we obtain $t^{p}=4^{6}=4096$ allowed calltargets per 
 callsite if TypeArmor is used. Note that for simplicity reasons we considered $t=4$ but in practice $t$ is often even larger since there are many types
 of parameters in C++. Thus, all these data types are ignored by TypeArmor.
 
-\item TypeArmor \textbf{\textit{actually}} allows more than $t^{p}$ calltargets per callsite. If we have $t=4$ integer types due to TypeArmors overestimation
+% \item 
+TypeArmor \textbf{\textit{actually}} allows more than $t^{p}$ calltargets per callsite. If we have $t=4$ integer types due to TypeArmors overestimation
 and underestimation we get for each callsite an additional number of calltargets. Let $p=6$, then we get $c = 6x + 5y+ 4z + 3t + 2p + 1v$ where:
 $x$ is the sum of all calltargets consuming 6 parameters, 
 $y$ is the sum of all calltargets consuming 5 parameters 
@@ -518,7 +520,7 @@ Next $2100$ is added to $4^{6}$. Thus, for a single callsite providing $p=6$ par
 total $4^{6} + 2100 = 6196$ calltargets for each callsite.
 Similar reasoning applies to $p=5$ where we get $4^{5} + (1500 = 500 + 400 + 300 + 200 + 100) = \ 1024 + 1500 = 2524 \ iff \ x=y=z=t=p=v=100$ 
 allowed calltarget per callsite, or $p \in [1, 4]$, too.
-\end{itemize}
+% \end{itemize}
 
 Finally, as it can be observed TypeArmor is too permissive (see also Figure H.1~\cite{vci:asiaccs} for more details), thus 
 we present \textsc{TypeShield}, a more precise alternative. \textsc{TypeShield} can deal with the aforementioned 4 types of register widths and can further reduce the the legitimate

@@ -4,11 +4,11 @@
 In this section, we present 
 in~\cref{Parameter Count Based Policy} we present our function parameter count based policy,
 in \cref{section:typepolicy}, we present the details of our type policy, and 
-in~\cref{section:instructionanalysis} the theory and definitions for our instructions analysis based on register states,  
+in~\cref{section:instructionanalysis} we introduce the definitions for our instructions analysis based on register states,  
 in~\cref{section:calltargetanalysis} we present the design of our calltarget analysis, while
-in~\cref{section:callsiteanalysis} we present the design of our callsite analysis.
+in~\cref{section:callsiteanalysis} we depict the design of our callsite analysis.
 Finally,  
-in~\cref{Enforcing The Forward Edge Policy} we briefly present our forward edge policy instrumentation strategy, and 
+in~\cref{Enforcing The Forward Edge Policy} we present our forward edge policy instrumentation strategy, and 
 in~\cref{Backward Edge Analysis} we highlight our function backward edge analysis and policy instrumentation strategy.
 
 \subsection{Parameter Count Based Policy}
@@ -42,22 +42,22 @@ in~\cref{Backward Edge Analysis} we highlight our function backward edge analysi
 \fill[black!60!white] (0,1) rectangle (6,0);
 
 
-\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Huge{growing required bits/parameter}} (-0.5,7);
-\draw[-triangle 45, thick] (6.5,7) -- node[sloped, anchor=center, above]  {\Huge{growing provided bits/parameter}} (6.5,0);
+\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Large{growing required \# of bytes per param.}} (-0.5,7);
+\draw[-triangle 45, thick] (6.5,7) -- node[sloped, anchor=center, above]  {\Large{growing provided \# of bytes per param.}} (6.5,0);
 
-\draw (0,7) rectangle node[anchor=center] {\Huge{0 parameters}} (6,6);
+\draw (0,7) rectangle node[anchor=center] {\LARGE{0 parameters}} (6,6);
 
-\draw (0,6) rectangle node[anchor=center] {\Huge{1 parameter}}  (6,5);
+\draw (0,6) rectangle node[anchor=center] {\LARGE{1 parameter}}  (6,5);
 
-\draw (0,5) rectangle node[anchor=center] {\Huge{2 parameters}} (6,4);
+\draw (0,5) rectangle node[anchor=center] {\LARGE{2 parameters}} (6,4);
 
-\draw (0,4) rectangle node[anchor=center] {\Huge{3 parameters}} (6,3);
+\draw (0,4) rectangle node[anchor=center] {\LARGE{3 parameters}} (6,3);
 
-\draw (0,3) rectangle node[anchor=center] {\Huge{4 parameters}} (6,2);
+\draw (0,3) rectangle node[anchor=center] {\LARGE{4 parameters}} (6,2);
 
-\draw (0,2) rectangle node[anchor=center] {\Huge{5 parameters}} (6,1);
+\draw (0,2) rectangle node[anchor=center] {\LARGE{5 parameters}} (6,1);
 
-\draw (0,1) rectangle node[anchor=center] {\Huge{6 parameters}} (6,0);
+\draw (0,1) rectangle node[anchor=center] {\LARGE{6 parameters}} (6,0);
 
 
 \end{tikzpicture}
@@ -71,7 +71,7 @@ parameters whereas callsites provide these parameters. Based on this schema we b
 which resembles the policy introduced by~\cite{veen:typearmor}. Calltargets are classified based on the number of parameters 
 that these provide and callsites are classified by the number of parameters that these require. 
 
-Furthermore, generating 100\% precise measurements for such classification with binaries as the only source of information is rather difficult. 
+Further, we consider the generation of high precision measurements for such classification with binaries as the only source of information rather difficult. 
 Therefore, over-estimations of parameter count for callsites and underestimations of the parameter count for calltargets is deemed acceptable. 
 This classification is based on the general purpose registers that the call convention of the current ABI---in this case the 
 Itanium C++ ABI~\cite{itanium:abi}---designates as parameter registers. Furthermore, we do not consider floating point registers or multi-integer registers for simplicity
@@ -101,50 +101,50 @@ of callsites, which can access the same set of calltargets, a route which we wil
 \fill[black!40!white] (0,3) rectangle (12,1.5);
 \fill[black!50!white] (0,1.5) rectangle (12,0);
 
-\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\Huge{growing required bits/parameter}} (-0.5,7.5);
-\draw[-triangle 45, thick] (12.5,7.5) -- node[sloped, anchor=center, above] {\Huge{growing provided bits/parameter}} (12.5,0);
+\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\LARGE{growing required bits/parameter}} (-0.5,7.5);
+\draw[-triangle 45, thick] (12.5,7.5) -- node[sloped, anchor=center, above] {\LARGE{growing provided bits/parameter}} (12.5,0);
 
-\draw (0,7.5)  --node[anchor=south] {\rot{\Huge{p. 6}}} (2,7.5);
-\draw (2,7.5)  --node[anchor=south] {\rot{\Huge{p. 5}}} (4,7.5);
-\draw (4,7.5)  --node[anchor=south] {\rot{\Huge{p. 4}}} (6,7.5);
-\draw (6,7.5)  --node[anchor=south] {\rot{\Huge{p. 3}}} (8,7.5);
-\draw (8,7.5)  --node[anchor=south] {\rot{\Huge{p. 2}}} (10,7.5);
-\draw (10,7.5) --node[anchor=south] {\rot{\Huge{p. 1}}} (12,7.5);
+\draw (0,7.5)  --node[anchor=south] {\rot{\LARGE{p. 6}}} (2,7.5);
+\draw (2,7.5)  --node[anchor=south] {\rot{\LARGE{p. 5}}} (4,7.5);
+\draw (4,7.5)  --node[anchor=south] {\rot{\LARGE{p. 4}}} (6,7.5);
+\draw (6,7.5)  --node[anchor=south] {\rot{\LARGE{p. 3}}} (8,7.5);
+\draw (8,7.5)  --node[anchor=south] {\rot{\LARGE{p. 2}}} (10,7.5);
+\draw (10,7.5) --node[anchor=south] {\rot{\LARGE{p. 1}}} (12,7.5);
 
-\draw (0,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (2,6);
-\draw (2,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (4,6);
-\draw (4,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (6,6);
-\draw (6,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (8,6);
-\draw (8,7.5)  rectangle node[anchor=center] {\Huge{0-bits}} (10,6);
-\draw (10,7.5) rectangle node[anchor=center] {\Huge{0-bits}} (12,6);
+\draw (0,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (2,6);
+\draw (2,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (4,6);
+\draw (4,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (6,6);
+\draw (6,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (8,6);
+\draw (8,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (10,6);
+\draw (10,7.5) rectangle node[anchor=center] {\LARGE{0-bits}} (12,6);
 
-\draw (0,6)  rectangle node[anchor=center] {\Huge{8-bits}} (2,4.5);
-\draw (2,6)  rectangle node[anchor=center] {\Huge{8-bits}} (4,4.5);
-\draw (4,6)  rectangle node[anchor=center] {\Huge{8-bits}} (6,4.5);
-\draw (6,6)  rectangle node[anchor=center] {\Huge{8-bits}} (8,4.5);
-\draw (8,6)  rectangle node[anchor=center] {\Huge{8-bits}} (10,4.5);
-\draw (10,6) rectangle node[anchor=center] {\Huge{8-bits}} (12,4.5);
+\draw (0,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (2,4.5);
+\draw (2,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (4,4.5);
+\draw (4,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (6,4.5);
+\draw (6,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (8,4.5);
+\draw (8,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (10,4.5);
+\draw (10,6) rectangle node[anchor=center] {\LARGE{8-bits}} (12,4.5);
 
-\draw (0,4.5)  rectangle node[anchor=center] {\Huge{16-bits}} (2,3);
-\draw (2,4.5)  rectangle node[anchor=center] {\Huge{16-bits}} (4,3);
-\draw (4,4.5)  rectangle node[anchor=center] {\Huge{16-bits}} (6,3);
-\draw (6,4.5)  rectangle node[anchor=center] {\Huge{16-bits}} (8,3);
-\draw (8,4.5)  rectangle node[anchor=center] {\Huge{16-bits}} (10,3);
-\draw (10,4.5) rectangle node[anchor=center] {\Huge{16-bits}} (12,3);
+\draw (0,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (2,3);
+\draw (2,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (4,3);
+\draw (4,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (6,3);
+\draw (6,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (8,3);
+\draw (8,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (10,3);
+\draw (10,4.5) rectangle node[anchor=center] {\LARGE{16-bits}} (12,3);
 
-\draw (0,3)  rectangle node[anchor=center] {\Huge{32-bits}} (2,1.5);
-\draw (2,3)  rectangle node[anchor=center] {\Huge{32-bits}} (4,1.5);
-\draw (4,3)  rectangle node[anchor=center] {\Huge{32-bits}} (6,1.5);
-\draw (6,3)  rectangle node[anchor=center] {\Huge{32-bits}} (8,1.5);
-\draw (8,3)  rectangle node[anchor=center] {\Huge{32-bits}} (10,1.5);
-\draw (10,3) rectangle node[anchor=center] {\Huge{32-bits}} (12,1.5);
+\draw (0,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (2,1.5);
+\draw (2,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (4,1.5);
+\draw (4,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (6,1.5);
+\draw (6,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (8,1.5);
+\draw (8,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (10,1.5);
+\draw (10,3) rectangle node[anchor=center] {\LARGE{32-bits}} (12,1.5);
 
-\draw (0,1.5)  rectangle node[anchor=center] {\Huge{64-bits}} (2,0);
-\draw (2,1.5)  rectangle node[anchor=center] {\Huge{64-bits}} (4,0);
-\draw (4,1.5)  rectangle node[anchor=center] {\Huge{64-bits}} (6,0);
-\draw (6,1.5)  rectangle node[anchor=center] {\Huge{64-bits}} (8,0);
-\draw (8,1.5)  rectangle node[anchor=center] {\Huge{64-bits}} (10,0);
-\draw (10,1.5) rectangle node[anchor=center] {\Huge{64-bits}} (12,0);
+\draw (0,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (2,0);
+\draw (2,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (4,0);
+\draw (4,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (6,0);
+\draw (6,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (8,0);
+\draw (8,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (10,0);
+\draw (10,1.5) rectangle node[anchor=center] {\LARGE{64-bits}} (12,0);
 \end{tikzpicture}
 }
 \caption{Our type policy schema for callsites and calltargets. Note that p. means parameter. As it is depicted in this example, when requiring parameter width, one starts at the 
@@ -154,13 +154,14 @@ Note that accepting more parameters than provided is not allowed.}
 \label{fig:TYPEschema}
 \end{figure}
 
-Figure \ref{fig:TYPEschema} depicts the fact that we do to not simply classify callsites and calltargets based on the number of parameters they provide or request, but 
-also on the parameter type. We use the register width as parameter type. As previously mentioned, there are 4 types 
+Figure \ref{fig:TYPEschema} depicts the basic principle of our function parameter type policy.
+We use the register width as parameter type. As previously mentioned, there are 4 types 
 of reading and writing accesses. Therefore, our set of possible types for parameters is $\texttt{TYPE} = \{64, 32, 16, 8, 0\}$; where 0 models the absence of a 
-parameter. Since Itanium C++ ABI specifies 6 registers (i.e., \texttt{rdi}, \texttt{rsi}, \texttt{rdx}, \texttt{rcx}, \texttt{r8}, and \texttt{r9}) as parameter passing registers, we classify our callsites and calltargets into $\texttt{TYPE}^6$. Similar to
-the policy of \texttt{TypeArmor}, we allow overestimations of callsites and underestimations of calltargets, however, on the parameter types as well. Therefore, for a 
+parameter. Since Itanium C++ ABI specifies 6 registers (\textit{i.e.,} \texttt{rdi}, \texttt{rsi}, \texttt{rdx}, \texttt{rcx}, \texttt{r8}, and \texttt{r9}) as 
+parameter passing registers during function calls, we classify our callsites and calltargets into $\texttt{TYPE}^6$. Similar to
+our count policy, we allow overestimations of callsites and underestimations of calltargets, on the parameter types as well. Therefore, for a 
 callsite $cs$ it is possible to call a calltarget $ct$, only if for each parameter of $ct$ the corresponding parameter of $cs$ is not smaller w.r.t. the register width.
-This results in a finer-grained policy which is further restricting the possible pool of calltargets for each callsite.
+This results in a finer-grained policy which is further restricting the possible set of calltargets for each callsite.
 
 %What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the parameter type. However, due to complexity reasons,
 %we are restricting ourselves to the general purpose registers, which the Intanium C++ ABI designates as parameter registers. Furthermore, we are not inferring 
@@ -249,8 +250,8 @@ A variable is alive before the execution of an instruction, if at least one of t
 If applied to a function, this calculates the variables that need to be alive at the beginning, as these are its parameters. 
 
 \begin{algorithm}[h!]
-        \scriptsize
-%         \footnotesize
+%         \scriptsize
+        \footnotesize
  	\SetAlgoLined
 	\SetKwInOut{Input}{Input}
         \SetKwInOut{Output}{Output}
@@ -260,27 +261,27 @@ If applied to a function, this calculates the variables that need to be alive at
 	\SetKwProg{Fn}{Function }{ is}{end}
 	\Fn{\texttt{analyze} (block : $\texttt{INSTR}^*$) : $\mathcal{S}^\mathcal{L}$}
 	{
- 	$state$ = Bl\Comment{Initialize the state with first block}
+ 	$state$ = Bl \Comment*[r]{Initialize the state with first block}
  	
  	\ForEach{inst $\in$ block}{
  	
- 		$state' = \texttt{analyze\_instr}(inst)$                     \Comment*[r]{Calculate changes}
+ 		$state' = \texttt{analyze\_instr}(inst)$                     \Comment*[l]{Calc. changes}
 
 		$state = \texttt{merge\_h}(state, state')$                     \Comment*[r]{Merge changes}
 	}
 
-	$states$ = $\emptyset$                                                 \Comment*[r]{Set of successor states}
+	$states$ = $\emptyset$                                                 \Comment*[r]{Set of succ. states}
 	
-	$blocks$ = $\texttt{successor(block)}$                                   \Comment*[r]{Get successors blocks}
+	$blocks$ = $\texttt{successor(block)}$                                   \Comment*[r]{Get succ. blocks}
 	
 	\ForEach{block' $\in$ blocks} {
 	
- 		$state'$ = $\texttt{ analyze}(block')$   \Comment*[r]{Analyze successor block}
+ 		$state'$ = $\texttt{ analyze}(block')$   \Comment*[r]{Analyze succ. block}
  		
-		$states$ = $states$ $\cup$ \{$state'$\}  \Comment*[r]{Add successor states}
+		$states$ = $states$ $\cup$ \{$state'$\}  \Comment*[r]{Add succ. states}
 	}
 
-	$state'$ = $\texttt{merge\_h }(states)$   \Comment*[r]{Merge successor states}
+	$state'$ = $\texttt{merge\_h }(states)$   \Comment*[r]{Merge succ. states}
 
 	\Return $merge\_v(state, state')$  \Comment*[r]{Merge to final state}
 
@@ -290,8 +291,8 @@ If applied to a function, this calculates the variables that need to be alive at
 \end{algorithm}
 
 Algorithm~\ref{alg:liveness} is based on the liveness analysis algorithm presented in~\cite{khedker2009data}, which basically is a depth-first traversal of basic blocks. 
-For customization, we rely on the implementation of several functions which we will present next. $\mathcal{S}^\mathcal{L}$ is the set of possible register states depending on the specific 
-liveness implementation of the following operations.
+For customization, we rely on the implementation of several functions which we will present next. $\mathcal{S}^\mathcal{L}$ is the set of possible register states which depends on the specific 
+implementations of the following operations.
 
 $\bullet$ $\texttt{merge\_v} : \mathcal{S}^\mathcal{L} \times \mathcal{S}^\mathcal{L} \mapsto \mathcal{S}^\mathcal{L}$, (merge vertically block states) describes how to merge the current state with the following state change.
 
@@ -301,7 +302,7 @@ $\bullet$ $\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal
 
 $\bullet$ $\texttt{succ} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, (successor of a basic block) calculates the successors of the given block.
 
-In our specific case, the function \texttt{analyze\_instr} needs to also handle non-jump and non-fall-through successors, as these are not handled by DynInst. 
+In our specific case, the function \texttt{analyze\_instr} needs to also to handle non-jump and non-fall-through successors, as these are not handled by DynInst. 
 Essentially, there are three relevant cases.
 First, if the current instruction is an indirect call or a direct call and the chosen implementation should not follow calls, 
 then our analysis will return a state where all registers are considered to be written before read. Second, if the current instruction is a direct call and the chosen implementation should follow calls, 
@@ -400,7 +401,6 @@ The index of highest parameter register based on the used call convention that h
 %
 %\label{fig:COUNTlivenessmapping}
 %\end{table}
-(merge vertically block states)
 %The index of highest parameter register based on the used call convention that has the state R is considered to be the number of parameters a function at least requires to be prepared by a callsite.
 
 \subsubsection{Required Parameter Wideness}
@@ -428,13 +428,13 @@ To permit this, we allow our merge operations to also return the value $RW$, whi
 %	\item A vertical merge operator that conceptually calculates the union of all read accesses along a path until the first write occurs ($merge\_v^{u}$).
 %\end{itemize}
 Therefore, our vertical merge operator conceptually intersects all read accesses along a path until the first write 
-occurs ($merge\_v^{i}$). In any other case, it behaves like the previously mentioned vertical merge function.
+occurs $merge\_v^{i}$. In any other case, it behaves like the previously mentioned vertical merge function.
 %Our horizontal merge function is a simple pairwise combination of the given set of states:
 %\begin{align}
 %merge\_h(\{s\}) &= s\\
 %merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
 %\end{align}
-Our horizontal \textit{merge($merge\_h$)} function is a pairwise combination of the given set of states, which are then combined with a union-like operator 
+Our horizontal merge $merge\_h$ function is a pairwise combination of the given set of states, which are then combined with a union-like operator 
 with $W$ preceding $WR$ and $WR$ preceding $R$ and $R$ preceding $C$. Unless one side is $W$, read accesses are combined in such a way that always the higher one is selected.
 
 %The results of our experiments with the implementation of calltarget classification gave presented us with essentially one possible candidate
@@ -462,13 +462,19 @@ with $W$ preceding $WR$ and $WR$ preceding $R$ and $R$ preceding $C$. Unless one
 %\label{tbl:TYPECTunion}
 %\end{table}
 
+\subsubsection{Void/Non-Void Calltarget}
+In order to determine if a calltarget is a void or non-void return function
+we backwards look from the return instruction of the function for the \texttt{RAX} register.
+In case this register is written than we know that the function return is non-void 
+and provides a return value which is not void.
+
 \subsubsection{Encountered Analysis Issues}
 \paragraph{Variadic Functions}
 \label{subsection:variadicfunctions}
-Variadic functions are special functions in C/C++ that have a basic set of parameters, 
+Variadic functions are a special type of C/C++ functions that have a basic set of parameters, 
 which they always require and a variadic set of parameters, which as the name suggests 
 may vary. A prominent example of this would be the $printf$ function, which is used 
-to output text to $stdout$.
+to output text to \texttt{stdout}.
 
 % \begin{figure}[thp] % the figure provides the caption
 % \centering          % which should be centered
@@ -507,7 +513,7 @@ to output text to $stdout$.
 
 \newsavebox{\firstlistingA}
 \begin{lrbox}{\firstlistingA}
-\begin{minipage}[c]{0.45\linewidth}
+\begin{minipage}[c]{0.52\linewidth}
 \begin{minted}[
 % frame=lines,
 framesep=2mm,
@@ -559,7 +565,7 @@ fontsize=\scriptsize
 \centering
 % \subfloat[]
 {\usebox{\firstlistingA}} 
-\caption{Assembly code of the \texttt{make\_cmd} function which was compiled with Clang -O2 flag, which has a variadic parameter list, shaded gray above.}
+\caption{Assembly code of the \texttt{make\_cmd} function which was compiled with Clang -O2 flag, and has a variadic parameter list which is shaded gray above.}
 \label{fig:asmvariadic}
 \end{figure}
 
@@ -570,24 +576,23 @@ In our solution we opted to find these spurious reads and ignore them for now. A
 similar for all cases, thus we can achieve our desired outcome using the following steps:
 (1) we search for (what we call) the xmm-passthrough block, which entirely consists of moving values of registers \texttt{xmm0} to \texttt{xmm7} into
 contiguous memory, % (in our case basic block [\texttt{0x422306}, \texttt{0x42233d} [ ).
-(2) we look at the predecessor of the xmm-passthrough block, which we call the entry block (in our case basic block %[\texttt{0x4222f0},\texttt{0x4222f2} [ )
-Check if the successors of the entry block consist of the xmm-passthrough block and the successor of the 
-xmm-passthrough block, which we call the param-passthrough block, and
+(2) we look at the predecessor of the xmm-passthrough block, which we call the entry block, next we %[\texttt{0x4222f0},\texttt{0x4222f2} [ )
+check if the successors of the entry block consist of the xmm-passthrough block and the successor of the xmm-passthrough block (we call the param-passthrough block), and
 %(in our case basic block [\texttt{0x42233d}Liveness analysis of a , \texttt{0x42235e} [ )
 (3) we look at the param-passthrough block and set all instructions that move the value of a parameter register into memory to be ignored. 
 %(in our case the instructions \texttt{0x42233d}, \texttt{0x422342}, \texttt{0x422347} and \texttt{0x42234c})
 
 \paragraph{Ignoring Reads} When one instruction writes and reads a register at the same time, we give the read access precedence, however, there 
 are exceptions (also mentioned in TypeArmor). However, we expand slightly on that as follows:
-(1) \texttt{xor \%rax, \%rax} is the first obvious scenario, as it will always result in \texttt{\%rax} holding the value 0,
-(2) \texttt{sub \%rax, \%rax} is probably the next scenario, as it results in \texttt{\%rax} also holding the value 0, and
+(1) \texttt{xor \%rax, \%rax} is the first scenario, as it will always result in \texttt{\%rax} holding the value 0,
+(2) \texttt{sub \%rax, \%rax} is the second scenario, as it results in \texttt{\%rax} also holding the value 0, and
 (3) \texttt{sbb \%rax, \%rax} is also relevant, however, it will not result in a constant value and based on the current state might either result in \texttt{\%rax} containing 0 or 1.
 
 \subsection{Callsite Analysis}
 \label{section:callsiteanalysis}
 Our callsite analysis classifies callsites according to the parameters they provide. Overestimations are allowed, however,
-underestimations are not be permitted. For this purpose we employ a customizable modified reaching definition algorithm, 
-which we will show first. Furthermore, we will highlight some corner cases we encountered.(merge vertically block states)
+underestimations are not permitted. For this purpose we employ a customizable modified reaching definition algorithm, 
+which we will show first. Furthermore, we will highlight some corner cases we encountered.
 
 \subsubsection{Reaching Definitions}
 \label{subsection:reachindefinitionstheory}
@@ -595,8 +600,8 @@ An assignment to a variable is a reaching definition after the execution of a se
 If applied to a callsite, this calculates the values that are provided by this callsite to the function it then invokes. 
 
 \begin{algorithm}[!ht]
-        \scriptsize
-%         \footnotesize
+%         \scriptsize
+        \footnotesize
 	\SetAlgoLined
 	\SetKwInOut{Input}{Input}
         \SetKwInOut{Output}{Output}
@@ -621,9 +626,9 @@ If applied to a callsite, this calculates the values that are provided by this c
 	
 	\ForEach{block' $\in$ blocks} {
 	
- 		$state' = analyze(block')$             \Comment*[r]{Analyze predecessors block}
+ 		$state' = analyze(block')$             \Comment*[r]{Analyze pred. block}
  		
-		$states$ = $states$ $\cup$ \{$state'$\}  \Comment*[r]{Add predecessors states}
+		$states$ = $states$ $\cup$ \{$state'$\}  \Comment*[r]{Add pred. states}
 	}
 
 	$state'$ = $merge\_h (states)$                   \Comment*[r]{Merge predecessors states}
@@ -638,7 +643,7 @@ If applied to a callsite, this calculates the values that are provided by this c
 Algorithm~\ref{alg:reaching} is based on the reaching definition analysis presented in~\cite{khedker2009data}, 
 which basically is a reverse depth-first traversal of basic blocks of a program. For customization, we rely on 
 the implementation of several functions. $\mathcal{S}^\mathcal{R}$ is the set of possible register states 
-depending on the specific reaching definition implementation of the following operations.
+which depends on the specific reaching definition implementation of the following operations.
 
 $\bullet$ $\texttt{merge\_v} : \mathcal{S}^\mathcal{R} \times \mathcal{S}^\mathcal{R} \mapsto \mathcal{S}^\mathcal{R}$, (merge vertically block states) describes how to merge the current state with the following state change.
 
@@ -757,7 +762,7 @@ liveness state $\mathcal{S}^\mathcal{L}$ into parameters up to the following sub
 
 \subsubsection{Provided Parameter Count}
 \label{subsection:providedparamcount}
-For implementing the our {count} policy, we need a coarse representation of the state of one register, thus we use the following representation.
+For implementing our {count} policy, we use a coarse representation of the state of one register, thus we use the following representation.
 (1) $T$ represents a trashed register,
 (2) $S$ represents a set register (written to), and
 (3) $U$ represents an untouched register.
@@ -849,7 +854,7 @@ The index of the highest parameter register based on the used call convention th
 
 \subsubsection{Provided Parameter Width}
 \label{subsection:providedparamwideness}
-In order to implement our {type} policy, we need a finer representation of the states of one register, thus we consider:
+In order to implement our {type} policy, we use a finer representation of the states of one register, thus we consider:
 (1) $T$ represents a trashed register,
 (2) $s8, s16, s32, s64 S$ represents a set register with  8-, 16-, 32-, 64-bit width, and
 (3) $U$ represents an untouched register.
@@ -861,11 +866,11 @@ In order to implement our {type} policy, we need a finer representation of the s
 This gives us the following $S^\mathcal{L} = \{ T, s64, s32, s16, s8, U \}$ register state which translates to the register 
 super state $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
 
-Again, we are only interested in the first occurrence of a state that is not $U$ in a path, as following reads or writes do not give us more information. Therefore, we can use 
+However, we are only interested in the first occurrence of a state that is not $U$ in a path, as following reads or writes do not give us more information. Therefore, we can use 
 the same vertical merge function as for the \emph{count} policy, which is essentially a pass-through until the first non $U$ state.
 
-Our horizontal merge($merge\_h$) function is a simple pairwise combination of the given set of states, which are then combined with a union like operator with $T$ 
-preceding $S$ and $S$ preceding $U$. When both states are set, we pick the higher one.
+Our horizontal merge $merge\_h$ function is a simple pairwise combination of the given set of states, which are then combined with a union like operator with $T$ 
+preceding $S$ and $S$ preceding $U$. Note, that when both states are set, we pick the higher one.
 
 %
 %Our horizontal merge function is again a simple pairwise combination of the given set of states:
@@ -928,6 +933,12 @@ preceding $S$ and $S$ preceding $U$. When both states are set, we pick the highe
 %\caption{Different mappings for combining two reaching state values in horizontal matching for the \emph{type} policy.}
 %\label{fig:TYPEreachingmapping}
 %\end{table}
+\subsubsection{Void/Non-Void Callsite}
+In order to determine if a callsite is a void or non-void return function
+\textsc{TypeShield} looks at the callsite if there is an read before write on the \texttt{RAX} register. 
+In case there is a read before write on the \texttt{RAX} register than
+\textsc{TypeShield} infers that the callsite is non-void and thus expects a variable to be provided 
+when the called function returns.
 
 \subsubsection{Encountered Analysis Issues}
 Our experiments with this implementation highlighted two issues.
@@ -939,7 +950,7 @@ Finally, to reduce analysis runtime overhead, we also restricted the maximum pat
 These are not existent in actual code, but our analysis has the possibility of generating them through the merge operations. An example would be the following: 
 A parameter list of $(64, 0, 64, 0, 0, 0)$ is concluded, although the actual parameter list might be $(64, 32, 64, 0, 0, 0)$. While the trailing 0s are 
 what we expect, the 0 at the second parameter position will cause trouble, because it is an underestimation at the single parameter level, which we need to avoid.
-Our solution relies on scanning our reaching analysis result for these holes and replace them with the wideness $64$, causing a (possible) overestimation.
+Our solution relies on scanning our reaching analysis result for these holes and replace them with the wideness $64$, causing a possible overestimation.
 
 \paragraph{Address Width Unterestimation.} This refers to the issue that while in the callsite a constant value of 32-bit is written to a register, the calltarget uses the 
 whole 64-bit register. This can occur when pointers are passed from the callsite to the calltarget. Specifically this happens 
@@ -1003,7 +1014,7 @@ and set the width to 64-bit instead of 32-bit.
 %\subsection{Callsite Instrumentation}
 %\label{subsection:patchingschema}
 
-\subsection{Enforcing The Forward Edge Policy}
+\subsection{Enforcing Our Forward Edge Policy}
 \label{Enforcing The Forward Edge Policy}
 The result of the forward callsite and calltarget analysis is a mapping between the allowed calltargets for each callsite.
 In order to enforce this mapping during runtime each callsite and calltarget contained in the previous mapping are instrumented
@@ -1011,9 +1022,9 @@ inside the binary program with two labels and a callsite located CFI-based check
 provided parameters are encoded as a series of six bits. At the calltarget the label contains six bits denoting how 
 many parameters the calltarget expects. Additionally, at the callsite six bits encode which register wideness types each of the provided parameters have 
 while at the calltarget another six bits are used to encode the types of the parameters expected. Further, at the callsite another bit 
-is used to define if the function is expecting a \texttt{void} return type of not. All this information are written in labels before
-each callsite and calltarget. During runtime before each callsite the these labels are compared by performing a xor operations between 
-the bits contained in the previously mentioned labels. In case the xor operation returns true
+is used to define if the function is expecting a \texttt{void} return type or not. All this information are written in labels before
+each callsite and calltarget. During runtime before each callsite these labels are compared by performing a xor operation between 
+the bits contained in the previously mentioned labels. In case the xor operation returns false
 than the transfer is allowed else the program execution is terminated.
 
 \subsection{Backward Edge Analysis}
@@ -1023,48 +1034,48 @@ determined calltargets for each callsite we designed an
 analysis which can determine possible legitimate return target addresses.
 
 \begin{algorithm}[!ht]
-        \scriptsize
-%         \footnotesize
+%         \scriptsize
+        \footnotesize
 	\SetAlgoLined
 	\SetKwInOut{Input}{Input}
         \SetKwInOut{Output}{Output}
-        \Input{Forward edge callsite to calltargets map- $fMap$}
+        \Input{Forward edge callsite to calltargets map - $fMap$}
         \Output{Backward edge to return addresses map - $rMap$}
         \BlankLine
 	\SetKwProg{Fn}{Function}{ is}{end}
 	\Fn{\texttt{backwardAddressMapping}($fMap$) : $rMap$}
 	{
 	
- 	\tcc{visit all detected callsites in the binary}
+ 	\Comment*[l]{visit all detected callsites in the binary}
  	
  	\ForEach{callsite $\in$ $fMap$}{  
  	  
- 	  \tcp*{get all calltargets for a given callsite address key}
+ 	  \Comment*[l]{get calltargets for callsite address key}
  	  
  	  $calltargetSet$ = $getCalltargetSet(callsite, fMap)$\;
-        
-           \tcp{visit all calltargets of a callsite}
            
-           \tcp{calltarget is the start address of a function}
+           \Comment*[l]{calltarget is the function start address}
+           
+           \Comment*[l]{visit all calltargets of a callsite}
            
           \ForEach{calltarget $\in$ $calltargetSet$}{
  	  
- 	    \tcp{get the next address after the callsite}
+ 	    \Comment*[l]{get the next address after the callsite}
  	    
  	    $rTarget$ = $getNextAddress(callsiteKey)$\;
  	    
- 	    \tcp{find the address of function return}
+ 	    \Comment*[l]{find the address of function return}
  	    
  	    $rAddress$ = $getReturnOfCalltarget(calltarget)$\; 
  	    
- 	    \tcp{rAddress is map key \& rTarget is then value}
+ 	    \Comment*[l]{rAddress is map key; rTarget is value}
  	    
  	    $rMap$ = $rMap$ $\cup$ $rMap \ add \ (rAddress, rTarget)$\;
  	   
- 	  }core
+ 	  }
  	 }
         
-        \tcp{return the backward edge addresses mappings}
+        \Comment*[l]{return the backward edge addresses mappings}
         
 	\Return $rMap$\;                         
 
@@ -1074,45 +1085,43 @@ analysis which can determine possible legitimate return target addresses.
 \end{algorithm}
 
 Algorithm~\ref{alg:returns} depicts how the forward mapping between 
-callsites and calltargets is used in order to determine the backward address set 
+callsites and calltargets is used to determine the backward address set 
 for each return address contained in each address taken function. The 
 $fMap$ is obtained after running the callsite and 
 calltarget analysis (see \cref{section:calltargetanalysis} and \cref{section:callsiteanalysis}). 
 These mapping contains for each callsite the legal calltargets where the forward edge
 indirect control flow transfer is allowed to jump to. This mapping is reflected back by construction a second
 mapping between the return address of each function for which we have the start 
-address and a return target address. 
+address and a return target address set. 
 
-This is determined by incrementing the current address of
+The return target address set is determined by incrementing the current address of
 the callsite for which the forward edge propagation algorithm is applied 
-by one (i.e., recall the caller callee calling convention).
+(\textit{i.e.,} recall the caller callee calling convention).
 The $rMap$ is obtained by visiting each function return address and assigning to it the address next to the callsite
 which was used in order to transfer the control flow to the function in first place. 
-At the end 
-all callsites and all function returns have been visited and a set for each function return address of backward edge 
+At the end of the analysis all callsites and all function returns have been visited and a set for each function return address of backward edge 
 addresses will be obtained.
-Note that the function boundary address (i.e., retn) was detected by a linear search from the beginning of 
+Note that the function boundary address (\textit{i.e.,} retn) was detected by a linear search from the beginning of 
 the function (calltarget) until the first return instruction was encountered. We are aware that other promising approaches for recuperating 
-function boundaries (e.g.,~\cite{function:boundary}) exist, but we leave this as future work.
+function boundaries (\textit{e.g.,}~\cite{function:boundary}) exist, but we leave this as future work.
 
 \subsubsection{Enforcing The Backward Edge Policy}
 The previously determined $rMap$ in Algorithm~\ref{alg:returns} will be used to insert a check before each 
 function return present in the $rMap$. We propose two modes of operation based on two types
 of checks which can be inserted before each function return instruction, depending on specific needs.
-\begin{itemize}[leftmargin=.12in]
- \item \textbf{Fast path.} Based on the $rMap$ for each function return the minimum and the maximum address out of the return set for a particular 
+
+\textbf{Fast path.} Based on the $rMap$ for each function return the minimum and the maximum address out of the return set for a particular 
  $rAdress$ return address will be determined. Next, these two values will be used to insert a range check having as left and right boundaries these
  two values. Before the return instruction of the function is executed the value of the function return is compared against these two values previously
  mentioned. In case the check fails than the program will be terminated else the indirect control flow transfer will be allowed.
  Note that this check has insignificant runtime overhead but on the other side it could contain not legitimate return addresses depending 
  on the entropy of the $rAddress$es.
  
- \item \textbf{Slow path.} Based on the $rMap$ for each function return a series of comparison checks are inserted in the binary. 
+\textbf{Slow path.} Based on the $rMap$ for each function return a series of comparison checks are inserted in the binary. 
  Before the return instruction of the function a series of comparison checks between the appropriate 
  addresses stored in $rMap$ and the address where the function wants to return are performed. In case one of the check fails than the 
  program will be terminated. The total number of comparison checks added is equal to the size of return address set which contains $rTarget$ values. 
  Note that these types of checks are precise since only legitimate addresses are allowed but on the other side the runtime overhead is higher than in the 
  case of the fast path because the number of checks is in general higher.
-\end{itemize}
 
 

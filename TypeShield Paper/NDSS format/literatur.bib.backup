@@ -302,13 +302,6 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael},
  year = {2015}
 }
 
-@inproceedings{cfi_survey_payer,
- author = {Nathan, Burow, and A. Carr, Scott, and Nash, Joseph, and Larsen, Per, and Franz, Michael, and Brunthaler, Stefan, and Payer, Mathias},
- title = {Control-Flow Integrity: Precision, Security, and Performance},
- booktitle = {ACM Computing Surveys (CSUR)},
- year = {2017}
-}
-
 @inproceedings{abadi:cfi,
  author = {Abadi, Martin and Budiu, Mihai and Erlingsson, {\'U}lfar and Ligatti, Jay},
  title = {Control Flow Integrity Principles, Implementations, and Applications},

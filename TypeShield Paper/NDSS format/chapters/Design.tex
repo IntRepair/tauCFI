@@ -462,6 +462,12 @@ with $W$ preceding $WR$ and $WR$ preceding $R$ and $R$ preceding $C$. Unless one
 %\label{tbl:TYPECTunion}
 %\end{table}
 
+\subsubsection{Void/Non-Void Calltarget}
+In order to determine if a calltarget is a void or non-void return function
+\textsc{TypeShield} traverses backwards the basic blocks from the return instruction of the function an looks for the \texttt{RAX} register.
+In case  there is a write operation on the \texttt{RAX} register than we know that the function return is non-void 
+and thus provides a return value.
+
 \subsubsection{Encountered Analysis Issues}
 \paragraph{Variadic Functions}
 \label{subsection:variadicfunctions}
@@ -927,6 +933,12 @@ preceding $S$ and $S$ preceding $U$. Note, that when both states are set, we pic
 %\caption{Different mappings for combining two reaching state values in horizontal matching for the \emph{type} policy.}
 %\label{fig:TYPEreachingmapping}
 %\end{table}
+\subsubsection{Void/Non-Void Callsite}
+In order to determine if a callsite is a void or non-void return function
+\textsc{TypeShield} looks at the callsite if there is an read before write on the \texttt{RAX} register. 
+In case there is a read before write on the \texttt{RAX} register than
+\textsc{TypeShield} infers that the callsite is non-void and thus expects a variable to be provided 
+when the called function returns.
 
 \subsubsection{Encountered Analysis Issues}
 Our experiments with this implementation highlighted two issues.
