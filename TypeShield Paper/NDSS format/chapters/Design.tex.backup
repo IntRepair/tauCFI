@@ -464,9 +464,9 @@ with $W$ preceding $WR$ and $WR$ preceding $R$ and $R$ preceding $C$. Unless one
 
 \subsubsection{Void/Non-Void Calltarget}
 In order to determine if a calltarget is a void or non-void return function
-we backwards look from the return instruction of the function for the \texttt{RAX} register.
-In case this register is written than we know that the function return is non-void 
-and provides a return value which is not void.
+\textsc{TypeShield} traverses backwards the basic blocks from the return instruction of the function an looks for the \texttt{RAX} register.
+In case  there is a write operation on the \texttt{RAX} register than we know that the function return is non-void 
+and thus provides a return value.
 
 \subsubsection{Encountered Analysis Issues}
 \paragraph{Variadic Functions}
@@ -936,8 +936,8 @@ preceding $S$ and $S$ preceding $U$. Note, that when both states are set, we pic
 \subsubsection{Void/Non-Void Callsite}
 In order to determine if a callsite is a void or non-void return function
 \textsc{TypeShield} looks at the callsite if there is an read before write on the \texttt{RAX} register. 
-In case there is a read before write on the \texttt{RAX} register than
-\textsc{TypeShield} infers that the callsite is non-void and thus expects a variable to be provided 
+In case there is a read before write operation on the \texttt{RAX} register than
+\textsc{TypeShield} infers that the callsite is non-void and thus expects a pointer to be provided 
 when the called function returns.
 
 \subsubsection{Encountered Analysis Issues}
@@ -1094,16 +1094,15 @@ indirect control flow transfer is allowed to jump to. This mapping is reflected 
 mapping between the return address of each function for which we have the start 
 address and a return target address set. 
 
-The return target address set is determined by incrementing the current address of
-the callsite for which the forward edge propagation algorithm is applied 
+The return target address set for a function return is determined by getting the next address after each callsite address 
+which is allowed to make the forward edge control flow transfer
 (\textit{i.e.,} recall the caller callee calling convention).
 The $rMap$ is obtained by visiting each function return address and assigning to it the address next to the callsite
 which was used in order to transfer the control flow to the function in first place. 
-At the end of the analysis all callsites and all function returns have been visited and a set for each function return address of backward edge 
-addresses will be obtained.
-Note that the function boundary address (\textit{i.e.,} retn) was detected by a linear search from the beginning of 
+At the end of the analysis all callsites and all function returns have been visited and a set for each function return address of backward edge addresses will be obtained.
+Note that the function boundary address (\textit{i.e.,} retn) was detected by a linear basic block search from the beginning of 
 the function (calltarget) until the first return instruction was encountered. We are aware that other promising approaches for recuperating 
-function boundaries (\textit{e.g.,}~\cite{function:boundary}) exist, but we leave this as future work.
+function boundaries (\textit{e.g.,}~\cite{function:boundary}) exist, and plan to experiment with them in future work.
 
 \subsubsection{Enforcing The Backward Edge Policy}
 The previously determined $rMap$ in Algorithm~\ref{alg:returns} will be used to insert a check before each 

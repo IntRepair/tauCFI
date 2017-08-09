@@ -74,7 +74,7 @@ No runtime efficiency numbers were provided in the paper.
 The authors claim that Marx can recuperate a class hierarchy which is more precise than that of IDAPro. The paper is geared towards
 first providing a tool which can be used by analyst in order to reverse engineer a binary. The precision of the calltarget set reduction
 per callsite should be similar to those of VCI but no comparison was compared in the paper. Compared to \textsc{TypeShield} 
-Marx can not against backward edge violations and arguably suffers from the same limitations as VCI.
+Marx can not protect against backward edge violations and arguably suffers from the same limitations as VCI.
 
 % VTPin~\cite{vtpin} is a runtime based tool ($\approx$5\%) used for protecting against VTable hijacking, via use-after-free vulnerabilities. VTPin pins
 % all the freed VTable pointers on a safe VTable under VTPin’s control. For each object deallocation, VTPin deallocates all space allocated, but preserves and updates

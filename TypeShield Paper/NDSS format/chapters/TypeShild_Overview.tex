@@ -12,14 +12,17 @@ Finally, in~\cref{TypeShild Impact on COOP} we talk about parameter count vs. pa
 \centering
    \includegraphics[width=.88\textwidth]{figures/overview.pdf}
     \caption{System overview.
-    The program binary is analyzed by \textsc{TypeShield} and the calltargets and callsite analysis are performed for determining how many parameters are 
+    The original program binary is analyzed (left hand side) by \textsc{TypeShield} and the calltargets and callsite analysis are performed for determining how many parameters are 
     provided, how many are consumed and their register wideness.
-    After this step labels are inserted at each previously identified callsite and at each calltargets. Black dots above are allowed to call only legitimate red dots.
+    After this step labels are inserted at each previously identified callsite and at each calltarget. 
+    The enforced policy is schematically represented by the black dots (addresses) above are allowed to call only legitimate red dots (addresses).
     Next for each function return the set of address sets which are next to each callsite that is allowed to call the function in first place are collected.
+    This information is obtained trough the previous forward mapping.
     In this way we have for each function return site a set of legitimate addresses where the function return site is allowed to dispatch to.
     Finally, range or compare checks are inserted before each function return site. This checks are used to check during runtime if the 
-    address where the function return wants to dispatch to is contained in the legitimate set for each particular return site.
-    Green dots above are allowed to call only legitimate blue dots.}
+    address where the function return wants to jump to is contained in the legitimate set for each particular return site.
+    Green dots (addresses) above are allowed to call only legitimate blue dots (addresses).
+    The result is a hardened program binary (right hand side).}
     \label{System overview.}
  \end{figure*}
 \end{center}

@@ -11,21 +11,41 @@ the two database server applications
 \textit{Memcached} (v.1.4.20, C), 
 the \textit{Node.js} application server (v.0.12.5, C++). 
 We selected these applications in order to allow for comparison with~\cite{veen:typearmor}. 
-In our evaluation we addressed the following research questions (RQs) w.r.t \textsc{TypeShield}.
+In our evaluation we addressed the following research questions (RQs).
 
-\textbf{RQ1:} How \textbf{precise} is it? (\cref{section:typeshieldprecision})
+% \begin{itemize}
+%  \setlength{\itemindent}{.4em}
+%  \setlength\itemsep{.4em}
+%  \item[
+ \textbf{RQ1:} How \textbf{precise} is \textsc{TypeShield}? (\cref{section:typeshieldprecision})
 
-\textbf{RQ2:} How \textbf{effective} is it? (\cref{section:typeshieldeffectiveness})
+%  \item[
+ \textbf{RQ2:} How \textbf{effective} is \textsc{TypeShield}? (\cref{section:typeshieldeffectiveness})
 
-\textbf{RQ3:} What \textbf{runtime overhead} has does it have? (\cref{section:typeshieldoverheadperformance})
+%  \item[
+ \textbf{RQ3:} What \textbf{overhead} imposes \textsc{TypeShield}? (\cref{section:typeshieldoverheadperformance})
 
-\textbf{RQ4:} What is its \textbf{instrumentation overhead}? (\cref{section:typeshieldoverheadinstrumentation})
+%  \item[
+ \textbf{RQ4:} What \textbf{binary blow-up} has \textsc{TypeShield}? (\cref{section:typeshieldoverheadinstrumentation})
 
-\textbf{RQ5:} What \textbf{security level} does it offer? (\cref{RQ5: Security Analysis})
+%  \item[
+ \textbf{RQ5:} What \textbf{security level} offers \textsc{TypeShield}? (\cref{RQ5: Security Analysis})
 
-\textbf{RQ6:} Which \textbf{upper bounds} can it enforce? (\cref{RQ6:TyperArmor's Imprecise Parameter-Count Policy})
+%  \item[
+ \textbf{RQ6:} Which \textbf{upper bounds} has \textsc{TypeShield}? (\cref{RQ6:TyperArmor's Imprecise Parameter-Count Policy})
+ 
+%  \item[
+ \textbf{RQ7:} Is shadow-stack \textbf{better} than \textsc{TypeShield}? (\cref{Comparison with SafeStack})
+ 
+%  \item[
+ \textbf{RQ8:} Are other tools \textbf{better} than \textsc{TypeShield}? (\cref{RQ5: Is TypeShield better than other tools?})
+ 
+ \textbf{RQ9:} Is \textsc{TypeShield} \textbf{effective} against COOP? (\cref{Effectiveness Against COOP})
+ 
+ \textbf{RQ10:} What attacks can \textsc{TypeShield} mitigate? (\cref{Mitigation of Advanced Code-Reuse Attacks})
+  
+% \end{itemize}
 
-\textbf{RQ7:} Is it \textbf{superior} compared to other tools? (\cref{RQ5: Is TypeShield better than other tools?})
 
 \textbf{Comparison Method.} We used \textsc{TypeShield} to analyze each program binary individually. Next \textsc{TypeShield} was used to harden each binary with forward and 
 backward checks. The data generated during analysis and binary hardening was written into external files for later processing. Finally, the previous obtained 
@@ -56,7 +76,7 @@ During compilation, we essentially collect three data points for each callsite a
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r|r}%
 	\toprule
-	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c|}{ {\bfseries calltargets}} & \multicolumn{3}{c}{{\bfseries callsites} }\\
+	\multicolumn{1}{c}{\bfseries \texttt{-O2}} & \multicolumn{3}{c|}{ {\bfseries calltargets}} & \multicolumn{3}{c}{{\bfseries callsites} }\\
 	\bfseries Target & match & Clang miss &  TypeShield miss &  match & Clang miss & TypeShield miss% specify table head
 	\\\midrule
 	\csvreader[before filter=\ifthenelse{\equal{\csvcoli}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/matching.O2.csv}{
@@ -73,7 +93,7 @@ During compilation, we essentially collect three data points for each callsite a
     	}
 %     	}
 	\caption {Table shows the quality of structural matching provided by our automated verify and test environment, 
-	regarding callsites and calltargets when compiling with optimization level O2. The label Clang miss 
+	regarding callsites and calltargets when compiling with optimization level \texttt{-O2}. The label Clang miss 
 	denotes elements not found in the data-set of the Clang/LLVM pass. The label TypeShield denotes elements not found in the data-set of \textsc{TypeShield}. 
 % 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	looking at this table?}
@@ -82,7 +102,7 @@ During compilation, we essentially collect three data points for each callsite a
 \end{table}
 Table~\ref{tbl:matchingquality} depicts the results obtained w.r.t. the investigation of callrgets comparability and the callsites compatibility.
 We assessed the applicability of our collected ground truth, by assessing the structural compatibility of our two data sets. 
-Table~\ref{tbl:matchingquality} shows three data points w.r.t. calltargets for the optimization level -O2:
+Table~\ref{tbl:matchingquality} shows three data points w.r.t. calltargets for the optimization level \texttt{-O2}:
 (1) Number of comparable calltargets that are found in both datasets, 
 (2) Clang miss: Number of calltargets that are found by \textsc{TypeShield}, but not by our Clang/LLVM pass, and 
 (3) TypeShield miss: Number of calltargets that are found by our Clang/LLVM pass, but not by \textsc{TypeShield}.
@@ -107,7 +127,7 @@ the compiler, as the IR is transformed into a machine-based representation (MR),
 is not possible with the MR. Therefore, we extract that data directly after the conversion from IR to MR and read the data at the end of the compilation. To not unnecessarily 
 pollute our dataset, we only considered calltargets, which have been found in both datasets. 
 
-Table~\ref{tbl:matchingquality} shows three data points regarding callsites for the optimization level -O2:
+Table~\ref{tbl:matchingquality} shows three data points regarding callsites for the optimization level \texttt{-O2}:
 (1) Number of comparable callsites that are found in both datasets,
 (2) Clang miss: Number of callsites that are discarded from the data set of \textsc{TypeShield}, and
 (3) TypeShield miss: Number of callsites that are discarded from the data set of our Clang/LLVM pass.
@@ -123,9 +143,9 @@ state that our structural matching between ground truth and \textsc{TypeShield}s
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r|r}%
 	\toprule
-	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c}{\bfseries Calltargets} & \multicolumn{3}{c}{\bfseries Callsites}\\
+	\multicolumn{1}{c}{\bfseries \texttt{-O2}} & \multicolumn{3}{c}{\bfseries Calltargets} & \multicolumn{3}{c}{\bfseries Callsites}\\
 	
-	\bfseries Target & \#  &  perfect args &  perfect return & \# & perfect args &  perfect return % specify table head
+	\bfseries Target & \#cs gt  &  perfect args &  perfect return & \#ct gt & perfect args &  perfect return % specify table head
 	\\\midrule
 	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilterreject}{\csvfilteraccept}, late after line=\\, late after last line=\\\midrule]{csvs/classification_count.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
@@ -139,7 +159,8 @@ state that our structural matching between ground truth and \textsc{TypeShield}s
     	\end{tabular}
 }
 
-\caption {The results for classification of callsites and calltargets using our \textit{count} policy on the O2 optimization level, when comparing to the ground truth obtained by our Clang/LLVM pass.
+\caption {The results for classification of callsites and calltargets using our \textit{count} policy on the \texttt{-O2} optimization level, when comparing to the ground truth obtained by our Clang/LLVM pass.
+The labels \#cs gt and \#ct gt mean callsite and calltarget ground truth, respectively.
 The label perfect args denotes all occurrences when our result and the ground truth perfectly match regarding the required/provided arguments. The label perfect return denotes this for return values. 
 % 		\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	        looking at this table?}
@@ -165,9 +186,9 @@ The results indicate a rate of perfect classification of over 73\% while for the
 	\begin{tabular}{l|r|r|r|r|r|r}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{3}{c}{\bfseries Calltargets} & \multicolumn{3}{c}{\bfseries Callsites}\\
+	\multicolumn{1}{c}{\bfseries \texttt{O2}} & \multicolumn{3}{c}{\bfseries Calltargets} & \multicolumn{3}{c}{\bfseries Callsites}\\
 	
-	\bfseries Target & \#  &  perfect  args&  perfect return& \# & perfect args &  perfect return% specify table head
+	\bfseries Target & \#cs gt  &  perfect  args&  perfect return& \#ct gt & perfect args &  perfect return% specify table head
 	\\\midrule
 	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/classification_type.O2.csv}{
 		%1=opt,2=target,3=cs,4=cs args,5=perfect,6=cs args,7=problem,8 = cs non-void ,9=correct,10 = cs non-void, 11=problem,12 = ct, 13 = ct args, 14=perfect, 15 = ct args, 16=problem, 17 = ct void, 18=correct, 19=ct void, 20=problem
@@ -181,7 +202,9 @@ The results indicate a rate of perfect classification of over 73\% while for the
     	\end{tabular}
 
 }
-	\caption {The result for classification of callsites using our \textit{type} policy on the O2 optimization level, when comparing to the ground truth obtained by our Clang/LLVM pass. The label perfect args denotes all occurrences when our result and the ground truth perfectly match regarding the required/provided arguments. The label perfect return denotes this for return values.
+	\caption {The result for classification of callsites using our \textit{type} policy on the \texttt{-O2} optimization level, when comparing to the ground truth obtained by our Clang/LLVM pass.
+	The labels \#cs gt and \#ct gt mean callsite and calltarget ground truth, respectively.
+	The label perfect args denotes all occurrences when our result and the ground truth perfectly match regarding the required/provided arguments. The label perfect return denotes this for return values.
 % 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	looking at this table?}
         }
@@ -211,7 +234,7 @@ The results indicate a rate of perfect classification of over 68\% while for the
 	\begin{tabular}{l|r|rcl|r|rcl|r|rcl|r|rcl|r}%
 
 	\toprule
-	\multicolumn{1}{c}{\bfseries O2} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count}*} & \multicolumn{4}{c}{\bfseries \textit{count}} & \multicolumn{4}{c}{\bfseries \textit{type}*} & \multicolumn{4}{c}{\bfseries \textit{type}}\\
+	\multicolumn{1}{c}{\bfseries \texttt{O2}} & \multicolumn{1}{c}{\bfseries AT} & \multicolumn{4}{c}{\bfseries \textit{count}*} & \multicolumn{4}{c}{\bfseries \textit{count}} & \multicolumn{4}{c}{\bfseries \textit{type}*} & \multicolumn{4}{c}{\bfseries \textit{type}}\\
 	
 	\bfseries Target && \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median & \multicolumn{3}{c}{ limit (mean $\pm$ $\sigma$)} & median  % specify table head
 	\\\midrule
@@ -229,7 +252,7 @@ The results indicate a rate of perfect classification of over 68\% while for the
 
 }
 	\caption {Restriction results of allowed callsites per calltarget for several test series on various targets compiled with 
-	Clang using optimization level O2. Note that the basic restriction to address taken only calltargets (see column AT) is 
+	Clang using optimization level \texttt{-O2}. Note that the basic restriction to address taken only calltargets (see column AT) is 
 	present for each other series. The label $count^*$ denotes the best possible reduction using our \emph{count} policy 
 	based on the ground truth collected by our Clang/LLVM pass, while $count$ denotes the results of our implementation of 
 	the \emph{count} policy derived from the binaries. The same applies to $type*$ and $type$ regarding the \emph{type} policy. 
@@ -261,7 +284,7 @@ We derived the available number of calltargets for each callsite based on the co
 \textbf{Results.}
 (1) The theoretical limit of the \textit{count*} schema has a geometric mean of 129 possible calltargets, which is around 11\% of the geometric mean of the total available calltargets (1097, see Table~\ref{tbl:precisionTYPE}), and
 (2) The theoretical limit of the \textit{type*} schema has a geometric mean of 105 possible calltargets, which is 9.5\% of the geometric mean of the total available calltargets (1097, see Table~\ref{tbl:precisionTYPE}).
-When compared, the theoretical limit of the \textit{type*} policy allows about 19\% less available calltargets in the geomean with Clang -O2 than the limit of the \textit{count*} policy (\textit{i.e.,} 105 vs. 129).
+When compared, the theoretical limit of the \textit{type*} policy allows about 19\% less available calltargets in the geomean with Clang \texttt{-O2} than the limit of the \textit{count*} policy (\textit{i.e.,} 105 vs. 129).
 
 \subsubsection{Calltarget Reduction per Callsite}
 \label{subsection:typeshieldvslimitcount}
@@ -274,7 +297,7 @@ When compared, the theoretical limit of the \textit{type*} policy allows about 1
 This is around 28\% more than the theoretical limit of available calltargets per callsite, see \textit{count*}, and
 (2)  The \textit{type} schema has a geometric mean of 144 possible calltargets, which is around 13\% of the geometric mean of total available calltargets (1097, see Table~\ref{tbl:precisionTYPE}). 
 This is around 37\% more than the theoretical limit of available calltargets per callsite, see \textit{type*}.
-Our implementation of the \textit{type} policy allows around 21\% less available calltargets in the geomean with Clang -O2 than our implementation of the \textit{count} policy and 
+Our implementation of the \textit{type} policy allows around 21\% less available calltargets in the geomean with Clang \texttt{-O2} than our implementation of the \textit{count} policy and 
 further a total reduction of more than 87\% (141 vs. 1097) w.r.t. to total number of AT calltargets available after our \textit{count} and \textit{type} policies were applied. 
 
 
@@ -440,7 +463,7 @@ Finally, this results should not represent an issue for memory resourceful syste
     \centering
     \resizebox{1.04\columnwidth}{!}{\includesvg{svgs/postgresqlO2}}
 %     \vspace{-.7cm}
-    \caption{CDF for Postgresql compiled with Clang -O2.} 
+    \caption{CDF for Postgresql compiled with Clang \texttt{-O2}.} 
     \label{fig7} 
     \vspace{1ex}
   \end{minipage}%%
@@ -468,7 +491,7 @@ Finally, this results should not represent an issue for memory resourceful syste
 \end{figure}
 % Figures~\ref{fig7}, \ref{fig8}, \ref{fig9}, and \ref{fig10} 
 Figures~\ref{fig7}
-depicts the CDF of the Postgresql program which was compiled with the Clang -O2 flag. 
+depicts the CDF of the Postgresql program which was compiled with the Clang \texttt{-O2} flag. 
 We selected this program randomly from our sample programs. 
 The CDFs depict the number of legal callsite targets and the difference between the type and the count policies. 
 While the count  policies have only a few changes, the number of changes that can be seen within the 
@@ -526,6 +549,41 @@ Finally, as it can be observed TypeArmor is too permissive (see also Figure H.1~
 we present \textsc{TypeShield}, a more precise alternative. \textsc{TypeShield} can deal with the aforementioned 4 types of register widths and can further reduce the the legitimate
 calltarget set per callsite as shown herein.
 
+\subsection{Comparison with Shadow-Stack}
+\label{Comparison with SafeStack}
+There are several tools which provide shadow-stack protection as for example 
+the original shadow-stack implementation from Abadi~\cite{abadi:cfi2}(binary-based), SafeStack~\cite{volodymyr:cpi} (compiler based and bypassed~\cite{safestack:bypassing}), 
+MoCFI~\cite{mcfi:niu} (compiler based), HAFIX~\cite{hafix} (compiler based and bypassed~\cite{hafix:bypass}), and 
+also PathArmor~\cite{veen:cfi} (similarly by-passable as kBouncer, ROPecker, and ROPGuard~\cite{schuster:raid} as it relies on a capacity restricted LBR register.)
+which emulates a shadow stack trough validation of the last-branch register (LBR).
+
+There exist many compiler based approaches which can be used to protect backward edges but the only binary
+based approach is from Abadi et al.~\cite{abadi:cfi2}. This solution has:
+(1) a high rumtime overhead ($\ge$ 21\%), 
+(2) is not open source, 
+(3) uses a proprietary binary analysis framework (\textit{i.e.,} Vulcan), and
+(4) uses a restricted number of labels (\text{i.e.,} each function called from inside another function will get the same label stored in all function shadow stacks, see Figure 1 in~\cite{\textsc{TypeShield}}). 
+
+For this reason we propose an alternative backward edge protection solution which is more effective and is more precise.
+In order to show the precision of \textsc{TypeShield} backward edge protection we will give the average wideness between the \textit{max} and 
+\textit{min} addresses for all calltarget return sites contained in the MySQL and Node.js programs.
+
+\begin{table}[H]
+\centering 
+% \resizebox{\columnwidth}{!}{%
+ \begin{tabular}{ l | r | r | r | r } 
+  \textbf{Program}& \#ct return & \#return addresses    & \# addresses total & \textit{max - min}  \\\hline 
+  MySQL           & 192  & 184  & 3   & 1     \\
+  Node.js         & 134  & 131  & 1   & 0     \\
+  geomean         & 160  & 155  & 1   & 1     \\\hline
+\end{tabular}
+\caption{Parameter overestimation for ML-G and REC-G.}
+\label{Parameter overestimation for ML-G and REC-G.}
+% }
+\end{table}
+
+Table~\ref{} 
+
 \subsection{Comparison with Other Tools}
 \label{RQ5: Is TypeShield better than other tools?}
 % \vspace{-.15cm}
@@ -536,7 +594,7 @@ calltarget set per callsite as shown herein.
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r}%
 	\toprule
-	\bfseries Target & IFCC  & TypeArmor  & AT  &  TypeShield (count) & TypeShield (type)% specify table head
+	\bfseries Target & IFCC  & TypeArmor (CFI+CFC)  & AT  &  TypeShield (count) & TypeShield (type)% specify table head
 	\\\midrule
 	\csvreader[before filter=\ifthenelse{\equal{\csvcolii}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/tools_compare.csv}{
 		%1=\target, 2=\opt, 3=\fns, 4=\fnsnotClang, 5=\fnsnotpadyn, 6=\ats, 7=\atnotClang, 8=\atnotpadyn, 9=\cscount, 10=\csClang, 11=\cspadyn
@@ -573,3 +631,75 @@ more with respect to precision than TypeArmor. While we anticipate that it is po
 in our tool, we deem it very hard to compete with IFCC, which can directly operate on the source code level 
 and has access to more possibilities than simply inspecting function parameters or return values.
 Nevertheless, \textsc{TypeShield} represents a strong improvement w.r.t. calltarget per callsite reduction in binary programs.
+
+\subsection{Effectiveness Against COOP}
+\label{Effectiveness Against COOP}
+We investigated the effectiveness of \textsc{TypeShield} against the COOP
+attack by looking at the number of register arguments which can be used to enable 
+data-flow between gadgets. In order to determine how many arguments 
+remain unprotected after we apply the forward edge policy of \textsc{TypeShield}
+we compared the number of parameter overestimation and compare it with the ground truth
+obtained with the help of an LLVM compiler pass. Next we used some heuristics to determine 
+how many ML-G and REC-G callsites exist for each of the C++ only server applications.
+Finally, we compared these results with the one obtained by TypeArmor.
+
+\begin{table}[H]
+\centering 
+% \resizebox{\columnwidth}{!}{%
+ \begin{tabular}{ l | r | r | r | r | r | r | r } 
+                         \multicolumn{8}{c}{\hspace{3cm}\textbf{Overestimation}} \\
+  \textbf{Program}& \#cs & 0    & +1  & +2  & +3  & +4  & +5  \\\hline 
+  MySQL (ML-G)    & 192  & 184  & 3   & 1   & 0   & 1   & 3   \\
+  Node.js (ML-G)  & 134  & 131  & 1   & 0   & 1   & 0   & 1   \\
+  geomean         & 160  & 155  & 1   & 1   & 1   & 1   & 1   \\\hline
+  MySql (REC-G)   & 289  & 273  & 10  & 2   & 3   & 0   & 1   \\
+  Node.js (REC-G) & 72   & 69   & 2   & 0   & 0   & 0   & 1   \\
+  geomean         & 144  & 137  & 4   & 1   & 1   & 1   & 1   \\\hline
+\end{tabular}
+\caption{Parameter overestimation for ML-G and REC-G.}
+\label{Parameter overestimation for ML-G and REC-G.}
+% }
+\end{table}
+Table~\ref{Parameter overestimation for ML-G and REC-G.} depicts the results obtained
+after counting the number of perfectly and overestimation of protected ML-G and 
+REC-G gadgets. As it can be observed we obtained a
+96\% (184 vs. 192) accuracy (geomean) of perfectly protected ML-G callsites for MySQL while
+TypeArmor obtaines for the same program an 94\% accuracy (geomean). Further,
+\textsc{TypeShield} obtained a 97\% (131 vs. 134) accuracy (geomean) for Node.js while TypeArmor
+obtained 95\% accuracy on the same program.
+Further, for the REC-G case \textsc{TypeShield} obtained an
+94\% (273 vs.289) exact argument accuracy for MySQL while TypeArmor had 86\%.
+For Node.js \textsc{TypeShield} obtained an exact parameter 
+matching of 95\% (69 vs. 72) while TypeArmor obtained an 96\% perfect matching.
+
+Overall \textsc{TypeShield}s forward edge policy obtained an perfect accuracy 
+of 95\% while TypeArmor obtained 92\%. While this is not a big difference
+we point out that the remaining overestimated parameters represent 5\% and this 
+do not leave much room for the attacker to perform her attack.
+
+
+\subsection{Mitigation of Advanced Code-Reuse Attacks}
+\label{Mitigation of Advanced Code-Reuse Attacks}
+
+\begin{table}[H]
+\centering 
+% \resizebox{\columnwidth}{!}{%
+ \begin{tabular}{ l  r  r  } 
+  \textbf{Exploit}& Stopped & Remark  \\\hline 
+  COOP ML-G       &         &         \\
+  IE 32 bit       &         &         \\
+  IE 1 64-bit     &         &         \\
+  IE 2 64-bit     &         &         \\
+  Firefox         &         &         \\\hline
+  COOP ML-REC     &         &         \\
+  Chrome          &         &         \\\hline
+  Control Jujutsu &         &         \\
+  Apache          &         &         \\
+  Nginx           &         &         \\\hline
+  Other Backward edge          &         &         \\
+  
+\end{tabular}
+\caption{Parameter overestimation for ML-G and REC-G.}
+\label{Parameter overestimation for ML-G and REC-G.}
+% }
+\end{table}
