@@ -42,12 +42,12 @@
 % since the precomputed CFG does not contain edges for indirect callsites which are explicitly exploited during the COOP attack.
 
 \subsubsection{Binary Based Techniques}
-The following tools address vTable protection through binary instrumentation, 
-but fail to mitigate against COOP: vfGuard~\cite{vfuard:aravind}, and vTint~\cite{vtint:zhang}. 
-The only binary-based tool which we are aware of that can protect against COOP is TypeArmor~\cite{veen:typearmor}. 
+% The following tools address vTable protection through binary instrumentation, 
+% but fail to mitigate against COOP: vfGuard~\cite{vfuard:aravind}, and vTint~\cite{vtint:zhang}.
+
+TypeArmor~\cite{veen:typearmor} is a binary instrumentation tool that can protect against COOP.
 TypeArmor uses a fine-grained CFI policy based on caller/callee (but only indirect callsites) matching, which checks 
 during runtime if the number of provided and needed parameters match.
-
 \textsc{TypeShield} is related to TypeArmor~\cite{veen:typearmor}, since we also enforce strong binary-level 
 invariants on the number of function parameters. Further, \textsc{TypeShield} also aims for exclusive protection 
 against advanced exploitation techniques, which can bypass fine-grained CFI schemes and vTable protections at the 
@@ -56,12 +56,12 @@ only restrict based on the number of parameters, but also on the width of their 
 buckets that in turn can only target a smaller subset of all address-taken functions. 
 %However, we rely for that on the variety of parameter types and when there is none, we will degrade into a parameter count policy.
 
-We are aware that there is still a long research path to go until binary based techniques can 
-recuperate program based semantic information from executable with the same precision as compiler based tools.
-This path could be even endless since compilers are optimized for speed and are designed to remove as much as possible semantic information
-from an executable in order to make the program run as fast as possible. In light of this fact,
-\textsc{TypeShield} is another attempt to recuperate just the needed semantic information (types and number of function parameters from
-indirect callsites) in order to be able to enforce a precise and with low overhead primitive against COOP attacks.
+% We are aware that there is still a long research path to go until binary based techniques can 
+% recuperate program based semantic information from executable with the same precision as compiler based tools.
+% This path could be even endless since compilers are optimized for speed and are designed to remove as much as possible semantic information
+% from an executable in order to make the program run as fast as possible. In light of this fact,
+% \textsc{TypeShield} is another attempt to recuperate just the needed semantic information (types and number of function parameters from
+% indirect callsites) in order to be able to enforce a precise and with low overhead primitive against COOP attacks.
 
 VCI~\cite{vci:asiaccs} is a binary based tool (7.9\%) based on DynInst which can protect forward edge indirect control flow violations based 
 on reconstructing a quasi program class hierarchy (\textit{i.e.,} no class root node and the edges are not directed). The authors claim that 
@@ -74,7 +74,7 @@ No runtime efficiency numbers were provided in the paper.
 The authors claim that Marx can recuperate a class hierarchy which is more precise than that of IDAPro. The paper is geared towards
 first providing a tool which can be used by analyst in order to reverse engineer a binary. The precision of the calltarget set reduction
 per callsite should be similar to those of VCI but no comparison was compared in the paper. Compared to \textsc{TypeShield} 
-Marx can not protect against backward edge violations and arguably suffers from the same limitations as VCI.
+Marx can not protect against backward edge violations and arguably has in common with VCI several limitations.
 
 % VTPin~\cite{vtpin} is a runtime based tool ($\approx$5\%) used for protecting against VTable hijacking, via use-after-free vulnerabilities. VTPin pins
 % all the freed VTable pointers on a safe VTable under VTPin’s control. For each object deallocation, VTPin deallocates all space allocated, but preserves and updates

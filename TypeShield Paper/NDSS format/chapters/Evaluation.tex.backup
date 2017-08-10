@@ -42,7 +42,7 @@ In our evaluation we addressed the following research questions (RQs).
  
  \textbf{RQ9:} Is \textsc{TypeShield} \textbf{effective} against COOP? (\cref{Effectiveness Against COOP})
  
- \textbf{RQ10:} What attacks can \textsc{TypeShield} mitigate? (\cref{Mitigation of Advanced Code-Reuse Attacks})
+ \textbf{RQ10:} What attacks can \textsc{TypeShield} \textbf{mitigate}? (\cref{Mitigation of Advanced Code-Reuse Attacks})
   
 % \end{itemize}
 
@@ -680,3 +680,39 @@ do not leave much room for the attacker to perform her attack.
 
 \subsection{Mitigation of Advanced Code-Reuse Attacks}
 \label{Mitigation of Advanced Code-Reuse Attacks}
+In this section we briefly list all code reuse attacks types that can be 
+stopped  by \textsc{TypeShield}. We want to remark that basically all CFI violating 
+attacks can be mitigated by \textsc{TypeShield}. Non-control flow violating attacks (\textit{i.e.,} data-only attacks)
+are out of scope.
+
+\begin{table}[H]
+\centering 
+% \resizebox{\columnwidth}{!}{%
+ \begin{tabular}{ l  c  p{2.5cm}  } 
+  \textbf{Exploit}& \textbf{Stopped}    & \textbf{Remark}  \\\hline 
+  COOP ML-G          &                  &         \\
+   \ IE 32 bit       & $\times$         & Out of scope        \\
+   \ IE 1 64-bit     & \checkmark (FP)  & Argcount mismatch        \\
+   \ IE 2 64-bit     & \checkmark (FP)  & Argcount mismatch        \\
+   \ Firefox         & \checkmark (FP)  & Argcount mismatch        \\\hline
+  COOP ML-REC        &                  &         \\
+   \ Chrome          & \checkmark (FP)  & Void target where non-void was expected         \\\hline
+  Control Jujutsu    &                  &         \\
+   \ Apache          & \checkmark (FP)  & Target function not AT        \\
+   \ Nginx           & \checkmark (FP)  & Void target where non-void was expected         \\\hline
+  All Backward 
+  edge \\ violating 
+  attacks            & \checkmark (BP)  &         \\
+  
+\end{tabular}
+\caption{Stopped attacks.}
+\label{Stopped attacks.}
+% }
+\end{table}
+
+Table~\ref{Stopped attacks.} depicts several attacks that can be successfully stopped by \textsc{TypeShield}
+by deploying only the forward or the backward policy. 
+Note that FP means forward policy while BP means backward policy. In summary we note that all forward-edge based attacks 
+and backward edge attacks can be successfully mitigated by \textsc{TypeShield} as long these attacks are not 
+aware of the policy in place and thus can be selectively use gadgets which have their start address in the 
+allowed set for the legitimate forward-edge and backward-edge transfers, respectively.
