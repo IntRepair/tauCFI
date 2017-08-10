@@ -18,7 +18,7 @@ in~\cref{Backward Edge Analysis} we highlight our function backward edge analysi
 % \vspace{-1.1em}
 \begin{figure}[!h]
 \centering
-\resizebox{0.25\textwidth}{!}{
+\resizebox{0.2\textwidth}{!}{
 \begin{tikzpicture}
 
 %\fill[black!40!white] (0,0) rectangle (9,9);
@@ -92,7 +92,7 @@ of callsites, which can access the same set of calltargets, a route which we wil
 \label{section:typepolicy}
 \begin{figure}[h!]
 \center
-\resizebox{.77\columnwidth}{!}{
+\resizebox{.65\columnwidth}{!}{
 \begin{tikzpicture}
 
 \fill[black!10!white] (0,7.5) rectangle (12,6);
@@ -147,14 +147,16 @@ of callsites, which can access the same set of calltargets, a route which we wil
 \draw (10,1.5) rectangle node[anchor=center] {\LARGE{64-bits}} (12,0);
 \end{tikzpicture}
 }
-\caption{Our type policy schema for callsites and calltargets. Note that p. means parameter. As it is depicted in this example, when requiring parameter width, one starts at the 
-bottom of the above matrix and grows to the top, as it is always possible to accept more parameters than required.
-Also, the reverse is true for providing parameters, as it is possible to accept less parameters than provided.
-Note that accepting more parameters than provided is not allowed.}
+\caption{Type policy schema for callsites and calltargets.}
 \label{fig:TYPEschema}
 \end{figure}
 
-Figure \ref{fig:TYPEschema} depicts the basic principle of our function parameter type policy.
+Figure~\ref{fig:TYPEschema} depicts the basic principle of our function parameter type policy.
+Note that p. means parameter. As it is depicted in this example, when requiring parameter width, one starts at the 
+bottom of the above matrix and grows to the top, as it is always possible to accept more parameters than required.
+Also, the reverse is true for providing parameters, as it is possible to accept less parameters than provided.
+Note that accepting more parameters than provided is not allowed.
+
 We use the register width as parameter type. As previously mentioned, there are 4 types 
 of reading and writing accesses. Therefore, our set of possible types for parameters is $\texttt{TYPE} = \{64, 32, 16, 8, 0\}$; where 0 models the absence of a 
 parameter. Since Itanium C++ ABI specifies 6 registers (\textit{i.e.,} \texttt{rdi}, \texttt{rsi}, \texttt{rdx}, \texttt{rcx}, \texttt{r8}, and \texttt{r9}) as 
