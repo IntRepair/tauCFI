@@ -1,13 +1,13 @@
 \section{Evaluation}
 \label{chapter:Evaluation}
 We evaluated \textsc{TypeShield} by instrumenting various open source applications and conducting a thorough analysis. Our test sample includes the two 
-FTP server applications \textit{Vsftpd} (v.1.1.0, C) and 
+FTP servers \textit{Vsftpd} (v.1.1.0, C), Pure-ftpd (v.1.0.36, C) and 
 \textit{Proftpd} (v.1.3.3, C), 
 web server Lighttpd (v.1.4.28, C); 
-FTP server Pure-ftpd (v.1.0.36, C) 
 the two database server applications 
 \textit{Postgresql} (v.9.0.10, C) and 
-\textit{Mysql} (v.5.1.65, C++), the memory cache application 
+\textit{Mysql} (v.5.1.65, C++), 
+the memory cache application 
 \textit{Memcached} (v.1.4.20, C), 
 the \textit{Node.js} application server (v.0.12.5, C++). 
 We selected these applications in order to allow for comparison with~\cite{veen:typearmor}. 
@@ -33,16 +33,17 @@ In our evaluation we addressed the following research questions (RQs).
 
 %  \item[
  \textbf{RQ6:} Which \textbf{upper bounds} has \textsc{TypeShield}? (\cref{RQ6:TyperArmor's Imprecise Parameter-Count Policy})\vspace{-.2cm}
+  
+  \textbf{RQ7:} Which \textbf{attacks} mitigates \textsc{TypeShield}? (\cref{RQ7: Mitigation of Advanced Code-Reuse Attacks})\vspace{-.2cm}
+  
+ \textbf{RQ8:} Is \textsc{TypeShield} \textbf{effective} against COOP? (\cref{RQ8: Effectiveness Against COOP})\vspace{-.2cm}
+  
+ %  \item[
+ \textbf{RQ9:} Are other tools \textbf{better} than \textsc{TypeShield}? (\cref{RQ9: Is TypeShield better than other tools?})\vspace{-.2cm}
+
  
-%  \item[
- \textbf{RQ7:} Is shadow-stack \textbf{better} than \textsc{TypeShield}? (\cref{Comparison with SafeStack})\vspace{-.2cm}
- 
-%  \item[
- \textbf{RQ8:} Are other tools \textbf{better} than \textsc{TypeShield}? (\cref{RQ5: Is TypeShield better than other tools?})\vspace{-.2cm}
- 
- \textbf{RQ9:} Is \textsc{TypeShield} \textbf{effective} against COOP? (\cref{Effectiveness Against COOP})\vspace{-.2cm}
- 
- \textbf{RQ10:} Which \textbf{attacks} mitigates \textsc{TypeShield}? (\cref{Mitigation of Advanced Code-Reuse Attacks})\vspace{-.2cm}
+ %  \item[
+ \textbf{RQ10:} Is shadow-stack \textbf{better} than \textsc{TypeShield}? (\cref{RQ10: Comparison with SafeStack})\vspace{-.2cm}
   
 % \end{itemize}
 
@@ -92,7 +93,7 @@ During compilation, we essentially collect three data points for each callsite a
     	
     	}
 %     	}
-	\caption {Table shows the quality of structural matching provided by our automated verify and test environment, 
+	\caption {The quality of structural matching provided by our automated verify and test environment, 
 	regarding callsites and calltargets when compiling with optimization level \texttt{-O2}. The label Clang miss 
 	denotes elements not found in the data-set of the Clang/LLVM pass. The label TypeShield denotes elements not found in the data-set of \textsc{TypeShield}. 
 % 	\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
@@ -107,6 +108,8 @@ Table~\ref{tbl:matchingquality} shows three data points w.r.t. calltargets for t
 (1) Number of comparable calltargets that are found in both datasets, 
 (2) Clang miss: Number of calltargets that are found by \textsc{TypeShield}, but not by our Clang/LLVM pass, and 
 (3) TypeShield miss: Number of calltargets that are found by our Clang/LLVM pass, but not by \textsc{TypeShield}.
+Both columns (Clang miss and TypeShield miss) show a relatively low number of encountered misses. Therefore, we can 
+state that our structural matching between ground truth and \textsc{TypeShield}s callsites is almost perfect.
 
 \textbf{Calltargets.} The obvious choice for structural comparison regarding calltargets is their name, as these are functions. First, we have to remove internal 
 functions from our datasets like the \texttt{\_init} or \texttt{\_fini} functions, which are of no relevance for this investigation. Furthermore, while C functions can
@@ -128,19 +131,16 @@ the compiler, as the IR is transformed into a machine-based representation (MR),
 is not possible with the MR. Therefore, we extract that data directly after the conversion from IR to MR and read the data at the end of the compilation. To not unnecessarily 
 pollute our dataset, we only considered calltargets, which have been found in both datasets. 
 
-Table~\ref{tbl:matchingquality} shows three data points regarding callsites for the optimization level \texttt{-O2}:
-(1) Number of comparable callsites that are found in both datasets,
-(2) Clang miss: Number of callsites that are discarded from the data set of \textsc{TypeShield}, and
-(3) TypeShield miss: Number of callsites that are discarded from the data set of our Clang/LLVM pass.
-Both columns (Clang miss and TypeShield miss) show a relatively low number of encountered misses. Therefore, we can 
-state that our structural matching between ground truth and \textsc{TypeShield}s callsites is almost perfect.
+% Table~\ref{tbl:matchingquality} shows three data points regarding callsites for the optimization level \texttt{-O2}:
+% (1) Number of comparable callsites that are found in both datasets,
+% (2) Clang miss: Number of callsites that are discarded from the data set of \textsc{TypeShield}, and
+% (3) TypeShield miss: Number of callsites that are discarded from the data set of our Clang/LLVM pass.
 
 \subsubsection{Count Based Classification Precision}
 \label{subsection:typeshieldcountprecision}
 
 \texttt{}
-
-\begin{table}[h!]
+\begin{table}[H]
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r|r}%
 	\toprule
@@ -161,8 +161,6 @@ state that our structural matching between ground truth and \textsc{TypeShield}s
 }
 
 \caption {The results for classification of callsites and calltargets using our \textit{count} policy on the \texttt{-O2} optimization level, when comparing to the ground truth obtained by our Clang/LLVM pass.
-The \#cs gt and \#ct gt labels mean total number of callsites and calltarget based on the ground truth, respectively.
-The label perfect args denotes all occurrences when our result and the ground truth perfectly match regarding the required/provided arguments. The label perfect return denotes this for return values. 
 % 		\textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? What is the main thing which can be observed if 
 % 	        looking at this table?}
                 }
@@ -171,6 +169,8 @@ The label perfect args denotes all occurrences when our result and the ground tr
 \end{table}
 Table~\ref{tbl:precisionCOUNT} depicts the number and ratio of perfect 
 classifications and the number and ratio of problematic classifications, which in the case of calltargets refers to overestimations and in case of callsites refers to underestimations.
+The \#cs gt and \#ct gt labels mean total number of callsites and calltarget based on the ground truth, respectively.
+The label perfect args denotes all occurrences when our result and the ground truth perfectly match regarding the required/provided arguments. The label perfect return denotes this for return values. 
 
 \textbf{Calltargets.} For the first experiment we used a union combination operator with an $analyze$ function that follows into occurring direct calls.
 The results indicate a perfect classification of around 86\% while for the returns it is over 68\%.
@@ -183,7 +183,7 @@ The results indicate a rate of perfect classification of over 73\% while for the
 
 \texttt{}
 
-\begin{table}[t!]
+\begin{table}[H]
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|r|r|r|r}%
 
@@ -425,7 +425,7 @@ further a total reduction of more than 87\% (141 vs. 1097) w.r.t. to total numbe
 \end{figure}
 
 Figure~\ref{fig:awesome_image} depicts the runtime overhead obtained by applying \textsc{TypeShield} (forward-edge policy (parameter count and type mode) and backward-edge policy (fast mode))
-to several SPEC CPU2006 benchmarks.
+to several SPEC CPU2006 benchmarks. Unpatched means the original vanilla programs while patched means the programs with the CFI checks inserted.
 The obtained runtime overhead is around 4\% (geomean) when instrumenting the binary with DynInst. 
 One reason for the performance drop includes cache misses introduced by jumping between the old and the new executable section 
 of the binary generated by duplicating and patching. This is necessary, because when
@@ -463,10 +463,11 @@ Finally, this results should not represent an issue for memory resourceful syste
 \textit{}
 
 \begin{figure}[h] 
+% \vspace{-.9cm}
 \hspace{-.3cm}
   \begin{minipage}[b]{1.0\linewidth}
     \centering
-    \resizebox{.8\columnwidth}{!}{\includesvg{svgs/postgresqlO2}}
+    \resizebox{.9\columnwidth}{!}{\includesvg{svgs/postgresqlO2}}
 %     \vspace{-.7cm}
     \caption{CDF for PostgreSQL compiled with Clang \texttt{-O2}.} 
     \label{fig7} 
@@ -501,7 +502,8 @@ depicts the cumulative distribution function (CDF) of the PostgreSQL program whi
 We selected this program randomly from our sample programs. 
 The CDFs depict the number of legal callsite targets and the difference between the type and the count policies. 
 While the count  policies have only a few changes, the number of changes that can be seen within the 
-type policies are vastly higher. The reason for this is fairly straightforward: the number of buckets 
+type policies are vastly higher. The reason for this is fairly straightforward: the number 
+of buckets (\textit{i.e.,} this is the number of equivalence classes)
 that are used to classify the callsites and calltargets is simply higher. While type policies mostly 
 perform better than the count policies, there are still parts within the type plot that are above the 
 count plot, the reason for that is also relatively simple: the maximum number of calltargets a 
@@ -524,7 +526,7 @@ function parameter count checks.
 We believe that their callsite vs. calltarget set enforcing policy is too permissive and thus
 many illegitimate indirect forward edge based control flow transfers are possible. 
 
-Let us consider the following example, where each callsite is
+Let us consider the following theoretical example, where each callsite is
 preparing, say, $p=6 \in [1, 6]$ parameters. Then TypeArmor policy would allow calltargets which consume the same number of parameters as
 prepared, $c=6 \in [1, 6]$ or a lower value. Thus all possible numerical parameter mismatches are allowed by TypeArmors policy as long
 as $p$ is greater or equal than $c$.
@@ -555,62 +557,103 @@ Finally, as it can be observed TypeArmor is too permissive (see also Figure H.1~
 we present \textsc{TypeShield}, a more precise alternative. \textsc{TypeShield} can deal with the aforementioned 4 types of register widths and can further reduce the the legitimate
 calltarget set per callsite as shown herein.
 
-\subsection{Backward-edge Comparison with Shadow-Stack (RQ7)}
-\label{Comparison with SafeStack}
-There are several tools which provide shadow-stack protection as for example 
-the original shadow-stack implementation from Abadi~\cite{abadi:cfi2}(binary-based), SafeStack~\cite{volodymyr:cpi} (compiler based and bypassed~\cite{safestack:bypassing}), 
-MoCFI~\cite{mcfi:niu} (compiler based), HAFIX~\cite{hafix} (compiler based and bypassed~\cite{hafix:bypass}), and 
-also PathArmor~\cite{veen:cfi} (similarly by-passable as kBouncer, ROPecker, and ROPGuard~\cite{schuster:raid} as it relies on a capacity restricted LBR register.)
-which emulates a shadow stack trough validation of the last-branch register (LBR).
-Further, there are many compiler based approaches which can be used to protect backward edges. 
-
-The only binary
-based approach is the one from Abadi et al.~\cite{abadi:cfi2}. This solution has:
-(1) a high rumtime overhead ($\ge$ 21\%), 
-(2) is not open source, 
-(3) uses a proprietary binary analysis framework (\textit{i.e.,} Vulcan), and
-(4) uses a restricted number of labels, \textit{i.e.,} each function called from inside a function will get the same label. This label will be 
-stored in all function shadow stacks, see Figure 1 in~\cite{abadi:cfi2}. 
-
-For this reason we propose an alternative backward-edge protection solution which is more runtime efficient.
-In order to show the precision of \textsc{TypeShield} backward edge protection we will give the average number of legitimate return addresses for each calltarget return address 
-and relate it to the total number of available addresses without any protection.
+\subsection{Mitigation of Advanced Code-Reuse Attacks (RQ7)}
+\label{RQ7: Mitigation of Advanced Code-Reuse Attacks}
+In this section we briefly list all code reuse attacks types that can be 
+stopped  by \textsc{TypeShield}. We want to remark that basically all CFI violating 
+attacks can be mitigated by \textsc{TypeShield}. Non-control flow violating attacks (\textit{i.e.,} data-only attacks)
+are out of scope.
 
 \begin{table}[H]
 \centering 
 % \resizebox{\columnwidth}{!}{%
- \begin{tabular}{ l | p{.5cm}  | p{.5cm}  | p{1.5cm}  | p{1.8cm} } 
-  \textbf{Program}  & Total \#RA    & Total \#RATs  & Total \#RATs/RA  & \%RATs/RA w.r.t. prog. binary \\\hline 
-  MySQL             & 5896          & 3792          & 0.64             & 0.014\%                       \\
-  Node.js           & 7230          & 3864          & 0.53             & 0.011\%                       \\
-  geomean           & 6529          & 3827          & 0.58             & 0.012\%                       \\\hline
+\begin{threeparttable}
+ \begin{tabular}{ l  c  p{2.5cm}  } 
+  \textbf{Exploit}                      & \textbf{Stopped}      & \textbf{Remark}  \\\hline 
+  COOP ML-G~\cite{schuster:coop}        &                  &         \\
+   \ IE 32 bit                          & $\times$         & Out of scope        \\
+   \ IE 1 64-bit                        & \checkmark (FP)  & Argcount mismatch        \\
+   \ IE 2 64-bit                        & \checkmark (FP)  & Argcount mismatch        \\
+   \ Firefox                            & \checkmark (FP)  & Argcount mismatch        \\\hline
+  COOP ML-REC~\cite{crane:readactor++}  &                  &         \\
+   \ Chrome                             & \checkmark (FP)  & Void target where non-void was expected         \\\hline
+  Control Jujutsu~\cite{jujutsu}        &                  &         \\
+   \ Apache                             & \checkmark (FP)  & Target function not AT        \\
+   \ Nginx                              & \checkmark (FP)  & Void target where non-void was expected         \\\hline
+  All Backward 
+  edge \\ violating 
+  attacks                               & \checkmark (BP)  & (1)\tnote{a} \ or (2)\tnote{b} \ or (3)\tnote{c}.
+  
 \end{tabular}
-% Node
-% 27 Mil. 100%
-% 3792 x
-% MySQL
-% 35 Mil. 100%
-% 3864    x
-\caption{Backward-edge policy statistics.}
-\label{Backward-edge policy statistics.}
+\begin{tablenotes}
+  \item[a] Jump to an address that is $\notin$ in the $max - min$ address range.
+  \item[b] Jump to an address which is $\ne$ to one of the legitimate addresses.
+  \item[c] Jump to an address label that is $\ne$ with the calltarget return label.
+  \end{tablenotes}
+  \end{threeparttable}
+\caption{Stopped attacks.}
+\label{Stopped attacks.}
 % }
 \vspace{-.5cm}
 \end{table}
 
-Table~\ref{Backward-edge policy statistics.} depicts the statistics w.r.t. the backward edge policy legitimate return targets.
-In Table~\ref{Backward-edge policy statistics.} we use the following abbreviations:
-total number of return addresses (Total \#RA),
-total (median) number of return address targets (Total \#RATs),
-total (median) number of return addresses targets per return addresses (Total. \# RATs/RA),
-percent of legitimate return address targets per return addresses w.r.t. the total number of addresses in the program binary (\% RATs/RA w.r.t. program binary).
-By applying \textsc{TypeShield} backward-edge policy we obtain a reduction of 0.43 (1-0.58) ratio (geomean)
-of total number of return addresses targets per return addresses over total number of return addresses which means that only 43\% of the total number of return addresses are actual targets
-for the function returns. The results indicate a percentage of 0.012\% (geomean) of the total addresses in the program binaries are legitimate targets for the function returns. This means
-that our policy can eliminate 99.98\% (100 - 0.012) of the addresses which an attacker can use for his attack inside the binary.
+Table~\ref{Stopped attacks.} depicts several attacks that can be successfully stopped by \textsc{TypeShield}
+by deploying only the forward-edge or the backward-edge policy. 
+In Table~\ref{Stopped attacks.} the FP label means forward-edge policy while BP means backward-edge policy. 
+In summary, all forward-edge based attacks 
+and backward edge attacks can be successfully mitigated by \textsc{TypeShield} as long these attacks are not 
+aware of the policy in place and thus can not selectively use gadgets which have their start address in the 
+allowed set for the legitimate forward-edge and backward-edge transfers, respectively.
 
-\subsection{Forward-Edge Comparison with Other Tools (RQ8)}
-\label{RQ5: Is TypeShield better than other tools?}
-% \vspace{-.15cm}
+\subsection{Effectiveness Against COOP (RQ8)}
+\label{RQ8: Effectiveness Against COOP}
+We investigated the effectiveness of \textsc{TypeShield} against the COOP
+attack by looking at the number of register arguments which can be used to enable 
+data-flow between gadgets. In order to determine how many arguments 
+remain unprotected after we apply the forward edge policy of \textsc{TypeShield}
+we compared the number of parameter overestimation and compare it with the ground truth
+obtained with the help of an LLVM compiler pass. Next we used some heuristics to determine 
+how many ML-G and REC-G callsites exist for each of the C++ only server applications.
+Finally, we compared these results with the one obtained by TypeArmor.
+
+\begin{table}[H]
+\centering 
+% \resizebox{\columnwidth}{!}{%
+ \begin{tabular}{ l | r | r | r | r | r | r | r } 
+                         \multicolumn{8}{c}{\hspace{3cm}\textbf{Overestimation}} \\
+  \textbf{Program}& \#cs & 0    & +1  & +2  & +3  & +4  & +5  \\\hline 
+  MySQL (ML-G)    & 192  & 184  & 3   & 1   & 0   & 1   & 3   \\
+  Node.js (ML-G)  & 134  & 131  & 1   & 0   & 1   & 0   & 1   \\
+  geomean         & 160  & 155  & 1   & 1   & 1   & 1   & 1   \\\hline
+  MySql (REC-G)   & 289  & 273  & 10  & 2   & 3   & 0   & 1   \\
+  Node.js (REC-G) & 72   & 69   & 2   & 0   & 0   & 0   & 1   \\
+  geomean         & 144  & 137  & 4   & 1   & 1   & 1   & 1   \\\hline
+\end{tabular}
+\caption{Parameter overestimation for ML-G and REC-G.}
+\label{Parameter overestimation for ML-G and REC-G.}
+% }
+\vspace{-.5cm}
+\end{table}
+Table~\ref{Parameter overestimation for ML-G and REC-G.} depicts the results obtained
+after counting the number of perfectly and overestimation of protected ML-G and 
+REC-G gadgets. As it can be observed we obtained a
+96\% (184 vs. 192) accuracy (geomean) of perfectly protected ML-G callsites for MySQL while
+TypeArmor obtaines for the same program an 94\% accuracy (geomean). Further,
+\textsc{TypeShield} obtained a 97\% (131 vs. 134) accuracy (geomean) for Node.js while TypeArmor
+obtained 95\% accuracy on the same program.
+Further, for the REC-G case \textsc{TypeShield} obtained an
+94\% (273 vs.289) exact argument accuracy for MySQL while TypeArmor had 86\%.
+For Node.js \textsc{TypeShield} obtained an exact parameter 
+matching of 95\% (69 vs. 72) while TypeArmor obtained an 96\% perfect matching.
+
+Overall \textsc{TypeShield}s forward edge policy obtained an perfect accuracy 
+of 95\% while TypeArmor obtained 92\%. While this is not a big difference
+we point out that the remaining overestimated parameters represent 5\% and this 
+do not leave much room for the attacker to perform her attack.
+
+\subsection{Forward-Edge Comparison with Other Tools (RQ9)}
+\label{RQ9: Is TypeShield better than other tools?}
+\vspace{-.5cm}
 
 \texttt{}
 
@@ -657,96 +700,57 @@ Finally, \textsc{TypeShield} represents a strong improvement w.r.t. calltarget p
 % and has access to more possibilities than simply inspecting function parameters or return values.
 % Nevertheless, \textsc{TypeShield} represents a strong improvement w.r.t. calltarget per callsite reduction in binary programs.
 
-\subsection{Effectiveness Against COOP (RQ9)}
-\label{Effectiveness Against COOP}
-We investigated the effectiveness of \textsc{TypeShield} against the COOP
-attack by looking at the number of register arguments which can be used to enable 
-data-flow between gadgets. In order to determine how many arguments 
-remain unprotected after we apply the forward edge policy of \textsc{TypeShield}
-we compared the number of parameter overestimation and compare it with the ground truth
-obtained with the help of an LLVM compiler pass. Next we used some heuristics to determine 
-how many ML-G and REC-G callsites exist for each of the C++ only server applications.
-Finally, we compared these results with the one obtained by TypeArmor.
+\subsection{Backward-edge Comparison with Shadow-Stack (RQ10)}
+\label{RQ10: Comparison with SafeStack}
+There are several tools which provide shadow-stack protection as for example 
+the original shadow-stack implementation from Abadi~\cite{abadi:cfi2}(binary-based), SafeStack~\cite{volodymyr:cpi} (compiler based and bypassed~\cite{safestack:bypassing}), 
+MoCFI~\cite{mcfi:niu} (compiler based), HAFIX~\cite{hafix} (compiler based and bypassed~\cite{hafix:bypass}), and 
+also PathArmor~\cite{veen:cfi} (similarly by-passable as kBouncer, ROPecker, and ROPGuard~\cite{schuster:raid} as it relies on a capacity restricted LBR register.)
+which emulates a shadow stack trough validation of the last-branch register (LBR).
+Further, there are many compiler based approaches which can be used to protect backward edges. 
+
+The only binary
+based shadow-stack approach is the one from Abadi et al.~\cite{abadi:cfi2}. This solution has:
+(1) a high rumtime overhead ($\ge$ 21\%), 
+(2) is not open source, 
+(3) uses a proprietary binary analysis framework (\textit{i.e.,} Vulcan), and
+(4) uses a restricted number of labels, \textit{i.e.,} each function called from inside a function will get the same label. This label will be 
+stored in all function shadow stacks, see Figure 1 in~\cite{abadi:cfi2}. 
+
+For this reason we propose an alternative backward-edge protection solution which is more runtime efficient.
+In order to show the precision of \textsc{TypeShield} backward edge protection we will give the average number of legitimate return addresses for each calltarget return address 
+and relate it to the total number of available addresses without any protection.
 
 \begin{table}[H]
 \centering 
 % \resizebox{\columnwidth}{!}{%
- \begin{tabular}{ l | r | r | r | r | r | r | r } 
-                         \multicolumn{8}{c}{\hspace{3cm}\textbf{Overestimation}} \\
-  \textbf{Program}& \#cs & 0    & +1  & +2  & +3  & +4  & +5  \\\hline 
-  MySQL (ML-G)    & 192  & 184  & 3   & 1   & 0   & 1   & 3   \\
-  Node.js (ML-G)  & 134  & 131  & 1   & 0   & 1   & 0   & 1   \\
-  geomean         & 160  & 155  & 1   & 1   & 1   & 1   & 1   \\\hline
-  MySql (REC-G)   & 289  & 273  & 10  & 2   & 3   & 0   & 1   \\
-  Node.js (REC-G) & 72   & 69   & 2   & 0   & 0   & 0   & 1   \\
-  geomean         & 144  & 137  & 4   & 1   & 1   & 1   & 1   \\\hline
+ \begin{tabular}{ l | p{.5cm}  | p{.5cm}  | p{1.5cm}  | p{1.8cm} } 
+  \textbf{Program}  & Total \#RA    & Total \#RATs  & Total \#RATs/RA  & \%RATs/RA w.r.t. prog. binary \\\hline 
+  MySQL             & 5896          & 3792          & 0.64             & 0.014\%                       \\
+  Node.js           & 7230          & 3864          & 0.53             & 0.011\%                       \\
+  geomean           & 6529          & 3827          & 0.58             & 0.012\%                       \\\hline
 \end{tabular}
-\caption{Parameter overestimation for ML-G and REC-G.}
-\label{Parameter overestimation for ML-G and REC-G.}
-% }
-\vspace{-.5cm}
-\end{table}
-Table~\ref{Parameter overestimation for ML-G and REC-G.} depicts the results obtained
-after counting the number of perfectly and overestimation of protected ML-G and 
-REC-G gadgets. As it can be observed we obtained a
-96\% (184 vs. 192) accuracy (geomean) of perfectly protected ML-G callsites for MySQL while
-TypeArmor obtaines for the same program an 94\% accuracy (geomean). Further,
-\textsc{TypeShield} obtained a 97\% (131 vs. 134) accuracy (geomean) for Node.js while TypeArmor
-obtained 95\% accuracy on the same program.
-Further, for the REC-G case \textsc{TypeShield} obtained an
-94\% (273 vs.289) exact argument accuracy for MySQL while TypeArmor had 86\%.
-For Node.js \textsc{TypeShield} obtained an exact parameter 
-matching of 95\% (69 vs. 72) while TypeArmor obtained an 96\% perfect matching.
-
-Overall \textsc{TypeShield}s forward edge policy obtained an perfect accuracy 
-of 95\% while TypeArmor obtained 92\%. While this is not a big difference
-we point out that the remaining overestimated parameters represent 5\% and this 
-do not leave much room for the attacker to perform her attack.
-
-\subsection{Mitigation of Advanced Code-Reuse Attacks (RQ10)}
-\label{Mitigation of Advanced Code-Reuse Attacks}
-In this section we briefly list all code reuse attacks types that can be 
-stopped  by \textsc{TypeShield}. We want to remark that basically all CFI violating 
-attacks can be mitigated by \textsc{TypeShield}. Non-control flow violating attacks (\textit{i.e.,} data-only attacks)
-are out of scope.
-
-\begin{table}[H]
-\centering 
-% \resizebox{\columnwidth}{!}{%
-\begin{threeparttable}
- \begin{tabular}{ l  c  p{2.5cm}  } 
-  \textbf{Exploit}                      & \textbf{Stopped}      & \textbf{Remark}  \\\hline 
-  COOP ML-G~\cite{schuster:coop}        &                  &         \\
-   \ IE 32 bit                          & $\times$         & Out of scope        \\
-   \ IE 1 64-bit                        & \checkmark (FP)  & Argcount mismatch        \\
-   \ IE 2 64-bit                        & \checkmark (FP)  & Argcount mismatch        \\
-   \ Firefox                            & \checkmark (FP)  & Argcount mismatch        \\\hline
-  COOP ML-REC~\cite{crane:readactor++}  &                  &         \\
-   \ Chrome                             & \checkmark (FP)  & Void target where non-void was expected         \\\hline
-  Control Jujutsu~\cite{jujutsu}        &                  &         \\
-   \ Apache                             & \checkmark (FP)  & Target function not AT        \\
-   \ Nginx                              & \checkmark (FP)  & Void target where non-void was expected         \\\hline
-  All Backward 
-  edge \\ violating 
-  attacks                               & \checkmark (BP)  & (1)\tnote{a} \ or (2)\tnote{b} \ or (3)\tnote{c}.
-  
-\end{tabular}
-\begin{tablenotes}
-  \item[a] Jump to an address that is $\notin$ in the $max - min$ address range.
-  \item[b] Jump to an address which is $\ne$ to one of the legitimate addresses.
-  \item[c] Jump to an address label that is $\ne$ with the calltarget return label.
-  \end{tablenotes}
-  \end{threeparttable}
-\caption{Stopped attacks.}
-\label{Stopped attacks.}
+% Node
+% 27 Mil. 100%
+% 3792 x
+% MySQL
+% 35 Mil. 100%
+% 3864    x
+\caption{Backward-edge policy statistics.}
+\label{Backward-edge policy statistics.}
 % }
 \vspace{-.5cm}
 \end{table}
 
-Table~\ref{Stopped attacks.} depicts several attacks that can be successfully stopped by \textsc{TypeShield}
-by deploying only the forward-edge or the backward-edge policy. 
-In Table~\ref{Stopped attacks.} the FP label means forward-edge policy while BP means backward-edge policy. 
-In summary, all forward-edge based attacks 
-and backward edge attacks can be successfully mitigated by \textsc{TypeShield} as long these attacks are not 
-aware of the policy in place and thus can not selectively use gadgets which have their start address in the 
-allowed set for the legitimate forward-edge and backward-edge transfers, respectively.
+Table~\ref{Backward-edge policy statistics.} depicts the statistics w.r.t. the backward edge policy legitimate return targets.
+In Table~\ref{Backward-edge policy statistics.} we use the following abbreviations:
+total number of return addresses (Total \#RA),
+total (median) number of return address targets (Total \#RATs),
+total (median) number of return addresses targets per return addresses (Total. \# RATs/RA),
+percent of legitimate return address targets per return addresses w.r.t. the total number of addresses in the program binary (\% RATs/RA w.r.t. program binary).
+By applying \textsc{TypeShield} backward-edge policy we obtain a reduction of 0.43 ($1-0.58$) ratio (geomean)
+of total number of return addresses targets per return addresses over total number of return addresses which means that only 43\% of the total number of return addresses are actual targets
+for the function returns. The results indicate a percentage of 0.012\% (geomean) of the total addresses in the program binaries are legitimate targets for the function returns. This means
+that our policy can eliminate 99.98\% (100\% - 0.012\%) of the addresses which an attacker can use for his attack inside the program binary.
+
+

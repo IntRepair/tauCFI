@@ -1,7 +1,7 @@
 \section{Implementation}
 \label{chapter:Implementation}
 
-We implemented \textsc{TypeShield} using the DynInst (v.9.2.0) instrumentation framework. We currently restricted our analysis and instrumentation to x86-64 
+We implemented \textsc{TypeShield} using the DynInst~\cite{bernat:dyninst} (v.9.2.0) instrumentation framework. We currently restricted our analysis and instrumentation to x86-64 
 bit elf binaries using the Itanium C++ ABI call convention.
 We focused on the Itanium C++ ABI call 
 convention as most C/C++ compilers on Linux implement this ABI, however, we encapsulated most ABI-dependent behavior, so it should be 

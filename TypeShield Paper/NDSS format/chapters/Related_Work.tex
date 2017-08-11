@@ -5,7 +5,7 @@
 % \label{Type-Inference on Executables}
 % Recovering variable types from executable programs
 % is very hard in general for several reasons. 
-% First, the quality of the disassembly can very much from used
+% First, the quality of the disassembly can vary much from used
 % framework to another. \textsc{TypeShield} is based on DynInst 
 % and the quality of the executable disassembly fits our needs. 
 % For a more comprehensive review on the capabilities of DynInst and other tools we
@@ -100,11 +100,12 @@ Marx can not protect against backward edge violations and arguably has in common
 % Such tools are: ShrinkWrap~\cite{haller:shrinkwrap}, IFCC/VTV~\cite{vtv:tice}, 
 % SafeDispatch~\cite{safedispatch:jang}, vTrust~\cite{zhang:vtrust}, Readactor++~\cite{crane:readactor++}, CPI~\cite{volodymyr:cpi} and the
 % tool presented by VTI~\cite{bounov:interleaving}. These tools profit from high precision
-% since they have access to the full semantic context of the program though the scope
+% since they have access to the full semantic context of the program trhough the scope
 % of the compiler on which they are based. 
 % Because of this reason, these tools target mostly other types of security problems than binary-based 
 % tools address. For example, some of the last advancements in compiler based protection against code reuse attacks address mainly performance issues.
-% Currently, most of the above presented tools are only forward edge enforcers of fine-grained CFI policies with an overhead from 1\% up to 15\%.
+% Currently, most of the above presented tools are only forward edge enforcers of fine-grained CFI policies with 
+% an overhead from 1\% up to 15\% (see \cite{cfi_survey_payer} for more details).
 % 
 % \subsubsection{Runtime Based Techniques}
 % Several promising runtime-based defenses against advanced CRAs exist but currently none of them can successfully
@@ -118,7 +119,7 @@ Marx can not protect against backward edge violations and arguably has in common
 % 
 % Windows Control Flow Guard~\cite{windows:cfguard} is based on a user-space and kernel-space components which
 % by working closely together can enforce an efficient fine-grained CFI policy based on a precomputed CFG.
-% These new feature available in Windows 10 can considerably rise the bar for future attacks but in our opinion advanced CRAs
+% These new feature available in Windows 10 can considerably raise the bar for future attacks but in our opinion advanced CRAs
 % such as COOP are still possible due the typical characteristics of COOP.
 % 
 % PathArmor~\cite{veen:cfi} is yet another tool which is based on a precomputed CFG and on the LBR register which can give a string of 16 up to
