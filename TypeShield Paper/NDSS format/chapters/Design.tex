@@ -1112,21 +1112,34 @@ function boundaries (\textit{e.g.,}~\cite{function:boundary}) exist, and plan to
 
 \subsubsection{Enforcing The Backward Edge Policy}
 The previously determined $rMap$ in Algorithm~\ref{alg:returns} will be used to insert a check before each 
-function return present in the $rMap$. We propose two modes of operation based on two types
-of checks which can be inserted before each function return instruction, depending on specific needs.
+function (calltarget) return present in the $rMap$. We propose three modes of operation based on three types
+of checks which can be inserted before each function return instruction. Depending on the specific needs
+one of the following modes of operation can be selected.
 
-\textbf{Fast path.} Based on the $rMap$ for each function return the minimum and the maximum address out of the return set for a particular 
- $rAdress$ return address will be determined. Next, these two values will be used to insert a range check having as left and right boundaries these
- two values. Before the return instruction of the function is executed the value of the function return is compared against these two values previously
- mentioned. In case the check fails than the program will be terminated else the indirect control flow transfer will be allowed.
- Note that this check has insignificant runtime overhead but on the other side it could contain not legitimate return addresses depending 
- on the entropy of the $rAddress$es.
- 
-\textbf{Slow path.} Based on the $rMap$ for each function return a series of comparison checks are inserted in the binary. 
+\textbf{Slow mode.} Based on the $rMap$, before each AT function return a series of comparison checks are inserted in the binary. 
  Before the return instruction of the function a series of comparison checks between the appropriate 
  addresses stored in $rMap$ and the address where the function wants to return are performed. In case one of the check fails than the 
  program will be terminated. The total number of comparison checks added is equal to the size of return address set which contains $rTarget$ values. 
  Note that these types of checks are precise since only legitimate addresses are allowed but on the other side the runtime overhead is higher than in the 
  case of the fast path because the number of checks is in general higher.
+ 
+\textbf{Fast mode.} Based on the $rMap$, before each AT function return a randomly generated label (\textit{i.e.,} the value 7232943 loaded trough one level of indirection) 
+value will be inserted. The same label will be inserted before each legitimate (\textit{i.e.,} based on the forward-edge policy) target address (next address after a legitimate callsite) of the function return. 
+In this way a function return will be allowed to jump to only the instruction which follows next to the 
+address of the callsites which are allowed to call the calltarget which contains this particular function return. 
+For callsites which are allowed to call the the calltarget mentioned and another calltarget than in this cases \textsc{TypeShield} will perform a search in order to detect if the callsite
+has already a label attached to the next address after the callsite. In this case the label will be reused. In this situation two callsites share their labels. The solution to this is to 
+use single labels for each function return address. In this case multiple labels have to be stored for each address following a legitimate callsite.
+Further, addresses located after a callsite that are not allowed to call a particular calltarget will get another randomly generated label. 
+In this way calltarget return labels are grouped together based on the $rMap$. This mode allows 
+at least (additionally the callsites which are allowed to call more than one calltarget are added) the same number of function return sites as the 
+forward-edge policy enforces for each callsite and it is runtime efficient since label checking is based on a single compare check.
+ 
+\textbf{Super fast mode.} Based on the $rMap$, for each AT function return the minimum and the maximum address out of the return set for a particular 
+ $rAdress$ return address will be determined. Next, these two values will be used to insert a range check having as left and right boundaries these
+ two values. Before the return instruction of the function is executed the value of the function return is compared against these two values previously
+ mentioned. In case the check fails than the program will be terminated else the indirect control flow transfer will be allowed.
+ Note that this check has insignificant runtime overhead but on the other side it could contain not legitimate return addresses depending 
+ on the entropy of the $rAddress$es. In short, this means that as far as the $min$ and $max$ addresses are from each other the more leeway the attacker will have. 
 
 

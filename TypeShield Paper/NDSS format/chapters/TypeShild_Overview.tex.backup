@@ -1,11 +1,10 @@
-
-
-\section{Overview}
+\section{Overview an Threat Model}
 \label{chapter:TypeShild Overview}
-In this section, we present the invariants for calltargets and callsites in~\cref{Invariants for Targets and Callsites}, and 
-in~\cref{TypeShield Policy Mechanism} we present our function parameter type aware policy, while
-in~\cref{Backward Edge CFI Policy} we highlight our backward edge protection policy. 
-Finally, in~\cref{TypeShild Impact on COOP} we talk about parameter count vs. parameter type policies.
+In this section, we introduce the threat model used in this word in~\cref{Adversary Model}, and in
+in~\cref{Invariants for Targets and Callsites} we present the invariants for calltargets and callsites, while 
+in~\cref{TypeShield Policy Mechanism} we present our function parameter type aware policy.
+Finally, in~\cref{Backward Edge CFI Policy} we highlight our backward edge protection policy. 
+% Finally, in~\cref{TypeShild Impact on COOP} we talk about parameter count vs. parameter type policies.
 
 \begin{center}
 \begin{figure*}[t!]
@@ -26,6 +25,19 @@ Finally, in~\cref{TypeShild Impact on COOP} we talk about parameter count vs. pa
     \label{System overview.}
  \end{figure*}
 \end{center}
+
+\subsection{Threat Model}
+\label{Adversary Model}
+
+We align our threat model with the same basic assumptions as described in~\cite{veen:typearmor}. 
+More precisely, we assume a resourceful attacker that has read and write access to the data 
+sections of the attacked program binary. We also assume that the protected binary does not contain 
+self-modifying code, handcrafted assembly or any kind of obfuscation. We also consider pages 
+to be either writable or executable but not both at the same time. Further, we assume 
+that the attacker has the ability to execute a memory corruption to hijack the program
+control flow. Finally, the analyzed program binary is not hand-crafted and the compiler
+which was used to generate the binary adheres to one of the 
+standard calling conventions mentioned in the first section of this paper.
 
 \subsection{Invariants}
 % \textbf{Invariants for Targets and Callsites.}

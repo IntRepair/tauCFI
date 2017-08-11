@@ -165,14 +165,15 @@ This further helps to reduce the possible target set of callees for each callsit
 
 \textbf{\textit{Backward Edge Policy.}}~~\textsc{TypeShield} uses a forward edge based propagation analysis used to determine a 
 set of possible return addresses for function returns which follow the caller calle function calling convention.
-The policy is implemented as (1) a fast mode where a range is determined for each function return formed by the minimum and maximum value and
-as (2) slow mode where each return address of a function return is compared individually with the return address where
-the calltarget (i.e., function) wants to return.
-This represents a fine-grained alternative to SafeStack which was recently bypassed~\cite{safestack:bypassing}.
+The backward-edge policy is available in three modes: 
+(1) super fast mode, a range is imposed for each AT function return formed by the minimum and maximum legitimate addresses,
+(2) fast mode, each AT function return contains a label value which is compared against several return targets labels, and
+(3) slow mode, each AT function return address is compared individually with each legitimate return address target where the calltarget (\textit{i.e.,} function return) wants to return to.
+This backward-edge policy modes represent effective fine-grained SafeStack~\cite{volodymyr:cpi} (\textit{i.e.,} compiler based protection recently bypassed~\cite{safestack:bypassing}.) alternatives. 
 
-\textbf{\textit{Comparison.}}~\textsc{TypeShield} uses partially different basic block analysis strategies than TypeArmor,
+\textbf{\textit{Comparison.}}~\textsc{TypeShield} uses different basic block analysis strategies than TypeArmor,
 and no control flow graph as TypeArmor does. Further,~\textsc{TypeShield}
-disallows an forward indirect call transfer where the types of the arguments provided are not super 
+disallows a forward indirect call transfer where the types of the arguments provided are not super 
 types of the arguments expected at the target. Also, it disallows backward edge indirect control flow transfers which do not 
 point to addresses located after a callsite which is allowed to call the function (calltarget) containing the function 
 return (backward edge starting point).
@@ -180,7 +181,7 @@ Further, similar to TypeArmor, \textsc{TypeShield} disallows forward indirect co
 prepares fewer arguments than the target callee consumes since otherwise it would risk breaking the binary.
 This invariants are used to enforce that each callsite targets only a strict calltarget set.
 Finally, the program binary hardened by \textsc{TypeShield} contains a considerably reduced available calltarget set per callsite 
-and return set per function returnsite, thus drastically limiting an attacker in his capabilities.
+and return set per function return site, thus drastically reducing the attacker leeway.
 
 % \textbf{Contributions.} 
 In summary, we make the following contributions:
@@ -225,7 +226,7 @@ In summary, we make the following contributions:
 
 %short version
 \label{Contribution}
-\begin{itemize}
+\begin{itemize}[leftmargin=.35cm]
 
  \item \textbf{Novel CFI-based protection technique.} We designed a novel fine-grained CFI technique for protecting forward and backward edges in a CFG
  against code reuse attacks.

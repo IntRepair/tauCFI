@@ -235,12 +235,12 @@ research results that the overhead incurred by these security checks can be very
 performed during runtime. Therefore, in our opinion, despite its security benefit these types of checks cannot be applied to high performance applications.
 
 A number of other highly promising tools (albeit also not deployed in practice) can overcome some of the drawbacks of the previously described tools. 
-Bounov \textit{et al.}~\cite{bounov:interleaving} presented a tool ($\approx$ 1\% runtime overhead)
+Bounov \textit{et al.}~\cite{bounov:interleaving} presented a tool ($\approx$1\% runtime overhead)
 for indirect forward-edge callsite checking based on virtual table layout interleaving. The tool has better performance than VTV and better precision with
 respect to allowed virtual tables per indirect callsite. Its precision (selecting legitimate virtual tables for each callsite) compared to ShrinkWrap is
 lower since it does not consider virtual table inheritance paths. vTrust~\cite{zhang:vtrust} (average runtime overhead 2.2\%) enforces two layers of defense
 (virtual function type enforcement and virtual table pointer sanitization) against virtual table corruption, injection and reuse. TypeArmor~\cite{veen:typearmor}
-($\le$ than 3 \% runtime overhead) enforces a CFI-policy based on runtime checking of caller/callee pairs and function parameter count matching. It is important to note 
+(around 3\% runtime overhead) enforces a CFI-policy based on runtime checking of caller/callee pairs and function parameter count matching. It is important to note 
 that there are no C++ language semantics which can be used to enforce type and parameter count matching for indirect caller/callee pairs, this could be addressed
 with specifically intended language constructs in the future.
 
