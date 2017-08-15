@@ -31,8 +31,8 @@
 
 % \subsection{Mitigation of Advanced CRAs}
 % \textbf{Mitigation of Forward-Edge based Attacks.}
-\subsection{Mitigation of Forward-Edge based Attacks.}
-\label{Mitigation of Advanced Code-Reuse Attacks}
+% \subsection{Mitigation of Forward-Edge based Attacks.}
+% \label{Mitigation of Advanced Code-Reuse Attacks}
 % Recursive-COOP~\cite{crane:readactor++}, COOP~\cite{schuster:coop}, Subversive-C~\cite{subversive-c:lettner} and the attack of Lan \textit{et al.}~\cite{loop:oriented} are 
 % forward-edge based CRAs which cannot be addressed with:
 % (i)  shadow stacks techniques and hardware-based approaches such as Intel CET~\cite{intel:cet} (\textit{i.e.,} since advanced COOP do not violate 
@@ -41,7 +41,7 @@
 % (iii) OS-based approaches such as Windows Control Flow Guard~\cite{windows:cfguard} 
 % since the precomputed CFG does not contain edges for indirect callsites which are explicitly exploited during the COOP attack.
 
-\subsubsection{Binary Based Techniques}
+\subsubsection{Forward-edge Based Binary Tools}
 % The following tools address vTable protection through binary instrumentation, 
 % but fail to mitigate against COOP: vfGuard~\cite{vfuard:aravind}, and vTint~\cite{vtint:zhang}.
 
@@ -167,7 +167,8 @@ Marx can not protect against backward edge violations and arguably has in common
 % techniques and tools can be used to mitigate COOP attacks.
 % 
 
-\subsection{Mitigation of Backward-Edge based Attacks.}
+% \subsection{Mitigation of Backward-Edge based Attacks.}
+\subsubsection{Backward-edge Based Binary Tools}
 Backward-Edge based code reuse attacks exploit the indirection provided by the return instructions 
 of a function. Usually each modern compiler builds caller/callee pairs by adhering to the so called caller-callee
 calling convention. This calling convention basically specifies that for each indirect call the return address of the function which returns after 
@@ -180,9 +181,8 @@ be available in mass production.
 For brevity reasons we do not look herein into compiler and purely runtime techniques and advise the reader to look for 
 more details the following survey~\cite{cfi_survey_payer}.
 
-\subsubsection{Binary Based Techniques}
 The CFI based implementation of Abadi et al.~\cite{abadi:cfi} is historically the first compiler based implementation of a shadow stack.
-At first quite promising this implementation suffers from high performance overhead which is around 21\% due to the fact that the inserted checks before each 
+At first, quite promising this implementation suffers from high performance overhead which is around 21\% due to the fact that the inserted checks before each 
 function return instruction are not runtime efficient.
 
 % \subsubsection{Compiler Based Techniques}

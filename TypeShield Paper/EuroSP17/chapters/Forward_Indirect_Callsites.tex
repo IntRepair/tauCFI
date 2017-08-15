@@ -9,33 +9,33 @@
 % (\cref{section:countpolicy}) is imprecise w.r.t. to the enforced calltarget set per callsite. 
 % Finally, in~\cref{Running Example: CVE X} we present in detail a real COOP attack.
 
-\subsection{Polymorphism in C++ Programs}
-% \textbf{Polymorphism in C++.}
-\label{Polymorphism in C++}
-Polymorphism, along inheritance and encapsulation, are the most used modern object-oriented concepts in C++. In C++, polymorphism allows accessing different types of objects 
-through a common base class. A pointer of the type of the base object can be used to point to object(s) which are derived from the base class. In C++, there are 
-several types of polymorphism:
-(a) compile-time (or static, usually is implemented with templates), 
-(b) runtime (dynamic, is implemented with inheritance and virtual functions), 
-(c) ad-hoc (\textit{e.g.,} if the range of actual types that can be used is finite and the combinations must be individually specified prior to use), and
-(d) parametric (\textit{e.g.,} if code is written without mention of any specific type and thus can be used transparently with any number of new types). 
-The first two are implemented through early and late binding, respectively. In C++, overloading concepts fall under the category of \textit{c)} and virtual functions, 
-templates or parametric classes fall under the category of pure polymorphism. However, C++ provides polymorphism through: 
-(i) virtual functions,
-(ii) function name overloading, and 
-(iii) operator overloading. 
-In this paper, we are concerned with dynamic polymorphism, based on virtual functions (see ISO/IEC N3690~\cite{iso:iecN3690}), because it can be exploited to call: 
-(x) illegitimate virtual table entries (not) contained in the class hierarchy by potentially varying the number of parameters and types,
-(y) legitimate virtual table entries (not) contained in the class hierarchy by potentially varying the number of parameters and types, and 
-(z) fake virtual tables entries not contained in the class hierarchy by potentially varying the number of parameters and types.
-By legitimate and illegitimate virtual table entries we mean those virtual table entries which for a single indirect callsite lie in the virtual table hierarchy. More 
-precisely, a virtual table entry is legitimate for a callsite if from the callsite to the virtual table containing the entry there is an inheritance path (see~\cite{haller:shrinkwrap}). 
-Virtual functions have several uses and issues associated, but for the scope of this paper we will look at the indirect callsites which are exploited by calling illegitimate virtual 
-table entries (\textit{i.e.,} functions) with varying number and type of parameters, see (x) above). More precisely, 
-(1) load-time enforcement: as calling each indirect callsite (\textit{i.e.,} callee) requires a fixed number of parameters which are passed each time the caller is calling, 
-we enforce a fine-grained CFI policy by statically determining the number and types of all function parameter that belong to an indirect callsite, and
-(2) runtime verification: as differentiating during runtime legitimate from illegitimate indirect caller/callee pairs requires parameter type and parameter number, we 
-insert before each indirect callsite a check used for determining during runtime if the caller matches with the callee based on certain CFI policies.
+% \subsection{Polymorphism in C++ Programs}
+% % \textbf{Polymorphism in C++.}
+% \label{Polymorphism in C++}
+% Polymorphism, along inheritance and encapsulation, are the most used modern object-oriented concepts in C++. In C++, polymorphism allows accessing different types of objects 
+% through a common base class. A pointer of the type of the base object can be used to point to object(s) which are derived from the base class. In C++, there are 
+% several types of polymorphism:
+% (a) compile-time (or static, usually is implemented with templates), 
+% (b) runtime (dynamic, is implemented with inheritance and virtual functions), 
+% (c) ad-hoc (\textit{e.g.,} if the range of actual types that can be used is finite and the combinations must be individually specified prior to use), and
+% (d) parametric (\textit{e.g.,} if code is written without mention of any specific type and thus can be used transparently with any number of new types). 
+% The first two are implemented through early and late binding, respectively. In C++, overloading concepts fall under the category of \textit{c)} and virtual functions, 
+% templates or parametric classes fall under the category of pure polymorphism. However, C++ provides polymorphism through: 
+% (i) virtual functions,
+% (ii) function name overloading, and 
+% (iii) operator overloading. 
+% In this paper, we are concerned with dynamic polymorphism, based on virtual functions (see ISO/IEC N3690~\cite{iso:iecN3690}), because it can be exploited to call: 
+% (x) illegitimate virtual table entries (not) contained in the class hierarchy by potentially varying the number of parameters and types,
+% (y) legitimate virtual table entries (not) contained in the class hierarchy by potentially varying the number of parameters and types, and 
+% (z) fake virtual tables entries not contained in the class hierarchy by potentially varying the number of parameters and types.
+% By legitimate and illegitimate virtual table entries we mean those virtual table entries which for a single indirect callsite lie in the virtual table hierarchy. More 
+% precisely, a virtual table entry is legitimate for a callsite if from the callsite to the virtual table containing the entry there is an inheritance path (see~\cite{haller:shrinkwrap}). 
+% Virtual functions have several uses and issues associated, but for the scope of this paper we will look at the indirect callsites which are exploited by calling illegitimate virtual 
+% table entries (\textit{i.e.,} functions) with varying number and type of parameters, see (x) above). More precisely, 
+% (1) load-time enforcement: as calling each indirect callsite (\textit{i.e.,} callee) requires a fixed number of parameters which are passed each time the caller is calling, 
+% we enforce a fine-grained CFI policy by statically determining the number and types of all function parameter that belong to an indirect callsite, and
+% (2) runtime verification: as differentiating during runtime legitimate from illegitimate indirect caller/callee pairs requires parameter type and parameter number, we 
+% insert before each indirect callsite a check used for determining during runtime if the caller matches with the callee based on certain CFI policies.
 
 
 \newsavebox{\firstlisting}
@@ -237,6 +237,27 @@ performed during runtime. Therefore, in our opinion, despite its security benefi
 
 A number of other highly promising tools (albeit also not deployed in practice) can overcome some of the drawbacks of the previously described tools. 
 Bounov \textit{et al.}~\cite{bounov:interleaving} presented a tool ($\approx$1\% runtime overhead)
+\begin{center}
+\begin{figure*}[t!]
+\centering
+   \includegraphics[width=.88\textwidth]{figures/overview.pdf}
+    \caption{Approach overview.
+%     The original program binary is analyzed (see left hand side in above Figure) by \textsc{TypeShield} and the calltargets and callsite analysis are performed for determining how many parameters are 
+%     provided, how many are consumed and their register wideness.
+%     After this step labels are inserted at each previously identified callsite and at each calltarget. 
+%     The enforced policy is schematically represented by the black highlighted dots (addresses) in the above Figure which are allowed to call only legitimate red highlighted dots (addresses).
+%     Next for each function return address the address set determined by each address located after each legitimate (is allowed to call the function) callsite is collected.
+%     This information is obtained by using the previously determined callsite forward-edge mapping to derive a function return backward map containing function returns as key and return targets as values.
+%     In this way \textsc{TypeShield} has for each function return site a set of legitimate addresses where the function return site is allowed to transfer the program control flow.
+%     Finally, range or compare checks are inserted before each function return site. This checks are used to check during runtime if the 
+%     address where the function return wants to jump to is contained in the legitimate set for each particular return site.
+%     This is represented above Figure by green highlighted dots (addresses) that are allowed to call only legitimate blue highlighted dots (addresses).
+%     Finally, the result is a hardened program binary (see right hand side in above Figure).
+}
+    \label{System overview.}
+    \vspace{-.5cm}
+ \end{figure*}
+\end{center}
 for indirect forward-edge callsite checking based on virtual table layout interleaving. The tool has better performance than VTV and better precision with
 respect to allowed virtual tables per indirect callsite. Its precision (selecting legitimate virtual tables for each callsite) compared to ShrinkWrap is
 lower since it does not consider virtual table inheritance paths. vTrust~\cite{zhang:vtrust} (average runtime overhead 2.2\%) enforces two layers of defense

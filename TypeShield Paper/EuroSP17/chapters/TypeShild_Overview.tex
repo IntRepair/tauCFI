@@ -1,31 +1,33 @@
-\section{Overview an Threat Model}
+\section{Overview}
 \label{chapter:TypeShild Overview}
 In this section, we present in~\cref{TypeShield Policy Mechanism} our type based policy and approach overview in Figure~\ref{System overview.}. 
-In~\cref{Backward Edge CFI Policy} we highlight our backward edge protection policy, while  
+In~\cref{Backward Edge CFI Policy} we highlight our backward edge protection policy.
+% while  
 % in~\cref{Invariants for Targets and Callsites} we present the invariants for calltargets and callsites, while 
-in~\cref{Adversary Model} we introduce our threat model.
+% in~\cref{Adversary Model} we introduce our threat model.
 % Finally, in~\cref{TypeShild Impact on COOP} we talk about parameter count vs. parameter type policies.
 
-\begin{center}
-\begin{figure*}[t!]
-\centering
-   \includegraphics[width=.88\textwidth]{figures/overview.pdf}
-    \caption{Approach overview.
-    The original program binary is analyzed (see left hand side above Figure) by \textsc{TypeShield} and the calltargets and callsite analysis are performed for determining how many parameters are 
-    provided, how many are consumed and their register wideness.
-    After this step labels are inserted at each previously identified callsite and at each calltarget. 
-    The enforced policy is schematically represented by the black highlighted dots (addresses) in the above Figure which are allowed to call only legitimate red highlighted dots (addresses).
-    Next for each function return address the address set determined by each address located after each legitimate (is allowed to call the function) callsite is collected.
-    This information is obtained by using the previously determined callsite forward-edge mapping to derive a function return backward map containing function returns as key and return targets as values.
-    In this way \textsc{TypeShield} has for each function return site a set of legitimate addresses where the function return site is allowed to transfer the program control flow.
-    Finally, range or compare checks are inserted before each function return site. This checks are used to check during runtime if the 
-    address where the function return wants to jump to is contained in the legitimate set for each particular return site.
-    This is represented above Figure by green highlighted dots (addresses) that are allowed to call only legitimate blue highlighted dots (addresses).
-    Finally, the result is a hardened program binary (see right hand side above Figure).}
-    \label{System overview.}
-    \vspace{-.5cm}
- \end{figure*}
-\end{center}
+% \begin{center}
+% \begin{figure*}[t!]
+% \centering
+%    \includegraphics[width=.88\textwidth]{figures/overview.pdf}
+%     \caption{Approach overview.
+% %     The original program binary is analyzed (see left hand side in above Figure) by \textsc{TypeShield} and the calltargets and callsite analysis are performed for determining how many parameters are 
+% %     provided, how many are consumed and their register wideness.
+% %     After this step labels are inserted at each previously identified callsite and at each calltarget. 
+% %     The enforced policy is schematically represented by the black highlighted dots (addresses) in the above Figure which are allowed to call only legitimate red highlighted dots (addresses).
+% %     Next for each function return address the address set determined by each address located after each legitimate (is allowed to call the function) callsite is collected.
+% %     This information is obtained by using the previously determined callsite forward-edge mapping to derive a function return backward map containing function returns as key and return targets as values.
+% %     In this way \textsc{TypeShield} has for each function return site a set of legitimate addresses where the function return site is allowed to transfer the program control flow.
+% %     Finally, range or compare checks are inserted before each function return site. This checks are used to check during runtime if the 
+% %     address where the function return wants to jump to is contained in the legitimate set for each particular return site.
+% %     This is represented above Figure by green highlighted dots (addresses) that are allowed to call only legitimate blue highlighted dots (addresses).
+% %     Finally, the result is a hardened program binary (see right hand side in above Figure).
+% }
+%     \label{System overview.}
+%     \vspace{-.5cm}
+%  \end{figure*}
+% \end{center}
 
 % \subsection{Invariants}
 % % \textbf{Invariants for Targets and Callsites.}
@@ -47,7 +49,7 @@ in~\cref{Adversary Model} we introduce our threat model.
 % call that calltarget.
 % Figure~\ref{System overview.} depicts this analogy by the backward indirect edges pointing from the green dots to the legitimate
 % blue dots.
-\vspace{-.99cm}
+% \vspace{-.99cm}
 \subsection{Type Based Policy}
 \label{TypeShield Policy Mechanism}
 
@@ -536,15 +538,15 @@ protecting the backward-edge policy. This modes of operation will be presented i
 % There we can see that while in a parameter-count oriented schema a callsite classified as (32,32) would be able to 
 % call functions classified as (64,0), however in our parameter wideness oriented schema that is not possible.
 
-\subsection{Threat Model}
-\label{Adversary Model}
-
-We align our threat model with the same basic assumptions as described in~\cite{veen:typearmor}. 
-More precisely, we assume a resourceful attacker that has read and write access to the data 
-sections of the attacked program binary. We also assume that the protected binary does not contain 
-self-modifying code, handcrafted assembly or any kind of obfuscation. We also consider pages 
-to be either writable or executable but not both at the same time. Further, we assume 
-that the attacker has the ability to execute a memory corruption to hijack the program
-control flow. Finally, the analyzed program binary is not hand-crafted and the compiler
-which was used to generate the binary adheres to one of the 
-standard calling conventions mentioned in the first section of this paper.
+% \subsection{Threat Model}
+% \label{Adversary Model}
+% 
+% We align our threat model with the same basic assumptions as described in~\cite{veen:typearmor}. 
+% More precisely, we assume a resourceful attacker that has read and write access to the data 
+% sections of the attacked program binary. We also assume that the protected binary does not contain 
+% self-modifying code, handcrafted assembly or any kind of obfuscation. We also consider pages 
+% to be either writable or executable but not both at the same time. Further, we assume 
+% that the attacker has the ability to execute a memory corruption to hijack the program
+% control flow. Finally, the analyzed program binary is not hand-crafted and the compiler
+% which was used to generate the binary adheres to one of the 
+% standard calling conventions mentioned in the first section of this paper.
