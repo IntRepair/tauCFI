@@ -1,0 +1,19 @@
+TypeShield Updates.
+
+1. Das TypeShield zum laufen zu bringen und eine Readme zu schreiben.
+
+2. Das Binary patching mechanismus zum laufen zu bringen.
+
+3. Die Basic Block merging Strategien von TypeArmor anschauen (liegt im GitHub repo) und eventuell unsere eigenen merging Strategien Updaten.
+
+4.Implementiere die Algorithme die am ende des VCI Papier gezeigt werden um die Forward edge Targets weiter zu reduzieren.
+
+5. Die return edge check einbauen. Das solte relativ einfach sein, weill wir das Forward mapping zwischen call sites und call targets haben. Die return edges duerfen im jeweiligen mapping zurueck zu der naechsten Addresse nach der call site. Hier ist es moeglich, zwei Modi einzubauen.
+Modus 1. Fuer jeden return N verglich Checks durchzufuehren mit den legalen ruecksprung Addressen, das ist praezisee aber sicherlich die Laufzeit Performance ist hoch.
+
+Modus 2. Fuer jeden Redurn 1 range check vergliche machen. Die range (Interval) besteht aus dem vorherigen N (Modus1) Addressen. Die Intervallenden bestehen aus dem Minimallen und Maximallen werten aus den vorherigen N werten. Forteil vom Range Ckeck ist das dieser schnell ist also geringe Runtime Performance, aber wohl moeglich lassen wir zu vielle nicht legitime Addressen auch im Intervall. Diese koennen vom Angriffer ausgenutzt werden und dan ist der Schutz fuer nichts gut.
+
+See the Nucleus Tool: for function boundary discovery in bynary programms. 
+https://www.vusec.net/projects/function-detection/ 
+
+This tool can be used to find function start addresses and function return addresses in order to know where to position a check before each function return. This helps to enforce the backward edge policy in TypeShield.

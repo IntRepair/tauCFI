@@ -1,0 +1,22 @@
+
+Paper summary:
+The authors present TypeShield, a binary-level Control Flow Inregrity (CFI) solution for protecting C++ object-oriented programs from forward-edge based code-reuse attacks. 
+It is based on a previous work, TypeArmor [7], which tries to couple call site function prototypes with the targets in order to implement a finer-grained CFI. 
+This idea is improved such that it determines both the number of function arguments and their types (using registers usage approach) with better precision.
+
+Strengths of paper
+The solution gets away with the binary-only analysis restriction and obtains a good function caller – callee signature binding heuristics solely based on parameter / type counting. 
+All of this while staying on the safe side: by under/over-estimating the parameters in order to avoid any false-positives.
+The evaluation section was especially well-written. I particularily liked the way the metrics & experimental testbed were presented.
+
+Weaknesses of paper
+The introductory sections (1 and 2) did not deliver an adequate understanding of the CFI / COOP concepts. I think the examples need to be rephrased / have better figures.
+Also, I consider the basic approach (counting function parameters) to be a coarse-grained policy overall, though this may be one of the best when using binary-only analysis. 
+This should have been better argued in the beginning.
+
+Comments for authors
+Some typos were encountered (e.g. addresses instead of addressed on page 4), as well as some missing commas, without specifically looking for them. Proof-reading is recommended.
+
+Mi se pare ca este foarte narrowed, ceea ce ai facut tu, iar introducerea e pentru mine prea tehnica si cumva plictisitoare. 
+Nu am o poza din care sa inteleg conceptele mai simplu, mai direct (Poza 1 e prea complexa).  
+

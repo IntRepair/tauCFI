@@ -1,0 +1,113 @@
+===========================================================================
+                            CCS'17 Review #179A
+---------------------------------------------------------------------------
+ Paper #179: TypeShield: Practical Forward-Backward Edge Attack Protection
+---------------------------------------------------------------------------
+
+                      Overall merit: 2. Weak reject
+                 Reviewer expertise: 3. Knowledgeable
+
+                         ===== Paper summary =====
+
+The paper presents TypeShield an advanced CFI policy, which can be applied
+directly to binaries. TypeShield extends prior work, the state-of-the-art of
+binary CFI, namely TypeArmor, with a more effective and more fine-grained CFI
+policy. Applying CFI to binaries is considered hard, since the absence of
+source code makes computing an accurate control-flow graph hard. Therefore
+initially CFI for binaries was introduced in a very coarse-grained fashion
+(e.g., indirect calls should target only function entry points and functions
+should return only to call sites). Later, in the face of advanced code-reuse
+attacks, such as COOP, more elaborate policies for binaries were published. For
+instance, TypeArmor goes a bit further by trying to infer if an indirect call
+matches the target function's signature by means of the number of function
+arguments which are prepared and expected, respectively. TypeShield goes even
+further by trying to infer the arguments' types by inspecting the registers'
+width used.
+
+                      ===== Comments for author =====
+
+The paper clearly advances TypeArmor, the new policy is sound and the prototype
+as evaluated is effective in stopping particular COOP exploits (not COOP in
+general).  Additionally, it seems that the new heuristics incorporated to
+TypeShield can slightly (or significantly) improve the accuracy of the CFG
+compared again to TypeArmor. As expected TypeShield offers a better CFI
+implementation for binaries, which of course cannot reach the accuracy of
+source-based solutions. 
+
+Although the paper advances an existing tool, and the software of the tools as
+described in the paper is useful for the community, the novelty is fairly low
+and the results are quite expected.
+
+Finally, I think you should elaborate more on how you protect the backward
+edge. As it reads now, you just assume there is something in place for
+protecting the backward edge (e.g., shadow stack), which is fair enough, as
+long as you explicitly state that you don't do anything new for protecting the
+backward edge.
+
+
+----
+===========================================================================
+                            CCS'17 Review #179B
+---------------------------------------------------------------------------
+ Paper #179: TypeShield: Practical Forward-Backward Edge Attack Protection
+---------------------------------------------------------------------------
+
+                      Overall merit: 1. Reject
+                 Reviewer expertise: 4. Expert
+
+                         ===== Paper summary =====
+
+The authors present TypeShield, a binary CFI solution that protects forward-edges of indirect calls during runtime. The authors focus on C++ applications in order to thwart COOP-style attacks. This is done by counting prepared argument registers on the callsite and counting required argument registers by the call target. In addition to the number of argument registers, the register wideness is also taken into account.
+
+                      ===== Comments for author =====
+
+Strengths:
+
++ Simple idea to improve TypeArmors forward-edge precision
++ TypeShield can be used with legacy applications
++ Open source
+
+Weaknesses:
+
+- Focusing on "being better than TypeArmor", yet removing important parts of TypeArmor which makes the comparison afterwards a little bit far fetched regarding to COOP attacks. In general, the work is very incremental.
+- Claiming backward-edge protection without having it.
+- Missing qualitative COOP evaluation and analysis (do not consider data flow of gadgets and so on)
+- Completely focusing on COOP attacks, yet using only two C++ applications in evaluation
+
+Detailed comments:
+
+The title "TypeShield: Practical Forward-Backward Edge Attack Protection" is misleading, since TypeShield does only protect the forward-edge of indirect call sites.
+
+In the introduction you write: "TypeShield, compared to TypeArmor, uses different analysis strategies for basic block merging. Furthermore, TypeShield disallows an indirect calltransfer that prepares fewer arguments than the target callee consumes ...". However, TypeArmor uses the same strategy (cf. Figure 1 in the TypeArmor paper) since otherwise it would risk breaking the binary. In general, the paper is very incremental and the authors need to discuss in much more detail the novelty of their paper.
+
+The COOP description in Section 2.1 is not hard to understand. First, Figure 2 is really complex and appears to be overloaded. Next, the references between the text and figure are not correct: "The attacker corrupts an indirect function call, (1), ...". I think this has to be referenced to (0). However, I am not completely sure since I do not understand Figure 2 in detail. And finally, the section is not written well. I do not understand the meaning of some sentences like "The indirect callsite (Figure 2 line 17) can be exploited to call by passing a varying ...". Additionally the enumeration in the very same sentence seems to make no sense. What is "overall, whole program" and "partial, only legitimate for this callsite"? What is the difference between class hierarchy and vtable hierarchy?
+
+In Section 2.2 you write "The basic idea resolves around classifying calltargets by the number of parameters they provide and callsites by the number of parameters they require.". I think you mean callsites provide parameter and calltargets require them.
+
+In Section 3.3 there are broken references of the Definition: "From Definitions (3.3) and (3.3) it can be observed ...".
+
+Section 3.4 "Impact of TypeShield on COOP" does not describe the impact on COOP. This section explains the difference of TypeShield and TypeArmor regarding the wideness of the registers and how it gives a more fine-grained forward-edge policy, however the impact on COOP is not regarded. For example, is COOP still possible? Are target functions that use only 2-bytes of an argument interesting for COOP? What about the data flow? TypeArmor introduces CFC to thwart the implicit data flow between vfgadgets, but TypeShield does nothing alike (cf. section VI D in the TypeArmor paper). An extensive analysis of how the improved forward-edge precision TypeShield provides influences the possibility of COOP attacks would be a great contribution. And with this I do not mean the raw numbers of allowed targets, but a qualitative analysis of existing COOP gadgets and their relation to the allowed calltargets. Otherwise I do not see a significant improvement or contribution on this topic. At the current state, I would also argue that TypeArmor protects better against COOP attacks than TypeShield does due to CFC.
+
+You explain all your analysis steps only with text. Without knowing TypeArmor, I am not sure I could easily follow your analysis steps. I would recommend adding more figures to better explain calltarget analysis (4.3) and callsite analysis (4.4).
+
+The enumeration about "analyze_instr" how it handles an instruction is given twice in Section 4.5.1 (in the beginning and in the end).
+
+Since you solely focus on improving TypeArmor, you did not explain why you removed CFC and why you do not use the return type to further improve your results. It appears a little bit half hearted to only cherry pick one aspect of TypeArmor and ignoring the other things.
+
+Let us say we have a function without any cross references and therefore you do not know where the control flow comes from. And this function has an indirect call in the beginning. How do you handle such cases? Then your analysis would not find any argument register writes. Or what if the function only writes the first argument register before reaching the indirect call instruction. The function could still just pass the remaining argument register through to the indirect call instruction. How many argument register with which wideness would there be? Or what if this function just changes the lowest 8 bit of the first argument register? Would your analysis say that the callsite prepares only a 8 bit argument? The indirect call target could still expect a 64 bit argument. What wideness would your analysis use here? Such cases will be encountered multiple times in C++ applications (and since you are focusing on thwarting COOP, you have to focus on C++ applications). 
+
+In Section 5 you write "We implemented TypeShield using the instrumentation framework (v.9.2.0).". What is the instrumentation framework? I guess DynInst since you mention it multiple times before.
+
+In the beginning of Section 6 you write "... the two http server applications Postgresql and Mysql, ...". These are database servers and not http servers.
+
+It is unfortunate that you had to recreate the analysis part of TypeArmor to compare results. Since the TypeArmor paper states that their tool will be open-sourced, you should have had access to it. Actually the authors have published the source code around 2 months ago on Github: https://github.com/vusec/typearmor
+
+In Section 6.3 you say TypeShield has around 2% overhead in comparison to TypeArmor with around 3% overhead. However, TypeShield only implements a forward-edge instrumentation whereas TypeArmor has additionally their CFC approach. Keeping in mind that both implementations are based on DynInst, one could argue that both approaches should have roughly the same overhead.
+
+In Section 7 you write "Third, TypeShield can protect forward and backward indirect edges in a binary program ...". I do not see how you protect backward edges. From your design and your implementation description you only protect forward edges.
+
+Your focus lies on protecting virtual callsites on binary files against COOP attacks, however, your related work section lack some work on it. You only mention TypeArmor as a binary-only solution capable of mitigating COOP. But what about "VTPin: Practical VTable Hijacking Protection for Binaries" (ACSAC’16) or "MARX: Uncovering Class Hierarchies in C++ Programs" (NDSS’17)? Both solutions seem to tackle COOP attacks. Without a more extensive differentiation with other existing works, the related work section appears incomplete.
+
+Furthermore, I would recommend using a spellchecker to fix all the typos like "teh" instead of "the", "awayre" instead of "aware", "surcessor" instead of "successor" and so on, since there are a lot of them.
+
+

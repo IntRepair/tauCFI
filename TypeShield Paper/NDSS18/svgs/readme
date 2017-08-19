@@ -1,0 +1,4 @@
+convert svg to pdf:
+inkscape -D -z --file=postgresql.O2.svg --export-pdf=postgresql.o2.pdf --export-latex
+
+danach pdf_latex file aufmachen und im Namen den . loeschen, das selbe vorher aus der erzeugten .pdf Datei machen.
