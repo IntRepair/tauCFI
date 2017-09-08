@@ -1,0 +1,771 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{00}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[\protect\citeauthoryear{??}{dyn}{}]%
+        {dynamorio:drmemory}
+\showarticletitle{DynamoRIO}.
+\newblock
+\newblock
+\shownote{\url{http://dynamorio.org/home.html}.}
+
+
+\bibitem[\protect\citeauthoryear{??}{ita}{}]%
+        {itanium:abi}
+\showarticletitle{Itanium C++ ABI}.
+\newblock
+\newblock
+\shownote{\url{https://mentorembedded.github.io/cxx-abi/abi.html}.}
+
+
+\bibitem[\protect\citeauthoryear{??}{mic}{1994}]%
+        {microsoft:abi}
+ \bibinfo{year}{1994}\natexlab{}.
+\newblock \showarticletitle{J. Gray. C++: Under the Hood}.
+\newblock
+\newblock
+\shownote{\url{http://www.openrce.org/articles/files/jangrayhood.pdf}.}
+
+
+\bibitem[\protect\citeauthoryear{??}{ctf}{2015}]%
+        {ctf:coop}
+ \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{BlueLotus Team, Bctf challenge: bypass vtable
+  read-only checks}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{??}{arm}{2015}]%
+        {arm:abi}
+ \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{C++ ABI for the ARM Architecture}.
+\newblock
+\newblock
+\shownote{\url{http://infocenter.arm.com/help/topic/com.arm.doc.ihi0041e/IHI0041E
+  cppabi.pdf}.}
+
+
+\bibitem[\protect\citeauthoryear{??}{win}{2015}]%
+        {windows:cfguard}
+ \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Windows Control Flow Guard}.
+\newblock
+\showURL{%
+\url{http://msdn.microsoft.com/en-us/library/windows/desktop/mt637065(v=vs.85).aspx}}
+
+
+\bibitem[\protect\citeauthoryear{??}{int}{2016}]%
+        {intel:cet}
+ \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Intel Control-flow Enforcement Technology}.
+\newblock
+\newblock
+\shownote{\url{https://software.intel.com/sites/default/files/managed/4d/2a/control-flow-enforcement-technology-preview.pdf}.}
+
+
+\bibitem[\protect\citeauthoryear{Abadi, Budiu, Erlingsson, and Ligatti}{Abadi
+  et~al\mbox{.}}{2005}]%
+        {abadi:cfi2}
+\bibfield{author}{\bibinfo{person}{Martin Abadi}, \bibinfo{person}{Mihai
+  Budiu}, \bibinfo{person}{{\'U}lfar Erlingsson}, {and} \bibinfo{person}{Jay
+  Ligatti}.} \bibinfo{year}{2005}\natexlab{}.
+\newblock \showarticletitle{Control Flow Integrity}. In
+  \bibinfo{booktitle}{{\em Proceedings of the 12th ACM Conference on Computer
+  and Communications Security (CCS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Abadi, Budiu, Erlingsson, and Ligatti}{Abadi
+  et~al\mbox{.}}{2009}]%
+        {abadi:cfi}
+\bibfield{author}{\bibinfo{person}{Martin Abadi}, \bibinfo{person}{Mihai
+  Budiu}, \bibinfo{person}{{\'U}lfar Erlingsson}, {and} \bibinfo{person}{Jay
+  Ligatti}.} \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{Control Flow Integrity Principles, Implementations,
+  and Applications}. In \bibinfo{booktitle}{{\em ACM Transactions on
+  Information and System Security (TISSEC)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Andriesse, Chen, Veen, Slowinska, and
+  Bos}{Andriesse et~al\mbox{.}}{2016}]%
+        {andriesse:indepth}
+\bibfield{author}{\bibinfo{person}{D. Andriesse}, \bibinfo{person}{X. Chen},
+  \bibinfo{person}{V.~van~der Veen}, \bibinfo{person}{A. Slowinska}, {and}
+  \bibinfo{person}{H. Bos}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{An In-Depth Analysis of Disassembly on Full-Scale
+  x86/x64 Binaries}. In \bibinfo{booktitle}{{\em Proceedings of the USENIX
+  Conference on Security (USENIX SEC)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Andriesse, Slowinska, and Bos}{Andriesse
+  et~al\mbox{.}}{2017}]%
+        {function:boundary}
+\bibfield{author}{\bibinfo{person}{Dennis Andriesse}, \bibinfo{person}{Asia
+  Slowinska}, {and} \bibinfo{person}{Herbert Bos}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Compiler-Agnostic Function Detection in Binaries}.
+  In \bibinfo{booktitle}{{\em IEEE European Symposium on Security and Privacy
+  (EuroS\&P)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Balakrishnan and Reps}{Balakrishnan and
+  Reps}{2007}]%
+        {divine:balakrishnan}
+\bibfield{author}{\bibinfo{person}{G. Balakrishnan} {and} \bibinfo{person}{T.
+  Reps}.} \bibinfo{year}{2007}\natexlab{}.
+\newblock \showarticletitle{DIVINE: Discovering Variables in Executables}. In
+  \bibinfo{booktitle}{{\em International Conference on Verification, Model
+  Checking, and Abstract Interpretation (VMCAI)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Bletsch, Jiang, Freeh, and Liang}{Bletsch
+  et~al\mbox{.}}{2011}]%
+        {JOP1}
+\bibfield{author}{\bibinfo{person}{T. Bletsch}, \bibinfo{person}{X. Jiang},
+  \bibinfo{person}{V.~W. Freeh}, {and} \bibinfo{person}{Z. Liang}.}
+  \bibinfo{year}{2011}\natexlab{}.
+\newblock \showarticletitle{Jump-Oriented Programming: A New Class of
+  Code-Reuse Attack}. In \bibinfo{booktitle}{{\em ACM Asia Conference on
+  Computer and Communications Security (ASIACCS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Bounov, Gökhan~Kici, and Lerner}{Bounov
+  et~al\mbox{.}}{2016}]%
+        {bounov:interleaving}
+\bibfield{author}{\bibinfo{person}{Dimitar Bounov}, \bibinfo{person}{Rami
+  Gökhan~Kici}, {and} \bibinfo{person}{Sorin Lerner}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Protecting C++ Dynamic Dispatch Through VTable
+  Interleaving}. In \bibinfo{booktitle}{{\em Symposium on Network and
+  Distributed System Security (NDSS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Brumley, Jager, Avgerinos, and
+  Schwartz}{Brumley et~al\mbox{.}}{2011}]%
+        {bap:brumley}
+\bibfield{author}{\bibinfo{person}{David Brumley}, \bibinfo{person}{Ivan
+  Jager}, \bibinfo{person}{Thanassis Avgerinos}, {and}
+  \bibinfo{person}{Edward~J. Schwartz}.} \bibinfo{year}{2011}\natexlab{}.
+\newblock \showarticletitle{BAP: A Binary Analysis Platform}. In
+  \bibinfo{booktitle}{{\em Proceedings of Computer AidedVTint: Protecting
+  Virtual Function Tab Verification (CAV)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Buchanan, Roemer, Shacham, and
+  Savage}{Buchanan et~al\mbox{.}}{2008}]%
+        {ROP}
+\bibfield{author}{\bibinfo{person}{E. Buchanan}, \bibinfo{person}{R. Roemer},
+  \bibinfo{person}{H. Shacham}, {and} \bibinfo{person}{S. Savage}.}
+  \bibinfo{year}{2008}\natexlab{}.
+\newblock \showarticletitle{When Good Instructions Go Bad: Generalizing
+  Return-oriented Programming to RISC}. In \bibinfo{booktitle}{{\em ACM
+  Conference on Computer and Communications Security (CCS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Caballero and Lin}{Caballero and Lin}{2016}]%
+        {caballero:inference}
+\bibfield{author}{\bibinfo{person}{Juan Caballero} {and}
+  \bibinfo{person}{Zhiqiang Lin}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Type Inference on Executables}. In
+  \bibinfo{booktitle}{{\em ACM Computing Surveys (CSUR)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Carlini, Barresi, Payer, Wagner, and
+  Gross}{Carlini et~al\mbox{.}}{2015}]%
+        {carlini:bending}
+\bibfield{author}{\bibinfo{person}{Nicolas Carlini}, \bibinfo{person}{Antonio
+  Barresi}, \bibinfo{person}{Mathias Payer}, \bibinfo{person}{David Wagner},
+  {and} \bibinfo{person}{Thomas~R. Gross}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Control-Flow Bending: On the Effectiveness of
+  Control-Flow Integrity}. In \bibinfo{booktitle}{{\em Proceedings of the
+  USENIX conference on Security (USENIX SEC)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Carlini and Wagner}{Carlini and
+  Wagner}{2014}]%
+        {rop:carlini}
+\bibfield{author}{\bibinfo{person}{Nicholas Carlini} {and}
+  \bibinfo{person}{David Wagner}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{ROP is still dangerous: Breaking Modern Defenses}.
+  In \bibinfo{booktitle}{{\em Proceedings of the USENIX conference on Security
+  (USENIX SEC)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Checkoway, Davi, Dmitrienko, Sadeghi, Shacham,
+  and Winandy}{Checkoway et~al\mbox{.}}{2010}]%
+        {JOP2}
+\bibfield{author}{\bibinfo{person}{S. Checkoway}, \bibinfo{person}{L. Davi},
+  \bibinfo{person}{A. Dmitrienko}, \bibinfo{person}{A.-R. Sadeghi},
+  \bibinfo{person}{H. Shacham}, {and} \bibinfo{person}{M. Winandy}.}
+  \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{Return-oriented Programming Without Returns}. In
+  \bibinfo{booktitle}{{\em ACM Conference on Computer and Communications
+  Security (CCS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Conti, Larsen, Crane, Davi, Franz, Negro,
+  Liebchen, Qunaibit, and Sadeghi}{Conti et~al\mbox{.}}{2015}]%
+        {conti:ccs}
+\bibfield{author}{\bibinfo{person}{Mauro Conti}, \bibinfo{person}{Per Larsen},
+  \bibinfo{person}{Stephen Crane}, \bibinfo{person}{Lucas Davi},
+  \bibinfo{person}{Michael Franz}, \bibinfo{person}{Marco Negro},
+  \bibinfo{person}{Christopher Liebchen}, \bibinfo{person}{Mohaned Qunaibit},
+  {and} \bibinfo{person}{Ahmad-Reza Sadeghi}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Losing Control: On the Effectiveness of
+  Control-Flow Integrity Under Stack Attacks}. In \bibinfo{booktitle}{{\em
+  Proceedings of the ACM SIGSAC Conference on Computer and Communications
+  Security (CCS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Crane, Volckaert, Schuster, Liebchen, Larsen,
+  Davi, Sadeghi, Holz, De~Sutter, and Franz}{Crane et~al\mbox{.}}{2015}]%
+        {crane:readactor++}
+\bibfield{author}{\bibinfo{person}{Stephen Crane}, \bibinfo{person}{Stijn
+  Volckaert}, \bibinfo{person}{Felix Schuster}, \bibinfo{person}{Christopher
+  Liebchen}, \bibinfo{person}{Per Larsen}, \bibinfo{person}{Lucas Davi},
+  \bibinfo{person}{Ahmad-Reza Sadeghi}, \bibinfo{person}{Thorsten Holz},
+  \bibinfo{person}{Bjorn De~Sutter}, {and} \bibinfo{person}{Michael Franz}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{It's a TRaP: Table Randomization and Protection
+  against Function-Reuse Attacks}. In \bibinfo{booktitle}{{\em Proceedings of
+  the ACM SIGSAC Conference on Computer and Communications Security (CCS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Dang, Maniatis, and Wagner}{Dang
+  et~al\mbox{.}}{2015}]%
+        {dang:asiaccs}
+\bibfield{author}{\bibinfo{person}{Thurston~HY Dang}, \bibinfo{person}{Petros
+  Maniatis}, {and} \bibinfo{person}{David Wagner}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{The Performance Cost of Shadow Stacks and Stack
+  Canaries}. In \bibinfo{booktitle}{{\em ACM Asia Conference on Computer and
+  Communications Security (ASIACCS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Davi, Dmitrienko, Sadeghi, and Winandy}{Davi
+  et~al\mbox{.}}{2010}]%
+        {JOP3}
+\bibfield{author}{\bibinfo{person}{L. Davi}, \bibinfo{person}{A. Dmitrienko},
+  \bibinfo{person}{A.-R. Sadeghi}, {and} \bibinfo{person}{M. Winandy}.}
+  \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{Return-Oriented Programming without Returns on
+  ARM}. In \bibinfo{booktitle}{{\em Technical report, Technical Report
+  HGI-TR-2010-002, Ruhr-University Bochum}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Elsabagh, Fleck, and Stavrou}{Elsabagh
+  et~al\mbox{.}}{2017}]%
+        {vci:asiaccs}
+\bibfield{author}{\bibinfo{person}{Mohamed Elsabagh}, \bibinfo{person}{Dan
+  Fleck}, {and} \bibinfo{person}{Angelos Stavrou}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Strict Virtual Call Integrity Checking for C ++
+  Binaries}. In \bibinfo{booktitle}{{\em ACM Asia Conference on Computer and
+  Communications Security (ASIACCS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Fokin, Derevenets, Chernov, and
+  Troshina}{Fokin et~al\mbox{.}}{2011}]%
+        {fokin:smartdec}
+\bibfield{author}{\bibinfo{person}{Alexander Fokin}, \bibinfo{person}{Yegor
+  Derevenets}, \bibinfo{person}{Alexander Chernov}, {and}
+  \bibinfo{person}{Katerina Troshina}.} \bibinfo{year}{2011}\natexlab{}.
+\newblock \showarticletitle{SmartDec: Approaching C++ decompilation}. In
+  \bibinfo{booktitle}{{\em Working Conference on Reverse Engineering (WCRE)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Gawlik and Holz}{Gawlik and Holz}{2014}]%
+        {gawlik}
+\bibfield{author}{\bibinfo{person}{Robert Gawlik} {and}
+  \bibinfo{person}{Thorsten Holz}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{Towards automated integrity protection of C++
+  virtual function tables in binary programs}. In \bibinfo{booktitle}{{\em
+  Annual Computer Security Applications Conference (ACSAC)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Haller, Goktas, Athanasopoulos, Portokalidis,
+  and Bos}{Haller et~al\mbox{.}}{2015}]%
+        {haller:shrinkwrap}
+\bibfield{author}{\bibinfo{person}{Istvan Haller}, \bibinfo{person}{Enes
+  Goktas}, \bibinfo{person}{Elias Athanasopoulos}, \bibinfo{person}{G.
+  Portokalidis}, {and} \bibinfo{person}{Herbert Bos}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{ShrinkWrap: VTable Protection Without Loose Ends}.
+  In \bibinfo{booktitle}{{\em Annual Computer Security Applications Conference
+  (ACSAC)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Jang, Tatlock, and Lerner}{Jang
+  et~al\mbox{.}}{2014}]%
+        {safedispatch:jang}
+\bibfield{author}{\bibinfo{person}{D. Jang}, \bibinfo{person}{T. Tatlock},
+  {and} \bibinfo{person}{S. Lerner}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{SafeDispatch: Securing C++ Virtual Calls from
+  Memory Corruption Attacks}. In \bibinfo{booktitle}{{\em Symposium on Network
+  and Distributed System Security (NDSS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Jansen}{Jansen}{2009}]%
+        {reprod:nist}
+\bibfield{author}{\bibinfo{person}{Wayne Jansen}.}
+  \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{Directions in Security Metrics Research}. In
+  \bibinfo{booktitle}{{\em NISTIR 7564}}.
+\newblock
+\newblock
+\shownote{\url{http://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir7564.pdf}.}
+
+
+\bibitem[\protect\citeauthoryear{JTC1/SC22WG21}{JTC1/SC22WG21}{2013}]%
+        {iso:iecN3690}
+\bibfield{author}{\bibinfo{person}{I. JTC1/SC22WG21}.}
+  \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{ISO/IEC 14882:2013 Programming Language C++
+  (N3690)}.
+\newblock
+\newblock
+\shownote{\url{https://isocpp.org/files/papers/N3690.pdf}.}
+
+
+\bibitem[\protect\citeauthoryear{Khedker, Sanyal, and Sathe}{Khedker
+  et~al\mbox{.}}{2009}]%
+        {khedker2009data}
+\bibfield{author}{\bibinfo{person}{Uday Khedker}, \bibinfo{person}{Amitabha
+  Sanyal}, {and} \bibinfo{person}{Bageshri Sathe}.}
+  \bibinfo{year}{2009}\natexlab{}.
+\newblock \bibinfo{booktitle}{{\em Data flow analysis: Theory and Practice}}.
+\newblock \bibinfo{publisher}{CRC Press}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Kornau}{Kornau}{2009}]%
+        {kornau:rop}
+\bibfield{author}{\bibinfo{person}{T. Kornau}.}
+  \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{Return-Oriented Programming for the ARM
+  Architecture}.
+\newblock
+\newblock
+\shownote{\url{http://www.zynamics.com/downloads/kornau-tim--diplomarbeit--rop.pdf}.}
+
+
+\bibitem[\protect\citeauthoryear{Kuznetsov, Szekeres, Payer, Candea, Sekar, and
+  Song}{Kuznetsov et~al\mbox{.}}{2014}]%
+        {volodymyr:cpi}
+\bibfield{author}{\bibinfo{person}{Volodymyr Kuznetsov},
+  \bibinfo{person}{László Szekeres}, \bibinfo{person}{Mathias Payer},
+  \bibinfo{person}{George Candea}, \bibinfo{person}{R. Sekar}, {and}
+  \bibinfo{person}{Dawn Song}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{Code-Pointer Integrity}. In
+  \bibinfo{booktitle}{{\em Proceedings of the USENIX Symposium on Operating
+  Systems Design and Implementation (OSDI)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Lan, Li, Sun, Su, Liu, and Zeng}{Lan
+  et~al\mbox{.}}{2015}]%
+        {loop:oriented}
+\bibfield{author}{\bibinfo{person}{Bingchen Lan}, \bibinfo{person}{Yan Li},
+  \bibinfo{person}{Hao Sun}, \bibinfo{person}{Chao Su}, \bibinfo{person}{Yao
+  Liu}, {and} \bibinfo{person}{Qingkai Zeng}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Loop-Oriented Programming: A New Code Reuse Attack
+  to Bypass Modern Defenses}. In \bibinfo{booktitle}{{\em IEEE
+  Trustcom/BigDataSE/ISPA}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Lee, Song, Kim, and Lee}{Lee
+  et~al\mbox{.}}{2015}]%
+        {byoungyoung:typecasting}
+\bibfield{author}{\bibinfo{person}{Byoungyoung Lee}, \bibinfo{person}{Chengyu
+  Song}, \bibinfo{person}{Taesoo Kim}, {and} \bibinfo{person}{Wenke Lee}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Type Casting Verification: Stopping an Emerging
+  Attack Vector}. In \bibinfo{booktitle}{{\em Proceedings of the USENIX
+  Conference on Security (USENIX SEC)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Lettner, Kollenda, Homescu, Larsen, Schuster,
+  Davi, Sadeghi, Holz, and Franz}{Lettner et~al\mbox{.}}{2016}]%
+        {subversive-c:lettner}
+\bibfield{author}{\bibinfo{person}{Julian Lettner}, \bibinfo{person}{Benjamin
+  Kollenda}, \bibinfo{person}{Andrei Homescu}, \bibinfo{person}{Per Larsen},
+  \bibinfo{person}{Felix Schuster}, \bibinfo{person}{Lucas Davi},
+  \bibinfo{person}{Ahmad-Reza Sadeghi}, \bibinfo{person}{Thorsten Holz}, {and}
+  \bibinfo{person}{Michael Franz}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Subversive-C: Abusing and Protecting Dynamic
+  Message Dispatch}. In \bibinfo{booktitle}{{\em USENIX Annual Technical
+  Conference (USENIX ATC)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Lin, Zhang, and Xu}{Lin et~al\mbox{.}}{2010}]%
+        {lin:rewards}
+\bibfield{author}{\bibinfo{person}{Zhiqiang Lin}, \bibinfo{person}{Xiangyu
+  Zhang}, {and} \bibinfo{person}{Dongyan Xu}.} \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{Automatic Reverse Engineering of Data Structures
+  from Binary Execution}. In \bibinfo{booktitle}{{\em Symposium on Network and
+  Distributed System Security (NDSS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Mashtizadeh, Bittau, Boneh, and
+  Mazières}{Mashtizadeh et~al\mbox{.}}{2015}]%
+        {ccfi:jose}
+\bibfield{author}{\bibinfo{person}{Ali~José Mashtizadeh},
+  \bibinfo{person}{Andrea Bittau}, \bibinfo{person}{Dan Boneh}, {and}
+  \bibinfo{person}{David Mazières}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{CCFI: Cryptograhically Enforced Control Flow
+  Integrity}. In \bibinfo{booktitle}{{\em Proceedings of the ACM SIGSAC
+  Conference on Computer and Communications Security (CCS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Microsoft}{Microsoft}{}]%
+        {dep}
+\bibfield{author}{\bibinfo{person}{Changes to Functionality in Microsoft
+  Windows XP Service Pack~2. Microsoft}.}
+\newblock
+\newblock
+\shownote{\url{https://technet.microsoft.com/en-us/library/bb457151.aspx.}}
+
+
+\bibitem[\protect\citeauthoryear{Mohan, Larsen, Brunthaler, Hamlen, and
+  Franz}{Mohan et~al\mbox{.}}{2015}]%
+        {mohan:opaque}
+\bibfield{author}{\bibinfo{person}{Vishwath Mohan}, \bibinfo{person}{Per
+  Larsen}, \bibinfo{person}{Stefan Brunthaler}, \bibinfo{person}{Kevin~W.
+  Hamlen}, {and} \bibinfo{person}{Michael Franz}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Opaque Control-Flow Integrity}. In
+  \bibinfo{booktitle}{{\em Symposium on Network and Dist---ributed System
+  Security (NDSS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Mycroft}{Mycroft}{2007}]%
+        {alan:mycroft}
+\bibfield{author}{\bibinfo{person}{Alan Mycroft}.}
+  \bibinfo{year}{2007}\natexlab{}.
+\newblock \showarticletitle{Lecture Notes}.
+\newblock
+\newblock
+\shownote{\url{https://www.cl.cam.ac.uk/~am21/papers/sas07slides.pdf}.}
+
+
+\bibitem[\protect\citeauthoryear{Niu and Tan}{Niu and Tan}{2014a}]%
+        {mcfi:niu}
+\bibfield{author}{\bibinfo{person}{Ben Niu} {and} \bibinfo{person}{Gang Tan}.}
+  \bibinfo{year}{2014}\natexlab{a}.
+\newblock \showarticletitle{Modular Control-Flow VTint: Protecting Virtual
+  Function TabIntegrity}. In \bibinfo{booktitle}{{\em ACM Conferece on
+  Programming Language Design and Implementation (PLDI)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Niu and Tan}{Niu and Tan}{2014b}]%
+        {rockjit:niu}
+\bibfield{author}{\bibinfo{person}{Ben Niu} {and} \bibinfo{person}{Gang Tan}.}
+  \bibinfo{year}{2014}\natexlab{b}.
+\newblock \showarticletitle{RockJIT: Securing Just-In-Time Compilation Using
+  Modular Control-Flow Inegrity}. In \bibinfo{booktitle}{{\em Proceedings of
+  the ACM Conference on Computer and Communications Security (CCS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Niu and Tan}{Niu and Tan}{2015}]%
+        {perinput:niu}
+\bibfield{author}{\bibinfo{person}{Ben Niu} {and} \bibinfo{person}{Gang Tan}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Per-Input Control-Flow Integrity}. In
+  \bibinfo{booktitle}{{\em Proceedings the ACM Conference on Computer and
+  Communications Security (CCS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{(NVD)}{(NVD)}{2017}]%
+        {NVD:ACE}
+\bibfield{author}{\bibinfo{person}{US~NIST National Vulnerability~Database
+  (NVD)}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{In total 700 arbitrary code executions reported,
+  Jan.'08 to May'17}.
+\newblock
+\newblock
+\shownote{\url{https://nvd.nist.gov/vuln/search/results?adv_search=true&form_type=advanced&results_type=overview&query=arbitrary+code+execution&pub_date_start_month=0&pub_date_start_year=2008&pub_date_end_month=6&pub_date_end_year=2017}.}
+
+
+\bibitem[\protect\citeauthoryear{Pawlowski, Contag, van~der Veen, Ouwehand,
+  Holz, Bos, Athanasopoulos, and Giuffrida}{Pawlowski et~al\mbox{.}}{2017}]%
+        {marx}
+\bibfield{author}{\bibinfo{person}{Andre Pawlowski}, \bibinfo{person}{Moritz
+  Contag}, \bibinfo{person}{Victor van~der Veen}, \bibinfo{person}{Chris
+  Ouwehand}, \bibinfo{person}{Thorsten Holz}, \bibinfo{person}{Herbert Bos},
+  \bibinfo{person}{Elias Athanasopoulos}, {and} \bibinfo{person}{Cristiano
+  Giuffrida}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{MARX : Uncovering Class Hierarchies in C++
+  Programs}. In \bibinfo{booktitle}{{\em Symposium on Network and Distributed
+  System Security (NDSS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Petsios, Kemerlis, Polychronakis, and
+  Keromytis}{Petsios et~al\mbox{.}}{2015}]%
+        {dynaguard:petsios}
+\bibfield{author}{\bibinfo{person}{Theofilos Petsios},
+  \bibinfo{person}{Vasileios~P. Kemerlis}, \bibinfo{person}{Michalis
+  Polychronakis}, {and} \bibinfo{person}{Angelos~D. Keromytis}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{DynaGuard: Armoring Canary-based Protections
+  against Brute-force Attacks}. In \bibinfo{booktitle}{{\em Annual Computer
+  Security Applications Conference (ACSAC)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Prakash, Hu, and Yin}{Prakash
+  et~al\mbox{.}}{2015}]%
+        {vfuard:aravind}
+\bibfield{author}{\bibinfo{person}{Aravind Prakash}, \bibinfo{person}{Xunchao
+  Hu}, {and} \bibinfo{person}{Heng Yin}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Strict Protection for Virtual Function Calls in
+  COTS C++ Binaries}. In \bibinfo{booktitle}{{\em Symposium on Network and
+  Dist---ributed System Security (NDSS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Prakash and Yin}{Prakash and Yin}{2015}]%
+        {pblocker:prakash}
+\bibfield{author}{\bibinfo{person}{Aravind Prakash} {and} \bibinfo{person}{Heng
+  Yin}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Defeating ROP Through Denial of Stack Pivot}. In
+  \bibinfo{booktitle}{{\em Annual Computer Security Applications Conference
+  (ACSAC)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ramalingam}{Ramalingam}{1994}]%
+        {alias:undecidable}
+\bibfield{author}{\bibinfo{person}{G. Ramalingam}.}
+  \bibinfo{year}{1994}\natexlab{}.
+\newblock \showarticletitle{The Undecidability of Aliasing}. In
+  \bibinfo{booktitle}{{\em ACM Transactions on Programming Languages and
+  Systems (TOPLAS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Randomization}{Randomization}{2001}]%
+        {ASLR}
+\bibfield{author}{\bibinfo{person}{PaX Team. Address Space~Layout
+  Randomization}.} \bibinfo{year}{2001}\natexlab{}.
+\newblock
+\newblock
+\shownote{\url{https://pax.grsecurity.net/docs/aslr.txt}.}
+
+
+\bibitem[\protect\citeauthoryear{Sarbinowski, Kemerlis, Giuffrida, and
+  Athanasopoulos}{Sarbinowski et~al\mbox{.}}{2016}]%
+        {vtpin}
+\bibfield{author}{\bibinfo{person}{Pawel Sarbinowski},
+  \bibinfo{person}{Vasileios~P. Kemerlis}, \bibinfo{person}{Cristiano
+  Giuffrida}, {and} \bibinfo{person}{Elias Athanasopoulos}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{VTPin: Practical VTable Hijacking Protection for
+  Binaries}. In \bibinfo{booktitle}{{\em Annual Computer Security Applications
+  Conference (ACSAC)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Schuster, Tendyck, Liebchen, Davi, Sadeghi,
+  and Holz}{Schuster et~al\mbox{.}}{2015}]%
+        {schuster:coop}
+\bibfield{author}{\bibinfo{person}{Felix Schuster}, \bibinfo{person}{Thomas
+  Tendyck}, \bibinfo{person}{Christopher Liebchen}, \bibinfo{person}{Lucas
+  Davi}, \bibinfo{person}{Ahmad-Reza Sadeghi}, {and} \bibinfo{person}{Thorsten
+  Holz}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Counterfeit Object-Oriented Programming}. In
+  \bibinfo{booktitle}{{\em Proceedings of the IEEE Symposium on Security and
+  Privacy (S\&P)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Shacham}{Shacham}{2007}]%
+        {rop:shacham}
+\bibfield{author}{\bibinfo{person}{H. Shacham}.}
+  \bibinfo{year}{2007}\natexlab{}.
+\newblock \showarticletitle{The Geometry of Innocent Flesh on the Bone:
+  Return-into-Libc without Function Calls (On the x86)}. In
+  \bibinfo{booktitle}{{\em ACM Conference on Computer and Communications
+  Security (CCS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Tice, Roeder, Collingbourne, Checkoway,
+  Erlingsson, Lozano, and Pike}{Tice et~al\mbox{.}}{2014}]%
+        {vtv:tice}
+\bibfield{author}{\bibinfo{person}{Caroline Tice}, \bibinfo{person}{Tom
+  Roeder}, \bibinfo{person}{Peter Collingbourne}, \bibinfo{person}{Stephen
+  Checkoway}, \bibinfo{person}{{\'U}lfar Erlingsson}, \bibinfo{person}{Luis
+  Lozano}, {and} \bibinfo{person}{Geoff Pike}.}
+  \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{Enforcing Forward-Edge Control-Flow Integrity in
+  GCC and LLVM}. In \bibinfo{booktitle}{{\em Proceedings of the USENIX
+  conference on Security (USENIX SEC)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Veen, Andriesse, Göktas, Gras, Sambuc,
+  Slowinska, Bos, and Giuffrida}{Veen et~al\mbox{.}}{2015}]%
+        {veen:cfi}
+\bibfield{author}{\bibinfo{person}{Victor van~der Veen},
+  \bibinfo{person}{Dennis Andriesse}, \bibinfo{person}{Enes Göktas},
+  \bibinfo{person}{Ben Gras}, \bibinfo{person}{Lionel Sambuc},
+  \bibinfo{person}{Asia Slowinska}, \bibinfo{person}{Herbert Bos}, {and}
+  \bibinfo{person}{Cristiano Giuffrida}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Practical Context-Sensiticve CFI}. In
+  \bibinfo{booktitle}{{\em Proceedings of the ACM SIGSAC Conference on Computer
+  and Communications Security (CCS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Veen, Goktas, Contag, Pawlowski, Chen, Rawat,
+  Bos, Holz, Athanasopoulos, and Giuffrida}{Veen et~al\mbox{.}}{2016}]%
+        {veen:typearmor}
+\bibfield{author}{\bibinfo{person}{Victor van~der Veen}, \bibinfo{person}{Enes
+  Goktas}, \bibinfo{person}{Moritz Contag}, \bibinfo{person}{Andre Pawlowski},
+  \bibinfo{person}{Xi Chen}, \bibinfo{person}{Sanjay Rawat},
+  \bibinfo{person}{Herbert Bos}, \bibinfo{person}{Thorsten Holz},
+  \bibinfo{person}{Elias Athanasopoulos}, {and} \bibinfo{person}{Cristiano
+  Giuffrida}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{A Tough call: Mitigating Advanced Code-Reuse
+  Attacks At The Binary Level}. In \bibinfo{booktitle}{{\em Proceedings of the
+  IEEE Symposium on Security and Privacy (S\&P),}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Yuan, Zeng, and Ding}{Yuan
+  et~al\mbox{.}}{2015}]%
+        {cfiguard:yuan}
+\bibfield{author}{\bibinfo{person}{Pinghai Yuan}, \bibinfo{person}{Qingkai
+  Zeng}, {and} \bibinfo{person}{Xuhua Ding}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Hardware-Assisted Fine-Grained Code-Reuse Attack
+  Detection}. In \bibinfo{booktitle}{{\em Proceedings of the International
+  Symposium on Research in Attacks, Intrusions, and Defenses (RAID)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhang, Carr, Li, Ding, Song, Payer, and
+  Song}{Zhang et~al\mbox{.}}{2016}]%
+        {zhang:vtrust}
+\bibfield{author}{\bibinfo{person}{Chao Zhang}, \bibinfo{person}{Scott~A.
+  Carr}, \bibinfo{person}{Tongxin Li}, \bibinfo{person}{Yu Ding},
+  \bibinfo{person}{Chengyu Song}, \bibinfo{person}{Mathias Payer}, {and}
+  \bibinfo{person}{Dawn Song}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{VTrust: Regaining Trust on Virtual Calls}. In
+  \bibinfo{booktitle}{{\em Symposium on Network and Distributed System Security
+  (NDSS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhang, Song, Zhijie, Chen, and Song}{Zhang
+  et~al\mbox{.}}{2015}]%
+        {vtint:zhang}
+\bibfield{author}{\bibinfo{person}{Chao Zhang}, \bibinfo{person}{Chengyu Song},
+  \bibinfo{person}{Kevin~Chen Zhijie}, \bibinfo{person}{Zhaofeng Chen}, {and}
+  \bibinfo{person}{Dawn Song}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{vTint: Protecting Virtual Function Tables\'
+  Integrity}. In \bibinfo{booktitle}{{\em Proceedings of the Symposium on
+  Network and Distributed System Security (NDSS)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhang, Wei, Chen, Duan, Szekeres, McCamant,
+  Song, and Zou}{Zhang et~al\mbox{.}}{2013}]%
+        {ccfir:zhang}
+\bibfield{author}{\bibinfo{person}{Chao Zhang}, \bibinfo{person}{Tao Wei},
+  \bibinfo{person}{Zhaofeng Chen}, \bibinfo{person}{Lei Duan},
+  \bibinfo{person}{Laszlo Szekeres}, \bibinfo{person}{Stephen McCamant},
+  \bibinfo{person}{Dawn Song}, {and} \bibinfo{person}{Wei Zou}.}
+  \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{Practical Control Flow Integrity \& Randomization
+  for Binary Executables}. In \bibinfo{booktitle}{{\em Proceedings of the IEEE
+  Symposium on Security and Privacy (S\&P)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhang and Sekar}{Zhang and Sekar}{2013}]%
+        {zhang:usenix}
+\bibfield{author}{\bibinfo{person}{Mingwei Zhang} {and} \bibinfo{person}{R.
+  Sekar}.} \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{Control Flow Integrity for COTS Binaries}. In
+  \bibinfo{booktitle}{{\em Proceedings of the USENIX conference on Security
+  (USENIX SEC)}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhang and Sekar}{Zhang and Sekar}{2015}]%
+        {cfci:zhang}
+\bibfield{author}{\bibinfo{person}{Mingwei Zhang} {and} \bibinfo{person}{R.
+  Sekar}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Control Flow and Code Integrity for COTS binaries:
+  An Effective Defense Against Real-ROP Attcks}. In \bibinfo{booktitle}{{\em
+  Annual Computer Security Applications Conference (ACSAC)}}.
+\newblock
+
+
+\end{thebibliography}

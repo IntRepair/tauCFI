@@ -1,0 +1,92 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/dev/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: main.aux
+The style file: IEEEtran.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: literatur.bib
+I was expecting a `,' or a `}'---line 134 of file literatur.bib
+ :  
+ :  note = {\url{https://github.com/ctfs/write-ups-2015/tree/master/bctf-2015/exploit/zhongguancun}}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+-- IEEEtran.bst version 1.13 (2008/09/30) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+** IEEEtran BST control entry "IEEEexample:BSTcontrol" detected.
+Warning--empty booktitle in NVD:ACE
+Warning--empty author in ctf:coop
+Warning--empty booktitle in ctf:coop
+Warning--empty author in itanium:abi
+Warning--empty booktitle in itanium:abi
+Warning--empty year in itanium:abi
+Warning--empty author in arm:abi
+Warning--empty booktitle in arm:abi
+Warning--empty author in microsoft:abi
+Warning--empty booktitle in microsoft:abi
+Warning--empty author in safestack:bypassing
+Warning--empty booktitle in iso:iecN3690
+Warning--empty author in dynamorio:drmemory
+Warning--empty booktitle in dynamorio:drmemory
+Warning--empty year in dynamorio:drmemory
+Warning--empty author in intel:cet
+Warning--empty booktitle in intel:cet
+Name 1 in "Nathan, Burow, and A. Carr, Scott, and Nash, Joseph, and Larsen, Per, and Franz, Michael, and Brunthaler, Stefan, and Payer, Mathias" has a comma at the end for entry cfi_survey_payer
+while executing---line 2419 of file IEEEtran.bst
+Name 2 in "Nathan, Burow, and A. Carr, Scott, and Nash, Joseph, and Larsen, Per, and Franz, Michael, and Brunthaler, Stefan, and Payer, Mathias" has a comma at the end for entry cfi_survey_payer
+while executing---line 2419 of file IEEEtran.bst
+Name 3 in "Nathan, Burow, and A. Carr, Scott, and Nash, Joseph, and Larsen, Per, and Franz, Michael, and Brunthaler, Stefan, and Payer, Mathias" has a comma at the end for entry cfi_survey_payer
+while executing---line 2419 of file IEEEtran.bst
+Name 4 in "Nathan, Burow, and A. Carr, Scott, and Nash, Joseph, and Larsen, Per, and Franz, Michael, and Brunthaler, Stefan, and Payer, Mathias" has a comma at the end for entry cfi_survey_payer
+while executing---line 2419 of file IEEEtran.bst
+Name 5 in "Nathan, Burow, and A. Carr, Scott, and Nash, Joseph, and Larsen, Per, and Franz, Michael, and Brunthaler, Stefan, and Payer, Mathias" has a comma at the end for entry cfi_survey_payer
+while executing---line 2419 of file IEEEtran.bst
+Name 6 in "Nathan, Burow, and A. Carr, Scott, and Nash, Joseph, and Larsen, Per, and Franz, Michael, and Brunthaler, Stefan, and Payer, Mathias" has a comma at the end for entry cfi_survey_payer
+while executing---line 2419 of file IEEEtran.bst
+
+Done.
+You've used 43 entries,
+            4039 wiz_defined-function locations,
+            973 strings with 14632 characters,
+and the built_in function-call counts, 21666 in all, are:
+= -- 1358
+> -- 699
+< -- 0
++ -- 337
+- -- 165
+* -- 1000
+:= -- 3234
+add.period$ -- 84
+call.type$ -- 43
+change.case$ -- 50
+chr.to.int$ -- 0
+cite$ -- 60
+duplicate$ -- 1817
+empty$ -- 2477
+format.name$ -- 196
+if$ -- 5013
+int.to.chr$ -- 0
+int.to.str$ -- 42
+missing$ -- 412
+newline$ -- 151
+num.names$ -- 35
+pop$ -- 1226
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 4
+skip$ -- 1744
+stack$ -- 0
+substring$ -- 57
+swap$ -- 965
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 6
+type$ -- 43
+warning$ -- 17
+while$ -- 35
+width$ -- 44
+write$ -- 351
+(There were 7 error messages)

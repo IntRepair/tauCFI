@@ -1,0 +1,49 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Background}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Polymorphism in C++ Programs}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Checking Indirect Calls in Practice}{section.2}% 4
+\BOOKMARK [1][-]{section.3}{Overview an Threat Model}{}% 5
+\BOOKMARK [2][-]{subsection.3.1}{Type Based Policy}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.2}{Backward Edge Policy}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.3}{Threat Model}{section.3}% 8
+\BOOKMARK [1][-]{section.4}{Design}{}% 9
+\BOOKMARK [2][-]{subsection.4.1}{Parameter Count Based Policy}{section.4}% 10
+\BOOKMARK [2][-]{subsection.4.2}{Parameter Register Wideness Based Policy}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.3}{Analysis of Register States}{section.4}% 12
+\BOOKMARK [2][-]{subsection.4.4}{Calltarget Analysis}{section.4}% 13
+\BOOKMARK [3][-]{subsubsection.4.4.1}{Liveness Analysis}{subsection.4.4}% 14
+\BOOKMARK [3][-]{subsubsection.4.4.2}{Required Parameter Count}{subsection.4.4}% 15
+\BOOKMARK [3][-]{subsubsection.4.4.3}{Required Parameter Wideness}{subsection.4.4}% 16
+\BOOKMARK [3][-]{subsubsection.4.4.4}{Void/Non-Void Calltarget}{subsection.4.4}% 17
+\BOOKMARK [2][-]{subsection.4.5}{Callsite Analysis}{section.4}% 18
+\BOOKMARK [3][-]{subsubsection.4.5.1}{Reaching Definitions}{subsection.4.5}% 19
+\BOOKMARK [3][-]{subsubsection.4.5.2}{Provided Parameter Count}{subsection.4.5}% 20
+\BOOKMARK [3][-]{subsubsection.4.5.3}{Provided Parameter Width}{subsection.4.5}% 21
+\BOOKMARK [3][-]{subsubsection.4.5.4}{Void/Non-Void Callsite}{subsection.4.5}% 22
+\BOOKMARK [2][-]{subsection.4.6}{Enforcing Our Forward Edge Policy}{section.4}% 23
+\BOOKMARK [2][-]{subsection.4.7}{Backward Edge Analysis}{section.4}% 24
+\BOOKMARK [3][-]{subsubsection.4.7.1}{Enforcing The Backward Edge Policy}{subsection.4.7}% 25
+\BOOKMARK [1][-]{section.5}{Implementation}{}% 26
+\BOOKMARK [1][-]{section.6}{Evaluation}{}% 27
+\BOOKMARK [2][-]{subsection.6.1}{Precision \(RQ1\)}{section.6}% 28
+\BOOKMARK [3][-]{subsubsection.6.1.1}{Quality and Applicability of Ground Truth}{subsection.6.1}% 29
+\BOOKMARK [3][-]{subsubsection.6.1.2}{Count Based Classification Precision}{subsection.6.1}% 30
+\BOOKMARK [3][-]{subsubsection.6.1.3}{Type Based Classification Precision}{subsection.6.1}% 31
+\BOOKMARK [2][-]{subsection.6.2}{Effectiveness \(RQ2\)}{section.6}% 32
+\BOOKMARK [3][-]{subsubsection.6.2.1}{Theoretical Limits}{subsection.6.2}% 33
+\BOOKMARK [3][-]{subsubsection.6.2.2}{Calltarget Reduction per Callsite}{subsection.6.2}% 34
+\BOOKMARK [2][-]{subsection.6.3}{Runtime Overhead \(RQ3\)}{section.6}% 35
+\BOOKMARK [2][-]{subsection.6.4}{Instrumentation Overhead \(RQ4\)}{section.6}% 36
+\BOOKMARK [2][-]{subsection.6.5}{Security Analysis \(RQ5\)}{section.6}% 37
+\BOOKMARK [2][-]{subsection.6.6}{TyperShield Upper Bounds \(RQ6\)}{section.6}% 38
+\BOOKMARK [2][-]{subsection.6.7}{Mitigation of Advanced Code-Reuse Attacks \(RQ7\)}{section.6}% 39
+\BOOKMARK [2][-]{subsection.6.8}{Effectiveness Against COOP \(RQ8\)}{section.6}% 40
+\BOOKMARK [2][-]{subsection.6.9}{Forward-Edge Comparison with Other Tools \(RQ9\)}{section.6}% 41
+\BOOKMARK [2][-]{subsection.6.10}{Backward-edge Comparison with Shadow-Stack \(RQ10\)}{section.6}% 42
+\BOOKMARK [1][-]{section.7}{Related Work}{}% 43
+\BOOKMARK [2][-]{subsection.7.1}{Mitigation of Forward-Edge based Attacks.}{section.7}% 44
+\BOOKMARK [3][-]{subsubsection.7.1.1}{Binary Based Techniques}{subsection.7.1}% 45
+\BOOKMARK [2][-]{subsection.7.2}{Mitigation of Backward-Edge based Attacks.}{section.7}% 46
+\BOOKMARK [3][-]{subsubsection.7.2.1}{Binary Based Techniques}{subsection.7.2}% 47
+\BOOKMARK [1][-]{section.8}{Conclusion}{}% 48
+\BOOKMARK [1][-]{section*.20}{References}{}% 49

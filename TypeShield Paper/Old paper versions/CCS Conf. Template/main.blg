@@ -1,0 +1,319 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/dev/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: main.aux
+The style file: ACM-Reference-Format.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Database file #1: literatur.bib
+I was expecting a `,' or a `}'---line 108 of file literatur.bib
+ :  
+ :  note = {\url{https://github.com/ctfs/write-ups-2015/tree/master/bctf-2015/exploit/zhongguancun}}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--no key, author in ctf:coop
+Warning--no author, editor, organization, or key in ctf:coop
+Warning--to sort, need author or key in ctf:coop
+Warning--no key, author in microsoft:abi
+Warning--no author, editor, organization, or key in microsoft:abi
+Warning--to sort, need author or key in microsoft:abi
+Warning--no key, author in itanium:abi
+Warning--no author, editor, organization, or key in itanium:abi
+Warning--to sort, need author or key in itanium:abi
+Warning--no key, author in arm:abi
+Warning--no author, editor, organization, or key in arm:abi
+Warning--to sort, need author or key in arm:abi
+Warning--no key, author in dynamorio:drmemory
+Warning--no author, editor, organization, or key in dynamorio:drmemory
+Warning--to sort, need author or key in dynamorio:drmemory
+Warning--no key, author in intel:cet
+Warning--no author, editor, organization, or key in intel:cet
+Warning--to sort, need author or key in intel:cet
+Warning--no key, author in windows:cfguard
+Warning--no author, editor, organization, or key in windows:cfguard
+Warning--to sort, need author or key in windows:cfguard
+Warning--no key, author in arm:abi
+Warning--no key, author in arm:abi
+Warning--no key, author in ctf:coop
+Warning--no key, author in ctf:coop
+Warning--no key, author in dynamorio:drmemory
+Warning--no key, author in dynamorio:drmemory
+Warning--no key, author in intel:cet
+Warning--no key, author in intel:cet
+Warning--no key, author in itanium:abi
+Warning--no key, author in itanium:abi
+Warning--no key, author in microsoft:abi
+Warning--no key, author in microsoft:abi
+Warning--no key, author in windows:cfguard
+Warning--no key, author in windows:cfguard
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Warning--no key, author in dynamorio:drmemory
+Warning--no author, editor, organization, or key in dynamorio:drmemory
+Warning--empty author in dynamorio:drmemory
+Warning--empty year in dynamorio:drmemory
+Warning--empty booktitle in dynamorio:drmemory
+Warning--empty publisher in dynamorio:drmemory
+Warning--empty address in dynamorio:drmemory
+Warning--page numbers missing in both pages and numpages fields in dynamorio:drmemory
+Warning--no key, author in itanium:abi
+Warning--no author, editor, organization, or key in itanium:abi
+Warning--empty author in itanium:abi
+Warning--empty year in itanium:abi
+Warning--empty booktitle in itanium:abi
+Warning--empty publisher in itanium:abi
+Warning--empty address in itanium:abi
+Warning--page numbers missing in both pages and numpages fields in itanium:abi
+Warning--no key, author in microsoft:abi
+Warning--no author, editor, organization, or key in microsoft:abi
+Warning--empty author in microsoft:abi
+Warning--empty booktitle in microsoft:abi
+Warning--empty publisher in microsoft:abi
+Warning--empty address in microsoft:abi
+Warning--page numbers missing in both pages and numpages fields in microsoft:abi
+Warning--no key, author in ctf:coop
+Warning--no author, editor, organization, or key in ctf:coop
+Warning--empty author in ctf:coop
+Warning--empty booktitle in ctf:coop
+Warning--empty publisher in ctf:coop
+Warning--empty address in ctf:coop
+Warning--page numbers missing in both pages and numpages fields in ctf:coop
+Warning--no key, author in arm:abi
+Warning--no author, editor, organization, or key in arm:abi
+Warning--empty author in arm:abi
+Warning--empty booktitle in arm:abi
+Warning--empty publisher in arm:abi
+Warning--empty address in arm:abi
+Warning--page numbers missing in both pages and numpages fields in arm:abi
+Warning--no key, author in windows:cfguard
+Warning--no author, editor, organization, or key in windows:cfguard
+Warning--empty author in windows:cfguard
+Warning--empty booktitle in windows:cfguard
+Warning--empty publisher in windows:cfguard
+Warning--empty address in windows:cfguard
+Warning--page numbers missing in both pages and numpages fields in windows:cfguard
+Warning--no key, author in intel:cet
+Warning--no author, editor, organization, or key in intel:cet
+Warning--empty author in intel:cet
+Warning--empty booktitle in intel:cet
+Warning--empty publisher in intel:cet
+Warning--empty address in intel:cet
+Warning--page numbers missing in both pages and numpages fields in intel:cet
+Warning--empty publisher in abadi:cfi2
+Warning--empty address in abadi:cfi2
+Warning--page numbers missing in both pages and numpages fields in abadi:cfi2
+Warning--empty publisher in abadi:cfi
+Warning--empty address in abadi:cfi
+Warning--page numbers missing in both pages and numpages fields in abadi:cfi
+Warning--empty publisher in andriesse:indepth
+Warning--empty address in andriesse:indepth
+Warning--page numbers missing in both pages and numpages fields in andriesse:indepth
+Warning--empty publisher in function:boundary
+Warning--empty address in function:boundary
+Warning--page numbers missing in both pages and numpages fields in function:boundary
+Warning--empty publisher in divine:balakrishnan
+Warning--empty address in divine:balakrishnan
+Warning--page numbers missing in both pages and numpages fields in divine:balakrishnan
+Warning--empty publisher in JOP1
+Warning--empty address in JOP1
+Warning--page numbers missing in both pages and numpages fields in JOP1
+Warning--empty publisher in bounov:interleaving
+Warning--empty address in bounov:interleaving
+Warning--page numbers missing in both pages and numpages fields in bounov:interleaving
+Warning--empty publisher in bap:brumley
+Warning--empty address in bap:brumley
+Warning--page numbers missing in both pages and numpages fields in bap:brumley
+Warning--empty publisher in ROP
+Warning--empty address in ROP
+Warning--page numbers missing in both pages and numpages fields in ROP
+Warning--empty publisher in caballero:inference
+Warning--empty address in caballero:inference
+Warning--page numbers missing in both pages and numpages fields in caballero:inference
+Warning--empty publisher in carlini:bending
+Warning--empty address in carlini:bending
+Warning--page numbers missing in both pages and numpages fields in carlini:bending
+Warning--empty publisher in rop:carlini
+Warning--empty address in rop:carlini
+Warning--page numbers missing in both pages and numpages fields in rop:carlini
+Warning--empty publisher in JOP2
+Warning--empty address in JOP2
+Warning--page numbers missing in both pages and numpages fields in JOP2
+Warning--empty publisher in conti:ccs
+Warning--empty address in conti:ccs
+Warning--page numbers missing in both pages and numpages fields in conti:ccs
+Warning--empty publisher in crane:readactor++
+Warning--empty address in crane:readactor++
+Warning--page numbers missing in both pages and numpages fields in crane:readactor++
+Warning--empty publisher in dang:asiaccs
+Warning--empty address in dang:asiaccs
+Warning--page numbers missing in both pages and numpages fields in dang:asiaccs
+Warning--empty publisher in JOP3
+Warning--empty address in JOP3
+Warning--page numbers missing in both pages and numpages fields in JOP3
+Warning--empty publisher in vci:asiaccs
+Warning--empty address in vci:asiaccs
+Warning--page numbers missing in both pages and numpages fields in vci:asiaccs
+Warning--empty publisher in fokin:smartdec
+Warning--empty address in fokin:smartdec
+Warning--page numbers missing in both pages and numpages fields in fokin:smartdec
+Warning--empty publisher in gawlik
+Warning--empty address in gawlik
+Warning--page numbers missing in both pages and numpages fields in gawlik
+Warning--empty publisher in haller:shrinkwrap
+Warning--empty address in haller:shrinkwrap
+Warning--page numbers missing in both pages and numpages fields in haller:shrinkwrap
+Warning--empty publisher in safedispatch:jang
+Warning--empty address in safedispatch:jang
+Warning--page numbers missing in both pages and numpages fields in safedispatch:jang
+Warning--empty publisher in reprod:nist
+Warning--empty address in reprod:nist
+Warning--page numbers missing in both pages and numpages fields in reprod:nist
+Warning--empty booktitle in iso:iecN3690
+Warning--empty publisher in iso:iecN3690
+Warning--empty address in iso:iecN3690
+Warning--page numbers missing in both pages and numpages fields in iso:iecN3690
+Warning--empty address in khedker2009data
+Warning--empty booktitle in kornau:rop
+Warning--empty publisher in kornau:rop
+Warning--empty address in kornau:rop
+Warning--page numbers missing in both pages and numpages fields in kornau:rop
+Warning--empty publisher in volodymyr:cpi
+Warning--empty address in volodymyr:cpi
+Warning--page numbers missing in both pages and numpages fields in volodymyr:cpi
+Warning--empty publisher in loop:oriented
+Warning--empty address in loop:oriented
+Warning--page numbers missing in both pages and numpages fields in loop:oriented
+Warning--empty publisher in byoungyoung:typecasting
+Warning--empty address in byoungyoung:typecasting
+Warning--page numbers missing in both pages and numpages fields in byoungyoung:typecasting
+Warning--empty publisher in subversive-c:lettner
+Warning--empty address in subversive-c:lettner
+Warning--page numbers missing in both pages and numpages fields in subversive-c:lettner
+Warning--empty publisher in lin:rewards
+Warning--empty address in lin:rewards
+Warning--page numbers missing in both pages and numpages fields in lin:rewards
+Warning--empty publisher in ccfi:jose
+Warning--empty address in ccfi:jose
+Warning--page numbers missing in both pages and numpages fields in ccfi:jose
+Warning--empty year in dep
+Warning--empty title in dep
+Warning--empty booktitle in dep
+Warning--empty publisher in dep
+Warning--empty address in dep
+Warning--page numbers missing in both pages and numpages fields in dep
+Warning--empty publisher in mohan:opaque
+Warning--empty address in mohan:opaque
+Warning--page numbers missing in both pages and numpages fields in mohan:opaque
+Warning--empty booktitle in alan:mycroft
+Warning--empty publisher in alan:mycroft
+Warning--empty address in alan:mycroft
+Warning--page numbers missing in both pages and numpages fields in alan:mycroft
+Warning--empty publisher in mcfi:niu
+Warning--empty address in mcfi:niu
+Warning--page numbers missing in both pages and numpages fields in mcfi:niu
+Warning--empty publisher in rockjit:niu
+Warning--empty address in rockjit:niu
+Warning--page numbers missing in both pages and numpages fields in rockjit:niu
+Warning--empty publisher in perinput:niu
+Warning--empty address in perinput:niu
+Warning--page numbers missing in both pages and numpages fields in perinput:niu
+Warning--empty booktitle in NVD:ACE
+Warning--empty publisher in NVD:ACE
+Warning--empty address in NVD:ACE
+Warning--page numbers missing in both pages and numpages fields in NVD:ACE
+Warning--empty publisher in marx
+Warning--empty address in marx
+Warning--page numbers missing in both pages and numpages fields in marx
+Warning--empty publisher in dynaguard:petsios
+Warning--empty address in dynaguard:petsios
+Warning--page numbers missing in both pages and numpages fields in dynaguard:petsios
+Warning--empty publisher in vfuard:aravind
+Warning--empty address in vfuard:aravind
+Warning--page numbers missing in both pages and numpages fields in vfuard:aravind
+Warning--empty publisher in pblocker:prakash
+Warning--empty address in pblocker:prakash
+Warning--page numbers missing in both pages and numpages fields in pblocker:prakash
+Warning--empty publisher in alias:undecidable
+Warning--empty address in alias:undecidable
+Warning--page numbers missing in both pages and numpages fields in alias:undecidable
+Warning--empty title in ASLR
+Warning--empty booktitle in ASLR
+Warning--empty publisher in ASLR
+Warning--empty address in ASLR
+Warning--page numbers missing in both pages and numpages fields in ASLR
+Warning--empty publisher in vtpin
+Warning--empty address in vtpin
+Warning--page numbers missing in both pages and numpages fields in vtpin
+Warning--empty publisher in schuster:coop
+Warning--empty address in schuster:coop
+Warning--page numbers missing in both pages and numpages fields in schuster:coop
+Warning--empty publisher in rop:shacham
+Warning--empty address in rop:shacham
+Warning--page numbers missing in both pages and numpages fields in rop:shacham
+Warning--empty publisher in vtv:tice
+Warning--empty address in vtv:tice
+Warning--page numbers missing in both pages and numpages fields in vtv:tice
+Warning--empty publisher in veen:cfi
+Warning--empty address in veen:cfi
+Warning--page numbers missing in both pages and numpages fields in veen:cfi
+Warning--empty publisher in veen:typearmor
+Warning--empty address in veen:typearmor
+Warning--page numbers missing in both pages and numpages fields in veen:typearmor
+Warning--empty publisher in cfiguard:yuan
+Warning--empty address in cfiguard:yuan
+Warning--page numbers missing in both pages and numpages fields in cfiguard:yuan
+Warning--empty publisher in zhang:vtrust
+Warning--empty address in zhang:vtrust
+Warning--page numbers missing in both pages and numpages fields in zhang:vtrust
+Warning--empty publisher in vtint:zhang
+Warning--empty address in vtint:zhang
+Warning--page numbers missing in both pages and numpages fields in vtint:zhang
+Warning--empty publisher in ccfir:zhang
+Warning--empty address in ccfir:zhang
+Warning--page numbers missing in both pages and numpages fields in ccfir:zhang
+Warning--empty publisher in zhang:usenix
+Warning--empty address in zhang:usenix
+Warning--page numbers missing in both pages and numpages fields in zhang:usenix
+Warning--empty publisher in cfci:zhang
+Warning--empty address in cfci:zhang
+Warning--page numbers missing in both pages and numpages fields in cfci:zhang
+You've used 64 entries,
+            5706 wiz_defined-function locations,
+            1544 strings with 26015 characters,
+and the built_in function-call counts, 63409 in all, are:
+= -- 5475
+> -- 3017
+< -- 0
++ -- 950
+- -- 1092
+* -- 4861
+:= -- 6840
+add.period$ -- 259
+call.type$ -- 64
+change.case$ -- 481
+chr.to.int$ -- 63
+cite$ -- 356
+duplicate$ -- 5640
+empty$ -- 4120
+format.name$ -- 1205
+if$ -- 14529
+int.to.chr$ -- 2
+int.to.str$ -- 0
+missing$ -- 317
+newline$ -- 511
+num.names$ -- 455
+pop$ -- 3689
+preamble$ -- 1
+purify$ -- 800
+quote$ -- 0
+skip$ -- 1912
+stack$ -- 0
+substring$ -- 2968
+swap$ -- 180
+text.length$ -- 157
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 1899
+warning$ -- 264
+while$ -- 304
+width$ -- 0
+write$ -- 998
+(There was 1 error message)
