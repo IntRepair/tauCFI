@@ -1,0 +1,53 @@
+\select@language {english}
+\contentsline {section}{\numberline {1}Introduction}{4}{section.1}
+\contentsline {subsection}{\numberline {1.1}Project Structure}{4}{subsection.1.1}
+\contentsline {subsubsection}{\numberline {1.1.1}Directory Structure}{4}{subsubsection.1.1.1}
+\contentsline {subsection}{\numberline {1.2}Use of Programming Language and Libraries}{5}{subsection.1.2}
+\contentsline {subsubsection}{\numberline {1.2.1}C++11 Features}{5}{subsubsection.1.2.1}
+\contentsline {subsubsection}{\numberline {1.2.2}C++ Standard Library}{6}{subsubsection.1.2.2}
+\contentsline {subsubsection}{\numberline {1.2.3}Exceptions}{6}{subsubsection.1.2.3}
+\contentsline {subsubsection}{\numberline {1.2.4}Boost}{6}{subsubsection.1.2.4}
+\contentsline {subsubsection}{\numberline {1.2.5}Qt}{6}{subsubsection.1.2.5}
+\contentsline {subsubsection}{\numberline {1.2.6}Language Extensions}{6}{subsubsection.1.2.6}
+\contentsline {subsubsection}{\numberline {1.2.7}Metaprogramming techniques}{7}{subsubsection.1.2.7}
+\contentsline {subsection}{\numberline {1.3}Building}{8}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Testing}{8}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}Using}{8}{subsection.1.5}
+\contentsline {subsection}{\numberline {1.6}Todo}{8}{subsection.1.6}
+\contentsline {section}{\numberline {2}Nc Library}{9}{section.2}
+\contentsline {subsection}{\numberline {2.1}Core: Representation of Input Program}{9}{subsection.2.1}
+\contentsline {subsubsection}{\numberline {2.1.1}Instructions}{9}{subsubsection.2.1.1}
+\contentsline {subsubsection}{\numberline {2.1.2}Architecture}{10}{subsubsection.2.1.2}
+\contentsline {subsubsection}{\numberline {2.1.3}Image}{10}{subsubsection.2.1.3}
+\contentsline {subsubsection}{\numberline {2.1.4}Mangling}{10}{subsubsection.2.1.4}
+\contentsline {subsubsection}{\numberline {2.1.5}Module}{10}{subsubsection.2.1.5}
+\contentsline {subsubsection}{\numberline {2.1.6}Context}{10}{subsubsection.2.1.6}
+\contentsline {subsubsection}{\numberline {2.1.7}Input}{11}{subsubsection.2.1.7}
+\contentsline {subsubsection}{\numberline {2.1.8}Disassembly}{11}{subsubsection.2.1.8}
+\contentsline {subsubsection}{\numberline {2.1.9}Decompilation: UniversalAnalyzer}{11}{subsubsection.2.1.9}
+\contentsline {subsubsection}{\numberline {2.1.10}Implementing new architecture}{11}{subsubsection.2.1.10}
+\contentsline {subsection}{\numberline {2.2}IR: Intermediate Representation}{12}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}Statements and Terms}{12}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}Memory Model}{13}{subsubsection.2.2.2}
+\contentsline {subsubsection}{\numberline {2.2.3}Translation of Assembler Program to IR}{13}{subsubsection.2.2.3}
+\contentsline {subsubsection}{\numberline {2.2.4}Isolation of Functions}{13}{subsubsection.2.2.4}
+\contentsline {subsubsection}{\numberline {2.2.5}Inlining}{14}{subsubsection.2.2.5}
+\contentsline {subsubsection}{\numberline {2.2.6}Calling Conventions}{14}{subsubsection.2.2.6}
+\contentsline {subsubsection}{\numberline {2.2.7}Dataflow Analysis}{14}{subsubsection.2.2.7}
+\contentsline {paragraph}{Calling Conventions}{14}{section*.2}
+\contentsline {subsubsection}{\numberline {2.2.8}Reconstruction of Local Variables}{15}{subsubsection.2.2.8}
+\contentsline {subsubsection}{\numberline {2.2.9}Hiding Redundant Computations}{15}{subsubsection.2.2.9}
+\contentsline {subsubsection}{\numberline {2.2.10}Type Reconstruction}{15}{subsubsection.2.2.10}
+\contentsline {subsubsection}{\numberline {2.2.11}Structural Analysis}{16}{subsubsection.2.2.11}
+\contentsline {subsubsection}{\numberline {2.2.12}Code Generation}{16}{subsubsection.2.2.12}
+\contentsline {subsection}{\numberline {2.3}LikeC: High-level Representation}{16}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Crec: Reconstruction of C++ classes and exceptions}{16}{subsection.2.4}
+\contentsline {subsubsection}{\numberline {2.4.1}Class hierarchy reconstruction}{17}{subsubsection.2.4.1}
+\contentsline {subsubsection}{\numberline {2.4.2}Reconstruction of exception handling constructs}{17}{subsubsection.2.4.2}
+\contentsline {subsection}{\numberline {2.5}Refs: Code cross-references}{17}{subsection.2.5}
+\contentsline {subsection}{\numberline {2.6}VSA: Value set analysis}{18}{subsection.2.6}
+\contentsline {subsection}{\numberline {2.7}Intel: Support for Intel x86 Architecture}{18}{subsection.2.7}
+\contentsline {section}{\numberline {3}Nocode: Command Line Decompiler}{19}{section.3}
+\contentsline {section}{\numberline {4}SmartDec: Decompiler with a GUI}{20}{section.4}
+\contentsline {section}{\numberline {5}Nocode-plugin: IDA Pro plug-in}{21}{section.5}
+\contentsline {section}{References}{22}{section.5}
