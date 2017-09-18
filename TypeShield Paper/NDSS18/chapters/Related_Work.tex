@@ -41,7 +41,7 @@
 % (iii) OS-based approaches such as Windows Control Flow Guard~\cite{windows:cfguard} 
 % since the precomputed CFG does not contain edges for indirect callsites which are explicitly exploited during the COOP attack.
 
-\subsubsection{Binary Based Techniques}
+% \subsubsection{Binary Based Techniques}
 % The following tools address vTable protection through binary instrumentation, 
 % but fail to mitigate against COOP: vfGuard~\cite{vfuard:aravind}, and vTint~\cite{vtint:zhang}.
 
@@ -117,7 +117,7 @@ Marx can not protect against backward edge violations and arguably has in common
 % new feature provided by intel is useless in the face of this attack. Nevertheless, other highly notorious CRAs may not be possible
 % after this feature will be implemented main stream in OSs and compilers.
 % 
-% Windows Control Flow Guard~\cite{windows:cfguard} is based on a user-space and kernel-space components which
+% Windows Control Flow Guard~\cite{windows:cfguard} is based on an user-space and kernel-space components which
 % by working closely together can enforce an efficient fine-grained CFI policy based on a precomputed CFG.
 % These new feature available in Windows 10 can considerably raise the bar for future attacks but in our opinion advanced CRAs
 % such as COOP are still possible due the typical characteristics of COOP.
@@ -180,7 +180,7 @@ be available in mass production.
 For brevity reasons we do not look herein into compiler and purely runtime techniques and advise the reader to look for 
 more details the following survey~\cite{cfi_survey_payer}.
 
-\subsubsection{Binary Based Techniques}
+% \subsubsection{Binary Based Techniques}
 The CFI based implementation of Abadi et al.~\cite{abadi:cfi} is historically the first compiler based implementation of a shadow stack.
 At first quite promising this implementation suffers from high performance overhead which is around 21\% due to the fact that the inserted checks before each 
 function return instruction are not runtime efficient.

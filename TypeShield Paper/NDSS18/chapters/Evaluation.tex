@@ -172,10 +172,10 @@ classifications and the number and ratio of problematic classifications, which i
 The \#cs gt and \#ct gt labels mean total number of callsites and calltarget based on the ground truth, respectively.
 The label perfect args denotes all occurrences when our result and the ground truth perfectly match regarding the required/provided arguments. The label perfect return denotes this for return values. 
 
-\textbf{Calltargets.} For the first experiment we used a union combination operator with an $analyze$ function that follows into occurring direct calls.
+\textbf{Calltargets.} For the first experiment we used an union combination operator with an $analyze$ function that follows into occurring direct calls.
 The results indicate a perfect classification of around 86\% while for the returns it is over 68\%.
 
-\textbf{Callsites.} For the second experiment we used a union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
+\textbf{Callsites.} For the second experiment we used an union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
 The results indicate a rate of perfect classification of over 73\% while for the returns it is over 88\%.
 
 \subsubsection{Type Based Classification Precision}

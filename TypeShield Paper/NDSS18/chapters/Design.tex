@@ -326,7 +326,7 @@ For our {count} policy, we need a coarse representation of the state of one regi
 Further, this gives us the $S^\mathcal{L} = \{ C, R, W \}$ as register state, which translates to the register super state $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$. 
 We implement \texttt{merge\_v} in such a way that a state within a superstate is only updated if the corresponding register was not accessed, as represented by $C$. 
 Our reasoning is that the first access is the relevant one in order to determine read before write.
-Our horizontal \textit{merge($merge\_h$)} function is a simple pairwise combination of the given set of states, which are then combined with a union like operator with $W$ preceding $R$ and $R$ preceding $C$.
+Our horizontal \textit{merge($merge\_h$)} function is a simple pairwise combination of the given set of states, which are then combined with an union like operator with $W$ preceding $R$ and $R$ preceding $C$.
 The index of highest parameter register based on the used call convention that has the state R considered to be the number of parameters a function at least requires to be prepared by a callsite.
 
 %
@@ -355,7 +355,7 @@ The index of highest parameter register based on the used call convention that h
 %\end{align}
 
 %Our horizontal merge($merge\_h$) function is a simple pairwise combination of the given set of states, 
-%which are then combined with a union like operator with $W$ preceding $R$ preceding $C$.
+%which are then combined with an union like operator with $W$ preceding $R$ preceding $C$.
 %\begin{align}
 %merge\_h(\{s\}) &= s\\
 %merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
@@ -366,7 +366,7 @@ The index of highest parameter register based on the used call convention that h
 %\begin{itemize}
 %\item [$\bigsqcap^{\mathcal{L}}$] is what we call the destructive combination operator, as it returns W on any mismatch.
 %\item [$\bigcap^{\mathcal{L}}$] is what we call the intersection operator, as it returns C, when combining C and R, similar to an intersection.
-%\item [$\bigcup^{\mathcal{L}}$] is what we call the union operator, as it returns R, when combining C and R similar to a union.
+%\item [$\bigcup^{\mathcal{L}}$] is what we call the union operator, as it returns R, when combining C and R similar to an union.
 %\end{itemize}
 
 
@@ -440,7 +440,7 @@ occurs $merge\_v^{i}$. In any other case, it behaves like the previously mention
 %merge\_h(\{s\}) &= s\\
 %merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
 %\end{align}
-Our horizontal merge $merge\_h$ function is a pairwise combination of the given set of states, which are then combined with a union-like operator 
+Our horizontal merge $merge\_h$ function is a pairwise combination of the given set of states, which are then combined with an union-like operator 
 with $W$ preceding $WR$ and $WR$ preceding $R$ and $R$ preceding $C$. Unless one side is $W$, read accesses are combined in such a way that always the higher one is selected.
 
 %The results of our experiments with the implementation of calltarget classification gave presented us with essentially one possible candidate
@@ -788,7 +788,7 @@ merge function $merge\_v$ behaves as follows. In case the first given state is $
 %\end{align}
 
 
-Our horizontal merge $merge\_h$ function is a pairwise combination of the given set of states, which are then combined with a union like operator with $T$ preceding $S$ and $S$ preceding $U$.
+Our horizontal merge $merge\_h$ function is a pairwise combination of the given set of states, which are then combined with an union like operator with $T$ preceding $S$ and $S$ preceding $U$.
 %
 %Our horizontal merge function is a simple pairwise combination of the given set of states:
 %\begin{align}
@@ -800,9 +800,9 @@ Our horizontal merge $merge\_h$ function is a pairwise combination of the given 
 %\begin{itemize}
 %\item [$\bigsqcap^{\mathcal{R}}$] is what we call the destructive combination operator, as it returns T on any mismatch.
 %\item [$\bigcap^{\mathcal{R}}$] is what we call the intersection operator, as it returns U, when combining U and S, similar to an intersection.
-%\item [$\bigcup^{\mathcal{R}}$] is what we call the union operator, as it returns S, when combining U and S similar to a union.
+%\item [$\bigcup^{\mathcal{R}}$] is what we call the union operator, as it returns S, when combining U and S similar to an union.
 %\item [$\bigsqcup^{\mathcal{R}}$] is what we call the true union operator, as it gives S precedence over everything and returns T or 
-%U only when both sides are T or U being more inclusive than a union.
+%U only when both sides are T or U being more inclusive than an union.
 %\end{itemize}
 
 \newcolumntype{?}{!{\vrule width 1pt}}
@@ -873,7 +873,7 @@ super state $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
 However, we are only interested in the first occurrence of a state that is not $U$ in a path, as following reads or writes do not give us more information. Therefore, we can use 
 the same vertical merge function as for the \emph{count} policy, which is essentially a pass-through until the first non $U$ state.
 
-Our horizontal merge $merge\_h$ function is a simple pairwise combination of the given set of states, which are then combined with a union like operator with $T$ 
+Our horizontal merge $merge\_h$ function is a simple pairwise combination of the given set of states, which are then combined with an union like operator with $T$ 
 preceding $S$ and $S$ preceding $U$. Note, that when both states are set, we pick the higher one.
 
 %
@@ -898,7 +898,7 @@ preceding $S$ and $S$ preceding $U$. Note, that when both states are set, we pic
 %(the lower of the two is returned).
 %\item [$\bigsqcap^{\mathcal{R}}$] is what we call the half intersection operator, as it returns U, when combining U and S, 
 %similar to an intersection but we calculate the union of states when both states are set (the higher of the two is returned).
-%\item [$\bigcup^{\mathcal{R}}$] is what we call the union operator, as it returns S, when combining U and S similar to a union
+%\item [$\bigcup^{\mathcal{R}}$] is what we call the union operator, as it returns S, when combining U and S similar to an union
 %furthermore we calculate the union of states when both states are set (the higher of the two is returned).
 %\end{itemize}
 %

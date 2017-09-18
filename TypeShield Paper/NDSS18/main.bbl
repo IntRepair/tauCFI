@@ -165,6 +165,11 @@ C.~Zhang, S.~A. Carr, T.~Li, Y.~Ding, C.~Song, M.~Payer, and D.~Song, ``Vtrust:
   Regaining trust on virtual calls,'' in \emph{Symposium on Network and
   Distributed System Security (NDSS)}, 2016.
 
+\bibitem{bernat:dyninst}
+A.~R. Bernat and B.~P. Miller, ``Anywhere, any-time binary instrumentation,''
+  in \emph{Proceedings of the 10th ACM SIGPLAN-SIGSOFT workshop on Program
+  analysis for software tools, (PASTE)}, 2011.
+
 \bibitem{khedker2009data}
 U.~Khedker, A.~Sanyal, and B.~Sathe, \emph{Data flow analysis: Theory and
   Practice}.\hskip 1em plus 0.5em minus 0.4em\relax CRC Press, 2009.
@@ -173,11 +178,6 @@ U.~Khedker, A.~Sanyal, and B.~Sathe, \emph{Data flow analysis: Theory and
 D.~Andriesse, A.~Slowinska, and H.~Bos, ``Compiler-agnostic function detection
   in binaries,'' in \emph{IEEE European Symposium on Security and Privacy
   (EuroS\&P)}, 2017.
-
-\bibitem{bernat:dyninst}
-A.~R. Bernat and B.~P. Miller, ``Anywhere, any-time binary instrumentation,''
-  in \emph{Proceedings of the 10th ACM SIGPLAN-SIGSOFT workshop on Program
-  analysis for software tools, (PASTE)}, 2011.
 
 \bibitem{dynamorio:drmemory}
 ``Dynamorio,'' \url{http://dynamorio.org/home.html}.
@@ -226,6 +226,6 @@ F.~Schuster, T.~Tendyck, C.~Liebchen, L.~Davi, A.-R. Sadeghi, and T.~Holz,
 \bibitem{cfi_survey_payer}
 B.~Nathan, S.~A.~Carr, J.~Nash, P.~Larsen, M.~Franz, S.~Brunthaler, and
   M.~Payer, ``Control-flow integrity: Precision, security, and performance,''
-  in \emph{ACM Computing Surveys (CSUR)}, 2018.
+  in \emph{ACM Computing Surveys (CSUR)}, 2017.
 
 \end{thebibliography}

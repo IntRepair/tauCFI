@@ -200,7 +200,8 @@
 % \title{\Large \bf \textsc{TypeShield}: Protecting Forward Indirect Calls in C++ Binaries for Real}
 % \title{\Large \bf \textsc{TypeShield}: Practical, Precise and Effective Protection of Forward Indirect Calls in C++ Binaries}
 % \title{\Large \bf \textsc{TypeShield}: Practical, Precise \& Effective Protection of Forward Indirect Calls}
-\title{\textsc{TypeShield}: Practical Forward \& Backward Edge Defense Against Code Reuse Attacks}
+% \title{\textsc{TypeShield}: Practical Forward \& Backward Edge Defense Against Code Reuse Attacks using Binary Type Information}
+\title{\textsc{TypeShield}: Practical Defense Against Code Reuse Attacks using Binary Type Information}
 
 
 % author names and affiliations
@@ -259,7 +260,7 @@
 %short version
 Applications aiming for high performance and availability draw on several object oriented 
 features available in the C/C++ programming language such dynamic object dispatch.
-However, there is an alarmingly high number of object dispatch corruption vulnerabilities which undercut security 
+However, there is an alarmingly high number of object dispatch (\textit{i.e.,} forward-edge) corruption vulnerabilities which undercut security 
 in significant ways and are in need of a thorough solution.
 
 In this paper we present, \textsc{TypeShield}, a binary runtime forward and backward edge protection tool 
