@@ -195,7 +195,7 @@ compiler based protection recently bypassed~\cite{safestack:bypassing}.) alterna
 % and return set per function return site, thus drastically reducing the attacker leeway.
 
 % \textbf{Contributions.} 
-In summary, we make the following contributions:
+% In summary, we make the following contributions:
 %%long version
 % \label{Contribution}
 % \begin{itemize}[leftmargin=.12in]
@@ -237,23 +237,33 @@ In summary, we make the following contributions:
 
 %short version
 \label{Contribution}
-\begin{itemize}
-% [leftmargin=.35cm]
-
- \item \textbf{Novel CFI-based protection technique.} We designed a novel fine-grained CFI technique for protecting forward and backward edges in a CFG
- against code reuse attacks.
- 
- \item \textbf{Implemented an usable prototype.} We implemented, \textsc{TypeShield}, a prototype which enforces the aforementioned technique
- in stripped program binaries. \textsc{TypeShield} can serve as platform for developing other binary based protection mechanisms.
- 
- \item \textbf{Evaluation.} We conduct a thorough set of evaluative experiments in which we show that \textsc{TypeShield} is more precise and effective than 
- other state-f-the-art tools. Further, we show that our tool has a higher calltarget set reduction per callsite, thus further reducing the attack surface.
- 
+% \begin{itemize}
+% % [leftmargin=.35cm]
+% 
+%  \item \textbf{Novel CFI-based protection technique.} We designed a novel fine-grained CFI technique for protecting forward and backward edges in a CFG
+%  against code reuse attacks.
+%  
+%  \item \textbf{Implemented an usable prototype.} We implemented, \textsc{TypeShield}, a prototype which enforces the aforementioned technique
+%  in stripped program binaries. \textsc{TypeShield} can serve as platform for developing other binary based protection mechanisms.
+%  
+%  \item \textbf{Evaluation.} We conduct a thorough set of evaluative experiments in which we show that \textsc{TypeShield} is more precise and effective than 
+%  other state-f-the-art tools. Further, we show that our tool has a higher calltarget set reduction per callsite, thus further reducing the attack surface.
+%  
 %  \item \textbf{Reproducibility of results.} 
 %  We respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist} and the security and measurements 
 %  section in~\cite{herley:security}) by releasing \textsc{TypeShield} open source and by providing for each conducted experiment a precise description.
- 
-\end{itemize}
+%  
+% \end{itemize}
+
+We designed a novel fine-grained CFI technique for protecting forward and backward edges in a CFG
+ against code reuse attacks. We implemented, \textsc{TypeShield}, a prototype which enforces the aforementioned technique
+ in stripped program binaries. \textsc{TypeShield} can serve as platform for developing other binary based protection mechanisms.
+We conduct a thorough set of evaluative experiments in which we show that \textsc{TypeShield} is more precise and effective than 
+ other state-f-the-art tools. Further, we show that our tool has a higher calltarget set reduction per callsite, thus further reducing the attack surface.
+We respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist} and the security and measurements 
+section in~\cite{herley:security}) by releasing \textsc{TypeShield} as open source and by providing for each conducted experiment a precise description 
+upon paper acceptance.
+
 
 
 % 
