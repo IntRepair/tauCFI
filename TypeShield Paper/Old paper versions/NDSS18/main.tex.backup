@@ -1,0 +1,305 @@
+
+\documentclass[conference]{IEEEtran}
+% \usepackage{usenix,epsfig,endnotes}
+% \usepackage{flushend}
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage[ruled,vlined,linesnumbered,resetcount]{algorithm2e}
+\SetAlFnt{\scriptsize\sffamily}
+\SetKwComment{Comment}{$\triangleright$\ }{}
+\SetEndCharOfAlgoLine{}
+
+\makeatletter
+\newcommand\thefontsize[1]{{#1 The current font size is: \f@size pt\par}}
+\makeatother
+
+% \SetEndCharOfAlgoLine{}
+\newcommand\mycommfont[1]{\scriptsize\ttfamily\textcolor{blue}{#1}}
+\SetCommentSty{mycommfont}
+
+\usepackage{array}
+\usepackage[]{xcolor}
+\usepackage{ifthen}
+\usepackage{makecell}
+\usepackage{booktabs}
+\usepackage[disable]{todonotes}
+% \usepackage{todonotes}
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+\usepackage{svg}
+\usepackage{amsmath,amssymb}
+\usetikzlibrary{matrix,arrows}
+\usetikzlibrary{positioning,arrows}
+\usetikzlibrary{shapes,arrows,fit,calc,positioning,automata}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+
+\usepackage{fix-cm}    
+
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{19}{19}}
+\makeatother 
+
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=red,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+%use to check the not used references
+%and remove them
+% \usepackage{refcheck}
+
+%draft watermark
+% \usepackage{draftwatermark}
+% \SetWatermarkText{DRAFT}
+% \SetWatermarkScale{1}
+
+\inputencoding{latin1}
+\inputencoding{utf8}
+
+\usepackage{fancyhdr,import}
+% \usepackage[colorlinks=true,linkcolor=blue, citecolor=blue]{hyperref}
+\usepackage{cleveref}
+\crefname{section}{§}{§§}
+\Crefname{section}{§}{§§}
+\crefformat{section}{§#2#1#3}
+
+\usepackage{balance}
+\usepackage{setspace}
+\usepackage{adjustbox}
+\usepackage{lipsum}% dummy text
+\usepackage{longtable,csvsimple}
+% \usepackage[margin=.75in]{geometry}
+% \usepackage[toc,page]{appendix}
+\renewcommand{\UrlBreaks}{\do.\do\/\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z}
+\def\UrlBreaks{\do\/\do-}
+ 
+ \expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks% save the current one
+  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j%
+  \do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t%
+  \do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D%
+  \do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N%
+  \do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X%
+  \do\Y\do\Z\do\*\do\-\do\~\do\'\do\"\do\-\do\.}%
+  
+%%algorithm stuff
+\makeatletter
+\providecommand{\bigsqcap}{%
+  \mathop{%
+    \mathpalette\@updown\bigsqcup
+  }%
+}
+\newcommand*{\@updown}[2]{%
+  \rotatebox[origin=c]{180}{$\m@th#1#2$}%
+}
+\makeatother
+
+\makeatletter
+\let\oldnl\nl% Store \nl in \oldnl
+\newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}}% Remove line number for one line
+\makeatother
+
+\usepackage{graphicx} % http://ctan.org/pkg/graphicx
+\usepackage{booktabs} % http://ctan.org/pkg/booktabs
+\usepackage{xparse}   % http://ctan.org/pkg/xparse
+% Rotation: \rot[<angle>][<width>]{<stuff>}
+\NewDocumentCommand{\rot}{O{45} O{2em} m}{\makebox[#2][l]{\rotatebox{#1}{#3}}}%
+
+% \let\oldalgorithm\algorithm
+% \let\oldendalgorithm\endalgorithm
+% 
+% \let\algorithm\figure
+% \let\endalgorithm\endfigure
+
+%%% Allow more line breaks in URLs.
+\usepackage{url}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+
+%%my own dings
+\usepackage{tikz}
+\newcommand\encircle[1]{%
+\tikz[yshift=-2pt] 
+   \node (X) [draw, shape=circle, inner sep=0, scale=0.5, fill=black, text=white] {\strut #1};}
+   
+%% add -shell-escape as flag for pdflatex in order to work
+\usepackage{minted}
+\usepackage{placeins}
+
+% \usepackage[outputdir=build]{minted}
+
+\usetikzlibrary{arrows,positioning} 
+\tikzset{
+    %Define standard arrow tip
+    >=stealth',
+    %Define style for boxes
+    punkt/.style={
+           rectangle,
+           rounded corners,
+           draw=black, very thick,
+           text width=6.5em,
+           minimum height=2em,
+           text centered},
+    % Define arrow style
+    pil/.style={
+           ->,
+           thick,
+           shorten <=2pt,
+           shorten >=2pt,}
+}
+
+\usepackage{listings}
+\lstdefinelanguage
+   [x64]{Assembler}     % add a "x64" dialect of Assembler
+   [x86masm]{Assembler} % based on the "x86masm" dialect
+   % with these extra keywords:
+   {morekeywords={CDQE,CQO,CMPSQ,CMPXCHG16B,JRCXZ,LODSQ,MOVSXD, %
+                  POPFQ,PUSHFQ,SCASQ,STOSQ,IRETQ,RDTSCP,SWAPGS, %
+                  movaps,
+                  rax,rdx,rcx,rbx,rsi,rdi,rsp,rbp, %
+                  r8, r14, r15, r15d, r8d,r8w,r8b,r9,r9d,r9w,r9b}} % etc.
+
+\lstset{language=[x64]Assembler}
+
+
+\usepackage{amsthm}
+\usepackage[htt]{hyphenat}
+\usepackage{svg}
+\usepackage{pifont}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+% \newtheorem*{remark}{Remark}
+% \newtheorem{theorem}{Theorem}[section]
+% \newtheorem{proposition}{Theorem}[section]
+% \newtheorem{corollary}{Corollary}[theorem]
+% \newtheorem{lemma}[theorem]{Lemma}
+
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+\begin{document}
+%don't want date printed
+% \date{}
+
+%make title bold and 14 pt font (Latex default is non-bold, 16 pt)
+% \title{\Large \bf \textsc{TypeShield}: Precise Protection of Forward Indirect Calls in Binaries}
+% \title{\Large \bf \textsc{TypeShield}: Protecting Forward Indirect Calls in C++ Binaries for Real}
+% \title{\Large \bf \textsc{TypeShield}: Practical, Precise and Effective Protection of Forward Indirect Calls in C++ Binaries}
+% \title{\Large \bf \textsc{TypeShield}: Practical, Precise \& Effective Protection of Forward Indirect Calls}
+\title{\textsc{TypeShield}: Practical Forward \& Backward Edge Code Reuse Attack Defense}
+
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+
+% \author{\IEEEauthorblockN{tba}
+% \IEEEauthorblockA{tba\\
+% tba}
+% \and
+% \IEEEauthorblockN{Homer Simpson}
+% \IEEEauthorblockA{Twentieth Century Fox\\
+% homer@thesimpsons.com}
+% \and
+% \IEEEauthorblockN{tba}
+% \IEEEauthorblockA{tba\\
+% tba}
+% }
+
+
+
+%%add pg. number
+\thispagestyle{plain}
+\pagestyle{plain}
+
+% Use the following at camera-ready time to suppress page numbers.
+% Comment it out when you first submit the paper for review.
+\thispagestyle{empty}
+
+\maketitle
+
+\begin{abstract}
+%long version
+% Applications aiming for high performance and availability draw on several features in the C/C++ programming language. 
+% A key building block are virtual functions, which facilitate late binding, and thereby support runtime polymorphism. 
+% However, practice-driven and academic research have identified an alarmingly high number of virtual pointer corruption 
+% vulnerabilities which undercut security in significant ways and are still in need of a thorough solution approach.
+% 
+% We contribute to this research area by proposing \textsc{TypeShield}, a binary runtime virtual pointer protection tool 
+% which is based on instrumentation of program executables at load time. \textsc{TypeShield} applies a novel runtime 
+% type and function parameter counter control-flow integrity (CFI) policy in order to overcome the limitations of available approaches and to 
+% efficiently verify dynamic dispatches during runtime. To enhance practical applicability, \textsc{TypeShield} can 
+% be automatically and easily used in conjunction with legacy applications or where source code is missing to harden 
+% binaries.
+% We have applied \textsc{TypeShield} to web servers, FTP servers and the SPEC CPU2006 benchmark and were able to 
+% efficiently and with low performance overhead protect these applications from forward indirect edge corruptions 
+% based on virtual pointers. Further, in a direct comparison with the state-of-the-art tool, \textsc{TypeShield} 
+% achieves higher caller/callee matching (\textit{i.e.,} precision), while maintaining a more favorable 
+% runtime performance overhead ($\approx$ 4\%) than other state-of-the-art tools.
+% Focusing the evaluation on target reduction techniques, we can demonstrate that our approach achieves a notable 
+% additional reduction of the possible calltargets per callsite of up to 35\% associated with an overall reduction
+% of about 13\% and a comparable runtime performance overhead as other state-of-the-art parameter-only count-based tools.
+% Finally, we want to particularly emphasize that in this paper we provide for each experiment a precise description
+% w.r.t. setup, results, tool misses, mean, median and geomean values which clearly increases the reproducibility.
+
+%short version
+Applications aiming for high performance and availability draw on several object oriented 
+features available in the C/C++ programming language such dynamic object dispatch.
+However, there is an alarmingly high number of object dispatch corruption vulnerabilities which undercut security 
+in significant ways and are in need of a thorough solution.
+
+In this paper we present, \textsc{TypeShield}, a binary runtime forward and backward edge protection tool 
+which instruments program executables at load time. \textsc{TypeShield} applies a novel runtime 
+function parameter type and count control-flow integrity (CFI) policy in order to overcome the limitations of available approaches and to 
+efficiently verify dynamic dispatches at runtime. To enhance practical applicability, \textsc{TypeShield} can 
+be automatically and easily used in conjunction with legacy applications or where source code is missing to harden binaries.
+We evaluated \textsc{TypeShield} on database servers, FTP servers, memory caching applications and the SPEC CPU2006 benchmark and were able to 
+efficiently and with low performance overhead protect these applications from forward and backward indirect edge corruptions.
+Finally, in a direct comparison with the state-of-the-art tools, \textsc{TypeShield} 
+achieves higher caller/callee matching (\textit{i.e.,} precision), while maintaining 
+low runtime overhead and a calltarget set per callsite reduction gain of up to 35\% for 
+a single hardened application.
+
+
+%  \input{components/abstract}
+\end{abstract}
+
+% \keywords{C++ object dispatch, indirect call, forward edge, code reuse attack} % TODO: replace with your keywords
+
+
+	
+%contents
+\input{chapters/Introduction}
+\input{chapters/Forward_Indirect_Callsites}
+\input{chapters/ThreatModel}
+\input{chapters/TypeShild_Overview}
+\input{chapters/Design}
+\input{chapters/Implementation}
+\input{chapters/Evaluation}
+\input{chapters/Discussion}
+\input{chapters/Related_Work}
+\input{chapters/Future_Work}
+\input{chapters/Conclusion}
+
+%todos list
+% \listoftodos
+
+%the bibliography
+
+\bibliographystyle{IEEEtran} 
+\bibliography{literatur}  
+
+
+
+% \theendnotes
+
+%appendix, taken out for now.
+% \input{chapters/Appendix}
+
+\end{document}
