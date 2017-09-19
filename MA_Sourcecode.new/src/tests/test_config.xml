@@ -1,0 +1,21 @@
+<test_sources>
+
+	<program name="proftpd" src="proftpd-1.3.3" method="config+make" binary_path="sbin/proftpd" sourcedir_binary="" archive="proftpd-1.3.3.tar.gz"/>
+	<program name="pure-ftpd" src="pure-ftpd-1.0.3" method="config+make" binary_path="sbin/pure-ftp" sourcedir_binary="src/" archive="pure-ftpd-1.0.36.tar.gz"/>
+	<program name="vsftpd" src="vsftpd-1.1.0" method="make" binary_path="sbin/vsftpd" sourcedir_binary="" archive="vsftpd-1.1.0.tar.gz"/>
+
+	<program name="lighttpd" src="lighttpd-1.4.28" method="config+make" binary_path="sbin/lighttpd" sourcedir_binary="src/" archive="lighttpd-1.4.28.tar.gz"/>
+	<program name="nginx" src="nginx-0.8.54" method="config+make+flags" binary_path="sbin/nginx" sourcedir_binary="objs/" archive="nginx-0.8.54.tar.gz"/>
+
+<!--
+	<program name="pure-ftpd" src="exim-exim-4_69/src" method="make" binary_path="" sourcedir_binary="" archive="exim-exim-4_69.tar.gz"/>
+-->
+
+	<program name="mysql" src="mysql-5.1.65" method="config+make" binary_path="libexec/mysqld" sourcedir_binary="sql/" archive="mysql-5.1.65.tar.gz"/>
+	<program name="postgresql" src="postgresql-9.0.10" method="config+make" binary_path="bin/postgres" sourcedir_binary="src/backend/" archive="postgresql-9.0.10.tar.gz"/>
+
+	<program name="memcached" src="memcached-1.4.20" method="config+make" binary_path="bin/memcached" sourcedir_binary="" archive="memcached-1.4.20.tar.gz"/>
+
+<!--	<program name="node" src="node-v0.12.5" method="config+make" binary_path="bin/node" sourcedir_binary="out/Release/" archive="node-v0.12.5.tar.gz"/>
+-->
+</test_sources>
