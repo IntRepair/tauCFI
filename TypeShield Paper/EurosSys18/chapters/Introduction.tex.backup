@@ -2,41 +2,47 @@
 \label{chapter:Introduction}
 
 % \textbf{Big Picture.}
-The object-oriented programming (OOP) paradigm and the C++ programming language are the de facto standard for developing large, complex and efficient software systems, in particular, 
+The C++ programming language offers object-oriented programming (OOP) concepts which are highly relevant 
+during development of large, complex and efficient software systems, in particular, 
 when runtime performance and reliability are primary objectives.
 
-A key building block of (runtime) OOP polymorphism are virtual functions, which enable late binding and allow programmers to overwrite a virtual function of the base-class with their 
-own implementations. In order to implement virtual functions, the compiler needs to generate a virtual table meta-data structure of all virtual functions for each class containing 
-them and provide to each instance of such a class a (virtual) pointer to the aforementioned table. While this approach allows for more flexible code to be built, 
-the basic implementation provides unfortunately very little security assurances. Data about highly damaging arbitrary code executions in major applications collected by U.S. NIST 
-(see Figure~\ref{ace:nvd:statistics} description
-and~\cite{NVD:ACE}) demonstrates the security shortcomings and the need to address this problem space.
+A key OOP concept is polymorphism. This concept is based on C++ virtual functions. These functions enable late binding and allow programmers 
+to overwrite a virtual function of the base-class with their own implementations. In order to implement virtual functions, 
+the compiler needs to generate a virtual table meta-data structure of all 
+virtual functions for each class containing 
+them and provide to each instance of such a class a (virtual) pointer to the aforementioned table. 
+While this approach allows for more flexible code to be built, the basic implementation provides 
+unfortunately no security assurances (\textit{i.e.,} Cang-CFI is assumed not to be used). 
+% Data about highly damaging arbitrary code executions in major applications collected by U.S. NIST 
+% (
+% see Figure~\ref{ace:nvd:statistics} description and
+% see~\cite{NVD:ACE} for more details) demonstrates the security shortcomings and the need to address this problem space.
 
-\begin{figure}[t!]
-\centering
-\hspace{-.323cm}
-  \includegraphics[scale=0.77]{figures/distri.pdf}
-%   \node[below=of img, node distance=0cm, yshift=1.2cm, xshift=.25cm, font=\color{black}] {Year};
-%   \node[left=of img, node distance=0cm, rotate=90, anchor=center,yshift=-.9cm,font=\color{black}] {\# Bad Type Casts Reported};
-% \vspace{-.73cm}
-% \vspace{-.2cm}
-\caption{Arbitrary code reuse attacks vs. object corruptions.}
-\label{ace:nvd:statistics}
-\vspace{-.7cm}
-\end{figure}
+% \begin{figure}[t!]
+% \centering
+% \hspace{-.323cm}
+%   \includegraphics[scale=0.77]{figures/distri.pdf}
+% %   \node[below=of img, node distance=0cm, yshift=1.2cm, xshift=.25cm, font=\color{black}] {Year};
+% %   \node[left=of img, node distance=0cm, rotate=90, anchor=center,yshift=-.9cm,font=\color{black}] {\# Bad Type Casts Reported};
+% % \vspace{-.73cm}
+% % \vspace{-.2cm}
+% \caption{Arbitrary code reuse attacks vs. object corruptions.}
+% \label{ace:nvd:statistics}
+% \vspace{-.7cm}
+% \end{figure}
 
 While the reasons for unwanted outcomes can be highly diverse, our work is primarily motivated by the presence of at least one exploitable
 memory corruption (\textit{e.g.,} buffer overflow, etc.), which can enable the execution of sophisticated Code-Reuse Attacks (CRAs) such as the advanced COOP attack~\cite{schuster:coop} and its 
 extensions~\cite{crane:readactor++, subversive-c:lettner, ctf:coop, loop:oriented}. A necessary ingredient for this class of attacks is the ability
-to corrupt the virtual pointer of an object in order to call gadgets by using a list of fake objects.
-
-To address such object dispatch corruptions\footnote{Number (\#, left side of Figure~\ref{ace:nvd:statistics}) and percentage (\%, right side of Figure~\ref{ace:nvd:statistics}) 
-of arbitrary code executions (ACE) reports related (all colors expect black) to virtual pointer or virtual table (vptr/vtbl) corruption 
-(see bag of words at the bottom of left Figure~\ref{ace:nvd:statistics})* reported by U.S. NVD for the past 10 years~\cite{NVD:ACE}. 
-X axis is years (left \& right) and Y axis is number of reports in logarithmic scale (left, 204) and distribution in \% of the reports (right, 799).
-In black are the ACE unrelated reports.
-As of August'17, U.S. NVD reports in total 799 ACEs from which 204 are the result of a vptr/vtable corruption (see * above) that are exploited by highjacking forward indirect calls.
-These vulnerabilities were reported in applications such as Google's Chrome \& V8 JavaScript engine, Mozilla Firefox, Microsoft's IE 10, Edge \& Chakra JavaScript engine, and iOS/MacOS apps.} 
+to corrupt a virtual object pointer in order to call gadgets by using a list of fake objects.
+To address such object dispatch corruptions
+% \footnote{Number (\#, left side of Figure~\ref{ace:nvd:statistics}) and percentage (\%, right side of Figure~\ref{ace:nvd:statistics}) 
+% of arbitrary code executions (ACE) reports related (all colors expect black) to virtual pointer or virtual table (vptr/vtbl) corruption 
+% (see bag of words at the bottom of left Figure~\ref{ace:nvd:statistics})* reported by U.S. NVD for the past 10 years~\cite{NVD:ACE}. 
+% X axis is years (left \& right) and Y axis is number of reports in logarithmic scale (left, 204) and distribution in \% of the reports (right, 799).
+% In black are the ACE unrelated reports.
+% As of August'17, U.S. NVD reports in total 799 ACEs from which 204 are the result of a vptr/vtable corruption (see * above) that are exploited by highjacking forward indirect calls.
+% These vulnerabilities were reported in applications such as Google's Chrome \& V8 JavaScript engine, Mozilla Firefox, Microsoft's IE 10, Edge \& Chakra JavaScript engine, and iOS/MacOS apps.} 
 and in general any type of indirect control flow transfer violation, Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} was originally developed to secure indirect control flow transfers by adding 
 runtime checks before forward-edges and backward-edges. Unfortunately, COOP and its brethren bypass most deployed CFI-based enforcement policies, since 
 these attacks do not exploit indirect backward-edges (\textit{i.e.,} function returns), but rather exploit the forward indirect control flow transfers (\textit{i.e.,} object dispatches)
@@ -52,7 +58,8 @@ callsites based on the number of parameters provided at the callsite and consume
 by leveraging static binary analysis. At the end of the analysis the binary is patched in order to enforce those invariants during runtime. 
 While we believe that the general approach to be highly promising, we consider 
 as a significant shortcoming that TypeArmor lacks precision with respect to the number of calltargets allowed per callsite which introduces significant 
-inefficiencies (see~\cref{{Too Permissive Parameter-Based Policies}} for more details). 
+inefficiencies. 
+% (see~\cref{{Too Permissive Parameter-Based Policies}} for more details). 
 With our work, we aim to achieve both significant precision enhancements and calltarget set per callsite reduction.
 
 In this paper, we present \textsc{TypeShield}, a runtime binary-level fine-grained CFI tool for 
@@ -64,7 +71,9 @@ particular compiler flags, and is applicable to industrial software.
 to detect illegitimate indirect calls at runtime. In order to achieve this, 
 \textsc{TypeShield} analyzes 64-bit binaries by carefully analyzing function parameter counts and related register
 characteristics. Based on the used ABI, \textsc{TypeShield} is consequently able to track up to 6 function arguments for the 
-Itanium C++ ABI~\cite{itanium:abi} 64-bit calling convention.
+Itanium C++ ABI~\cite{itanium:abi} x86-64 calling convention. The caller callee calling convention essentially means that every 
+called function will return at the next address located after the callsite. This means that there is a one to one mapping between each caller and 
+each callee. 
 However, we stress that the presented methodology is usable for the ARM ABI~\cite{arm:abi} and Microsoft's C++ ABI~\cite{microsoft:abi} as well.
 Similarly to TypeArmor, we do not take into consideration floating-point arguments passed via xmm registers; which we want to address in future work. 
 As we demonstrate in the evaluation section, this setup provides us with enough information to be significantly more precise than~\cite{veen:typearmor} 
@@ -170,23 +179,25 @@ set of possible return addresses for function returns which follow the caller ca
 The backward-edge policy is available in three modes: 
 (1) super fast mode, a range is imposed for each AT function return formed by the minimum and maximum legitimate addresses,
 (2) fast mode, each AT function return contains a label value which is compared against several return targets labels, and
-(3) slow mode, each AT function return address is compared individually with each legitimate return address target where the calltarget (\textit{i.e.,} function return) wants to return to.
-This backward-edge policy modes represent effective fine-grained SafeStack~\cite{volodymyr:cpi} (\textit{i.e.,} compiler based protection recently bypassed~\cite{safestack:bypassing}.) alternatives. 
+(3) slow mode, each AT function return address is compared individually with each legitimate return address target 
+where the calltarget (\textit{i.e.,} function return) wants to return to.
+This backward-edge policy modes represent effective fine-grained SafeStack~\cite{volodymyr:cpi} (\textit{i.e.,} 
+compiler based protection recently bypassed~\cite{safestack:bypassing}.) alternatives. 
 
-\textbf{\textit{Comparison.}}~\textsc{TypeShield} uses different basic block analysis strategies than TypeArmor,
-and no control flow graph as TypeArmor does. Further,~\textsc{TypeShield}
-disallows a forward indirect call transfer where the types of the arguments provided are not super 
-types (\textit{i.e.,} the float type is a super type for int) of the arguments expected at the target. Also, it disallows backward edge indirect control flow transfers which do not 
-point to addresses located after a callsite which is allowed to call the function (calltarget) containing the function 
-return (backward edge starting point).
-Further, similar to TypeArmor, \textsc{TypeShield} disallows forward indirect control flow transfers that 
-prepares fewer arguments than the target callee consumes since otherwise it would risk breaking the binary.
-This invariants are used to enforce that each callsite targets only a strict calltarget set.
-Finally, the program binary hardened by \textsc{TypeShield} contains a considerably reduced available calltarget set per callsite 
-and return set per function return site, thus drastically reducing the attacker leeway.
+% \textbf{\textit{Comparison.}}~\textsc{TypeShield} uses different basic block analysis strategies than TypeArmor,
+% and no control flow graph as TypeArmor does. Further,~\textsc{TypeShield}
+% disallows a forward indirect call transfer where the types of the arguments provided are not super 
+% types (\textit{i.e.,} the float type is a super type for int) of the arguments expected at the target. Also, it disallows backward edge indirect control flow transfers which do not 
+% point to addresses located after a callsite which is allowed to call the function (calltarget) containing the function 
+% return (backward edge starting point).
+% Further, similar to TypeArmor, \textsc{TypeShield} disallows forward indirect control flow transfers that 
+% prepares fewer arguments than the target callee consumes since otherwise it would risk breaking the binary.
+% This invariants are used to enforce that each callsite targets only a strict calltarget set.
+% Finally, the program binary hardened by \textsc{TypeShield} contains a considerably reduced available calltarget set per callsite 
+% and return set per function return site, thus drastically reducing the attacker leeway.
 
 % \textbf{Contributions.} 
-In summary, we make the following contributions:
+% In summary, we make the following contributions:
 %%long version
 % \label{Contribution}
 % \begin{itemize}[leftmargin=.12in]
@@ -228,23 +239,34 @@ In summary, we make the following contributions:
 
 %short version
 \label{Contribution}
-\begin{itemize}
-% [leftmargin=.35cm]
+% \begin{itemize}
+% % [leftmargin=.35cm]
+% 
+%  \item \textbf{Novel CFI-based protection technique.} We designed a novel fine-grained CFI technique for protecting forward and backward edges in a CFG
+%  against code reuse attacks.
+%  
+%  \item \textbf{Implemented an usable prototype.} We implemented, \textsc{TypeShield}, a prototype which enforces the aforementioned technique
+%  in stripped program binaries. \textsc{TypeShield} can serve as platform for developing other binary based protection mechanisms.
+%  
+%  \item \textbf{Evaluation.} We conduct a thorough set of evaluative experiments in which we show that \textsc{TypeShield} is more precise and effective than 
+%  other state-f-the-art tools. Further, we show that our tool has a higher calltarget set reduction per callsite, thus further reducing the attack surface.
+%  
+%  \item \textbf{Reproducibility of results.} 
+%  We respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist} and the security and measurements 
+%  section in~\cite{herley:security}) by releasing \textsc{TypeShield} open source and by providing for each conducted experiment a precise description.
+%  
+% \end{itemize}
 
- \item \textbf{Novel CFI-based protection technique.} We designed a novel fine-grained CFI technique for protecting forward and backward edges in a CFG
- against code reuse attacks.
- 
- \item \textbf{Implemented an usable prototype.} We implemented, \textsc{TypeShield}, a prototype which enforces the aforementioned technique
- in stripped program binaries. \textsc{TypeShield} can serve as platform for developing other binary based protection mechanisms.
- 
- \item \textbf{Evaluation.} We conduct a thorough set of evaluative experiments in which we show that \textsc{TypeShield} is more precise and effective than 
+We designed a novel fine-grained CFI technique for protecting forward-edges and backward-edges in a CFG
+ against code reuse attacks. 
+We implemented, \textsc{TypeShield}, a prototype which enforces the forward and backward edge CFI policies 
+on stripped statically linked program binaries. \textsc{TypeShield} can serve as platform for developing other binary based protection mechanisms.
+We conduct a thorough set of evaluative experiments in which we show that \textsc{TypeShield} is more precise and effective than 
  other state-f-the-art tools. Further, we show that our tool has a higher calltarget set reduction per callsite, thus further reducing the attack surface.
- 
- \item \textbf{Reproducibility of results.} 
- We respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist} and the security and measurements 
- section in~\cite{herley:security}) by releasing \textsc{TypeShield} open source and by providing for each conducted experiment a precise description.
- 
-\end{itemize}
+We respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist} and the security and measurements 
+section in~\cite{herley:security}) by releasing \textsc{TypeShield} as open source and by providing for each conducted experiment a precise description 
+upon paper acceptance.
+
 
 
 % 

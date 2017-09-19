@@ -63,15 +63,20 @@ inefficiencies.
 With our work, we aim to achieve both significant precision enhancements and calltarget set per callsite reduction.
 
 In this paper, we present \textsc{TypeShield}, a runtime binary-level fine-grained CFI tool for 
-illegitimate forward-edge and backward-edge filtering, 
-that significantly reduces the number valid forward and backward targets compared to previous work~\cite{veen:typearmor}. 
+illegitimate forward-edge and backward-edge filtering. \textsc{TypeShield} backward edge policy is
+based on the observation that backward-edges of a program can be precisely protected
+if there is a precise forward-edge mapping in firrst place available.
+Due to the fact that \textsc{TypeShield} significantly reduces the number valid forward-edges then previous work~\cite{veen:typearmor} we are able 
+to build a precise backward-edge policy which represents a good alternative along shadow stack based techniques.
 \textsc{TypeShield} does not rely on RTTI data (\textit{i.e.,} metadata emitted by the compiler, most of the time stripped) or 
 particular compiler flags, and is applicable to industrial software.
 \textsc{TypeShield} takes the binary of a program as input and it automatically instruments it in order
 to detect illegitimate indirect calls at runtime. In order to achieve this, 
 \textsc{TypeShield} analyzes 64-bit binaries by carefully analyzing function parameter counts and related register
 characteristics. Based on the used ABI, \textsc{TypeShield} is consequently able to track up to 6 function arguments for the 
-Itanium C++ ABI~\cite{itanium:abi} 64-bit calling convention.
+Itanium C++ ABI~\cite{itanium:abi} x86-64 calling convention. The caller callee calling convention essentially means that every 
+called function will return at the next address located after the callsite. This means that there is a one to one mapping between each caller and 
+each callee. 
 However, we stress that the presented methodology is usable for the ARM ABI~\cite{arm:abi} and Microsoft's C++ ABI~\cite{microsoft:abi} as well.
 Similarly to TypeArmor, we do not take into consideration floating-point arguments passed via xmm registers; which we want to address in future work. 
 As we demonstrate in the evaluation section, this setup provides us with enough information to be significantly more precise than~\cite{veen:typearmor} 
@@ -255,9 +260,10 @@ compiler based protection recently bypassed~\cite{safestack:bypassing}.) alterna
 %  
 % \end{itemize}
 
-We designed a novel fine-grained CFI technique for protecting forward and backward edges in a CFG
- against code reuse attacks. We implemented, \textsc{TypeShield}, a prototype which enforces the aforementioned technique
- in stripped program binaries. \textsc{TypeShield} can serve as platform for developing other binary based protection mechanisms.
+We designed a novel fine-grained CFI technique for protecting forward-edges and backward-edges in a CFG
+ against code reuse attacks. 
+We implemented, \textsc{TypeShield}, a prototype which enforces the forward and backward edge CFI policies 
+on stripped statically linked program binaries. \textsc{TypeShield} can serve as platform for developing other binary based protection mechanisms.
 We conduct a thorough set of evaluative experiments in which we show that \textsc{TypeShield} is more precise and effective than 
  other state-f-the-art tools. Further, we show that our tool has a higher calltarget set reduction per callsite, thus further reducing the attack surface.
 We respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist} and the security and measurements 
