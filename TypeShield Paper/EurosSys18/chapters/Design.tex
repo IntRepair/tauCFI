@@ -6,7 +6,14 @@ in~\cref{Parameter Count Based Policy} we present our function parameter count b
 in \cref{section:typepolicy}, we present the details of our type policy, and 
 in~\cref{section:instructionanalysis} we introduce the definitions for our instructions analysis based on register states,  
 in~\cref{section:calltargetanalysis} we present the design of our calltarget analysis, while
-in~\cref{section:callsiteanalysis} we depict the design of our callsite analysis\footnote{Callsites detection in the binary is based on DynInst~\cite{bernat:dyninst} capabilities.}.
+in~\cref{section:callsiteanalysis} we depict the design of our callsite analysis\footnote{Callsites detection in the 
+binary is based on DynInst~\cite{bernat:dyninst} capabilities. DynInst is a binary rewriting framework which allows 
+to instrument binaries during loading or runtime and can be used to
+build: 
+(1) performance measurement tools,
+(2) correctness debuggers (\textit{i.e.,} efficient data breakpoints),
+(3) execution drive simulations, and 
+(4) computational steering.}.
 Finally,  
 in~\cref{Enforcing The Forward Edge Policy} we present our forward edge policy instrumentation strategy, and 
 in~\cref{Backward Edge Analysis} we highlight our function backward edge analysis and policy instrumentation strategy.
@@ -312,8 +319,9 @@ $\bullet$ $\texttt{succ} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*
 
 In our specific case, the function \texttt{analyze\_instr} needs to also to handle non-jump and non-fall-through successors, as these are not handled by DynInst. 
 Essentially, there are three relevant cases.
-First, if the current instruction is an indirect call or a direct call and the chosen implementation should not follow calls, 
-then our analysis will return a state where all registers are considered to be written before read. Second, if the current instruction is a direct call and the chosen implementation should follow calls, 
+First, if the current instruction is an indirect call or a direct call and the analysis algorithm is set not to follow calls, 
+then our analysis will return a state where all registers are considered to be written before read. Second, if the current instruction is
+a direct call and the analysis algorithm is set not to follow calls, 
 then we start an analysis of the target function an return its result.
 If the instruction is a constant write (\textit{e.g.,} xor of two registers), 
 then we remove the read portion before we return the decoded state.
@@ -664,8 +672,8 @@ $\bullet$ $\texttt{pred} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*
 
 In our specific case, the function \texttt{analyze\_instr} does not need to handle normal predecessors, as DynInst will resolve those for us. 
 However there are several instructions that have to be handled as depicted in the following situations. 
-(1) If the current instruction is an indirect call or a direct call and the chosen implementation should not follow calls, then return a state where all registers are considered trashed. 
-(2) If the instruction is a direct call and the chosen implementation should follow calls, then we start an analysis of the target function. 
+(1) If the current instruction is an indirect call or a direct call and the analysis algorithm is set not to follow calls, then return a state where all registers are considered trashed. 
+(2) If the instruction is a direct call and the analysis algorithm is set to follow calls, then we start an analysis of the target function. 
 (3) In all other cases we simply return the decoded state. This leaves us with the two merge functions and the undefined reaching definitions state $\mathcal{S}^\mathcal{R}$. 
 
 %The book~\cite{khedker2009data} defines reaching definition analysis on blocks in the following manner:
@@ -1114,7 +1122,8 @@ function boundaries (\textit{e.g.,}~\cite{function:boundary}) exist, and plan to
 The previously determined $rMap$ in Algorithm~\ref{alg:returns} will be used to insert a check before each 
 function (calltarget) return present in the $rMap$. We propose three modes of operation based on three types
 of checks which can be inserted before each function return instruction. Depending on the specific needs
-one of the following modes of operation can be selected.
+one of the following modes of operation can be selected. Depending on the runtime time needed to perform each backward edge 
+indirect transfer we define the following three modes of operation.
 
 \textbf{Super fast mode.} Based on the $rMap$, for each AT function return the minimum and the maximum address out of the return set for a particular 
 $rAdress$ return address will be determined. Next, these two values will be used to insert a range check having as left and right boundaries these

@@ -89,78 +89,78 @@ One possible remedy would be the ability to introduce an upper bound for the cla
 however, as of now, this does not seem feasible with current technology. Another possibility would be the overall reduction
 of callsites, which can access the same set of calltargets, a route which we will explore within this work.
 
-
 \subsection{Parameter Register Wideness Based Policy}
 \label{section:typepolicy}
-\begin{figure}[h!]
-\center
-\resizebox{.65\columnwidth}{!}{
-\begin{tikzpicture}
 
-\fill[black!10!white] (0,7.5) rectangle (12,6);
-\fill[black!20!white] (0,6) rectangle (12,4.5);
-\fill[black!30!white] (0,4.5) rectangle (12,3);
-\fill[black!40!white] (0,3) rectangle (12,1.5);
-\fill[black!50!white] (0,1.5) rectangle (12,0);
+% \begin{figure}[h!]
+% \center
+% \resizebox{.65\columnwidth}{!}{
+% \begin{tikzpicture}
+% 
+% \fill[black!10!white] (0,7.5) rectangle (12,6);
+% \fill[black!20!white] (0,6) rectangle (12,4.5);
+% \fill[black!30!white] (0,4.5) rectangle (12,3);
+% \fill[black!40!white] (0,3) rectangle (12,1.5);
+% \fill[black!50!white] (0,1.5) rectangle (12,0);
+% 
+% \draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\LARGE{growing required bits/parameter}} (-0.5,7.5);
+% \draw[-triangle 45, thick] (12.5,7.5) -- node[sloped, anchor=center, above] {\LARGE{growing provided bits/parameter}} (12.5,0);
+% 
+% \draw (0,7.5)  --node[anchor=south] {\rot{\LARGE{p. 6}}} (2,7.5);
+% \draw (2,7.5)  --node[anchor=south] {\rot{\LARGE{p. 5}}} (4,7.5);
+% \draw (4,7.5)  --node[anchor=south] {\rot{\LARGE{p. 4}}} (6,7.5);
+% \draw (6,7.5)  --node[anchor=south] {\rot{\LARGE{p. 3}}} (8,7.5);
+% \draw (8,7.5)  --node[anchor=south] {\rot{\LARGE{p. 2}}} (10,7.5);
+% \draw (10,7.5) --node[anchor=south] {\rot{\LARGE{p. 1}}} (12,7.5);
+% 
+% \draw (0,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (2,6);
+% \draw (2,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (4,6);
+% \draw (4,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (6,6);
+% \draw (6,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (8,6);
+% \draw (8,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (10,6);
+% \draw (10,7.5) rectangle node[anchor=center] {\LARGE{0-bits}} (12,6);
+% 
+% \draw (0,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (2,4.5);
+% \draw (2,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (4,4.5);
+% \draw (4,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (6,4.5);
+% \draw (6,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (8,4.5);
+% \draw (8,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (10,4.5);
+% \draw (10,6) rectangle node[anchor=center] {\LARGE{8-bits}} (12,4.5);
+% 
+% \draw (0,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (2,3);
+% \draw (2,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (4,3);
+% \draw (4,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (6,3);
+% \draw (6,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (8,3);
+% \draw (8,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (10,3);
+% \draw (10,4.5) rectangle node[anchor=center] {\LARGE{16-bits}} (12,3);
+% 
+% \draw (0,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (2,1.5);
+% \draw (2,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (4,1.5);
+% \draw (4,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (6,1.5);
+% \draw (6,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (8,1.5);
+% \draw (8,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (10,1.5);
+% \draw (10,3) rectangle node[anchor=center] {\LARGE{32-bits}} (12,1.5);
+% 
+% \draw (0,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (2,0);
+% \draw (2,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (4,0);
+% \draw (4,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (6,0);
+% \draw (6,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (8,0);
+% \draw (8,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (10,0);
+% \draw (10,1.5) rectangle node[anchor=center] {\LARGE{64-bits}} (12,0);
+% \end{tikzpicture}
+% }
+% \caption{Type policy schema for callsites and calltargets.}
+% \label{fig:TYPEschema}
+% \vspace{-.5cm}
+% \end{figure}
+% 
+% Figure~\ref{fig:TYPEschema} depicts the basic principle of our function parameter type policy.
+% Note that p. means parameter. As it is depicted in this example, when requiring parameter width, one starts at the 
+% bottom of the above matrix and grows to the top, as it is always possible to accept more parameters than required.
+% Also, the reverse is true for providing parameters, as it is possible to accept less parameters than provided.
+% Note that accepting more parameters than provided is not allowed.
 
-\draw[-triangle 45, thick] (-0.5,0) -- node[sloped, anchor=center, above] {\LARGE{growing required bits/parameter}} (-0.5,7.5);
-\draw[-triangle 45, thick] (12.5,7.5) -- node[sloped, anchor=center, above] {\LARGE{growing provided bits/parameter}} (12.5,0);
-
-\draw (0,7.5)  --node[anchor=south] {\rot{\LARGE{p. 6}}} (2,7.5);
-\draw (2,7.5)  --node[anchor=south] {\rot{\LARGE{p. 5}}} (4,7.5);
-\draw (4,7.5)  --node[anchor=south] {\rot{\LARGE{p. 4}}} (6,7.5);
-\draw (6,7.5)  --node[anchor=south] {\rot{\LARGE{p. 3}}} (8,7.5);
-\draw (8,7.5)  --node[anchor=south] {\rot{\LARGE{p. 2}}} (10,7.5);
-\draw (10,7.5) --node[anchor=south] {\rot{\LARGE{p. 1}}} (12,7.5);
-
-\draw (0,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (2,6);
-\draw (2,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (4,6);
-\draw (4,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (6,6);
-\draw (6,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (8,6);
-\draw (8,7.5)  rectangle node[anchor=center] {\LARGE{0-bits}} (10,6);
-\draw (10,7.5) rectangle node[anchor=center] {\LARGE{0-bits}} (12,6);
-
-\draw (0,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (2,4.5);
-\draw (2,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (4,4.5);
-\draw (4,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (6,4.5);
-\draw (6,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (8,4.5);
-\draw (8,6)  rectangle node[anchor=center] {\LARGE{8-bits}} (10,4.5);
-\draw (10,6) rectangle node[anchor=center] {\LARGE{8-bits}} (12,4.5);
-
-\draw (0,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (2,3);
-\draw (2,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (4,3);
-\draw (4,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (6,3);
-\draw (6,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (8,3);
-\draw (8,4.5)  rectangle node[anchor=center] {\LARGE{16-bits}} (10,3);
-\draw (10,4.5) rectangle node[anchor=center] {\LARGE{16-bits}} (12,3);
-
-\draw (0,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (2,1.5);
-\draw (2,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (4,1.5);
-\draw (4,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (6,1.5);
-\draw (6,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (8,1.5);
-\draw (8,3)  rectangle node[anchor=center] {\LARGE{32-bits}} (10,1.5);
-\draw (10,3) rectangle node[anchor=center] {\LARGE{32-bits}} (12,1.5);
-
-\draw (0,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (2,0);
-\draw (2,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (4,0);
-\draw (4,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (6,0);
-\draw (6,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (8,0);
-\draw (8,1.5)  rectangle node[anchor=center] {\LARGE{64-bits}} (10,0);
-\draw (10,1.5) rectangle node[anchor=center] {\LARGE{64-bits}} (12,0);
-\end{tikzpicture}
-}
-\caption{Type policy schema for callsites and calltargets.}
-\label{fig:TYPEschema}
-\vspace{-.5cm}
-\end{figure}
-
-Figure~\ref{fig:TYPEschema} depicts the basic principle of our function parameter type policy.
-Note that p. means parameter. As it is depicted in this example, when requiring parameter width, one starts at the 
-bottom of the above matrix and grows to the top, as it is always possible to accept more parameters than required.
-Also, the reverse is true for providing parameters, as it is possible to accept less parameters than provided.
-Note that accepting more parameters than provided is not allowed.
-
-We use the register width as parameter type. As previously mentioned, there are 4 types 
+We use the register width of the function parameter in order to infer the type information. As previously mentioned, there are 4 types 
 of reading and writing accesses. Therefore, our set of possible types for parameters is $\texttt{TYPE} = \{64, 32, 16, 8, 0\}$; where 0 models the absence of a 
 parameter. Since Itanium C++ ABI specifies 6 registers (\textit{i.e.,} \texttt{rdi}, \texttt{rsi}, \texttt{rdx}, \texttt{rcx}, \texttt{r8}, and \texttt{r9}) as 
 parameter passing registers during function calls, we classify our callsites and calltargets into $\texttt{TYPE}^6$. Similar to
@@ -297,6 +297,7 @@ If applied to a function, this calculates the variables that need to be alive at
 \caption{Basic block liveness analysis.}
 \label{alg:liveness}
 \end{algorithm}
+% \vspace{-.5cm}
 Algorithm~\ref{alg:liveness} is based on the liveness analysis algorithm presented in~\cite{khedker2009data}, which basically is a depth-first traversal of basic blocks. 
 For customization, we rely on the implementation of several functions which we will present next. $\mathcal{S}^\mathcal{L}$ is the set of possible register states which depends on the specific 
 implementations of the following operations.
@@ -647,7 +648,7 @@ If applied to a callsite, this calculates the values that are provided by this c
 \caption{Basic block reaching definition analysis.}
 \label{alg:reaching}
 \end{algorithm}
-
+\vspace{-.5cm}
 Algorithm~\ref{alg:reaching} is based on the reaching definition analysis presented in~\cite{khedker2009data}, 
 which basically is a reverse depth-first traversal of basic blocks of a program. For customization, we rely on 
 the implementation of several functions. $\mathcal{S}^\mathcal{R}$ is the set of possible register states 
