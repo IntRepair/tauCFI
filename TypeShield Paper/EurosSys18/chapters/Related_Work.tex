@@ -31,8 +31,8 @@
 
 % \subsection{Mitigation of Advanced CRAs}
 % \textbf{Mitigation of Forward-Edge based Attacks.}
-\subsection{Mitigation of Forward-Edge based Attacks.}
-\label{Mitigation of Advanced Code-Reuse Attacks}
+% \subsection{Mitigation of Forward-Edge based Attacks}
+% \label{Mitigation of Advanced Code-Reuse Attacks}
 % Recursive-COOP~\cite{crane:readactor++}, COOP~\cite{schuster:coop}, Subversive-C~\cite{subversive-c:lettner} and the attack of Lan \textit{et al.}~\cite{loop:oriented} are 
 % forward-edge based CRAs which cannot be addressed with:
 % (i)  shadow stacks techniques and hardware-based approaches such as Intel CET~\cite{intel:cet} (\textit{i.e.,} since advanced COOP do not violate 
@@ -167,23 +167,25 @@ Marx can not protect against backward edge violations and arguably has in common
 % techniques and tools can be used to mitigate COOP attacks.
 % 
 
-\subsection{Mitigation of Backward-Edge based Attacks.}
-Backward-Edge based code reuse attacks exploit the indirection provided by the return instructions 
-of a function. Usually each modern compiler builds caller/callee pairs by adhering to the so called caller-callee
-calling convention. This calling convention basically specifies that for each indirect call the return address of the function which returns after 
-it was called lies at the next address of the call instruction. 
-This calling convention is violated by all ROP attacks and also by 
-more recent advanced code reuse attacks. 
-Intel CET~\cite{intel:cet} is a promising technology from Intel in which the X86 instruction set is updated with new instructions (\textit{i.e.,} \texttt{END\_BRANCH}) instruction
-which should facilitate an efficient implementation of shadow stack implementations. Currently, this technology is not available and it is not foreseeable when this features will 
-be available in mass production.
-For brevity reasons we do not look herein into compiler and purely runtime techniques and advise the reader to look for 
-more details the following survey~\cite{cfi_survey_payer}.
+% \subsection{Mitigation of Backward-Edge based Attacks}
+% Backward-Edge based code reuse attacks exploit the indirection provided by the return instructions 
+% of a function. Usually each modern compiler builds caller/callee pairs by adhering to the so called caller-callee
+% calling convention. This calling convention basically specifies that for each indirect call the return address of the function which returns after 
+% it was called lies at the next address of the call instruction. 
+% This calling convention is violated by all ROP attacks and also by 
+% more recent advanced code reuse attacks. 
+% Intel CET~\cite{intel:cet} is a promising technology from Intel in which the X86 instruction set is updated with new instructions (\textit{i.e.,} \texttt{END\_BRANCH}) instruction
+% which should facilitate an efficient implementation of shadow stack implementations. Currently, this technology is not available and it is not foreseeable when this features will 
+% be available in mass production.
+% For brevity reasons we do not look herein into compiler and purely runtime techniques and advise the reader to look for 
+% more details the following survey~\cite{cfi_survey_payer}.
 
 % \subsubsection{Binary Based Techniques}
-The CFI based implementation of Abadi et al.~\cite{abadi:cfi} is historically the first compiler based implementation of a shadow stack.
-At first quite promising this implementation suffers from high performance overhead which is around 21\% due to the fact that the inserted checks before each 
-function return instruction are not runtime efficient.
+The CFI based implementation of Abadi et al.~\cite{abadi:cfi} is the first binary based implementation of a shadow stack.
+While at first quite promising this implementation suffers from high performance overhead which is around 21\% due to the fact 
+that the inserted checks before each function return instruction are not runtime efficient. Further, this tool has high imprecision
+du to the fact that labels are reused and in this way not legitimate return addresses become legitimate, thus these 
+could be exploited by the attacker
 
 % \subsubsection{Compiler Based Techniques}
 % LLVM SafeStack~\cite{volodymyr:cpi} is a compiler based approach in which for each function stack a shadows stack copy is build with the help of the Clang compiler. These additional stacks

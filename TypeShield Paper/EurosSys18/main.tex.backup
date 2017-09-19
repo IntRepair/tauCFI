@@ -1,5 +1,6 @@
 
-\documentclass[conference]{IEEEtran}
+\documentclass[comsoc, 10pt]{sigplanconf-eurosys}
+% \documentclass[compsoc, conference, letterpaper, 10pt, times]{IEEEtran}
 % \usepackage{usenix,epsfig,endnotes}
 % \usepackage{flushend}
 \usepackage{tikz}
@@ -26,6 +27,7 @@
 \usepackage{makecell}
 \usepackage{booktabs}
 \usepackage[disable]{todonotes}
+\usepackage{graphicx}
 % \usepackage{todonotes}
 \usepackage[T1]{fontenc}
 \usepackage{tikz}
@@ -38,6 +40,11 @@
 \PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
 
 \usepackage{fix-cm}    
+\usepackage[flushleft]{threeparttable} % http://ctan.org/pkg/threeparttable
+\let\labelindent\relax
+\usepackage{enumitem}
+
+
 
 \makeatletter
 \newcommand\HUGE{\@setfontsize\Huge{19}{19}}
@@ -183,7 +190,10 @@
 
 \hyphenation{op-tical net-works semi-conduc-tor}
 
+
 \begin{document}
+%%used to avoid using --- to replace author names of similar entries
+% \bstctlcite{IEEEexample:BSTcontrol}
 %don't want date printed
 % \date{}
 
@@ -192,38 +202,22 @@
 % \title{\Large \bf \textsc{TypeShield}: Protecting Forward Indirect Calls in C++ Binaries for Real}
 % \title{\Large \bf \textsc{TypeShield}: Practical, Precise and Effective Protection of Forward Indirect Calls in C++ Binaries}
 % \title{\Large \bf \textsc{TypeShield}: Practical, Precise \& Effective Protection of Forward Indirect Calls}
-\title{\textsc{TypeShield}: Practical Forward \& Backward Edge Code Reuse Attack Defense}
+% \title{\textsc{TypeShield}: Practical Forward \& Backward Edge Defense Against Code Reuse Attacks using Binary Type Information}
+\title{\textsc{TypeShield}: Practical Defense Against Code Reuse Attacks using Binary Type Information}
 
 
 % author names and affiliations
 % use a multiple column layout for up to three different
 % affiliations
 
-% \author{\IEEEauthorblockN{tba}
-% \IEEEauthorblockA{tba\\
-% tba}
-% \and
-% \IEEEauthorblockN{Homer Simpson}
-% \IEEEauthorblockA{Twentieth Century Fox\\
-% homer@thesimpsons.com}
-% \and
-% \IEEEauthorblockN{tba}
-% \IEEEauthorblockA{tba\\
-% tba}
-% }
+\authorinfo{tba.}
 
-
-
-%%add pg. number
-\thispagestyle{plain}
-\pagestyle{plain}
 
 % Use the following at camera-ready time to suppress page numbers.
 % Comment it out when you first submit the paper for review.
-\thispagestyle{empty}
 
 \maketitle
-
+\setpagenumber{1}
 \begin{abstract}
 %long version
 % Applications aiming for high performance and availability draw on several features in the C/C++ programming language. 
@@ -249,22 +243,22 @@
 % w.r.t. setup, results, tool misses, mean, median and geomean values which clearly increases the reproducibility.
 
 %short version
-Applications aiming for high performance and availability draw on several object oriented 
-features available in the C/C++ programming language such dynamic object dispatch.
-However, there is an alarmingly high number of object dispatch corruption vulnerabilities which undercut security 
-in significant ways and are in need of a thorough solution.
+% Applications aiming for high performance and availability draw on several object oriented 
+% features available in the C/C++ programming language such dynamic object dispatch.
+% However, there is an alarmingly high number of object dispatch (\textit{i.e.,} forward-edge) corruption vulnerabilities which undercut security 
+% in significant ways and are in need of a thorough solution.
 
-In this paper we present, \textsc{TypeShield}, a binary runtime forward and backward edge protection tool 
-which instruments program executables at load time. \textsc{TypeShield} applies a novel runtime 
-function parameter type and count control-flow integrity (CFI) policy in order to overcome the limitations of available approaches and to 
-efficiently verify dynamic dispatches at runtime. To enhance practical applicability, \textsc{TypeShield} can 
+We propose, \textsc{TypeShield}, a binary runtime forward-edge and backward-edge protection tool 
+which instruments program executables at load time. \textsc{TypeShield} enforces a novel runtime 
+control-flow integrity (CFI) policy based on function parameter type and count in order to overcome the limitations of available approaches and to 
+efficiently verify dynamic object dispatches and function returns during runtime. To enhance practical applicability, \textsc{TypeShield} can 
 be automatically and easily used in conjunction with legacy applications or where source code is missing to harden binaries.
 We evaluated \textsc{TypeShield} on database servers, FTP servers, memory caching applications and the SPEC CPU2006 benchmark and were able to 
 efficiently and with low performance overhead protect these applications from forward and backward indirect edge corruptions.
 Finally, in a direct comparison with the state-of-the-art tools, \textsc{TypeShield} 
 achieves higher caller/callee matching (\textit{i.e.,} precision), while maintaining 
-low runtime overhead and a calltarget set per callsite reduction gain of up to 35\% for 
-a single hardened application.
+low runtime overhead and a calltarget set per callsite reduction gain of up to 41\% 
+compared to state-of-the-art tools.
 
 
 %  \input{components/abstract}
@@ -276,15 +270,15 @@ a single hardened application.
 	
 %contents
 \input{chapters/Introduction}
-\input{chapters/Forward_Indirect_Callsites}
+% \input{chapters/Forward_Indirect_Callsites}
 \input{chapters/ThreatModel}
-\input{chapters/TypeShild_Overview}
+% \input{chapters/TypeShild_Overview}
 \input{chapters/Design}
 \input{chapters/Implementation}
 \input{chapters/Evaluation}
-\input{chapters/Discussion}
+% \input{chapters/Discussion}
 \input{chapters/Related_Work}
-\input{chapters/Future_Work}
+% \input{chapters/Future_Work}
 \input{chapters/Conclusion}
 
 %todos list
@@ -292,7 +286,7 @@ a single hardened application.
 
 %the bibliography
 
-\bibliographystyle{IEEEtran} 
+% \bibliographystyle{IEEEtran} 
 \bibliography{literatur}  
 
 
