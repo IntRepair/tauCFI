@@ -301,8 +301,8 @@
 
 % This can be used with the 'reprint' option to get the final folios.
 
-\def \setpagenumber #1{%
-  \setcounter{page}{#1}}
+% \def \setpagenumber #1{%
+%   \setcounter{page}{#1}}
 
 \AtEndDocument{\label{sigplanconf@finalpage}}
 

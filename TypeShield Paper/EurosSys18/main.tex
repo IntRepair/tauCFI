@@ -1,5 +1,5 @@
 
-\documentclass[10pt]{sigplanconf-eurosys}
+\documentclass[compsoc, 10pt]{sigplanconf-eurosys}
 % \documentclass[compsoc, conference, letterpaper, 10pt, times]{IEEEtran}
 % \usepackage{usenix,epsfig,endnotes}
 % \usepackage{flushend}
@@ -32,6 +32,8 @@
 \usepackage[T1]{fontenc}
 \usepackage{tikz}
 \usepackage[utf8]{inputenc}
+\usepackage{svg}
+\usepackage{etex}
 \usepackage{svg}
 \usepackage{amsmath,amssymb}
 \usetikzlibrary{matrix,arrows}
@@ -87,13 +89,18 @@
 \renewcommand{\UrlBreaks}{\do.\do\/\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z}
 \def\UrlBreaks{\do\/\do-}
  
- \expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks% save the current one
-  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j%
-  \do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t%
-  \do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D%
-  \do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N%
-  \do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X%
-  \do\Y\do\Z\do\*\do\-\do\~\do\'\do\"\do\-\do\.}%
+\makeatletter
+\g@addto@macro{\UrlBreaks}{%
+  \do\/\do\a\do\b\do\c\do\d\do\e\do\f%
+  \do\g\do\h\do\i\do\j\do\k\do\l\do\m%
+  \do\n\do\o\do\p\do\q\do\r\do\s\do\t%
+  \do\u\do\v\do\w\do\x\do\y\do\z%
+  \do\A\do\B\do\C\do\D\do\E\do\F\do\G%
+  \do\H\do\I\do\J\do\K\do\L\do\M\do\N%
+  \do\O\do\P\do\Q\do\R\do\S\do\T\do\U%
+  \do\V\do\W\do\X\do\Y\do\Z}
+\g@addto@macro\UrlBreaks{\do\-\.}
+\makeatother
   
 %%algorithm stuff
 \makeatletter
@@ -117,7 +124,7 @@
 \usepackage{xparse}   % http://ctan.org/pkg/xparse
 % Rotation: \rot[<angle>][<width>]{<stuff>}
 \NewDocumentCommand{\rot}{O{45} O{2em} m}{\makebox[#2][l]{\rotatebox{#1}{#3}}}%
-
+\selectlanguage{english}
 % \let\oldalgorithm\algorithm
 % \let\oldendalgorithm\endalgorithm
 % 
@@ -139,7 +146,7 @@
 %% add -shell-escape as flag for pdflatex in order to work
 \usepackage{minted}
 \usepackage{placeins}
-
+\usepackage{float}
 % \usepackage[outputdir=build]{minted}
 
 \usetikzlibrary{arrows,positioning} 
@@ -189,7 +196,23 @@
 % \newtheorem{lemma}[theorem]{Lemma}
 
 \hyphenation{op-tical net-works semi-conduc-tor}
-
+\bibliographystyle{plain}
+\fancypagestyle{myplain}
+{
+  \fancyhf{}
+  \renewcommand\headrulewidth{0pt}
+  \renewcommand\footrulewidth{0pt}
+  \fancyfoot[C]{\thepage}
+}
+\fancypagestyle{myfancy}{
+  \fancyhf{}
+  \fancyhead[CO]{\nouppercase\leftmark}
+  \fancyhead[CE]{\hdrtitle}
+  \fancyhead[LE,RO]{\thepage}
+  \renewcommand\headrulewidth{0.4pt}
+  \pagestyle{fancy}
+  \renewcommand\sectionmark[1]{\markboth{##1}{}}%don't move this
+}
 \begin{document}
 %%used to avoid using --- to replace author names of similar entries
 % \bstctlcite{IEEEexample:BSTcontrol}
@@ -216,7 +239,10 @@
 % Comment it out when you first submit the paper for review.
 
 \maketitle
-\setpagenumber{1}
+%page nymbering option
+\thispagestyle{myplain}
+\pagestyle{myplain}
+\pagenumbering{arabic}
 \begin{abstract}
 %long version
 % Applications aiming for high performance and availability draw on several features in the C/C++ programming language. 
@@ -264,7 +290,6 @@ compared to state-of-the-art tools.
 \end{abstract}
 
 % \keywords{C++ object dispatch, indirect call, forward edge, code reuse attack} % TODO: replace with your keywords
-
 
 	
 %contents
