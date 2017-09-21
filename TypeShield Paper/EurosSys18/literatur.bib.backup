@@ -31,6 +31,13 @@ YEAR="2009"
  year = {2015}
 } 
 
+@InProceedings{schuster:raid,
+ author = {Schuster, Felix and Tendyck, Thomas and Liebchen, Christopher and Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten},
+ title = {Evaluating the Effectiveness of Current Anti-ROP Defenses},
+ booktitle = {Proceedings of the International Symposium on Research in Attacks, Intrusions, and Defenses (RAID)},
+ year = {2014}
+} 
+
 @InProceedings{gawlik,
  author = {Gawlik, Robert and Holz, Thorsten},
  title = {Towards automated integrity protection of C++ virtual function tables in binary programs},
@@ -76,8 +83,15 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael},
 @InProceedings{hafix:bypass,
  author = {Theodorides, Michael and Wagner, David},
  title = {Breaking Active-Set Backward-Edge CFI},
- booktitle = {86 2017 IEEE International Symposium on Hardware Oriented Security and Trust (HOST)},
+ booktitle = {International Symposium on Hardware Oriented Security and Trust (HOST)},
  year = {2017}
+}
+
+@InProceedings{hafix,
+ author = {Davi, Lucas and Hanreich, M. and Paul, D. and Sadeghi, A.-R and Koeberl, P. and Sullivan, D. and Arias, O. and Jin, Y},
+ title = {HAFIX: hardware-assisted flow integrity extension},
+ booktitle = {Design Automation Conference (DAC)},
+ year = {2015}
 }
 
 @InProceedings{zhang:usenix,
@@ -122,13 +136,19 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael},
 
 @inproceedings{windows:cfguard,
  title = {Windows Control Flow Guard},
- url={http://msdn.microsoft.com/en-us/library/windows/desktop/mt637065(v=vs.85).aspx},
+ note = {\url{http://msdn.microsoft.com/en-us/library/windows/desktop/mt637065(v=vs.85).aspx}},
  year = {2015}
+}
+
+@inproceedings{clang:cfi,
+ title = {Clang CFI},
+ note = {\url{https://clang.llvm.org/docs/ControlFlowIntegrity.html#cfi-strictness}},
+ year = {2017}
 }
 
 @inproceedings{safestack:bypassing,
  title = {Bypassing clang’s SafeStack for Fun and Profit},
- url={https://www.blackhat.com/docs/eu-16/materials/eu-16-Goktas-Bypassing-Clangs-SafeStack.pdf},
+ note = {\url{https://www.blackhat.com/docs/eu-16/materials/eu-16-Goktas-Bypassing-Clangs-SafeStack.pdf}},
  booktitle = {Blackhat Europe},
  year = {2016}
 }
@@ -137,7 +157,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael},
  author = {Veen, Victor van der and Goktas, Enes and Contag, Moritz and Pawlowski, Andre and Chen, Xi and Rawat, Sanjay and
  Bos, Herbert and Holz, Thorsten and Athanasopoulos, Elias and Giuffrida, Cristiano},
  title = {A Tough call: Mitigating Advanced Code-Reuse Attacks At The Binary Level},
- booktitle = {Proceedings of the IEEE Symposium on Security and Privacy (S\&P),},
+ booktitle = {Proceedings of the IEEE Symposium on Security and Privacy (S\&P)},
  year = {2016}
 } 
 
@@ -414,7 +434,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael},
 
 @inproceedings{NVD:ACE,
  author = {United States NVD-Reports},
- title = {Over 800 arbitrary code executions reported from Jan.'08 to May'17},
+ title = {Over 800 arbitrary code executions reported from Jan.'08 to Oct.'17},
  year = {2017},
  note={\url{https://goo.gl/5uv47n}}
 }

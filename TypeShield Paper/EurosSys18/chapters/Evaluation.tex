@@ -1,15 +1,15 @@
 \section{Evaluation}
 \label{chapter:Evaluation}
 We evaluated \textsc{TypeShield} by instrumenting various open source applications and conducting a thorough analysis. Our test sample includes the two 
-FTP servers \textit{Vsftpd} (v.1.1.0, C), Pure-ftpd (v.1.0.36, C) and 
-\textit{Proftpd} (v.1.3.3, C), 
-web server Lighttpd (v.1.4.28, C); 
+FTP servers \textit{Vsftpd} (v.1.1.0, C code), Pure-ftpd (v.1.0.36, C code) and 
+\textit{Proftpd} (v.1.3.3, C code), 
+web server Lighttpd (v.1.4.28, C code); 
 the two database server applications 
-\textit{Postgresql} (v.9.0.10, C) and 
-\textit{Mysql} (v.5.1.65, C++), 
+\textit{Postgresql} (v.9.0.10, C code) and 
+\textit{Mysql} (v.5.1.65, C++ code), 
 the memory cache application 
-\textit{Memcached} (v.1.4.20, C), 
-the \textit{Node.js} application server (v.0.12.5, C++). 
+\textit{Memcached} (v.1.4.20, C code), 
+the \textit{Node.js} application server (v.0.12.5, C++ code). 
 We selected these applications in order to allow for comparison with~\cite{veen:typearmor}. 
 In our evaluation we addressed the following research questions (RQs).
 
@@ -98,7 +98,7 @@ results with other existing tools.
 \textbf{Experimental Setup.} Our used setup consisted in a VirtualBox (version 5.0.26r) instance, in which we ran a Kubuntu 16.04 LTS (Linux Kernel
 version 4.4.0). We had access to 3GB of RAM and 4 out of 8 provided hardware threads (Intel i7-4170HQ @ 2.50 GHz).
 
-\subsection{Precision}
+\subsection{Precision (RQ1)}
 \label{section:typeshieldprecision}
 % \todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
 
@@ -119,7 +119,7 @@ During compilation, we essentially collect three data points for each callsite a
 \resizebox{\columnwidth}{!}{
 	\begin{tabular}{l|r|r|p{1.9cm}|r|p{1.6cm}|p{1.9cm}}%
 	\toprule
-	\multicolumn{1}{c}{\bfseries \texttt{-O2}} & \multicolumn{3}{c|}{ {\bfseries calltargets}} & \multicolumn{3}{c}{{\bfseries callsites} }\\
+	\multicolumn{1}{c}{\bfseries \texttt{-O2}} & \multicolumn{3}{c|}{ {\bfseries Calltargets}} & \multicolumn{3}{c}{{\bfseries Callsites} }\\
 	\bfseries Target & match & Clang miss &  TypeShield miss &  match & Clang miss & TypeShield miss% specify table head
 	\\\midrule
 	\csvreader[before filter=\ifthenelse{\equal{\csvcoli}{geomean}}{\csvfilterreject}{\csvfilteraccept},  late after line=\\, late after last line=\\\midrule]{csvs/matching.O2.csv}{
@@ -269,7 +269,7 @@ The results indicate a rate of perfect calltargets classification is over 79\% w
 For the second experiment we used the union combination operator with an $analyze$ function that does not follow into occurring direct calls while relying on a backward inter-procedural analysis.
 The results indicate a rate of perfect classification of over 68\% while for the returns it is over 88\%.
 
-\subsection{Effectiveness}
+\subsection{Effectiveness (RQ2)}
 \label{section:typeshieldeffectiveness}
 % \todo[inline]{In this section we need just one or two Table similar to what TypeArmor contains, 
 % first we need to define the fields which make most sense.}
@@ -297,7 +297,7 @@ The results indicate a rate of perfect classification of over 68\% while for the
     	\end{tabular}
 
 }
-	\caption {Restriction results of allowed callsites per calltarget for several test series on various targets compiled with 
+	\caption {Results for allowed callsites per calltarget for several programs compiled with 
 	Clang using optimization level \texttt{-O2}. Note that the basic restriction to address taken only calltargets (see column AT) is 
 	present for each other series. The label $count^*$ denotes the best possible reduction using our \emph{count} policy 
 	based on the ground truth collected by our Clang/LLVM pass, while $count$ denotes the results of our implementation of 
@@ -314,12 +314,10 @@ The results indicate a rate of perfect classification of over 68\% while for the
 \end{center}
 \vspace{-.5cm}
 \end{table*}
-
+Table \ref{tbl:policycompat} depicts the the average number of calltargets per callsite, the standard deviation $\sigma$ and the median. 
 We evaluated the effectiveness of \textsc{TypeShield} by leveraging the results of several experiment runs.
 First, we established a baseline using the data collected from our Clang/LLVM pass. These are the theoretical limits of our implementation which can be reached for both the {count} and the {type} schema. 
 Second, we evaluated the effectiveness of our {count} policy. Third, we evaluated the effectiveness of our {type} policy. 
-
-Table \ref{tbl:policycompat} depicts the the average number of calltargets per callsite, the standard deviation $\sigma$ and the median. 
 
 \subsubsection{Theoretical Limits}
 \label{subsection:theoreticallimit}
@@ -454,7 +452,7 @@ further a total reduction of more than 87\% (141 vs. 1097) w.r.t. to total numbe
 %\end{figure}
 %
 
-\subsection{Runtime Overhead}
+\subsection{Runtime Overhead (RQ3)}
 \label{section:typeshieldoverheadperformance}
 % \todo[inline]{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
 \begin{figure}[h!]
@@ -473,7 +471,7 @@ xalanckbmk, astar, and omnetpp are C++ program while the rest are pure C program
 Unpatched means the original vanilla programs while patched means the programs with the CFI checks inserted.
 After the programs were instrumented we measured the runtime overhead. It is important to notice that none of the 
 instrumented programs crashed and all executed as intended by the benchmark.
-The obtained runtime overhead is around 4\% (geomean) when instrumenting the binary with DynInst. 
+The obtained runtime overhead is around 3\% (geomean) when instrumenting the binary with DynInst. 
 One reason for the performance drop includes cache misses introduced by jumping between the old and the new executable section 
 of the binary generated by duplicating and patching. This is necessary, because when
 outside of the compiler, it is nearly impossible to relocate indirect control flow. Therefore, 
@@ -482,15 +480,16 @@ there back to the new executable section. Moreover, this is also dependent on th
 of the target, as it depends on the number of indirect control flow operations per time unit.
 Another reason for the slightly higher (yer acceptable) performance overhead is due to our
 runtime policy which is more complex than that of other state-of-the-art tools.
-However, the runtime overhead of \textsc{TypeShield} (4\%) is comparable with other state-of-the-art virtual table defense
-tools such as: TypeArmor (3\%), VCI~\cite{vci:asiaccs} (7.79\% overall and 10.49\% on only the SPEC CPU2006 programs), vfGuard~\cite{vfuard:aravind} (10\% - 18.7\%), T-VIP~\cite{gawlik} (0.6\% - 103\%), 
+However, the runtime overhead of \textsc{TypeShield} (3\%) is comparable with other forward-edge protection
+tools such as: TypeArmor (3\%), VCI~\cite{vci:asiaccs} (7.79\% overall and 10.49\% on only the SPEC CPU2006 programs), 
+vfGuard~\cite{vfuard:aravind} (10\% - 18.7\%), T-VIP~\cite{gawlik} (0.6\% - 103\%), 
 SafeDispatch~\cite{safedispatch:jang} (2\% - 30\%), and VTV/IFCC~\cite{vtv:tice} (8\% - 19.2\%).
 Finally, this results qualify \textsc{TypeShield} as a highly practical tool.
 
 \todo[inline]{add a binary patch that does not crash none of the programs from SPEC CPU2006.}
 \todo[inline]{need a Table with all the results for each of the SPEC CPU2006 programs and a bar diagram}
 
-\subsection{Instrumentation Overhead}
+\subsection{Instrumentation Overhead (RQ4)}
 \label{section:typeshieldoverheadinstrumentation}
 
 \todo[inline]{here we need a bar chart, see TypeArmor paper.}
@@ -503,7 +502,7 @@ value significantly, because of the nature of code relocation after loosing the 
 changes are very hard to relocate. Therefore, instead each important basic block in the old code contains a jump instruction to the new position of the basic block.
 Finally, this results should not represent an issue for memory resourceful systems on which these applications typically run.
 
-\subsection{Security Analysis}
+\subsection{Security Analysis (RQ5)}
 \label{RQ5: Security Analysis}
 % \subsubsection{CDF Analysis}
 % \label{CDF Analysis}
@@ -571,7 +570,7 @@ internal structure of the hardened programs.
 % TypeArmor~\cite{veen:typearmor} enforces a CFI-based runtime policy in a binary for constraining object dispatches at the callsite based on
 % function parameter count checks.
 % We believe that their callsite vs. calltarget set enforcing policy is too permissive and thus
-% many illegitimate indirect forward edge based control flow transfers are possible. 
+% many illegitimate indirect forward-edge based control flow transfers are possible. 
 % 
 % Let us consider the following theoretical example, where each callsite is
 % preparing, say, $p=6 \in [1, 6]$ parameters. Then TypeArmor policy would allow calltargets which consume the same number of parameters as
@@ -604,13 +603,12 @@ internal structure of the hardened programs.
 % we present \textsc{TypeShield}, a more precise alternative. \textsc{TypeShield} can deal with the aforementioned 4 types of register widths and can further reduce the the legitimate
 % calltarget set per callsite as shown herein.
 
-\subsection{Mitigation of Advanced Code-Reuse Attacks}
+\subsection{Mitigation of Advanced CRAs (RQ6)}
 \label{RQ7: Mitigation of Advanced Code-Reuse Attacks}
-In this section we briefly list all code reuse attacks types that can be 
-stopped  by \textsc{TypeShield}. We want to remark that basically all CFI violating 
-attacks can be mitigated by \textsc{TypeShield}. Non-control flow violating attacks (\textit{i.e.,} data-only attacks)
-are out of scope.
-
+% In this section we briefly list all code reuse attacks types that can be 
+% stopped  by \textsc{TypeShield}. We want to remark that basically all CFI violating 
+% attacks can be mitigated by \textsc{TypeShield}. Non-control flow violating attacks (\textit{i.e.,} data-only attacks)
+% are out of scope.
 \begin{table}[H]
 \centering 
 \resizebox{\columnwidth}{!}{%
@@ -632,6 +630,7 @@ are out of scope.
   attacks                               & \checkmark (BP)  & (1)\tnote{a} \ or (2)\tnote{b} \ or (3)\tnote{c}.
   
 \end{tabular}
+\vspace{-.5cm}
 \begin{tablenotes}
   \item[a] Jump to an address $\notin$ in the $max - min$ address range.
   \item[b] Jump to an address $\ne$ to one of the legitimate addresses.
@@ -639,18 +638,15 @@ are out of scope.
   \end{tablenotes}
   \end{threeparttable}
 }
-\caption{Stopped attacks.}
+\caption{Stopped CRAs, forward-edge policy (FP) and backward-edge policy (BP).}
 \label{Stopped attacks.}
-
 \vspace{-.5cm}
 \end{table}
 Table~\ref{Stopped attacks.} depicts several attacks that can be successfully stopped by \textsc{TypeShield}
-by deploying only the forward-edge or the backward-edge policy. In Table~\ref{Stopped attacks.} the FP label means forward-edge 
-policy while BP means backward-edge policy.
-
+by deploying only the forward-edge or the backward-edge policy.
 For testing if the COOP attack can be prevented we instrumented the Firefox library (libxul.so) which was used to perform the original COOP
-attack as presented in the original paper. We observed that due to the forward edge policy this attack was no longer possible.
-For testing if backward edge attacks are possible after applying \textsc{TypeShield} we used several 
+attack as presented in the original paper. We observed that due to the forward-edge policy this attack was no longer possible.
+For testing if backward-edge attacks are possible after applying \textsc{TypeShield} we used several 
 open source ROP attacks which are explicitly violating the control flow of the program through
 backward-edge violation which are based on C++ programs.
 Next we instrumented the binaries of these programs which were used to violate the return edge in order to call different gadgets.
@@ -660,12 +656,12 @@ In summary, all forward-edge and backward-edge attacks can be successfully mitig
 aware of the policy in place and thus can not selectively use gadgets which have their start address in the 
 allowed set for the legitimate forward-edge and backward-edge transfers, respectively.
 
-\subsection{Effectiveness Against COOP}
+\subsection{Effectiveness Against COOP (RQ7)}
 \label{RQ8: Effectiveness Against COOP}
 We investigated the effectiveness of \textsc{TypeShield} against the COOP
 attack by looking at the number of register arguments which can be used to enable 
 data-flow between gadgets. In order to determine how many arguments 
-remain unprotected after we apply the forward edge policy of \textsc{TypeShield}
+remain unprotected after we apply the forward-edge policy of \textsc{TypeShield}
 we compared the number of parameter overestimation and compare it with the ground truth
 obtained with the help of an LLVM compiler pass. Next we used some heuristics to determine 
 how many ML-G and REC-G callsites exist for each of the C++ only server applications.
@@ -702,12 +698,12 @@ Further, for the REC-G case \textsc{TypeShield} obtained an
 For Node.js \textsc{TypeShield} obtained an exact parameter 
 matching of 95\% (69 vs. 72) while TypeArmor obtained an 96\% perfect matching.
 
-Overall \textsc{TypeShield}s forward edge policy obtained an perfect accuracy 
+Overall \textsc{TypeShield}s forward-edge policy obtained an perfect accuracy 
 of 95\% while TypeArmor obtained 92\%. While this is not a big difference
 we point out that the remaining overestimated parameters represent 5\% and this 
 do not leave much room for the attacker to perform her attack.
 
-\subsection{Forward-Edge Comparison with Other Tools}
+\subsection{Forward-Edge Comparison with Other Tools (RQ8)}
 \label{RQ9: Is TypeShield better than other tools?}
 \vspace{-.5cm}
 
@@ -755,25 +751,28 @@ Finally, \textsc{TypeShield} represents a strong improvement w.r.t. calltarget p
 % and has access to more possibilities than simply inspecting function parameters or return values.
 % Nevertheless, \textsc{TypeShield} represents a strong improvement w.r.t. calltarget per callsite reduction in binary programs.
 
-\subsection{Backward-edge Comparison with Shadow-Stack}
+\subsection{Comparison with Shadow-Stack (RQ9)}
 \label{RQ10: Comparison with SafeStack}
-There are several tools which provide shadow-stack protection as for example 
-the original shadow-stack implementation from Abadi~\cite{abadi:cfi2}(binary-based), SafeStack~\cite{volodymyr:cpi} (compiler based and bypassed~\cite{safestack:bypassing}), 
-MoCFI~\cite{mcfi:niu} (compiler based), HAFIX~\cite{hafix} (compiler based and bypassed~\cite{hafix:bypass}), and 
-also PathArmor~\cite{veen:cfi} (similarly by-passable as kBouncer, ROPecker, and ROPGuard~\cite{schuster:raid} as it relies on a capacity restricted LBR register.)
-which emulates a shadow stack trough validation of the last-branch register (LBR).
-Further, there are many compiler based approaches which can be used to protect backward edges. 
+% There are several tools which provide shadow stack protection as for example 
+% the original shadow-stack implementation from Abadi et al.~\cite{abadi:cfi2}(binary-based), 
+% SafeStack~\cite{volodymyr:cpi} (compiler based and bypassed~\cite{safestack:bypassing}), 
+% MoCFI~\cite{mcfi:niu} (compiler based), HAFIX~\cite{hafix} (compiler based and bypassed~\cite{hafix:bypass}), and 
+% also PathArmor~\cite{veen:cfi} (similarly by-passable as kBouncer, ROPecker, and ROPGuard~\cite{schuster:raid} 
+% as it relies on a capacity restricted LBR register.)
+% which emulates a shadow stack trough validation of the last-branch register (LBR).
+% Further, there are many compiler based approaches which can be used to protect backward-edges. 
 
-The only binary
-based shadow-stack approach is the one from Abadi et al.~\cite{abadi:cfi2}. This solution has:
+The safe stack implementation of Abadi et al.~\cite{abadi:cfi2} has the highest
+security level~\cite{cfi:survey} w.r.t. backward-edge protection. This solution has:
 (1) a high rumtime overhead ($\ge$ 21\%), 
 (2) is not open source, 
-(3) uses a proprietary binary analysis framework (\textit{i.e.,} Vulcan), and
-(4) uses a restricted number of labels, \textit{i.e.,} each function called from inside a function will get the same label. This label will be 
-stored in all function shadow stacks, see Figure 1 in~\cite{abadi:cfi2}. 
+(3) uses a proprietary binary analysis framework (\textit{i.e.,} Vulcan), 
+(4) reuses a restricted number of labels, \textit{i.e.,} each function called from inside a function will get the same label, and
+(5) the shadow stacks can be disclosed by a motivate attacker.
+This labels will be stored in all function shadow stacks, see Figure 1 in~\cite{abadi:cfi2}. 
 
 For this reason we propose an alternative backward-edge protection solution which is more runtime efficient.
-In order to show the precision of \textsc{TypeShield} backward edge protection we will give the average number of legitimate return addresses for each calltarget return address 
+In order to show the precision of \textsc{TypeShield} backward-edge protection we will give the average number of legitimate return addresses for each calltarget return address 
 and relate it to the total number of available addresses without any protection.
 
 \begin{table}[H]
@@ -797,7 +796,7 @@ and relate it to the total number of available addresses without any protection.
 \vspace{-.5cm}
 \end{table}
 
-Table~\ref{Backward-edge policy statistics.} depicts the statistics w.r.t. the backward edge policy legitimate return targets.
+Table~\ref{Backward-edge policy statistics.} depicts the statistics w.r.t. the backward-edge policy legitimate return targets.
 In Table~\ref{Backward-edge policy statistics.} we use the following abbreviations:
 total number of return addresses (Total \#RA),
 total (median) number of return address targets (Total \#RATs),

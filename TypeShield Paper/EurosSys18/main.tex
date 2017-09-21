@@ -278,8 +278,8 @@ which instruments program executables at load time. \textsc{TypeShield} enforces
 control-flow integrity (CFI) policy based on function parameter type and count in order to overcome the limitations of available approaches and to 
 efficiently verify dynamic object dispatches and function returns during runtime. To enhance practical applicability, \textsc{TypeShield} can 
 be automatically and easily used in conjunction with legacy applications or where source code is missing to harden binaries.
-We evaluated \textsc{TypeShield} on database servers, FTP servers, memory caching applications and the SPEC CPU2006 benchmark and were able to 
-efficiently and with low performance overhead protect these applications from forward and backward indirect edge corruptions.
+We evaluated \textsc{TypeShield} on highly relevant open source programs and the SPEC CPU2006 benchmark and were able to 
+efficiently and with low performance overhead protect these applications from forward-edge and backward-edge corruptions.
 Finally, in a direct comparison with the state-of-the-art tools, \textsc{TypeShield} 
 achieves higher caller/callee matching (\textit{i.e.,} precision), while maintaining 
 low runtime overhead and a calltarget set per callsite reduction gain of up to 41\% 
@@ -291,12 +291,12 @@ compared to state-of-the-art tools.
 
 % \keywords{C++ object dispatch, indirect call, forward edge, code reuse attack} % TODO: replace with your keywords
 
-	
+
 %contents
 \input{chapters/Introduction}
 % \input{chapters/Forward_Indirect_Callsites}
-\input{chapters/ThreatModel}
-% \input{chapters/TypeShild_Overview}
+% \input{chapters/ThreatModel}
+\input{chapters/TypeShild_Overview}
 \input{chapters/Design}
 \input{chapters/Implementation}
 \input{chapters/Evaluation}

@@ -45,6 +45,7 @@
 % The following tools address vTable protection through binary instrumentation, 
 % but fail to mitigate against COOP: vfGuard~\cite{vfuard:aravind}, and vTint~\cite{vtint:zhang}.
 
+% \subsubsection{Binary Based Forward-Edge Protection}
 TypeArmor~\cite{veen:typearmor} is a binary instrumentation tool that can protect against COOP.
 TypeArmor uses a fine-grained CFI policy based on caller/callee (but only indirect callsites) matching, which checks 
 during runtime if the number of provided and needed parameters match.
@@ -66,7 +67,7 @@ buckets that in turn can only target a smaller subset of all address-taken funct
 VCI~\cite{vci:asiaccs} is a binary based tool (7.9\%) based on DynInst which can protect forward edge indirect control flow violations based 
 on reconstructing a quasi program class hierarchy (\textit{i.e.,} no class root node and the edges are not directed). The authors claim that 
 VCI is 10 times more precise w.r.t. reducing the calltarget set per callsite. In contrast to \textsc{TypeShield} VCI can not 
-protect backward edge violations and we arguably due to the conservative analysis the VCI could skip some corner situations 
+protect backward-edge violations and we arguably due to the conservative analysis the VCI could skip some corner situations 
 allowing not legitimate calltargets.
 
 Marx~\cite{marx} is most similar to VCI and as VCI this tool reconstructs the same type of quasi program class hierarchy. 
@@ -74,14 +75,14 @@ No runtime efficiency numbers were provided in the paper.
 The authors claim that Marx can recuperate a class hierarchy which is more precise than that of IDAPro. The paper is geared towards
 first providing a tool which can be used by analyst in order to reverse engineer a binary. The precision of the calltarget set reduction
 per callsite should be similar to those of VCI but no comparison was compared in the paper. Compared to \textsc{TypeShield} 
-Marx can not protect against backward edge violations and arguably has in common with VCI several limitations.
+Marx can not protect against backward-edge violations and arguably has in common with VCI several limitations.
 
 % VTPin~\cite{vtpin} is a runtime based tool ($\approx$5\%) used for protecting against VTable hijacking, via use-after-free vulnerabilities. VTPin pins
 % all the freed VTable pointers on a safe VTable under VTPin’s control. For each object deallocation, VTPin deallocates all space allocated, but preserves and updates
 % the VTable pointer with the address of the safe VTable. As consequence a dangling pointer can invoke 
 % invoke a method provided by VTPin’s safe object. TPin needs to keep track of meta-data in order to detect runtime 
 % dangling pointer violations. The tool can not protect against the COOP attack since the COOP attack does not rely on dangling pointers.
-% In contrast with \textsc{TypeShield} this tool can not protect against backward edges violations.
+% In contrast with \textsc{TypeShield} this tool can not protect against backward-edges violations.
 
 % In this paper, rather than claiming that the invariants offered by~\textsc{TypeShield} are sufficient
 % to mitigate all versions of the COOP (as \cite{veen:typearmor} does) attack we conservatively claim that~\textsc{TypeShield} 
@@ -181,11 +182,12 @@ Marx can not protect against backward edge violations and arguably has in common
 % more details the following survey~\cite{cfi_survey_payer}.
 
 % \subsubsection{Binary Based Techniques}
+% \subsubsection{Binary Based Backward-Edge Protection}
 The CFI based implementation of Abadi et al.~\cite{abadi:cfi} is the first binary based implementation of a shadow stack.
 While at first quite promising this implementation suffers from high performance overhead which is around 21\% due to the fact 
 that the inserted checks before each function return instruction are not runtime efficient. Further, this tool has high imprecision
 du to the fact that labels are reused and in this way not legitimate return addresses become legitimate, thus these 
-could be exploited by the attacker
+could be exploited by a skilled attacker.
 
 % \subsubsection{Compiler Based Techniques}
 % LLVM SafeStack~\cite{volodymyr:cpi} is a compiler based approach in which for each function stack a shadows stack copy is build with the help of the Clang compiler. These additional stacks
@@ -193,8 +195,8 @@ could be exploited by the attacker
 % in any usage scenario. Currently, it was demonstrated that this implementation can be bypassed~\cite{safestack:bypassing}.
 % 
 % \subsubsection{Runtime Based Techniques}
-% Windows CFGuard~\cite{windows:cfguard} is a technology by Microsoft deployed into Windows 8.1 and Windows 10. This technology allows to protect backward edges by checking in a 
-% shadow stack like fashion for backward edge violations. The implementation is based on an interplay between user space and kernel space thus there is high potential that this 
+% Windows CFGuard~\cite{windows:cfguard} is a technology by Microsoft deployed into Windows 8.1 and Windows 10. This technology allows to protect backward-edges by checking in a 
+% shadow stack like fashion for backward-edge violations. The implementation is based on an interplay between user space and kernel space thus there is high potential that this 
 % implementation is highly efficient even trough no official evaluation results are available.
 % 
 % PathArmor~\cite{veen:cfi} is a runtime based tool based on a Linux loadable module which can emulate shadow stack checks by using the \texttt{LBR} register which stores 
