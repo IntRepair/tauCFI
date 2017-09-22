@@ -47,10 +47,10 @@ runtime checks before forward-edges and backward-edges. Unfortunately, COOP and 
 these attacks do not exploit indirect backward-edges (\textit{i.e.,} function returns), but rather exploit the forward indirect control flow transfers (\textit{i.e.,} object dispatches)
 imprecision which cannot be statically precisely determined upfront as alias analysis is undecidable~\cite{alias:undecidable} in program binaries.
 
-More promising \textit{source code} based tools are: SafeDispatch~\cite{safedispatch:jang}, 
-ShrinkWrap~\cite{haller:shrinkwrap}, VTI~\cite{bounov:interleaving}, and IFCC/VTV~\cite{vtv:tice}.
-These tools rely on source-code availability which limits their applicability.
-In contrast, program \textit{binary}-based tools typically protect only the forward-edge based on a CFI 
+More promising \textit{source code} tools such as: SafeDispatch~\cite{safedispatch:jang}, 
+ShrinkWrap~\cite{haller:shrinkwrap}, VTI~\cite{bounov:interleaving}, and IFCC/VTV~\cite{vtv:tice}
+rely on source-code availability which limits their applicability (\textit{i.e.,} proprietary libraries).
+In contrast, \textit{binary}-based tools typically protect only the forward-edge based on a CFI 
 policy which assumes that a shadow stack~\cite{volodymyr:cpi} (bypassed in~\cite{safestack:bypassing}) 
 technique for protecting the backward edges is in place.
 Examples include binCFI~\cite{ccfir:zhang, zhang:usenix}, vfGuard~\cite{vfuard:aravind}, 
