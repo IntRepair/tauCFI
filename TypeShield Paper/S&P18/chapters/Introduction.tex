@@ -70,7 +70,8 @@ Unfortunately, VCI and Marx can be used to enforce only a CFI-based policy on th
 that a shadow stack protection policy is in place. TypeArmor enforces a forward-edge policy which does take into account only the number of parameter 
 provided and consumed without imposing any constraint on their types. Thus, these forward-edge protection tools are too permissive and for this reason we seek 
 in this paper for a more fined-grained protection technique which makes no assumptions on the presence of a shadow stack to protect the backward edges.
-Further, the backward-edge protecting tools~\cite{} based on shadow stack techniques suffer from high disclosure risks \cite{safestack:bypassing}.
+Further, the binary based backward-edge protecting tools~\cite{abadi:cfi2} such as the ones based on shadow stack techniques suffer from high overhead 
+(in average 10\%~\cite{dang:asiaccs}) and from high disclosure risks \cite{safestack:bypassing}.
 
 In this paper, we present \textsc{TypeShield}, the first fine-grained CFI-complete (forward and backward edges) open source runtime 
 binary-level protection tool.
@@ -271,17 +272,17 @@ In summary, we make the following contributions:
 [leftmargin=.35cm]
 
  \item 
-%  \textbf{Novel Technique.} 
+ \textbf{Novel Technique.} 
  We designed a novel fine-grained CFI technique for protecting forward and backward edges 
  against code reuse attacks.
  
  \item 
-%  \textbf{Usable Prototype.} 
+ \textbf{Usable Prototype.} 
  We implemented, \textsc{TypeShield}, a prototype which enforces the aforementioned technique
  in stripped program binaries. \textsc{TypeShield} can serve as platform for developing other binary based protection mechanisms.
  
  \item 
-%  \textbf{Experiments Results.}
+ \textbf{Experiments Results.}
  We conduct a thorough set of evaluative experiments in which we show that \textsc{TypeShield} is more precise and effective than 
  other state-f-the-art tools. Further, we show that our tool has a higher calltarget set reduction per callsite, thus further reducing the attack surface.
  
