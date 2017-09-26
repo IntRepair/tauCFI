@@ -1,4 +1,3 @@
-
 \section{Threat Model}
 \label{Adversary Model}
 
@@ -11,3 +10,13 @@ that the attacker has the ability to execute a memory corruption to hijack the p
 control flow. Finally, the analyzed program binary is not hand-crafted and the compiler
 which was used to generate the binary adheres to one of the 
 standard calling conventions mentioned in \cref{chapter:Introduction}.
+
+\begin{center}
+\begin{figure*}[t!]
+\centering
+   \includegraphics[width=.88\textwidth]{figures/overview.pdf}
+    \caption{Overview of the main steps performed by \textsc{TypeShield} when hardening a program binary.}
+    \label{System overview.}
+    \vspace{-.5cm}
+ \end{figure*}
+\end{center}

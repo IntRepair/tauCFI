@@ -1,16 +1,15 @@
-\section{Design}
+\section{System Design}
 \label{chapter:Design}
 
 In this section, we present 
-in~\cref{Parameter Count Based Policy} we present our function parameter count based policy,
-in \cref{section:typepolicy}, we present the details of our type policy, and 
-in~\cref{section:instructionanalysis} we introduce the definitions for our instructions analysis based on register states,  
-in~\cref{section:calltargetanalysis} we present the design of our calltarget analysis, while
-in~\cref{section:callsiteanalysis} we depict the design of our callsite analysis\footnote{Callsites detection in the 
-binary is based on the capabilities of DynInst.}.
-Finally,  
-in~\cref{Enforcing The Forward Edge Policy} we present our forward-edge policy instrumentation strategy, and 
-in~\cref{Backward Edge Analysis} we highlight our function backward-edgeanalysis and policy instrumentation strategy.
+% in~\cref{Parameter Count Based Policy} our function parameter count based policy,
+in \cref{section:typepolicy}, the details of our type policy, and 
+in~\cref{section:instructionanalysis} we introduce the definitions for our instructions analysis based on register states, while
+in~\cref{section:calltargetanalysis} we present the design of our calltarget analysis.
+In~\cref{section:callsiteanalysis} we depict the design of our callsite analysis\footnote{Callsites detection in the 
+binary is based on the capabilities of DynInst.}, and  
+in~\cref{Enforcing The Forward Edge Policy} we present our forward-edge policy instrumentation strategy, while 
+in~\cref{Backward Edge Analysis} we highlight our function backward-edge analysis and policy instrumentation strategy.
 
 \subsection{Parameter Register Wideness Based Policy}
 \label{section:typepolicy}
@@ -648,7 +647,7 @@ If applied to a callsite, this calculates the values that are provided by this c
 \caption{Basic block reaching definition analysis.}
 \label{alg:reaching}
 \end{algorithm}
-\vspace{-.5cm}
+% \vspace{-.5cm}
 Algorithm~\ref{alg:reaching} is based on the reaching definition analysis presented in~\cite{khedker2009data}, 
 which basically is a reverse depth-first traversal of basic blocks of a program. For customization, we rely on 
 the implementation of several functions. $\mathcal{S}^\mathcal{R}$ is the set of possible register states 
