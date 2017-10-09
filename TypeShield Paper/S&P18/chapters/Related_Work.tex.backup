@@ -5,7 +5,7 @@
 % \label{Type-Inference on Executables}
 % Recovering variable types from executable programs
 % is very hard in general for several reasons. 
-% First, the quality of the disassembly can very much from used
+% First, the quality of the disassembly can vary much from used
 % framework to another. \textsc{TypeShield} is based on DynInst 
 % and the quality of the executable disassembly fits our needs. 
 % For a more comprehensive review on the capabilities of DynInst and other tools we
@@ -31,23 +31,24 @@
 
 % \subsection{Mitigation of Advanced CRAs}
 % \textbf{Mitigation of Forward-Edge based Attacks.}
-\subsection{Mitigation of Forward-Edge based Attacks.}
-\label{Mitigation of Advanced Code-Reuse Attacks}
-Recursive-COOP~\cite{crane:readactor++}, COOP~\cite{schuster:coop}, Subversive-C~\cite{subversive-c:lettner} and the attack of Lan \textit{et al.}~\cite{loop:oriented} are 
-forward-edge based CRAs which cannot be addressed with:
-(i)  shadow stacks techniques and hardware-based approaches such as Intel CET~\cite{intel:cet} (\textit{i.e.,} since advanced COOP do not violate 
-the caller/callee convention), 
-(ii) coarse-grained Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} techniques, and 
-(iii) OS-based approaches such as Windows Control Flow Guard~\cite{windows:cfguard} 
-since the precomputed CFG does not contain edges for indirect callsites which are explicitly exploited during the COOP attack.
+% \subsection{Mitigation of Forward-Edge based Attacks}
+% \label{Mitigation of Advanced Code-Reuse Attacks}
+% Recursive-COOP~\cite{crane:readactor++}, COOP~\cite{schuster:coop}, Subversive-C~\cite{subversive-c:lettner} and the attack of Lan \textit{et al.}~\cite{loop:oriented} are 
+% forward-edge based CRAs which cannot be addressed with:
+% (i)  shadow stacks techniques and hardware-based approaches such as Intel CET~\cite{intel:cet} (\textit{i.e.,} since advanced COOP do not violate 
+% the caller/callee convention), 
+% (ii) coarse-grained Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} techniques, and 
+% (iii) OS-based approaches such as Windows Control Flow Guard~\cite{windows:cfguard} 
+% since the precomputed CFG does not contain edges for indirect callsites which are explicitly exploited during the COOP attack.
 
-\subsubsection{Binary Based Techniques}
-The following tools address vTable protection through binary instrumentation, 
-but fail to mitigate against COOP: vfGuard~\cite{vfuard:aravind}, and vTint~\cite{vtint:zhang}. 
-The only binary-based tool which we are aware of that can protect against COOP is TypeArmor~\cite{veen:typearmor}. 
+% \subsubsection{Binary Based Techniques}
+% The following tools address vTable protection through binary instrumentation, 
+% but fail to mitigate against COOP: vfGuard~\cite{vfuard:aravind}, and vTint~\cite{vtint:zhang}.
+
+\subsubsection{Binary Based Forward-Edge Protection}
+TypeArmor~\cite{veen:typearmor} is a binary instrumentation tool that can protect against COOP.
 TypeArmor uses a fine-grained CFI policy based on caller/callee (but only indirect callsites) matching, which checks 
 during runtime if the number of provided and needed parameters match.
-
 \textsc{TypeShield} is related to TypeArmor~\cite{veen:typearmor}, since we also enforce strong binary-level 
 invariants on the number of function parameters. Further, \textsc{TypeShield} also aims for exclusive protection 
 against advanced exploitation techniques, which can bypass fine-grained CFI schemes and vTable protections at the 
@@ -56,17 +57,17 @@ only restrict based on the number of parameters, but also on the width of their 
 buckets that in turn can only target a smaller subset of all address-taken functions. 
 %However, we rely for that on the variety of parameter types and when there is none, we will degrade into a parameter count policy.
 
-We are aware that there is still a long research path to go until binary based techniques can 
-recuperate program based semantic information from executable with the same precision as compiler based tools.
-This path could be even endless since compilers are optimized for speed and are designed to remove as much as possible semantic information
-from an executable in order to make the program run as fast as possible. In light of this fact,
-\textsc{TypeShield} is another attempt to recuperate just the needed semantic information (types and number of function parameters from
-indirect callsites) in order to be able to enforce a precise and with low overhead primitive against COOP attacks.
+% We are aware that there is still a long research path to go until binary based techniques can 
+% recuperate program based semantic information from executable with the same precision as compiler based tools.
+% This path could be even endless since compilers are optimized for speed and are designed to remove as much as possible semantic information
+% from an executable in order to make the program run as fast as possible. In light of this fact,
+% \textsc{TypeShield} is another attempt to recuperate just the needed semantic information (types and number of function parameters from
+% indirect callsites) in order to be able to enforce a precise and with low overhead primitive against COOP attacks.
 
 VCI~\cite{vci:asiaccs} is a binary based tool (7.9\%) based on DynInst which can protect forward edge indirect control flow violations based 
 on reconstructing a quasi program class hierarchy (\textit{i.e.,} no class root node and the edges are not directed). The authors claim that 
 VCI is 10 times more precise w.r.t. reducing the calltarget set per callsite. In contrast to \textsc{TypeShield} VCI can not 
-protect backward edge violations and we arguably due to the conservative analysis the VCI could skip some corner situations 
+protect backward-edge violations and we arguably due to the conservative analysis the VCI could skip some corner situations 
 allowing not legitimate calltargets.
 
 Marx~\cite{marx} is most similar to VCI and as VCI this tool reconstructs the same type of quasi program class hierarchy. 
@@ -74,18 +75,18 @@ No runtime efficiency numbers were provided in the paper.
 The authors claim that Marx can recuperate a class hierarchy which is more precise than that of IDAPro. The paper is geared towards
 first providing a tool which can be used by analyst in order to reverse engineer a binary. The precision of the calltarget set reduction
 per callsite should be similar to those of VCI but no comparison was compared in the paper. Compared to \textsc{TypeShield} 
-Marx can not against backward edge violations and arguably suffers from the same limitations as VCI.
+Marx can not protect against backward-edge violations and arguably has in common with VCI several limitations.
 
-VTPin~\cite{vtpin} is a runtime based tool ($\approx$5\%) used for protecting against VTable hijacking, via use-after-free vulnerabilities. VTPin pins
-all the freed VTable pointers on a safe VTable under VTPin’s control. For each object deallocation, VTPin deallocates all space allocated, but preserves and updates
-the VTable pointer with the address of the safe VTable. As consequence a dangling pointer can invoke 
-invoke a method provided by VTPin’s safe object. TPin needs to keep track of meta-data in order to detect runtime 
-dangling pointer violations. The tool can not protect against the COOP attack since the COOP attack does not rely on dangling pointers.
-In contrast with \textsc{TypeShield} this tool can not protect against backward edges violations.
+% VTPin~\cite{vtpin} is a runtime based tool ($\approx$5\%) used for protecting against VTable hijacking, via use-after-free vulnerabilities. VTPin pins
+% all the freed VTable pointers on a safe VTable under VTPin’s control. For each object deallocation, VTPin deallocates all space allocated, but preserves and updates
+% the VTable pointer with the address of the safe VTable. As consequence a dangling pointer can invoke 
+% invoke a method provided by VTPin’s safe object. TPin needs to keep track of meta-data in order to detect runtime 
+% dangling pointer violations. The tool can not protect against the COOP attack since the COOP attack does not rely on dangling pointers.
+% In contrast with \textsc{TypeShield} this tool can not protect against backward-edges violations.
 
-In this paper, rather than claiming that the invariants offered by~\textsc{TypeShield} are sufficient
-to mitigate all versions of the COOP (as \cite{veen:typearmor} does) attack we conservatively claim that~\textsc{TypeShield} 
-further raises the bar w.r.t. what is possible when defending against COOP attacks on the binary level.
+% In this paper, rather than claiming that the invariants offered by~\textsc{TypeShield} are sufficient
+% to mitigate all versions of the COOP (as \cite{veen:typearmor} does) attack we conservatively claim that~\textsc{TypeShield} 
+% further raises the bar w.r.t. what is possible when defending against COOP attacks on the binary level.
 
 % \subsubsection{Source Code Based Techniques} Indirect callsite targets are checked based on vTable integrity.
 % Different types of CFI policies are used such as in the following tools:
@@ -100,11 +101,12 @@ further raises the bar w.r.t. what is possible when defending against COOP attac
 % Such tools are: ShrinkWrap~\cite{haller:shrinkwrap}, IFCC/VTV~\cite{vtv:tice}, 
 % SafeDispatch~\cite{safedispatch:jang}, vTrust~\cite{zhang:vtrust}, Readactor++~\cite{crane:readactor++}, CPI~\cite{volodymyr:cpi} and the
 % tool presented by VTI~\cite{bounov:interleaving}. These tools profit from high precision
-% since they have access to the full semantic context of the program though the scope
+% since they have access to the full semantic context of the program trhough the scope
 % of the compiler on which they are based. 
 % Because of this reason, these tools target mostly other types of security problems than binary-based 
 % tools address. For example, some of the last advancements in compiler based protection against code reuse attacks address mainly performance issues.
-% Currently, most of the above presented tools are only forward edge enforcers of fine-grained CFI policies with an overhead from 1\% up to 15\%.
+% Currently, most of the above presented tools are only forward edge enforcers of fine-grained CFI policies with 
+% an overhead from 1\% up to 15\% (see \cite{cfi_survey_payer} for more details).
 % 
 % \subsubsection{Runtime Based Techniques}
 % Several promising runtime-based defenses against advanced CRAs exist but currently none of them can successfully
@@ -116,9 +118,9 @@ further raises the bar w.r.t. what is possible when defending against COOP attac
 % new feature provided by intel is useless in the face of this attack. Nevertheless, other highly notorious CRAs may not be possible
 % after this feature will be implemented main stream in OSs and compilers.
 % 
-% Windows Control Flow Guard~\cite{windows:cfguard} is based on a user-space and kernel-space components which
+% Windows Control Flow Guard~\cite{windows:cfguard} is based on an user-space and kernel-space components which
 % by working closely together can enforce an efficient fine-grained CFI policy based on a precomputed CFG.
-% These new feature available in Windows 10 can considerably rise the bar for future attacks but in our opinion advanced CRAs
+% These new feature available in Windows 10 can considerably raise the bar for future attacks but in our opinion advanced CRAs
 % such as COOP are still possible due the typical characteristics of COOP.
 % 
 % PathArmor~\cite{veen:cfi} is yet another tool which is based on a precomputed CFG and on the LBR register which can give a string of 16 up to
@@ -166,35 +168,38 @@ further raises the bar w.r.t. what is possible when defending against COOP attac
 % techniques and tools can be used to mitigate COOP attacks.
 % 
 
-\subsection{Mitigation of Backward-Edge based Attacks.}
-Backward-Edge based code reuse attacks exploit the indirection provided by the return instructions 
-of a function. Usually each modern compiler builds caller/callee pairs by adhering to the so called caller-callee
-calling convention. This calling convention basically specifies that for each indirect call the return address of the function which returns after 
-it was called lies at the next address of the call instruction. 
-This calling convention is violated by all ROP attacks and also by 
-more recent advanced code reuse attacks. 
-Intel CET~\cite{intel:cet} is a promising technology from Intel in which the X86 instruction set is updated with new instructions (\textit{i.e.,} \texttt{END\_BRANCH}) instruction
-which should facilitate an efficient implementation of shadow stack implementations. Currently, this technology is not available and it is not foreseeable when this features will 
-be available in mass production.
-For brevity reasons we do not look herein into compiler and purely runtime techniques. 
-See for more details the following survey paper~\cite{cfi_survey_payer}.
+% \subsection{Mitigation of Backward-Edge based Attacks}
+% Backward-Edge based code reuse attacks exploit the indirection provided by the return instructions 
+% of a function. Usually each modern compiler builds caller/callee pairs by adhering to the so called caller-callee
+% calling convention. This calling convention basically specifies that for each indirect call the return address of the function which returns after 
+% it was called lies at the next address of the call instruction. 
+% This calling convention is violated by all ROP attacks and also by 
+% more recent advanced code reuse attacks. 
+% Intel CET~\cite{intel:cet} is a promising technology from Intel in which the X86 instruction set is updated with new instructions (\textit{i.e.,} \texttt{END\_BRANCH}) instruction
+% which should facilitate an efficient implementation of shadow stack implementations. Currently, this technology is not available and it is not foreseeable when this features will 
+% be available in mass production.
+% For brevity reasons we do not look herein into compiler and purely runtime techniques and advise the reader to look for 
+% more details the following survey~\cite{cfi_survey_payer}.
 
-\subsubsection{Binary Based Techniques}
-The CFI based implementation of Abadi et al.~\cite{abadi:cfi} is historically the first compiler based implementation of a shadow stack.
-At first quite promising this implementation suffers from high performance overhead which is around 21\% due to the fact that the inserted checks before each 
-function return instruction are not runtime efficient.
+% \subsubsection{Binary Based Techniques}
+\subsubsection{Binary Based Backward-Edge Protection}
+The CFI based implementation of Abadi et al.~\cite{abadi:cfi} is the first binary based implementation of a shadow stack.
+While at first quite promising this implementation suffers from high performance overhead which is around 21\% due to the fact 
+that the inserted checks before each function return instruction are not runtime efficient. Further, this tool has high imprecision
+du to the fact that labels are reused and in this way not legitimate return addresses become legitimate, thus these 
+could be exploited by a skilled attacker.
 
-\subsubsection{Compiler Based Techniques}
-LLVM SafeStack~\cite{volodymyr:cpi} is a compiler based approach in which for each function stack a shadows stack copy is build with the help of the Clang compiler. These additional stacks
-are hidden by at least one level of indirection from the attacker such that she can not interfere with it. This approach is effective but suffers from a big binary blow-up which is not acceptable
-in any usage scenario. Currently, it was demonstrated that this implementation can be bypassed~\cite{safestack:bypassing}.
-
-\subsubsection{Runtime Based Techniques}
-Windows CFGuard~\cite{windows:cfguard} is a technology by Microsoft deployed into Windows 8.1 and Windows 10. This technology allows to protect backward edges by checking in a 
-shadow stack like fashion for backward edge violations. The implementation is based on an interplay between user space and kernel space thus there is high potential that this 
-implementation is highly efficient even trough no official evaluation results are available.
-
-PathArmor~\cite{veen:cfi} is a runtime based tool based on a Linux loadable module which can emulate shadow stack checks by using the \texttt{LBR} register which stores 
-callsite and target address pairs. The capacity of the LBR register is limited to 32 address pairs which can be stored. The tools sufferes from high runtime overhead and 
-it is imprecise since the address pairs can not be analyzed at the same speed as they arrive in this register. For this reason some pairs are skipped and thus the attacker has 
-the chance to mount and attack.
+% \subsubsection{Compiler Based Techniques}
+% LLVM SafeStack~\cite{volodymyr:cpi} is a compiler based approach in which for each function stack a shadows stack copy is build with the help of the Clang compiler. These additional stacks
+% are hidden by at least one level of indirection from the attacker such that she can not interfere with it. This approach is effective but suffers from a big binary blow-up which is not acceptable
+% in any usage scenario. Currently, it was demonstrated that this implementation can be bypassed~\cite{safestack:bypassing}.
+% 
+% \subsubsection{Runtime Based Techniques}
+% Windows CFGuard~\cite{windows:cfguard} is a technology by Microsoft deployed into Windows 8.1 and Windows 10. This technology allows to protect backward-edges by checking in a 
+% shadow stack like fashion for backward-edge violations. The implementation is based on an interplay between user space and kernel space thus there is high potential that this 
+% implementation is highly efficient even trough no official evaluation results are available.
+% 
+% PathArmor~\cite{veen:cfi} is a runtime based tool based on a Linux loadable module which can emulate shadow stack checks by using the \texttt{LBR} register which stores 
+% callsite and target address pairs. The capacity of the LBR register is limited to 32 address pairs which can be stored. The tools sufferes from high runtime overhead and 
+% it is imprecise since the address pairs can not be analyzed at the same speed as they arrive in this register. For this reason some pairs are skipped and thus the attacker has 
+% the chance to mount and attack.

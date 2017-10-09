@@ -7,7 +7,7 @@ CTLdash_repeated_names= "no",
 AUTHOR={Khedker, Uday and Sanyal, Amitabha and Sathe, Bageshri},
 TITLE={Data flow analysis: Theory and Practice},
 PUBLISHER={CRC Press},
-YEAR="2009"
+YEAR={2009}
 }
 
 @inproceedings{mingwei:sekar,
@@ -48,7 +48,7 @@ YEAR="2009"
 @InProceedings{payer:dimva,
  author = {Payer, Mathias and Barresi, Antonio and R. Gross, Thomas},
  title = {Fine-Grained Control-Flow Integrity through Binary Hardening},
- booktitle = "DIMVA",
+ booktitle = {DIMVA},
  year = {2015}
 } 
 
@@ -282,7 +282,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael},
 }
 
 @inproceedings{dynamorio:drmemory,
- author = "",
+ author = {},
  title = {DynamoRIO},
  note={\url{http://dynamorio.org/home.html}}
 }
@@ -329,7 +329,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael},
  year = {2015}
 }
 
-@inproceedings{cfi_survey_payer,
+@inproceedings{cfi:survey,
  author = {Nathan, Burow, and A. Carr, Scott, and Nash, Joseph, and Larsen, Per, and Franz, Michael, and Brunthaler, Stefan, and Payer, Mathias},
  title = {Control-Flow Integrity: Precision, Security, and Performance},
  booktitle = {ACM Computing Surveys (CSUR)},

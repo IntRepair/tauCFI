@@ -9,33 +9,33 @@
 % (\cref{section:countpolicy}) is imprecise w.r.t. to the enforced calltarget set per callsite. 
 % Finally, in~\cref{Running Example: CVE X} we present in detail a real COOP attack.
 
-\subsection{Polymorphism in C++ Programs}
-% \textbf{Polymorphism in C++.}
-\label{Polymorphism in C++}
-Polymorphism, along inheritance and encapsulation, are the most used modern object-oriented concepts in C++. In C++, polymorphism allows accessing different types of objects 
-through a common base class. A pointer of the type of the base object can be used to point to object(s) which are derived from the base class. In C++, there are 
-several types of polymorphism:
-(a) compile-time (or static, usually is implemented with templates), 
-(b) runtime (dynamic, is implemented with inheritance and virtual functions), 
-(c) ad-hoc (\textit{e.g.,} if the range of actual types that can be used is finite and the combinations must be individually specified prior to use), and
-(d) parametric (\textit{e.g.,} if code is written without mention of any specific type and thus can be used transparently with any number of new types). 
-The first two are implemented through early and late binding, respectively. In C++, overloading concepts fall under the category of \textit{c)} and virtual functions, 
-templates or parametric classes fall under the category of pure polymorphism. However, C++ provides polymorphism through: 
-(i) virtual functions,
-(ii) function name overloading, and 
-(iii) operator overloading. 
-In this paper, we are concerned with dynamic polymorphism, based on virtual functions (see ISO/IEC N3690~\cite{iso:iecN3690}), because it can be exploited to call: 
-(x) illegitimate virtual table entries (not) contained in the class hierarchy by potentially varying the number of parameters and types,
-(y) legitimate virtual table entries (not) contained in the class hierarchy by potentially varying the number of parameters and types, and 
-(z) fake virtual tables entries not contained in the class hierarchy by potentially varying the number of parameters and types.
-By legitimate and illegitimate virtual table entries we mean those virtual table entries which for a single indirect callsite lie in the virtual table hierarchy. More 
-precisely, a virtual table entry is legitimate for a callsite if from the callsite to the virtual table containing the entry there is an inheritance path (see~\cite{haller:shrinkwrap}). 
-Virtual functions have several uses and issues associated, but for the scope of this paper we will look at the indirect callsites which are exploited by calling illegitimate virtual 
-table entries (\textit{i.e.,} functions) with varying number and type of parameters, see (x) above}. More precisely, 
-(1) load-time enforcement: as calling each indirect callsite (\textit{i.e.,} callee) requires a fixed number of parameters which are passed each time the caller is calling, 
-we enforce a fine-grained CFI policy by statically determining the number and types of all function parameter that belong to an indirect callsite, and
-(2) runtime verification: as differentiating during runtime legitimate from illegitimate indirect caller/callee pairs requires parameter type (along parameter number), we 
-check during run-time before each indirect callsite if the caller matches with the callee based on the previously added checks.
+% \subsection{Polymorphism in C++ Programs}
+% % \textbf{Polymorphism in C++.}
+% \label{Polymorphism in C++}
+% Polymorphism, along inheritance and encapsulation, are the most used modern object-oriented concepts in C++. In C++, polymorphism allows accessing different types of objects 
+% through a common base class. A pointer of the type of the base object can be used to point to object(s) which are derived from the base class. In C++, there are 
+% several types of polymorphism:
+% (a) compile-time (or static, usually is implemented with templates), 
+% (b) runtime (dynamic, is implemented with inheritance and virtual functions), 
+% (c) ad-hoc (\textit{e.g.,} if the range of actual types that can be used is finite and the combinations must be individually specified prior to use), and
+% (d) parametric (\textit{e.g.,} if code is written without mention of any specific type and thus can be used transparently with any number of new types). 
+% The first two are implemented through early and late binding, respectively. In C++, overloading concepts fall under the category of \textit{c)} and virtual functions, 
+% templates or parametric classes fall under the category of pure polymorphism. However, C++ provides polymorphism through: 
+% (i) virtual functions,
+% (ii) function name overloading, and 
+% (iii) operator overloading. 
+% In this paper, we are concerned with dynamic polymorphism, based on virtual functions (see ISO/IEC N3690~\cite{iso:iecN3690}), because it can be exploited to call: 
+% (x) illegitimate virtual table entries (not) contained in the class hierarchy by potentially varying the number of parameters and types,
+% (y) legitimate virtual table entries (not) contained in the class hierarchy by potentially varying the number of parameters and types, and 
+% (z) fake virtual tables entries not contained in the class hierarchy by potentially varying the number of parameters and types.
+% By legitimate and illegitimate virtual table entries we mean those virtual table entries which for a single indirect callsite lie in the virtual table hierarchy. More 
+% precisely, a virtual table entry is legitimate for a callsite if from the callsite to the virtual table containing the entry there is an inheritance path (see~\cite{haller:shrinkwrap}). 
+% Virtual functions have several uses and issues associated, but for the scope of this paper we will look at the indirect callsites which are exploited by calling illegitimate virtual 
+% table entries (\textit{i.e.,} functions) with varying number and type of parameters, see (x) above). More precisely, 
+% (1) load-time enforcement: as calling each indirect callsite (\textit{i.e.,} callee) requires a fixed number of parameters which are passed each time the caller is calling, 
+% we enforce a fine-grained CFI policy by statically determining the number and types of all function parameter that belong to an indirect callsite, and
+% (2) runtime verification: as differentiating during runtime legitimate from illegitimate indirect caller/callee pairs requires parameter type and parameter number, we 
+% insert before each indirect callsite a check used for determining during runtime if the caller matches with the callee based on certain CFI policies.
 
 
 \newsavebox{\firstlisting}
@@ -111,7 +111,7 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 % depicts a C++ code example (left) and how a COOP main-loop gadget (right) 
 % (\textit{i.e.,} based either on ML-G (main-loop) or REC-G (recursive-gadget) or UNR-G (unrolled COOP gadget), 
 % see~\cite{crane:readactor++} for more details) is used to sequentially call COOP gadgets by iterating trough 
-% a loop controlled by the attacker.
+% a loop (REC-G excluded) controlled by the attacker.
 % 
 % First, the object dispatch (see Figure~\ref{Code example used to illustrate how a COOP loop gadget works} line 17) is exploited by the attacker
 % in order to call different functions in the whole program by iterating on an array of fake objects previously inserted in the array.
@@ -124,7 +124,7 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 % can invoke from the same callsite legitimate functions (in total {\tiny\encircle{\Large{N}}}) residing in the virtual table (vTable) inheritance path
 % (\textit{i.e.,} at the time of writing this paper this type of information is particularly hard to recuperate from program binaries)
 % for this particular callsite, indicated with green color vTable entries. 
-% However, a real COOP attack invokes illegitimate vTable entries residing in the whole initial program hierarchy (or the extended one)
+% However, a real COOP attack invokes illegitimate vTable entries residing in the whole initial program class hierarchy (or the extended one)
 % with less or no relationship to the initial callsite,
 % indicated with red-color vTable entries.
 % 
@@ -146,15 +146,16 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 % % \textbf{Security Implications of Forbidden Indirect Calls.}
 % \label{Security Implications of Forbidden Forward Indirect Calls}
 % The C++ language standard (N3690~\cite{iso:iecN3690}) does not specify what happens when calling different virtual table entries from an indirect callsite. 
-% The standard says that we have a virtual function-related undefined behavior when: \textit{a virtual function call uses an explicit class member access and 
+% The standard says that we have a virtual function-related undefined behavior when: (citation) \textit{a virtual function call uses an explicit class member access and 
 % the object expression refers to the complete object of x or one of that object's base class sub-objects but not x or one of its base class sub-objects}. As 
-% undefined behavior is not a clearly defined concept, we argue that in order to be able to deal with undefined behavior or unspecified behavior related to 
+% undefined behavior is not a clearly defined concept, we argue that in order to be able to deal with undefined or unspecified behavior related to 
 % virtual function calls one needs to know how these language-dependent concepts are implemented inside the used compilers.
 % 
 % Forbidden forward-edge indirect calls are the result of a vPointer corruption. A vPointer corruption is not a vulnerability, but rather a capability which
 % can be the result of a spatial or temporal memory corruption triggered by: 
 % (1) bad-casting~\cite{byoungyoung:typecasting} of C++ objects, 
-% (2) buffer overflow in a buffer adjacent to a C++ object or a use-after-free condition~\cite{schuster:coop}.
+% (2) buffer overflow in a buffer adjacent to a C++ object or 
+% (3) a use-after-free condition~\cite{schuster:coop}.
 % A vPointer corruption can be exploited in several ways. A manipulated vPointer can be exploited by pointing it in any existing or added program virtual 
 % table entry or into a fake virtual table which was added by an attacker. For example in case a vPointer
 % was corrupted than the attacker could highjack the control flow of the program and start a COOP attack~\cite{schuster:coop}.
@@ -163,10 +164,10 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 % to the C++ object or a use-after-free condition. As a consequence, each corruption which can reach an object (\textit{e.g.,} bad object casts) is a potential
 % exploit vector for a vPointer corruption. Interestingly to notice in this context is that through:
 % (1) memory layout analysis (through highly configurable compiler tool chains) of source code based locations which are highly prone to memory corruptions such 
-% as declarations and uses of buffers, integers or pointer deallocations one can obtain the internal machine code layout representation.
+% as declarations and uses of buffers, integers or pointer deallocations one can obtain the internal machine code layout representation;
 % (2) analysis of a code corruption which is adjacent (based on (1)) to a C++ object based on application class hierarchy, the virtual table hierarchy and each
 % location in source code where an object is declared and used (\textit{e.g.,} modern compiler tool chains can spill out this information for free), one can 
-% derive an analysis which can determine---up to a certain extent---if a memory corruption can influence (\textit{e.g.,} is adjacent) to a C++ object.
+% derive an analysis which can determine---up to a certain extent---if a memory corruption can influence (\textit{e.g.,} is adjacent to) a C++ object.
 % 
 % Finally, tools based on these two concepts (\textit{i.e.,} (1) and (2)) can be used by attackers, \textit{e.g.,} to find new vulnerabilities, and by defenders
 % to harden the source code only at the places which are most exposed to such vulnerabilities (\textit{i.e.,} targeted security hardening).
@@ -223,7 +224,7 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 % allowed to call a trivial task for source code applications, but a hard task when one wants to apply similar 
 % security policies (\textit{e.g.,} which rely on parameter types of virtual table entries) to binary executables.
 
-\subsection{Checking Indirect Calls in Practice}
+\subsection{Mitigation of Forward-Edge Based Attacks}
 % \textbf{Checking Indirect Forward-Edge Calls in Practice.}
 \label{C++ Indirect Calls in Practice}
 To the best of our knowledge, only the IFCC/VTV~\cite{vtv:tice} compiler based tools (up to 8.7\% performance overhead) are deployed in practice
@@ -244,5 +245,26 @@ lower since it does not consider virtual table inheritance paths. vTrust~\cite{z
 that there are no C++ language semantics which can be used to enforce type and parameter count matching for indirect caller/callee pairs, this could be addressed
 with specifically intended language constructs in the future.
 
+\subsection{Mitigation of Backward-Edge Based Attacks}
+\label{Mitigation of Return Edge Attacks}
+Accordingly to the currently most comprehensive survey~\cite{cfi_survey_payer} on tools which asses backward edge protection tools there are tools which
+offer low, medium, and high level of protection of the backward edge. Further, this survey classifies the backward edge protection tools 
+in binary based, source code based, and other types (\textit{i.e.,} with HW support, etc.) as follows.
 
+\textbf{Binary based tools.} Original CFI implementation from Abadi et. al.~\cite{abadi:cfi2}, MoCFI~\cite{mocfi}, 
+kBouncer~\cite{kbouncer}, 
+CCFIR~\cite{ccfir:zhang}, bin-CFI~\cite{mingwei:sekar}, O-CFI~\cite{mohan:opaque}, 
+PathArmor~\cite{veen:cfi}, 
+LockDown~\cite{payer:dimva} mostly suffer from imprecision (high number of reused labels), 
+have low runtime efficiency, do not support shared libraries at all.
+
+\textbf{Source code based tools.} SafeStack~\cite{safestack}, Hypersafe~\cite{hypersafe}, CF-Locking~\cite{cflocking}, MIP~\cite{mip}, 
+CF-Restrictor~\cite{cfrestrictor}, KCoFi~\cite{kcocfi}, RockJIT~\cite{rockjit:niu}, CCFI~\cite{ccfi:jose}, 
+Kernel CFI~\cite{kernelcfi}, MCFI~\cite{mcfi:niu}, piCFI~\cite{perinput:niu} relatively high precision
+w.r.t. enforced address return set, and all do not support shared libraries (except MCFI), have high coverage (almost all backward edges are protected).
+
+\textbf{Other types of tools.} ROPecker~\cite{ropecker}, HW-asst. CFI~\cite{davi:hardware}, 
+CFIGuard~\cite{cfiguard:yuan} are mostly relying on HW features which were not specifically built for protecting backward edges and 
+for this reason the tools are not runtime effective and their precision is rather low and mostly not effective against state of the art code
+reuse attacks.
 

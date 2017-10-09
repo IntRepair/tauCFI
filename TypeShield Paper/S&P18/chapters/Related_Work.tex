@@ -184,9 +184,9 @@ Marx can not protect against backward-edge violations and arguably has in common
 % \subsubsection{Binary Based Techniques}
 \subsubsection{Binary Based Backward-Edge Protection}
 The CFI based implementation of Abadi et al.~\cite{abadi:cfi} is the first binary based implementation of a shadow stack.
-While at first quite promising this implementation suffers from high performance overhead which is around 21\% due to the fact 
+While at first glance promising, this implementation suffers from high performance overhead which is around 21\% due to the fact 
 that the inserted checks before each function return instruction are not runtime efficient. Further, this tool has high imprecision
-du to the fact that labels are reused and in this way not legitimate return addresses become legitimate, thus these 
+due to the fact that labels are reused and in this way not legitimate return addresses become legitimate, thus these 
 could be exploited by a skilled attacker.
 
 % \subsubsection{Compiler Based Techniques}

@@ -44,8 +44,10 @@
 
 %version3 short version
 We presented \textsc{TypeShield} the first open source binary 
-hardening tool that can protect the forward and backward edges 
-inside a stripped (no RTTI information) program binary. In our evaluation we evaluated
+hardening tool that can protect the forward-edges and backward-edges 
+inside a stripped (no RTTI information) program binary without the need to make any assumptions
+on the presence of an auxiliary technique for protecting backward edges (i.e., shadow stacks). 
+In our evaluation we evaluated
 \textsc{TypeShield} with real open source programs and shown that the 
 tool is practical and effective when protecting system binaries.
 Further our evaluation results indicate that \textsc{TypeShield} can reduce the forward-edge legal 
