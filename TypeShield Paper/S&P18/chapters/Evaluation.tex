@@ -465,6 +465,44 @@ further a total reduction of more than 87\% (141 vs. 1097) w.r.t. to total numbe
     \label{fig:awesome_image}
 \end{figure}
 
+\begin{figure}[H]
+  \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        enlargelimits=0.1,
+        legend style={at={(0.7,0.9)},
+          anchor=north,legend columns=-1},
+        ylabel={\% Runtime Overhead},
+        xlabel={},
+%         symbolic x coords={444.namd,447.dealII,450.soplex,453.povray,471.omnetpp,473.astar,average,geomean},
+        symbolic x coords={namd,xalancbmk,dealII,soplex,povray,omnetpp,astar,average,geomean},
+        xtick=data,
+        width=9.5cm,
+        height=6cm,
+        x tick label style={rotate=30,anchor=east},
+        y label style={at={(0.1,0.5)}},
+        nodes near coords,
+        nodes near coords align={vertical},
+        nodes near coords style={font=\tiny,},
+        every node near coord/.append style={font=\tiny},
+        nodes near coords align={vertical},
+        cycle list={red, green}
+      ]
+      \addplot[lightgray, fill=lightgray] coordinates {
+        (namd,{0.4}) (xalancbmk,4.49) (dealII,0.47)
+        (soplex,5.03) (povray,2.34) (omnetpp, 0.68) (astar,0.90) (average,2.04) (geomean,1.29)
+      };
+      \addplot[black, fill=black] coordinates {
+        (namd,0.0) (xalancbmk,1.78) (dealII,0.94)
+        (soplex,2.07) (povray,1.57) (omnetpp,0.34) (astar,0.30) (average,1.0) (geomean,0.92)
+      };
+      \legend{vanila, \textsc{TypeShield}}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{SPEC CPU2006 benchmark runtime with no instrumentation (shaded gray), and with \textsc{TypeShield} (shaded black).}
+  \label{overhead:spec:cfi}
+\end{figure}
+
 Figure~\ref{fig:awesome_image} depicts the runtime overhead obtained by applying \textsc{TypeShield} (forward-edge policy (parameter count and type mode) and backward-edge policy (fast mode))
 to several SPEC CPU2006 benchmarks. Out of the used programs:
 xalanckbmk, astar, and omnetpp are C++ program while the rest are pure C programs. 

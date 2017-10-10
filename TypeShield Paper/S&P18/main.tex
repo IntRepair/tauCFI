@@ -5,8 +5,28 @@
 % \usepackage{usenix,epsfig,endnotes}
 % \usepackage{flushend}
 \usepackage{tikz}
+\usepackage{pgfplots}
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
             \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
+\usetikzlibrary{arrows,positioning} 
+\tikzset{
+    %Define standard arrow tip
+    >=stealth',
+    %Define style for boxes
+    punkt/.style={
+           rectangle,
+           rounded corners,
+           draw=black, very thick,
+           text width=6.5em,
+           minimum height=2em,
+           text centered},
+    % Define arrow style
+    pil/.style={
+           ->,
+           thick,
+           shorten <=2pt,\textsc{}
+           shorten >=2pt,}
+}
 \usepackage{verbatim}
 \usepackage{amsmath}
 \usepackage[ruled,vlined,linesnumbered,resetcount]{algorithm2e}
@@ -212,6 +232,10 @@
   \pagestyle{fancy}
   \renewcommand\sectionmark[1]{\markboth{##1}{}}%don't move this
 }
+\definecolor{bostonuniversityred}{rgb}{0.8, 0.0, 0.0}
+\definecolor{cadmiumgreen}{rgb}{0.0, 0.42, 0.24}
+\definecolor{lightgray}{rgb}{0.83, 0.83, 0.83}
+
 \begin{document}
 %%used to avoid using --- to replace author names of similar entries
 % \bstctlcite{IEEEexample:BSTcontrol}
