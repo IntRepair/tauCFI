@@ -227,21 +227,8 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 \subsection{Mitigation of Forward-Edge Based Attacks}
 % \textbf{Checking Indirect Forward-Edge Calls in Practice.}
 \label{C++ Indirect Calls in Practice}
-To the best of our knowledge, only the IFCC/VTV~\cite{vtv:tice} compiler based tools (up to 8.7\% performance overhead) are deployed in practice
-and can be used to check legitimate from illegitimate indirect forward-edge calls during runtime. Virtual pointers are checked based on the class hierarchy. 
-Furthermore, ShrinkWrap~\cite{haller:shrinkwrap} (to the best of our knowledge not deployed in practice) is a tool which further reduces the legitimate 
-virtual table ranges for a given indirect callsite through precise analysis of the program class hierarchy and virtual table hierarchy. Evaluation results
-show similar performance overhead but more precision with respect to legitimate virtual table entries per callsite. We noticed by analyzing the previous 
-research results that the overhead incurred by these security checks can be very high due to the fact that for each callsite many range checks have to be
-performed during runtime. Therefore, in our opinion, despite its security benefit these types of checks cannot be applied to high performance applications.
-
-A number of other highly promising tools (albeit also not deployed in practice) can overcome some of the drawbacks of the previously described tools. 
-Bounov \textit{et al.}~\cite{bounov:interleaving} presented a tool ($\approx$1\% runtime overhead)
-for indirect forward-edge callsite checking based on virtual table layout interleaving. The tool has better performance than VTV and better precision with
-respect to allowed virtual tables per indirect callsite. Its precision (selecting legitimate virtual tables for each callsite) compared to ShrinkWrap is
-lower since it does not consider virtual table inheritance paths. vTrust~\cite{zhang:vtrust} (average runtime overhead 2.2\%) enforces two layers of defense
-(virtual function type enforcement and virtual table pointer sanitization) against virtual table corruption, injection and reuse. TypeArmor~\cite{veen:typearmor}
-(around 3\% runtime overhead) enforces a CFI-policy based on runtime checking of caller/callee pairs and function parameter count matching. It is important to note 
+\textbf{Binary based tools.} TypeArmor~\cite{veen:typearmor}
+($\approx$3\% runtime overhead) enforces a CFI-policy based on runtime checking of caller/callee pairs and function parameter count matching. It is important to note 
 that there are no C++ language semantics which can be used to enforce type and parameter count matching for indirect caller/callee pairs, this could be addressed
 with specifically intended language constructs in the future.
 VCI~\cite{vci:asiaccs} and Marx~\cite{marx}, are both based on an approximated program class hierarchy  
@@ -249,10 +236,28 @@ VCI~\cite{vci:asiaccs} and Marx~\cite{marx}, are both based on an approximated p
 from the binary inferable class inheritance path. Finally, both tools use up to six heuristics and simplifying assumptions in order 
 to make the problem of program class hierarchy reconstruction tractable.
 
+\textbf{Source code based tools.} 
+To the best of our knowledge, only the Clang-CFI \cite{clang:cfi} and IFCC/VTV~\cite{vtv:tice} (up to 8.7\% performance overhead) compiler based tools are deployed in practice
+and can be used to check legitimate from illegitimate indirect forward-edge calls during runtime by checking if virtual object pointers comply with 
+the program class hierarchy inheritance relationships.
+Furthermore, ShrinkWrap~\cite{haller:shrinkwrap} is a GCC compiler based tool which further reduces the legitimate 
+virtual table ranges for a given indirect callsite (\textit{i.e.,} object dispatch) through precise analysis of the program class hierarchy and virtual table hierarchy. Evaluation results
+show similar performance overhead results as the previous mentioned tools but with more precision with respect to legitimate virtual table entries (calltargets) per callsite. 
+We noticed by analyzing the previous research results that the overhead incurred by these security checks can be very high due to the fact that for each callsite many range checks have to be
+performed during runtime. Therefore, in our opinion, despite its security benefit these types of checks are most likely not 
+applicable to software where performance is key.
+
+Other highly promising source code based tools (albeit also not deployed in practice) which can overcome some of the drawbacks of the previously described tools are as follows. 
+Bounov \textit{et al.}~\cite{bounov:interleaving} presented a tool ($\approx$1\% runtime overhead)
+for indirect forward-edge callsite checking based on virtual table layout interleaving. The tool has better performance than VTV and better precision with
+respect to allowed virtual tables per indirect callsite. Its precision (selecting legitimate virtual tables for each callsite) compared to ShrinkWrap is
+lower since it does not consider virtual table inheritance paths. vTrust~\cite{zhang:vtrust} (average runtime overhead 2.2\%) enforces two layers of defense
+(virtual function type enforcement and virtual table pointer sanitization) against virtual table corruption, injection and reuse. 
+
 \subsection{Mitigation of Backward-Edge Based Attacks}
 \label{Mitigation of Return Edge Attacks}
-Accordingly to the currently most comprehensive survey~\cite{cfi_survey_payer} on tools which asses backward edge protection tools there are tools which
-offer low, medium, and high level of protection of the backward edge. Further, this survey classifies the backward edge protection tools 
+Accordingly to the currently most comprehensive survey~\cite{cfi_survey_payer} which assesses backward edge protection tools there are tools which
+offer low, medium, and high level of protection w.r.t. backward-edges. Further, this survey classifies the backward-edge protection techniques 
 in binary based, source code based, and other types (\textit{i.e.,} with HW support, etc.) as follows.
 
 \textbf{Binary based tools.} Original CFI implementation from Abadi et. al.~\cite{abadi:cfi2}, MoCFI~\cite{mocfi}, 
