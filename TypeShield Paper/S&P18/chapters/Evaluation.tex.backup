@@ -488,18 +488,18 @@ further a total reduction of more than 87\% (141 vs. 1097) w.r.t. to total numbe
         nodes near coords align={vertical},
         cycle list={red, green}
       ]
-      \addplot[bostonuniversityred, fill=bostonuniversityred] coordinates {
+      \addplot[lightgray, fill=lightgray] coordinates {
         (namd,{0.4}) (xalancbmk,4.49) (dealII,0.47)
         (soplex,5.03) (povray,2.34) (omnetpp, 0.68) (astar,0.90) (average,2.04) (geomean,1.29)
       };
-      \addplot[cadmiumgreen, fill=cadmiumgreen] coordinates {
+      \addplot[black, fill=black] coordinates {
         (namd,0.0) (xalancbmk,1.78) (dealII,0.94)
         (soplex,2.07) (povray,1.57) (omnetpp,0.34) (astar,0.30) (average,1.0) (geomean,0.92)
       };
-      \legend{Clang-CFI, \textsc{CastSan}}
+      \legend{vanila, \textsc{TypeShield}}
     \end{axis}
   \end{tikzpicture}
-  \caption{SPEC CPU2006 benchmark runtime when using Clang-CFI (shaded red), and \textsc{CastSan} (shaded green).}
+  \caption{SPEC CPU2006 benchmark runtime with no instrumentation (shaded gray), and with \textsc{TypeShield} (shaded black).}
   \label{overhead:spec:cfi}
 \end{figure}
 

@@ -296,7 +296,7 @@ If applied to a function, this calculates the variables that need to be alive at
 \label{alg:liveness}
 \end{algorithm}
 % \vspace{-.5cm}
-Algorithm~\ref{alg:liveness} is based on the liveness analysis algorithm presented in~\cite{khedker2009data}, which basically is a depth-first traversal of basic blocks. 
+Algorithm~\ref{alg:liveness} is based on the liveness analysis algorithm presented in~\cite{khedker2009data}, which consists of a depth-first traversal of basic blocks. 
 For customization, we rely on the implementation of several functions which we will present next. $\mathcal{S}^\mathcal{L}$ is the set of possible register states which depends on the specific 
 implementations of the following operations.
 
@@ -649,7 +649,7 @@ If applied to a callsite, this calculates the values that are provided by this c
 \end{algorithm}
 % \vspace{-.5cm}
 Algorithm~\ref{alg:reaching} is based on the reaching definition analysis presented in~\cite{khedker2009data}, 
-which basically is a reverse depth-first traversal of basic blocks of a program. For customization, we rely on 
+which can be regarded as a reverse depth-first traversal of basic blocks of a program. For customization, we rely on 
 the implementation of several functions. $\mathcal{S}^\mathcal{R}$ is the set of possible register states 
 which depends on the specific reaching definition implementation of the following operations.
 
@@ -662,7 +662,7 @@ $\bullet$ $\texttt{analyze\_instr} : \texttt{INSTR} \mapsto \mathcal{S}^\mathcal
 $\bullet$ $\texttt{pred} : \texttt{INSTR}^* \mapsto \mathcal{P}(\texttt{INSTR}^*)$, (predecessor of a basic block) calculates the predecessors of the given block.
 
 In our specific case, the function \texttt{analyze\_instr} does not need to handle normal predecessors, as DynInst will resolve those for us. 
-However there are several instructions that have to be handled as depicted in the following situations. 
+However, there are several instructions that have to be handled as depicted in the following situations. 
 (1) If the current instruction is an indirect call or a direct call and the analysis algorithm is set not to follow calls, then return a state where all registers are considered trashed. 
 (2) If the instruction is a direct call and the analysis algorithm is set to follow calls, then we start an analysis of the target function. 
 (3) In all other cases we simply return the decoded state. This leaves us with the two merge functions and the undefined reaching definitions state $\mathcal{S}^\mathcal{R}$. 
