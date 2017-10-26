@@ -48,14 +48,14 @@ To address such object dispatch corruptions
 and in general any type of indirect program control flow transfer violation, Control-Flow Integrity (CFI)~\cite{abadi:cfi2, abadi:cfi} 
 % (up to 35\% runtime overhead)
 was originally developed to secure indirect control flow transfers by adding runtime checks before forward-edges and backward-edges. 
-While CFI-based techniques which rely on the construction of a precise CFG are effective \cite{cfi_survey_payer} and in general if CFGs are carefully constructed
+While CFI-based techniques which rely on the construction of a precise CFG are effective \cite{cfi:survey} and in general if CFGs are carefully constructed
 sound \cite{cfg:sound} these techniques can not be used if a CRA does not violate the previously constructed CFG-based policy.
 For example, the COOP family of CRAs bypass most deployed CFI-based enforcement policies, since 
 these attacks do not exploit indirect backward-edges (\textit{i.e.,} function returns), but rather statically hard to determine CFG
 forward-edge (\textit{i.e.,} object dispatches, indirect control flow transfers) imprecision which in general cannot be statically (before runtime) precisely determined 
 as alias analysis in program binaries is undecidable~\cite{alias:undecidable} and certain program CFG edges are input dependent.
 
-Source code based tools which can protect only forward-edges such as: SafeDispatch~\cite{safedispatch:jang}, ShrinkWrap~\cite{haller:shrinkwrap}, VTI~\cite{bounov:interleaving}, 
+Source code based tools which can protect against forward-edge violations such as: SafeDispatch~\cite{safedispatch:jang}, ShrinkWrap~\cite{haller:shrinkwrap}, VTI~\cite{bounov:interleaving}, 
 and IFCC/VTV~\cite{vtv:tice} rely on source-code availability which limits their applicability (\textit{i.e.,} proprietary libraries can not be recompiled).
 In contrast, binary-based forward-edge protection tools, binCFI~\cite{ccfir:zhang, zhang:usenix}, vfGuard~\cite{vfuard:aravind}, 
 vTint~\cite{vtint:zhang}, VCI~\cite{vci:asiaccs}, Marx~\cite{marx} and TypeArmor~\cite{veen:typearmor}, typically protect only the forward-edges trough a CFI-based 
@@ -77,9 +77,9 @@ six heuristics and several simplification assumptions, while TypeArmor enforces 
 provided and consumed by caller callee pairs without imposing any constraint on their types. 
 Thus, these forward-edge protection tools are in general too permissive.
 As there is clear evidence that CFI-based forward-edge protection techniques without a backward-edge protection are broken \cite{carlini:bending}, these tools further assume
-that a shadow stack protection policy is in place. Recently shadow stack based techniques (backward-edge protection, in average 10\% runtime overhead \cite{shadowstack:overhead})
+that a shadow stack protection policy is in place. Unfortunately, recently shadow stack based techniques (backward-edge protection, in average 10\% runtime overhead \cite{shadowstack:overhead})
 were bypassed \cite{safestack:bypass, safestack:bypassing}. Further, this bypass demonstrated that at least 4 independently usable attack vectors exist for thwarting shadow stack techniques 
-(binary and source code based) making their usage questionable.
+(binary and source code based) targeting their entropy based hiding principle and making their usage questionable.
 
 For these reasons we seek in this paper for a binary based fined-grained forward-edge and backward-edge protection technique which does not rely on a
 shadow stack based technique to offer CFI-complete (forward and backward edge protection) protection of indirect control flow transfers.

@@ -37,7 +37,6 @@
 % (2) runtime verification: as differentiating during runtime legitimate from illegitimate indirect caller/callee pairs requires parameter type and parameter number, we 
 % insert before each indirect callsite a check used for determining during runtime if the caller matches with the callee based on certain CFI policies.
 
-
 \newsavebox{\firstlisting}
 \begin{lrbox}{\firstlisting}
 \begin{minipage}[c]{\linewidth}
@@ -142,35 +141,81 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 % the loop gadget indicated in Figure~\ref{Code example used to illustrate how a COOP loop gadget works} can be unconstrained used to call 
 % any possible entry in the whole program. Thus, making any program address a gadget part.
 % 
-% \subsubsection{Security Implications of Indirect Calls}
-% % \textbf{Security Implications of Forbidden Indirect Calls.}
-% \label{Security Implications of Forbidden Forward Indirect Calls}
-% The C++ language standard (N3690~\cite{iso:iecN3690}) does not specify what happens when calling different virtual table entries from an indirect callsite. 
-% The standard says that we have a virtual function-related undefined behavior when: (citation) \textit{a virtual function call uses an explicit class member access and 
-% the object expression refers to the complete object of x or one of that object's base class sub-objects but not x or one of its base class sub-objects}. As 
-% undefined behavior is not a clearly defined concept, we argue that in order to be able to deal with undefined or unspecified behavior related to 
-% virtual function calls one needs to know how these language-dependent concepts are implemented inside the used compilers.
-% 
-% Forbidden forward-edge indirect calls are the result of a vPointer corruption. A vPointer corruption is not a vulnerability, but rather a capability which
-% can be the result of a spatial or temporal memory corruption triggered by: 
-% (1) bad-casting~\cite{byoungyoung:typecasting} of C++ objects, 
-% (2) buffer overflow in a buffer adjacent to a C++ object or 
-% (3) a use-after-free condition~\cite{schuster:coop}.
-% A vPointer corruption can be exploited in several ways. A manipulated vPointer can be exploited by pointing it in any existing or added program virtual 
-% table entry or into a fake virtual table which was added by an attacker. For example in case a vPointer
-% was corrupted than the attacker could highjack the control flow of the program and start a COOP attack~\cite{schuster:coop}.
-% 
-% vPointer corruptions are a real security threat which can be exploited if there is a memory corruption (\textit{e.g.,} buffer overflow) which is adjacent 
-% to the C++ object or a use-after-free condition. As a consequence, each corruption which can reach an object (\textit{e.g.,} bad object casts) is a potential
-% exploit vector for a vPointer corruption. Interestingly to notice in this context is that through:
-% (1) memory layout analysis (through highly configurable compiler tool chains) of source code based locations which are highly prone to memory corruptions such 
-% as declarations and uses of buffers, integers or pointer deallocations one can obtain the internal machine code layout representation;
-% (2) analysis of a code corruption which is adjacent (based on (1)) to a C++ object based on application class hierarchy, the virtual table hierarchy and each
-% location in source code where an object is declared and used (\textit{e.g.,} modern compiler tool chains can spill out this information for free), one can 
-% derive an analysis which can determine---up to a certain extent---if a memory corruption can influence (\textit{e.g.,} is adjacent to) a C++ object.
-% 
-% Finally, tools based on these two concepts (\textit{i.e.,} (1) and (2)) can be used by attackers, \textit{e.g.,} to find new vulnerabilities, and by defenders
-% to harden the source code only at the places which are most exposed to such vulnerabilities (\textit{i.e.,} targeted security hardening).
+\subsection{Type-Inference on Executables}
+\label{Type-Inference on Executables}
+Recovering variable types from executable programs
+is considered difficult in general, for two main reasons.
+First, the quality of the disassemble can vary considerably from the used underlying binary analysis
+framework to another and w.r.t. the compiler flags which were used to compile the binary.
+Note that a production binary can be more or less stripped (\textit{i.e.,} RTTI or other debugging symbols may or may not be available, etc.)
+from useful information which can be used during a type recovering analysis.
+\textsc{TypeShield} is based on DynInst and the quality of the executable disassembly is sufficient for our needs.
+For a more comprehensive review on the capabilities of DynInst and other tools we
+advice the reader to have a look at~\cite{andriesse:indepth}.
+Second, if the type inference analysis requires alias analysis then it is well known that 
+alias analysis in binaries is undecidable \cite{alias:undecidable} in theory and intractable 
+in practice~\cite{alan:mycroft}.
+Finally, there are several highly promising tools such as: Rewards~\cite{lin:rewards}, BAP~\cite{bap:brumley}, 
+SmartDec~\cite{fokin:smartdec}, and Divine~\cite{divine:balakrishnan}.
+These tools try with more or less success to recover (infer)
+type information from binary programs with different goals.
+Typical goals are: 
+(i) full program reconstruction (\textit{i.e.,} binary to code conversion, reversing, etc.), 
+(ii) checking for buffer overflows, and
+(iii) integer overflows and other types of memory corruptions.
+For a more exhaustive review of type inference recovering tools out of binaries we advice the reader
+to consult the following review~\cite{caballero:inference}.
+% Interesting to notice is that the code from only a few of these tools is actually available.
+
+% SmartDec seemed at first promising due to its simple type lattice that we wanted to leverage for our classification schema. 
+% Its integration into our DynInst based environment was not successful mostly for several reasons, as it was deemed to 
+% time consuming to extract the whole machinery and implement an interface to the DynInst disassembler.
+% Therefore, we finally implemented our own version of function parameter type analysis and focused only
+% on the wideness of the types, resulting in a simpler lattice than we initially intended.
+
+\subsection{Security Implications of Indirect Transfers}
+% \textbf{Security Implications of Forbidden Indirect Calls.}
+\label{Security Implications of Forbidden Forward Indirect Calls}
+\textbf{Indirect Forward-Edge Transfers.} The C++ language standard (N3690~\cite{iso:iecN3690}) does not specify what happens when calling different virtual table entries from an indirect callsite. 
+The standard says that we have a virtual function-related undefined behavior when: (citation) \textit{a virtual function call uses an explicit class member access and 
+the object expression refers to the complete object of x or one of that object's base class sub-objects but not x or one of its base class sub-objects}. As 
+undefined behavior is not a clearly defined concept, we argue that in order to be able to deal with undefined or unspecified behavior related to 
+virtual function calls one needs to know how these language-dependent concepts are implemented inside the used compilers.
+
+Forbidden forward-edge indirect calls are the result of a vPointer corruption. A vPointer corruption is not a vulnerability, but rather a capability which
+can be the result of a spatial or temporal memory corruption triggered by: 
+(1) bad-casting~\cite{byoungyoung:typecasting} of C++ objects, 
+(2) buffer overflow in a buffer adjacent to a C++ object or 
+(3) a use-after-free condition~\cite{schuster:coop}.
+A vPointer corruption can be exploited in several ways. A manipulated vPointer can be exploited by pointing it in any existing or added program virtual 
+table entry or into a fake virtual table which was added by an attacker. For example in case a vPointer
+was corrupted than the attacker could highjack the control flow of the program and start a COOP attack~\cite{schuster:coop}.
+
+vPointer corruptions are a real security threat which can be exploited if there is a memory corruption (\textit{e.g.,} buffer overflow) which is adjacent 
+to the C++ object or a use-after-free condition. As a consequence, each corruption which can reach an object (\textit{e.g.,} bad object casts) is a potential
+exploit vector for a vPointer corruption. Interestingly to notice in this context is that through:
+(1) memory layout analysis (through highly configurable compiler tool chains) of source code based locations which are highly prone to memory corruptions such 
+as declarations and uses of buffers, integers or pointer deallocations one can obtain the internal machine code layout representation;
+(2) analysis of a code corruption which is adjacent (based on (1)) to a C++ object based on application class hierarchy, the virtual table hierarchy and each
+location in source code where an object is declared and used (\textit{e.g.,} modern compiler tool chains can spill out this information for free), one can 
+derive an analysis which can determine---up to a certain extent---if a memory corruption can influence (\textit{e.g.,} is adjacent to) a C++ object.
+
+Finally, tools based on these two concepts (\textit{i.e.,} (1) and (2)) can be used by attackers, \textit{e.g.,} to find new vulnerabilities, and by defenders
+to harden the source code only at the places which are most exposed to such vulnerabilities (\textit{i.e.,} targeted security hardening).
+
+\textbf{Indirect Backward-Edge Transfers.} 
+Program backward edges (\textit{i.e.,} \texttt{jump}, \texttt{ret}, etc.) can be corrupted due to their provided indirection to assemble gadget chains in the following scenarios.
+(1) No CFI protection technique was applied. In this case the binary is not protected by any CFI policy, obviously, the attacker can hijack backward edges to \textit{jump} virtually 
+anywhere in the binary in order to chain gadgets together.
+(2) Coarse-grained CFI protected scenarios. In this scenario if the attacker is aware of what addresses are protected and which are not trough control flow bending the attacker may deviate
+the application flow to legitimate locations in order to link gadgets together.
+(3) Fine-grained CFI protection scenarios. In this case the legitimate target set is more strict than in (2) but still in this case under the assumption that the attacker knows
+which address are protected and which are not he my still be able trough control flow bending to call legitimate targets which are useful for assembling a gadget chain.
+(4) Fully precise CFI protected scenarios (\textit{i.e.,} SafeStack \cite{volodymyr:cpi} based). In this scenario the legitimate target set is more strict than in (3). Even trough that we have a 1 to 1 mapping 
+between calltargets and legitimate return sites the attacker could theoretically use this 1 to 1 mapping to assemble gadget chains if at the legitimate calltarget return site their is an useful gadget. 
+See \cite{carlini:bending} for more details about how control flow can be bent to legitimate addresses and how this is still dangerous in 
+case that at the bent address location is exists an useful gadget or even in fully CFI-precise scenarios. 
+
 % 
 % \subsection{Real COOP Attack Example}
 % \label{Real COOP Attack Example}
@@ -224,54 +269,4 @@ NS_IMETHODIMP nsMultiplexInputStream::Close(){
 % allowed to call a trivial task for source code applications, but a hard task when one wants to apply similar 
 % security policies (\textit{e.g.,} which rely on parameter types of virtual table entries) to binary executables.
 
-\subsection{Mitigation of Forward-Edge Based Attacks}
-% \textbf{Checking Indirect Forward-Edge Calls in Practice.}
-\label{C++ Indirect Calls in Practice}
-\textbf{Binary based tools.} TypeArmor~\cite{veen:typearmor}
-(around 3\% runtime overhead) enforces a CFI-policy based on runtime checking of caller/callee pairs and function parameter count matching. It is important to note 
-that there are no C++ language semantics which can be used to enforce type and parameter count matching for indirect caller/callee pairs, this could be addressed
-with specifically intended language constructs in the future.
-VCI~\cite{vci:asiaccs} and Marx~\cite{marx}, are both based on an approximated program class hierarchy  
-(1) no root class node determined and (2) the edges between the classes are not oriented thus both tools enforce for each callsite the longest
-from the binary inferable class inheritance path. Finally, both tools use up to six heuristics and simplifying assumptions in order 
-to make the problem of program class hierarchy reconstruction tractable.
-
-\textbf{Source code based tools.} 
-To the best of our knowledge, only the Clang-CFI \cite{clang:cfi} and IFCC/VTV~\cite{vtv:tice} (up to 8.7\% performance overhead) compiler based tools are deployed in practice
-and can be used to check legitimate from illegitimate indirect forward-edge calls during runtime. Virtual pointers are checked based on the class hierarchy. 
-Furthermore, ShrinkWrap~\cite{haller:shrinkwrap} (to the best of our knowledge not deployed in practice) is a tool which further reduces the legitimate 
-virtual table ranges for a given indirect callsite through precise analysis of the program class hierarchy and virtual table hierarchy. Evaluation results
-show similar performance overhead but more precision with respect to legitimate virtual table entries per callsite. We noticed by analyzing the previous 
-research results that the overhead incurred by these security checks can be very high due to the fact that for each callsite many range checks have to be
-performed during runtime. Therefore, in our opinion, despite its security benefit these types of checks cannot be applied to high performance applications.
-
-Other highly promising tools (albeit also not deployed in practice) can overcome some of the drawbacks of the previously described tools. 
-Bounov \textit{et al.}~\cite{bounov:interleaving} presented a tool ($\approx$1\% runtime overhead)
-for indirect forward-edge callsite checking based on virtual table layout interleaving. The tool has better performance than VTV and better precision with
-respect to allowed virtual tables per indirect callsite. Its precision (selecting legitimate virtual tables for each callsite) compared to ShrinkWrap is
-lower since it does not consider virtual table inheritance paths. vTrust~\cite{zhang:vtrust} (average runtime overhead 2.2\%) enforces two layers of defense
-(virtual function type enforcement and virtual table pointer sanitization) against virtual table corruption, injection and reuse. 
-
-\subsection{Mitigation of Backward-Edge Based Attacks}
-\label{Mitigation of Return Edge Attacks}
-Accordingly to the currently most comprehensive survey~\cite{cfi_survey_payer} on tools which asses backward edge protection tools there are tools which
-offer low, medium, and high level of protection of the backward edge. Further, this survey classifies the backward edge protection tools 
-in binary based, source code based, and other types (\textit{i.e.,} with HW support, etc.) as follows.
-
-\textbf{Binary based tools.} Original CFI implementation from Abadi et. al.~\cite{abadi:cfi2}, MoCFI~\cite{mocfi}, 
-kBouncer~\cite{kbouncer}, 
-CCFIR~\cite{ccfir:zhang}, bin-CFI~\cite{mingwei:sekar}, O-CFI~\cite{mohan:opaque}, 
-PathArmor~\cite{veen:cfi}, 
-LockDown~\cite{payer:dimva} mostly suffer from imprecision (high number of reused labels), 
-have low runtime efficiency, do not support shared libraries at all.
-
-\textbf{Source code based tools.} SafeStack~\cite{safestack}, Hypersafe~\cite{hypersafe}, CF-Locking~\cite{cflocking}, MIP~\cite{mip}, 
-CF-Restrictor~\cite{cfrestrictor}, KCoFi~\cite{kcocfi}, RockJIT~\cite{rockjit:niu}, CCFI~\cite{ccfi:jose}, 
-Kernel CFI~\cite{kernelcfi}, MCFI~\cite{mcfi:niu}, piCFI~\cite{perinput:niu} relatively high precision
-w.r.t. enforced address return set, and all do not support shared libraries (except MCFI), have high coverage (almost all backward edges are protected).
-
-\textbf{Other types of tools.} ROPecker~\cite{ropecker}, HW-asst. CFI~\cite{davi:hardware}, 
-CFIGuard~\cite{cfiguard:yuan} are mostly relying on HW features which were not specifically built for protecting backward edges and 
-for this reason the tools are not runtime effective and their precision is rather low and mostly not effective against state of the art code
-reuse attacks.
 

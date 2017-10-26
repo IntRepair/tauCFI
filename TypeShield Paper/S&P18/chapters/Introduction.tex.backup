@@ -9,9 +9,9 @@ A key OOP concept is polymorphism. This concept is based on C++ virtual function
 to overwrite a virtual function of the base-class with their own implementations. In order to implement virtual functions, 
 the compiler needs to generate a virtual table meta-data structures for all virtual functions and provide to each 
 instance (object) of such a class a (virtual) pointer (its value is computed during runtime) to the aforementioned table.
-While this approach represents a main source of program indirection (\textit{i.e.,} forward-edges), 
-the basic compiler implementation provides unfortunately no security assurances 
-(\textit{i.e.,} we assume Clang-CFI~\cite{clang:cfi} is not in used). 
+While this approach represents a main source for exploitable program indirection (\textit{i.e.,} forward-edges) 
+along function returns (\textit{i.e.,} backward-edges) the C/C++ language provides no intrinsic security guarantees 
+(\textit{i.e.,} we consider Clang-CFI~\cite{clang:cfi} and Clang's SafeStack \cite{safestack} optional). 
 % Data about highly damaging arbitrary code executions in major applications collected by U.S. NIST 
 % (
 % see Figure~\ref{ace:nvd:statistics} description and
@@ -30,12 +30,13 @@ the basic compiler implementation provides unfortunately no security assurances
 % \vspace{-.7cm}
 % \end{figure}
 
-Our work is primarily motivated by the presence of at least one exploitable
-memory corruption (\textit{e.g.,} buffer overflow, etc.), which can enable the execution of sophisticated Code-Reuse Attacks 
-(CRAs) which can violate forward-edges of the program's CFG such as the advanced COOP attack~\cite{schuster:coop} and its 
+Our work is primarily motivated by the absence of source code and by the presence of at least one exploitable
+memory corruption (\textit{e.g.,} buffer overflow, etc.), which can be used to enable the execution of sophisticated Code-Reuse Attacks 
+(CRAs) that can violate CFG forward-edges 
+of the program's CFG such as the advanced COOP attack~\cite{schuster:coop} and its 
 extensions~\cite{crane:readactor++, subversive-c:lettner, ctf:coop, loop:oriented} and/or the backward-edge such as Control Jujutsu~\cite{jujutsu}. 
-A potential ingredient for violating forward-edge control flow transfers is based on corrupting a virtual object pointer in order to call gadgets 
-by using a list of fake objects.
+A potential ingredient for violating forward-edge control flow transfers is based on corrupting a virtual object pointer 
+while backward-edges can be corrupted by loading fake return addresses on the program stack in order to call gadgets consecutively.
 To address such object dispatch corruptions
 % \footnote{Number (\#, left side of Figure~\ref{ace:nvd:statistics}) and percentage (\%, right side of Figure~\ref{ace:nvd:statistics}) 
 % of arbitrary code executions (ACE) reports related (all colors expect black) to virtual pointer or virtual table (vptr/vtbl) corruption 
@@ -48,7 +49,7 @@ and in general any type of indirect program control flow transfer violation, Con
 % (up to 35\% runtime overhead)
 was originally developed to secure indirect control flow transfers by adding runtime checks before forward-edges and backward-edges. 
 While CFI-based techniques which rely on the construction of a precise CFG are effective \cite{cfi_survey_payer} and in general if CFGs are carefully constructed
-sound \cite{cfg:sound} these techniques can not be used if an CRA does not violate the previously constructed CFG-based policy.
+sound \cite{cfg:sound} these techniques can not be used if a CRA does not violate the previously constructed CFG-based policy.
 For example, the COOP family of CRAs bypass most deployed CFI-based enforcement policies, since 
 these attacks do not exploit indirect backward-edges (\textit{i.e.,} function returns), but rather statically hard to determine CFG
 forward-edge (\textit{i.e.,} object dispatches, indirect control flow transfers) imprecision which in general cannot be statically (before runtime) precisely determined 
@@ -79,7 +80,8 @@ As there is clear evidence that CFI-based forward-edge protection techniques wit
 that a shadow stack protection policy is in place. Recently shadow stack based techniques (backward-edge protection, in average 10\% runtime overhead \cite{shadowstack:overhead})
 were bypassed \cite{safestack:bypass, safestack:bypassing}. Further, this bypass demonstrated that at least 4 independently usable attack vectors exist for thwarting shadow stack techniques 
 (binary and source code based) making their usage questionable.
-For this reason we seek in this paper for a binary based fined-grained forward-edge and backward-edge protection technique which does not rely on a
+
+For these reasons we seek in this paper for a binary based fined-grained forward-edge and backward-edge protection technique which does not rely on a
 shadow stack based technique to offer CFI-complete (forward and backward edge protection) protection of indirect control flow transfers.
 
 In this paper, we present \textsc{TypeShield}, a fine-grained CFI-complete runtime 
@@ -282,17 +284,17 @@ In summary, we make the following contributions:
 [leftmargin=.35cm]
 
  \item 
- \textbf{Novel forward and backward edge protection technique.} 
+%  \textbf{Novel forward and backward edge protection technique.} 
  We designed a novel fine-grained CFI technique for protecting forward-edges and backward-edges 
  without making any assumptions on the presence of a shadow stack based technique.
  
  \item 
- \textbf{Usable Open Source Prototype.} 
+%  \textbf{Usable Open Source Prototype.} 
  We implemented, \textsc{TypeShield}, a binary instrumentation prototype which enforces the a fined grained forward-edge and backward-edge protecting technique
  for stripped program binaries. \textsc{TypeShield} can serve as platform for developing other binary based protection mechanisms.
  
  \item 
- \textbf{Extensive Experimental Results.}
+%  \textbf{Extensive Experimental Results.}
  We conducted a thorough set of evaluative experiments in which we show that \textsc{TypeShield} is more precise and effective than 
  other state-of-the-art tools. Further, we show that our tool has a higher calltarget set per callsite reduction, thus 
  further reducing the attack surface compared to state-of-the-art tools.
