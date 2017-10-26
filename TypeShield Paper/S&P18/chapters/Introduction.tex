@@ -184,7 +184,7 @@ thereby providing a more strict callsite per calltarget compared to other state-
 % set for each caller than other state-of-the-art approaches like, for instance, TypeArmor.
 
 % \textbf{\textit{Analysis Details.}}
-\textsc{TypeShield}'s analysis is based on a use-def callees analysis 
+\textsc{TypeShield}'s analysis is based on an use-def callees analysis 
 to derive the function prototypes, and a liveness analysis at indirect callsites to approximate callsite signatures. 
 This efficiently leads to a more precise control flow graph (CFG) of the binary program in question, 
 which can be used also by other systems in order to gain a more precise CFG on which to 
@@ -215,7 +215,7 @@ Our backward-edge policy represents a fine-grained Safe Stack~\cite{volodymyr:cp
 This attack shown that in general the protection offered by shadow stacks is questionable (at least four attack vectors) since it is relatively 
 easy for a motivated attacker to disclose the shadow stack and bypass it.
 
-We implemented \textsc{TypeShield} using DynInst~\cite{bernat:dyninst}, which is
+We implemented \textsc{TypeShield} on top of DynInst~\cite{bernat:dyninst}, which is
 a binary rewriting framework that allows program binary instrumentation during loading or runtime.
 % and can be used e.g.,:
 % (1) performance measurements,
