@@ -60,6 +60,7 @@ def main(argv):
 		print "\t" + pass_name
 	
 	for pass_name in pass_order:
+		print "Running pass", pass_name, "..."
 		runtime_pass = (_available_passes[pass_name])(config, arguments)
 		runtime_pass.run_on_targets(test_targets)
 

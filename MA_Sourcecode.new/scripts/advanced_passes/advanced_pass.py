@@ -13,7 +13,8 @@ class AdvancedPass(Pass):
         raise "Not Implemented Yet"
 
     def _run_on_target_parse(self, target):
-        padyn = parse_verify(target.prefix, target.binary_name)
+        print "target", target.prefix, target.binary_name
+	padyn = parse_verify(target.prefix, target.binary_name)
         clang = parse_ground_truth(target.prefix, target.binary_name)
         self._run_on_target(target, padyn, clang)
 

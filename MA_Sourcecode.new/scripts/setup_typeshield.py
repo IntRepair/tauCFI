@@ -59,3 +59,4 @@ for build_target_path in build_target_paths:
 	with open(makefile_include_path, "w") as makefile_include:
 		makefile_include.write(build_makefile_header(config))
 
+os.mkdir(os.path.join(project_root, config["type_shield.binary.dir"]

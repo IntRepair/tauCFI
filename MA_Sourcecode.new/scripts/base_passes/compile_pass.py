@@ -15,7 +15,7 @@ class CompilePass(Pass):
         command_string += "CC=\"" + os.path.join(llvm_dir, "clang") + "\" "
         command_string += "CXX=\"" + os.path.join(llvm_dir, "clang++") + "\" "
         command_string += "CFLAGS=\"" + target.cc_options + "\" "
-        command_string += "CXXFLAGS=\"" + target.cc_options + "\" "
+        command_string += "CXXFLAGS=\"" + target.cxx_options + "\" "
         command_string += "LDFLAGS=\"" + target.ld_options + "\" "
 
         return command_string
@@ -29,7 +29,7 @@ class CompilePass(Pass):
 
     def build_standard_make(self, target):
         command_string = "cd " + target.sourcedir + "; "
-        #command_string += self.build_environment(target)
+        command_string += self.build_environment(target)
         command_string += "make 2> " + os.path.join(target.prefix, "ground_truth." + target.binary_name)
         return command_string
 

@@ -30,15 +30,11 @@ class TestSourcesConfigReader(ContentHandler):
 
 	def startElement(self, name, attrs):
 		self._stack += [name]
-		
+
 		if name == "program":
 			program = {}
-			program["name"] = attrs["name"]
-			program["src"] = attrs["src"]
-			program["method"] = attrs["method"]
-			program["binary_path"] = attrs["binary_path"]
-			program["sourcedir_binary"] = attrs["sourcedir_binary"]
-			program["archive"] = attrs["archive"]
+	                for attrs_key in attrs.keys():
+                        	program[attrs_key] = attrs[attrs_key]
 			self.config["programs"] += [program]
 
 	def endElement(self, name):

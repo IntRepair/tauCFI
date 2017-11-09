@@ -156,13 +156,14 @@ def _update_information(information, module_entry, storage, index):
         inf_double_index += add_double_index
         # We have new additions to double index, so check if we need to remove stuff from information
         if add_double_index != []:
-            inf_remove_index = list(set(inf_index).intersect(set(add_double_index)))
+            inf_remove_index = list(set(inf_index).intersection(set(add_double_index)))
             # We need to remove stuff from information index and add to information double index
             for elem in inf_remove_index:
                 inf_index.remove(elem)
                 inf_double_index += [elem]
             # We need to remove stuff from information store and add to information double store
-            inf_remove = [elem for x in inf_store if entry_identity(x) in inf_remove_index]
+            inf_remove = [x for x in inf_store if entry_identity(x) in inf_remove_index]
+            print inf_remove
             for elem in inf_remove:
                 inf_store.remove(elem)
                 inf_double_store += [elem]
@@ -209,6 +210,31 @@ def _update_information(information, module_entry, storage, index):
 
     return information
 
+#def _update_callsite_information(information, module_entry)
+#    # Get the compiled function data from information
+#    inf_cfn_double_index = utils.get_values_for_subkey(information, "double_vals", "cfn_index")
+#    inf_cfn_index = utils.get_values_for_key(information, "cfn_index")
+#
+#    # Get the compiled function data from module_entry
+#    mod_cfn_double_index = utils.get_values_for_key(module_entry, "cfn_index_double")
+#    mod_cfn_index = utils.get_values_for_key(module_entry, "cfn_index")
+#
+#    storage = "call_site"
+#
+#    # Get the data from information
+#    inf_double_store = utils.get_values_for_subkey(information, "double_vals", storage)
+#    inf_store = utils.get_values_for_key(information, storage)
+#
+#    # Get the call site data
+#    mod_double_store = utils.get_values_for_key(module_entry, storage + "_double")
+#    mod_store = utils.get_values_for_key(module_entry, storage)
+#
+#
+#    # A) make sure the module doubles found at parsing are all within cfn doubles
+#    if mod_double_store != []:
+#        mod_double_index = set([entry_identity(x) for x in mod_double_store])
+#        mod_double_index_inter_cfn = mod_double_index.intersection(set(mod_cfn_index))
+        
 def _try_find_source_string(source, keys):
     # Attempt to match based on the full path
     source_string = source["source"]
@@ -244,6 +270,8 @@ def _compose_information_backwards(history, binary, index):
                 source_data = module_entry[source_string]
                 information = _update_information(information, source_data, "address_taken", "at_index")
                 information = _update_information(information, source_data, "call_target", "ct_index")
+                information = _update_information(information, source_data, "compiled_function", "cfn_index")
+
         sources_cur = sources_next
         sources_next = []
         index -= 2

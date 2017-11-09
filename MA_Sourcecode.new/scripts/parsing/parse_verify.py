@@ -24,6 +24,14 @@ def _analyze_file_line_verify(result, line, index):
                     utils.add_values_to_subkey(result, "double_vals", "adress_taken", entry)
                     utils.add_values_to_subkey(result, "double_vals", "at_index", name_pair)
 
+            if "PLT" not in entry["flags"]:
+                if name_pair not in utils.get_values_for_key(result, "cfn_index"):
+                    utils.add_values_to_key(result, "compiled_function", entry)
+                    utils.add_values_to_key(result, "cfn_index", name_pair)
+                else:
+                    utils.add_values_to_subkey(result, "double_vals", "compiled_functions", entry)
+                    utils.add_values_to_subkey(result, "double_vals", "cfn_index", name_pair)
+
     elif line.count("<CS>") > 0:
         entry = fparser.map_line_to_values_verify(line, index)
 

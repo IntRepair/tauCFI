@@ -1,5 +1,11 @@
 import os
 
+def get_string(config, key):
+	result = ""
+	if key in config.keys():
+		result = config[key]
+	return result
+
 class Target:
     def __init__(self, name, method):
         self.name = name
@@ -21,6 +27,9 @@ class Target:
     def set_cc_options(self, cc_options):
         self.cc_options = cc_options
 
+    def set_cxx_options(self, cxx_options):
+	self.cxx_options = cxx_options
+
     def set_ld_options(self, ld_options):
         self.ld_options = ld_options
 
@@ -37,8 +46,9 @@ def get_targets(config, test_source_config):
 		target.set_binary_path(os.path.join(test_sources_dir, program["binary_path"]))
 		target.set_sourcedir_binary(program["sourcedir_binary"])
 		target.set_prefix(os.path.join(test_dir, program["name"]))
-		target.set_cc_options(config["type_shield.sources.tests.cc_options"])
-		target.set_ld_options(config["type_shield.sources.tests.ld_options"])
+		target.set_cc_options(get_string(config, "type_shield.sources.tests.cc_options") + get_string(program, "cc_options"))
+		target.set_cxx_options(get_string(config, "type_shield.sources.tests.cxx_options") + get_string(program, "cxx_options"))
+		target.set_ld_options(get_string(config, "type_shield.sources.tests.ld_options") + get_string(program, "ld_options"))
 
 		test_targets += [target]
 

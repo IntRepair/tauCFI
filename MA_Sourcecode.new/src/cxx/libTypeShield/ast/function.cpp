@@ -33,7 +33,7 @@ std::string ast::function::get_name_mang() const
 
 std::string ast::function::get_name_demang() const
 {
-    return funcname; 
+    return bp_function->getTypedName();
 }
 
 uint64_t ast::function::get_address() const { return funcaddress; }
