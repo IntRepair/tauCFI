@@ -47,7 +47,7 @@ cmake_flags += ["-DCMAKE_CXX_COMPILER=" + config["type_shield.cxxcompiler"] ]
 cmake_flags += ["-DCMAKE_C_COMPILER=" + config["type_shield.ccompiler"] ]
 
 command_string += build_cmake_command(target=llvm_source_dir, pre=cmake_flags) + "; "
-command_string += build_cmake_command(target=".", pre=["--build"], post=["-- -j4"]) "; "
+command_string += build_cmake_command(target=".", pre=["--build"], post=["-- -j4"]) + "; "
 command_string += "cd " + os.path.join(llvm_build_dir, "bin") + "; "
 command_string += "ln lld ld"
 

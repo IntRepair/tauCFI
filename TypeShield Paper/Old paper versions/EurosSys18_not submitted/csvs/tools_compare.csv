@@ -1,0 +1,10 @@
+opt,target,IFCC,TypeArmor,AT,TypeShield(count),TypeShield(type)
+O2,Lighttpd,6,47,63,41,38
+O2,Memcached,1,14,14,13,10
+O2,ProFTPD,3,376,396,311,336
+O2,Pure-FTPD,0,4,13,13,7
+O2,vsftpd,1,12,10,7,7
+O2,PostgreSQL,12,2304,2504,2122,1786
+O2,MySQL,150,3698,5896,4403,3792
+O2,Node.js,341,4714,7230,5429,3864
+O2,geomean,7.6,162.1,216.6,172.0,141.8
