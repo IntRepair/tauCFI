@@ -182,13 +182,15 @@
 % \textbf{Checking Indirect Forward-Edge Calls in Practice.}
 \label{C++ Indirect Calls in Practice}
 \textbf{Binary based tools.} TypeArmor~\cite{veen:typearmor}
-($\approx$3\% runtime overhead) enforces a CFI-policy based on runtime checking of caller/callee pairs and function parameter count matching. It is important to note 
-that there are no C++ language semantics which can be used to enforce type and parameter count matching for indirect caller/callee pairs, this could be addressed
-with specifically intended language constructs in the future.
-VCI~\cite{vci:asiaccs} and Marx~\cite{marx}, are both based on an approximated program class hierarchy  
-(1) no root class node determined and (2) the edges between the classes are not oriented thus both tools enforce for each callsite the longest
-from the binary inferable class inheritance path. Finally, both tools use up to six heuristics and simplifying assumptions in order 
-to make the problem of program class hierarchy reconstruction tractable.
+($\approx$3\% runtime overhead) enforces a CFI-policy based on runtime checking of caller/callee pairs 
+and function parameter count matching. Compared to \textsc{TypeShield} this tool does not uses function 
+parameter types and assumes a backward-edge protection is in place.
+VCI~\cite{vci:asiaccs} and Marx~\cite{marx}, are both based on an approximated program class hierarchies: 
+(1) do not recover the root class of the hierarchy, and (2) the edges between the classes are not oriented, thus both tools 
+enforce for each callsite the same virtual table entry (\textit{i.e.,} index based) 
+contained in one recovered class hierarchy denoted by father-child relationships between the recovered vtables. 
+Finally, both tools use up to six heuristics and simplifying assumptions in order to make the problem of program
+class hierarchy reconstruction tractable.
 
 \textbf{Source code based tools.} 
 To the best of our knowledge, only the Clang-CFI \cite{clang:cfi} and IFCC/VTV~\cite{vtv:tice} (up to 8.7\% performance overhead) compiler based tools are deployed in practice

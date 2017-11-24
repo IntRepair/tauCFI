@@ -73,25 +73,25 @@ In our evaluation we addressed the following research questions (RQs).
 \textbf{RQ3:} What \textbf{overhead} imposes \textsc{TypeShield}? (\cref{section:typeshieldoverheadperformance})
 
 \hspace{-.27cm}
-\textbf{RQ4:} What \textbf{binary blow-up} has \textsc{TypeShield}? (\cref{section:typeshieldoverheadinstrumentation})
-
-\hspace{-.27cm}
-\textbf{RQ5:} What \textbf{security level} offers \textsc{TypeShield}? (\cref{RQ5: Security Analysis})
+\textbf{RQ4:} What \textbf{security level} offers \textsc{TypeShield}? (\cref{RQ5: Security Analysis})
 
 % \hspace{-.27cm}
 % \textbf{RQ6:} Which \textbf{upper bounds} has \textsc{TypeShield}? (\cref{RQ6:TyperArmor's Imprecise Parameter-Count Policy})
 
 \hspace{-.27cm}
-\textbf{RQ6:} Which \textbf{attacks} mitigates \textsc{TypeShield}? (\cref{RQ7: Mitigation of Advanced Code-Reuse Attacks})
+\textbf{RQ5:} Which \textbf{attacks} mitigates \textsc{TypeShield}? (\cref{RQ7: Mitigation of Advanced Code-Reuse Attacks})
 
 \hspace{-.27cm}
-\textbf{RQ7:} Is \textsc{TypeShield} \textbf{effective} against COOP? (\cref{RQ8: Effectiveness Against COOP})
+\textbf{RQ6:} Is \textsc{TypeShield} \textbf{effective} against COOP? (\cref{RQ8: Effectiveness Against COOP})
 
 \hspace{-.27cm}
-\textbf{RQ8:} Are other tools \textbf{better} than \textsc{TypeShield}? (\cref{RQ9: Is TypeShield better than other tools?})
+\textbf{RQ7:} Are other tools \textbf{better} than \textsc{TypeShield}? (\cref{RQ9: Is TypeShield better than other tools?})
 
 \hspace{-.27cm}
-\textbf{RQ9:} Is \textsc{TypeShield} \textbf{better} than ShadowStack? (\cref{RQ10: Comparison with SafeStack})
+\textbf{RQ8:} Is \textsc{TypeShield} \textbf{better} than ShadowStack? (\cref{RQ10: Comparison with SafeStack})
+
+\hspace{-.27cm}
+\textbf{RQ9:} What \textbf{binary blow-up} has \textsc{TypeShield}? (\cref{section:typeshieldoverheadinstrumentation})
 
 \textbf{Comparison Method.} We used \textsc{TypeShield} to analyze each program binary individually. Next \textsc{TypeShield} was used to harden each binary with forward and 
 backward checks. The data generated during analysis and binary hardening was written into external files for later processing. Finally, the previous obtained 
@@ -154,7 +154,7 @@ Table~\ref{tbl:matchingquality} shows three data points w.r.t. calltargets for t
 (2) Clang miss: Number of calltargets that are found by \textsc{TypeShield}, but not by our Clang/LLVM pass, and 
 (3) TypeShield miss: Number of calltargets that are found by our Clang/LLVM pass, but not by \textsc{TypeShield}.
 Both columns (Clang miss and TypeShield miss) show a relatively low number of encountered misses. Therefore, we can 
-state that our structural matching between ground truth and \textsc{TypeShield}s callsites is almost perfect.
+state that our structural matching between ground truth and \textsc{TypeShield}s callsites is comparable.
 
 \textbf{Calltargets.} The obvious choice for structural comparison regarding calltargets is their name, as these are functions. First, we have to remove internal 
 functions from our datasets like the \texttt{\_init} or \texttt{\_fini} functions, which are of no relevance for this investigation. Furthermore, while C functions can
@@ -530,20 +530,7 @@ Finally, this results qualify \textsc{TypeShield} as a highly practical tool.
 \todo[inline]{add a binary patch that does not crash none of the programs from SPEC CPU2006.}
 \todo[inline]{need a Table with all the results for each of the SPEC CPU2006 programs and a bar diagram}
 
-\subsection{Instrumentation Overhead (RQ4)}
-\label{section:typeshieldoverheadinstrumentation}
-
-\todo[inline]{here we need a bar chart, see TypeArmor paper.}
-\todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
-
-The instrumentation overhead (\textit{i.e.,} binary blow-up) or the change in size due to patching is mostly due to the method DynInst uses to patch binaries. 
-Essentially, the executable part of the binary is duplicated and extended with the check we insert. The usual ratio we encountered in our experiments is 
-around 40\% to 60\% with Postgres having an increase of 150\% in binary size. One cannot reduce that 
-value significantly, because of the nature of code relocation after loosing the information which a compiler has. Especially indirect control flow 
-changes are very hard to relocate. Therefore, instead each important basic block in the old code contains a jump instruction to the new position of the basic block.
-Finally, this results should not represent an issue for memory resourceful systems on which these applications typically run.
-
-\subsection{Security Analysis (RQ5)}
+\subsection{Security Analysis (RQ4)}
 \label{RQ5: Security Analysis}
 % \subsubsection{CDF Analysis}
 % \label{CDF Analysis}
@@ -644,7 +631,7 @@ internal structure of the hardened programs.
 % we present \textsc{TypeShield}, a more precise alternative. \textsc{TypeShield} can deal with the aforementioned 4 types of register widths and can further reduce the the legitimate
 % calltarget set per callsite as shown herein.
 
-\subsection{Mitigation of Advanced CRAs (RQ6)}
+\subsection{Mitigation of Advanced CRAs (RQ5)}
 \label{RQ7: Mitigation of Advanced Code-Reuse Attacks}
 % In this section we briefly list all code reuse attacks types that can be 
 % stopped  by \textsc{TypeShield}. We want to remark that basically all CFI violating 
@@ -697,7 +684,7 @@ In summary, all forward-edge and backward-edge attacks can be successfully mitig
 aware of the policy in place and thus can not selectively use gadgets which have their start address in the 
 allowed set for the legitimate forward-edge and backward-edge transfers, respectively.
 
-\subsection{Effectiveness Against COOP (RQ7)}
+\subsection{Effectiveness Against COOP (RQ6)}
 \label{RQ8: Effectiveness Against COOP}
 We investigated the effectiveness of \textsc{TypeShield} against the COOP
 attack by looking at the number of register arguments which can be used to enable 
@@ -744,7 +731,7 @@ of 95\% while TypeArmor obtained 92\%. While this is not a big difference
 we point out that the remaining overestimated parameters represent 5\% and this 
 do not leave much room for the attacker to perform her attack.
 
-\subsection{Forward-Edge Policy vs. Other Tools (RQ8)}
+\subsection{Forward-Edge Policy vs. Other Tools (RQ7)}
 \label{RQ9: Is TypeShield better than other tools?}
 \vspace{-.5cm}
 
@@ -792,7 +779,7 @@ Finally, \textsc{TypeShield} represents a strong improvement w.r.t. calltarget p
 % and has access to more possibilities than simply inspecting function parameters or return values.
 % Nevertheless, \textsc{TypeShield} represents a strong improvement w.r.t. calltarget per callsite reduction in binary programs.
 
-\subsection{Comparison with Shadow-Stack (RQ9)}
+\subsection{Comparison with Shadow-Stack (RQ8)}
 \label{RQ10: Comparison with SafeStack}
 % There are several tools which provide shadow stack protection as for example 
 % the original shadow-stack implementation from Abadi et al.~\cite{abadi:cfi2}(binary-based), 
@@ -848,4 +835,16 @@ of total number of return addresses targets per return addresses over total numb
 for the function returns. The results indicate a percentage of 0.012\% (geomean) of the total addresses in the program binaries are legitimate targets for the function returns. This means
 that our policy can eliminate 99.98\% (100\% - 0.012\%) of the addresses which an attacker can use for his attack inside the program binary.
 
+\subsection{Instrumentation Overhead (RQ9)}
+\label{section:typeshieldoverheadinstrumentation}
+
+\todo[inline]{here we need a bar chart, see TypeArmor paper.}
+\todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
+
+The instrumentation overhead (\textit{i.e.,} binary blow-up) or the change in size due to patching is mostly due to the method DynInst uses to patch binaries. 
+Essentially, the executable part of the binary is duplicated and extended with the check we insert. The usual ratio we encountered in our experiments is 
+around 40\% to 60\% with Postgres having an increase of 150\% in binary size. One cannot reduce that 
+value significantly, because of the nature of code relocation after loosing the information which a compiler has. Especially indirect control flow 
+changes are very hard to relocate. Therefore, instead each important basic block in the old code contains a jump instruction to the new position of the basic block.
+Finally, this results should not represent an issue for memory resourceful systems on which these applications typically run.
 

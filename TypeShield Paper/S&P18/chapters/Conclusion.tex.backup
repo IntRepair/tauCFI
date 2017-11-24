@@ -26,20 +26,31 @@
 % The family of forward indirect call based attacks which can manifest due to a series of factors such as
 % memory corruptions, binary layout leackages and availability of useful
 % gadgets in a sufficiently large executable poses a serious security threat.
-In this paper, we presented \textsc{TypeShield}, a runtime fine-grained CFI-policy enforcing tool which 
-operates on program binaries. Our tool precisely and efficiently filters legitimate from 
-illegitimate forward and backward indirect control flow transfers by using a novel runtime type-checking 
-technique based on function parameter type-checking and parameter-counting. 
-%Further, we maintain a comparable performance overhead to existing tools. (REDUNDANT WITH BELOW)
-We have implemented~\textsc{TypeShield} and applied it to real software such as web servers, databases, FTP servers and the SPEC CPU2006 benchmark. 
-We demonstrated through extensive experiments that~\textsc{TypeShield} has 
-higher precision w.r.t. the calltarget set per callsite than existing state-of-the-art tools, while maintaining a comparable runtime performance overhead of 4\%. 
-To date, we were able to improve the ratio of calltargets per callsite (forward-edge) by more than 87\% w.r.t. total number of AT calltargets, 
-by up to 41\% for a single hardened application and with an overall geomean reduction of more than 13\% when comparing with TypeArmor.
-Further, by using our backward-edge policy, 99.98\% (geomean) of the addresses from a binary are eliminated as potential function return targets.
-Next to a more precise analysis, the tangible outcome is a considerably reduced attack surface which can be further improved by 
-tweaking our analysis. Finally, in the spirit of open research, we will make the source code of \textsc{TypeShield}, test scripts and the evaluation results publicly available, 
-thus we support reproducibility in this fast-moving research field by providing comprehensive descriptions of our experiments.
+% In this paper, we presented \textsc{TypeShield}, a runtime fine-grained CFI-policy enforcing tool which 
+% operates on program binaries. Our tool precisely and efficiently filters legitimate from 
+% illegitimate forward and backward indirect control flow transfers by using a novel runtime type-checking 
+% technique based on function parameter type-checking and parameter-counting. 
+% %Further, we maintain a comparable performance overhead to existing tools. (REDUNDANT WITH BELOW)
+% We have implemented~\textsc{TypeShield} and applied it to real software such as web servers, databases, FTP servers and the SPEC CPU2006 benchmark. 
+% We demonstrated through extensive experiments that~\textsc{TypeShield} has 
+% higher precision w.r.t. the calltarget set per callsite than existing state-of-the-art tools, while maintaining a comparable runtime performance overhead of 4\%. 
+% To date, we were able to improve the ratio of calltargets per callsite (forward-edge) by more than 87\% w.r.t. total number of AT calltargets, 
+% by up to 41\% for a single hardened application and with an overall geomean reduction of more than 13\% when comparing with TypeArmor.
+% Further, by using our backward-edge policy, 99.98\% (geomean) of the addresses from a binary are eliminated as potential function return targets.
+% Next to a more precise analysis, the tangible outcome is a considerably reduced attack surface which can be further improved by 
+% tweaking our analysis. Finally, in the spirit of open research, we will make the source code of \textsc{TypeShield}, test scripts and the evaluation results publicly available, 
+% thus we support reproducibility in this fast-moving research field by providing comprehensive descriptions of our experiments.
 % ~\url{https://github.com/domain/typeshield}.
+
+%version3 short version
+We presented \textsc{TypeShield} the first open source binary 
+hardening tool that can protect the forward-edges and backward-edges 
+inside a stripped (\textit{i.e.,} no RTTI information) program binary without the need to make any assumptions
+on the presence of an auxiliary technique for protecting backward edges (\textit{i.e.,} shadow stacks). 
+In our evaluation we evaluated
+\textsc{TypeShield} with real open source programs and shown that the 
+tool is practical and effective when protecting system binaries.
+Further our evaluation results indicate that \textsc{TypeShield} can considerably reduce the forward-edge legal 
+call target set and providing high backward-edge precision while maintaining low overhead.
 
 

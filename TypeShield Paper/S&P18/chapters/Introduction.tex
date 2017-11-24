@@ -5,9 +5,11 @@
 The C++ programming language offers object-oriented programming (OOP) concepts which are highly relevant 
 during development of large, complex and efficient software systems, in particular, 
 when runtime performance and reliability are primary objectives.
-A key OOP concept is polymorphism. This concept is based on C++ virtual functions. These functions enable late binding and allow programmers 
-to overwrite a virtual function of the base-class with their own implementations. In order to implement virtual functions, 
-the compiler needs to generate a virtual table meta-data structures for all virtual functions and provide to each 
+A key OOP concept is polymorphism, which is based on C++ virtual functions. 
+Virtual functions enable late binding and allow programmers 
+to overwrite a virtual function of the base-class with their own implementations. 
+In order to implement virtual functions, 
+the compiler needs to generate virtual table meta-data structures for all virtual functions and provide to each 
 instance (object) of such a class a (virtual) pointer (its value is computed during runtime) to the aforementioned table.
 While this approach represents a main source for exploitable program indirection (\textit{i.e.,} forward-edges) 
 along function returns (\textit{i.e.,} backward-edges) the C/C++ language provides no intrinsic security guarantees 
@@ -56,7 +58,7 @@ forward-edge (\textit{i.e.,} object dispatches, indirect control flow transfers)
 as alias analysis in program binaries is undecidable~\cite{alias:undecidable} and certain program CFG edges are input dependent.
 
 Source code based tools which can protect against forward-edge violations such as: SafeDispatch~\cite{safedispatch:jang}, ShrinkWrap~\cite{haller:shrinkwrap}, VTI~\cite{bounov:interleaving}, 
-and IFCC/VTV~\cite{vtv:tice} rely on source-code availability which limits their applicability (\textit{i.e.,} proprietary libraries can not be recompiled).
+and IFCC/VTV~\cite{vtv:tice} rely on source code availability which limits their applicability (\textit{i.e.,} proprietary libraries can not be recompiled).
 In contrast, binary-based forward-edge protection tools, binCFI~\cite{ccfir:zhang, zhang:usenix}, vfGuard~\cite{vfuard:aravind}, 
 vTint~\cite{vtint:zhang}, VCI~\cite{vci:asiaccs}, Marx~\cite{marx} and TypeArmor~\cite{veen:typearmor}, typically protect only the forward-edges trough a CFI-based 
 policy and most of the tools assume that a shadow stack~\cite{volodymyr:cpi} technique for protecting backward-edges is in place.
@@ -70,9 +72,9 @@ policy and most of the tools assume that a shadow stack~\cite{volodymyr:cpi} tec
 % % (see~\cref{{Too Permissive Parameter-Based Policies}} for more details). 
 % With our work, we aim to achieve both significant precision enhancements and calltarget set per callsite reduction.
 
-Unfortunately, the currently most precise binary based forward-edge protection tools, 
+Unfortunately, the currently most precise binary based forward-edge protection tools w.r.t. calltarget reduction, 
 VCI and Marx, suffer from forward edge imprecision since both are based on an approximated program class hierarchy  
-(\textit{i.e.,} no root class determined and the edges between the classes are not oriented) derived trough the usage of up to 
+(\textit{i.e.,} no root class determined, and the edges between the classes are not oriented) derived trough the usage of up to 
 six heuristics and several simplification assumptions, while TypeArmor enforces a forward-edge policy which takes into account only the number of parameter 
 provided and consumed by caller callee pairs without imposing any constraint on their types. 
 Thus, these forward-edge protection tools are in general too permissive.
@@ -81,11 +83,10 @@ that a shadow stack protection policy is in place. Unfortunately, recently shado
 were bypassed \cite{safestack:bypass, safestack:bypassing}. Further, this bypass demonstrated that at least 4 independently usable attack vectors exist for thwarting shadow stack techniques 
 (binary and source code based) targeting their entropy based hiding principle and making their usage questionable.
 
-For these reasons we seek in this paper for a binary based fined-grained forward-edge and backward-edge protection technique which does not rely on a
-shadow stack based technique to offer CFI-complete (forward and backward edge protection) protection of indirect control flow transfers.
-
-In this paper, we present \textsc{TypeShield}, a fine-grained CFI-complete runtime 
-binary-level protection tool which does not rely on shadow stack based techniques to protect backward-edges.
+%%Our idea
+In this paper, we present \textsc{TypeShield}, a fine-grained CFI-complete (\textit{i.e.,} forward-edge and backward-edge protection) runtime 
+binary-level protection tool which does not rely on shadow stack based techniques to protect backward-edges. 
+\textsc{TypeShield} is applicable to program binaries for which we assume source code is not available.
 \textsc{TypeShield} backward-edge policy is based on the observation that backward-edges of a program can be efficiently protected
 if there is a precise forward-edge mapping available between callers and callees.
 \textsc{TypeShield} significantly reduces the number valid forward-edges than previous work~\cite{veen:typearmor} and thus we are able 

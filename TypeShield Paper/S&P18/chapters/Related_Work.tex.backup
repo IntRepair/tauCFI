@@ -1,34 +1,6 @@
 \section{Related Work}
 \label{chapter:Related_Work}
 
-% \subsection{Type-Inference on Executables}
-% \label{Type-Inference on Executables}
-% Recovering variable types from executable programs
-% is very hard in general for several reasons. 
-% First, the quality of the disassembly can vary much from used
-% framework to another. \textsc{TypeShield} is based on DynInst 
-% and the quality of the executable disassembly fits our needs. 
-% For a more comprehensive review on the capabilities of DynInst and other tools we
-% advice the reader to have a look at~\cite{andriesse:indepth}.
-% Second, alias analysis in binaries is undecidable in theory and intractable in practice~\cite{alan:mycroft}.
-% There are several most promising tools such as: Rewards~\cite{lin:rewards}, BAP~\cite{bap:brumley}, 
-% SmartDec~\cite{fokin:smartdec}, and Divine~\cite{divine:balakrishnan}.
-% These tools try with more or less success to recover 
-% type information from binary programs with different goals.
-% Typical goals are: 
-% (i) full program reconstruction (\textit{i.e.,} binary to code conversion, reversing, etc.), 
-% (ii) checking for buffer overflows, and
-% (iii) integer overflows and other types of memory corruptions.
-% For a more exhaustive review of such tools we advice the reader to
-% have a look at the review of Caballero \textit{et al.}~\cite{caballero:inference}.
-% Interesting to notice is that the code from only a few of these tools is actually available.
-% 
-% SmartDec seemed at first promising due to its simple type lattice that we wanted to leverage for our classification schema. 
-% Its integration into our DynInst based environment was not successful mostly for several reasons, as it was deemed to 
-% time consuming to extract the whole machinery and implement an interface to the DynInst disassembler.
-% Therefore, we finally implemented our own version of function parameter type analysis and focused only
-% on the wideness of the types, resulting in a simpler lattice than we initially intended.
-
 % \subsection{Mitigation of Advanced CRAs}
 % \textbf{Mitigation of Forward-Edge based Attacks.}
 % \subsection{Mitigation of Forward-Edge based Attacks}
@@ -45,16 +17,16 @@
 % The following tools address vTable protection through binary instrumentation, 
 % but fail to mitigate against COOP: vfGuard~\cite{vfuard:aravind}, and vTint~\cite{vtint:zhang}.
 
-\subsubsection{Binary Based Forward-Edge Protection}
-TypeArmor~\cite{veen:typearmor} is a binary instrumentation tool that can protect against COOP.
-TypeArmor uses a fine-grained CFI policy based on caller/callee (but only indirect callsites) matching, which checks 
-during runtime if the number of provided and needed parameters match.
-\textsc{TypeShield} is related to TypeArmor~\cite{veen:typearmor}, since we also enforce strong binary-level 
-invariants on the number of function parameters. Further, \textsc{TypeShield} also aims for exclusive protection 
-against advanced exploitation techniques, which can bypass fine-grained CFI schemes and vTable protections at the 
-binary level. However, \textsc{TypeShield} offers a better restriction of calltargets to callsites, since we not 
-only restrict based on the number of parameters, but also on the width of their types. This results in much smaller 
-buckets that in turn can only target a smaller subset of all address-taken functions. 
+% \subsubsection{Binary Based Forward-Edge Protection}
+% TypeArmor~\cite{veen:typearmor} is a binary instrumentation tool that can protect against COOP.
+% TypeArmor uses a fine-grained CFI policy based on caller/callee (but only indirect callsites) matching, which checks 
+% during runtime if the number of provided and needed parameters match.
+% \textsc{TypeShield} is related to TypeArmor~\cite{veen:typearmor}, since we also enforce strong binary-level 
+% invariants on the number of function parameters. Further, \textsc{TypeShield} also aims for exclusive protection 
+% against advanced exploitation techniques, which can bypass fine-grained CFI schemes and vTable protections at the 
+% binary level. However, \textsc{TypeShield} offers a better restriction of calltargets to callsites, since we not 
+% only restrict based on the number of parameters, but also on the width of their types. This results in much smaller 
+% buckets that in turn can only target a smaller subset of all address-taken functions. 
 %However, we rely for that on the variety of parameter types and when there is none, we will degrade into a parameter count policy.
 
 % We are aware that there is still a long research path to go until binary based techniques can 
@@ -64,18 +36,18 @@ buckets that in turn can only target a smaller subset of all address-taken funct
 % \textsc{TypeShield} is another attempt to recuperate just the needed semantic information (types and number of function parameters from
 % indirect callsites) in order to be able to enforce a precise and with low overhead primitive against COOP attacks.
 
-VCI~\cite{vci:asiaccs} is a binary based tool (7.9\%) based on DynInst which can protect forward edge indirect control flow violations based 
-on reconstructing a quasi program class hierarchy (\textit{i.e.,} no class root node and the edges are not directed). The authors claim that 
-VCI is 10 times more precise w.r.t. reducing the calltarget set per callsite. In contrast to \textsc{TypeShield} VCI can not 
-protect backward-edge violations and we arguably due to the conservative analysis the VCI could skip some corner situations 
-allowing not legitimate calltargets.
-
-Marx~\cite{marx} is most similar to VCI and as VCI this tool reconstructs the same type of quasi program class hierarchy. 
-No runtime efficiency numbers were provided in the paper.
-The authors claim that Marx can recuperate a class hierarchy which is more precise than that of IDAPro. The paper is geared towards
-first providing a tool which can be used by analyst in order to reverse engineer a binary. The precision of the calltarget set reduction
-per callsite should be similar to those of VCI but no comparison was compared in the paper. Compared to \textsc{TypeShield} 
-Marx can not protect against backward-edge violations and arguably has in common with VCI several limitations.
+% VCI~\cite{vci:asiaccs} is a binary based tool (7.9\%) based on DynInst which can protect forward edge indirect control flow violations based 
+% on reconstructing a quasi program class hierarchy (\textit{i.e.,} no class root node and the edges are not directed). The authors claim that 
+% VCI is 10 times more precise w.r.t. reducing the calltarget set per callsite. In contrast to \textsc{TypeShield} VCI can not 
+% protect backward-edge violations and we arguably due to the conservative analysis the VCI could skip some corner situations 
+% allowing not legitimate calltargets.
+% 
+% Marx~\cite{marx} is most similar to VCI and as VCI this tool reconstructs the same type of quasi program class hierarchy. 
+% No runtime efficiency numbers were provided in the paper.
+% The authors claim that Marx can recuperate a class hierarchy which is more precise than that of IDAPro. The paper is geared towards
+% first providing a tool which can be used by analyst in order to reverse engineer a binary. The precision of the calltarget set reduction
+% per callsite should be similar to those of VCI but no comparison was compared in the paper. Compared to \textsc{TypeShield} 
+% Marx can not protect against backward-edge violations and arguably has in common with VCI several limitations.
 
 % VTPin~\cite{vtpin} is a runtime based tool ($\approx$5\%) used for protecting against VTable hijacking, via use-after-free vulnerabilities. VTPin pins
 % all the freed VTable pointers on a safe VTable under VTPin’s control. For each object deallocation, VTPin deallocates all space allocated, but preserves and updates
@@ -182,12 +154,12 @@ Marx can not protect against backward-edge violations and arguably has in common
 % more details the following survey~\cite{cfi_survey_payer}.
 
 % \subsubsection{Binary Based Techniques}
-\subsubsection{Binary Based Backward-Edge Protection}
-The CFI based implementation of Abadi et al.~\cite{abadi:cfi} is the first binary based implementation of a shadow stack.
-While at first glance promising, this implementation suffers from high performance overhead which is around 21\% due to the fact 
-that the inserted checks before each function return instruction are not runtime efficient. Further, this tool has high imprecision
-due to the fact that labels are reused and in this way not legitimate return addresses become legitimate, thus these 
-could be exploited by a skilled attacker.
+% \subsubsection{Binary Based Backward-Edge Protection}
+% The CFI based implementation of Abadi et al.~\cite{abadi:cfi} is the first binary based implementation of a shadow stack.
+% While at first glance promising, this implementation suffers from high performance overhead which is around 21\% due to the fact 
+% that the inserted checks before each function return instruction are not runtime efficient. Further, this tool has high imprecision
+% due to the fact that labels are reused and in this way not legitimate return addresses become legitimate, thus these 
+% could be exploited by a skilled attacker.
 
 % \subsubsection{Compiler Based Techniques}
 % LLVM SafeStack~\cite{volodymyr:cpi} is a compiler based approach in which for each function stack a shadows stack copy is build with the help of the Clang compiler. These additional stacks
@@ -203,3 +175,60 @@ could be exploited by a skilled attacker.
 % callsite and target address pairs. The capacity of the LBR register is limited to 32 address pairs which can be stored. The tools sufferes from high runtime overhead and 
 % it is imprecise since the address pairs can not be analyzed at the same speed as they arrive in this register. For this reason some pairs are skipped and thus the attacker has 
 % the chance to mount and attack.
+
+
+
+\subsection{Mitigation of Forward-Edge Based Attacks}
+% \textbf{Checking Indirect Forward-Edge Calls in Practice.}
+\label{C++ Indirect Calls in Practice}
+\textbf{Binary based tools.} TypeArmor~\cite{veen:typearmor}
+($\approx$3\% runtime overhead) enforces a CFI-policy based on runtime checking of caller/callee pairs and function parameter count matching. 
+VCI~\cite{vci:asiaccs} and Marx~\cite{marx}, are both based on an approximated program class hierarchy  
+(1) no root class node determined and (2) the edges between the classes are not oriented thus both tools enforce for each callsite the longest
+from the binary inferable class inheritance path. Finally, both tools use up to six heuristics and simplifying assumptions in order 
+to make the problem of program class hierarchy reconstruction tractable.
+
+\textbf{Source code based tools.} 
+To the best of our knowledge, only the Clang-CFI \cite{clang:cfi} and IFCC/VTV~\cite{vtv:tice} (up to 8.7\% performance overhead) compiler based tools are deployed in practice
+and can be used to check legitimate from illegitimate indirect forward-edge calls during runtime by checking if virtual object pointers comply with 
+the program class hierarchy inheritance relationships.
+Furthermore, ShrinkWrap~\cite{haller:shrinkwrap} is a GCC compiler based tool which further reduces the legitimate 
+virtual table ranges for a given indirect callsite (\textit{i.e.,} object dispatch) through precise analysis of the program class hierarchy and virtual table hierarchy. Evaluation results
+show similar performance overhead results as the previous mentioned tools but with more precision with respect to legitimate virtual table entries (calltargets) per callsite. 
+We noticed by analyzing the previous research results that the overhead incurred by these security checks can be very high due to the fact that for each callsite many range checks have to be
+performed during runtime. Therefore, in our opinion, despite its security benefit these types of checks are most likely not 
+applicable to software where performance is key.
+
+\textbf{Other types of tools.} Other highly promising source code based tools (albeit also not deployed in practice) 
+which can overcome some of the drawbacks of the previously described tools are as follows. 
+Bounov \textit{et al.}~\cite{bounov:interleaving} presented a tool ($\approx$1\% runtime overhead)
+for indirect forward-edge callsite checking based on virtual table layout interleaving. The tool has better performance than VTV and better precision with
+respect to allowed virtual tables per indirect callsite. Its precision (selecting legitimate virtual tables for each callsite) compared to ShrinkWrap is
+lower since it does not consider virtual table inheritance paths. vTrust~\cite{zhang:vtrust} (average runtime overhead 2.2\%) enforces two layers of defense
+(virtual function type enforcement and virtual table pointer sanitization) against virtual table corruption, injection and reuse. 
+
+\subsection{Mitigation of Backward-Edge Based Attacks}
+\label{Mitigation of Return Edge Attacks}
+Accordingly to one of the currently most comprehensive surveys~\cite{cfi:survey} which assesses backward edge protection techniques there are tools which
+offer low, medium, and high level of protection w.r.t. backward-edges. Further, this survey 
+provides runtime overhead comparisons,
+classifies the backward-edge protection techniques 
+in binary based, source code based, and other types (\textit{i.e.,} with HW support, etc.) as follows.
+
+\textbf{Binary based tools.} Original CFI implementation from Abadi et. al.~\cite{abadi:cfi2}, MoCFI~\cite{mocfi}, 
+kBouncer~\cite{kbouncer}, 
+CCFIR~\cite{ccfir:zhang}, bin-CFI~\cite{mingwei:sekar}, O-CFI~\cite{mohan:opaque}, 
+PathArmor~\cite{veen:cfi}, 
+LockDown~\cite{payer:dimva} mostly suffer from imprecision (high number of reused labels), 
+have low runtime efficiency, do not support shared libraries at all.
+
+\textbf{Source code based tools.} SafeStack~\cite{safestack}, Hypersafe~\cite{hypersafe}, CF-Locking~\cite{cflocking}, MIP~\cite{mip}, 
+CF-Restrictor~\cite{cfrestrictor}, KCoFi~\cite{kcocfi}, RockJIT~\cite{rockjit:niu}, CCFI~\cite{ccfi:jose}, 
+Kernel CFI~\cite{kernelcfi}, MCFI~\cite{mcfi:niu}, piCFI~\cite{perinput:niu} relatively high precision
+w.r.t. enforced address return set, and all do not support shared libraries (except MCFI), have high coverage (almost all backward edges are protected).
+
+\textbf{Other types of tools.} ROPecker~\cite{ropecker}, HW-asst. CFI~\cite{davi:hardware}, 
+CFIGuard~\cite{cfiguard:yuan} are mostly relying on HW features which were not specifically built for protecting backward edges and 
+for this reason the tools are not runtime effective and their precision is rather low and mostly not effective against state of the art code
+reuse attacks.
+
