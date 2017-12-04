@@ -90,8 +90,8 @@ In our evaluation we addressed the following research questions (RQs).
 \hspace{-.27cm}
 \textbf{RQ8:} Is \textsc{TypeShield} \textbf{better} than ShadowStack? (\cref{RQ10: Comparison with SafeStack})
 
-\hspace{-.27cm}
-\textbf{RQ9:} What \textbf{binary blow-up} has \textsc{TypeShield}? (\cref{section:typeshieldoverheadinstrumentation})
+% \hspace{-.27cm}
+% \textbf{RQ9:} What \textbf{binary blow-up} has \textsc{TypeShield}? (\cref{section:typeshieldoverheadinstrumentation})
 
 \textbf{Comparison Method.} We used \textsc{TypeShield} to analyze each program binary individually. Next \textsc{TypeShield} was used to harden each binary with forward and 
 backward checks. The data generated during analysis and binary hardening was written into external files for later processing. Finally, the previous obtained 
@@ -458,30 +458,34 @@ further a total reduction of more than 87\% (141 vs. 1097) w.r.t. to total numbe
 \subsection{Runtime Overhead (RQ3)}
 \label{section:typeshieldoverheadperformance}
 % \todo[inline]{In this section we need one or two Table similar to what TypeArmor contains, first we need to define the fields which make most sense.}
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.47\textwidth]{figures/spec_cpu2006.pdf}
-    \caption{SPEC CPU2006 Benchmark Results.
-%     \textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? replace with our values. remove this stub.}
-    }
-%     \vspace{-.5cm}
-    \label{fig:awesome_image}
-\end{figure}
-
+% \begin{figure}[h!]
+%     \centering
+%     \includegraphics[width=0.47\textwidth]{figures/spec_cpu2006.pdf}
+%     \caption{SPEC CPU2006 Benchmark Results.
+% %     \textcolor{red}{TODO-add more description in order to indicate the advantage of our tool. What geomean values are good, low or hig? replace with our values. remove this stub.}
+%     }
+% %     \vspace{-.5cm}
+%     \label{fig:awesome_image}
+% \end{figure}
+\vspace{-.5cm}
 \begin{figure}[H]
   \begin{tikzpicture}
     \begin{axis}[
         ybar,
         enlargelimits=0.1,
-        legend style={at={(0.7,0.9)},
-          anchor=north,legend columns=-1},
+        legend style={at={(0.6,0.15)},
+        anchor=north,legend columns=-1},
+        every node near coord/.append style={rotate=90, anchor=west},
+        xtick={1,2,...,14},
+        ytick={1,2,...,14},
+        x=.52cm,
+        bar width=5pt,
         ylabel={\% Runtime Overhead},
         xlabel={},
-%         symbolic x coords={444.namd,447.dealII,450.soplex,453.povray,471.omnetpp,473.astar,average,geomean},
-        symbolic x coords={namd,xalancbmk,dealII,soplex,povray,omnetpp,astar,average,geomean},
+        symbolic x coords={namd,dealII,soplex,mcf,povray,hmmer,sjeng,libquantum, h264ref, omnetpp, astar, xalancbmk, average, geomean},
         xtick=data,
-        width=9.5cm,
-        height=6cm,
+        width=9cm,
+        height=6.5cm,
         x tick label style={rotate=30,anchor=east},
         y label style={at={(0.1,0.5)}},
         nodes near coords,
@@ -491,41 +495,40 @@ further a total reduction of more than 87\% (141 vs. 1097) w.r.t. to total numbe
         nodes near coords align={vertical},
         cycle list={red, green}
       ]
-      \addplot[lightgray, fill=lightgray] coordinates {
-        (namd,{0.4}) (xalancbmk,4.49) (dealII,0.47)
-        (soplex,5.03) (povray,2.34) (omnetpp, 0.68) (astar,0.90) (average,2.04) (geomean,1.29)
+      \addplot[darkgray, fill=darkgray] coordinates {
+        (namd, 0.29) (dealII, 0.44) (soplex, 0.29) (mcf, 0.41) (povray, 0.43) (hmmer, 0.39) (sjeng, 0.46) (libquantum, 0.43) (h264ref, 0.53) (omnetpp, 0.59) (astar, 0.62) (xalancbmk, 0.44) (average, 0.44) (geomean, 0.43)
       };
       \addplot[black, fill=black] coordinates {
-        (namd,0.0) (xalancbmk,1.78) (dealII,0.94)
-        (soplex,2.07) (povray,1.57) (omnetpp,0.34) (astar,0.30) (average,1.0) (geomean,0.92)
+        (namd, 0.40) (dealII, 0.66) (soplex, 0.41) (mcf, 0.56) (povray, 0.48) (hmmer, 0.39) (sjeng, 0.47) (libquantum, 0.38) (h264ref, 0.51) (omnetpp, 0.42) (astar, 0.45) (xalancbmk, 0.34) (average, 0.45) (geomean, 0.45)
       };
-      \legend{vanila, \textsc{TypeShield}}
+      \legend{Vanila Benchmark, \textsc{TypeShield}}
     \end{axis}
   \end{tikzpicture}
-  \caption{SPEC CPU2006 benchmark runtime with no instrumentation (shaded gray), and with \textsc{TypeShield} (shaded black).}
+  \caption{SPEC CPU2006 runtime with no instrumentation (shaded gray), and with instrumentation (shaded black).}
   \label{overhead:spec:cfi}
 \end{figure}
 
-Figure~\ref{fig:awesome_image} depicts the runtime overhead obtained by applying \textsc{TypeShield} (forward-edge policy (parameter count and type mode) and backward-edge policy (fast mode))
-to several SPEC CPU2006 benchmarks. Out of the used programs:
-xalanckbmk, astar, and omnetpp are C++ program while the rest are pure C programs. 
-Unpatched means the original vanilla programs while patched means the programs with the CFI checks inserted.
-After the programs were instrumented we measured the runtime overhead. It is important to notice that none of the 
-instrumented programs crashed and all executed as intended by the benchmark.
-The obtained runtime overhead is around 3\% (geomean) when instrumenting the binary with DynInst. 
+Figure~\ref{overhead:spec:cfi} depicts the runtime overhead obtained by applying \textsc{TypeShield} (forward-edge policy (parameter count and register type) and backward-edge policy)
+to several programs contained in the SPEC CPU2006 benchmark. 
+Out of the evaluated programs:
+xalancbmk, astar, and omnetpp, dealII, namd, soplex, and povray are C++ programs while the rest are pure C programs. 
+Unpatched means the original vanilla programs while patched means the programs with the forward-edge and backward-edge CFI checks inserted.
+After the programs were instrumented we measured the runtime overhead.
+The obtained runtime overhead is around 3.29\% (geomean,  0.43 vs. 0.45) when instrumenting the binary with DynInst and 2.46\% (0.44 vs. 0.45) in average.
 One reason for the performance drop includes cache misses introduced by jumping between the old and the new executable section 
 of the binary generated by duplicating and patching. This is necessary, because when
 outside of the compiler, it is nearly impossible to relocate indirect control flow. Therefore, 
-every time an indirect control flow occurs, one jumps into the old executable section and from 
-there back to the new executable section. Moreover, this is also dependent on the actual structure 
+every time an indirect control flow occurs, jumps into the old executable section and from 
+there back to the new executable section occur. Moreover, this is also dependent on the actual structure 
 of the target, as it depends on the number of indirect control flow operations per time unit.
 Another reason for the slightly higher (yer acceptable) performance overhead is due to our
 runtime policy which is more complex than that of other state-of-the-art tools.
-However, the runtime overhead of \textsc{TypeShield} (3\%) is comparable with other forward-edge protection
-tools such as: TypeArmor (3\%), VCI~\cite{vci:asiaccs} (7.79\% overall and 10.49\% on only the SPEC CPU2006 programs), 
-vfGuard~\cite{vfuard:aravind} (10\% - 18.7\%), T-VIP~\cite{gawlik} (0.6\% - 103\%), 
-SafeDispatch~\cite{safedispatch:jang} (2\% - 30\%), and VTV/IFCC~\cite{vtv:tice} (8\% - 19.2\%).
-Finally, this results qualify \textsc{TypeShield} as a highly practical tool.
+
+Further, the runtime overhead of \textsc{TypeShield} (3\%) is comparable with other forward-edge protection
+tools such as: TypeArmor (3\%) (binary), VCI~\cite{vci:asiaccs} (7.79\% overall and 10.49\% on only the SPEC CPU2006 programs) (binary), 
+vfGuard~\cite{vfuard:aravind} (binary) (10\% - 18.7\%), T-VIP~\cite{gawlik} (0.6\% - 103\%) (binary), 
+SafeDispatch~\cite{safedispatch:jang}(source code) (2\% - 30\%), and VTV/IFCC~\cite{vtv:tice} (8\% - 19.2\%) (source code).
+However, this comparable results qualify \textsc{TypeShield} as a highly practical tool.
 
 \todo[inline]{add a binary patch that does not crash none of the programs from SPEC CPU2006.}
 \todo[inline]{need a Table with all the results for each of the SPEC CPU2006 programs and a bar diagram}
@@ -782,7 +785,7 @@ Finally, \textsc{TypeShield} represents a strong improvement w.r.t. calltarget p
 \subsection{Comparison with Shadow-Stack (RQ8)}
 \label{RQ10: Comparison with SafeStack}
 % There are several tools which provide shadow stack protection as for example 
-% the original shadow-stack implementation from Abadi et al.~\cite{abadi:cfi2}(binary-based), 
+% the original shadow-stack implementation from Abadi \textit{et al.}~\cite{abadi:cfi2}(binary-based), 
 % SafeStack~\cite{volodymyr:cpi} (compiler based and bypassed~\cite{safestack:bypassing}), 
 % MoCFI~\cite{mcfi:niu} (compiler based), HAFIX~\cite{hafix} (compiler based and bypassed~\cite{hafix:bypass}), and 
 % also PathArmor~\cite{veen:cfi} (similarly by-passable as kBouncer, ROPecker, and ROPGuard~\cite{schuster:raid} 
@@ -790,7 +793,7 @@ Finally, \textsc{TypeShield} represents a strong improvement w.r.t. calltarget p
 % which emulates a shadow stack trough validation of the last-branch register (LBR).
 % Further, there are many compiler based approaches which can be used to protect backward-edges. 
 
-The safe stack implementation of Abadi et al.~\cite{abadi:cfi2} has the highest
+The safe stack implementation of Abadi \textit{et al.}~\cite{abadi:cfi2} has the highest
 security level~\cite{cfi:survey} w.r.t. backward-edge protection. This solution has:
 (1) a high rumtime overhead ($\ge$ 21\%), 
 (2) is not open source, 
@@ -835,16 +838,16 @@ of total number of return addresses targets per return addresses over total numb
 for the function returns. The results indicate a percentage of 0.012\% (geomean) of the total addresses in the program binaries are legitimate targets for the function returns. This means
 that our policy can eliminate 99.98\% (100\% - 0.012\%) of the addresses which an attacker can use for his attack inside the program binary.
 
-\subsection{Instrumentation Overhead (RQ9)}
-\label{section:typeshieldoverheadinstrumentation}
-
-\todo[inline]{here we need a bar chart, see TypeArmor paper.}
-\todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
-
-The instrumentation overhead (\textit{i.e.,} binary blow-up) or the change in size due to patching is mostly due to the method DynInst uses to patch binaries. 
-Essentially, the executable part of the binary is duplicated and extended with the check we insert. The usual ratio we encountered in our experiments is 
-around 40\% to 60\% with Postgres having an increase of 150\% in binary size. One cannot reduce that 
-value significantly, because of the nature of code relocation after loosing the information which a compiler has. Especially indirect control flow 
-changes are very hard to relocate. Therefore, instead each important basic block in the old code contains a jump instruction to the new position of the basic block.
-Finally, this results should not represent an issue for memory resourceful systems on which these applications typically run.
+% \subsection{Instrumentation Overhead (RQ9)}
+% \label{section:typeshieldoverheadinstrumentation}
+% 
+% \todo[inline]{here we need a bar chart, see TypeArmor paper.}
+% \todo[inline]{Measure the size (in bytes) of the SPEC2006 testes in RQ3 before and after adding all the patches}
+% 
+% The instrumentation overhead (\textit{i.e.,} binary blow-up) or the change in size due to patching is mostly due to the method DynInst uses to patch binaries. 
+% Essentially, the executable part of the binary is duplicated and extended with the check we insert. The usual ratio we encountered in our experiments is 
+% around 40\% to 60\% with Postgres having an increase of 150\% in binary size. One cannot reduce that 
+% value significantly, because of the nature of code relocation after loosing the information which a compiler has. Especially indirect control flow 
+% changes are very hard to relocate. Therefore, instead each important basic block in the old code contains a jump instruction to the new position of the basic block.
+% Finally, this results should not represent an issue for memory resourceful systems on which these applications typically run.
 

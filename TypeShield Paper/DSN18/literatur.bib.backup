@@ -3,12 +3,13 @@
 @IEEEtranBSTCTL{IEEEexample:BSTcontrol,
 CTLdash_repeated_names= "no",
 }
-@BOOK{khedker2009data,
-AUTHOR={Khedker, Uday and Sanyal, Amitabha and Sathe, Bageshri},
-TITLE={Data flow analysis: Theory and Practice},
-PUBLISHER={CRC Press},
-YEAR={2009}
-}
+
+%@BOOK{khedker2009data,
+%AUTHOR={Khedker, Uday and Sanyal, Amitabha and Sathe, Bageshri},
+%TITLE={Data flow analysis: Theory and Practice},
+%PUBLISHER={CRC Press},
+%YEAR={2009}
+%}
 
 @inproceedings{mingwei:sekar,
  author = {Zhang, M. and Sekar, R.},
@@ -97,7 +98,7 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael},
 @InProceedings{zhang:usenix,
  author = {Zhang, Mingwei and Sekar, R.},
  title = {Control Flow Integrity for COTS Binaries},
- booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC)},
+ booktitle = {USENIX SEC},
  year = {2013}
 } 
 
@@ -205,12 +206,12 @@ booktitle = "Black Hat Europe",
  year = {2016}
 } 
 
-@inproceedings{zhang:vtrust,
- author = {Zhang, Chao and Carr, Scott A. and Li, Tongxin and Ding, Yu and Song, Chengyu and Payer, Mathias and Song, Dawn},
- title = {VTrust: Regaining Trust on Virtual Calls},
- booktitle = {Symposium on Network and Distributed System Security (NDSS)},
- year = {2016}
-}
+%@inproceedings{zhang:vtrust,
+% author = {Zhang, Chao and Carr, Scott A. and Li, Tongxin and Ding, Yu and Song, Chengyu and Payer, Mathias and Song, Dawn},
+% title = {VTrust: Regaining Trust on Virtual Calls},
+% booktitle = {Symposium on Network and Distributed System Security (NDSS)},
+% year = {2016}
+%}
 
 @inproceedings{marx,
  author = {Pawlowski, Andre and Contag, Moritz and van der Veen, Victor and Ouwehand, Chris and Holz, Thorsten and Bos, Herbert and Athanasopoulos, Elias and Giuffrida, Cristiano},
@@ -353,7 +354,7 @@ booktitle = "Black Hat Europe",
 }
 
 @inproceedings{cfi:survey,
- author = {Nathan, Burow, and A. Carr, Scott, and Nash, Joseph, and Larsen, Per, and Franz, Michael, and Brunthaler, Stefan, and Payer, Mathias},
+ author = {Burow, Nathan, and A. Carr, Scott, and Nash, Joseph, and Larsen, Per, and Franz, Michael, and Brunthaler, Stefan, and Payer, Mathias},
  title = {Control-Flow Integrity: Precision, Security, and Performance},
  booktitle = {ACM Computing Surveys (CSUR)},
  year = {2017}
@@ -422,12 +423,12 @@ booktitle = "Black Hat Europe",
  year = {2015}
 }
 
-@inproceedings{ccfi:jose,
- author = {Mashtizadeh, Ali José and Bittau, Andrea and Boneh, Dan and Mazières, David},
- title = {CCFI: Cryptograhically Enforced Control Flow Integrity},
- booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)},
- year = {2015}
-}
+%@inproceedings{ccfi:jose,
+% author = {Mashtizadeh, Ali José and Bittau, Andrea and Boneh, Dan and Mazières, David},
+% title = {CCFI: Cryptograhically Enforced Control Flow Integrity},
+% booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)},
+% year = {2015}
+%}
 
 @inproceedings{herley:security,
  author = {Herley, Cormac and van Oorschot, P. C.},
@@ -521,7 +522,8 @@ booktitle = "Black Hat Europe",
 @inproceedings{rop:carlini,
  author = {Carlini, Nicholas and Wagner, David},
  title = {ROP is still dangerous: Breaking Modern Defenses},
- booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC)},
+% booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC)},
+ booktitle = {(USENIX SEC)},
  year = {2014}
 }
 
@@ -535,42 +537,48 @@ booktitle = "Black Hat Europe",
 @inproceedings{rop:shacham,
  author = {Shacham, H.},
  title = {The Geometry of Innocent Flesh on the Bone: Return-into-Libc without Function Calls (On the x86)},
- booktitle = {ACM Conference on Computer and Communications Security (CCS)},
+% booktitle = {ACM Conference on Computer and Communications Security (CCS)},
+ booktitle = {(CCS)},
  year = {2007}
 }
 
 @inproceedings{carlini:bending,
  author = {Carlini, Nicolas and Barresi, Antonio and Payer, Mathias and Wagner, David and Gross, Thomas R.},
  title = {Control-Flow Bending: On the Effectiveness of Control-Flow Integrity},
- booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC)},
+% booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC)},
+ booktitle = {(USENIX SEC)},
  year = {2015}
 }
 
 @inproceedings{conti:ccs,
  author = {Conti, Mauro and Larsen, Per and Crane, Stephen   and Davi, Lucas and Franz, Michael and Negro, Marco and  Liebchen, Christopher and Qunaibit, Mohaned and Sadeghi, Ahmad-Reza},
  title = {Losing Control: On the Effectiveness of Control-Flow Integrity Under Stack Attacks},
- booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)},
+% booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)},
+ booktitle = {(CCS)},
  year = {2015}
 }
 
 @inproceedings{skowyra:systemetic,
  author = {Skowyra, R. and Casteel, K. and Okhravi, H. and Zeldovich, N. and Streilein, W.},
  title = {Systematic Analysis of Defenses Against Return-Oriented Programming},
- booktitle = {Proceedings of the International Symposium on Research in Attacks, Intrusions, and Defenses (RAID)},
+% booktitle = {Proceedings of the International Symposium on Research in Attacks, Intrusions, and Defenses (RAID)},
+ booktitle = {(RAID)},
  year = {2013}
 }
 
 @inproceedings{goktas:outofcontrol,
  author = {Göktas, Enes and Athanasopoulos, Elias and Bos, Herbert and Portokalidis, Georgios},
  title = {Out Of Control: Overcoming Control-Flow Integrity},
- booktitle = {Proceedings of the IEEE Symposium on Security and Privacy (S\&P)},
+% booktitle = {Proceedings of the IEEE Symposium on Security and Privacy (S\&P)},
+  booktitle = {(S\&P)},
  year = {2014}
 }
 
 @inproceedings{minghua:binary,
  author = {Wang, Minghua and Yin, Heng and Bhaskar, Abhishek Vasisht and Su, Purui and Feng, Dengguo},
  title = {Binary Code Continent: Finer-Grained Control Flow Integrity for Stripped Binaries},
- booktitle = {Annual Computer Security Applications Conference (ACSAC)},
+% booktitle = {Annual Computer Security Applications Conference (ACSAC)},
+ booktitle = "Proceedings of the USENIX conference on Security (USENIX SEC)",
  year = {2015}
 }
 
@@ -639,14 +647,16 @@ booktitle = "Black Hat Europe",
  @inproceedings{mingwei:sekar,
   author = "Zhang, M. and Sekar, R.",
   title = "{Control Flow Integrity for COTS Binaries}",
-  booktitle = "Proceedings of the USENIX conference on Security (USENIX SEC)",
+ % booktitle = "Proceedings of the USENIX conference on Security (USENIX SEC)",
+  booktitle = "(USENIX SEC)",
   year = "2013",
  } 
 % 
  @inproceedings{safedispatch:jang,
   author = "Jang, D. and Tatlock, T. and Lerner, S.",
   title = "{SafeDispatch: Securing C++ Virtual Calls from Memory Corruption Attacks}",
-  booktitle = "Symposium on Network and Distributed System Security (NDSS)",
+%  booktitle = "Symposium on Network and Distributed System Security (NDSS)",
+  booktitle = "(NDSS)",
   year = "2014",
  } 
 % 
@@ -657,17 +667,18 @@ booktitle = "Black Hat Europe",
 %  year = "2015",
 % } 
 
- @InProceedings{hypersafe,
-  author = "Wang, Zhi and Jiang, Xuxian",
-  title = "{HyperSafe: A Lightweight Approach to Provide Lifetime Hypervisor Control-Flow}",
-  booktitle = "Proceedings of the IEEE Symposium on Security and Privacy (S\&P)",
-  year = "2010",
- } 
+% @InProceedings{hypersafe,
+%  author = "Wang, Zhi and Jiang, Xuxian",
+%  title = "{HyperSafe: A Lightweight Approach to Provide Lifetime Hypervisor Control-Flow}",
+%  booktitle = "Proceedings of the IEEE Symposium on Security and Privacy (S\&P)",
+%  year = "2010",
+% } 
  
   @InProceedings{kernelcfi,
   author = "Ge, Xinyang and Talele, Nirupama and Payer, Mathias and Jaeger, Trent",
   title = "{Fine-Grained Control-Flow Integrity for Kernel Software}",
-  booktitle = "IEEE European Symp. on Security and Privacy (Euro S\&P)",
+%  booktitle = "IEEE European Symp. on Security and Privacy (Euro S\&P)",
+  booktitle = "(Euro S\&P)",
   year = "2016",
  } 
  
@@ -837,7 +848,7 @@ booktitle = "Black Hat Europe",
  @inproceedings{safestack:bypass,
 title = "Bypassing Clang's SafeStack for Fun and Profit",
 keywords = "Security, Information hiding",
-author = "E.K. Goktas and A. Oikonomopoulos and Robert Gawlik and Benjamin Kollenda and I. Athanasopoulos and C. Giuffrida and G. Portokalidis and H.J. Bos",
+author = "Goktas, Enes K. and Oikonomopoulos, Angelos and Gawlik, Robert and Kollenda, Benjamin and Athanasopoulos, Elias and Giuffrida, Cristiano and Portokalidis, Georgios and Bos, Herbert J.",
 year = "2016",
 month = "11",
 booktitle = "Black Hat Europe",
@@ -916,12 +927,12 @@ booktitle = "Black Hat Europe",
  year = {2017}
 }
 
- @inproceedings{ropecker,
- author = {Cheng, Yueqiang and Zhou, Zongwei and Miao, Yu and Ding, Xuhua and Deng, Robert Huijie},
- title = {ROPecker: A Generic and Practical Approach For Defending Against ROP Attacks},
- booktitle = {Symposium on Network and Distributed System Security (NDSS)},
- year = {2014}
-}
+% @inproceedings{ropecker,
+% author = {Cheng, Yueqiang and Zhou, Zongwei and Miao, Yu and Ding, Xuhua and Deng, Robert Huijie},
+% title = {ROPecker: A Generic and Practical Approach For Defending Against ROP Attacks},
+% booktitle = {Symposium on Network and Distributed System Security (NDSS)},
+% year = {2014}
+%}
 
  @inproceedings{davi:hardware,
  author = {Davi, Lucas and Koeberl, Patrick and Sadeghi, Ahmad-Reza},
@@ -999,19 +1010,19 @@ booktitle = "Black Hat Europe",
   year = "2005",
 }
 
- @inproceedings{mip,
-  author = "Niu, Ben and Tan, Gang",
-  title = "{Monitor integrity protection with space efficiency and separate compilation}",
-  booktitle = {Proceedings of the 12th ACM Conference on Computer and Communications Security (CCS)},
-  year = "2013",
-}
+% @inproceedings{mip,
+%  author = "Niu, Ben and Tan, Gang",
+%  title = "{Monitor integrity protection with space efficiency and separate compilation}",
+%  booktitle = {Proceedings of the 12th ACM Conference on Computer and Communications Security (CCS)},
+%  year = "2013",
+%}
 
-@inproceedings{mcfi:niu,
- author = {Niu, Ben and Tan, Gang},
- title = "{Modular Control-Flow Integrity}",
- booktitle = {ACM Conference on Programming Language Design and Implementation (PLDI)},
- year = {2014}
-}
+%@inproceedings{mcfi:niu,
+% author = {Niu, Ben and Tan, Gang},
+% title = "{Modular Control-Flow Integrity}",
+% booktitle = {ACM Conference on Programming Language Design and Implementation (PLDI)},
+% year = {2014}
+%}
 
 % 
 % @inproceedings{abadi:cfi,
@@ -1028,12 +1039,12 @@ booktitle = "Black Hat Europe",
 %  year = "2014",
 % }
 % 
- @inproceedings{rockjit:niu,
-  author = "Niu, Ben and Tan, Gang",
-  title = "{RockJIT: Securing Just-In-Time Compilation Using Modular Control-Flow Inegrity}",
-  booktitle = {Proceedings of the ACM Conference on Computer and Communications Security (CCS)},
-  year = "2014",
- }
+% @inproceedings{rockjit:niu,
+%  author = "Niu, Ben and Tan, Gang",
+%  title = "{RockJIT: Securing Just-In-Time Compilation Using Modular Control-Flow Inegrity}",
+%  booktitle = {Proceedings of the ACM Conference on Computer and Communications Security (CCS)},
+%  year = "2014",
+% }
  
 % 
 % @inproceedings{vtint:zhang,
@@ -1050,12 +1061,6 @@ booktitle = "Black Hat Europe",
   year = "2015",
  }
  
- @inproceedings{cfi_survey_payer,
- author = {Nathan, Burow, and A. Carr, Scott, and Nash, Joseph, and Larsen, Per, and Franz, Michael, and Brunthaler, Stefan, and Payer, Mathias},
- title = {Control-Flow Integrity: Precision, Security, and Performance},
- booktitle = {ACM Computing Surveys (CSUR)},
- year = {2018}
-}
 % 
 % @inproceedings{dynaguard:petsios,
 %  author = "Petsios, Theofilos and Kemerlis, Vasileios P. and Polychronakis, Michalis and Keromytis, Angelos D.",
@@ -1078,12 +1083,12 @@ booktitle = "Black Hat Europe",
   year = "2015",
  }
  
-  @inproceedings{perinput:niu,
-  author = "Niu, Ben and Tan, Gang",
-  title = "{Per-Input Control-Flow Integrity}",
-  booktitle = {Proceedings the ACM Conference on Computer and Communications Security (CCS)},
-  year = "2015",
- }
+%  @inproceedings{perinput:niu,
+%  author = "Niu, Ben and Tan, Gang",
+%  title = "{Per-Input Control-Flow Integrity}",
+%  booktitle = {Proceedings the ACM Conference on Computer and Communications Security (CCS)},
+%  year = "2015",
+% }
 % 
 % @inproceedings{cfci:zhang,
 %  author = "Zhang, Mingwei and Sekar, R.",
@@ -1099,12 +1104,12 @@ booktitle = "Black Hat Europe",
   year = "2013",
  }
 % 
- @inproceedings{cfiguard:yuan,
-  author = "Yuan, Pinghai and Zeng, Qingkai and Ding, Xuhua",
-  title = "{Hardware-Assisted Fine-Grained Code-Reuse Attack Detection}",
-  booktitle = {Proceedings of the International Symposium on Research in Attacks, Intrusions, and Defenses (RAID)},
-  year = "2015",
- }
+% @inproceedings{cfiguard:yuan,
+%  author = "Yuan, Pinghai and Zeng, Qingkai and Ding, Xuhua",
+%  title = "{Hardware-Assisted Fine-Grained Code-Reuse Attack Detection}",
+%  booktitle = {Proceedings of the International Symposium on Research in Attacks, Intrusions, and Defenses (RAID)},
+%  year = "2015",
+% }
 % 
  @inproceedings{ccfi:jose,
   author = "Mashtizadeh, Ali José and Bittau, Andrea and Boneh, Dan and Mazières, David",
@@ -1218,12 +1223,12 @@ booktitle = "Black Hat Europe",
 %  year = "2014",
 % }
 
- @inproceedings{kcocfi,
-  author = "Criswell, John and Dautenhahn, Nathan and Adve, Vikram",
-  title = "{KCoFI: Complete Control-Flow Integrity for Commodity Operating System Kernels}",
-  booktitle = {Proceedings of the IEEE Symposium on Security and Privacy (S\&P)},
-  year = "2014",
- }
+% @inproceedings{kcocfi,
+%  author = "Criswell, John and Dautenhahn, Nathan and Adve, Vikram",
+%  title = "{KCoFI: Complete Control-Flow Integrity for Commodity Operating System Kernels}",
+%  booktitle = {Proceedings of the IEEE Symposium on Security and Privacy (S\&P)},
+%  year = "2014",
+% }
 
 % 
 % @inproceedings{minghua:binary,
@@ -1233,12 +1238,12 @@ booktitle = "Black Hat Europe",
 %  year = "2015",
 % }
 
- @inproceedings{cflocking,
-  author = "Bletsch, Tyler and Jiang, Xuxian and Freeh, Vince",
-  title = "{Mitigating code-reuse attacks with control-flow locking}",
-  booktitle = {Annual Computer Security Applications Conference (ACSAC)},
-  year = "2011",
- }
+% @inproceedings{cflocking,
+%  author = "Bletsch, Tyler and Jiang, Xuxian and Freeh, Vince",
+%  title = "{Mitigating code-reuse attacks with control-flow locking}",
+%  booktitle = {Annual Computer Security Applications Conference (ACSAC)},
+%  year = "2011",
+% }
  
   @inproceedings{cfrestrictor,
   author = "Pewny, Jannik and Holz, Thorsten",

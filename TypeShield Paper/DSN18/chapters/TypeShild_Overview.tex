@@ -1,11 +1,11 @@
 \section{System Overview}
 \label{chapter:TypeShild Overview}
 In~\cref{Overview} we present the main steps performed by \textsc{TypeShield} in order to harden a program binary, and
-in~\cref{Invariants for Targets and Callsites} we present the invariants for calltargets and callsites, while 
-in~\cref{TypeShield Policy Mechanism} we present our type based policy and approach overview.
+in~\cref{Invariants for Targets and Callsites} we present the invariants for calltargets and callsites.
+% while in~\cref{TypeShield Policy Mechanism} we present our type based policy and approach overview.
 In~\cref{Backward Edge CFI Policy} we highlight our backward edge protection policy, and
 in~\cref{Adversary Model} we introduce the threat model used in this paper.
-Finally, in~\cref{TypeShild Impact on COOP} we talk about parameter count vs. parameter type policies.
+% Finally, in~\cref{TypeShild Impact on COOP} we talk about parameter count vs. parameter type policies.
 \subsection{Approach Overview}
 \label{Overview}
 Figure~\ref{System overview.} depicts the overview our approach.
@@ -41,10 +41,10 @@ red dots.
 
 \subsubsection{Callertarget Returns}
 We propose the following invariant for the calltargets returns.
-(1) we enforce the caller caller convention between the calltarget return instruction and the address next to callsite which was used in first place to 
-call that calltarget.
-Figure~\ref{System overview.} depicts this analogy by the backward indirect edges pointing from the green dots to the legitimate
-blue dots.
+(1) we enforce the caller caller convention between the calltarget return instruction and the address next 
+to callsite which was used in first place to call that calltarget.
+Figure~\ref{System overview.} depicts this with the backward indirect edges pointing from the green shaded dots to the legitimate
+blue shaded dots.
 
 % \vspace{-.99cm}
 % \subsection{Type Based Policy}
@@ -425,9 +425,10 @@ blue dots.
 relies on enforcing the legitimate forward edge addresses after each callsite
 to each calltarget return address (\textit{i.e.,} function return address). 
 This corresponds to the caller-callee calling convention 
-which basically enforces that each function should return to the next address after the callsite which 
-was used to call that function before. \textsc{TypeShield} provides three modes of operation for
-protecting the backward-edge policy. This modes of operation will be presented in section~\cref{chapter:Design}.
+which enforces that each function is allowed to return to the next address after the callsite which 
+was used to call that function first. \textsc{TypeShield} provides three modes of operation for
+protecting the backward-edge policy. 
+This modes of operation will be presented in section~\cref{chapter:Design}.
 
 % \subsection{Parameter Count vs. Parameter Type}
 % % \textbf{\textsc{TypeShield} Impact on COOP.}

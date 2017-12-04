@@ -286,19 +286,21 @@ In summary, we make the following contributions:
 
  \item 
 %  \textbf{Novel forward and backward edge protection technique.} 
- We designed a novel fine-grained CFI technique for protecting forward-edges and backward-edges 
- without making any assumptions on the presence of a shadow stack based technique.
+ We designed a novel fine-grained CFI technique for protecting forward-edges and backward-edges in stripped (\textit{i.e.,} no RTTI information) program binaries.
+%  without making any assumptions on the presence of a shadow stack based technique.
  
  \item 
 %  \textbf{Usable Open Source Prototype.} 
  We implemented, \textsc{TypeShield}, a binary instrumentation prototype which enforces the a fined grained forward-edge and backward-edge protecting technique
- for stripped program binaries. \textsc{TypeShield} can serve as platform for developing other binary based protection mechanisms.
+ for stripped program binaries. 
+%  \textsc{TypeShield} can serve as platform for developing other binary based protection mechanisms.
  
  \item 
 %  \textbf{Extensive Experimental Results.}
  We conducted a thorough set of evaluative experiments in which we show that \textsc{TypeShield} is more precise and effective than 
- other state-of-the-art tools. Further, we show that our tool has a higher calltarget set per callsite reduction, thus 
- further reducing the attack surface compared to state-of-the-art tools.
+ other state-of-the-art tools. 
+%  Further, we show that our tool has a higher calltarget set per callsite reduction, thus 
+%  further reducing the attack surface compared to state-of-the-art tools.
  
 %  \item \textbf{Reproducibility of Results.} 
 %  We respond to calls emphasizing the importance of reproducibility of evaluation results (see NISTIR 7564~\cite{reprod:nist} and the security and measurements 
