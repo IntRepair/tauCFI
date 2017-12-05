@@ -1,25 +1,25 @@
 \section{System Overview}
 \label{chapter:TypeShild Overview}
-In~\cref{Overview} we present the main steps performed by \textsc{TypeShield} in order to harden a program binary, and
-in~\cref{Invariants for Targets and Callsites} we present the invariants for calltargets and callsites.
+In~\cref{Overview}, we present the main steps performed by \textsc{TypeShield} in order to harden a program binary, and
+in~\cref{Invariants for Targets and Callsites}, we present the invariants for calltargets and callsites.
 % while in~\cref{TypeShield Policy Mechanism} we present our type based policy and approach overview.
-In~\cref{Backward Edge CFI Policy} we highlight our backward edge protection policy, and
-in~\cref{Adversary Model} we introduce the threat model used in this paper.
+Finally, in~\cref{Backward Edge CFI Policy}, we highlight our backward edge protection policy.
+% in~\cref{Adversary Model}, we introduce the threat model used in this paper.
 % Finally, in~\cref{TypeShild Impact on COOP} we talk about parameter count vs. parameter type policies.
 \subsection{Approach Overview}
 \label{Overview}
-Figure~\ref{System overview.} depicts the overview our approach.
-From right to left the program binary is analyzed (see left hand side in Figure~\ref{System overview.}) by \textsc{TypeShield} and the calltargets
+Figure~\ref{System overview.} depicts the overview of our approach.
+From right to left, the program binary is analyzed (see left hand side in Figure~\ref{System overview.}) by \textsc{TypeShield} and the calltargets
 and callsite analysis are performed for determining 
 how many parameters are provided, 
 how many are consumed and their register wideness.
-After this step labels are inserted at each previously identified callsite and at each calltarget. 
+After this step, labels are inserted at each previously identified callsite and at each calltarget. 
 The enforced policy is schematically represented by the black highlighted dots (addresses) in Figure~\ref{System overview.} which are allowed to call only legitimate red highlighted dots (addresses).
-Next for each function return address the address set determined by each address located after each legitimate (is allowed to call the function) callsite is collected.
+Next, for each function return address, the address set determined by each address located after each legitimate (is allowed to call the function) callsite is collected.
 This information is obtained by using the previously determined callsite forward-edge mapping to derive a function return backward map containing function returns as key and return targets as values.
-In this way \textsc{TypeShield} has for each function return site a set of legitimate addresses where the function return site is allowed to transfer the program control flow.
-Finally, range or compare checks are inserted before each function return site. This checks are used to check during runtime if the 
-address where the function return wants to jump to is contained in the legitimate set for each particular return site.
+In this way, \textsc{TypeShield} has for each function return site a set of legitimate addresses where the function return site is allowed to transfer the program control flow.
+Finally, range or compare checks are inserted before each function return site. These checks are used to check during runtime if the 
+address, where the function return wants to jump to, is contained in the legitimate set for each particular return site.
 This is represented in Figure~\ref{System overview.} by green highlighted dots (addresses) that are allowed to call only legitimate blue highlighted dots (addresses).
 Finally, the result is a hardened program binary (see right hand side in Figure~\ref{System overview.}).
 
@@ -34,15 +34,15 @@ We propose the following invariants for the function calltargets and callsites.
 (1) indirect callsites provide a number of parameters (\textit{i.e.,} possibly overestimated compared to program source code), 
 (2) calltargets require a minimum number of parameters (\textit{i.e.,} possibly underestimated compared to program source code), and
 (3) the wideness of the callsite parameters has to be bigger or equal to the wideness of the parameters registers expected at the calltarget.
-In a nutshell the idea is that a callsite might only call functions that do not require more parameters than provided by the callsite and
-where the parameter register wideness of each parameter of the callsite is higher or equal to that parameter registers used at the calltarget.
+In a nutshell, the idea is that a callsite might only call functions that do not require more parameters than provided by the callsite and
+where the parameter register wideness of each parameter of the callsite is higher or equal to that parameter register used at the calltarget.
 Figure~\ref{System overview.} depicts this requirements by the forward indirect edges pointing from the black dots to the legitimate
 red dots.
 
 \subsubsection{Callertarget Returns}
-We propose the following invariant for the calltargets returns.
-(1) we enforce the caller caller convention between the calltarget return instruction and the address next 
-to callsite which was used in first place to call that calltarget.
+We propose the following invariant for the calltargets returns:
+we enforce the caller-callee convention between the calltarget return instruction and the address next 
+to the callsite, which was used in the first place to call that calltarget.
 Figure~\ref{System overview.} depicts this with the backward indirect edges pointing from the green shaded dots to the legitimate
 blue shaded dots.
 
@@ -428,7 +428,7 @@ This corresponds to the caller-callee calling convention
 which enforces that each function is allowed to return to the next address after the callsite which 
 was used to call that function first. \textsc{TypeShield} provides three modes of operation for
 protecting the backward-edge policy. 
-This modes of operation will be presented in section~\cref{chapter:Design}.
+These modes of operation will be presented in section~\cref{chapter:Design}.
 
 % \subsection{Parameter Count vs. Parameter Type}
 % % \textbf{\textsc{TypeShield} Impact on COOP.}

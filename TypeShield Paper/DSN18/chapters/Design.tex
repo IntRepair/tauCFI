@@ -5,11 +5,11 @@ In this section, we present
 % in~\cref{Parameter Count Based Policy} our function parameter count based policy,
 in \cref{section:typepolicy}, the details of our type policy, and 
 in~\cref{section:instructionanalysis} we introduce the definitions for our instructions analysis based on register states, 
-while in~\cref{section:calltargetanalysis} we present the design of our calltarget analysis.
-In~\cref{section:callsiteanalysis} we depict the design of our callsite analysis\footnote{Callsites detection in the 
+while in~\cref{section:calltargetanalysis}, we present the design of our calltarget analysis.
+In~\cref{section:callsiteanalysis}, we depict the design of our callsite analysis\footnote{Callsites detection in the 
 binary is based on the capabilities of DynInst.}, and  
-in~\cref{Enforcing The Forward Edge Policy} we present our forward-edge policy instrumentation strategy, while 
-in~\cref{Backward Edge Analysis} we highlight our function backward-edge analysis and policy instrumentation strategy.
+in~\cref{Enforcing The Forward Edge Policy}, we present our forward-edge policy instrumentation strategy, while 
+in~\cref{Backward Edge Analysis}, we highlight our function backward-edge analysis and policy instrumentation strategy.
 
 \subsection{Parameter Register Wideness Based Policy}
 \label{section:typepolicy}
@@ -82,13 +82,13 @@ in~\cref{Backward Edge Analysis} we highlight our function backward-edge analysi
 % Also, the reverse is true for providing parameters, as it is possible to accept less parameters than provided.
 % Note that accepting more parameters than provided is not allowed.
 
-We use the register width of the function parameter in order to infer the type information. As previously mentioned, there are 4 types 
+We use the register width of the function parameter in order to infer the type information. There are 4 types 
 of reading and writing accesses. Therefore, our set of possible types for parameters is $\texttt{TYPE} = \{64, 32, 16, 8, 0\}$; where 0 models the absence of a 
 parameter. Since Itanium C++ ABI specifies 6 registers (\textit{i.e.,} \texttt{rdi}, \texttt{rsi}, \texttt{rdx}, \texttt{rcx}, \texttt{r8}, and \texttt{r9}) as 
 parameter passing registers during function calls, we classify our callsites and calltargets into $\texttt{TYPE}^6$. Similar to
-our count policy, we allow overestimations of callsites and underestimations of calltargets, on the parameter types as well. Therefore, for a 
+our count policy, we allow overestimations of callsites and underestimations of calltargets on the parameter types as well. Therefore, for a 
 callsite $cs$ it is possible to call a calltarget $ct$, only if for each parameter of $ct$ the corresponding parameter of $cs$ is not smaller w.r.t. the register width.
-This results in a finer-grained policy which is further restricting the possible set of calltargets for each callsite.
+This results in a finer-grained policy, which is further restricting the possible set of calltargets for each callsite.
 
 %What we call the \emph{type} policy is the idea of not only relying on the parameter count but also on the parameter type. However, due to complexity reasons,
 %we are restricting ourselves to the general purpose registers, which the Intanium C++ ABI designates as parameter registers. Furthermore, we are not inferring 
@@ -201,7 +201,7 @@ of callsites, which can access the same set of calltargets, a route which we wil
 \subsection{Analysis of Register States}
 \label{section:instructionanalysis}
 
-Our register state analysis is register state based, another alternative would be to do symbol-based data-flow analysis which we will leave as future work.
+Our register state analysis is (as the name implies) register state based. Another alternative would be to do symbol-based data-flow analysis, which we will leave as future work.
 In order for the reader to understand our analysis we will first give some definitions.
 The set $\texttt{INSTR}$ describes all possible instructions that can occur within the executable section of a program binary. In our case,
 this is based on the x86-64 instruction set. An instruction $i \in \texttt{INSTR}$ can non-exclusively perform two kinds of operations on any number of existing 
@@ -344,14 +344,14 @@ To permit this, we allow our merge operations to also return the value $RW$, whi
 %	\item A vertical merge operator that conceptually calculates the union of all read accesses along a path until the first write occurs ($merge\_v^{u}$).
 %\end{itemize}
 Therefore, our vertical merge operator conceptually intersects all read accesses along a path until the first write 
-occurs $merge\_v^{i}$. In any other case, it behaves like the previously mentioned vertical merge function.
+occurs, $merge\_v^{i}$. In any other case, it behaves like the vertical merge function.
 %Our horizontal merge function is a simple pairwise combination of the given set of states:
 %\begin{align}
 %merge\_h(\{s\}) &= s\\
 %merge\_h(\{s\} \cup s') &= s \circ merge\_h(s')
 %\end{align}
-Our horizontal merge $merge\_h$ function is a pairwise combination of the given set of states, which are then combined with an union-like operator 
-with $W$ preceding $WR$ and $WR$ preceding $R$ and $R$ preceding $C$. Unless one side is $W$, read accesses are combined in such a way that always the higher one is selected.
+Our horizontal merge $merge\_h$ function is a pairwise combination of the given set of states, which are then combined with a union-like operator 
+with $W$ preceding $WR$, and $WR$ preceding $R$, and $R$ preceding $C$. Unless one side is $W$, read accesses are combined in such a way that always the higher one is selected.
 
 %The results of our experiments with the implementation of calltarget classification gave presented us with essentially one possible candidate
 %that we can base our horizontal merge function on, namely the union operator with an analysis function that follows into direct calls. The 
@@ -386,7 +386,7 @@ For our {count} policy, we need a coarse representation of the state of one regi
 Further, this gives us the $S^\mathcal{L} = \{ C, R, W \}$ as register state, which translates to the register super state $\mathcal{S}^\mathcal{L} = (S^\mathcal{L})^{16}$. 
 We implement \texttt{merge\_v} in such a way that a state within a superstate is only updated if the corresponding register was not accessed, as represented by $C$. 
 Our reasoning is that the first access is the relevant one in order to determine read before write.
-Our horizontal \textit{merge($merge\_h$)} function is a simple pairwise combination of the given set of states, which are then combined with an union like operator with $W$ preceding $R$ and $R$ preceding $C$.
+Our horizontal \textit{merge($merge\_h$)} function is a simple pairwise combination of the given set of states, which are then combined with a union like operator with $W$ preceding $R$, and $R$ preceding $C$.
 The index of highest parameter register based on the used call convention that has the state R considered to be the number of parameters a function at least requires to be prepared by a callsite.
 
 %
@@ -471,8 +471,8 @@ The index of highest parameter register based on the used call convention that h
 
 \subsubsection{Void/Non-Void Calltarget}
 In order to determine if a calltarget is a void or non-void return function
-\textsc{TypeShield} traverses backwards the basic blocks from the return instruction of the function an looks for the \texttt{RAX} register.
-In case  there is a write operation on the \texttt{RAX} register then \textsc{TypeShield}
+\textsc{TypeShield} traverses backwards the basic blocks from the return instruction of the function and looks for the \texttt{RAX} register.
+In case there is a write operation on the \texttt{RAX} register, then \textsc{TypeShield}
 infers that the function return is non-void and thus provides a pointer value back.
 
 % \subsubsection{Encountered Analysis Issues}
@@ -598,7 +598,7 @@ infers that the function return is non-void and thus provides a pointer value ba
 \subsection{Callsite Analysis}
 \label{section:callsiteanalysis}
 Our callsite analysis classifies callsites according to the parameters they provide. Overestimations are allowed, however,
-underestimations are not permitted. For this purpose we employ a customizable modified reaching definition algorithm, 
+underestimations are not permitted. For this purpose, we employ a customizable modified reaching definition algorithm, 
 which we will show first. 
 % Furthermore, we will highlight some corner cases we encountered.
 
@@ -780,10 +780,10 @@ This gives us the following $S^\mathcal{L} = \{ T, s64, s32, s16, s8, U \}$ regi
 super state $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
 
 However, we are only interested in the first occurrence of a state that is not $U$ in a path, as following reads or writes do not give us more information. Therefore, we can use 
-the same vertical merge function as for the \emph{count} policy, which is essentially a pass-through until the first non $U$ state.
+the same vertical merge function as for the \emph{count} policy, which is essentially a pass-through until the first non-$U$ state.
 
 Our horizontal merge $merge\_h$ function is a simple pairwise combination of the given set of states, which are then combined with an union like operator with $T$ 
-preceding $S$ and $S$ preceding $U$. Note, that when both states are set, we pick the higher one.
+preceding $S$, and $S$ preceding $U$. Note, that when both states are set, we pick the higher one.
 
 %
 %Our horizontal merge function is again a simple pairwise combination of the given set of states:
@@ -853,10 +853,10 @@ For implementing our {count} policy, we use a coarse representation of the state
 (1) $T$ represents a trashed register,
 (2) $S$ represents a set register (written to), and
 (3) $U$ represents an untouched register.
-This gives us the following $S^\mathcal{L} = \{ T, S, U \}$  register state which translates to the register super state $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
+This gives us the following $S^\mathcal{L} = \{ T, S, U \}$  register state, which translates to the register super state $\mathcal{S}^\mathcal{R} = (S^\mathcal{R})^{16}$.
 
 We are only interested in the first occurrence of a $S$ or $T$ within one path, as following reads or writes do not give us more information. Therefore, our vertical 
-merge function $merge\_v$ behaves as follows. In case the first given state is $U$, than the return value is the second state and in all other cases it will return the first state.
+merge function $merge\_v$ behaves as follows. In case the first given state is $U$, then the return value is the second state and in all other cases it will return the first state.
 %
 %We are only interested in the first occurrence of a S or T within one path, as following reads or writes do not give us more information.
 %Therefore, we can define our vertical merge function in the following way:
@@ -871,7 +871,7 @@ merge function $merge\_v$ behaves as follows. In case the first given state is $
 %\end{align}
 
 
-Our horizontal merge $merge\_h$ function is a pairwise combination of the given set of states, which are then combined with an union like operator with $T$ preceding $S$ and $S$ preceding $U$.
+Our horizontal merge $merge\_h$ function is a pairwise combination of the given set of states, which are then combined with a union like operator with $T$ preceding $S$, and $S$ preceding $U$.
 %
 %Our horizontal merge function is a simple pairwise combination of the given set of states:
 %\begin{align}
@@ -941,8 +941,8 @@ The index of the highest parameter register based on the used call convention th
 
 \subsubsection{Void/Non-Void Callsite}
 In order to determine if a callsite is a void or non-void return function
-\textsc{TypeShield} looks at the callsite if there is an read before write on the \texttt{RAX} register. 
-In case there is a read before write operation on the \texttt{RAX} register then
+\textsc{TypeShield} looks at the callsite if there is a read before write on the \texttt{RAX} register. 
+In this is the case,
 \textsc{TypeShield} infers that the callsite is non-void and thus expects a pointer to be provided 
 when the called function returns.
 
@@ -1085,17 +1085,17 @@ callsites and calltargets is used to determine the backward address set
 for each return address contained in each address taken function. The 
 $fMap$ is obtained after running the callsite and 
 calltarget analysis (see \cref{section:calltargetanalysis} and \cref{section:callsiteanalysis}). 
-These mapping contains for each callsite the legal calltargets where the forward-edge
-indirect control flow transfer is allowed to jump to. This mapping is reflected back by construction a second
+This mapping contains for each callsite the legal calltargets where the forward-edge
+indirect control flow transfer is allowed to jump to. This mapping is mapped back by building a second
 mapping between the return address of each function for which we have the start 
 address and a return target address set. 
 
 The return target address set for a function return is determined by getting the next address after each callsite address 
 which is allowed to make the forward-edge control flow transfer
-(\textit{i.e.,} recall the caller callee calling convention).
+(\textit{i.e.,} recall the caller-callee calling convention).
 The $rMap$ is obtained by visiting each function return address and assigning to it the address next to the callsite
-which was used in order to transfer the control flow to the function in first place. 
-At the end of the analysis all callsites and all function returns have been visited and a set for each function return address of backward-edgeaddresses will be obtained.
+which was used in order to transfer the control flow to the function in the first place. 
+At the end of the analysis, all callsites and all function returns have been visited and a set for each function return address of backward-edge addresses will be obtained.
 Note that the function boundary address (\textit{i.e.,} retn) was detected by a linear basic block search from the beginning of 
 the function (calltarget) until the first return instruction was encountered. We are aware that other promising approaches for recuperating 
 function boundaries (\textit{e.g.,}~\cite{function:boundary}) exist, and plan to experiment with them in future work.
@@ -1105,14 +1105,13 @@ function boundaries (\textit{e.g.,}~\cite{function:boundary}) exist, and plan to
 \label{Enforcing The Forward Edge Policy}
 The result of the forward callsite and calltarget analysis is a mapping between the allowed calltargets for each callsite.
 In order to enforce this mapping during runtime each callsite and calltarget contained in the previous mapping are instrumented
-inside the binary program with two labels and a callsite located CFI-based checking mechanism. At each callsite the number of 
-provided parameters are encoded as a series of six bits. At the calltarget the label contains six bits denoting how 
+inside the binary program with two labels and a callsite located CFI-based checking mechanism. At each callsite, the number of 
+provided parameters are encoded as a series of six bits. At the calltarget, the label contains six bits denoting how 
 many parameters the calltarget expects. Additionally, at the callsite six bits encode which register wideness types each of the provided parameters have 
 while at the calltarget another six bits are used to encode the types of the parameters expected. Further, at the callsite another bit 
-is used to define if the function is expecting a \texttt{void} return type or not. All this information are written in labels before
-each callsite and calltarget. During runtime before each callsite these labels are compared by performing a xor operation between 
-the bits contained in the previously mentioned labels. In case the xor operation returns false
-than the transfer is allowed else the program execution is terminated.
+is used to define if the function is expecting a \texttt{void} return type or not. All these information are written in labels before
+each callsite and calltarget. During runtime before each callsite, these labels are compared by performing a xor operation between 
+the bits contained in the previously mentioned labels. In case the xor operation returns false, then the transfer is allowed, else the program execution is terminated.
 
 \subsubsection{Backward-Edge Policy Enforcement}
 The previously determined $rMap$ in Algorithm~\ref{alg:returns} will be used to insert a check before each 
@@ -1127,16 +1126,16 @@ CFI check which can be inserted before each function return instruction.
 % on the entropy of the $rAddress$es. In short, this means that as far as the $min$ and $max$ addresses are from each other the more leeway the attacker will have. 
 
 % \textbf{Fast mode.} 
-Based on the $rMap$, before each AT function return a randomly generated label (\textit{i.e.,} the value 7232943 will be loaded trough one level of indirection) 
+Based on the $rMap$, before each AT function returns a randomly generated label (\textit{i.e.,} the value 7232943 will be loaded through one level of indirection) 
 value will be inserted. The same label will be inserted before each legitimate (\textit{i.e.,} based on the forward-edge policy) target address (next address after a legitimate callsite) 
 of the function return. 
-In this way a function return will be allowed to jump to only the instruction which follows next to the 
-address of the callsites which are allowed to call the calltarget which contains this particular function return. 
-For callsites which are allowed to call the calltarget mentioned and another calltarget than in this cases \textsc{TypeShield} will perform a search in order to detect if the callsite
-has already a label attached to the next address after the callsite. In this case the label will be reused. In this situation two callsites share their labels. The solution to this is to 
-use single labels for each function return address. In this case multiple labels have to be stored for each address following a legitimate callsite.
+In this way, a function return will be allowed to jump to only the instruction which follows next to the 
+address of the callsites which are allowed to call the calltarget containing this particular function return. 
+For callsites which are allowed to call the calltarget mentioned and another calltarget, \textsc{TypeShield} will perform a search in order to detect if the callsite
+has already a label attached to the next address after the callsite. In this case, the label will be reused. Note that in this situation two callsites share their labels. The solution to this is to 
+use single labels for each function return address. In this case, multiple labels have to be stored for each address following a legitimate callsite.
 Further, addresses located after a callsite that are not allowed to call a particular calltarget will get another randomly generated label. 
-In this way calltarget return labels are grouped together based on the $rMap$. This mode of operation allows 
+In this way, calltarget return labels are grouped together based on the $rMap$. This mode of operation allows 
 at least (additionally the callsites which are allowed to call more than one calltarget are added) the same number of function return sites as the 
 forward-edge policy enforces for each callsite and it is runtime efficient since label checking is based on a single efficient 
 compare check.

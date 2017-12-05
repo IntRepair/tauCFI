@@ -297,15 +297,14 @@
 % However, there is an alarmingly high number of object dispatch (\textit{i.e.,} forward-edge) corruption vulnerabilities which undercut security 
 % in significant ways and are in need of a thorough solution.
 
-We propose, \textsc{TypeShield}, a binary runtime forward-edge and backward-edge protection tool 
-which instruments program executables at load time. \textsc{TypeShield} enforces a novel runtime 
-control-flow integrity (CFI) policy based on function parameter type and count in order to overcome the limitations of available approaches and to 
-efficiently verify dynamic object dispatches and function returns during runtime. To enhance practical applicability, \textsc{TypeShield} can 
+We propose \textsc{TypeShield}, a binary runtime forward-edge and backward-edge protection tool instrumenting program executables at load time. \textsc{TypeShield} enforces a novel runtime
+control-flow integrity (CFI) policy based on function parameter type and count, in order to overcome the limitations of available approaches and to
+efficiently verify dynamic object dispatches and function returns during runtime. To enhance practical applicability, \textsc{TypeShield} can
 be automatically and easily used in conjunction with legacy applications or where source code is missing to harden binaries.
-We evaluated \textsc{TypeShield} on highly relevant open source programs and the SPEC CPU2006 benchmark and were able to 
+We evaluated \textsc{TypeShield} on highly relevant open source programs and the SPEC CPU2006 benchmark and were able to
 efficiently and with low performance overhead protect these applications from forward-edge and backward-edge corruptions.
 Finally, in a direct comparison with state-of-the-art tools, \textsc{TypeShield}
-achieves higher caller/callee matching precision, while maintaining a
+achieves higher caller-callee matching precision, while maintaining a
 low runtime overhead.
 
 
