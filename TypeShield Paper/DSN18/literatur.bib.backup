@@ -3,68 +3,60 @@
 @IEEEtranBSTCTL{IEEEexample:BSTcontrol,
 CTLdash_repeated_names= "no",
 }
-
-%@BOOK{khedker2009data,
-%AUTHOR={Khedker, Uday and Sanyal, Amitabha and Sathe, Bageshri},
-%TITLE={Data flow analysis: Theory and Practice},
-%PUBLISHER={CRC Press},
-%YEAR={2009}
-%}
-
 @inproceedings{mingwei:sekar,
  author = {Zhang, M. and Sekar, R.},
  title = {Control Flow Integrity for COTS Binaries},
- booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC)},
+ booktitle = {USENIX SEC},
  year = {2013}
 } 
 
 @inproceedings{safedispatch:jang,
  author = {Jang, D. and Tatlock, T. and Lerner, S.},
  title = {SafeDispatch: Securing C++ Virtual Calls from Memory Corruption Attacks},
- booktitle = {Symposium on Network and Distributed System Security (NDSS)},
+ booktitle = {NDSS},
  year = {2014}
 } 
 
 @InProceedings{schuster:coop,
- author = {Schuster, Felix and Tendyck, Thomas and Liebchen, Christopher and Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten},
+ author = {Schuster, F. and Tendyck, T. and Liebchen, C. and Davi, L. and Sadeghi, A.-R. and Holz, T.},
  title = {Counterfeit Object-Oriented Programming},
- booktitle = {Proceedings of the IEEE Symposium on Security and Privacy (S\&P)},
+ booktitle = {S\&P},
  year = {2015}
 } 
 
 @InProceedings{schuster:raid,
- author = {Schuster, Felix and Tendyck, Thomas and Liebchen, Christopher and Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten},
+ author = {Schuster, F. and Tendyck, T. and Liebchen, C. and Davi, L. and Sadeghi, A.-R. and Holz, T.},
  title = {Evaluating the Effectiveness of Current Anti-ROP Defenses},
- booktitle = {Proceedings of the International Symposium on Research in Attacks, Intrusions, and Defenses (RAID)},
+ booktitle = {RAID},
  year = {2014}
 } 
 
 @InProceedings{gawlik,
- author = {Gawlik, Robert and Holz, Thorsten},
+ author = {Gawlik, R. and Holz, T.},
  title = {Towards automated integrity protection of C++ virtual function tables in binary programs},
- booktitle = {Annual Computer Security Applications Conference (ACSAC)},
+ booktitle = {ACSAC},
  year = {2014}
 } 
 
 @InProceedings{payer:dimva,
- author = {Payer, Mathias and Barresi, Antonio and R. Gross, Thomas},
+ author = {Payer, M. and Barresi, A. and R. Gross, T.},
  title = {Fine-Grained Control-Flow Integrity through Binary Hardening},
  booktitle = {DIMVA},
  year = {2015}
 } 
 
 @inproceedings{vtv:tice,
- author = {Tice, Caroline and Roeder, Tom and Collingbourne, Peter and Checkoway, Stephen and Erlingsson, {\'U}lfar and Lozano, Luis and Pike, Geoff},
+ author = {Tice, C. and Roeder, T. and Collingbourne, P. and Checkoway, S. and Erlingsson, {\'U}. and Lozano, L. and Pike, G.},
  title = {Enforcing Forward-Edge Control-Flow Integrity in GCC and LLVM},
- booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC)},
+ booktitle = {USENIX SEC},
  year = {2014}
 } 
 
 @inproceedings{subversive-c:lettner,
- author = {Lettner, Julian and Kollenda, Benjamin and Homescu, Andrei and Larsen, Per and Schuster, Felix and
-Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael},
+ author = {Lettner, J. and Kollenda, B. and Homescu, A. and Larsen, Per and Schuster, F. and
+Davi, L. and Sadeghi, A.-R. and Holz, T. and Franz, M.},
  title = {Subversive-C: Abusing and Protecting Dynamic Message Dispatch},
- booktitle = {USENIX Annual Technical Conference (USENIX ATC)},
+ booktitle = {USENIX ATC},
  year = {2016}
 } 
 
@@ -75,51 +67,37 @@ Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and Franz, Michael},
 }
 
 @InProceedings{loop:oriented,
- author = {Lan, Bingchen and Li, Yan and Sun, Hao and Su, Chao and Liu, Yao and Zeng, Qingkai},
+ author = {Lan, B. and Li, Y. and Sun, H. and Su, C. and Liu, Y. and Zeng, Q.},
  title = {Loop-Oriented Programming: A New Code Reuse Attack to Bypass Modern Defenses},
  booktitle = {IEEE Trustcom/BigDataSE/ISPA},
  year = {2015}
 } 
 
 @InProceedings{hafix:bypass,
- author = {Theodorides, Michael and Wagner, David},
+ author = {Theodorides, M. and Wagner, D.},
  title = {Breaking Active-Set Backward-Edge CFI},
- booktitle = {International Symposium on Hardware Oriented Security and Trust (HOST)},
+ booktitle = {HOST},
  year = {2017}
 }
 
 @InProceedings{hafix,
- author = {Davi, Lucas and Hanreich, M. and Paul, D. and Sadeghi, A.-R and Koeberl, P. and Sullivan, D. and Arias, O. and Jin, Y},
+ author = {Davi, L. and Hanreich, M. and Paul, D. and Sadeghi, A.-R and Koeberl, P. and Sullivan, D. and Arias, O. and Jin, Y},
  title = {HAFIX: hardware-assisted flow integrity extension},
- booktitle = {Design Automation Conference (DAC)},
- year = {2015}
-}
-
-@InProceedings{zhang:usenix,
- author = {Zhang, Mingwei and Sekar, R.},
- title = {Control Flow Integrity for COTS Binaries},
- booktitle = {USENIX SEC},
- year = {2013}
+ booktitle = {DAC'15},
+ %year = {2015}
 } 
 
 @InProceedings{dang:asiaccs,
- author = {Dang, Thurston HY and Maniatis, Petros and Wagner, David},
+ author = {Dang, T. H. Y. and Maniatis, P. and Wagner, D.},
  title = {The Performance Cost of Shadow Stacks and Stack Canaries},
- booktitle = {ACM Asia Conference on Computer and Communications Security (ASIACCS)},
- year = {2015}
+ booktitle = {ASIACCS'15},
+ %year = {2015}
 }
-
- @inproceedings{shadowstack:overhead,
-  author = "Dang, Thurston H.Y. and Maniatis, Petros and Wagner, David",
-  title = "{The Performance Cost of Shadow Stacks and Stack Canaries}",
-  booktitle = {ACM Symposium on Information, Computer and Communications Security (ASIACCS)},
-  year = "2015",
- }
  
-  @inproceedings{safestack:bypass,
+@inproceedings{safestack:bypass,
 title = "Bypassing Clang's SafeStack for Fun and Profit",
 keywords = "Security, Information hiding",
-author = "E.K. Goktas and A. Oikonomopoulos and Robert Gawlik and Benjamin Kollenda and I. Athanasopoulos and C. Giuffrida and G. Portokalidis and H.J. Bos",
+author = "E. K. Goktas and A. Oikonomopoulos and Robert Gawlik and Benjamin Kollenda and I. Athanasopoulos and C. Giuffrida and G. Portokalidis and H.J. Bos",
 year = "2016",
 month = "11",
 booktitle = "Black Hat Europe",
@@ -132,16 +110,16 @@ booktitle = "Black Hat Europe",
 }
 
 @InProceedings{vci:asiaccs,
- author = {Elsabagh, Mohamed and Fleck, Dan and Stavrou, Angelos},
+ author = {Elsabagh, M. and Fleck, D. and Stavrou, A.},
  title = {Strict Virtual Call Integrity Checking for C ++ Binaries},
- booktitle = {ACM Asia Conference on Computer and Communications Security (ASIACCS)},
+ booktitle = {ASIACCS},
  year = {2017}
 }
 
 @InProceedings{alias:undecidable,
  author = {Ramalingam, G.},
  title = {The Undecidability of Aliasing},
- booktitle = {ACM Transactions on Programming Languages and Systems (TOPLAS)},
+ booktitle = {TOPLAS},
  year = {1994}
 }
 
@@ -171,130 +149,123 @@ booktitle = "Black Hat Europe",
 }
 
 @inproceedings{veen:typearmor,
- author = {Veen, Victor van der and Goktas, Enes and Contag, Moritz and Pawlowski, Andre and Chen, Xi and Rawat, Sanjay and
- Bos, Herbert and Holz, Thorsten and Athanasopoulos, Elias and Giuffrida, Cristiano},
+ author = {Veen, V. van der and Goktas, E. and Contag, M. and Pawlowski, A. and Chen, X. and Rawat, S. and
+ Bos, H. and Holz, T. and Athanasopoulos, E. and Giuffrida, C.},
  title = {A Tough call: Mitigating Advanced Code-Reuse Attacks At The Binary Level},
- booktitle = {Proceedings of the IEEE Symposium on Security and Privacy (S\&P)},
+ booktitle = {S\&P},
  year = {2016}
 } 
 
 @inproceedings{haller:shrinkwrap,
- author = {Haller, Istvan and Goktas, Enes and Athanasopoulos, Elias and Portokalidis, G. and Bos, Herbert},
+ author = {Haller, I. and Goktas, E. and Athanasopoulos, E. and Portokalidis, G. and Bos, H.},
  title = {ShrinkWrap: VTable Protection Without Loose Ends},
- booktitle = {Annual Computer Security Applications Conference (ACSAC)},
+ booktitle = {ACSAC},
  year = {2015}
 } 
 
 @inproceedings{vtpin,
- author = {Sarbinowski, Pawel and Kemerlis, Vasileios P. and Giuffrida, Cristiano and Athanasopoulos, Elias},
+ author = {Sarbinowski, P. and Kemerlis, V. P. and Giuffrida, C. and Athanasopoulos, E.},
  title = {VTPin: Practical VTable Hijacking Protection for Binaries},
- booktitle = {Annual Computer Security Applications Conference (ACSAC)},
+ booktitle = {ACSAC},
  year = {2016}
 } 
 
 @inproceedings{volodymyr:cpi,
- author = {Kuznetsov, Volodymyr and Szekeres, László and Payer, Mathias and Candea, George and Sekar, R. and Song, Dawn},
+ author = {Kuznetsov, V. and Szekeres, L. and Payer, M. and Candea, G. and Sekar, R. and Song, D.},
  title = {Code-Pointer Integrity},
- booktitle = {Proceedings of the USENIX Symposium on Operating Systems Design and Implementation (OSDI)},
+ booktitle = {OSDI},
  year = {2014}
 } 
 
 @inproceedings{bounov:interleaving,
- author = {Bounov, Dimitar and Gökhan Kici, Rami and Lerner, Sorin},
+ author = {Bounov, D. and Gökhan K., Rami and Lerner, S.},
  title = {Protecting C++ Dynamic Dispatch Through VTable Interleaving},
- booktitle = {Symposium on Network and Distributed System Security (NDSS)},
+ booktitle = {NDSS},
  year = {2016}
 } 
 
 %@inproceedings{zhang:vtrust,
-% author = {Zhang, Chao and Carr, Scott A. and Li, Tongxin and Ding, Yu and Song, Chengyu and Payer, Mathias and Song, Dawn},
+% author = {Zhang, C. and Carr, S. A. and Li, T. and Ding, Y. and Song, C. and Payer, M. and Song, D.},
 % title = {VTrust: Regaining Trust on Virtual Calls},
-% booktitle = {Symposium on Network and Distributed System Security (NDSS)},
+% booktitle = {NDSS},
 % year = {2016}
 %}
 
-@inproceedings{marx,
- author = {Pawlowski, Andre and Contag, Moritz and van der Veen, Victor and Ouwehand, Chris and Holz, Thorsten and Bos, Herbert and Athanasopoulos, Elias and Giuffrida, Cristiano},
- title = {MARX : Uncovering Class Hierarchies in C++ Programs},
- booktitle = {Symposium on Network and Distributed System Security (NDSS)},
- year = {2017}
-}
-
 @inproceedings{crane:readactor++,
- author = {Crane, Stephen and Volckaert, Stijn and Schuster, Felix and Liebchen, Christopher and Larsen, Per and Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and De Sutter, Bjorn and Franz, Michael},
+ author = {Crane, S. and Volckaert, S. and Schuster, F. and Liebchen, C. and Larsen, P. and Davi, L. and Sadeghi, A.-R. and Holz, T. and De Sutter, B. and Franz, M.},
  title = {It's a TRaP: Table Randomization and Protection against Function-Reuse Attacks},
- booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)},
- year = {2015}
+ booktitle = {CCS'15},
+ %year = {2015}
 }
 
 @inproceedings{jujutsu,
- author = {Evans, Isaac and Long, Fan and Otgonbaatar, Ulziibayar and Shrobe, Howard and Rinard, Martin and Okhravi, Hamed and Sidiroglou-Douskosr, Stelios},
+ author = {Evans, I. and Long, F. and Otgonbaatar, U. and Shrobe, H. and Rinard, M. and Okhravi, H. and Sidiroglou-Douskosr, S.},
  title = {Control Jujutsu: On the Weaknesses of Fine-Grained Control Flow Integrity},
- booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)},
- year = {2015}
+ booktitle = {CCS'15},
+ %year = {2015}
 }
 
 @inproceedings{caballero:inference,
- author = {Caballero, Juan and Lin, Zhiqiang},
+ author = {Caballero, J. and Lin, Z.},
  title = {Type Inference on Executables},
- booktitle = {ACM Computing Surveys (CSUR)},
- year = {2016}
+ booktitle = {CSUR'16},
+ %year = {2016}
 }
 
 @inproceedings{veen:cfi,
- author = {Veen, Victor van der and Andriesse, Dennis and Göktas, Enes and Gras, Ben and
- Sambuc, Lionel and Slowinska, Asia and Bos, Herbert and Giuffrida, Cristiano},
+ author = {Veen, V. van der and Andriesse, D. and Göktas, E. and Gras, B. and
+ Sambuc, L. and Slowinska, A. and Bos, H. and Giuffrida, C.},
  title = {Practical Context-Sensiticve CFI},
- booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)},
- year = {2015}
+ booktitle = {CCS'15},
+ %year = {2015}
 }
 
-@inproceedings{andriesse:indepth,
- author = {Andriesse, D. and Chen, X. and Veen, V. van der and Slowinska, A. and Bos, H.},
- title = {An In-Depth Analysis of Disassembly on Full-Scale x86/x64 Binaries},
- booktitle = {Proceedings of the USENIX Conference on Security (USENIX SEC)},
- year = {2016}
-}
+%@inproceedings{andriesse:indepth,
+% author = {Andriesse, D. and Chen, X. and Veen, V. van der and Slowinska, A. and Bos, H.},
+% title = {An In-Depth Analysis of Disassembly on Full-Scale x86/x64 Binaries},
+% booktitle = {USENIX SEC},
+% year = {2016}
+%}
 
 @inproceedings{lin:rewards,
- author = {Lin, Zhiqiang and Zhang, Xiangyu and Xu, Dongyan},
+ author = {Lin, Z. and Zhang, X. and Xu, D.},
  title = {Automatic Reverse Engineering of Data Structures from Binary Execution},
- booktitle = {Symposium on Network and Distributed System Security (NDSS)},
- year = {2010}
+ booktitle = {NDSS'10},
+ %year = {2010}
 }
 
 @inproceedings{bap:brumley,
- author = {Brumley, David and Jager, Ivan and Avgerinos, Thanassis and Schwartz, Edward J.},
+ author = {Brumley, D. and Jager, I. and Avgerinos, T. and Schwartz, E. J.},
  title = {BAP: A Binary Analysis Platform},
- booktitle = {Proceedings of Computer AidedVTint: Protecting Virtual Function Tab Verification (CAV)},
- year = {2011}
+ booktitle = {CAV'11},
+ %year = {2011}
 }
 
 @inproceedings{fokin:smartdec,
- author = {Fokin, Alexander and Derevenets, Yegor and Chernov, Alexander and Troshina, Katerina},
+ author = {Fokin, A. and Derevenets, Y. and Chernov, A. and Troshina, K.},
  title = {SmartDec: Approaching C++ decompilation},
- booktitle = {Working Conference on Reverse Engineering (WCRE)},
- year = {2011}
+ booktitle = {WCRE'11},
+ %year = {2011}
 }
 
-@inproceedings{divine:balakrishnan,
- author = {Balakrishnan, G. and Reps, T.},
- title = {DIVINE: Discovering Variables in Executables},
- booktitle = {International Conference on Verification, Model Checking, and Abstract Interpretation (VMCAI)},
- year = {2007}
-}
+%@inproceedings{divine:balakrishnan,
+% author = {Balakrishnan, G. and Reps, T.},
+% title = {DIVINE: Discovering Variables in Executables},
+% booktitle = {VMCAI},
+% year = {2007}
+%}
 
 @inproceedings{alan:mycroft,
- author = {Mycroft, Alan},
+ author = {Mycroft, A.},
  title = {Lecture Notes},
  note={\url{https://www.cl.cam.ac.uk/~am21/papers/sas07slides.pdf}},
  year = {2007}
 }
 
 @inproceedings{bernat:dyninst,
- author = {Bernat, Andrew R. and Miller, Barton P.},
+ author = {Bernat, A. R. and Miller, B. P.},
  title = {Anywhere, Any-Time Binary Instrumentation},
- booktitle = {Proceedings of the 10th ACM SIGPLAN-SIGSOFT workshop on Program analysis for software tools, (PASTE)},
+ booktitle = {PASTE},
  year = {2011}
 }
 
@@ -304,136 +275,136 @@ booktitle = "Black Hat Europe",
  note={\url{http://dynamorio.org/home.html}}
 }
 
-@inproceedings{iso:iecN3690,
- author = {I. JTC1/SC22WG21},
- title = {ISO/IEC 14882:2013 Programming Language C++ (N3690)},
- year = {2013},
- note={\url{https://isocpp.org/files/papers/N3690.pdf}}
-}
+%@inproceedings{iso:iecN3690,
+% author = {I. JTC1/SC22WG21},
+% title = {ISO/IEC 14882:2013 Programming Language C++ (N3690)},
+% year = {2013},
+% note={\url{https://isocpp.org/files/papers/N3690.pdf}}
+%}
 
 @inproceedings{byoungyoung:typecasting,
- author = {Lee, Byoungyoung and Song, Chengyu and Kim, Taesoo and Lee, Wenke},
+ author = {Lee, B. and Song, C. and Kim, T. and Lee, W.},
  title = {Type Casting Verification: Stopping an Emerging Attack Vector},
  booktitle = {Proceedings of the USENIX Conference on Security (USENIX SEC)},
  year = {2015}
 }
 
 @inproceedings{rockjit:niu,
- author = {Niu, Ben and Tan, Gang},
+ author = {Niu, B. and Tan, G.},
  title = {RockJIT: Securing Just-In-Time Compilation Using Modular Control-Flow Inegrity},
- booktitle = {Proceedings of the ACM Conference on Computer and Communications Security (CCS)},
+ booktitle = {CCS},
  year = {2014}
 }
 
 @inproceedings{cfg:sound,
- author = {Tan, Gang and Jaeger, Trent},
+ author = {Tan, G. and Jaeger, T.},
  title = {CFG Construction Soundness in Control-Flow Integrity},
- booktitle = {Proceedings of the ACM SIGSAC Workshop on Programming Languages and Analysis for Security (PLAS)},
+ booktitle = {PLAS},
  year = {2017}
 }
 
 @inproceedings{vtint:zhang,
- author = {Zhang, Chao and Song, Chengyu and Zhijie, Kevin Chen and Chen, Zhaofeng and Song, Dawn},
+ author = {Zhang, C. and Song, C. and Zhijie, K. Chen and Chen, Z. and Song, D.},
  title = {vTint: Protecting Virtual Function Tables\' Integrity},
- booktitle = {Proceedings of the Symposium on Network and Distributed System Security (NDSS)},
+ booktitle = {NDSS},
  year = {2015}
 }
 
 @inproceedings{abadi:cfi2,
- author = {Abadi, Martin and Budiu, Mihai and Erlingsson, {\'U}lfar and Ligatti, Jay},
+ author = {Abadi, M. and Budiu, M. and Erlingsson, {\'U}. and Ligatti, J.},
  title = {Control Flow Integrity},
- booktitle = {Proceedings of the 12th ACM Conference on Computer and Communications Security (CCS)},
+ booktitle = {CCS},
  year = {2005}
 }
 
 @inproceedings{perinput:niu,
- author = {Niu, Ben and Tan, Gang},
+ author = {Niu, B. and Tan, G.},
  title = {Per-Input Control-Flow Integrity},
- booktitle = {Proceedings the ACM Conference on Computer and Communications Security (CCS)},
+ booktitle = {CCS},
  year = {2015}
 }
 
 @inproceedings{cfi:survey,
- author = {Burow, Nathan, and A. Carr, Scott, and Nash, Joseph, and Larsen, Per, and Franz, Michael, and Brunthaler, Stefan, and Payer, Mathias},
+ author = {Burow, N., and A. Carr, S., and Nash, J., and Larsen, P., and Franz, M., and Brunthaler, S., and Payer, M.},
  title = {Control-Flow Integrity: Precision, Security, and Performance},
- booktitle = {ACM Computing Surveys (CSUR)},
+ booktitle = {CSUR},
  year = {2017}
 }
 
 @inproceedings{abadi:cfi,
- author = {Abadi, Martin and Budiu, Mihai and Erlingsson, {\'U}lfar and Ligatti, Jay},
+ author = {Abadi, M. and Budiu, M. and Erlingsson, {\'U}. and Ligatti, J.},
  title = {Control Flow Integrity Principles, Implementations, and Applications},
- booktitle = {ACM Transactions on Information and System Security (TISSEC)},
+ booktitle = {TISSEC},
  year = {2009}
 }
 
 @inproceedings{mcfi:niu,
- author = {Niu, Ben and Tan, Gang},
+ author = {Niu, B. and Tan, G.},
  title = {Modular Control-Flow Integrity},
- booktitle = {ACM Conferece on Programming Language Design and Implementation (PLDI)},
+ booktitle = {PLDI},
  year = {2014}
 }
 
 @inproceedings{vfuard:aravind,
- author = {Prakash, Aravind and Hu, Xunchao and Yin, Heng},
+ author = {Prakash, A. and Hu, X. and Yin, H.},
  title = {Strict Protection for Virtual Function Calls in COTS C++ Binaries},
- booktitle = {Symposium on Network and Distributed System Security (NDSS)},
+ booktitle = {NDSS},
  year = {2015}
 }
 
 @inproceedings{dynaguard:petsios,
- author = {Petsios, Theofilos and Kemerlis, Vasileios P. and Polychronakis, Michalis and Keromytis, Angelos D.},
+ author = {Petsios, T. and Kemerlis, V. P. and Polychronakis, M. and Keromytis, A. D.},
  title = {DynaGuard: Armoring Canary-based Protections against Brute-force Attacks},
- booktitle = {Annual Computer Security Applications Conference (ACSAC)},
+ booktitle = {ACSAC},
  year = {2015}
 }
 
 @inproceedings{pblocker:prakash,
- author = {Prakash, Aravind and Yin, Heng},
+ author = {Prakash, A. and Yin, H.},
  title = {Defeating ROP Through Denial of Stack Pivot},
- booktitle = {Annual Computer Security Applications Conference (ACSAC)},
+ booktitle = {ACSAC},
  year = {2015}
 }
 
 @inproceedings{mohan:opaque,
- author = {Mohan, Vishwath and Larsen, Per and Brunthaler, Stefan and Hamlen, Kevin W. and Franz, Michael},
+ author = {Mohan, V. and Larsen, P. and Brunthaler, S. and Hamlen, K. W. and Franz, M.},
  title = {Opaque Control-Flow Integrity},
- booktitle = {Symposium on Network and Distributed System Security (NDSS)},
+ booktitle = {NDSS},
  year = {2015}
 }
 
 @inproceedings{cfci:zhang,
- author = {Zhang, Mingwei and Sekar, R.},
+ author = {Zhang, M. and Sekar, R.},
  title = {Control Flow and Code Integrity for COTS binaries: An Effective Defense Against Real-ROP Attcks},
- booktitle = {Annual Computer Security Applications Conference (ACSAC)},
+ booktitle = {ACSAC},
  year = {2015}
 }
 
 @inproceedings{ccfir:zhang,
- author = {Zhang, Chao and Wei, Tao and Chen, Zhaofeng and Duan, Lei and Szekeres, Laszlo and McCamant, Stephen and Song, Dawn and Zou, Wei},
+ author = {Zhang, C. and Wei, T. and Chen, Z. and Duan, L. and Szekeres, L. and McCamant, S. and Song, D. and Zou, W.},
  title = {Practical Control Flow Integrity \& Randomization for Binary Executables},
- booktitle = {Proceedings of the IEEE Symposium on Security and Privacy (S\&P)},
+ booktitle = {S\&P},
  year = {2013}
 }
 
 @inproceedings{cfiguard:yuan,
- author = {Yuan, Pinghai and Zeng, Qingkai and Ding, Xuhua},
+ author = {Yuan, P. and Zeng, Q. and Ding, X.},
  title = {Hardware-Assisted Fine-Grained Code-Reuse Attack Detection},
- booktitle = {Proceedings of the International Symposium on Research in Attacks, Intrusions, and Defenses (RAID)},
+ booktitle = {RAID},
  year = {2015}
 }
 
 %@inproceedings{ccfi:jose,
-% author = {Mashtizadeh, Ali José and Bittau, Andrea and Boneh, Dan and Mazières, David},
+% author = {Mashtizadeh, A. J. and Bittau, A. and Boneh, D. and Mazières, D.},
 % title = {CCFI: Cryptograhically Enforced Control Flow Integrity},
 % booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)},
 % year = {2015}
 %}
 
 @inproceedings{herley:security,
- author = {Herley, Cormac and van Oorschot, P. C.},
+ author = {Herley, C. and van Oorschot, P. C.},
  title = {Science, Security, and the Elusive Goal of Security as a Scientific Pursuit},
- booktitle = {Proceedings of the IEEE Symposium on Security and Privacy (S\&P)},
+ booktitle = {S\&P},
  year = {2017}
 }
 
@@ -453,7 +424,7 @@ booktitle = "Black Hat Europe",
  author = {Buchanan, E. and Roemer, R. and Shacham, H. and Savage, S.},
  title = {When Good Instructions Go Bad: Generalizing Return-oriented Programming to RISC},
  year = {2008},
- booktitle = {ACM Conference on Computer and Communications Security (CCS)}
+ booktitle = {CCS}
 }
 
 @inproceedings{NVD:ACE,
@@ -463,23 +434,22 @@ booktitle = "Black Hat Europe",
  note={\url{https://goo.gl/5uv47n}}
 }
 
-
 @inproceedings{JOP1,
  author = {Bletsch, T. and Jiang, X. and Freeh, V. W. and Liang, Z.},
  title = {Jump-Oriented Programming: A New Class of Code-Reuse Attack},
- booktitle = {ACM Asia Conference on Computer and Communications Security (ASIACCS)},
+ booktitle = {ASIACCS},
  year = {2011}
 }
 
 @inproceedings{function:boundary,
- author = {Andriesse, Dennis and Slowinska, Asia and Bos, Herbert},
+ author = {Andriesse, D. and Slowinska, A. and Bos, H.},
  title = {Compiler-Agnostic Function Detection in Binaries},
- booktitle = {IEEE European Symposium on Security and Privacy (EuroS\&P)},
+ booktitle = {EuroS\&P},
  year = {2017}
 }
 
 @inproceedings{reprod:nist,
- author = {Wayne Jansen},
+ author = {Wayne, J.},
  title = {Directions in Security Metrics Research},
  booktitle = {NISTIR 7564},
  year = {2009},
@@ -498,7 +468,7 @@ booktitle = "Black Hat Europe",
 }
 
 @inproceedings{microsoft:abi,
- author = {J. Gray},
+ author = {Gray, J.},
  title = {C++: Under the Hood},
  year = {1994},
  note={\url{http://www.openrce.org/articles/files/jangrayhood.pdf}}
@@ -508,7 +478,7 @@ booktitle = "Black Hat Europe",
 @inproceedings{JOP2,
  author = {Checkoway, S. and Davi, L. and Dmitrienko, A. and Sadeghi, A.-R. and Shacham, H. and Winandy, M.},
  title = {Return-oriented Programming Without Returns},
- booktitle = {ACM Conference on Computer and Communications Security (CCS)},
+ booktitle = {CCS},
  year = {2010}
 }
 
@@ -520,10 +490,9 @@ booktitle = "Black Hat Europe",
 }
 
 @inproceedings{rop:carlini,
- author = {Carlini, Nicholas and Wagner, David},
+ author = {Carlini, N. and Wagner, D.},
  title = {ROP is still dangerous: Breaking Modern Defenses},
-% booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC)},
- booktitle = {(USENIX SEC)},
+ booktitle = {USENIX SEC},
  year = {2014}
 }
 
@@ -537,21 +506,19 @@ booktitle = "Black Hat Europe",
 @inproceedings{rop:shacham,
  author = {Shacham, H.},
  title = {The Geometry of Innocent Flesh on the Bone: Return-into-Libc without Function Calls (On the x86)},
-% booktitle = {ACM Conference on Computer and Communications Security (CCS)},
- booktitle = {(CCS)},
+ booktitle = {CCS},
  year = {2007}
 }
 
 @inproceedings{carlini:bending,
- author = {Carlini, Nicolas and Barresi, Antonio and Payer, Mathias and Wagner, David and Gross, Thomas R.},
+ author = {Carlini, N. and Barresi, A. and Payer, M. and Wagner, D. and Gross, T. R.},
  title = {Control-Flow Bending: On the Effectiveness of Control-Flow Integrity},
-% booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC)},
- booktitle = {(USENIX SEC)},
+ booktitle = {USENIX SEC},
  year = {2015}
 }
 
 @inproceedings{conti:ccs,
- author = {Conti, Mauro and Larsen, Per and Crane, Stephen   and Davi, Lucas and Franz, Michael and Negro, Marco and  Liebchen, Christopher and Qunaibit, Mohaned and Sadeghi, Ahmad-Reza},
+ author = {Conti, M. and Larsen, P. and Crane, S. and Davi, L. and Franz, M. and Negro, M. and  Liebchen, C. and Qunaibit, M. and Sadeghi, A.-R.},
  title = {Losing Control: On the Effectiveness of Control-Flow Integrity Under Stack Attacks},
 % booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)},
  booktitle = {(CCS)},
@@ -561,24 +528,21 @@ booktitle = "Black Hat Europe",
 @inproceedings{skowyra:systemetic,
  author = {Skowyra, R. and Casteel, K. and Okhravi, H. and Zeldovich, N. and Streilein, W.},
  title = {Systematic Analysis of Defenses Against Return-Oriented Programming},
-% booktitle = {Proceedings of the International Symposium on Research in Attacks, Intrusions, and Defenses (RAID)},
- booktitle = {(RAID)},
+ booktitle = {RAID},
  year = {2013}
 }
 
 @inproceedings{goktas:outofcontrol,
- author = {Göktas, Enes and Athanasopoulos, Elias and Bos, Herbert and Portokalidis, Georgios},
+ author = {Göktas, E. and Athanasopoulos, E. and Bos, H. and Portokalidis, G.},
  title = {Out Of Control: Overcoming Control-Flow Integrity},
-% booktitle = {Proceedings of the IEEE Symposium on Security and Privacy (S\&P)},
-  booktitle = {(S\&P)},
+  booktitle = {S\&P},
  year = {2014}
 }
 
 @inproceedings{minghua:binary,
- author = {Wang, Minghua and Yin, Heng and Bhaskar, Abhishek Vasisht and Su, Purui and Feng, Dengguo},
+ author = {Wang, M. and Yin, H. and Bhaskar, A. Vasisht and Su, P. and Feng, D.},
  title = {Binary Code Continent: Finer-Grained Control Flow Integrity for Stripped Binaries},
-% booktitle = {Annual Computer Security Applications Conference (ACSAC)},
- booktitle = "Proceedings of the USENIX conference on Security (USENIX SEC)",
+ booktitle = "USENIX SEC",
  year = {2015}
 }
 
@@ -631,32 +595,24 @@ booktitle = "Black Hat Europe",
 }
 
 @inproceedings{microsoft:abi,
- title = {J. Gray. C++: Under the Hood},
+ author = "J. Gray",
+ title = "C++: Under the Hood",
  year = {1994},
  note={\url{http://www.openrce.org/articles/files/jangrayhood.pdf}}
 }
 
 % 
-% @BOOK{khedker2009data,
-% AUTHOR="Khedker, Uday and Sanyal, Amitabha and Sathe, Bageshri",
-% TITLE="{Data flow analysis: Theory and Practice}",
-% PUBLISHER="CRC Press",
-% YEAR="2009",
-% }
-% 
- @inproceedings{mingwei:sekar,
-  author = "Zhang, M. and Sekar, R.",
-  title = "{Control Flow Integrity for COTS Binaries}",
- % booktitle = "Proceedings of the USENIX conference on Security (USENIX SEC)",
-  booktitle = "(USENIX SEC)",
-  year = "2013",
- } 
+ @BOOK{khedker2009data,
+ AUTHOR="Khedker, U. and Sanyal, A. and Sathe, B.",
+ TITLE="{Data flow analysis: Theory and Practice}",
+ PUBLISHER="CRC Press",
+ YEAR="2009",
+ }
 % 
  @inproceedings{safedispatch:jang,
   author = "Jang, D. and Tatlock, T. and Lerner, S.",
   title = "{SafeDispatch: Securing C++ Virtual Calls from Memory Corruption Attacks}",
-%  booktitle = "Symposium on Network and Distributed System Security (NDSS)",
-  booktitle = "(NDSS)",
+  booktitle = "NDSS",
   year = "2014",
  } 
 % 
@@ -675,14 +631,12 @@ booktitle = "Black Hat Europe",
 % } 
  
   @InProceedings{kernelcfi,
-  author = "Ge, Xinyang and Talele, Nirupama and Payer, Mathias and Jaeger, Trent",
+  author = "Ge, X. and Talele, N. and Payer, M. and Jaeger, T.",
   title = "{Fine-Grained Control-Flow Integrity for Kernel Software}",
-%  booktitle = "IEEE European Symp. on Security and Privacy (Euro S\&P)",
   booktitle = "(Euro S\&P)",
   year = "2016",
  } 
  
-
  @InProceedings{payer:dimva,
   author = "Payer, Mathias and Barresi, Antonio and R. Gross, Thomas",
   title = "{Fine-Grained Control-Flow Integrity through Binary Hardening}",
@@ -749,18 +703,16 @@ booktitle = "Black Hat Europe",
  @InProceedings{alias:undecidable,
   author = "Ramalingam, G.",
   title = "{The Undecidability of Aliasing}",
-  booktitle = {ACM Transactions on Programming Languages and Systems (TOPLAS)},
+  booktitle = {TOPLAS},
   year = "1994",
  }
  
  @InProceedings{hafix:bypass,
  author = {Theodorides, Michael and Wagner, David},
  title = {Breaking Active-Set Backward-Edge CFI},
- booktitle = {International Symposium on Hardware Oriented Security and Trust (HOST)},
+ booktitle = {HOST},
  year = {2017}
 }
-
-
 % 
 % @inproceedings{ctf:coop,
 %  title = "{BlueLotus Team, Bctf challenge: bypass vtable read-only checks}",
@@ -786,7 +738,6 @@ booktitle = "Black Hat Europe",
   year = "2017",
  }
  
-
   @inproceedings{apache:traficserver,
   title = "{Apache Traffic Server}",
   note={\url{https://projects.apache.org/project.html?trafficserver-traffic_server}}
@@ -811,8 +762,6 @@ booktitle = "Black Hat Europe",
   year = "2017",
  }
 
-
-
 % 
 % @inproceedings{veen:typearmor,
 %  author = "Veen, Victor van der and Goktas, Enes and Contag, Moritz and Pawlowski, Andre and Chen, Xi and Rawat, Sanjay and
@@ -825,23 +774,22 @@ booktitle = "Black Hat Europe",
  @inproceedings{haller:shrinkwrap,
   author = "Haller, Istvan and Goktas, Enes and Athanasopoulos, Elias and Portokalidis, G. and Bos, Herbert",
   title = "{ShrinkWrap: VTable Protection Without Loose Ends}",
-  booktitle = {Annual Computer Security Applications Conference (ACSAC)},
+  booktitle = {ACSAC},
   year = "2015",
  } 
 % 
 
-
  @inproceedings{volodymyr:cpi,
   author = "Kuznetsov, Volodymyr and Szekeres, László and Payer, Mathias and Candea, George and Sekar, R. and Song, Dawn",
   title = "{Code-Pointer Integrity}",
-  booktitle = {Proceedings of the USENIX Symposium on Operating Systems Design and Implementation (OSDI)},
+  booktitle = {OSDI},
   year = "2014",
  } 
  
  @inproceedings{bounov:interleaving,
   author = "Bounov, Dimitar and Gökhan Kici, Rami and Lerner, Sorin",
   title = "{Protecting C++ Dynamic Dispatch Through VTable Interleaving}",
-  booktitle = {Symposium on Network and Distributed System Security (NDSS)},
+  booktitle = {NDSS},
   year = "2016",
  } 
  
@@ -853,12 +801,11 @@ year = "2016",
 month = "11",
 booktitle = "Black Hat Europe",
 }
-
 % 
 % @inproceedings{zhang:vtrust,
 %  author = "Zhang, Chao and Carr, Scott A. and Li, Tongxin and Ding, Yu and Song, Chengyu and Payer, Mathias and Song, Dawn",
 %  title = "{VTrust: Regaining Trust on Virtual Calls}",
-%  booktitle = {Symposium on Network and Distributed System Security (NDSS)},
+%  booktitle = {NDSS},
 %  year = "2016",
 % }
 % 
@@ -881,7 +828,7 @@ booktitle = "Black Hat Europe",
   author = "Veen, Victor van der and Andriesse, Dennis and Göktas, Enes and Gras, Ben and
   Sambuc, Lionel and Slowinska, Asia and Bos, Herbert and Giuffrida, Cristiano",
   title = "{Practical Context-Sensiticve CFI}",
-  booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)},
+  booktitle = {CCS},
   year = "2015",
  }
 % 
@@ -902,28 +849,28 @@ booktitle = "Black Hat Europe",
  @inproceedings{hafix,
   author = "Arias, Orlando and Davi, Lucas and Hanreich, Matthias and Jin, Yier and Koeberl, Patrick and Paul, Debayan and Sadeghi, Ahmad-Reza and Sullivan, Dean",
   title = "{HAFIX: Hardware-Assisted Flow Integrity Extension}",
-  booktitle = {Annual Design Automation Conference (DAC)},
+  booktitle = {DAC},
   year = "2015",
  }
  
   @inproceedings{hafix:broken,
   author = "Theodorides, Michael and Wagner, David",
   title = "{Breaking Active-Set Backward-Edge CFI}",
-  booktitle = {IEEE International Symposium on Hardware Oriented Security and Trust (HOST)},
+  booktitle = {HOST},
   year = "2017",
  }
  
   @inproceedings{mocfi,
-  author = "Lucas, Davi and Dmitrienko, Alexandra and Egele, Manuel, Fischer, Thomas and Holz, Thorsten and Hund, Ralf and Nurnberger, Stefan and Sadeghi, Ahmad-Reza",
+  author = "Lucas, D. and Dmitrienko, A. and Egele, M. and Fischer, T. and Holz, T. and Hund, R. and Nurnberger, S. and Sadeghi, A.-R.",
   title = "{MoCFI: A Framework to Mitigate Control-Flow Attacks on Smartphones}",
-  booktitle = {Symposium on Network and Distributed System Security (NDSS)},
+  booktitle = {NDSS},
   year = "2012",
  }
  
  @inproceedings{marx,
- author = {Pawlowski, Andre and Contag, Moritz and van der Veen, Victor and Ouwehand, Chris and Holz, Thorsten and Bos, Herbert and Athanasopoulos, Elias and Giuffrida, Cristiano},
- title = {MARX : Uncovering Class Hierarchies in C++ Programs},
- booktitle = {Symposium on Network and Distributed System Security (NDSS)},
+ author = {Pawlowski, A. and Contag, M. and van der Veen, V. and Ouwehand, C. and Holz, T. and Bos, H. and Athanasopoulos, E. and Giuffrida, C.},
+ title = {MARX:Uncovering Class Hierarchies in C++ Programs},
+ booktitle = {NDSS},
  year = {2017}
 }
 
@@ -937,14 +884,14 @@ booktitle = "Black Hat Europe",
  @inproceedings{davi:hardware,
  author = {Davi, Lucas and Koeberl, Patrick and Sadeghi, Ahmad-Reza},
  title = {Hardware-Assisted Fine-Grained Control-Flow Integrity: Towards Efficient Protection of Embedded Systems Against Software Exploitation},
- booktitle = {Annual Design Automation Conference (DAC)},
+ booktitle = {DAC},
  year = {2014}
 }
 
  @inproceedings{kbouncer,
- author = {Pappas, Vasilis and Polychronakis, Michalis and Keromytis, Angelos D.},
+ author = {Pappas, V. and Polychronakis, M. and Keromytis, A. D.},
  title = {Transparent ROP Exploit Mitigation Using Indirect Branch Tracing},
- booktitle = {Proceedings of the USENIX Conference on Security (USENIX SEC)},
+ booktitle = {USENIX SEC},
  year = "2013",
 }
  
@@ -1006,7 +953,7 @@ booktitle = "Black Hat Europe",
  @inproceedings{abadi:cfi2,
   author = "Abadi, Martin and Budiu, Mihai and Erlingsson, {\'U}lfar and Ligatti, Jay",
   title = "{Control Flow Integrity}",
-  booktitle = {Proceedings of the 12th ACM Conference on Computer and Communications Security (CCS)},
+  booktitle = {CCS},
   year = "2005",
 }
 
@@ -1057,7 +1004,7 @@ booktitle = "Black Hat Europe",
  @inproceedings{vfuard:aravind,
   author = "Prakash, Aravind and Hu, Xunchao and Yin, Heng",
   title = "{Strict Protection for Virtual Function Calls in COTS C++ Binaries}",
-  booktitle = {Symposium on Network and Distributed System Security (NDSS)},
+  booktitle = {NDSS},
   year = "2015",
  }
  
@@ -1079,7 +1026,7 @@ booktitle = "Black Hat Europe",
  @inproceedings{mohan:opaque,
   author = "Mohan, Vishwath and Larsen, Per and Brunthaler, Stefan and Hamlen, Kevin W. and Franz, Michael",
   title = "{Opaque Control-Flow Integrity}",
-  booktitle = {Symposium on Network and Distributed System Security (NDSS)},
+  booktitle = {NDSS},
   year = "2015",
  }
  
@@ -1100,7 +1047,7 @@ booktitle = "Black Hat Europe",
  @inproceedings{ccfir:zhang,
   author = "Zhang, Chao and Wei, Tao and Chen, Zhaofeng and Duan, Lei and Szekeres, Laszlo and McCamant, Stephen and Song, Dawn and Zou, Wei",
   title = "{Practical Control Flow Integrity \& Randomization for Binary Executables}",
-  booktitle = {Proceedings of the IEEE Symposium on Security and Privacy (S\&P)},
+  booktitle = {S\&P},
   year = "2013",
  }
 % 
@@ -1114,7 +1061,7 @@ booktitle = "Black Hat Europe",
  @inproceedings{ccfi:jose,
   author = "Mashtizadeh, Ali José and Bittau, Andrea and Boneh, Dan and Mazières, David",
   title = "{CCFI: Cryptograhically Enforced Control Flow Integrity}",
-  booktitle = {Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS)},
+  booktitle = {CCS},
   year = "2015",
  }
 % 
@@ -1132,32 +1079,30 @@ booktitle = "Black Hat Europe",
  @inproceedings{ROP,
   author = "Buchanan, E. and Roemer, R. and Shacham, H. and Savage, S.",
   title = "{When Good Instructions Go Bad: Generalizing Return-oriented Programming to RISC}",
-  booktitle = {ACM Conference on Computer and Communications Security (CCS)},
+  booktitle = {CCS},
   year = "2008",
  }
 % 
  @inproceedings{JOP1,
   author = "Bletsch, T. and Jiang, X. and Freeh, V. W. and Liang, Z.",
   title = "{Jump-Oriented Programming: A New Class of Code-Reuse Attack}",
-  booktitle = {ACM Symposium on Information, Computer and Communications Security (ASIACCS)},
+  booktitle = {ASIACCS},
   year = "2011",
  }
 
  @inproceedings{shadowstack:overhead,
   author = "Dang, Thurston H.Y. and Maniatis, Petros and Wagner, David",
   title = "{The Performance Cost of Shadow Stacks and Stack Canaries}",
-  booktitle = {ACM Symposium on Information, Computer and Communications Security (ASIACCS)},
+  booktitle = {ASIACCS},
   year = "2015",
  }
  
   @inproceedings{griffin,
   author = "Ge, Xinyang and Cui, Weidong and Jaeger, Trent",
   title = "{GRIFFIN: Guarding Control Flows Using Intel Processor Trace}",
-  booktitle = {Proceedings of the Twenty-Second International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS)},
+  booktitle = {ASPLOS},
   year = "2017",
  }
- 
-
 
 % 
 % @inproceedings{JOP2,
@@ -1198,7 +1143,7 @@ booktitle = "Black Hat Europe",
  @inproceedings{carlini:bending,
   author = "Carlini, Nicolas and Barresi, Antonio and Payer, Mathias and Wagner, David and Gross, Thomas R.",
   title = "{Control-Flow Bending: On the Effectiveness of Control-Flow Integrity}",
-  booktitle = {Proceedings of the USENIX conference on Security (USENIX SEC)},
+  booktitle = {USENIX SEC},
   year = "2015",
  }
 % 
@@ -1248,7 +1193,6 @@ booktitle = "Black Hat Europe",
   @inproceedings{cfrestrictor,
   author = "Pewny, Jannik and Holz, Thorsten",
   title = "{Control-flow Restrictor: Compiler-based CFI for iOS}",
-  booktitle = {Annual Computer Security Applications Conference (ACSAC)},
+  booktitle = {ACSAC},
   year = "2013",
  }
- 

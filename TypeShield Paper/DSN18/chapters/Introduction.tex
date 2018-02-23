@@ -38,7 +38,7 @@ memory corruption (\textit{e.g.,} buffer overflow, etc.), which can be used to e
 of the program's CFG such as the advanced COOP attack~\cite{schuster:coop} and its 
 extensions~\cite{crane:readactor++, subversive-c:lettner, ctf:coop, loop:oriented} and/or the backward-edge such as Control Jujutsu~\cite{jujutsu}. 
 A potential ingredient for violating forward-edge control flow transfers is based on corrupting a virtual object pointer 
-while backward-edges can be corrupted by loading fake return addresses on the program stack in order to call gadgets consecutively.
+while backward-edges can be corrupted by loading fake return addresses on the program stack in order to consecutively call gadgets.
 To address such object dispatch corruptions
 % \footnote{Number (\#, left side of Figure~\ref{ace:nvd:statistics}) and percentage (\%, right side of Figure~\ref{ace:nvd:statistics}) 
 % of arbitrary code executions (ACE) reports related (all colors expect black) to virtual pointer or virtual table (vptr/vtbl) corruption 
@@ -51,15 +51,16 @@ and in general any type of indirect program control flow transfer violation, Con
 % (up to 35\% runtime overhead)
 was originally developed to secure indirect control flow transfers by adding runtime checks before forward-edges and backward-edges. 
 While CFI-based techniques that rely on the construction of a precise CFG are effective \cite{cfi:survey} and, in general, if CFGs are carefully constructed and 
-sound \cite{cfg:sound} these techniques cannot be used if a CRA does not violate the previously constructed CFG-based policy.
+sound \cite{cfg:sound} these techniques cannot effectively be used if a CRA does not violate the previously constructed CFG-based policy.
 For example, the COOP family of CRAs bypass most deployed CFI-based enforcement policies, since 
 these attacks do not exploit indirect backward-edges (\textit{i.e.,} function returns), but rather CFG
-forward-edge imprecision (\textit{i.e.,} object dispatches, indirect control flow transfers), which in general cannot be statically (before runtime) precisely determined 
+forward-edge imprecision (\textit{i.e.,} object dispatches, indirect control flow transfers), which in general cannot be 
+statically (before runtime) precisely determined 
 as alias analysis in program binaries is undecidable~\cite{alias:undecidable} and certain program CFG edges are input dependent.
 
 Source code based tools which can protect against forward-edge violations such as: SafeDispatch~\cite{safedispatch:jang}, ShrinkWrap~\cite{haller:shrinkwrap}, VTI~\cite{bounov:interleaving}, 
 and IFCC/VTV~\cite{vtv:tice} rely on source code availability which limits their applicability (\textit{i.e.,} proprietary libraries cannot be recompiled).
-In contrast, binary-based forward-edge protection tools, binCFI~\cite{ccfir:zhang, zhang:usenix}, vfGuard~\cite{vfuard:aravind}, 
+In contrast, binary-based forward-edge protection tools, binCFI~\cite{ccfir:zhang}, vfGuard~\cite{vfuard:aravind}, 
 vTint~\cite{vtint:zhang}, VCI~\cite{vci:asiaccs}, Marx~\cite{marx} and TypeArmor~\cite{veen:typearmor}, typically protect only the forward-edges trough a CFI-based 
 policy and most of the tools assume that a shadow stack~\cite{volodymyr:cpi} technique for protecting backward-edges is in place.
 
@@ -79,27 +80,29 @@ six heuristics and several simplification assumptions, while TypeArmor enforces 
 provided and consumed by caller-callee pairs without imposing any constraint on their types. 
 Thus, these forward-edge protection tools are in general too permissive.
 As there is clear evidence that CFI-based forward-edge protection techniques without a backward-edge protection are broken \cite{carlini:bending}, these tools further assume
-that a shadow stack protection policy is in place. Unfortunately, recently shadow stack based techniques (backward-edge protection, on average 10\% runtime overhead \cite{shadowstack:overhead})
-were bypassed \cite{safestack:bypass, safestack:bypassing}. Further, this bypass demonstrated that at least 4 independently usable attack vectors exist for thwarting shadow stack techniques 
+that a shadow stack protection policy is in place. Unfortunately, recently shadow stack based techniques (backward-edge protection, on 
+average up to 10\% runtime overhead \cite{shadowstack:overhead})
+were bypassed \cite{safestack:bypass, safestack:bypassing}. Further, this bypass demonstrated that at least 4 independently 
+usable attack vectors (namely: guessing oracles, neglected pointers, thread spraying,
+and allocation oracles) exist for thwarting shadow stack techniques 
 (binary and source code based) targeting their entropy based hiding principle and making their usage questionable.
 
 %%Our idea
 In this paper, we present \textsc{TypeShield}, a fine-grained CFI-complete (\textit{i.e.,} forward-edge and backward-edge protection) runtime 
 binary-level protection tool which does not rely on shadow stack based techniques to protect backward-edges. 
-\textsc{TypeShield} is applicable to program binaries for which we assume source code is not available.
-\textsc{TypeShield}'s backward-edge policy is based on the observation that backward-edges of a program can be efficiently protected
-if there is a precise forward-edge mapping available between callers and callees.
-\textsc{TypeShield} significantly reduces the number of valid forward-edges compared to previous work~\cite{veen:typearmor} and thus we are able 
-to build a precise backward-edge policy which represents an efficient alternative to shadow stack based techniques.
-Thus, there is no need to assume, as other forward edge protection techniques, that another backward-edge protection mechanism (\textit{i.e.,} shadow stack) is in place. In this way, the 
-attack vectors of shadow stack are avoided.
+We implemented \textsc{TypeShield} on top of DynInst~\cite{bernat:dyninst}, which is
+a binary rewriting framework that allows program binary instrumentation during loading or runtime.
+% and can be used e.g.,:
+% (1) performance measurements,
+% (2) correctness debuggers (\textit{i.e.,} efficient data breakpoints),
+% (3) execution drive simulations.
 \textsc{TypeShield} does not rely on runtime type information (RTTI) (\textit{i.e.,} metadata emitted by the compiler, most of the time stripped in production binaries) or particular compiler flags, and is applicable to legacy programs.
-\textsc{TypeShield} takes the binary of a program as input and it automatically instruments it in order to detect illegitimate indirect control flow transfers during runtime. 
-In order to achieve this, 
-\textsc{TypeShield} analyzes x86-64 program binaries by carefully analyzing function parameter register wideness (parameter type) and the provided and consumed number of function parameters. 
-Based on the used ABI, \textsc{TypeShield} is consequently able to track up to 6 function arguments for the Itanium C++ ABI~\cite{itanium:abi} x86-64 calling convention. 
+\textsc{TypeShield} takes a not obfuscated program binary as input and it automatically instruments it in order to detect illegitimate indirect control flow transfers during runtime. 
+In order to achieve this, \textsc{TypeShield} analyzes program binaries (works on x86 and x86-64) by carefully analyzing function parameter register 
+wideness (used to derive parameter type information) and the provided and consumed number of function parameters. 
+Based on the used ABI, \textsc{TypeShield} is consequently able to track up to 6 function arguments for the Itanium C++ ABI~\cite{itanium:abi} (used by the major Unix OSs, \textit{i.e.,} Linux, BSD, and MacOSX) x86-64 calling convention. 
 The Itanium ABI caller-callee calling convention essentially means that every called function will return at the next address located after the callsite which was 
-used in first place to call this function. This means that there is a one-to-one mapping between each caller and callee contained in the program.
+used in first place to call this function. This means that there is a one-to-one mapping (we exclude tail calls) between each caller and callee contained in the program.
 However, we stress that the presented technique is applicable with the ARM ABI~\cite{arm:abi} and Microsoft's C++ ABI~\cite{microsoft:abi} 
 as well.
 % Similarly to TypeArmor, we do not take into consideration floating-point arguments passed via xmm registers; which we want to address in future work. 
@@ -179,52 +182,53 @@ More precisely, the analysis performed by \textsc{TypeShield}:
 (3) compares individually parameters of callsites and calltargets in order to check if an indirect call transfer is legitimate or not, and
 (4) based on the provided forward-edge caller-callee mapping it builds a mapping back from each callee to the legitimate addresses located next to each caller,
 thereby providing a more strict callsite per calltarget compared to other state-of-the-art tools and a fine-grained shadow stack alternative for backward edges.
+\textsc{TypeShield}'s backward-edge policy is based on the observation that backward-edges of a program can be efficiently protected
+if there is a precise forward-edge mapping available between callers and callees.
 \textsc{TypeShield} uses automatically inferred parameter types, which are used to build a more precise approximation of both the callee parameter types and callsite signatures. 
 % This is later used during the classification of matching callsites and calltargets, in order to 
 % distinguish between valid and invalid function calls, and results in a more precise callee target 
 % set for each caller than other state-of-the-art approaches like, for instance, TypeArmor.
 
 % \textbf{\textit{Analysis Details.}}
-\textsc{TypeShield}'s analysis is based on an use-def callees analysis 
-to derive the function prototypes, and a liveness analysis at indirect callsites to approximate callsite signatures. 
-This efficiently leads to a more precise CFG of the binary program in question, 
-which can be used also by other systems in order to gain a more precise CFG on which to 
-enforce other types of CFI-related policies. These analysis results are used to
-determine a mapping between all callsites and legitimate calltarget sets. Further,
-this mapping is used in a backward analysis for determining the set of legitimate 
-return addresses for each function return determined by each calltarget. Note that 
-we consider each calltarget to be the start address of a function.
+% \textsc{TypeShield}'s analysis is based on an use-def callees analysis 
+% to derive the function prototypes, and a liveness analysis at indirect callsites to approximate callsite signatures. 
+% This efficiently leads to a more precise CFG of the binary program in question, 
+% which can be used also by other systems in order to gain a more precise CFG on which to 
+% enforce other types of CFI-related policies. These analysis results are used to
+% determine a mapping between all callsites and legitimate calltarget sets. Further,
+% this mapping is used in a backward analysis for determining the set of legitimate 
+% return addresses for each function return determined by each calltarget. Note that 
+% we consider each calltarget to be the start address of a function.
+% 
+% % \textbf{\textit{Forward Edge Policy.}}~
+% \textsc{TypeShield} incorporates an improved forward-edge protection policy, which is
+% based on the insight that if the binary adheres to the standard calling convention (\textit{i.e.,} Itanium ABI)
+% for indirect calls, undefined arguments at the callsite are not used by any callee by design and that based
+% on the passed function parameter types can be approximated by their corresponding register wideness.
+% % This further helps to reduce the possible target set of callees for each callsite.
+% % \textbf{\textit{Backward Edge Policy.}}~
+% \textsc{TypeShield} uses a forward-edge based propagation analysis to determine a minimal
+% set of possible return addresses for calltargets (\textit{i.e.,} function returns), which helps to impose the caller-callee 
+% function calling convention with high precision. This policy is based on the observation that if a fine-grained 
+% forward-edge policy can be precisely determined between callers and callees then this mapping can be used backwards 
+% from the calltarget to the callsite in order to construct a fine-grained CFI policy which helps to impose the caller-callee calling convention backwards.
+% % The backward-edge policy is available in three modes: 
+% % (1) super fast mode, a range is imposed for each AT function return formed by the minimum and maximum legitimate addresses,
+% % (2) fast mode, each AT function return contains a label value which is compared against several return targets labels, and
+% % (3) slow mode, each AT function return address is compared individually with each legitimate return address target 
+% % where the calltarget (\textit{i.e.,} function return) wants to return to.
+% Our backward-edge policy represents a fine-grained Safe Stack~\cite{volodymyr:cpi} (recently bypassed~\cite{safestack:bypassing}) alternative.
+% This attack shows that in general the protection offered by shadow stacks is questionable (at least 4 attack vectors), since it is relatively 
+% easy for a motivated attacker to disclose the shadow stack and bypass it.
 
-% \textbf{\textit{Forward Edge Policy.}}~
-\textsc{TypeShield} incorporates an improved forward-edge protection policy, which is
-based on the insight that if the binary adheres to the standard calling convention (\textit{i.e.,} Itanium ABI)
-for indirect calls, undefined arguments at the callsite are not used by any callee by design and that based
-on the passed function parameter types can be approximated by their corresponding register wideness.
-% This further helps to reduce the possible target set of callees for each callsite.
-% \textbf{\textit{Backward Edge Policy.}}~
-\textsc{TypeShield} uses a forward-edge based propagation analysis to determine a minimal
-set of possible return addresses for calltargets (\textit{i.e.,} function returns), which helps to impose the caller-callee 
-function calling convention with high precision. This policy is based on the observation that if a fine-grained 
-forward-edge policy can be precisely determined between callers and callees then this mapping can be used backwards 
-from the calltarget to the callsite in order to construct a fine-grained CFI policy which helps to impose the caller-callee calling convention backwards.
-% The backward-edge policy is available in three modes: 
-% (1) super fast mode, a range is imposed for each AT function return formed by the minimum and maximum legitimate addresses,
-% (2) fast mode, each AT function return contains a label value which is compared against several return targets labels, and
-% (3) slow mode, each AT function return address is compared individually with each legitimate return address target 
-% where the calltarget (\textit{i.e.,} function return) wants to return to.
-Our backward-edge policy represents a fine-grained Safe Stack~\cite{volodymyr:cpi} (recently bypassed~\cite{safestack:bypassing}) alternative.
-This attack shows that in general the protection offered by shadow stacks is questionable (at least 4 attack vectors), since it is relatively 
-easy for a motivated attacker to disclose the shadow stack and bypass it.
-
-We implemented \textsc{TypeShield} on top of DynInst~\cite{bernat:dyninst}, which is
-a binary rewriting framework that allows program binary instrumentation during loading or runtime.
-% and can be used e.g.,:
-% (1) performance measurements,
-% (2) correctness debuggers (\textit{i.e.,} efficient data breakpoints),
-% (3) execution drive simulations.
-We evaluated \textsc{TypeShield} with several highly relevant open source programs and the SPEC CPU2006 benchmark
+We evaluated \textsc{TypeShield} with several highly real-world open source programs (\textit{i.e.,} NodeJS, Lightttpd, MySql, etc.) and the SPEC CPU2006 benchmark
 and show that our forward-edge policy is more precise than state-of-the-art and our backward-edge policy is a precise 
 alternative to shadow stacks. 
+\textsc{TypeShield} is applicable to program binaries for which we assume source code is not available.
+\textsc{TypeShield} significantly reduces the number of valid forward-edges compared to previous work~\cite{veen:typearmor} and thus we are able 
+to build a precise backward-edge policy which represents an efficient alternative to shadow stack based techniques.
+Thus, there is no need to assume, as other forward edge protection techniques, that another backward-edge protection mechanism (\textit{i.e.,} shadow stack) is in place. In this way, the 
+attack vectors of shadow stack are avoided.
 
 % \textbf{\textit{Comparison.}}~\textsc{TypeShield} uses different basic block analysis strategies than TypeArmor,
 % and no control flow graph as TypeArmor does. Further,~\textsc{TypeShield}
@@ -239,7 +243,7 @@ alternative to shadow stacks.
 % and return set per function return site, thus drastically reducing the attacker leeway.
 
 % \textbf{Contributions.} 
-In summary, we make the following contributions:
+In summary, we make the following main contributions:
 %%long version
 % \label{Contribution}
 % \begin{itemize}[leftmargin=.12in]
@@ -281,6 +285,7 @@ In summary, we make the following contributions:
 
 %short version
 \label{Contribution}
+\paul{precisely state what are the novel contributions.}
 \begin{itemize}
 [leftmargin=.35cm]
 
@@ -296,7 +301,7 @@ In summary, we make the following contributions:
  
  \item 
 %  \textbf{Extensive Experimental Results.}
- We conducted a thorough set of evaluative experiments in which we show that \textsc{TypeShield} is more precise and effective than 
+ We conducted a thorough set of evaluative experiments in which, we show that \textsc{TypeShield} is more precise and effective than 
  other state-of-the-art tools. Further, we show that our tool has a higher calltarget set per callsite reduction, thus 
  further reducing the attack surface compared to state-of-the-art tools.
  

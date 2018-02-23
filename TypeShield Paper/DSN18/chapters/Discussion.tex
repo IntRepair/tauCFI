@@ -1,8 +1,8 @@
-\section{Discussion}
+\section{Discussion and Limitations}
 \label{chapter:Discussion}
 
 \subsection{Limitations of \textsc{TypeShield}}
-\label{section:limit}
+% \label{section:limit}
 First, \textsc{TypeShield} is limited by the capabilities of the DynInst instrumentation environment, where non-returning functions like exit are 
 not detected reliably in some cases. As a result, we cannot test the Pure-FTP server, as it heavily relies on these functions. 
 The problem is that those non-returning functions usually appear as a second branch within a function that occurs after the normal 
@@ -15,22 +15,26 @@ Occurrences of such situations are quite rare, as we learned with our experiment
 detect a difference between our \textit{type} policy and a \textit{count} policy. However, when using our tool, we were able to detect differences,
 which reinforce the fact, that we do not rely on declaration of parameters, but usage of those.
 
-Third, \textsc{TypeShield} can protect forward indirect edges 
-in a binary program and can complement a shadow stack~\cite{dang:asiaccs} protection technique. For this reason, we assume that \textsc{TypeShield} can run orthogonal with an 
-ideal backward-edge protection mechanism such as a shadow stack~\cite{conti:ccs}. However, the main goal of \textsc{TypeShield} is to complement 
-shadow stack based defenses which fail to account for attacks not violating the backward-edge calling conventions such as the COOP attack.
+% Third, \textsc{TypeShield} can protect forward indirect edges 
+% in a binary program and can complement a shadow stack~\cite{dang:asiaccs} protection technique. For this reason, we assume that \textsc{TypeShield} can run orthogonal with an 
+% ideal backward-edge protection mechanism such as a shadow stack~\cite{conti:ccs}. However, the main goal of \textsc{TypeShield} is to complement 
+% shadow stack based defenses which fail to account for attacks not violating the backward-edge calling conventions such as the COOP attack.
 
-Fourth, \textsc{TypeShield} is not intended to be more precise than source code based tools such as IFCC/VTV~\cite{vtv:tice}. However, 
-\textsc{TypeShield} is highly useful in situations where the source code is typically not available (\textit{e.g.,} off-the-shelf programs), 
-where programs rely on third party libraries, and where the recompilation of all the shared libraries is not possible. 
-Further, binary based tools such as \textsc{TypeShield} can offer precise protection when source code is not available or 
-recompilation is not feasible or desirable.
+Fourth, function parameter passing trough floating point registers is currently not supported by \textsc{TypeShield}. We plan 
+to address this limitation in future research. Tail calls which make that there is not 1 to 1 matching between callers and callees 
+are as for now not supported by \textsc{TypeShield} bu we plan to address this limitation in future work as well.
 
-Finally, while a major step forward, \textsc{TypeShield} cannot thwart all possible attacks, as even solutions with access to source 
-code are unable to protect against all possible attacks~\cite{carlini:bending}. In contrast, \textsc{TypeShield}, our binary-based tool, 
-can stop all currently COOP attacks published to date and significantly raises the bar for an adversary when compared to
-TypeArmor and similar tools. Moreover, \textsc{TypeShield} provides a strong mitigation for other types of code-reuse attacks as well
-which violate the caller callee calling convention.
+% Finally, \textsc{TypeShield} is not intended to be more precise than source code based tools such as IFCC/VTV~\cite{vtv:tice}. However, 
+% \textsc{TypeShield} is highly useful in situations where the source code is typically not available (\textit{e.g.,} off-the-shelf programs), 
+% where programs rely on third party libraries, and where the recompilation of all the shared libraries is not possible. 
+% Further, binary based tools such as \textsc{TypeShield} can offer precise protection when source code is not available or 
+% recompilation is not feasible or desirable.
+
+% Finally, while a major step forward, \textsc{TypeShield} cannot thwart all possible attacks, as even solutions with access to source 
+% code are unable to protect against all possible attacks~\cite{carlini:bending}. In contrast, \textsc{TypeShield}, our binary-based tool, 
+% can stop all currently COOP attacks published to date and significantly raises the bar for an adversary when compared to
+% TypeArmor and similar tools. Moreover, \textsc{TypeShield} provides a strong mitigation for other types of code-reuse attacks as well
+% which violate the caller callee calling convention.
 
 % \subsection{Comparison with TypeArmor}
 % \label{section:comptype}
@@ -55,6 +59,10 @@ which violate the caller callee calling convention.
 % counts. However, we report a geometric mean of 57.36\%
 % for perfect classification of callsites, which although seemingly low, is still 69.74\% of our precision
 % regarding parameter counts.
+
+\subsection{Policy Discovery Trade-offs}
+\paul{address the point w.r.t. how hard/easy is for an attacker to discover the used policy and state the trade-offs}
+\paul{clarify the point w.r.t. false negatives}
 
 % \subsubsection{Reduction of Available Calltargets}
 % While our count based precision focused implementation achieves a reduction in the same ballpark as

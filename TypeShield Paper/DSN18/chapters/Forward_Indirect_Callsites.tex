@@ -215,15 +215,27 @@ exploit vector for a vPointer corruption.
 Program backward edges (\textit{i.e.,} \texttt{jump}, \texttt{ret}, etc.) can be corrupted due to their provided indirection to assemble gadget chains in the following scenarios.
 (1) No CFI protection technique was applied: In this case, the binary is not protected by any CFI policy. Obviously, the attacker can then hijack backward edges to \textit{jump} virtually 
 anywhere in the binary in order to chain gadgets together.
-(2) Coarse-grained CFI protected scenarios: In this scenario, if the attacker is aware of what addresses are protected and which are not through control flow bending, the attacker may deviate
+(2) Coarse-grained CFI protected scenarios: In this scenario, if the attacker is aware of what addresses are protected and which are not through control flow bending, 
+the attacker may 
+% \begin{center}
+\begin{figure*}[t!]
+\centering
+   \includegraphics[width=.82\textwidth]{figures/overview.pdf}
+   \vspace{-.25cm}
+    \caption{Overview of the main steps performed by \textsc{TypeShield} when hardening a program binary.}
+    \label{System overview.}
+    \vspace{-.5cm}
+ \end{figure*}
+% \end{center}
+deviate
 the application flow to legitimate locations in order to link gadgets together.
 (3) Fine-grained CFI protection scenarios: In this case, the legitimate target set is more strict than in (2) but still in this case, under the assumption that the attacker knows
-which addresses are protected and which are not, he may be able through control flow bending to call legitimate targets, which are useful for assembling a gadget chain.
+which addresses are protected and which are not, she may be able through control flow bending to call legitimate targets, which are useful for assembling a gadget chain.
 (4) Fully precise CFI protected scenarios (\textit{i.e.,} SafeStack \cite{volodymyr:cpi} based): In this scenario, the legitimate target set is more strict than in (3). Even though, we 
 have a one-to-one mapping 
 between calltargets and legitimate return sites, the attacker could theoretically use this one-to-one mapping to assemble gadget chains if at the legitimate calltarget return site there is a useful gadget. 
 See \cite{carlini:bending} for more details about how control flow can be bent to legitimate addresses and how this is still dangerous in 
-case that at the bent address location exists a useful gadget or even in fully CFI-complete scenarios. 
+case that at the bent address location exists a useful gadget even in fully CFI-complete scenarios. 
 
 % 
 % \subsection{Real COOP Attack Example}
@@ -465,8 +477,9 @@ case that at the bent address location exists a useful gadget or even in fully C
 % \textbf{Checking Indirect Forward-Edge Calls in Practice.}
 \label{C++ Indirect Calls in Practice}
 Amongst \textbf{binary based tools}, TypeArmor~\cite{veen:typearmor}
-($\approx$3\% runtime overhead) enforces a CFI-policy based on runtime checking of caller-callee pairs 
-and function parameter count matching. Compared to \textsc{TypeShield}, this tool does not use function 
+% ($\approx$3\% runtime overhead) 
+enforces a CFI-policy based on runtime checking of caller-callee pairs which relies
+on function parameter count matching. Compared to \textsc{TypeShield}, this tool does not use function 
 parameter types and assumes that a backward-edge protection is in place.
 VCI~\cite{vci:asiaccs} and Marx~\cite{marx} are both based on approximated program class hierarchies: 
 (1) do not recover the root class of the hierarchy, and (2) the edges between the classes are not oriented. Thus, both tools 
@@ -496,7 +509,7 @@ class hierarchy reconstruction tractable.
 
 \subsection{Mitigation of Backward-Edge Based Attacks}
 \label{Mitigation of Return Edge Attacks}
-According to one of the currently most comprehensive surveys~\cite{cfi:survey} assessing backward edge protection techniques and runtime overhead comparisons, tools can be distinguished into providing
+According to one of the currently most comprehensive surveys by Burow \textit{et al.}~\cite{cfi:survey} assessing backward edge protection techniques and runtime overhead comparisons, tools can be distinguished into providing
  low, medium, and high levels of protection w.r.t. backward-edges. %Further, this survey 
 %provides runtime overhead comparisons. 
 %classifies the backward-edge protection techniques 
@@ -508,7 +521,7 @@ kBouncer~\cite{kbouncer},
 CCFIR~\cite{ccfir:zhang}, bin-CFI~\cite{mingwei:sekar}, O-CFI~\cite{mohan:opaque}, 
 PathArmor~\cite{veen:cfi}, 
 LockDown~\cite{payer:dimva} mostly suffer from imprecision (high number of reused labels); 
-have low runtime efficiency; do not support shared libraries at all.
+have low runtime efficiency; and some of the tools do not support shared libraries.
 
 % \textbf{Source code based tools.} SafeStack~\cite{safestack}, Hypersafe~\cite{hypersafe}, CF-Locking~\cite{cflocking}, MIP~\cite{mip}, 
 % CF-Restrictor~\cite{cfrestrictor}, KCoFi~\cite{kcocfi}, RockJIT~\cite{rockjit:niu}, CCFI~\cite{ccfi:jose}, 
@@ -520,17 +533,7 @@ have low runtime efficiency; do not support shared libraries at all.
 % for this reason the tools are not runtime effective and their precision is rather low and mostly not effective against state of the art code
 % reuse attacks.
 
-\begin{center}
-\begin{figure*}[t!]
-\centering
-   \includegraphics[width=.82\textwidth]{figures/overview.pdf}
-   \vspace{-.25cm}
-    \caption{Overview of the main steps performed by \textsc{TypeShield} when hardening a program binary.}
-    \label{System overview.}
-    \vspace{-.5cm}
- \end{figure*}
-\end{center}
-    \vspace{-.5cm}
+% \vspace{-.5cm}
 \subsection{Threat Model}
 \label{Adversary Model}
 
@@ -558,6 +561,6 @@ approach does not rely on information hiding from the
 attacker and as such we can tolerate arbitrary reads. 
 Finally, the analyzed program binary is not hand-crafted and the compiler which was used
 to generate the program binary adheres to one of the 
-following most used caller-callee calling conventions \cite{arm:abi, microsoft:abi, itanium:abi}.
+following most used caller-callee function calling conventions \cite{arm:abi, microsoft:abi, itanium:abi}.
 
 

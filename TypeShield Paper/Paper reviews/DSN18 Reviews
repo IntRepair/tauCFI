@@ -1,0 +1,217 @@
+===========================================================================
+                           DSN 2018 Review #165A
+---------------------------------------------------------------------------
+Paper #165: TypeShield: Practical Defense Against Code Reuse Attacks using
+            Binary Type Information
+---------------------------------------------------------------------------
+
+                      Overall merit: 2. Weak reject
+                 Reviewer expertise: 4. Expert
+
+                         ===== Paper summary =====
+
+The paper presents an improved version of the TypeArmor (S&P 2016)
+defense to build a better CFI, but with a potentially interesting
+delta. First, it adds an approximation of argument *types* in addition
+to solely the argument count as used by TypeArmor, plus it protects
+both the forward edge and the backward edge.
+
+                      ===== Comments for author =====
+
+While the idea(s) in this paper are quite small, I initially liked the
+paper. Nothing wrong with a smallish but interesting and real
+improvement of an existing idea. The writing was also quite clear (if
+a bit annoyingly repetitive, as it repeats at the start of each
+section that under- or over approximation are acceptable).
+
+Unfortunately, this lasted only until Section IV, where the
+explanation of the call site and call target analysis disintegrated. I
+would recommend that the authors carefully explain what happens step
+by step for each of the analyses. Dumping register super states on the
+reader without much explanation is one thing, but things became really
+murky when you started discussing the merge operation. The first
+mention of it is this:
+
+     To permit this, we allow our merge operations to also return the
+     value RW
+
+Which merge operations? Later on, you even make it merge_h and merge_v
+and by that time, you lost me. After a while I guessed (hopefully
+correctly) that you were talking about what is commonly referred to as
+the meet operator in data flow analysis. If so, this is real compiler
+speak. I do not think you should expect the audience to understand
+this. I still do not quite understand what you mean by merge_h and
+merge_v.
+
+Nevertheless, I understood the bigger picture in the preceding
+sections and would have been happy to have this clarified in a final
+version. However, my positive assessment turned into a negative one
+after reading the evaluation section, which, unfortunately was very
+bad. 
+
+For the performance evaluation you present (not unreasonably) SPEC
+CPU2006 results and refer to Fig.2. It shows 12x2 bars for 12 of the
+SPEC benchmarks. And then you compare to competing solutions.
+
+No, you cannot do this! This is very misleading. You are taking a
+subset of SPEC CPU 2006 without any explanation and then calculate the
+geomean over the result and compare it to competitors. Moreover, you
+leave out some of the most expensive ones, such as Perlbench, gcc, and
+sjeng on which TypeArmor seems to score quite badly (upto over 10%
+performance overhead). Unfortunately, this has all the characteristics
+of cherrypicked benchmarks. Moreover, the entire suite should be
+tested, that is why it is a suite. If one of the benchmarks doesn't
+work, you bend over backwards to fix your system first, and if that
+still does not work, explain carefully in the paper why it did not
+work.
+
+Moreover, I do not understand why it says %runtime overhead on the y
+axis when it seems to just show the baselines score and the score with
+instrumentation. If this is the case, you can see that some of the
+benchmarks have terrible overhead, up to 50% or so?!
+
+Unlike you, I would perhaps have more faith in shadow stack than in
+the hope of resolving the calls exactly. You introduce imprecision,
+while a shadow stack offers perfect context sensitive CFI on the
+backward edge. You just need to protect it carefully.
+
+How do you handle cases where the calls and returns do not line up?
+E.g., tail calls?
+ 
+Minor comments
+
+1. Perhaps it would be good to mention somewhere which operating
+systems make use of the Itanium ABI.
+
+2. References [6] and [20] are the same! Also, this work is based on
+two peer-reviewed conference papers. It would be better to refer to
+these than to a BH presentation.
+
+===========================================================================
+                           DSN 2018 Review #165B
+---------------------------------------------------------------------------
+Paper #165: TypeShield: Practical Defense Against Code Reuse Attacks using
+            Binary Type Information
+---------------------------------------------------------------------------
+
+                      Overall merit: 4. Accept
+                 Reviewer expertise: 2. Some familiarity
+
+                         ===== Paper summary =====
+
+The paper proposes TYPESHIELD, a binary runtime forward-edge and backward-edge
+protection tool instrumenting program executables at load time. TYPESHIELD
+enforces a novel runtime control-flow integrity (CFI) policy based on function
+parameter type and count, in order to overcome the limitations of available
+approaches and to efficiently verify dynamic object dispatches and function
+returns during runtime.
+
+                      ===== Comments for author =====
+
+This is a well-written, well-executed paper. It is straight-forward to follow,
+and the engineering aspects of the work are well done.
+
+I would suspect that some CFI people might have the feeling that the work is a
+little incremental, but I thought that this was pretty good work with a decent
+evaluation. 
+
+One potential issue is that the approach does not work on obfuscated binaries,
+but I would say that this is comparable to existing work. Also, an evaluation
+with binaries that do not come with source code would make the paper stronger.
+
+The runtime overhead seems to be pretty OK.
+
+===========================================================================
+                           DSN 2018 Review #165C
+---------------------------------------------------------------------------
+Paper #165: TypeShield: Practical Defense Against Code Reuse Attacks using
+            Binary Type Information
+---------------------------------------------------------------------------
+
+                      Overall merit: 3. Weak accept
+                 Reviewer expertise: 2. Some familiarity
+
+                         ===== Paper summary =====
+
+A TYPESHIELD is a binary rewriting tool for runtime protection of program forward and backward call edges. The backward edge protection technique differs from standard tools in that it does not rely on shadow stack protection which has been found vulnerable. Instead forward edge protection is used for backward edge protection.
+The forward protection generates call site and target graph and propagates and checks labels with parameter counts to prevent gadgets communicating via registers. The
+forward mapping between callsites and calltargets is also used to determine the backward address set for return address, 
+so that function return is allowed to jump to only the instruction
+which follows next to the address of the call site which is
+allowed to call the call target containing this particular function return.
+The technique is evaluated on realistic programs for precision, effectiveness, and overhead comparing it to existing tools, among  them shadow stack based tool by Abadi, showing comparable or better precision and overhead, and substantial call site to call target reduction. 
+The paper is interesting but the writing is dense, there is not enough high level 
+overview before diving into low level descriptions.
+I also missed a clear statement of what is the novel contribution of this work.
+Is it the first back edge protection technique without shadow stack?
+
+                      ===== Comments for author =====
+
+If the attack is aware of the policy, it can
+selectively use gadgets which have their start address in the
+allowed set for the legitimate forward-edge and backward-edge
+transfers, subverting protection. It was not clear to me how hard is for the attacker to discover the policy. Please clarify.
+
+The paper is dense and it was hard to follow the convoluted descriptions.
+
+===========================================================================
+                           DSN 2018 Review #165D
+---------------------------------------------------------------------------
+Paper #165: TypeShield: Practical Defense Against Code Reuse Attacks using
+            Binary Type Information
+---------------------------------------------------------------------------
+
+                      Overall merit: 3. Weak accept
+                 Reviewer expertise: 3. Knowledgeable
+
+                         ===== Paper summary =====
+
+This paper proposes TypeSheild, a binary instrumentation tool that enforce the control-flow integrity (CFI). TypeShield can be applied to stripped binaries (i.e. no source code, no symbol tables). TypeShield analyzes binary and derives "parameter types" of the callsites and calltargets, leveraging C++ standard calling convention. The binary is instrumented to check the correcntess of parameter types.
+
+                      ===== Comments for author =====
+
+Strong Points:
+TypeShield can be applied to stripped binaries, and does not rely on other heavyweight protection mechanisms. The approach of TypeShield achieves reasonably precise protection of the control-flow.
+
+Weak Points:
+The descripton of the technical details is ambiguous. The fundamental approach of TypeShield is well presented but the algorithm that accomplishes the approach is not clear. It is quite hard to evaluate the validity of the proposed method.
+
+Detailed Comments:
+
+It is interesting to derive register-level "parameter types" from binary and use them to enforce CFI. The approach taken to protect backward-edges is good.
+
+I wonder why TypeShield can achieve highly precise enforcement of CFI. Since TypeShield relies only the number of parameters (if I understand your approach correctly), the matchings between callsites and calltargets include lots of false positives. Althoug you are showing lots of results in the evaluation, which table answers this question?
+
+Evaluation part of the paper is too long, and the points of the evaluation are ambiguous. Cut irrelevant tables and graphs, and concentrate on essential points of TypeShield.
+
+As I mentioned above in "Weak Points", I couldn't understand the technical details in Section IV. Before diving into the detailed algorithm, please show a simple, easy-to-understand example, and use it to explain the key points of your approach.
+
+Minor Comments:
+Captions for tables and figures are too close to the body of the paper. Take a look at Table 1. It is not easy to find where the caption ends. 
+
+I guess Itanium C++ ABI does not define register-level calling conventions. It rather defines, for example, the mangling rules. If my guess is correct, please use a more appropriate term.
+
+===========================================================================
+                           DSN 2018 Review #165E
+---------------------------------------------------------------------------
+Paper #165: TypeShield: Practical Defense Against Code Reuse Attacks using
+            Binary Type Information
+---------------------------------------------------------------------------
+
+                      Overall merit: 4. Accept
+                 Reviewer expertise: 1. No familiarity
+
+                         ===== Paper summary =====
+
+The paper proposes a new approach to protect binary programs against the hijacking of function pointers and return addresses through memory corruption. The intuition is to analyze the machine code before a call site, and after a callee's start to infer constrains on the number of parameters and the type of these parameters (more precisely the wideness of the registers used). This is possible by exploiting the calling conventions documented in the system's ABI (Application Binary Interface). Using this analysis, the authors deduce which call targets can possibly match with which call site, and instrument the binary code to enforce this matching, aborting the program in case a jump or return to an invalid address is detected.
+
+                      ===== Comments for author =====
+
+The paper is well written, and clearly explained: both the intuition and the details of the analysis are easy to grasp. The evaluation is very comprehensive, considering both the overhead of the tool, the accuracy of its analysis, its ability to detect code-reuse attacks (CRAs), and comparisons with other existing tools.
+
+In terms of limits, the authors do not consider floating point registers or multi-integer registers. Can nevertheless their approach cannot be applied to them? If yes, it would be good to say so.
+
+In the same vein, the analysis seems to rely several heuristics. Does it mean that a legitimate call target could possibly be flagged as invalid by TypeShield (thus ending in the clang miss column in Table I). If this were to happen, would not the instrumented binary risk to get aborted although no attack is underway? Is this type of problem simply impossible, or very improbable?
+
+The captions of many tables run into the surrounding text (Table I is the worst). Reducing the caption, or tightening up some of the text would make the layout much cleaner.
+

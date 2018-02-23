@@ -235,6 +235,8 @@
 \definecolor{bostonuniversityred}{rgb}{0.8, 0.0, 0.0}
 \definecolor{cadmiumgreen}{rgb}{0.0, 0.42, 0.24}
 \definecolor{darkgray}{rgb}{0.66, 0.66, 0.66}
+% \usepackage[firstinits=true]{biblatex}
+\newcommand{\paul}[1]{\textcolor{magenta}{\textbf{PM:} #1}}
 
 \begin{document}
 %%used to avoid using --- to replace author names of similar entries
@@ -297,7 +299,8 @@
 % However, there is an alarmingly high number of object dispatch (\textit{i.e.,} forward-edge) corruption vulnerabilities which undercut security 
 % in significant ways and are in need of a thorough solution.
 
-We propose \textsc{TypeShield}, a binary runtime forward-edge and backward-edge protection tool instrumenting program executables at load time. \textsc{TypeShield} enforces a novel runtime
+We propose \textsc{TypeShield}, a binary runtime forward-edge and backward-edge protection tool used for instrumenting program 
+executables during load time. \textsc{TypeShield} enforces a novel runtime
 control-flow integrity (CFI) policy based on function parameter type and count, in order to overcome the limitations of available approaches and to
 efficiently verify dynamic object dispatches and function returns during runtime. To enhance practical applicability, \textsc{TypeShield} can
 be automatically and easily used in conjunction with legacy applications or where source code is missing to harden binaries.
@@ -313,6 +316,56 @@ low runtime overhead.
 
 % \keywords{C++ object dispatch, indirect call, forward edge, code reuse attack} % TODO: replace with your keywords
 
+% DSN rebuttal: * - means done.
+% We thank the reviewers for the constructive reviews. We are already in the process of revising the paper and 
+% we will address all points mentioned in the reviews. Below, we discuss the main comments and how we 
+% updated the paper in the relevant sections.
+% 
+% *We improved our step-by-step explanation of what happens for each type of analysis. 
+% *In particular, we provide clear algorithmic descriptions of the analysis steps.
+% *More specifically, merge vertically (merge_v) represents a binary basic
+% block merging strategy in which the data flow information of blocks
+% which are located one after each other in the program control flow graph
+% (CFG) is merged. *Merge horizontally (merge_h) is a basic block merging
+% strategy for basic blocks located on several paths, which are parallel
+% to each other in the CFG of the program. *Moreover, we provide now simple
+% explanations for all the other used operations.
+% 
+% We agree with the first reviewer that we need to perform a more
+% comprehensive runtime overhead analysis on all programs contained in
+% SPEC CPU2006 test suite.  For this reason, we performed all benchmarks
+% contained in the SPEC CPU2006. The results are encouraging and depict
+% that the runtime overhead normalized against the baseline for the SPEC
+% CPU2006 benchmarks is in geomean 3 % which is comparable with other
+% state-of-the-art tools.
+% 
+% *While in essence, shadow stack techniques are more precise, we point out
+% that our tool does not require source code, and does not suffer from the
+% attack vectors, which can be independently used to bypass a shadow stack
+% protection. Namely, guessing oracles, neglected pointers, thread
+% spraying, and allocation oracles can all independently be used to bypass
+% this protection technique. As such, our approach is a competitive
+% alternative to shadow stack techniques, which has its particular
+% trade-offs and relies on different principles. todo: Finally, we carefully
+% specify the pros and cons of our approach over shadow stack techniques
+% in the updated paper version.
+% 
+% *(added in the discussion section, which is now hidden). Floating point registers are not used to pass the first six function parameters. 
+% These registers as specified by the C++ Itanium ABI are: rdi, rsi, rdx, rcx, r8, 
+% and r9. In case more than 6 parameters are passed, then these are passed over the
+% stack. For this reason, we did not consider floating point registers for now. 
+% Nevertheless, we plan to address floating point registers in an updated version
+% of our tool as well.
+% 
+% Other review points which we used to improve the paper are: (1)*(done) specified types 
+% of binaries on which our approach works, (2)* mentioned that the goal is not obfuscated
+% binaries, (3)* rewritten the design section in order to avoid the dense previous 
+% writing style, (4) precisely state what are the novel contributions of this paper,
+% (5) address the point w.r.t. how hard/easy is for an attacker to discover the used
+% policy and state the trade-offs, (6) clarify the point w.r.t. false negatives, (7)* 
+% mention which OSs are typically using the Itanium ABI, and (8)* update paper references.
+% 
+% We once again thank for the helpful and constructive comments.
 
 %contents
 \input{chapters/Introduction}
@@ -320,7 +373,7 @@ low runtime overhead.
 % \input{chapters/ThreatModel}
 \input{chapters/TypeShild_Overview}
 \input{chapters/Design}
-\input{chapters/Implementation}
+% \input{chapters/Implementation}
 \input{chapters/Evaluation}
 % \input{chapters/Discussion}
 % \input{chapters/Related_Work}
@@ -332,7 +385,7 @@ low runtime overhead.
 
 %the bibliography
 
-\bibliographystyle{IEEEtran} 
+\bibliographystyle{IEEEabrv} 
 % \bibliographystyle{sigplanconf-eurosys} 
 \bibliography{literatur}  
 
