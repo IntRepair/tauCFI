@@ -1,0 +1,25 @@
+import os
+
+class Target:
+    def __init__(self, name, method):
+        self.name = name
+        self.method = method
+
+    def set_sourcedir(self, sourcedir):
+        self.sourcedir = sourcedir
+
+    def set_binary_path(self, binary_path):
+        self.binary_path = binary_path
+        self.binary_name = os.path.basename(binary_path)
+
+    def set_sourcedir_binary(self, sourcedir_binary):
+        self.sourcedir_binary = sourcedir_binary
+
+    def set_prefix(self, prefix):
+        self.prefix = prefix
+
+    def set_cc_options(self, cc_options):
+        self.cc_options = cc_options
+
+    def set_ld_options(self, ld_options):
+        self.ld_options = ld_options

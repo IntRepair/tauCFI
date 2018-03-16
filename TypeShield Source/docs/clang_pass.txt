@@ -1,0 +1,86 @@
+A) clang/llvm Pass Output Format
+
+I) We print all functions that are *compiled* within the module by emitting the following line:
+
+    <MFNX>; $fn_name; $demang_fn_name; $current_path/$module; $flags; $arg_types; $arg_count; $ret_type;
+
+$fn_name denotes the mangled name of the function
+$demang_fn_name denotes the demangled name of the function
+$current_path denotes the path clang is currently executed from
+$module denotes the identifier of the compiled source_file
+$flags denotes a list of flags that relate to the function separated by "|"
+    flags would be : (AT for address taken)
+$arg_types denotes a list of arguments separated by "; " this function expects
+$arg_count denotes the number of arguments this function expectes
+$ret_type denotes the return type of this function provides
+
+
+II) We print all callsites that are found within the module by emitting the following line:
+
+    <AMCS>; $fn_name; $demang_fn_name; $current_path/$module; $flags; $arg_types; $arg_count; $ret_type;
+
+$fn_name denotes the mangled name of the function the callsite is found in
+$fn_name_demang denotes the unmangled name of the function the callsite is found in
+$current_path denotes the path clang is currently executed from
+$module denotes the identifier of the compiled source_file
+$flags denotes a list of flags that relate to the callsite separated by "|"
+    flags would be : (ICS for indirect callsite)
+$arg_types denotes a list of arguments separated by "; " this callsite provides
+$arg_count denotes the number of arguments this callsite provides
+$ret_type denotes the return type this callsite expectes
+
+
+III) We print all functions that are *visible* within the module by emitting the following line:
+
+    <MFN>; $fn_name; $demang_fn_name; $current_path/$module; $flags; $arg_types; $arg_count; $ret_type;
+
+$fn_name denotes the mangled name of the function
+$demang_fn_name denotes the demangled name of the function
+$current_path denotes the path clang is currently executed from
+$module denotes the identifier of the compiled source_file
+$flags denotes a list of flags that relate to the function separated by "|"
+    flags would be : (AT for address taken)
+$arg_types denotes a list of arguments separated by "; " this function expects
+$arg_count denotes the number of arguments this function expectes
+$ret_type denotes the return type of this function provides
+
+IV) We indicate that a module is done compiling by emitting the following line.
+
+    $module_name; <MMD>; $current_path;
+
+$module denotes the identifier of the compiled source_file
+$current_path denotes the path that clang is currently executed from
+
+B) clang/llvm pass functionality
+
+I) To achieve output A.I, we leverage a MachineFunctionPass that gets executed
+after all optimizations within the module have taken place and before the
+object file is written. The output is based on the Function the given
+MachineFunction object is linked to.
+
+II) To achieve output A.II, we leverage two MachineFunctionPass objects:
+
+a) We use a MachineFunctionPass that gets exectuted before any optimization on
+the Machine Level takes place, but after the conversion from IR to
+MachineInstructions. At this time there is essentially no difference between IR
+and the MachineModel. Therefore we iterate over each MachineBasicBlock and look
+at the corresponding IR BasicBlock, for which we iterate over each IR
+Instruction looking for CallSites. We remove what we call Internal Callsites,
+which are callsites that call an internal function. Internal functions match
+the pattern llvm.* an should be omitted as those will create problems later on,
+because there are such functions that cause an indirect callsite instead of a
+direct one. When we find an non internal indirect callsite, we look for the
+corresponding call MachineInstruction and when we find it, we store a copy of
+the found callsite with the MachineBasicBlock. This is a modification of LLVM,
+which allows us to track the callsite during any copying of MachineBasicBlocks
+or other creation originating from this MachineBasicBlock.
+
+b) The same MachineFunctionPass as in B.I but to output the callsite data, we
+iterate over each MachineBasicBlock within the given MachineFunction. For each
+MachineBasicBlock we iterate over all its MachineInstructions. We inspect each
+MachineInstruction that is considered a Call by llvm and get the callsite set
+by the pass from II.a. We then check this callsite if ti is an indirect
+callsite. In case it is, we output the relevant data for this callsite.
+
+III) To achieve outputs A.III and A.IV we leverage a ModulePass, which iterates
+through all visible functions inside the current module

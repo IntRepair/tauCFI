@@ -1,0 +1,21 @@
+Regarding the verify output of our tool (referenced as verify), both functions
+
+    def parse_verify_basic(path, name):
+    def parse_verify(path, name, tag_ct, tag_cs):
+
+provide the following output:
+result = {
+    ["ct_index"] = list of pairs (mangled_name, demangled_name) for functions
+    ["at_index"] = list of pairs (mangled_name, demangled_name) for address taken functions 
+    ["call_target"] = list of parsed function entries for all functions
+    ["address_taken"] = list of parsed function entries for address taken functions
+    ["call_site"] = list of parsed call_target entries
+
+    ["double_vals"] = {
+        ["ct_index"] = same as above but for non first appearances
+        ["at_index"] = same as above but for non first appearances
+        ["call_target"] = same as above but for non first appearances
+        ["address_taken"] = same as above but for non first appearances
+        ["call_site"] = !!TODO!!
+    }
+}

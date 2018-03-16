@@ -1,0 +1,12 @@
+.vscode
+bin/*
+*.so
+*.o
+*.pyc
+*.di
+di-opt/di-opt
+bin/di-opt
+build_llvm*
+src_tests/*/
+tests/*
+src/tests/*/

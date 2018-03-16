@@ -1,0 +1,154 @@
+import getopt
+import os
+import csv
+
+from test_target import Target
+
+_test_config = {}
+
+def _parse_input(argv):
+    flag_options = ["force-compile"]
+
+    # Initialize flag options to false
+    for flag in flag_options:
+        _test_config[flag] = False
+
+    value_options = ["project-root"]
+    value_options += ["dyninstapi-rt"]
+    value_options += ["binutils-dir"]
+    value_options += ["dynamorio"]
+
+    multi_value_options = ["runtime-passes"]
+
+    option_strings = [x for x in flag_options]
+    option_strings += [x + "=" for x in value_options]
+    option_strings += [x + "=" for x in multi_value_options]
+    opts, args = getopt.getopt(argv, "", option_strings)
+
+    for opt, arg in opts:
+        option = opt[2:]
+        if option in flag_options:
+            print "using flag: " + option
+            _test_config[option] = True
+
+        elif option in value_options:
+            print "using " + option + ": " + arg
+            _test_config[option] = arg
+
+        elif option in multi_value_options:
+            mult_arg = arg.split(",")
+            print "using " + option + ": " + str(mult_arg)
+            _test_config[option] = mult_arg
+
+    _test_config["llvm-build-dir"] = os.path.join(_test_config["project-root"], "build_llvm")
+    _test_config["source-dir"] = os.path.join(_test_config["project-root"], "src_tests")
+    _test_config["test-dir"] = os.path.join(_test_config["project-root"], "tests")
+    _test_config["binary-dir"] = os.path.join(_test_config["project-root"], "bin")
+
+    _test_config["analyzer"] = os.path.join(_test_config["binary-dir"], "analyzer")
+    _test_config["patcher"] = os.path.join(_test_config["binary-dir"], "patcher")
+
+    _test_config["cc-options"] = "-O2" #"-flto"#-pipe -W -Wall -Wpointer-arith -Wno-unused"#" -fno-optimize-sibling-calls"
+    _test_config["ld-options"] = "" #"-flto -O0 -use-gold-plugin"#-Wl,-disable-opt"#-fno-optimize-sibling-calls"
+    #_test_config["ld_options"] += "-B " + BINUTILS + "/gold -Wl,-plugin " + LLVMBUILD + "/lib/LLVMgold.so"
+    LLVMBUILD = _test_config["llvm-build-dir"]
+    _test_config["ccompiler"] = os.path.join(LLVMBUILD, "bin", "clang")
+    _test_config["cxxcompiler"] = os.path.join(LLVMBUILD, "bin", "clang++")
+    _test_config["linker"] = os.path.join(LLVMBUILD, "bin", "lld")
+
+    _test_config["config-file"] = os.path.join(_test_config["source-dir"], "tests.config")
+
+
+#"project_root", "script_dir", "binary_dir", "test_sources", "test_dir", "llvm_dir", "llvm_build_dir", "dynamorio_dir", "dyninst_root"
+
+
+#TODO move to parsing part...
+def _parse_test_target(line):
+    # Parse config line
+    tokens = line.split(":")
+    name = tokens[0]
+    source = os.path.join(_test_config["source-dir"], tokens[1])
+    method = tokens[2]
+    binary_path = tokens[3]
+    sourcedir_binary = tokens[4]
+    # Generate the target itself
+    target = Target(name, method)
+    target.set_sourcedir(source)
+    target.set_binary_path(binary_path)
+    target.set_sourcedir_binary(sourcedir_binary)
+    target.set_prefix(os.path.join(_test_config["test-dir"], name))
+    target.set_cc_options(_test_config["cc-options"])
+    target.set_ld_options(_test_config["ld-options"])
+    return target
+
+def configure_targets(argv):
+    _parse_input(argv)
+
+    test_targets = []
+    with file(_test_config["config-file"]) as test_config_file:
+        for line in test_config_file:
+            line = line.split("#")[0] # ignore comments
+            line = line.strip()
+            if len(line) > 0:
+                test_targets += [_parse_test_target(line)]
+
+    return test_targets
+
+def get_runtime_passes():
+    return _test_config["runtime-passes"]
+
+def get_test_dir():
+    return _test_config["test-dir"]
+
+def get_dyninstapi_rt():
+    return _test_config["dyninstapi-rt"]
+
+def get_binary_dir():
+    return _test_config["binary-dir"]
+
+def get_dynamorio():
+    return _test_config["dynamorio"]
+
+def get_analyzer():
+    return _test_config["analyzer"]
+
+def get_patcher():
+    return _test_config["patcher"]
+
+def get_ccompiler():
+    return _test_config["ccompiler"]
+
+def get_cxxcompiler():
+    return _test_config["cxxcompiler"]
+
+def get_linker():
+    return _test_config["linker"]
+
+def is_force_compile():
+    return _test_config["force-compile"]
+
+#def __run_in_test_environment(argv, name, csv_defs, fn, error_files, csv_writers):
+#    csv_def = csv_defs[0]
+#    csv_defs = csv_defs[1:]
+#    csv_name = csv_def[0]
+#    csv_fields = csv_def[1]
+#    test_dir = get_test_dir(argv)
+#    with open(os.path.join(test_dir, csv_name + ".O2.csv"), "w") as csv_file2:
+#        __csv_writers = {}
+#        writer = csv.DictWriter(csv_file2, fieldnames=csv_fields)
+#        writer.writeheader()
+#        __csv_writers["O2"] = writer
+#        csv_writers[csv_name] = __csv_writers
+#
+#        if len(csv_defs) > 0:
+#            __run_in_test_environment(argv, name, csv_defs, fn, error_files, csv_writers)
+#        else:
+#            fn(argv, error_files, csv_writers)
+#
+#def run_in_test_environment(argv, name, csv_defs, fn):
+#    test_dir = get_test_dir(argv)
+#    with open(os.path.join(test_dir, "error_file" + name + ".O2"), "w") as e2:
+#        error_files = {}
+#        error_files["O2"] = e2
+#        __run_in_test_environment(argv, name, csv_defs, fn, error_files, {})
+#

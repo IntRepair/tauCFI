@@ -1,0 +1,20 @@
+<type_shield dir="/home/matthias/typeshield" ccompiler="gcc" cxxcompiler="g++">
+	<script dir="scripts" />
+	<binary dir="bin" />
+	<test dir="tests" />
+	<llvm source_dir="llvm" build_dir="build_llvm" />
+	<dynamorio dir="DynamoRIO" lib="lib64/release/" />
+	<dyninst dir="Dyninst" rt_library="dyninstAPI_RT/libdyninstAPI_RT.so"/>
+
+	<sources dir="src">
+		<tests dir="tests" config="test_config.xml" cc_options="" ld_options="" />
+	</sources>
+
+	<pass order="compile analysis">
+		<compile value="compile" />
+		<analysis value="analysis" />
+		<matching value="matching" />
+	</pass>
+
+</type_shield>
+
