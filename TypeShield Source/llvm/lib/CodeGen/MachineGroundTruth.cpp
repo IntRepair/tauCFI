@@ -122,7 +122,8 @@ static void output_object(Function const& obj, Function const& fn, std::string t
       errs() << (*arg.getType()) << "|";
     errs() << ";";
 
-    errs() << (*obj.getReturnType()) << ";" << '\n';
+    errs() << (*obj.getReturnType()) << ";";
+    errs() << obj.getLinkage() << ";" << '\n';
   } else {
     errs() << "ERROR ";
     errs().write_escaped(fn.getName()) << " is not a valid function name!\n";
@@ -154,7 +155,8 @@ static void output_object(ImmutableCallSite const& obj, Function const& fn, std:
       errs() << (*arg->getType()) << "|";
     errs() << ";"; 
 
-    errs() << *obj.getType() << ";" << '\n';
+    errs() << *obj.getType() << ";";
+    errs() << fn.getLinkage() << ";" << '\n';
   } else {
     errs() << "ERROR ";
     errs().write_escaped(fn.getName()) << " is not a valid function name!\n";

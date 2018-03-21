@@ -43,7 +43,7 @@ static inline std::string param_to_string(std::array<char, 7> const &params)
     }
 
     ss << 6 << ";";
-    ss << params[6] << ";" << '\n';
+    ss << params[6];
 
     return ss.str();
 }

@@ -50,7 +50,7 @@ std::vector<ast::function> resolve_jumptables(BPatch_object *object,
         basic_blocks.emplace_back(ast_block.get_basic_block(),
                                   ast_block.get_address(),
                                   ast_block.get_end(),
-                                  false,
+                                  !potential_switch_table,
                                   potential_switch_table);
       }
       else {
@@ -60,7 +60,7 @@ std::vector<ast::function> resolve_jumptables(BPatch_object *object,
                                 block->getEndAddress(), is_indirect_callsite);
 */    }
 
-//    ast_function.update_basic_blocks(basic_blocks);
+    ast_function.update_basic_blocks(basic_blocks);
   }
 
 
