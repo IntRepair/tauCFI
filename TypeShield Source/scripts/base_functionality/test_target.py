@@ -46,9 +46,9 @@ def get_targets(config, test_source_config):
 		target.set_binary_path(os.path.join(test_sources_dir, program["binary_path"]))
 		target.set_sourcedir_binary(program["sourcedir_binary"])
 		target.set_prefix(os.path.join(test_dir, program["name"]))
-		target.set_cc_options(get_string(config, "type_shield.sources.tests.cc_options") + get_string(program, "cc_options"))
-		target.set_cxx_options(get_string(config, "type_shield.sources.tests.cxx_options") + get_string(program, "cxx_options"))
-		target.set_ld_options(get_string(config, "type_shield.sources.tests.ld_options") + get_string(program, "ld_options"))
+		target.set_cc_options(get_string(config, "type_shield.sources.tests.cc_options") + " " + get_string(program, "cc_options"))
+		target.set_cxx_options(get_string(config, "type_shield.sources.tests.cxx_options") + " " + get_string(program, "cxx_options"))
+		target.set_ld_options(get_string(config, "type_shield.sources.tests.ld_options") + " " + get_string(program, "ld_options"))
 
 		test_targets += [target]
 

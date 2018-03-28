@@ -32,6 +32,8 @@ class AnalysisPass(Pass):
         for option in self._options:
             command_string += " " + option
 
+	command_string += "; " + command_string + " --types"
+
 	print command_string
         os.system(command_string)
 

@@ -11,19 +11,21 @@ from base_passes.compile_pass import CompilePass
 from base_passes.analysis_pass import AnalysisPass
 # these are "advanced" passes as they need access to more advanced systems
 from advanced_passes.matching_pass import MatchingPass
-#from advanced_passes.precision_count_pass import PrecisionCountPass
-#from advanced_passes.precision_type_pass import PrecisionTypePass
+from advanced_passes.precision_count_pass import PrecisionCountPass
+from advanced_passes.precision_type_pass import PrecisionTypePass
 #from advanced_passes.pairing_count_pass import PairingCountPass
 #from advanced_passes.pairing_type_pass import PairingTypePass
+from advanced_passes.policy_compare_pass import PolicyComparePass
 
 _available_passes = {}
 _available_passes["compile"] = CompilePass
 _available_passes["analysis"] = AnalysisPass
 _available_passes["matching"] = MatchingPass
-#_available_passes["precision_count"] = PrecisionCountPass
-#_available_passes["precision_type"] = PrecisionTypePass
+_available_passes["precision_count"] = PrecisionCountPass
+_available_passes["precision_type"] = PrecisionTypePass
 #_available_passes["pairing_count"] = PairingCountPass
 #_available_passes["pairing_type"] = PairingTypePass
+_available_passes["policy_compare"] = PolicyComparePass
 
 def main(argv):
 	arguments = parse_arguments(sys.argv[1:], value_options=["config"], flag_options=["force"])

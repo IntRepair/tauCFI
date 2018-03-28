@@ -1,1 +1,1 @@
-__all__=["verify_matching"]
+__all__=["verify_matching, matching"]

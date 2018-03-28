@@ -64,12 +64,12 @@ def parse_verify(path, name, tag_ct, tag_cs):
     if not os.path.isfile(file_path):
         file_path = os.path.join(path, "verify." + name + ".ct")
 
-    result = _analyze_verify_file_lines(file_path, result)
+    _analyze_verify_file_lines(file_path, result)
 
     file_path = os.path.join(path, "verify." + tag_cs + "." + name + ".cs")
     if not os.path.isfile(file_path):
         file_path = os.path.join(path, "verify." + name + ".cs")
 
-    result = _analyze_verify_file_lines(file_path, result)
+    _analyze_verify_file_lines(file_path, result)
 
     return result

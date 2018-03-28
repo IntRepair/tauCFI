@@ -24,6 +24,17 @@ class AdvancedPass(Pass):
         clang = parse_ground_truth(target.prefix, target.binary_name)
         return self._run_on_target(target, padyn, clang)
 
+    def calc_geomean(self, csv_name):
+        csv_data = {}
+        csv_data["target"] = "geomean"
+        csv_data["opt"] = "O2"
+
+        for key in set(self.csv_fields[csv_name]) - set(["target", "opt"]):
+            values = utils.get_values_for_subkey(self.csv_data, csv_name, key)
+            float_values = [float(value) for value in values]
+            csv_data[key] = utils.geomean(float_values)
+        return csv_data
+
     def csv_set_define(self, csv_name, csv_fields):
         self.csv_fields[csv_name] = csv_fields
 
@@ -40,6 +51,7 @@ class AdvancedPass(Pass):
             self._run_on_target_parse(target)
 
         for csv_name in self.csv_fields.keys():
+            self.csv_output_row(csv_name, self.calc_geomean(csv_name))
             with open(os.path.join(self.test_dir, csv_name + ".csv"), "w") as csv_file: 
                 writer = csv.DictWriter(csv_file, fieldnames=self.csv_fields[csv_name]) 
                 writer.writeheader()

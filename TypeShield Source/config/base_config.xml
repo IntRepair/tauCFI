@@ -7,13 +7,16 @@
 	<dyninst dir="Dyninst" rt_library="dyninstAPI_RT/libdyninstAPI_RT.so"/>
 
 	<sources dir="src">
-		<tests dir="tests" config="test_config.xml" cc_options="" ld_options="" />
+		<tests dir="tests" config="test_config.xml" cc_options="-O2" cxx_options="-O2" ld_options="" />
 	</sources>
 
 	<pass order="compile analysis">
 		<compile value="compile" />
 		<analysis value="analysis" />
 		<matching value="matching" />
+                <precision_count value="precision_count" prefixes="0 1 2 3 4 5 6 7" />
+                <precision_type value="precision_type" prefixes="0 1 2 3 4 5 6 7 8 9 10 11" />
+		<policy_compare value="policy_compare" count_ct="0" count_cs="0" type_ct="0" type_cs="0" />
 	</pass>
 
 </type_shield>
